@@ -1,0 +1,49 @@
+<div class="container-fluid" *ngIf="moreDetailsOfTruck">
+    <div class="row">
+        <div class="form-group col-xs-2" align="center">
+            <select class="form-control " [(ngModel)]="nameOfParty" (change)="find()">
+                <option selected>Select Name</option>
+                <option *ngFor="let own of parties">{{own.name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row" *ngIf="showcount">
+
+        <table class="table" style="width:50%" align="center">
+            <thead>
+                <tr class=table-header>
+                    <th>Name</th>
+                    <th>Count</th>
+                    <th>Check</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of canBankPaymentdetailslist;let j=index" class="CanaraBanktr">
+                    <td>{{j+1}}</td>
+                    <td>{{i.accType}}</td>
+                    <td *ngIf="i.transferType=='NEFT'">
+                        <i class="material-icons">computer</i>
+                    </td>
+                    <td *ngIf="i.transferType=='IMPS'">
+                        <i class="material-icons">phone_android</i>
+                    </td>
+                    <td>{{i.nameOfParty}}</td>
+                    <td>{{i.lrno}}</td>
+                    <td>{{i.payment}}</td>
+                    <td>{{i.paymentDate|date:'dd-MM-yyyy'}}</td>
+                    <td>
+                        <button mat-raised-button (click)="delete(i)" class="btn-danger btn-sm btn-just-icon">
+                            <i class="material-icons">delete_forever</i>
+                        </button>
+                    </td>
+                    <td>
+                        <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+                            <i class="material-icons">edit</i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

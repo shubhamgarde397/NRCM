@@ -1,0 +1,158 @@
+<div class="well container" *ngIf="!mailDiv">
+  <div class="row">
+
+
+    <div class="form-group col-xs-2">
+
+      <select class="form-control scrollable-menu" [(ngModel)]="year" (change)="getMonthsLocal()">
+        <option>Year</option>
+        <option *ngFor="let years of yearNames">{{years}}</option>
+      </select>
+    </div>
+
+
+    <div class="form-group col-xs-2" align="center">
+
+      <select class="form-control " [(ngModel)]="month">
+        <option>Month</option>
+        <option *ngFor="let mon of monthNames">{{mon}}</option>
+      </select>
+
+    </div>
+
+    <div class="form-group col-sm-2" align="center">
+
+      <button class="btn btn-primary" (click)="find()">Search</button>
+
+    </div>
+
+    <div class="col-sm-1" style="font-weight: bold">{{month + year}}
+      <span style="font-size: 30px;padding-left: 6px">{{current_count}}</span>
+    </div>
+
+    <div class="col-xs-2">
+      <button (click)="download()" class="btn btn-warning btn-sm btn-just-icon">
+        <i class="material-icons" style="color:white">save_alt</i>
+      </button>
+    </div>
+
+    <div class="col-xs-1">
+      <button (click)="exportAsXLSX()">
+        Download XL
+      </button>
+    </div>
+
+    <div class="col-xs-1">
+      <button class="btn btn-info" data-toggle="modal" data-target="#EmailModal"> Send Mail
+      </button>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="!show && tabledata">
+    <table class="table" style="width:100%" align="center">
+      <thead>
+        <tr class="table-header">
+
+          <th>Date</th>
+          <th>LRNO</th>
+          <th>Party Name</th>
+          <th>GST No.</th>
+          <th>Party Name</th>
+          <th>GST No.</th>
+          <th>Truck No</th>
+          <th>Hire</th>
+          <th>Place</th>
+          <th>Owner</th>
+          <th>PAN</th>
+          <th>Amount</th>
+
+        </tr>
+      </thead>
+
+
+      <tbody>
+        <tr *ngFor="let i of finolexdetailslist;let j = index">
+
+          <td>{{i.Date|date:'dd-MM-yyyy'}}</td>
+          <td>{{i.lrno}}</td>
+          <td>{{i.FromParty}}</td>
+          <td>{{i.FromPartyGST}}</td>
+          <td>{{i.nop}}</td>
+          <td>{{i.ToPartyGST}}</td>
+          <td>{{i.truckno}}</td>
+          <td>{{i.hamt}}</td>
+          <td>{{i.place}}</td>
+          <td>{{i.OwnerName}}</td>
+          <td>{{i.PAN}}</td>
+          <td>{{i.amt}}</td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<!-- Email Modal -->
+
+<div class="modal fade" id="EmailModal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Sign In</h4>
+      </div>
+      <div class="modal-body">
+        <div class="well">
+
+          <form [formGroup]="myFormGroupE" (ngSubmit)="sendEmail(myFormGroupE)" submittedO=true
+            enctype="multipart/form data" action="/">
+
+
+
+            <div class="form-group row">
+              <div class="col-xs-8">
+                <label><b><h3>nitinroadways9@gmail.com</h3></b></label>
+              </div>
+
+            </div>
+
+            <div class="form-group row">
+              <div class="col-xs-8">
+                <input type="password" id="password" class="form-control" formControlName="password" placeholder="Password">
+              </div>
+              <div class="col-xs-2">
+                <div [hidden]="myFormGroupE.controls.password.valid">
+                  <font color="red">
+                    <span class="glyphicon glyphicon-remove"></span>
+                  </font>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="form-group" class="col-xs-2"></div>
+              <div class="form-group" class="col-xs-1">
+                <button type="submit" class="btn btn-primary" [disabled]='!myFormGroupE.valid'>
+                  <i class="material-icons">send</i>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!--  -->
+        <!--  -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!--  -->

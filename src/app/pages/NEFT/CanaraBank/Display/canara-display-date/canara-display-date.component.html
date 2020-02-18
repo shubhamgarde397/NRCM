@@ -1,0 +1,111 @@
+<div class="well container" *ngIf="!show">
+  <i class="material-icons">computer</i>
+  <span> NEFT</span>
+  <i class="material-icons">phone_android</i>
+  <span> IMPS</span>
+
+  <div class="row">
+
+    <div class="form-group col-xs-2" align="center">
+      <input type="date" [(ngModel)]="date" class="form-control" (change)="find()">
+    </div>
+
+    <div class="col-xs-3">
+      <select id="truckNo" class="form-control " [(ngModel)]="trucknopart" (change)="find()">
+        <option> Truck No</option>
+        <option *ngFor="let j of uniqueTrucks" value={{j}}>{{j}}</option>
+      </select>
+    </div>
+
+  </div>
+  <div>
+    <table class="table" style="width:100%" align="center">
+      <thead>
+        <tr class="table-header">
+          <th>Srno</th>
+          <th>AccType</th>
+          <th>Acc Date</th>
+          <th>TruckNO</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th>Transfer</th>
+          <th>PmtDate</th>
+          <th>Delete</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let i of canBankNeftdetailslist;let j=index" class="CanaraBanktr">
+          <td>{{j+1}}</td>
+          <td>{{i.accType}}</td>
+          <td>{{i.accDate|date:'dd-MM-yyyy'}}</td>
+          <td>{{i.truckNo}}</td>
+          <td (click)="getMobileNumber(i)" data-toggle="modal" data-target="#myModal">
+            <a>{{i.name}}</a>
+          </td>
+          <td class="CanaraBankAmount">{{i.amt}}</td>
+          <td *ngIf="i.transferType=='NEFT'">
+            <i class="material-icons">computer</i>
+          </td>
+          <td *ngIf="i.transferType=='IMPS'">
+            <i class="material-icons">phone_android</i>
+          </td>
+          <td>{{i.paymentDate|date:'dd-MM-yyyy'}}</td>
+          <td>
+            <button mat-raised-button (click)="deleteOwnerDetails(i._id)" class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button>
+          </td>
+          <td>
+            <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Modal content-->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title" style="text-align: center">{{modelName}}</h4>
+          </div>
+          <div class="modal-body">
+            <table class="table table-hover">
+              <tr>
+                <th>Contact</th>
+                <td>{{modelMobileNumber}}</td>
+              </tr>
+              <tr>
+                <th>BankName</th>
+                <td>{{modelBankName}}</td>
+              </tr>
+              <tr>
+                <th>IFSC</th>
+                <td>{{modelIFSC}}</td>
+              </tr>
+              <tr>
+                <th>AccountNumber</th>
+                <td>{{modelaccno}}</td>
+              </tr>
+              <tr>
+                <th>Summary</th>
+                <td>{{modelSummary}}</td>
+              </tr>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal content-->
+  </div>
+</div>
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,52 @@
+<div class="well" *ngIf="!show">
+
+  <table class="table table-header" style="width:100%" align="center">
+
+    <thead>
+      <tr class="table-header">
+        <th>Notification</th>
+        <th>Check</th>
+        <th>Delete</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of notificationList;let j = index">
+        <td>{{i.notification}}</td>
+        <td *ngIf="i.check">
+          <i class="material-icons checkboxGreen">done</i>
+        </td>
+        <td *ngIf="!i.check">
+          <i class="material-icons checkboxRed">clear</i>
+        </td>
+        <td>
+          <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
+            <i class="material-icons">delete_forever</i>
+          </button>
+        </td>
+        <td>
+          <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  <div class="row">
+    <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)">
+
+      <div class="col-sm-6">
+        <input type="text" id="notification" class="form-control myTextButton" formControlName="notification" placeholder="Enter something!">
+      </div>
+      <div class="col-sm-6">
+        <button type="submit" class="btn btn-primary myTextButton">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,87 @@
+<div class="well container" *ngIf="!show">
+  <i class="material-icons">computer</i>
+  <span> NEFT</span>
+  <i class="material-icons">phone_android</i>
+  <span> IMPS</span>
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="onSubmit(form.value)">
+    <div class="row">
+
+      <div class="col-sm-1">
+        <span style="font-weight: bold">12</span>
+        <input type="radio" [(ngModel)]="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="12"
+          (change)="find()">
+      </div>
+      <!-- <div class="col-sm-1" style="font-weight: bold">12</div> -->
+
+      <div class="col-sm-1">
+        <span style="font-weight: bold">363</span>
+        <input type="radio" [(ngModel)]="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="363"
+          (change)="find()">
+      </div>
+
+
+      <div class="col-sm-1">
+        <span style="font-weight: bold">91</span>
+        <input type="radio" [(ngModel)]="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="91"
+          (change)="find()">
+      </div>
+
+
+      <div class="col-sm-1">
+        <span style="font-weight: bold">Full Data</span>
+        <input type="radio" [(ngModel)]="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="0"
+          (change)="find()" checked>
+      </div>
+
+
+    </div>
+  </form>
+  <div>
+    <table class="table" style="width:100%" align="center">
+      <thead>
+        <tr class="table-header">
+          <th>Srno</th>
+          <th>AccType</th>
+          <th>Transfer</th>
+          <th>Name</th>
+          <th>Lrno</th>
+          <th>Payment</th>
+          <th>PmtDate</th>
+          <th>Delete</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let i of canBankPaymentdetailslist;let j=index" class="CanaraBanktr">
+          <td>{{j+1}}</td>
+          <td>{{i.accType}}</td>
+          <td *ngIf="i.transferType=='NEFT'">
+            <i class="material-icons">computer</i>
+          </td>
+          <td *ngIf="i.transferType=='IMPS'">
+            <i class="material-icons">phone_android</i>
+          </td>
+          <td>{{i.nameOfParty}}</td>
+          <td>{{i.lrno}}</td>
+          <td>{{i.payment}}</td>
+          <td>{{i.paymentDate|date:'dd-MM-yyyy'}}</td>
+          <td>
+            <button mat-raised-button (click)="delete(i)" class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button>
+          </td>
+          <td>
+            <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>

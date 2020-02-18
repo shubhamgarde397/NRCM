@@ -1,0 +1,116 @@
+<div *ngIf="!show">
+  <router-outlet></router-outlet>
+</div>
+
+
+<div class="container-fluid home" *ngIf="show">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="header">
+      <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-4">NRCM</div>
+    </div>
+  </div>
+  <div class="row ">
+    <div class="col-xs-12" id="main">
+      <form [formGroup]="myFormGroup" (ngSubmit)="login(myFormGroup)" submitted=true enctype="multipart/form data" action="/" name="myform"
+        id="myform" class="form-horizontal">
+
+        <div class="form-group">
+          <div class="col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-md-offset-4 col-lg-4 col-lg-offset-6 col-xlg-2">
+            <input type="text" class="form-control input" placeholder="Username" formControlName="username" required />
+          </div>
+          <div [hidden]="myFormGroup.controls.username.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2">
+            <input type="password" class="form-control input" placeholder="Password" formControlName="password" required />
+          </div>
+          <div [hidden]="myFormGroup.controls.password.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2">
+            <select id="financialYear" class="form-control" formControlName="financialYear">
+              <option selected>Select Year</option>
+              <option>2018-2019 (April-March)</option>
+              <option>2019-2020 (April-March)</option>
+            </select>
+          </div>
+          <div [hidden]="myFormGroup.controls.financialYear.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2">
+            <i class="material-icons">lock_open</i>
+          </button>
+          <button type="button" (click)="register()" class="btn btn-primary col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2"
+            disabled>
+            <i class="material-icons">fiber_new</i>
+          </button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="main-content" *ngIf="show">
+  <div class="container-fluid align-middle ">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h3>check</h3>
+          </div>
+          <div class="card-body col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <form [formGroup]="myFormGroup" (ngSubmit)="login(myFormGroup)">
+              <div class='row '>
+                <div class="justifier col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <mat-form-field>
+                    <input matInput class="form-control" formControlName="username" placeholder="Username" type="email">
+                  </mat-form-field>
+                  <div class='col-9 form-control-feedback' style="color: red" *ngIf="username.errors && (username.dirty || username.touched )">
+                    <p *ngIf='username.errors.required'>Username is Required</p>
+                  </div>
+                </div>
+              </div>
+              <div class='row '>
+                <div class=" justifier col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                  <mat-form-field>
+                    <input matInput class="form-control" formControlName="password" placeholder="Password" type="password">
+                  </mat-form-field>
+                  <div class='col-9 form-control-feedback' style="color: red" *ngIf="password.errors && (password.dirty || password.touched )">
+                    <p *ngIf='password.errors.required'>Password is Required</p>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <button mat-raised-button class="justifier login-button" type="submit">
+                  <mat-icon>input</mat-icon> Login
+                </button>
+              </div>
+              <h4>
+                forgot
+              </h4>
+              <h6>Login with</h6>
+              <div style="clear: left;">
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->

@@ -1,0 +1,365 @@
+<div>
+  <button class="btn btn-primary" (click)="toggle()">Menu</button>
+  <div *ngIf="!togglemenu">
+    <div class="row">
+      <div class="col-sm-2">
+        <br>
+        <a class="btn btn-warning btn-block" routerLink="BANKDETAILS_HANDLER">Bank Details</a>
+        <a class="btn btn-warning btn-block" routerLink="BANKNAME_HANDLER">Bank Name</a>
+        <a class="btn btn-warning btn-block" routerLink="TRUCKBANKDETAILS_HANDLER">Truck Bank Details</a>
+      </div>
+      <div class="col-sm-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="well container" *ngIf="togglemenu">
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeCanaraNEFTDetailsData(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
+    <!-- Account Number -->
+    <div class="form-group">
+      <div class="row">
+
+        <div class="col-sm-1">
+          <span style="font-weight: bold">12</span>
+          <input type="radio" id="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="12">
+        </div>
+
+
+        <div class="col-sm-1">
+          <span style="font-weight: bold">363</span>
+          <input type="radio" id="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="363">
+        </div>
+
+
+        <div class="col-sm-1">
+          <span style="font-weight: bold">91</span>
+          <input type="radio" id="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="91">
+        </div>
+
+
+        <div class="col-sm-1">
+          <span style="font-weight: bold">5</span>
+          <input type="radio" id="accType" class="form-control radio-buttons" name="accType" formControlName="accType" value="5">
+        </div>
+
+
+        <div [hidden]="myFormGroup.controls.accType.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Account Number -->
+
+    <!-- Transfer Type -->
+    <div class="form-group">
+      <div class="row">
+        <div class="col-sm-2">
+          <label for="transferType"> Transfer Type </label>
+        </div>
+        <div class="row">
+          <div class="col-sm-1" style="font-weight: bold">NEFT</div>
+          <div class="col-sm-1">
+            <input type="radio" id="transferType" class="form-control radio-buttons" name="transferType" formControlName="transferType"
+              value="NEFT">
+          </div>
+
+          <div class="col-sm-1" style="font-weight: bold">IMPS</div>
+          <div class="col-sm-1">
+            <input type="radio" id="transferType" class="form-control radio-buttons" name="transferType" formControlName="transferType"
+              value="IMPS">
+          </div>
+          <div [hidden]="myFormGroup.controls.transferType.valid" class="col-sm-1">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+
+      </div>
+
+    </div>
+
+    <!-- Transfer Type -->
+
+
+
+
+    <!-- DATE-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="accDate"> Date</label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="date" id="accDate" class="form-control" formControlName="accDate">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.accDate.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--DATE -->
+
+        <!-- Amount-->
+        <div class="form-group row">
+
+          <div class="col-xs-2">
+            <label for="amt"> Amount </label>
+          </div>
+          <div class="col-xs-3">
+            <input type="number" id="amt" class="form-control " formControlName="amt">
+    
+          </div>
+    
+          <div class="col-xs-1">
+            <div [hidden]="myFormGroup.controls.amt.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+        <!--Amount-->
+
+    <!--Truckno-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="truckNo"> Truckno </label>
+      </div>
+
+      <div class="col-xs-3">
+        <select id="truckNo" class="form-control " formControlName="truckNo" [(ngModel)]="trucknopart" (change)="findbd()">
+          <option> Truck No</option>
+          <option *ngFor="let j of truckbankdetailslist" value={{j.truckno}}>{{j.truckno}}</option>
+
+        </select>
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.truckNo.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--Truckno-->
+
+    <!--NOP-->
+    <div class="form-group row" *ngIf="showPersonName">
+
+      <div class="col-xs-2">
+        <label for="name"> Name </label>
+      </div>
+      <div class="col-xs-3">
+
+        <select id="name" class="form-control" formControlName="name" [(ngModel)]="namepart" (change)="findbankdetails()">
+          <option disabled>Name</option>
+          <option *ngFor="let i of listofnames" value={{i.accountname}}>{{i.accountname}}</option>
+        </select>
+
+
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.name.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--NOP-->
+
+    <div *ngIf="showBankName">
+      <!--Bank Name-->
+      <div class="form-group row">
+
+        <div class="col-xs-2">
+          <label for="bankName"> Bank Name </label>
+        </div>
+        <div class="col-xs-3">
+
+          <!-- <input type="text" id="bankName" class="form-control " formControlName="bankName"> -->
+
+          <select id="bankName" class="form-control" formControlName="bankName" [(ngModel)]="banknamepart" (change)="finduniquebankdetails()">
+            <option disabled>Bank Name</option>
+            <option *ngFor="let i of bankdetaillist" value={{i.BankName}}>{{i.BankName}}</option>
+          </select>
+
+        </div>
+
+        <div class="col-xs-1">
+          <div [hidden]="myFormGroup.controls.bankName.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+      <!--Bank Name-->
+
+
+      <!--IFSC-->
+      <div class="form-group row">
+
+        <div class="col-xs-2">
+          <label for="IFSC"> IFSC </label>
+        </div>
+        <div class="col-xs-3">
+          <input type="text" id="IFSC" class="form-control " formControlName="IFSC" readonly>
+
+        </div>
+
+        <div class="col-xs-1">
+          <div [hidden]="myFormGroup.controls.IFSC.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+      <!--IFSC-->
+
+
+      <!--Account Number-->
+      <div class="form-group row">
+
+        <div class="col-xs-2">
+          <label for="accno"> Account Number </label>
+        </div>
+        <div class="col-xs-3">
+          <input type="number" id="accno" class="form-control " formControlName="accno" readonly>
+
+        </div>
+
+        <div class="col-xs-1">
+          <div [hidden]="myFormGroup.controls.accno.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+      <!--Account Number-->
+    </div>
+
+
+
+
+
+    <!-- Summary-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="summary"> Summary </label>
+      </div>
+      <div class="col-xs-3">
+        <input type="text" id="summary" class="form-control" value="Advance" formControlName="summary">
+
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.summary.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--Summary-->
+
+
+
+
+
+
+
+
+    <!-- PaymentDATE-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="paymentDate"> Payment Date</label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="date" id="paymentDate" class="form-control" formControlName="paymentDate">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.paymentDate.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--PaymentDATE -->
+
+    <!-- MobileNo-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="mobileNo"> mobileNo </label>
+      </div>
+      <div class="col-xs-3">
+        <input type="number" id="mobileNo" class="form-control " formControlName="mobileNo">
+
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.mobileNo.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--MobileNo-->
+
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-2">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+      <div class="form-group" class="col-xs-2">
+        <button type="button" class="btn btn-primary" (click)="reLoad()">
+          <i class="material-icons">cached</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-2">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">redo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-2">
+        <input type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success" />
+      </div>
+
+    </div>
+  </form>
+</div>

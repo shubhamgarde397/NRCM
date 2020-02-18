@@ -1,0 +1,144 @@
+<!DOCTYPE>
+<html>
+
+<head>
+    <title>Table</title>
+</head>
+
+<body>
+    <script language="javascript" type="text/javascript">
+
+
+        this.data = [
+
+            {
+                'product_key': 100205778829,
+                'side': 'B',
+                'agg_unit': 'HK - BNPASGH - HK - 692',
+                'execution_key': 'HK - NCB190169925 - N - 20190116 - 151518'
+            },
+            {
+                'product_key': 100205778829,
+                'side': 'S',
+                'agg_unit': 'HK - BNPASGH - HK - 692',
+                'execution_key': 'HK - NCB190169926 - N - 20190116 - 151351'
+            },
+            {
+                'product_key': 100208346271,
+                'side': 'B',
+                'agg_unit': 'HK - SUHKHKH - HK - 883',
+                'execution_key': 'HK - CPB190169623 - N - 20190116 - 135146'
+            },
+            {
+                'product_key': 100208346271,
+                'side': 'S',
+                'agg_unit': 'HK - SUHKHKH - HK - 883',
+                'execution_key': 'HK - CPB190169842 - N - 20190116 - 103009'
+            },
+            {
+                'product_key': 100208735950,
+                'side': 'B',
+                'agg_unit': 'HK - MIDLLOH - HK - 78',
+                'execution_key': ' HK - CPB190179945 - N - 20190116 - 185256'
+            },
+            {
+                'product_key': 100208735950,
+                'side': 'S',
+                'agg_unit': 'HK - MIDLLOH - HK - 78',
+                'execution_key': ' HK - CPB190179944 - N - 20190116 - 185822'
+            },
+            {
+                'product_key': 100214232721,
+                'side': 'B',
+                'agg_unit': 'HK - HSBCINT - HK - 15',
+                'execution_key': ' HK - GSB190168650 - N - 20190116 - 154143'
+            },
+            {
+                'product_key': 100214232721,
+                'side': 'B',
+                'agg_unit': 'HK - HSBCINT - HK - 198',
+                'execution_key': 'HK - GSB190168648 - N - 20190116 - 154243'
+            },
+            {
+                'product_key': 100214232721,
+                'side': 'S',
+                'agg_unit': 'HK - HSBCINT - HK - 15',
+                'execution_key': ' HK - GSB190168649 - N - 20190116 - 154243'
+            },
+            {
+                'product_key': 100214232721,
+                'side': 'S',
+                'agg_unit': 'HK - HSBCINT - HK - 198',
+                'execution_key': 'HK - GSB190168651 - N - 20190116 - 154143'
+            },
+            {
+                'product_key': 100215124850,
+                'side': 'B',
+                'agg_unit': 'HK - HSBCHKH - HK - 433',
+                'execution_key': 'HK - NCB190179879 - N - 20190116 - 91225'
+            },
+            {
+                'product_key': 100215124850,
+                'side': 'B',
+                'agg_unit': 'HK - HSBCHKH - HK - 433',
+                'execution_key': 'HK - NCB190179878 - N - 20190116 - 91225'
+            }
+
+        ]
+        function compare(a, b) {
+            if ((a.product_key + a.agg_unit) < (b.product_key + b.agg_unit))
+                return -1;
+            if ((a.product_key + a.agg_unit) > (b.product_key + b.agg_unit))
+                return 1;
+            return 0;
+        }
+
+        data = data.sort(compare);
+
+        document.write("<table border='1'>");
+
+        document.write("<tr style='text - align: right; '>");
+        document.write("<th>product_key</th>");
+        document.write("<th>side</th>");
+        document.write("<th>agg_unit</th>");
+        document.write("<th>execution_key</th>");
+        document.write("</tr>");
+
+        var temp = data[0].product_key;
+        for (var a = 0; a < data.length; a++) {
+            var b = a;
+            if (temp === data[b].product_key) {
+                document.write("<tr>");
+                document.write('<td>', data[a].product_key, '</td>');
+                document.write('<td>', data[b].side, '</td>');
+                document.write('<td>', data[b].agg_unit, '</td>');
+                document.write('<td>', data[b].execution_key, '</td>');
+                document.write("</tr>");
+            } else {
+
+                temp = data[b++].product_key;
+                document.write("</table>");
+                document.write("<table border='1'>");
+                document.write("<tr style='text - align: right; '>");
+                document.write("<th>product_key</th>");
+                document.write("<th>side</th>");
+                document.write("<th>agg_unit</th>");
+                document.write("<th>execution_key</th>");
+                document.write("</tr>");
+                document.write("<tr>");
+                document.write('<td>', data[b].product_key, '</td>');
+                document.write('<td>', data[b].side, '</td>');
+                document.write('<td>', data[b].agg_unit, '</td>');
+                document.write('<td>', data[b].execution_key, '</td>');
+                document.write("</tr>");
+
+            }
+
+        }
+
+        document.write("</table>");
+
+    </script>
+</body>
+
+</html>

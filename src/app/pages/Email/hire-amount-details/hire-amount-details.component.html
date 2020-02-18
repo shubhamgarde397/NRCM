@@ -1,0 +1,164 @@
+<div class="well">
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeGstDetailsData(myFormGroup)" enctype="multipart/form data"
+    action="/">
+    <div class="row">
+      <div class="col-sm-6">
+
+
+        <!-- DATE-->
+        <div class="form-group row">
+
+          <div class="col-sm-1">
+            <label for="date"> Date </label>
+          </div>
+
+          <div class="col-xs-6">
+            <input type="date" class="form-control" formControlName="date">
+          </div>
+
+          <div [hidden]="myFormGroup.controls.date.valid" class="col-xs-1">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+        <!--DATE -->
+        <!--Truckno-->
+        <div class="form-group row">
+
+          <div class="col-xs-1">
+            <label for="truckNo"> Truckno </label>
+          </div>
+
+          <!-- <div class="col-xs-6">
+            <select id="truckNo" class="form-control " formControlName="truckNo">
+              <option disabled selected>Select Truck Number</option>
+              <option *ngFor="let own of ownerdetailslist;let j=index;">{{own.truckno}}</option>
+            </select>
+          </div> -->
+
+
+          <div class="col-xs-6">
+            <input type="text" list="cars" class="form-control" formControlName="truckNo" />
+            <datalist id="cars">
+              <option *ngFor="let own of ownerdetailslist;let j=index;">{{own.truckno}}</option>
+            </datalist>
+          </div>
+
+          <div class="col-xs-1">
+            <div [hidden]="myFormGroup.controls.truckNo.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+        <!--Truckno-->
+
+        <!--LRNO-->
+        <div class="form-group row">
+
+          <div class="col-xs-1">
+            <label for="lrno"> LRNO </label>
+          </div>
+
+          <div class="col-xs-6">
+            <input type="number" id="lrno" class="form-control" formControlName="lrno">
+          </div>
+
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.lrno.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+
+        </div>
+        <!--LRNO-->
+        <!--Hire Amount-->
+        <div class="form-group row">
+
+          <div class="col-xs-1">
+            <label for="amount"> Hire Amount </label>
+          </div>
+
+          <div class="col-xs-6">
+            <input type="text" list="cars" class="form-control" formControlName="amount" />
+            <datalist id="cars">
+              <option *ngFor="let i of hireExtendingMoney">{{i}}</option>
+            </datalist>
+          </div>
+
+          <div class="col-xs-1">
+            <div [hidden]="myFormGroup.controls.amount.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+
+        </div>
+        <!--HireAmount-->
+
+
+      </div>
+      <div class="col-sm-6">
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <input type="text" id="particulars" class="form-control" formControlName="particulars"
+              placeholder="Particulars">
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.particulars.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <select id="dest" class="form-control" formControlName="dest">
+              <option selected>Select Place</option>
+              <option *ngFor="let own of villagelist">{{own.village_name}}</option>
+            </select>
+          </div>
+          <div class="col-xs-3">
+            <div [hidden]="myFormGroup.controls.dest.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+
+      <button type="button" value="Reset Form" (click)="Proceed()" class="btn btn-danger">
+        Proceed
+      </button>
+
+
+    </div>
+  </form>
+
+
+
+</div>

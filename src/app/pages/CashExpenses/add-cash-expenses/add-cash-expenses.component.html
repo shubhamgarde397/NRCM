@@ -1,0 +1,159 @@
+<div>
+  <button class="btn btn-primary" (click)="toggle()">Menu</button>
+  <div *ngIf="!togglemenu">
+    <div class="row">
+      <div class="col-sm-2">
+        <br>
+        <a class="btn btn-warning btn-block" routerLink="REGULAR_TRUCK_HANDLER">TruckNo</a>
+      </div>
+      <div class="col-sm-10">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="well container" *ngIf="togglemenu">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeCashExpenses(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/" name="myform" id="myform">
+
+    <!-- DATE-->
+    <div class="form-group row">
+
+      <div class="col-sm-2">
+        <label for="Date"> Date </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="date" class="form-control " id="Date" formControlName="Date" />
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.Date.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--DATE -->
+
+    <!--Truckno-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="TruckNo"> Truckno </label>
+      </div>
+
+      <div class="col-xs-6">
+        <select id="TruckNo" class="form-control " formControlName="TruckNo">
+          <option> Truck No</option>
+          <option *ngFor="let i of regulartrucklist">{{i.regulartruck}}</option>
+        </select>
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.TruckNo.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--Truckno-->
+
+    <!--Diesel-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="Diesel"> Diesel </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="number" id="Diesel" class="form-control" formControlName="Diesel">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.Diesel.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--Diesel-->
+
+
+    <!--Cash-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="Cash"> Cash </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="number" id="Cash" class="form-control" formControlName="Cash">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.Cash.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--Cash-->
+
+
+    <!--NEFT-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="NEFT"> NEFT </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="number" id="NEFT" class="form-control" formControlName="NEFT">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.NEFT.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--NEFT-->
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-1">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-1">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>

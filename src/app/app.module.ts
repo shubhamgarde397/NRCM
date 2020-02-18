@@ -1,0 +1,82 @@
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { AppComponent } from './app.component';
+import { routes } from './app.route';
+import { RouterModule } from '@angular/router';
+import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { informationComponent } from './pages/information/information.component';
+import { LoginComponent } from './pages/login/login.component';
+import { NavigationComponent } from './pages/navigation/navigation.component';
+import { RegisterComponent } from './pages/register/register.component';
+import { MatFormFieldModule } from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WelcomePageComponent } from './welcome-page/welcome-page.component';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { getFullApi } from './common/services/ApiCalls/getFullApi.service';
+import { handleFunction } from './common/services/functions/handleFunctions';
+import { DrawerComponent } from './drawer/drawer.component';
+import { HandleDataService } from './common/services/Data/handle-data.service';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MainPageComponent } from './pages/main-page/main-page.component';
+import { ChangeComponent } from './pages/Change/change/change.component';
+import { ExcelService } from './common/services/sharedServices/excel.service';
+import { HashLocationStrategy, Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+// PathLocationStrategy,HashLocation
+import {
+  MatButtonModule,
+  MatInputModule,
+  MatRippleModule,
+  MatTooltipModule,
+  MatSelectModule,
+  MatFormField,
+  MatIconModule,
+  MatSidenavModule
+} from '@angular/material';
+import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
+import { SecurityCheckService } from './common/services/Data/security-check.service';
+import { MonthNamesComponent } from './pages/month-names/month-names.component';
+import { PDFComponent } from './pages/pdf/pdf.component';
+import { C2wComponent } from './pages/C2W/c2w/c2w.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    informationComponent,
+    LoginComponent,
+    NavigationComponent,
+    RegisterComponent,
+    WelcomePageComponent,
+    DrawerComponent,
+    PageNotFoundComponent,
+    MainPageComponent,
+    ChangeComponent,
+    WhatsappTowhysappComponent,
+    MonthNamesComponent,
+    PDFComponent,
+    C2wComponent
+  ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    HttpModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule,
+    MatRippleModule,
+    MatTooltipModule,
+    MatSelectModule,
+    MatSidenavModule,
+    MatIconModule,
+    RouterModule.forRoot(routes),
+    Ng4LoadingSpinnerModule.forRoot()
+
+  ],
+  providers: [getFullApi, handleFunction, HandleDataService, ExcelService, { provide: LocationStrategy, useClass: HashLocationStrategy }],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }

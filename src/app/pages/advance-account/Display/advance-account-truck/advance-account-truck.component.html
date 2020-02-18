@@ -1,0 +1,77 @@
+<div class="well container">
+  <div class="row">
+    <div class="form-group col-xs-2" align="center">
+      <select class="form-control " [(ngModel)]="regularpartyname" (change)="find()">
+        <option>Select Name</option>
+        <option *ngFor="let mon of dailydatadetailsnamelist">{{mon.name}}</option>
+      </select>
+    </div>
+
+    <div class="form-group col-xs-2" align="center">
+      <select class="form-control " [(ngModel)]="truckno" (change)="find()">
+        <option>Select Name</option>
+        <option *ngFor="let i of regulartrucklist">{{i.regulartruck}}</option>
+      </select>
+    </div>
+
+    <div class="col-xs-6" style="text-align: center" *ngIf="tabledata">
+      <span style="font-weight:bold;font-size: 40px;"> {{regularpartyname}} : {{truckno}}:{{count}}</span>
+    </div>
+
+  </div>
+  <br/>
+  <div *ngIf="!show && tabledata" class="row">
+    <div class="col-lg-12">
+      <table class="table" style="width:100%" align="center">
+
+        <thead>
+          <tr class="table-header">
+            <th>Srno</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Place</th>
+            <th>Hire Amt</th>
+            <th>Advance</th>
+            <th>Rec. Date</th>
+            <th>Check</th>
+            <th>Delete</th>
+            <th>Update</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+          <tr *ngFor="let i of advancedatadetails;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.Date|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.nop}}</td>
+            <td>{{i.place}}</td>
+            <td>{{i.hamt}}</td>
+            <td>{{i.adv}}</td>
+            <td>{{i.recDate|date:'dd-MM-yyyy'}}</td>
+            <td *ngIf="i.Check">
+              <i class="material-icons checkboxGreen">done</i>
+            </td>
+            <td *ngIf="!i.Check">
+              <i class="material-icons checkboxRed">clear</i>
+            </td>
+            <td>
+              <button mat-raised-button (click)="deleteAdvanceDetails(i._id)" class="btn-danger btn-sm btn-just-icon">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+            <td>
+              <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>

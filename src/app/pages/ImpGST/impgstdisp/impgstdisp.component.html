@@ -1,0 +1,35 @@
+<div class="well" *ngIf="!show">
+    <table class="table" style="width:100%" align="center">
+        <thead>
+            <tr class="table-header">
+                <th>Srno</th>
+                <th>Name</th>
+                <th>GST Number</th>
+                <th>Destination</th>
+                <th>Delete</th>
+                <th>Update</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of impgstdetailslist;let j = index">
+                <td>{{j+1}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.gst}}</td>
+                <td>{{i.dest}}</td>
+                <td>
+                    <button mat-raised-button (click)="deleteImpGSTDetails(i._id)" class="btn-danger btn-sm btn-just-icon">
+                        <i class="material-icons">delete_forever</i>
+                    </button>
+                </td>
+                <td>
+                    <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+                        <i class="material-icons">edit</i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="show">
+    <router-outlet></router-outlet>
+</div>

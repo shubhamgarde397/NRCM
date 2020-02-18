@@ -1,0 +1,15 @@
+.table-header{
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+}
+
+button{
+    border-radius: 100px;
+    
+}
+
+.well{
+    border-color:#f5f5f5;
+    box-shadow: none;
+}

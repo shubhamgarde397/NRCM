@@ -1,0 +1,119 @@
+<div *ngIf="loginV">
+  <router-outlet>
+  </router-outlet>
+</div>
+<div *ngIf="!loginV">
+
+
+  <nav class="navbar navbar-inverse">
+    <div class="container row">
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="NRCM_HOME"></a>
+      </div>
+      <div class="nav navbar-nav">
+        <h1 style="color:wheat;" *ngIf="changed" data-toggle="modal" data-target="#myCrypto">A</h1>
+        <h1 style="color:white;" *ngIf="!changed">A</h1>
+      </div>
+
+    </div>
+
+  </nav>
+
+  <div class="well">
+    <div class="row">
+      <div class="col-sm-3" style="height: 50vh;"><button style="width: 100%;height: 100%;font-size: 10vh;"
+          (click)="login()" class="btn btn-success">Login</button></div>
+      <div class="col-sm-3" style="height: 50vh;"><button style="width: 100%;height: 100%;font-size: 10vh;"
+          (click)="whysapp()" class="btn btn-warning" data-toggle="modal" data-target="#myModal">WhysApp</button></div>
+      <div class="col-sm-3" style="height: 50vh;">
+        <button class="btn btn-warning" (click)="showAlert()">Click for Python</button>
+      </div>
+      <div class="col-sm-3">
+        <div class="row">
+          <div class="col-sm-6">
+            <input (change)="incomingFile($event)" type="file">
+            <input type="text" name='dir' [(ngModel)]="imageFolder">
+            {{imageFolder}}
+          </div>
+          <div class="col-sm-6">
+            <button class="butoncus_sig" id="dnext" (click)="upload()">Submit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myCrypto" role="dialog">
+
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Congratulations
+          <span style="color:wheat;" *ngIf="changed" (click)="clueCall()">!</span>
+          <span style="color:black;" *ngIf="!changed">!</span>
+        </h4>
+      </div>
+      <div class="modal-body">
+        <h1 *ngIf="clue">One Suggesstion refresh the page b4 every click</h1>
+        <h1 *ngIf="clue">EVERY LETTER NEEDS TO BE CAPITAL</h1>
+        <h1 *ngIf="clue">NO NUMBERS</h1>
+        <h1 *ngIf="clue">NO SPECIAL CHARACTERS</h1>
+        <div>
+          <input type="text" #id>
+        </div>
+        <button (click)="getMorse(id.value)">Morse</button>
+      </div>
+      {{morseIS}}
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="container">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h2 class="modal-title">Terms and Conditions</h2>
+        </div>
+        <div class="modal-body">
+
+          <span>
+            <h4>When you upload a text file, we will preserve that file on our server.</h4>
+          </span><br>
+          <span>
+            <h4>Be assured that we will not use it for any kind of data analysis.</h4>
+          </span><br>
+          <span>
+            <h4>Your data will be in safe hands.</h4>
+          </span><br>
+          <span>
+            <h4>All the collected data is cleared every Monday.</h4>
+          </span><br>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
