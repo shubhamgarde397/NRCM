@@ -11,9 +11,13 @@ var fs = require('fs'),
 var msgArr = [];
 
 router.post('/getChat', urlencodedParser, function (req, res) {
-    fs.readFile('chats.json', 'utf8', (err, data) => {
-        if (err) { throw err; }
+    fs.readFile('tp.json', 'utf8', (err, data) => {
+        if (err) {
+            console.log(data);
+            console.log(err);
+        }
         jsonData = JSON.parse(data)
+        // jsonData = data;
         res.send(jsonData);
     })
 });
@@ -39,10 +43,7 @@ router.post('/writeChat', urlencodedParser, function (req, res) {
 
 router.post('/advanced', urlencodedParser, (req, res) => {
     // num = JSON.parse(req.body.numbers);
-    console.log(req.body.numbers);
     num = req.body.numbers;
-
-
     counter = 0;
     arr = [];
     jsonData = []
@@ -52,33 +53,30 @@ router.post('/advanced', urlencodedParser, (req, res) => {
             for (i = 0; i < num.length; i++) {
                 for (j = 0; j < msgArr.slice(counter, counter + num[i]).length; j++) {
                     if (i % 2 == 0) {
-                        arr.push({ 'Name': 'dgdgdg', 'Text': msgArr.slice(counter, counter + num[i])[j] })
+                        arr.push({ 'Name': 'Anuja', 'Text': msgArr.slice(counter, counter + num[i])[j] })
                     }
                     else {
-                        arr.push({ 'Name': 'Sense', 'Text': msgArr.slice(counter, counter + num[i])[j] })
+                        arr.push({ 'Name': 'Shubham', 'Text': msgArr.slice(counter, counter + num[i])[j] })
                     }
                 }
                 counter = counter + num[i];
             }
             setTimeout(() => {
-                fs.readFile('chats.json', 'utf8', (err, data) => {
+                fs.readFile('tp.json', 'utf8', (err, data) => {
                     if (err) { throw err; }
                     jsonData = JSON.parse(data)
                     arr.forEach(element => {
                         jsonData.unshift(element);
                     });
 
-                    fs.writeFile('chats.json', JSON.stringify(jsonData), 'utf8', (err, data) => {
+                    fs.writeFile('tp.json', JSON.stringify(jsonData), 'utf8', (err, data) => {
                         if (err) { throw err; }
                         res.send({ "Status": "done" });
 
                     })
                 })
             }, 5000);
-
-
         })
-
 });
 
 async function creator() {
