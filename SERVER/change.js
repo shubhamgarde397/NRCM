@@ -13,7 +13,7 @@ var collectionName = common_data.table_name.change;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getChangeDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName)
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName)
         .then((result) => {
             res.send(result);
         })
@@ -23,7 +23,7 @@ router.post('/getChangeDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/addChangeDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })

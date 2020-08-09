@@ -25,14 +25,13 @@ export class BCEDisplayComponent implements OnInit {
   nameToBeDisplayed: any;
   tabledata: false;
   public name: string;
-  public dbName;
+  public dbName = 1;
   public count;
   public commonArray;
   constructor(public apiCallservice: ApiCallsService, public router: Router,
     public handleData: HandleDataService,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.commonArray = this.securityCheck.commonArray;
   }
 

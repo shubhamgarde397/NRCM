@@ -12,7 +12,7 @@ var apiCalls = common_data.APICALLS;
 var SORT = common_data.sortBy;
 
 router.post('/getTruckBankDetailsbyid/:trucknoid', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { "truckno": req.params.trucknoid })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { "truckno": req.params.trucknoid })
         .then((result) => {
             res.send(result);
         })
@@ -24,7 +24,7 @@ router.post('/getTruckBankDetailsbyid/:trucknoid', function (req, res) {
 
 
 router.post('/getTruckBankDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, SORT.byTruckNo, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, SORT.byTruckNo, {})
         .then(function (result) {
             res.send(result);
         })
@@ -35,7 +35,7 @@ router.post('/getTruckBankDetails', function (req, res) {
 
 
 router.post('/getTruckBankDetailsbyName', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, SORT.byAccountName, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, SORT.byAccountName, {})
         .then(function (result) {
             res.send(result);
         })
@@ -45,7 +45,7 @@ router.post('/getTruckBankDetailsbyName', function (req, res) {
 });
 
 router.post('/addtruckbankdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then((result) => {
             res.send(result);
         })
@@ -55,7 +55,7 @@ router.post('/addtruckbankdetailsdata', urlencodedParser, function (req, res) {
 });
 
 router.post('/deleteTruckBankdetails/:id', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -65,7 +65,7 @@ router.post('/deleteTruckBankdetails/:id', function (req, res) {
 });
 
 router.put('/updateTruckBankdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "truckno": req.body.truckno,
             "accountname": req.body.accountname,

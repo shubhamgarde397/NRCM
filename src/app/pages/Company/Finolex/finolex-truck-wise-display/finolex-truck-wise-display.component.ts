@@ -35,7 +35,7 @@ export class FinolexTruckWiseDisplayComponent implements OnInit {
   public y = this.now.getFullYear();
   public year = '';
   public month = '';
-  public dbName;
+  public dbName = 1;
   public truckno;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService,
     public handlefunction: handleFunction,
@@ -51,11 +51,10 @@ export class FinolexTruckWiseDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.yearNames = this.securityCheck.yearNames;
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/getOwnerDetails', 1, 0)
+    this.apiCallservice.handleData_New(0, 'ownerDetails/getOwnerDetails', 1, 0)
       .subscribe((res: Response) => {
         this.trucknumbers = res;
       });

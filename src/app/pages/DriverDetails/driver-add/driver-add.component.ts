@@ -36,7 +36,7 @@ export class DriverAddComponent implements OnInit {
 
   storeDriverDetailsData({ value, valid }: { value: driverdata, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New('NRCM_Information', 'driverDetails/adddriverdetailsdata', 1, 0, value)
+    this.apiCallservice.handleData_New(0, 'driverDetails/adddriverdetailsdata', 1, 0, value)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['driverdetails'] = [];

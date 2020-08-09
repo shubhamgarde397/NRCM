@@ -13,7 +13,7 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 
 export class ChangeComponent implements OnInit {
   public newData;
-  public dbName;
+  public dbName = 1;
   public lrdetails;
   constructor(
     public apiCallservice: ApiCallsService,
@@ -21,7 +21,6 @@ export class ChangeComponent implements OnInit {
     public handledata: HandleDataService,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   fetchData = function () {

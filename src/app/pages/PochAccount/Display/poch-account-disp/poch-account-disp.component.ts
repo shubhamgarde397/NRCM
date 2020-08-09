@@ -13,10 +13,10 @@ import { SecurityCheckService } from '../../../../common/services/Data/security-
 @Input()
 export class PochAccountDispComponent implements OnInit {
   public show = false;
-  public dbName;
+  public dbName = 1;
 
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService, public router: Router,
-    public securityCheck: SecurityCheckService) { this.dbName = this.securityCheck.saveFinancialYear; }
+    public securityCheck: SecurityCheckService) { }
 
   fetchData = function () {
     this.apiCallservice.handleData_New(this.dbName, 'pochAccount/getPochDetails', 1, 0)

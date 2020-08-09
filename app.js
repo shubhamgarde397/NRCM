@@ -154,7 +154,7 @@ app.post('/finalMail', urlencodedParser, function (req, res) {
     ];
 
 
-    var receivedDate = mongoFunctions.handleData(req.body.dbName, 0, req.body.FileName, { 'Date': 1 })
+    var receivedDate = mongoFunctions.handleData(0, req.body.FileName, { 'Date': 1 })
         .then((result) => {
             for (i = 0; i < result.length; i++) {
                 sheet1.addRow(result[i]);

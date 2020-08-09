@@ -19,12 +19,11 @@ export class BookingDisplayCountByDateComponent implements OnInit {
   public name;
   public gstdetailslist: any;
   public showcount = false;
-  public dbName;
+  public dbName = 1;
   public commonArray;
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.commonArray = this.securityCheck.commonArray;
   }
 

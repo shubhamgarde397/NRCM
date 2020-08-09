@@ -43,7 +43,7 @@ export class PaymentDetailsComponent implements OnInit {
   public yearNames = ['2019', '2020'];
   public hireExtendingMoney = [];
   public alertBoxSuccess = false;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   public dataArray = [];
   public showTable = false;
@@ -79,7 +79,6 @@ export class PaymentDetailsComponent implements OnInit {
     public excelService: ExcelService,
     public spinner: Ng4LoadingSpinnerService) {
     this.days = this.handlefunction.generateDays();
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {

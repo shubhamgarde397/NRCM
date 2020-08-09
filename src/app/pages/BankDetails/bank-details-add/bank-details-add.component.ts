@@ -28,10 +28,9 @@ export class BankDetailsAddComponent implements OnInit {
 
   public banknameC: string;
   public ifscC: string;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder, public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -55,7 +54,7 @@ export class BankDetailsAddComponent implements OnInit {
 
   storeBankDetailsData({ value, valid }: { value: bankdetails, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New('NRCM_Information', 'bankDetails/addBankDetails', 1, 0, value)
+    this.apiCallservice.handleData_New(0, 'bankDetails/addBankDetails', 1, 0, value)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['BankDetails'] = [];

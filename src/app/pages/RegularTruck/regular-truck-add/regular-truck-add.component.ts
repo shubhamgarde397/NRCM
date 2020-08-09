@@ -37,7 +37,7 @@ export class RegularTruckAddComponent implements OnInit {
 
   storeRegularTruckData({ value, valid }: { value: regulartruck, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/addregulartruckdata', 1, 0, value)
+    this.apiCallservice.handleData_New(0, 'regularTruck/addregulartruckdata', 1, 0, value)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['RegularTruck'] = [];

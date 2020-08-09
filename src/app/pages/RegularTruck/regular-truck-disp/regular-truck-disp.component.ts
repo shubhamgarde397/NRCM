@@ -31,7 +31,7 @@ export class RegularTruckDispComponent implements OnInit {
 
   deleteRegularTruckDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/delregulartruckdata', 1, 0, { id: id })
+      this.apiCallservice.handleData_New(0, 'regularTruck/delregulartruckdata', 1, 0, { id: id })
         .subscribe((response: Response) => {
           this.sec.commonArray['RegularTruck'] = [];
           this.sec.commonArray['RegularTruck'] = response;

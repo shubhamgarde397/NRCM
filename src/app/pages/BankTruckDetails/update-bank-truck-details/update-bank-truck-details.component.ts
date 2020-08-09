@@ -44,7 +44,7 @@ export class UpdateBankTruckDetailsComponent implements OnInit {
     const truckno = data.value.truckno;
     const accountname = data.value.accountname;
     this.arr = { truckno, accountname, id };
-    this.apiCallservice.handleData_New('NRCM_Information', 'truckBankDetails/updateTruckBankdetailsdata', 3, 0, this.arr)
+    this.apiCallservice.handleData_New(0, 'truckBankDetails/updateTruckBankdetailsdata', 3, 0, this.arr)
       .subscribe((response: Response) => {
         this.show = !this.show;
         this._location.back();

@@ -18,13 +18,12 @@ export class DailyDataDailyComponent implements OnInit {
   public dailydatadetailsnamelist;
   public DailyDataPartyName: string;
   public showdate: boolean;
-  public dbName;
+  public dbName = 1;
   constructor(
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
     public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() { this.find(); }

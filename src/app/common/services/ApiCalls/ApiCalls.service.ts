@@ -27,97 +27,6 @@ export class ApiCallsService {
   public authSuccess = this.authService.asObservable();
   public headerPost: HttpHeaders;
   public URL = '';
-  truck = [
-    {
-      "truckNo": "MH12HH2790",
-      "name": "Shubham",
-      "pan": "QQQQQ1111Q",
-      "village": "pune",
-      "mobileOwner": [
-        "9766",
-        "7070",
-        "61"
-      ]
-    },
-    {
-      "truckNo": "MH12AS1111",
-      "name": "ABC",
-      "pan": "QQQQQ1111Q",
-      "village": "pune",
-      "mobileOwner": [
-        "9766",
-        "7070",
-        "61"
-      ]
-    },
-    {
-      "truckNo": "MH12HH2791",
-      "name": "JKL",
-      "pan": "QQQQQ1111Q",
-      "village": "pune",
-      "mobileOwner": [
-        "9766",
-        "7070",
-        "61"
-      ]
-    }
-  ];
-  driver = [
-    {
-      "truckNo": "MH12HH2790",
-      "name": "A",
-      "phone": [
-        "11111111",
-        "222222222",
-        "333333333"
-      ]
-    },
-    {
-      "truckNo": "MH12HH2790",
-      "name": "B",
-      "phone": [
-        "11111111",
-        "222222222",
-        "333333333"
-      ]
-    },
-    {
-      "truckNo": "MH12HH2791",
-      "name": "C",
-      "phone": [
-        "11111111",
-        "222222222",
-        "333333333"
-      ]
-    },
-    {
-      "truckNo": "MH12HH2791",
-      "name": "D",
-      "phone": [
-        "11111111",
-        "222222222",
-        "333333333"
-      ]
-    },
-    {
-      "truckNo": "MH12AS1111",
-      "name": "D",
-      "phone": [
-        "11111111",
-        "222222222",
-        "333333333"
-      ]
-    },
-    {
-      "truckNo": "MH12AS1111",
-      "name": "D",
-      "phone": [
-        "11111111",
-        "222222222",
-        "333333333"
-      ]
-    }
-  ]
   constructor(public http: Http, public httpClient: HttpClient, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
   handleAWS(api, formBody = {}) {
     this.getAuthenticatedUser().getSession((err, session) => {
@@ -136,20 +45,17 @@ export class ApiCallsService {
     })
 
   }
-  handleData_New(dbName, api, apiCall, noOfIDs: number, formBody = {}, id1?, id2?, id3?) {
+  handleData_New(code, api, apiCall, noOfIDs: number, formBody = {}, id1?, id2?, id3?) {
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
+    formBody['code'] = code;
     switch (noOfIDs) {
       case 0: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs); break;
       case 1: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1); break;
       case 2: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1, id2); break;
       case 3: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1, id2, id3); break;
     }
-    if (Object.keys(formBody).length === 0) {
-      formBody['dbName'] = dbName;
-    } else if (Object.keys(formBody).length > 0) {
-      formBody['dbName'] = dbName;
-    }
+
     switch (apiCall) {
       case 0: return this.http.get(this.URL).pipe(map((res) => res));
       case 1: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
@@ -159,8 +65,8 @@ export class ApiCallsService {
     }
   }
 
-  handleData_New_Temp(api, apiCall, formBody = {}, dbName) {
-    formBody['code'] = dbName;
+  handleData_New_Temp(api, apiCall, formBody = {}, code) {
+    formBody['code'] = code;
     this.getAuthenticatedUser().getSession((err, session) => {
       const headers = {
         headers: new Headers({ 'Authorization': session.getIdToken().getJwtToken() })
@@ -196,7 +102,7 @@ export class ApiCallsService {
       // case 0: return this.http.post(`${'http://18.219.49.104:5000/' + api}`, formBody).pipe(map((res: any) => res));
     }
   }
-  signIn(username: string, password: string, year): void {
+  signIn(username: string, password: string): void {
     const authData = {
       Username: username,
       Password: password
@@ -212,7 +118,6 @@ export class ApiCallsService {
       onSuccess(res: CognitoUserSession) {
         console.log(res);
         that.setter('true');
-        that.security.saveYear(year);
         that.security.AUTH = true;
         that.router.navigate(['Navigation']);
       }, onFailure(err) {

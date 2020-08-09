@@ -33,13 +33,12 @@ export class BookingdispComponent implements OnInit {
   nameToBeDisplayed: any;
   tabledata: false;
   public name: string;
-  public dbName;
+  public dbName = 1;
   public commonArray;
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.commonArray = this.securityCheck.commonArray;
   }
 

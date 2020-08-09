@@ -15,12 +15,11 @@ export class DailyDataDispComponent implements OnInit {
   public show = false;
   public found;
   public tabledata = false;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService,
     public router: Router,
     public handledata: HandleDataService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {

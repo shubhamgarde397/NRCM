@@ -35,14 +35,13 @@ export class FinolexdisplayComponent implements OnInit {
   public current_count: string;
   public year = '';
   public month = '';
-  public dbName;
+  public dbName = 1;
 
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public securityCheck: SecurityCheckService) { }
 
   ngOnInit() {
     this.yearNames = this.securityCheck.yearNames;
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
   }

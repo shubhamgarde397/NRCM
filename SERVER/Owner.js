@@ -13,7 +13,7 @@ var apiCalls = common_data.APICALLS;
 var readline = require('readline');
 var fs = require('fs');
 router.put('/updatelambda', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "lambda": req.body.lambda,
             "truckno": req.body.truckno,
@@ -24,7 +24,7 @@ router.put('/updatelambda', urlencodedParser, function (req, res) {
         req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { truckno: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { truckno: 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -45,7 +45,7 @@ router.get('/LRCountAll', function (req, res) {
 });
 
 router.post('/getOwnerDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'truckno': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'truckno': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -55,7 +55,7 @@ router.post('/getOwnerDetails', function (req, res) {
 });
 
 router.post('/getOwnerDetailsbyid/:trucknoid', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { "truckno": req.params.trucknoid })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { "truckno": req.params.trucknoid })
         .then((result) => {
             res.send(result);
         })
@@ -65,17 +65,17 @@ router.post('/getOwnerDetailsbyid/:trucknoid', function (req, res) {
 });
 
 router.post('/addownerdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'ownerdetails', { truckno: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, 'ownerdetails', { truckno: 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
         })
         .catch((err) => {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'ownerdetails', { truckno: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, 'ownerdetails', { truckno: 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
@@ -83,10 +83,10 @@ router.post('/addownerdetailsdata', urlencodedParser, function (req, res) {
 });
 
 router.post('/deleteownerdetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'ownerdetails', { truckno: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, 'ownerdetails', { truckno: 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -97,7 +97,7 @@ router.post('/deleteownerdetails', urlencodedParser, function (req, res) {
 });
 
 router.put('/updateownerdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "truckno": req.body.truckno,
             "oname": req.body.oname,
@@ -107,7 +107,7 @@ router.put('/updateownerdetailsdata', urlencodedParser, function (req, res) {
         req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { truckno: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { truckno: 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -138,11 +138,11 @@ router.post('/bulkAdd', (req, res) => {
 
                     fs.writeFile('tp.json', JSON.stringify(jsonData), 'utf8', (err, data) => {
                         if (err) { throw err; }
-                        mongoFunctions.handleData('NRCM_Information', 10, collectionName, {}, {}, jsonData)
+                        mongoFunctions.handleData(10, collectionName, {}, {}, jsonData)
                             .then(function (result) {
 
                                 index = 0;
-                                var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'ownerdetails', { truckno: 1 })
+                                var receivedData = mongoFunctions.handleData(apiCalls.GET, 'ownerdetails', { truckno: 1 })
                                     .then((result1) => {
                                         res.send(result1);
                                     });

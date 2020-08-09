@@ -18,7 +18,7 @@ var API = common_data.APIS.GST;
 date = new Date();
 
 router.post('/getturnbookdata', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { 'date': req.body.today })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { 'date': req.body.today })
         .then(function (result) {
             res.send(result);
         })
@@ -28,7 +28,7 @@ router.post('/getturnbookdata', function (req, res) {
 });
 
 router.post('/addturnbookdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result1) {
             res.send(result1)
         })
@@ -39,7 +39,7 @@ router.post('/addturnbookdata', urlencodedParser, function (req, res) {
 
 
 router.post('/delturnbookdata', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result1) {
             res.send(result);
         })
@@ -49,7 +49,7 @@ router.post('/delturnbookdata', function (req, res) {
 });
 
 router.put('/updateturnbookdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "date": req.body.date,
             "truckNo": req.body.truckNo,

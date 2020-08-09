@@ -26,11 +26,10 @@ export class CanBankNeftDispComponent implements OnInit {
   public arr;
   public copy: any;
   public myFormGroup: FormGroup;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   find() {

@@ -37,7 +37,7 @@ export class HireAmountDetailsComponent implements OnInit, AfterViewInit {
   public yearNames = ['2019', '2020'];
   public hireExtendingMoney = [];
   public alertBoxSuccess = false;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   ownerdetailslist = [];
   villagelist = [];
@@ -53,7 +53,6 @@ export class HireAmountDetailsComponent implements OnInit, AfterViewInit {
     public router: Router,
     public ds: ObsServiceService) {
     this.days = this.handlefunction.generateDays();
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
 

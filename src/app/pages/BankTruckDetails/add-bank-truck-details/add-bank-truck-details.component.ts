@@ -33,7 +33,7 @@ export class AddBankTruckDetailsComponent implements OnInit {
 
   storeTruckBankDetailsData({ value, valid }: { value: truckbank, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New('NRCM_Information', 'truckBankDetails/addtruckbankdetailsdata', 1, 0, value)
+    this.apiCallservice.handleData_New(0, 'truckBankDetails/addtruckbankdetailsdata', 1, 0, value)
       .subscribe(x => { alert('Data entered Successfully'); });
   }
 

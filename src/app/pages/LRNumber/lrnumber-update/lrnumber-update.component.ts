@@ -25,7 +25,7 @@ export class LRNumberUpdateComponent implements OnInit {
   public myFormGroup: FormGroup;
   public submitted = false;
   public response: any;
-  public dbName;
+  public dbName = 1;
 
   constructor(
     public handledata: HandleDataService,
@@ -33,7 +33,6 @@ export class LRNumberUpdateComponent implements OnInit {
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -53,21 +52,21 @@ export class LRNumberUpdateComponent implements OnInit {
   }
 
   find() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'Village/getVillageData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'Village/getVillageData', 1, 0)
       .subscribe((res: Response) => {
         this.villagelist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'gstDetails/getGSTDetails', 1, 0)
+    this.apiCallservice.handleData_New(0, 'gstDetails/getGSTDetails', 1, 0)
       .subscribe((res: Response) => {
         this.gstdetailslist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'lrno/LRCountAll', 1, 0)
+    this.apiCallservice.handleData_New(0, 'lrno/LRCountAll', 1, 0)
       .subscribe((res: Response) => {
         this.fullCount = res;
       });
-    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/getOwnerDetails', 1, 0)
+    this.apiCallservice.handleData_New(0, 'ownerDetails/getOwnerDetails', 1, 0)
       .subscribe((res: Response) => {
         this.ownerdetailslist = res;
       });

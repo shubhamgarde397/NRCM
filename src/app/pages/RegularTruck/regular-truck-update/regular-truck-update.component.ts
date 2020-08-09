@@ -39,7 +39,7 @@ export class RegularTruckUpdateComponent implements OnInit {
     const regulartruck = data.value.regulartruck;
     const id = this.handledata.Data._id;
     this.arr = { regulartruck, id };
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/updateregulartruckdata', 3, 0, this.arr)
+    this.apiCallservice.handleData_New(0, 'regularTruck/updateregulartruckdata', 3, 0, this.arr)
       .subscribe((response: Response) => {
         this.sec.commonArray['RegularTruck'] = [];
         this.sec.commonArray['RegularTruck'] = response;

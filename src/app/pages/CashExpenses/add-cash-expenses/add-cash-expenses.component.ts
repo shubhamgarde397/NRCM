@@ -29,10 +29,9 @@ export class AddCashExpensesComponent implements OnInit {
   public regulartrucklist: any;
 
   public togglemenu = true;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -49,7 +48,7 @@ export class AddCashExpensesComponent implements OnInit {
   }
 
   fetchBasic() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/getregulartruckdata', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularTruck/getregulartruckdata', 1, 0)
       .subscribe((res: Response) => {
         this.regulartrucklist = res;
       });

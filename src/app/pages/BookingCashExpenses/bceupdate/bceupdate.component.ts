@@ -38,7 +38,7 @@ export class BCEUpdateComponent implements OnInit {
   public place: string;
   public hireAmount: string;
   public Payment: string;
-  public dbName;
+  public dbName = 1;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -46,7 +46,6 @@ export class BCEUpdateComponent implements OnInit {
     public apiCallservice: ApiCallsService,
     public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -74,16 +73,16 @@ export class BCEUpdateComponent implements OnInit {
   }
 
   fetchBasic() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/getOwnerDetails', 1, 0)
+    this.apiCallservice.handleData_New(0, 'ownerDetails/getOwnerDetails', 1, 0)
       .subscribe((res: Response) => {
         this.ownerdetailslist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'gstDetails/getGSTDetails', 1, 0)
+    this.apiCallservice.handleData_New(0, 'gstDetails/getGSTDetails', 1, 0)
       .subscribe((res: Response) => {
         this.gstdetailslist = res;
       });
-    this.apiCallservice.handleData_New('NRCM_Information', 'Village/getVillageData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'Village/getVillageData', 1, 0)
       .subscribe((res: Response) => {
         this.villagelist = res;
       });

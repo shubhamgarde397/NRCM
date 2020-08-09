@@ -13,7 +13,7 @@ var SORT = common_data.sortBy;
 var API = common_data.APIS.VILLAGE;
 
 router.post(API.GET.get, function (req, res, next) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, SORT.byVillageName)
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, SORT.byVillageName)
         .then((result) => {
             res.send(result);
         })
@@ -23,24 +23,24 @@ router.post(API.GET.get, function (req, res, next) {
 });
 
 router.post(API.POST.add, urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
 
             res.send(result);
         })
         .catch((err) => {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, SORT.byVillageName)
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, SORT.byVillageName)
                 .then((result1) => {
                     res.send(result1);
                 });
         });
 });
 router.post(API.DELETE.delete, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, SORT.byVillageName)
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, SORT.byVillageName)
                 .then((result) => {
                     res.send(result);
                 });
@@ -50,14 +50,14 @@ router.post(API.DELETE.delete, function (req, res) {
         });
 });
 router.put(API.UPDATE.update, urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "village_name": req.body.village_name
         }
         , req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, SORT.byVillageName)
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, SORT.byVillageName)
                 .then((result) => {
                     res.send(result);
                 });

@@ -12,7 +12,7 @@ var collectionName = common_data.table_name.regularparty;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getRegularPartyData', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'name': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'name': 1 })
         .then(function (result) {
             res.send(result);
         })
@@ -22,13 +22,13 @@ router.post('/getRegularPartyData', urlencodedParser, function (req, res) {
 });
 
 router.post('/addregularpartydata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result1) {
 
         })
         .catch((err) => {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { name: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { name: 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
@@ -36,10 +36,10 @@ router.post('/addregularpartydata', urlencodedParser, function (req, res) {
 });
 
 router.post('/deleteregulardatadetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { name: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { name: 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -50,10 +50,10 @@ router.post('/deleteregulardatadetails', urlencodedParser, function (req, res) {
 });
 
 router.put('/updateregularparty', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {}, { "name": req.body.name }, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {}, { "name": req.body.name }, req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { name: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { name: 1 })
                 .then((result) => {
                     console.log(result);
                     res.send(result);

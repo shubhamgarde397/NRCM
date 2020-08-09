@@ -52,7 +52,7 @@ export class OddispComponent implements OnInit {
       'mobileno': data.mobileno,
     }
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/updatelambda', 3, 0, arr)
+    this.apiCallservice.handleData_New(0, 'ownerDetails/updatelambda', 3, 0, arr)
       .subscribe((response: any) => {
         this.sec.commonArray['ownerdetails'] = [];
         this.sec.commonArray['ownerdetails'] = response;
@@ -72,7 +72,7 @@ export class OddispComponent implements OnInit {
 
   deleteOwnerDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/deleteownerdetails', 1, 0, { id: id })
+      this.apiCallservice.handleData_New(0, 'ownerDetails/deleteownerdetails', 1, 0, { id: id })
         .subscribe((response: Response) => {
           this.sec.commonArray['ownerdetails'] = [];
           this.sec.commonArray['ownerdetails'] = response;

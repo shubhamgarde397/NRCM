@@ -60,7 +60,7 @@ export class NavigationComponent implements OnInit {
     console.log('hit');
 
     this.spin.show();
-    this.apiCallservice.handleData_New('NRCM_Information', 'Information/getCommonInformation', 1, 0)
+    this.apiCallservice.handleData_New(0, 'Information/getCommonInformation', 1, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray = [];
         this.securityCheck.commonArray = res;

@@ -14,7 +14,7 @@ var collectionName = common_data.table_name.CanaraBankNEFT;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getCanBankNEFTDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'accDate': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'accDate': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -24,7 +24,7 @@ router.post('/getCanBankNEFTDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/getCanBankNEFTDetailsByID/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'accDate': 1 }, { 'accType': req.params.id })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'accDate': 1 }, { 'accType': req.params.id })
         .then((result) => {
             res.send(result);
         })
@@ -35,7 +35,7 @@ router.post('/getCanBankNEFTDetailsByID/:id', urlencodedParser, function (req, r
 
 
 router.post('/getCanBankNEFTDetailsByDate/:date', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'accDate': 1 }, { 'accDate': req.params.date })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'accDate': 1 }, { 'accDate': req.params.date })
         .then((result) => {
             res.send(result);
         })
@@ -46,7 +46,7 @@ router.post('/getCanBankNEFTDetailsByDate/:date', urlencodedParser, function (re
 
 router.post('/getCanBankNEFTDetailsToday', urlencodedParser, function (req, res) {
     var today = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'accDate': 1 }, { 'accDate': today })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'accDate': 1 }, { 'accDate': today })
         .then((result) => {
             res.send(result);
         })
@@ -56,7 +56,7 @@ router.post('/getCanBankNEFTDetailsToday', urlencodedParser, function (req, res)
 });
 
 router.post('/getCanBankNEFTDetailsByTruck/:trucknopart', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'accDate': 1 }, { 'truckNo': req.params.trucknopart })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'accDate': 1 }, { 'truckNo': req.params.trucknopart })
         .then((result) => {
             res.send(result);
         })
@@ -67,7 +67,7 @@ router.post('/getCanBankNEFTDetailsByTruck/:trucknopart', urlencodedParser, func
 
 
 router.post('/getCanBankNEFTDetailsByTruckNo/:date/:truckNo', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'accDate': 1 }, { $and: [{ 'accDate': req.params.date }, { 'truckNo': req.params.truckNo }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'accDate': 1 }, { $and: [{ 'accDate': req.params.date }, { 'truckNo': req.params.truckNo }] })
         .then((result) => {
             res.send(result);
         })
@@ -78,7 +78,7 @@ router.post('/getCanBankNEFTDetailsByTruckNo/:date/:truckNo', urlencodedParser, 
 
 
 router.post('/getCanBankNEFTTrucks', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DISTINCT, 'TruckBankDetails', { 'truckno': 1 }, {}, {}, {}, 'truckno')
+    var receivedData = mongoFunctions.handleData(apiCalls.DISTINCT, 'TruckBankDetails', { 'truckno': 1 }, {}, {}, {}, 'truckno')
         .then((result) => {
             res.send(result);
         })
@@ -88,7 +88,7 @@ router.post('/getCanBankNEFTTrucks', urlencodedParser, function (req, res) {
 });
 
 router.post('/addCanBankNEFTDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then((result) => {
             res.send(result);
         })
@@ -98,7 +98,7 @@ router.post('/addCanBankNEFTDetails', urlencodedParser, function (req, res) {
 });
 
 router.delete('/delCanBankNEFTDetails/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -109,7 +109,7 @@ router.delete('/delCanBankNEFTDetails/:id', urlencodedParser, function (req, res
 
 router.put('/updateCanBankNEFTDetails', urlencodedParser, function (req, res) {
 
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "accType": req.body.accType,
             "accDate": req.body.accDate,

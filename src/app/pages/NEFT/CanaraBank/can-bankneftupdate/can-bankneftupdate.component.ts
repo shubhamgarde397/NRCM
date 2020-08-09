@@ -34,7 +34,7 @@ export class CanBANKNEFTUpdateComponent implements OnInit {
   public myFormGroup: FormGroup;
   public truckNo;
   public bankName;
-  public dbName;
+  public dbName = 1;
   public submitted = false;
   constructor(
     public handledata: HandleDataService,
@@ -42,7 +42,6 @@ export class CanBANKNEFTUpdateComponent implements OnInit {
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -72,14 +71,14 @@ export class CanBANKNEFTUpdateComponent implements OnInit {
   }
 
   fetchTruckBankDetails() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'truckBankDetails/getTruckBankDetails', 1, 0).
+    this.apiCallservice.handleData_New(0, 'truckBankDetails/getTruckBankDetails', 1, 0).
       subscribe((res: Response) => {
         this.truckbankdetailslist = res;
       });
   }
 
   findbd() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'truckBankDetails/getTruckBankDetailsbyid', 1, 1, {}, this.trucknopart)
+    this.apiCallservice.handleData_New(0, 'truckBankDetails/getTruckBankDetailsbyid', 1, 1, {}, this.trucknopart)
       .subscribe((res: Response) => {
         this.listofnames = res;
         this.myFormGroup.patchValue({ bankName: '' });
@@ -90,7 +89,7 @@ export class CanBANKNEFTUpdateComponent implements OnInit {
   }
 
   findbankdetails() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'bankDetails/getBankDetailsbyid', 1, 1, {}, this.namepart)
+    this.apiCallservice.handleData_New(0, 'bankDetails/getBankDetailsbyid', 1, 1, {}, this.namepart)
       .subscribe((res: Response) => {
         this.bankdetaillist = res;
         this.showBankName = true;
@@ -98,7 +97,7 @@ export class CanBANKNEFTUpdateComponent implements OnInit {
   }
 
   finduniquebankdetails() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'bankDetails/getUniqueBankDetailsbyid',
+    this.apiCallservice.handleData_New(0, 'bankDetails/getUniqueBankDetailsbyid',
       1, 2, {}, this.banknamepart, this.namepart)
       .subscribe((res: Response) => {
         this.bankuniqudetaillist = res;

@@ -22,7 +22,7 @@ export class DailyDataTruckWiseComponent implements OnInit {
   public newAuthor: any;
   public nameToBeDisplayed: any;
   public tabledata: false;
-  public dbName;
+  public dbName = 1;
   public regularpartyname;
   public truckno;
   constructor(
@@ -31,16 +31,15 @@ export class DailyDataTruckWiseComponent implements OnInit {
     public handledata: HandleDataService,
     public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/getRegularPartyData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularParty/getRegularPartyData', 1, 0)
       .subscribe((res: Response) => {
         this.dailydatadetailsnamelist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/getregulartruckdata', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularTruck/getregulartruckdata', 1, 0)
       .subscribe((res: Response) => {
         this.regulartrucklist = res;
       });

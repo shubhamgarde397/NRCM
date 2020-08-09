@@ -13,7 +13,7 @@ var collectionName = common_data.table_name.CanaraBankPayment;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getCanBankPaymentDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'paymentDate': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'paymentDate': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -23,7 +23,7 @@ router.post('/getCanBankPaymentDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/getCanBankPaymentDetailsByID/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'paymentDate': 1 }, { 'accType': req.params.id })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'paymentDate': 1 }, { 'accType': req.params.id })
         .then((result) => {
             res.send(result);
         })
@@ -33,7 +33,7 @@ router.post('/getCanBankPaymentDetailsByID/:id', urlencodedParser, function (req
 });
 
 router.post('/getCanBankPaymentDetailsByParty/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'paymentDate': 1 }, { 'nameOfParty': req.params.name })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'paymentDate': 1 }, { 'nameOfParty': req.params.name })
         .then((result) => {
             res.send(result);
         })
@@ -44,7 +44,7 @@ router.post('/getCanBankPaymentDetailsByParty/:name', urlencodedParser, function
 
 
 router.post('/deleteCanBankPaymentDetails/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -54,7 +54,7 @@ router.post('/deleteCanBankPaymentDetails/:id', urlencodedParser, function (req,
 });
 
 router.post('/addCanBankPaymentDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then((result) => {
             res.send(result);
         })
@@ -64,7 +64,7 @@ router.post('/addCanBankPaymentDetails', urlencodedParser, function (req, res) {
 });
 
 router.put('/updateCanBankPaymentDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "accType": req.body.accType,
             "transferType": req.body.transferType,

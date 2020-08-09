@@ -44,14 +44,13 @@ export class CanBankPaymentAddComponent implements OnInit {
   public showBankNameIFSC: boolean;
   public togglemenu = true;
   public dataGone = false;
-  public dbName;
+  public dbName = 1;
   constructor(
     public apiCallservice: ApiCallsService,
     public formBuilder: FormBuilder,
     public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -69,7 +68,7 @@ export class CanBankPaymentAddComponent implements OnInit {
   }
 
   fetchParty() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'gstDetails/getGSTDetails', 1, 0).
+    this.apiCallservice.handleData_New(0, 'gstDetails/getGSTDetails', 1, 0).
       subscribe((res: Response) => {
         this.parties = res;
       });

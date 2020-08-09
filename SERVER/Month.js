@@ -21,7 +21,7 @@ router.put('/updateMonth', urlencodedParser, function (req, res) {
         changeValue = 1;
     }
     console.log(changeValue);
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "monthName": req.body.monthName,
             "status": changeValue
@@ -29,7 +29,7 @@ router.put('/updateMonth', urlencodedParser, function (req, res) {
         , req.body._id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName)
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName)
                 .then((result) => {
                     res.send(result);
                 });

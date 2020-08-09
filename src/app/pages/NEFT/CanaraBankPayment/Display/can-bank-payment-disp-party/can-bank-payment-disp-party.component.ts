@@ -18,15 +18,14 @@ export class CanBankPaymentDispPartyComponent implements OnInit {
   public showcount;
   public moreDetailsOfTruck = true;
   public bookingnamelist;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'gstDetails/getGSTDetails', 1, 0).
+    this.apiCallservice.handleData_New(0, 'gstDetails/getGSTDetails', 1, 0).
       subscribe((res: Response) => {
         this.parties = res;
       });

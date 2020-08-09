@@ -19,7 +19,7 @@ export class AdvanceAccountPartyDisplayComponent implements OnInit {
   public dailydatadetailsnamelist: string;
   public tabledata = false;
   public regularpartylist: any;
-  public dbName;
+  public dbName = 1;
   public nopid;
   public commonArray;
   constructor(
@@ -28,7 +28,6 @@ export class AdvanceAccountPartyDisplayComponent implements OnInit {
     public handledata: HandleDataService,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {

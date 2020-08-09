@@ -31,7 +31,7 @@ export class BankNameDispComponent implements OnInit {
 
   delete = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New('NRCM_Information', 'bankName/deleteBankNamedetails', 1, 0, { id: id })
+      this.apiCallservice.handleData_New(0, 'bankName/deleteBankNamedetails', 1, 0, { id: id })
         .subscribe((response: Response) => {
           this.sec.commonArray['BankNames'] = [];
           this.sec.commonArray['BankNames'] = response;

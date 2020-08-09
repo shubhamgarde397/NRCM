@@ -22,7 +22,7 @@ export class DispBankTruckDetailsComponent implements OnInit {
   ) { }
 
   fetchData = function () {
-    this.apiCallservice.handleData_New('NRCM_Information', 'truckBankDetails/getTruckBankDetails', 1, 0).
+    this.apiCallservice.handleData_New(0, 'truckBankDetails/getTruckBankDetails', 1, 0).
       subscribe((res: Response) => {
         this.truckbankdetailslist = res;
       });
@@ -30,7 +30,7 @@ export class DispBankTruckDetailsComponent implements OnInit {
 
   deleteBankTruckDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New('NRCM_Information', 'truckBankDetails/deleteTruckBankdetails', 1, 1, {}, id)
+      this.apiCallservice.handleData_New(0, 'truckBankDetails/deleteTruckBankdetails', 1, 1, {}, id)
         .subscribe((response: Response) => {
           this.fetchData();
         });

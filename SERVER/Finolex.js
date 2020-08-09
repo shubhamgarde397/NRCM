@@ -10,7 +10,7 @@ router.use(bodyParser.json());
 var apiCalls = common_data.APICALLS;
 
 router.post('/getFinolexDetails/:tab', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.tab, { 'Date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.tab, { 'Date': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -20,7 +20,7 @@ router.post('/getFinolexDetails/:tab', function (req, res) {
 });
 
 router.post('/getFinolexDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.body.tab, { 'Date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.body.tab, { 'Date': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -30,7 +30,7 @@ router.post('/getFinolexDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/getFinolexDetailsTruckWiseCount/:tab/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, req.params.tab, { 'Date': 1 }, { 'truckno': req.params.truckno })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.tab, { 'Date': 1 }, { 'truckno': req.params.truckno })
         .then((result) => {
             res.send(result);
         })
@@ -40,7 +40,7 @@ router.post('/getFinolexDetailsTruckWiseCount/:tab/:truckno', urlencodedParser, 
 });
 
 router.post('/getFinolexDetailsAllTrucks/:tab/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.tab, { 'Date': 1 }, { 'truckno': req.params.truckno })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.tab, { 'Date': 1 }, { 'truckno': req.params.truckno })
         .then((result) => {
             res.send(result);
         })
@@ -50,7 +50,7 @@ router.post('/getFinolexDetailsAllTrucks/:tab/:truckno', urlencodedParser, funct
 });
 
 router.post('/getFinolexDetailsPartyWise/:tab/:partyname', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.tab, { 'Date': 1 }, { 'nop': req.params.partyname })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.tab, { 'Date': 1 }, { 'nop': req.params.partyname })
         .then((result) => {
             res.send(result);
         })
@@ -60,7 +60,7 @@ router.post('/getFinolexDetailsPartyWise/:tab/:partyname', function (req, res) {
 });
 
 router.post('/getFinolexDetailsPartyWiseCount/:tab/:partyname', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, req.params.tab, { 'Date': 1 }, { 'nop': req.params.partyname })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.tab, { 'Date': 1 }, { 'nop': req.params.partyname })
         .then((result) => {
             res.send(result);
         })
@@ -70,7 +70,7 @@ router.post('/getFinolexDetailsPartyWiseCount/:tab/:partyname', function (req, r
 });
 
 router.post('/countFinolexDetails/:tab', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, req.params.tab)
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.tab)
         .then((result) => {
             res.send(result);
         })
@@ -80,7 +80,7 @@ router.post('/countFinolexDetails/:tab', function (req, res) {
 });
 
 router.post('/delFinolexdetailsdata/:id/:data', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, req.params.data, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, req.params.data, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -90,7 +90,7 @@ router.post('/delFinolexdetailsdata/:id/:data', function (req, res) {
 });
 
 router.put('/updatefinolexdetailsdata/:data', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, req.params.data, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, req.params.data, {}, {},
         {
             "Date": req.body.ndate,
             "lrno": req.body.lrno,

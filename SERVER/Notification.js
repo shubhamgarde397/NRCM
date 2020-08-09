@@ -13,7 +13,7 @@ var collectionName = common_data.table_name.Notifications;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getNotifications', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName)
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName)
         .then(function (result) {
             res.send(result);
         })
@@ -23,7 +23,7 @@ router.post('/getNotifications', urlencodedParser, function (req, res) {
 });
 
 router.post('/countNotifications', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, {}, { "check": false })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, {}, { "check": false })
         .then(function (result) {
 
             res.send(result);
@@ -34,7 +34,7 @@ router.post('/countNotifications', urlencodedParser, function (req, res) {
 });
 
 router.post('/addNotifications', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -44,7 +44,7 @@ router.post('/addNotifications', urlencodedParser, function (req, res) {
 });
 
 router.post('/deleteNotifications/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -54,7 +54,7 @@ router.post('/deleteNotifications/:id', urlencodedParser, function (req, res) {
 });
 
 router.put('/updateNotifications', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             $set: { "check": !req.body.check }
         },

@@ -35,7 +35,7 @@ export class BankNameAddComponent implements OnInit {
 
   storeBankNameData({ value, valid }: { value: bankname, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New('NRCM_Information',
+    this.apiCallservice.handleData_New(0,
       'bankName/addbanknamedata', 1, 0, value)
       .subscribe((res: any) => {
         alert('Added Successfully');
