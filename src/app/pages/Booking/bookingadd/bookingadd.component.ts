@@ -76,7 +76,7 @@ export class BookingaddComponent implements OnInit {
   public impnopid: string;
   public hireExtendingMoney = [];
   public fullCount;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   public gstID = false;
   public ownerID = false;
@@ -92,7 +92,6 @@ export class BookingaddComponent implements OnInit {
     public securityCheck: SecurityCheckService) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
 
@@ -227,7 +226,7 @@ export class BookingaddComponent implements OnInit {
   }
 
   findimpgst() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'impGstDetails/getImpGSTDetailsbyid', 1, 1, {}, this.impnopid)
+    this.apiCallservice.handleData_New(0, 'impGstDetails/getImpGSTDetailsbyid', 1, 1, {}, this.impnopid)
       .subscribe((res: Response) => {
         this.impgstdetailslistid = res;
       });
@@ -262,8 +261,7 @@ export class BookingaddComponent implements OnInit {
 
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {
     this.submittedO = true;
-    value['newDB'] = this.securityCheck.saveFinancialYear;
-    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/addownerdetailsdata', 1, 0, value)
+    this.apiCallservice.handleData_New(0, 'ownerDetails/addownerdetailsdata', 1, 0, value)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['ownerdetails'] = [];

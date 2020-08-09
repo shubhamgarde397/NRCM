@@ -62,7 +62,7 @@ export class BankDetailsUpdateComponent implements OnInit {
     const IFSC = data.value.IFSC;
     this.arr = { Name, Accno, BankName, IFSC, id };
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'bankDetails/updateBankDetails', 3, 0, this.arr)
+    this.apiCallservice.handleData_New(0, 'bankDetails/updateBankDetails', 3, 0, this.arr)
       .subscribe((response: Response) => {
         this.show = !this.show;
         this._location.back();

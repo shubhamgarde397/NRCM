@@ -64,10 +64,10 @@ export class BookingUpdateComponent implements OnInit {
   public impnopid: string;
   public show = false;
   public id: string;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   public ownerID = false;
-  public gstID=false;
+  public gstID = false;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -79,7 +79,6 @@ export class BookingUpdateComponent implements OnInit {
   ) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.handlefunction.generateYears();
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -128,7 +127,7 @@ export class BookingUpdateComponent implements OnInit {
   }
 
   findimpgst() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'impGstDetails/getImpGSTDetailsbyid', 1, 1, {}, this.impnopid)
+    this.apiCallservice.handleData_New(0, 'impGstDetails/getImpGSTDetailsbyid', 1, 1, {}, this.impnopid)
       .subscribe((res: Response) => {
         this.impgstdetailslistid = res;
       });

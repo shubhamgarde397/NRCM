@@ -27,7 +27,6 @@ export class AdvanceAccountUpdateComponent implements OnInit {
   public truckno;
   public place;
   public pmode;
-  public dbName;
   public submitted = false;
   public commonArray;
   constructor(
@@ -36,7 +35,6 @@ export class AdvanceAccountUpdateComponent implements OnInit {
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -69,7 +67,7 @@ export class AdvanceAccountUpdateComponent implements OnInit {
   update = function (data) {
     this.submitted = true;
     data.value.id = this.handledata.Data._id;
-    this.apiCallservice.handleData_New(this.dbName, 'advanceAccount/updateAdvanceAccountdata', 3, 0, data.value)
+    this.apiCallservice.handleData_New(1, 'advanceAccount/updateAdvanceAccountdata', 3, 0, data.value)
       .subscribe((response: Response) => {
         console.log('eachedr');
         this.show = !this.show;

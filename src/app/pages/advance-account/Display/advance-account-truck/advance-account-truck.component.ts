@@ -22,7 +22,7 @@ export class AdvanceAccountTruckComponent implements OnInit {
   public newAuthor: any;
   public nameToBeDisplayed: any;
   public tabledata: false;
-  public dbName;
+  public dbName = 1;
   public regularpartyname;
   public truckno;
   public commonArray;
@@ -30,7 +30,7 @@ export class AdvanceAccountTruckComponent implements OnInit {
     public router: Router,
     public handledata: HandleDataService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
+
   }
 
   ngOnInit() {

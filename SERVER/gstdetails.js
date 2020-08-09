@@ -17,7 +17,7 @@ var SORT = common_data.sortBy;
 var API = common_data.APIS.GST;
 
 router.post(API.GET.getBasic, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, SORT.byName)
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, SORT.byName)
         .then(function (result) {
             res.send(result);
         })
@@ -27,7 +27,7 @@ router.post(API.GET.getBasic, function (req, res) {
 });
 
 router.post(API.GET.getByIdDest, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { "name": req.params.nopid, "dest": req.params.nopiddest })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { "name": req.params.nopid, "dest": req.params.nopiddest })
         .then((result) => {
             res.send(result);
         })
@@ -37,7 +37,7 @@ router.post(API.GET.getByIdDest, function (req, res) {
 });
 
 router.post(API.GET.getCount, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, req.params.tab)
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.tab)
         .then((result) => {
             res.send(result);
         })
@@ -47,7 +47,7 @@ router.post(API.GET.getCount, function (req, res) {
 });
 
 router.post(API.GET.getById, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { "_id": new mongodb.ObjectID(req.params.id) })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { "_id": new mongodb.ObjectID(req.params.id) })
         .then(function (result) {
             res.send(result);
         })
@@ -57,10 +57,10 @@ router.post(API.GET.getById, function (req, res) {
 });
 
 router.post(API.POST.add, urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'gstdetails', { name: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, 'gstdetails', { name: 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -72,10 +72,10 @@ router.post(API.POST.add, urlencodedParser, function (req, res) {
 
 
 router.post(API.DELETE.delete, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'gstdetails', { name: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, 'gstdetails', { name: 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -86,7 +86,7 @@ router.post(API.DELETE.delete, function (req, res) {
 });
 
 router.put(API.UPDATE.update, urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "name": req.body.name,
             "gst": req.body.gst,
@@ -95,7 +95,7 @@ router.put(API.UPDATE.update, urlencodedParser, function (req, res) {
         req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'gstdetails', { name: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, 'gstdetails', { name: 1 })
                 .then((result) => {
                     res.send(result);
                 });

@@ -17,7 +17,7 @@ export class CanBankPaymentDispComponent implements OnInit {
   public canBankPaymentdetailslist;
   public show = false;
   public myFormGroup: FormGroup;
-  public dbName;
+  public dbName = 1;
   constructor(
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
@@ -25,7 +25,6 @@ export class CanBankPaymentDispComponent implements OnInit {
     public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
 

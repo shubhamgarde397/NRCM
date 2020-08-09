@@ -12,7 +12,7 @@ var collectionName = common_data.table_name.dailydata;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getDailyDataDetailsByDateCount/:startdate/:enddate/:name', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
         .then(function (result) {
             res.send(result);
         })
@@ -22,7 +22,7 @@ router.post('/getDailyDataDetailsByDateCount/:startdate/:enddate/:name', functio
 });
 
 router.post('/getDailyDataDetailsTruckWiseByDateCount/:name/:truckno', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'TruckNo': req.params.truckno }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'TruckNo': req.params.truckno }] })
         .then(function (result) {
             res.send(result);
         })
@@ -32,7 +32,7 @@ router.post('/getDailyDataDetailsTruckWiseByDateCount/:name/:truckno', function 
 });
 
 router.post('/getDailyDataTruckWiseDetails/:name/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'TruckNo': req.params.truckno }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'TruckNo': req.params.truckno }] })
         .then(function (result) {
             res.send(result);
         })
@@ -42,7 +42,7 @@ router.post('/getDailyDataTruckWiseDetails/:name/:truckno', urlencodedParser, fu
 });
 
 router.post('/getDailyDataDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -52,7 +52,7 @@ router.post('/getDailyDataDetails', function (req, res) {
 });
 
 router.post('/getDailyDataDetailsName/:name', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { "nofp": req.params.name })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { "nofp": req.params.name })
         .then((result) => {
             res.send(result);
         })
@@ -62,7 +62,7 @@ router.post('/getDailyDataDetailsName/:name', function (req, res) {
 });
 
 router.post('/getDailyDataDetailsbyid/:id', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { "_id": new mongodb.ObjectID(req.params.id) })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { "_id": new mongodb.ObjectID(req.params.id) })
         .then(function (result) {
             res.send(result);
         })
@@ -72,7 +72,7 @@ router.post('/getDailyDataDetailsbyid/:id', function (req, res) {
 });
 
 router.post('/countTruckWiseParty/:truckno', function (req, res) {
-    var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'regularparty')
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, 'regularparty')
         .then(function (Party) {
             countAll(Party, req.params.truckno, req.body.dbName)
                 .then((result) => {
@@ -110,7 +110,7 @@ function countAll(Party, truckno, dbName) {
 }
 
 router.post('/getDailyDetailsAllTrucks/:name/:truckno', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { $and: [{ 'nofp': req.params.name }, { 'TruckNo': req.params.truckno }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { $and: [{ 'nofp': req.params.name }, { 'TruckNo': req.params.truckno }] })
         .then(function (result) {
             res.send(result);
         })
@@ -120,7 +120,7 @@ router.post('/getDailyDetailsAllTrucks/:name/:truckno', function (req, res) {
 });
 
 router.post('/adddailydata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -130,7 +130,7 @@ router.post('/adddailydata', urlencodedParser, function (req, res) {
 });
 
 router.post('/dailyDataCountAll', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName)
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName)
         .then(function (result) {
             res.send(result);
         })
@@ -140,7 +140,7 @@ router.post('/dailyDataCountAll', function (req, res) {
 });
 
 router.post('/delDailydata/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -150,7 +150,7 @@ router.post('/delDailydata/:id', urlencodedParser, function (req, res) {
 });
 
 router.post('/getDailyDataDetailsByDate/:startdate/:enddate/:name', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nofp': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
         .then(function (result) {
             res.send(result);
         })
@@ -162,7 +162,7 @@ router.post('/getDailyDataDetailsByDate/:startdate/:enddate/:name', function (re
 router.post('/getDailyDataDetailsToday', function (req, res) {
 
     var today = this.date.getFullYear() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getDate();
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { 'Date': today })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { 'Date': today })
         .then(function (result) {
             res.send(result);
         })

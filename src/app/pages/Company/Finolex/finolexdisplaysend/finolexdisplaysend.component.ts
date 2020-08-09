@@ -39,7 +39,7 @@ export class FinolexdisplaysendComponent implements OnInit {
   public current_count: string;
   public year = '';
   public month = '';
-  public dbName;
+  public dbName = 1;
   public mailDiv = false;
   public Mailsubject: string;
   public Mailbody: string;
@@ -53,11 +53,11 @@ export class FinolexdisplaysendComponent implements OnInit {
     public excelService: ExcelService,
     public securityCheck: SecurityCheckService
     , public formBuilder: FormBuilder,
-    public spinner:Ng4LoadingSpinnerService) { }
+    public spinner: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.yearNames = this.securityCheck.yearNames;
-    this.dbName = this.securityCheck.saveFinancialYear;
+
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
 
@@ -199,24 +199,24 @@ export class FinolexdisplaysendComponent implements OnInit {
 
 
 
-  sendEmail({ value, valid }: { value: {password}, valid: boolean }) {
+  sendEmail({ value, valid }: { value: { password }, valid: boolean }) {
     this.submitted = true;
     this.spinner.show();
     this.apiCallservice.handleData_New(this.dbName, 'finalMail', 1, 0,
       {
         'FileName': this.month + '' + this.year,
-        'Password':value.password
+        'Password': value.password
       }
     ).subscribe((res: Response) => {
       this.apiCallservice.handleData_New(this.dbName, 'finalMailSend', 1, 0,
-      {
-        'FileName': this.month + '' + this.year,
-        'Password':value.password
-      }
-    ).subscribe((res: Response) => {
-      alert('Mail has been sent successfully');
-      this.spinner.hide();
-    });
+        {
+          'FileName': this.month + '' + this.year,
+          'Password': value.password
+        }
+      ).subscribe((res: Response) => {
+        alert('Mail has been sent successfully');
+        this.spinner.hide();
+      });
     });
   }
 

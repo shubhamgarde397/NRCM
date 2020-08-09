@@ -35,7 +35,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public today;
   public todaysDate;
   public name: string;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   public date = new Date();
   turnbooklist: any;
@@ -44,7 +44,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.commonArray = this.securityCheck.commonArray;
   }
 

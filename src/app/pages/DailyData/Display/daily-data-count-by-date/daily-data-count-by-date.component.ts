@@ -13,10 +13,10 @@ export class DailyDataCountByDateComponent implements OnInit {
   public countByDate;
   public monthNames = Consts.monthNames;
   public tabledata = false;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService
-  ) { this.dbName = this.securityCheck.saveFinancialYear; }
+  ) { }
 
   ngOnInit() {
     this.apiCallservice.handleData_New(this.dbName, 'Count/getCountDateWise', 1, 1, {}, 'dailydata')

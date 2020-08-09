@@ -27,14 +27,13 @@ export class CanaraDisplayDateComponent implements OnInit {
   public show = false;
   public myFormGroup: FormGroup;
   public newData;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
     public router: Router,
     public formBuilder: FormBuilder,
     public handlefunction: handleFunction,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   find() {

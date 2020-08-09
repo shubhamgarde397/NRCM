@@ -33,11 +33,10 @@ export class DailyDataaddComponent implements OnInit {
   public PAN?: string;
   public advamt: string;
   public togglemenu = true;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {

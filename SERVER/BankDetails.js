@@ -11,7 +11,7 @@ var collectionName = common_data.table_name.BankDetails;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getBankDetailsbyid/:nameid', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { "Name": 1 }, { "Name": req.params.nameid })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { "Name": 1 }, { "Name": req.params.nameid })
         .then((result) => {
             res.send(result);
         })
@@ -21,7 +21,7 @@ router.post('/getBankDetailsbyid/:nameid', function (req, res) {
 });
 
 router.post('/getUniqueBankDetailsbyid/:bankname/:name', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { "BankName": 1 }, { $and: [{ "BankName": req.params.bankname }, { "Name": req.params.name }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { "BankName": 1 }, { $and: [{ "BankName": req.params.bankname }, { "Name": req.params.name }] })
         .then((result) => {
             res.send(result);
         })
@@ -31,7 +31,7 @@ router.post('/getUniqueBankDetailsbyid/:bankname/:name', function (req, res) {
 });
 
 router.post('/getBankDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'BankName': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'BankName': 1 })
         .then(function (result) {
             res.send(result);
         })
@@ -41,13 +41,13 @@ router.post('/getBankDetails', function (req, res) {
 });
 
 router.post('/addBankDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then((result) => {
             res.send(result);
         })
         .catch((err) => {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'BankName': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'BankName': 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
@@ -55,10 +55,10 @@ router.post('/addBankDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/deleteBankDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'BankName': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'BankName': 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
@@ -69,7 +69,7 @@ router.post('/deleteBankDetails', function (req, res) {
 });
 
 router.put('/updateBankDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             'Name': req.body.Name,
             'Accno': req.body.Accno,
@@ -79,7 +79,7 @@ router.put('/updateBankDetails', function (req, res) {
         req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'BankName': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'BankName': 1 })
                 .then((result1) => {
                     res.send(result1);
                 });

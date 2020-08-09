@@ -11,7 +11,7 @@ var collectionName = common_data.table_name.AdvanceAccount;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getAdvanceDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -21,7 +21,7 @@ router.post('/getAdvanceDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/AdvanceDataDetailsCount', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, {}, { "Check": false })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, {}, { "Check": false })
         .then(function (result) {
             res.send(result);
         })
@@ -31,7 +31,7 @@ router.post('/AdvanceDataDetailsCount', urlencodedParser, function (req, res) {
 });
 
 router.post('/getAdvanceDataTruckWiseDetails/:name/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }] })
         .then(function (result) {
             res.send(result);
         })
@@ -41,7 +41,7 @@ router.post('/getAdvanceDataTruckWiseDetails/:name/:truckno', urlencodedParser, 
 });
 
 router.post('/getAdvanceDataDetailsTruckWiseByDateCount/:name/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }, { "Check": false }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }, { "Check": false }] })
         .then(function (result) {
             res.send(result);
         })
@@ -51,7 +51,7 @@ router.post('/getAdvanceDataDetailsTruckWiseByDateCount/:name/:truckno', urlenco
 });
 
 router.post('/getAdvanceDetailsByDate/:startdate/:enddate/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
         .then(function (result) {
             res.send(result);
         })
@@ -61,7 +61,7 @@ router.post('/getAdvanceDetailsByDate/:startdate/:enddate/:name', urlencodedPars
 });
 
 router.post('/getAdvanceByDateCount/:startdate/:enddate/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }, { "Check": false }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }, { "Check": false }] })
         .then(function (result) {
             res.send(result);
         })
@@ -71,7 +71,7 @@ router.post('/getAdvanceByDateCount/:startdate/:enddate/:name', urlencodedParser
 });
 
 router.post('/getAdvanceDataDetailsbyName/:name', urlencodedParser, function (req, res) {//this function
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { "nop": req.params.name })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { "nop": req.params.name })
         .then((result) => {
             balanceChecker(result)
                 .then((resultFinal) => {
@@ -118,7 +118,7 @@ function balanceChecker(value) {
 }
 
 router.post('/AdvanceDataDetailsbyNameCount/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, {}, { $and: [{ "nop": req.params.name }, { "Check": false }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, {}, { $and: [{ "nop": req.params.name }, { "Check": false }] })
         .then(function (result) {
             res.send(result);
         })
@@ -128,7 +128,7 @@ router.post('/AdvanceDataDetailsbyNameCount/:name', urlencodedParser, function (
 });
 
 router.post('/addAdvanceData', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -138,7 +138,7 @@ router.post('/addAdvanceData', urlencodedParser, function (req, res) {
 });
 
 router.post('/AdvanceDataDetailsCountAll', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName)
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName)
         .then(function (result) {
             res.send(result);
         })
@@ -148,7 +148,7 @@ router.post('/AdvanceDataDetailsCountAll', urlencodedParser, function (req, res)
 });
 
 router.post('/delAdvancedetailsdata/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -158,7 +158,7 @@ router.post('/delAdvancedetailsdata/:id', urlencodedParser, function (req, res) 
 });
 router.use(bodyParser.json());
 router.put('/updateAdvanceAccountdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             'Date': req.body.Date,
             'nop': req.body.nop,

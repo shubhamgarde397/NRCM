@@ -12,7 +12,7 @@ var collectionName = common_data.table_name.PochAccount;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getPochDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -22,7 +22,7 @@ router.post('/getPochDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/PochDetailsCount', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, {}, { "Check": false })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, {}, { "Check": false })
         .then(function (result) {
             res.send(result);
         })
@@ -32,7 +32,7 @@ router.post('/PochDetailsCount', urlencodedParser, function (req, res) {
 });
 
 router.post('/getPochDataTruckWiseDetails/:name/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }] })
         .then(function (result) {
             res.send(result);
         })
@@ -42,7 +42,7 @@ router.post('/getPochDataTruckWiseDetails/:name/:truckno', urlencodedParser, fun
 });
 
 router.post('/getPochDataDetailsTruckWiseByDateCount/:name/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }, { "Check": false }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'truckno': req.params.truckno }, { "Check": false }] })
         .then(function (result) {
             res.send(result);
         })
@@ -52,7 +52,7 @@ router.post('/getPochDataDetailsTruckWiseByDateCount/:name/:truckno', urlencoded
 });
 
 router.post('/getPochDetailsByDate/:startdate/:enddate/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }] })
         .then(function (result) {
             res.send(result);
         })
@@ -62,7 +62,7 @@ router.post('/getPochDetailsByDate/:startdate/:enddate/:name', urlencodedParser,
 });
 
 router.post('/getPochByDateCount/:startdate/:enddate/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }, { "Check": false }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, { 'Date': 1 }, { $and: [{ 'nop': req.params.name }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } }, { "Check": false }] })
         .then(function (result) {
             res.send(result);
         })
@@ -73,7 +73,7 @@ router.post('/getPochByDateCount/:startdate/:enddate/:name', urlencodedParser, f
 
 
 router.post('/getPochDataDetailsbyName/:name', urlencodedParser, function (req, res) {//this function
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { "Date": 1 }, { "nop": req.params.name })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { "Date": 1 }, { "nop": req.params.name })
         .then((result) => {
             balanceChecker(result)
                 .then((resultFinal) => {
@@ -86,7 +86,7 @@ router.post('/getPochDataDetailsbyName/:name', urlencodedParser, function (req, 
 });
 
 router.post('/PochDetailsbyNameCount/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, {}, { $and: [{ "nop": req.params.name }, { "Check": false }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, {}, { $and: [{ "nop": req.params.name }, { "Check": false }] })
         .then(function (result) {
             res.send(result);
         })
@@ -96,7 +96,7 @@ router.post('/PochDetailsbyNameCount/:name', urlencodedParser, function (req, re
 });
 
 router.post('/getPochDataDetailsbyNameCheck/:name/:check', urlencodedParser, function (req, res) {//this function
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { "Date": 1 }, { $and: [{ "nop": req.params.name }, { "Check": false }] })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { "Date": 1 }, { $and: [{ "nop": req.params.name }, { "Check": false }] })
         .then((result) => {
             res.send(result);
         })
@@ -106,7 +106,7 @@ router.post('/getPochDataDetailsbyNameCheck/:name/:check', urlencodedParser, fun
 });
 
 router.post('/addPochData', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -116,7 +116,7 @@ router.post('/addPochData', urlencodedParser, function (req, res) {
 });
 
 router.post('/PochDetailsbyNameCountAll', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName)
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName)
         .then(function (result) {
             res.send(result);
         })
@@ -126,7 +126,7 @@ router.post('/PochDetailsbyNameCountAll', urlencodedParser, function (req, res) 
 });
 
 router.post('/delPochdetailsdata/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -136,7 +136,7 @@ router.post('/delPochdetailsdata/:id', urlencodedParser, function (req, res) {
 });
 
 router.put('/updatePochAccountdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             'Date': req.body.Date,
             'nop': req.body.nop,

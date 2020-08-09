@@ -37,14 +37,13 @@ export class PochAccountAddComponent implements OnInit {
   public m = this.monthNames[this.now.getMonth()];
   public y = this.now.getFullYear();
   public togglemenu = true;
-  public dbName;
+  public dbName = 1;
 
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
     public handlefunction: handleFunction,
     public securityCheck: SecurityCheckService) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.handlefunction.generateYears();
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -62,17 +61,17 @@ export class PochAccountAddComponent implements OnInit {
   }
 
   fetchBasic() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'Village/getVillageData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'Village/getVillageData', 1, 0)
       .subscribe((res: Response) => {
         this.villagenamelist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/getRegularPartyData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularParty/getRegularPartyData', 1, 0)
       .subscribe((res: Response) => {
         this.regularpartylist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/getregulartruckdata', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularTruck/getregulartruckdata', 1, 0)
       .subscribe((res: Response) => {
         this.regulartrucklist = res;
       });

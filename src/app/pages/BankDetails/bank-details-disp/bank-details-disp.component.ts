@@ -30,7 +30,7 @@ export class BankDetailsDispComponent implements OnInit {
 
   deleteBankDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New('NRCM_Information', 'bankDetails/deleteBankDetails', 1, 0, { id: id })
+      this.apiCallservice.handleData_New(0, 'bankDetails/deleteBankDetails', 1, 0, { id: id })
         .subscribe((response: Response) => {
           this.sec.commonArray['BankDetails'] = [];
           this.sec.commonArray['BankDetails'] = response;

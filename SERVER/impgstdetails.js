@@ -12,7 +12,7 @@ var collectionName = common_data.table_name.impgstdetails;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getImpGSTDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'name': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'name': 1 })
         .then(function (result) {
             res.send(result);
         })
@@ -22,7 +22,7 @@ router.post('/getImpGSTDetails', function (req, res) {
 });
 
 router.post('/getImpGSTDetailsbyid/:nopid/:nopiddest', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { "name": req.params.nopid, "dest": req.params.nopiddest })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { "name": req.params.nopid, "dest": req.params.nopiddest })
         .then((result) => {
             res.send(result);
         })
@@ -32,7 +32,7 @@ router.post('/getImpGSTDetailsbyid/:nopid/:nopiddest', function (req, res) {
 });
 
 router.post('/getImpGSTDetailsbyid/:id', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, { "_id": new mongodb.ObjectID(req.params.id) })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { "_id": new mongodb.ObjectID(req.params.id) })
         .then(function (result) {
             res.send(result);
         })
@@ -42,13 +42,13 @@ router.post('/getImpGSTDetailsbyid/:id', function (req, res) {
 });
 
 router.post('/addimpgstdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
         .catch((err) => {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'name': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'name': 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
@@ -56,10 +56,10 @@ router.post('/addimpgstdetailsdata', urlencodedParser, function (req, res) {
 });
 
 router.post('/delImpgstdetailsdata', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'name': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'name': 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -70,7 +70,7 @@ router.post('/delImpgstdetailsdata', function (req, res) {
 });
 
 router.put('/updateImpgstdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "name": req.body.name,
             "gst": req.body.gst,
@@ -79,7 +79,7 @@ router.put('/updateImpgstdetailsdata', urlencodedParser, function (req, res) {
         req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'name': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'name': 1 })
                 .then((result) => {
                     console.log(result);
                     res.send(result);

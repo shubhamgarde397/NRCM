@@ -31,7 +31,6 @@ export class AdvanceAccountAddComponent implements OnInit {
   public Name: string;
   public Gst: string;
   public Dest: string;
-  public dbName;
   public commonArray;
   constructor(
     public apiCallservice: ApiCallsService,
@@ -39,7 +38,6 @@ export class AdvanceAccountAddComponent implements OnInit {
     public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -60,7 +58,7 @@ export class AdvanceAccountAddComponent implements OnInit {
 
   find() {
 
-    this.apiCallservice.handleData_New(this.dbName, 'advanceAccount/AdvanceDataDetailsCountAll', 1, 0)
+    this.apiCallservice.handleData_New(1, 'advanceAccount/AdvanceDataDetailsCountAll', 1, 0)
       .subscribe((res: Response) => {
         this.fullCount = res;
       });
@@ -75,9 +73,9 @@ export class AdvanceAccountAddComponent implements OnInit {
       value.Check = false;
     }
     this.submitted = true;
-    this.apiCallservice.handleData_New(this.dbName, 'advanceAccount/addAdvanceData', 1, 0, value)
+    this.apiCallservice.handleData_New(1, 'advanceAccount/addAdvanceData', 1, 0, value)
       .subscribe((res) => {
-        this.apiCallservice.handleData_New(this.dbName, 'advanceAccount/AdvanceDataDetailsCountAll', 1, 0)
+        this.apiCallservice.handleData_New(1, 'advanceAccount/AdvanceDataDetailsCountAll', 1, 0)
           .subscribe((res1: Response) => {
             { alert('Data entered Successfully'); }
             this.fullCount = res1;

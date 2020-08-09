@@ -29,7 +29,7 @@ export class DriverDispComponent implements OnInit {
 
   deleteDriverDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New('NRCM_Information', 'driverDetails/deletedriverdetails', 1, 0, { id: id })
+      this.apiCallservice.handleData_New(0, 'driverDetails/deletedriverdetails', 1, 0, { id: id })
         .subscribe((response: Response) => {
           this.sec.commonArray['driverdetails'] = [];
           this.sec.commonArray['driverdetails'] = response;

@@ -41,8 +41,7 @@ export class LoginComponent implements OnInit {
     this.model = new login(this.username, this.password);
     this.myFormGroup = this.formBuilder.group({
       username: [this.model.username, Validators.required],
-      password: [this.model.password, Validators.required],
-      financialYear: [this.model.financialYear, Validators.required]
+      password: [this.model.password, Validators.required]
     });
     this.apiCallservice.authSuccess.subscribe(
       (res: any) => { console.log(res); this.isLoginSuccess = res; }
@@ -53,7 +52,7 @@ export class LoginComponent implements OnInit {
   login({ value, valid }: { value: login, valid: boolean }) {
     this.spinnerService.show();
     // this.apiCallservice.logout();
-    this.apiCallservice.signIn(value.username, value.password, value.financialYear);
+    this.apiCallservice.signIn(value.username, value.password);
   }
 
 

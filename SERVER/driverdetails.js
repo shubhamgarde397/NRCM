@@ -11,7 +11,7 @@ var collectionName = common_data.table_name.driverdetails;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getDriverDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'truckno': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'truckno': 1 })
         .then(function (result) {
             res.send(result);
         })
@@ -21,13 +21,13 @@ router.post('/getDriverDetails', function (req, res) {
 });
 
 router.post('/adddriverdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
         .catch((err) => {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'truckno': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'truckno': 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
@@ -35,10 +35,10 @@ router.post('/adddriverdetailsdata', urlencodedParser, function (req, res) {
 });
 
 router.post('/deletedriverdetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'truckno': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'truckno': 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -49,14 +49,14 @@ router.post('/deletedriverdetails', function (req, res) {
 });
 
 router.put('/updatedriverdetailsdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "truckno": req.body.truckno, "dname": req.body.dname, "mobileno": req.body.mobileno
         },
         req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'truckno': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'truckno': 1 })
                 .then((result) => {
                     res.send(result);
                 });

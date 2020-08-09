@@ -13,7 +13,7 @@ var dbName = common_data.database.dbNameNRCM;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getbookingCashExpenses/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.nop, { 'date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.nop, { 'date': 1 })
         .then(function (result) {
             balanceChecker(result)
                 .then((resultFinal) => {
@@ -28,7 +28,7 @@ router.post('/getbookingCashExpenses/:nop', urlencodedParser, function (req, res
 });
 
 router.post('/countbookingCashExpenses/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.nop, { 'date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.nop, { 'date': 1 })
         .then(function (result) {
             getOnlyTruck(result)
                 .then((resultFinal) => {
@@ -88,7 +88,7 @@ function balanceChecker(value) {
 
 router.post('/addbookingCashExpenses/:nop', urlencodedParser, function (req, res) {
 
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, req.params.nop, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, req.params.nop, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -99,7 +99,7 @@ router.post('/addbookingCashExpenses/:nop', urlencodedParser, function (req, res
 });
 
 router.post('/deletebookingCashExpenses/:id/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, req.params.nop, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, req.params.nop, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -109,7 +109,7 @@ router.post('/deletebookingCashExpenses/:id/:nop', urlencodedParser, function (r
 });
 
 router.put('/updatebookingCashExpenses', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, req.body.nop + 'BCE', {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, req.body.nop + 'BCE', {}, {},
         {
             "date": req.body.date,
             "truckNo": req.body.truckNo,

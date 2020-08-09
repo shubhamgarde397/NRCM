@@ -29,7 +29,7 @@ export class TurnBookUpdateComponent implements OnInit {
   public trucklist: any;
   public parties: any;
   public hireExtendingMoney = [];
-  public dbName;
+  public dbName = 1;
   public submitted = false;
   public truckno;
   public party;
@@ -40,7 +40,6 @@ export class TurnBookUpdateComponent implements OnInit {
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService, public handlefunction: handleFunction) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
