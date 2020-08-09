@@ -43,9 +43,20 @@
       </li>
 
       <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" routerLink="TURN_BOOK_HANDLER">Turn Book
+        <a class="dropdown-toggle" data-toggle="dropdown">Daily Truck Details
           <span class="caret"></span>
         </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a routerLink="TURN_BOOK_HANDLER">Turn Book</a>
+          </li>
+          <li>
+            <a routerLink="DAILY_LOADING_HANDLER">Daily Loading</a>
+          </li>
+        </ul>
+
+
+
 
       </li>
 
@@ -70,7 +81,7 @@
       </li>
 
 
-      <li class="dropdown">
+      <li class="dropdown" *ngIf="AUTH">
         <a class="dropdown-toggle" data-toggle="dropdown">Accounts
           <span class="caret"></span>
         </a>
@@ -114,7 +125,7 @@
         </ul>
       </li>
 
-      <li class="dropdown">
+      <li class="dropdown" *ngIf="AUTH">
 
         <a class="dropdown-toggle" data-toggle="dropdown">Details
           <span class="caret"></span>

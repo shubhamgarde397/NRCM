@@ -13,6 +13,7 @@
                 <th>Mobile No.</th>
                 <th>Delete</th>
                 <th>Update</th>
+                <th>Lambda</th>
             </tr>
         </thead>
 
@@ -23,7 +24,7 @@
                 <td>{{i.truckno}}</td>
                 <td>{{i.oname}}</td>
                 <td>{{i.pan}}</td>
-                <td>{{i.mobileno}}</td>
+                <td>{{i.mobileno}}{{i.lambda}}</td>
                 <td>
                     <button mat-raised-button (click)="deleteOwnerDetails(i._id)"
                         class="btn-danger btn-sm btn-just-icon">
@@ -34,6 +35,12 @@
                     <button mat-raised-button type="button" (click)="showDatabyid(i)"
                         class="btn-primary btn-sm btn-just-icon">
                         <i class="material-icons">edit</i>
+                    </button>
+                </td>
+                <td>
+                    <button mat-raised-button (click)="movetoLambda(i)" *ngIf="i.lambda!=='true'"
+                        class="btn-warning btn-sm btn-just-icon">
+                        <i class="material-icons">add</i>
                     </button>
                 </td>
             </tr>

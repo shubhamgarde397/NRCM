@@ -11,7 +11,7 @@ from email import encoders
 print(sys.argv[1])
 print(sys.argv[2])
 fromaddr = "nitinroadways9@gmail.com"
-toaddr = "punenitinroadways@gmail.com"
+toaddr = "pramodbnahar@gmail.com"
 
 # instance of MIMEMultipart
 msg = MIMEMultipart()
@@ -42,7 +42,7 @@ Nitin Roadways And Cargo Movers.
 msg.attach(MIMEText(body, 'plain'))
 
 # open the file to be sent
-filename = "GST_ACCOUNT_DETAILS_" +sys.argv[1]+'_'+sys.argv[2]+".xlsx"
+filename = "GST_ACCOUNT_DETAILS_" + sys.argv[1]+'_'+sys.argv[2]+".xlsx"
 attachment = open("GST_ACCOUNT_DETAILS_" +
                   sys.argv[1]+'_'+sys.argv[2]+".xlsx", "rb")
 

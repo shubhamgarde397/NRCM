@@ -22,7 +22,6 @@ var fileupload = require("express-fileupload");
 app.use(fileupload());
 
 
-
 var mongoFunctions = require('./SERVER/mongoFunctions');
 var addIndex = require('./SERVER/addIndex');
 var advanceAccount = require('./SERVER/advanceAccount');
@@ -104,25 +103,9 @@ app.use('/Village', village);
 app.listen(3000, function () {
     console.log(common_data.Messages.serverStartMsg);
 });
-app.get('/api1', (req, res) => {
-    res.send('api1 working');
-});
-
-app.post('/write', urlencodedParser, (req, res) => {
-    fs.readFile('chats.txt', 'utf8', (err, data) => {
-        res.send(JSON.parse(data))
-
-    })
-
-    // fs.writeFile('chats.xt', req.body.data, (err, data) => {
-    //     if (err) {
-    //         console.log(err);
-    //     } else {
-    //         res.send(data)
-
-    //     }
-    // });
-});
+// app.listen(3000, '172.31.38.24', function () {
+//     console.log(common_data.Messages.serverStartMsg);
+// });
 
 app.post('/addImage', function (req, res, next) {
     console.log(req.files);
@@ -132,7 +115,7 @@ app.post('/addImage', function (req, res, next) {
 
 // app.listen(3000, '172.31.19.155', function () {
 //     console.log(common_data.Messages.serverStartMsg);
-// });
+// });//old
 // app.listen(3000, '172.31.37.236', function () {
 //     console.log(common_data.Messages.serverStartMsg);
 // });old
@@ -282,11 +265,3 @@ app.post('/sendMail', urlencodedParser, function (req, res) {
         }
     );
 })
-
-function replacer(a) { //making '' look like ""
-    return a.replace(/'/g, '"')
-}
-
-// app.listen(3000, function () {
-//     console.log(common_data.Messages.serverStartMsg);
-// });

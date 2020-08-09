@@ -6,6 +6,7 @@ export class getFullApi {
 
     public data: any;
     public urlno: string = 'http://' + Consts.URL + ':' + Consts.PORT_NUMBER;
+    public awsLink: string = 'https://wxbwagxbqh.execute-api.ap-south-1.amazonaws.com/dev/';
 
     constructor() { }
 
@@ -18,4 +19,8 @@ export class getFullApi {
             default: return `${this.urlno + '/' + api}`;
         }
     }
+    getFullAPI(data) {
+        return this.awsLink + data;
+    }
+
 }

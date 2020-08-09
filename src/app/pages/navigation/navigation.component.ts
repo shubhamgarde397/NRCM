@@ -5,6 +5,7 @@ import { Location } from '@angular/common';
 import { HandleDataService } from '../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { NotificationDisplayComponent } from '../Notification/notification-display/notification-display.component';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 // import * as moment from 'moment';
 
 @Component({
@@ -31,8 +32,10 @@ export class NavigationComponent implements OnInit {
     public apiCallservice: ApiCallsService,
     public location: Location,
     public handledata: HandleDataService,
-    public securit: SecurityCheckService
+    public securit: SecurityCheckService,
+    public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService
   ) { }
+
 
   // ngAfterViewChecked() {
   //   console.log(this.ndc);
@@ -40,6 +43,7 @@ export class NavigationComponent implements OnInit {
   // }
 
   ngOnInit() {
+    this.getInformationData();
     this.AUTH = this.securit.AUTH;
     this.apiCallservice.handleData_New(this.dbName, 'notification/countNotifications', 1, 0)
       .subscribe((res: Response) => {
@@ -52,9 +56,22 @@ export class NavigationComponent implements OnInit {
       });
   }
 
+  getInformationData() {
+    console.log('hit');
+
+    this.spin.show();
+    this.apiCallservice.handleData_New('NRCM_Information', 'Information/getCommonInformation', 1, 0)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray = [];
+        this.securityCheck.commonArray = res;
+        this.spin.hide();
+      });
+  }
+
 
 
   logout() {
     this.router.navigate(['']);
+    this.apiCallservice.logout();
   }
 }

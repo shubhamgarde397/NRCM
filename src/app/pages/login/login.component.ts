@@ -26,6 +26,7 @@ export class LoginComponent implements OnInit {
   public logindetailslist;
   public financialYear;
   public dbName = 'NRCM_Information';
+  public isLoginSuccess = 'false';
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -43,29 +44,16 @@ export class LoginComponent implements OnInit {
       password: [this.model.password, Validators.required],
       financialYear: [this.model.financialYear, Validators.required]
     });
+    this.apiCallservice.authSuccess.subscribe(
+      (res: any) => { console.log(res); this.isLoginSuccess = res; }
+    );
+    this.apiCallservice.initAuth();
   }
 
   login({ value, valid }: { value: login, valid: boolean }) {
     this.spinnerService.show();
-    this.security.saveYear(value.financialYear);
-    this.apiCallservice.handleData_New(this.dbName, 'login/getLoginDetailsbyid', 1, 0, { "username": value.username, "password": value.password })
-      .subscribe((res: any) => {
-        if (res.AUTH) {
-          this.security.AUTH = true;
-        } else {
-          this.security.AUTH = false;
-        }
-
-        this.logindetailslist = res.status;
-        if (this.logindetailslist === true) {
-          this.show = !this.show;
-          this.spinnerService.hide();
-          this.router.navigate(['Navigation']);
-        } else {
-          this.spinnerService.hide();
-          alert('Wrong Credentials..!');
-        }
-      });
+    // this.apiCallservice.logout();
+    this.apiCallservice.signIn(value.username, value.password, value.financialYear);
   }
 
 
@@ -74,3 +62,5 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['Register']);
   }
 }
+
+// C: \Users\Admin\AppData\Local\Programs\Python\Python37 - 32\; C: \Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;

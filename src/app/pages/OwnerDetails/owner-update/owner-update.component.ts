@@ -52,6 +52,8 @@ export class OwnerUpdateComponent implements OnInit {
     const pan = data.value.pan;
     const mobileno = data.value.mobileno;
     this.arr = { truckno, oname, pan, mobileno, id };
+    console.log(this.arr);
+
     this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/updateownerdetailsdata', 3, 0, this.arr)
       .subscribe((response: Response) => {
         this.sec.commonArray['ownerdetails'] = [];

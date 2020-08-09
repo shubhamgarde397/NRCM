@@ -188,6 +188,22 @@ module.exports = {
                                             client.close();
                                         });
                                     break;
+                                case 10:
+                                    delete (body.dbName);
+                                    delete (body.newDB);
+                                    db.collection(tableName)
+                                        .insertMany(body, function (err, result) {
+                                            if (err) {
+
+                                                reject(err);
+
+                                            }
+                                            else {
+                                                resolve(result);
+                                            }
+                                            client.close();
+                                        });
+                                    break;
                             }
                         });
                 }

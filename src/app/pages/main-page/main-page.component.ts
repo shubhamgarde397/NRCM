@@ -64,7 +64,7 @@ export class MainPageComponent implements OnInit {
 
   upload() {
     this.fileFormData.append('name', this.imageFolder);
-    this.apiCallservice.handleImage(this.fileFormData)
+    this.apiCallservice.handleImage(this.fileFormData, 'http://localhost:3000/image/addImage')
       .subscribe((res) => {
         this.fileFormData = new FormData();
       }, err => {

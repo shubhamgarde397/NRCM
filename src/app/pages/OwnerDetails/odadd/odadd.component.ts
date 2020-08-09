@@ -24,6 +24,10 @@ export class OdaddComponent implements OnInit {
   public Pan: string;
   public MobileNo: string;
 
+  public filePath = ''
+  public fileFormData = new FormData();
+  selectedFile = null;
+
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder, public securityCheck: SecurityCheckService) { }
 
   ngOnInit() {
@@ -38,8 +42,8 @@ export class OdaddComponent implements OnInit {
 
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {
     this.submitted = true;
-    value['newDB'] = this.securityCheck.saveFinancialYear;
-    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/addownerdetailsdata', 1, 0, value)
+    // this.apiCallservice.handleData_New_Temp('ownerdetails', 1, value, 0)
+    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/addownerdetailsdata', 1, 0, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['ownerdetails'] = [];
@@ -53,5 +57,24 @@ export class OdaddComponent implements OnInit {
 
   appendContact() {
     this.mobilenoauto = '9999999999';
+  }
+  incomingFile(file) {
+
+    this.selectedFile = file.target.files[0]
+    if (file) {
+      this.fileFormData.append('name', file.target.files[0]);
+    }
+  }
+  upload() {
+    this.fileFormData.append('name', this.filePath);
+    this.apiCallservice.handleImage(this.fileFormData, 'ownerDetails/bulkAdd')
+      .subscribe((res) => {
+        alert('Added Successfully');
+        this.securityCheck.commonArray['ownerdetails'] = [];
+        this.securityCheck.commonArray['ownerdetails'] = res;
+        this.fileFormData = new FormData();
+      }, err => {
+        console.log(err);
+      })
   }
 }

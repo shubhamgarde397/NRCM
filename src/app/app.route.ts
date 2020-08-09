@@ -96,6 +96,10 @@ export const routes: Routes =
                                     loadChildren: './pages/BankName/bank-name.module#BankNameModule'
                                 },
                                 {
+                                    path: 'OWNER_DETAILED_HANDLER',
+                                    loadChildren: './pages/BankName/bank-name.module#BankNameModule'
+                                },
+                                {
                                     path: 'MonthName_Handler',
                                     component: MonthNamesComponent
                                 }

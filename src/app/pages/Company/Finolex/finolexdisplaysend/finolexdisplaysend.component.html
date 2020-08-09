@@ -16,6 +16,10 @@
       <select class="form-control " [(ngModel)]="month">
         <option>Month</option>
         <option *ngFor="let mon of monthNames">{{mon}}</option>
+
+        <option>May</option>
+        <option>June</option>
+        <option>July</option>
       </select>
 
     </div>
@@ -115,14 +119,17 @@
 
             <div class="form-group row">
               <div class="col-xs-8">
-                <label><b><h3>nitinroadways9@gmail.com</h3></b></label>
+                <label><b>
+                    <h3>nitinroadways9@gmail.com</h3>
+                  </b></label>
               </div>
 
             </div>
 
             <div class="form-group row">
               <div class="col-xs-8">
-                <input type="password" id="password" class="form-control" formControlName="password" placeholder="Password">
+                <input type="password" id="password" class="form-control" formControlName="password"
+                  placeholder="Password">
               </div>
               <div class="col-xs-2">
                 <div [hidden]="myFormGroupE.controls.password.valid">

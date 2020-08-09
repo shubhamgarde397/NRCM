@@ -18,7 +18,8 @@ export class OddispComponent implements OnInit {
   public data;
 
   public commonArray;
-
+  public lambdaArr = [];
+  public index = 0;
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -32,6 +33,43 @@ export class OddispComponent implements OnInit {
     this.ownerdetailslist = this.commonArray.ownerdetails;
   };
 
+  movetoLambda(data) {
+    var obj = {}
+    obj['driver'] = [];
+    var tempObj = {};
+    tempObj['truckNo'] = data.truckno;
+    tempObj['name'] = data.oname;
+    tempObj['pan'] = data.pan;
+    tempObj['village'] = '';
+    tempObj['mobileNo'] = [""];
+    obj['owner'] = tempObj;
+    let arr = {
+      "lambda": "true",
+      "id": data._id,
+      'truckno': data.truckno,
+      'oname': data.oname,
+      'pan': data.pan,
+      'mobileno': data.mobileno,
+    }
+
+    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/updatelambda', 3, 0, arr)
+      .subscribe((response: any) => {
+        this.sec.commonArray['ownerdetails'] = [];
+        this.sec.commonArray['ownerdetails'] = response;
+        this.ownerdetailslist = response;
+      });
+    this.lambdaArr.push(obj);
+    this.index = this.index + 1;
+    if (this.index == 4) {
+      alert('Add?');
+      this.apiCallservice.handleAWS('lambdaupdate', this.lambdaArr);
+      console.log(this.lambdaArr);
+      this.lambdaArr = [];
+      this.index = 0;
+
+    }
+  }
+
   deleteOwnerDetails = function (id) {
     if (confirm('Are you sure?')) {
       this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/deleteownerdetails', 1, 0, { id: id })
@@ -39,6 +77,8 @@ export class OddispComponent implements OnInit {
           this.sec.commonArray['ownerdetails'] = [];
           this.sec.commonArray['ownerdetails'] = response;
           this.ownerdetailslist = response;
+          console.log(response);
+
         });
     }
   };
@@ -54,7 +94,7 @@ export class OddispComponent implements OnInit {
       this.ownerdetailslist = [];
       let tempData = [];
       tempList.filter((res, index) => {
-        if (res['truckno'].includes(this.data)) {
+        if (res['truckno'].includes(this.data.toUpperCase())) {
           tempData.push(res);
         }
       })

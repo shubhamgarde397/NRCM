@@ -1,7 +1,8 @@
 export class Consts {
     public static URL = 'localhost';
     // public static URL = '18.220.197.138';//old
-    // public static URL = '18.219.49.104';
+    // public static URL = '18.219.49.104';//old
+    // public static URL = '172.31.38.168';
     public static PORT_NUMBER = '3000';
     public static monthNames =
         [

@@ -4,7 +4,6 @@ import { gstdata } from './gstdata';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
-import { Response } from '@angular/http';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 
 @Component({
@@ -37,8 +36,8 @@ export class GstaddComponent implements OnInit {
     this.model = new gstdata(this.Name, this.Gst, this.Dest);
     this.myFormGroup = this.formBuilder.group({
       name: [this.model.Name, Validators.required],
-      gst: [this.model.GST, [Validators.required, Validators.pattern('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9]{1}[A-Z]{1}[0-9|A-Z]{1}')]],
-      dest: [this.model.Dest, Validators.required]
+      gst_no: [this.model.GST_No, [Validators.required, Validators.pattern('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9]{1}[A-Z]{1}[0-9|A-Z]{1}')]],
+      village: [this.model.Village, Validators.required]
     });
 
     this.villagenamelist = this.commonArray.villagenames;
@@ -46,8 +45,10 @@ export class GstaddComponent implements OnInit {
 
   storeGstDetailsData({ value, valid }: { value: gstdata, valid: boolean }) {
     this.submitted = true;
-    value['newDB'] = this.securityCheck.saveFinancialYear;
-    this.apiCallservice.handleData_New(this.dbName, 'gstDetails/addgstdetailsdata', 1, 0, value)
+
+    console.log(value)
+    // this.apiCallservice.handleData_New_Temp('gstdetails', 0, value, 0)
+    this.apiCallservice.handleData_New('gstDetails/addgstdetailsdata', 0, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['gstdetails'] = [];

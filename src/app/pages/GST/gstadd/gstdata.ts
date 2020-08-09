@@ -2,7 +2,7 @@ export class gstdata {
 
   constructor(
     public Name?: string,
-    public GST?: string,
-    public Dest?: string
+    public GST_No?: string,
+    public Village?: string
   ) { }
 }

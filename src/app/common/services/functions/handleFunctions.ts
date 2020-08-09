@@ -186,11 +186,6 @@ export class handleFunction {
         return temp;
     }
 
-    createHeader() {
-        this.headerPost = new HttpHeaders();
-        this.headerPost.append('Content-Type', 'application/x-www-form-urlencoded');
-    }
-
     normalMorseCode(data) {
         let forCounter = 0;
         const morseArray = [];

@@ -17,10 +17,10 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="gst" class="form-control" formControlName="gst" placeholder="GST No">
+        <input type="text" id="gst_no" class="form-control" formControlName="gst_no" placeholder="GST No">
       </div>
       <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.gst.valid">
+        <div [hidden]="myFormGroup.controls.gst_no.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
@@ -33,13 +33,13 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <select id="dest" class="form-control" formControlName="dest">
+        <select id="village" class="form-control" formControlName="village">
           <option selected>Select Place</option>
           <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
         </select>
       </div>
       <div class="col-xs-3">
-        <div [hidden]="myFormGroup.controls.dest.valid">
+        <div [hidden]="myFormGroup.controls.village.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>

@@ -22,7 +22,6 @@ export class CashExpensesDisplayComponent implements OnInit {
   public NEFTArray = [];
   public DataArray = [];
   options: any;
-  chart: Highcharts.ChartObject;
   public dbName;
   @ViewChild('chartTarget') chartTarget: ElementRef;
   constructor(public apiCallservice: ApiCallsService, public handleData: HandleDataService, public router: Router,

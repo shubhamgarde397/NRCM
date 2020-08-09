@@ -15,6 +15,7 @@
             <select class="form-control " [(ngModel)]="month">
                 <option>Month</option>
                 <option *ngFor="let mon of monthNames">{{mon}}</option>
+                <option>July</option>
             </select>
 
         </div>
@@ -65,12 +66,14 @@
                     <td>{{i.place}}</td>
                     <td>{{i.amt}}</td>
                     <td>
-                        <button mat-raised-button (click)="deleteFinolexDetails(i._id)" class="btn-danger btn-sm btn-just-icon">
+                        <button mat-raised-button (click)="deleteFinolexDetails(i._id)"
+                            class="btn-danger btn-sm btn-just-icon">
                             <i class="material-icons">delete_forever</i>
                         </button>
                     </td>
                     <td>
-                        <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+                        <button mat-raised-button type="button" (click)="showDatabyid(i)"
+                            class="btn-primary btn-sm btn-just-icon">
                             <i class="material-icons">edit</i>
                         </button>
                     </td>
@@ -230,7 +233,8 @@
             <tr>
 
                 <td>
-                    <button type="submit" class="btn btn-info" (click)="change(ndate.value,lrno.value,nfromparty.value,nfrompartygst.value,nop.value,ntopartygst.value,ntruckno.value,hamt.value,place.value,amt.value,ownername.value,pan.value,month.value,year.value)">Change</button>
+                    <button type="submit" class="btn btn-info"
+                        (click)="change(ndate.value,lrno.value,nfromparty.value,nfrompartygst.value,nop.value,ntopartygst.value,ntruckno.value,hamt.value,place.value,amt.value,ownername.value,pan.value,month.value,year.value)">Change</button>
                 </td>
                 <td>
                     <button type="submit" class="btn btn-info" (click)="back()">Back</button>

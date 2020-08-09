@@ -1,7 +1,7 @@
 <div class="well">
 
-  <form [formGroup]="myFormGroup" (ngSubmit)="storeOwnerDetailsData(myFormGroup)" submitted=true enctype="multipart/form data"
-    action="/">
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeOwnerDetailsData(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/">
 
 
 
@@ -52,7 +52,8 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="mobileno" class="form-control" formControlName="mobileno" [(ngModel)]="mobilenoauto" placeholder="9876543211">
+        <input type="text" id="mobileno" class="form-control" formControlName="mobileno" [(ngModel)]="mobilenoauto"
+          placeholder="9876543211">
       </div>
       <div class="col-xs-2">
         <div [hidden]="myFormGroup.controls.mobileno.valid" (click)="appendContact()">
@@ -64,25 +65,36 @@
     </div>
 
     <div class="row">
-      <div class="form-group" class="col-xs-2"></div>
-      <div class="form-group" class="col-xs-1">
-        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
           <i class="material-icons">send</i>
         </button>
       </div>
 
-      <div *ngIf="!submitted" class="col-xs-1">
+      <div *ngIf="!submitted" class="col-xs-2">
 
         <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
           <i class="material-icons">undo</i>
         </button>
       </div>
 
-      <div *ngIf="submitted" class="col-xs-1">
+      <div *ngIf="submitted" class="col-xs-3">
         <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
           <i class="material-icons">add</i>
         </button>
       </div>
+
+
+      <!-- <div class="col-xs-3">
+        <input class="form-control" (change)="incomingFile($event)" type="file">
+        {{filePath}}
+      </div>
+      <div class="col-xs-2">
+        <button class="btn btn-warnign" id="dnext" (click)="upload()">Multiple</button>
+
+
+      </div> -->
 
     </div>
   </form>
