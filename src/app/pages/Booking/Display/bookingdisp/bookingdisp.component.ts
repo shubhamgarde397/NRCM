@@ -48,23 +48,20 @@ export class BookingdispComponent implements OnInit {
 
   find = function () {
     this.spinnerService.show();
-    this.apiCallservice.handleData_New(this.dbName, 'booking/getBookingDetails', 1, 1, {}, this.name).
+    this.apiCallservice.handleData_New(this.dbName, 'booking/getBookingDetails', 1, 0, { name: this.name, Date: '2020-08' }).
       subscribe((res: Response) => {
-        this.bookingnamelist = res;
-      });
-
-    this.apiCallservice.handleData_New(this.dbName, 'booking/getBookingDetailsCount', 1, 1, {}, this.name).
-      subscribe((res: Response) => {
-        this.spinnerService.hide();
-        this.BookingCount = res;
         this.tabledata = true;
+
+        this.bookingnamelist = res;
+        this.BookingCount = this.bookingnamelist.length;
+        this.spinnerService.hide();
       });
   };
 
   deleteBookingDetails = function (id, nop) {
     if (confirm('Are you sure?')) {
       this.spinnerService.show();
-      this.apiCallservice.handleData_New(this.dbName, 'booking/delBookingdetailsdata', 1, 2, {}, id, nop)
+      this.apiCallservice.handleData_New(this.dbName, 'booking/delBookingdetailsdata', 1, 0, { nop: nop, id: id, Date: '2020-08' })
         .subscribe((response: Response) => {
           this.find(nop);
           this.spinnerService.hide();
