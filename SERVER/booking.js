@@ -10,9 +10,9 @@ router.use(bodyParser.json());
 var dbName = common_data.database.dbNameNRCM;
 var apiCalls = common_data.APICALLS;
 
-router.post('/getBookingDetails/:name', urlencodedParser, function (req, res) {
+router.post('/getBookingDetails', urlencodedParser, function (req, res) {
 
-    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.name, { 'Date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, 'Pipe', { 'Date': 1 }, { 'nop': req.body.name }, req.body)
         .then(function (result) {
             res.send(result);
         })
@@ -109,8 +109,8 @@ router.post('/addbookingdata/:nop', urlencodedParser, function (req, res) {
         });
 });
 
-router.post('/addpartydata/:tab', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.POST, req.params.tab, {}, {}, req.body, {})
+router.post('/addpartydata', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, 'Pipe', {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -119,8 +119,8 @@ router.post('/addpartydata/:tab', urlencodedParser, function (req, res) {
         });
 });
 
-router.post('/delBookingdetailsdata/:id/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, req.params.nop, {}, {}, {}, req.params.id)
+router.post('/delBookingdetailsdata', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, 'Pipe', {}, {}, req.body, req.body.id)
         .then(function (result) {
             res.send(result);
         })
@@ -129,8 +129,8 @@ router.post('/delBookingdetailsdata/:id/:nop', urlencodedParser, function (req, 
         });
 });
 
-router.put('/updateBookingData/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, req.params.nop, {}, {},
+router.put('/updateBookingData', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, 'Pipe', {}, {},
         {
             "Date": req.body.Date,
             "nop": req.body.nop,
