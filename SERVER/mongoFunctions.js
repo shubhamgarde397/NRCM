@@ -70,7 +70,6 @@ module.exports = {
                     getTableName(collectionName)
                         .then((tableName) => {
                             dbName = (body.code == 1) ? createDbName(body.Date) : 'NRCM_Information';
-                            console.log(dbName);
                             var db = client.db(dbName);
                             switch (apiCall) {
                                 case 0:

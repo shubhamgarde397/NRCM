@@ -53,6 +53,13 @@ export class handleFunction {
             case "December": return 12
         }
     }
+    generate2DigitNumber(data) {
+        if (data.length == 1) {
+            return '0' + data;
+        } else {
+            return data;
+        }
+    }
     generateMonthName(month) {
         switch (month) {
             case "01": return "January"

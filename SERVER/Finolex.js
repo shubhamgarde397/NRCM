@@ -20,17 +20,7 @@ router.post('/getFinolexDetails/:tab', function (req, res) {
 });
 
 router.post('/getFinolexDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.body.tab, { 'Date': 1 })
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) => {
-            res.send(err);
-        });
-});
-
-router.post('/getFinolexDetailsTruckWiseCount/:tab/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.tab, { 'Date': 1 }, { 'truckno': req.params.truckno })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, 'Pipe', { 'Date': 1 }, { 'Date': { $gte: req.body.Date + '-01', $lte: req.body.Date + '-31' } }, req.body)
         .then((result) => {
             res.send(result);
         })
@@ -51,26 +41,6 @@ router.post('/getFinolexDetailsAllTrucks/:tab/:truckno', urlencodedParser, funct
 
 router.post('/getFinolexDetailsPartyWise/:tab/:partyname', function (req, res) {
     var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.tab, { 'Date': 1 }, { 'nop': req.params.partyname })
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) => {
-            res.send(err);
-        });
-});
-
-router.post('/getFinolexDetailsPartyWiseCount/:tab/:partyname', function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.tab, { 'Date': 1 }, { 'nop': req.params.partyname })
-        .then((result) => {
-            res.send(result);
-        })
-        .catch((err) => {
-            res.send(err);
-        });
-});
-
-router.post('/countFinolexDetails/:tab', function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.tab)
         .then((result) => {
             res.send(result);
         })
