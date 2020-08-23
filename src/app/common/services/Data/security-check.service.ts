@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SecurityCheckService {
-  public yearNames;
+  public yearNames = ['2019', '2020'];
   public monthNames;
   public commonArray = [];
   public AUTH = false;

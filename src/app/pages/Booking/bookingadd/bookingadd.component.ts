@@ -34,7 +34,7 @@ export class BookingaddComponent implements OnInit {
   public yearNames = [];
   public nopid: string;
   public impgstdetailslist: any;
-  public monthno: number;
+  public monthno;
   public month;
   public year;
   public day;
