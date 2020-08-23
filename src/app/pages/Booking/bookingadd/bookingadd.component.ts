@@ -34,7 +34,7 @@ export class BookingaddComponent implements OnInit {
   public yearNames = [];
   public nopid: string;
   public impgstdetailslist: any;
-  public monthno: number;
+  public monthno;
   public month;
   public year;
   public day;
@@ -76,7 +76,7 @@ export class BookingaddComponent implements OnInit {
   public impnopid: string;
   public hireExtendingMoney = [];
   public fullCount;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   public gstID = false;
   public ownerID = false;
@@ -92,7 +92,6 @@ export class BookingaddComponent implements OnInit {
     public securityCheck: SecurityCheckService) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
 
@@ -161,30 +160,15 @@ export class BookingaddComponent implements OnInit {
     value.PaymentRecDate = null;
     value.Payment = null;
     value.amt = '0';
+    value['Check'] = false;
+    value['recDate'] = '';
 
-    this.valueForLR = {
-      date: value.Date, lrno: value.lrno, nameOfParty: value.nop,
-      truckNo: this.ownerdetailslistid.truckno, place: value.place, recDate: '', Check: false
-    };
-    this.valueForBCE = {
-      date: value.Date,
-      truckNo: this.ownerdetailslistid.truckno,
-      lrno: value.lrno,
-      place: value.place,
-      hireAmount: value.hamt,
-      Payment: null
-    };
     this.submitted = true;
-    this.apiCallservice.handleData_New(this.dbName, 'booking/addbookingdata', 1, 1, value, value.nop)
+    this.apiCallservice.handleData_New(this.dbName, 'booking/addpartydata', 1, 0, value)
       .subscribe((res) => {
         if (res['done']) {
-          this.countByName(value.nop);
           alert('Data entered Successfully');
-          this.storePartyData(value, this.m, this.y, day, tab);
-          this.storeLRDetails(this.valueForLR);
-          this.storeBookingCashExpenses(this.valueForBCE, value.nop);
         } else {
-          this.countByName(value.nop);
           this.toggle();
         }
       });
@@ -192,29 +176,6 @@ export class BookingaddComponent implements OnInit {
 
   }
 
-  storeLRDetails(value) {
-    this.apiCallservice.handleData_New(this.dbName, 'lrno/addLRDetails', 1, 0, value)
-      .subscribe();
-  }
-
-  storePartyData(value, month, year, day, tab) {
-    this.submitted = true;
-    this.apiCallservice.handleData_New(this.dbName, 'booking/addpartydata', 1, 1, value, tab)
-      .subscribe(x => { this.response = x; });
-  }
-
-  storeBookingCashExpenses(value, nop) {
-    this.submitted = true;
-    this.apiCallservice.handleData_New(this.dbName, 'bookingCashExpenses/addbookingCashExpenses', 1, 1, value, nop + 'BCE')
-      .subscribe();
-  }
-
-  countByName(nameFromID) {
-    this.apiCallservice.handleData_New(this.dbName, 'booking/getBookingDetailsCount', 1, 1, {}, nameFromID)
-      .subscribe((res: Response) => {
-        this.fullCount = res;
-      });
-  }
 
   findgst() {
     this.gstdetailslistid = this.handlefunction.findgst(this.nopid, this.gstdetailslist);
@@ -227,7 +188,7 @@ export class BookingaddComponent implements OnInit {
   }
 
   findimpgst() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'impGstDetails/getImpGSTDetailsbyid', 1, 1, {}, this.impnopid)
+    this.apiCallservice.handleData_New(0, 'impGstDetails/getImpGSTDetailsbyid', 1, 1, {}, this.impnopid)
       .subscribe((res: Response) => {
         this.impgstdetailslistid = res;
       });
@@ -262,8 +223,7 @@ export class BookingaddComponent implements OnInit {
 
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {
     this.submittedO = true;
-    value['newDB'] = this.securityCheck.saveFinancialYear;
-    this.apiCallservice.handleData_New('NRCM_Information', 'ownerDetails/addownerdetailsdata', 1, 0, value)
+    this.apiCallservice.handleData_New(0, 'ownerDetails/addownerdetailsdata', 1, 0, value)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['ownerdetails'] = [];

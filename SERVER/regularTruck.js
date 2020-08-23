@@ -12,7 +12,7 @@ var collectionName = common_data.table_name.RegularTruck;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getregulartruckdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'regulartruck': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'regulartruck': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -22,13 +22,13 @@ router.post('/getregulartruckdata', urlencodedParser, function (req, res) {
 });
 
 router.post("/addregulartruckdata", urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
         .catch((err) => {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { regulartruck: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { regulartruck: 1 })
                 .then((result1) => {
                     res.send(result1);
                 });
@@ -36,10 +36,10 @@ router.post("/addregulartruckdata", urlencodedParser, function (req, res) {
 });
 
 router.post('/delregulartruckdata', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.body.id)
         .then(function (result) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { regulartruck: 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { regulartruck: 1 })
                 .then((result) => {
                     res.send(result);
                 });
@@ -50,10 +50,10 @@ router.post('/delregulartruckdata', function (req, res) {
 });
 
 router.put('/updateregulartruckdata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {}, { "regulartruck": req.body.regulartruck }, req.body.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {}, { "regulartruck": req.body.regulartruck }, req.body.id)
         .then(function (result1) {
             index = 0;
-            var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, { 'regulartruck': 1 })
+            var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'regulartruck': 1 })
                 .then((result) => {
                     res.send(result);
                 });

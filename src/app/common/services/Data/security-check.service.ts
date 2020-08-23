@@ -4,8 +4,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SecurityCheckService {
-  public saveFinancialYear;
-  public yearNames;
+  public yearNames = ['2019', '2020'];
   public monthNames;
   public commonArray = [];
   public AUTH = false;
@@ -22,18 +21,4 @@ export class SecurityCheckService {
     }
   }
 
-  saveYear(yearName) {
-    this.yearNames = [yearName.slice(0, 4), yearName.slice(5, 9)];
-    switch (yearName) {
-      case '2018-2019 (April-March)':
-        // this.saveFinancialYear = '1';
-        this.saveFinancialYear = 'NRCM';
-        break;
-      case '2019-2020 (April-March)':
-
-        // this.saveFinancialYear = '2';
-        this.saveFinancialYear = 'NRCM_2019_2020';
-        break;
-    }
-  }
 }

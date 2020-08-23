@@ -32,7 +32,7 @@ router.post('/getLoginDetailsbyid', urlencodedParser, function (req, res) {
                     return res.json({ status: false });
                 }
                 else {
-                    mongoFunctions.handleData('NRCM_Information', apiCalls.GET, collectionName, {}, { $and: [{ "username": req.body.username }, { "password": req.body.password }] })
+                    mongoFunctions.handleData(apiCalls.GET, collectionName, {}, { $and: [{ "username": req.body.username }, { "password": req.body.password }] })
                         .then(function (result) {
                             if (result[0].AUTH) {
                                 AUTHCode = 1;

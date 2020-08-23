@@ -26,7 +26,7 @@ export class DailyDataUpdateComponent implements OnInit {
   nofp;
   TruckNo;
   Dest;
-  public dbName;
+  public dbName = 1;
   public submitted = false;
   constructor(
     public handledata: HandleDataService,
@@ -34,7 +34,6 @@ export class DailyDataUpdateComponent implements OnInit {
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -54,17 +53,17 @@ export class DailyDataUpdateComponent implements OnInit {
   }
 
   fetchBasic() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'Village/getVillageData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'Village/getVillageData', 1, 0)
       .subscribe((res: Response) => {
         this.villagelist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/getRegularPartyData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularParty/getRegularPartyData', 1, 0)
       .subscribe((res: Response) => {
         this.regularpartylist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/getregulartruckdata', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularTruck/getregulartruckdata', 1, 0)
       .subscribe((res: Response) => {
         this.regulartrucklist = res;
       });

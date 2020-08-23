@@ -32,7 +32,7 @@ export class RegularPartyDispComponent implements OnInit {
 
   deleteRegularPartyDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/deleteregulardatadetails', 1, 0, { id: id })
+      this.apiCallservice.handleData_New(0, 'regularParty/deleteregulardatadetails', 1, 0, { id: id })
         .subscribe((response: Response) => {
           this.sec.commonArray['regularparty'] = [];
           this.sec.commonArray['regularparty'] = response;

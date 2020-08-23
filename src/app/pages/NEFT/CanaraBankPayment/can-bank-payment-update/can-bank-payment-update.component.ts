@@ -45,7 +45,7 @@ export class CanBankPaymentUpdateComponent implements OnInit {
   public showBankNameIFSC: boolean;
   public togglemenu = true;
   public dataGone = false;
-  public dbName;
+  public dbName = 1;
   constructor(
     public apiCallservice: ApiCallsService,
     public formBuilder: FormBuilder,
@@ -54,7 +54,6 @@ export class CanBankPaymentUpdateComponent implements OnInit {
     public router: Router,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {

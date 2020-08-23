@@ -28,7 +28,7 @@ export class TptHireDetailsUpdateComponent implements OnInit {
   nameOfParty;
   truckNo;
   place;
-  public dbName;
+  public dbName = 1;
   public submitted = false;
   constructor(
     public handledata: HandleDataService,
@@ -37,7 +37,6 @@ export class TptHireDetailsUpdateComponent implements OnInit {
     public apiCallservice: ApiCallsService,
     public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -57,17 +56,17 @@ export class TptHireDetailsUpdateComponent implements OnInit {
   }
 
   fetchBasic() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'Village/getVillageData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'Village/getVillageData', 1, 0)
       .subscribe((res: Response) => {
         this.villagelist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/getRegularPartyData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularParty/getRegularPartyData', 1, 0)
       .subscribe((res: Response) => {
         this.regularpartylist = res;
       });
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/getregulartruckdata', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularTruck/getregulartruckdata', 1, 0)
       .subscribe((res: Response) => {
         this.regulartrucklist = res;
       });
@@ -83,7 +82,7 @@ export class TptHireDetailsUpdateComponent implements OnInit {
     const advance = data.value.advance;
     const id = this.handledata.Data._id;
     this.arr = { date, nameOfParty, truckNo, place, hireAmount, advance, id };
-    this.apiCallservice.handleData_New('NRCM_Information', 'TPTHireDetails/updateTPTHireDetails', 3, 0, this.arr)
+    this.apiCallservice.handleData_New(0, 'TPTHireDetails/updateTPTHireDetails', 3, 0, this.arr)
       .subscribe((response: Response) => {
         this.router.navigate(['Navigation/DailyData_HANDLER']);
       });

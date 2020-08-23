@@ -25,10 +25,9 @@ export class RegisterComponent implements OnInit {
   public confirm_register = false;
   public new_value;
   public name: string;
-  public dbName;
+  public dbName = 1;
   constructor(public router: Router, public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -52,7 +51,7 @@ export class RegisterComponent implements OnInit {
 
   storeNewUser(adminUname, adminPassword) {
     if (adminUname === 'shubham' && adminPassword === 'shubham') {
-      this.apiCallservice.handleData_New('NRCM_Information', 'login/addnewuserdata', 1, 0, this.new_value)
+      this.apiCallservice.handleData_New(0, 'login/addnewuserdata', 1, 0, this.new_value)
         .subscribe(x => this.response = x);
       this.router.navigate(['']);
     } else {

@@ -35,14 +35,13 @@ export class FinolexdisplayComponent implements OnInit {
   public current_count: string;
   public year = '';
   public month = '';
-  public dbName;
+  public dbName = 1;
 
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public securityCheck: SecurityCheckService) { }
 
   ngOnInit() {
     this.yearNames = this.securityCheck.yearNames;
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
   }
@@ -57,7 +56,8 @@ export class FinolexdisplayComponent implements OnInit {
 
   find = function () {
     this.showdate = true;
-    this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 1, {}, this.month + this.year)
+    let date = this.year + '-' + this.handlefunction.generate2DigitNumber(String(this.handlefunction.getMonthNumber(this.month)));
+    this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 0, { Date: date })
       .subscribe((res: Response) => {
         this.finolexdetailslist = res;
         if (this.finolexdetailslist.length > 0) {
@@ -65,11 +65,6 @@ export class FinolexdisplayComponent implements OnInit {
         } else {
           this.tabledata = false;
         }
-      });
-
-    this.apiCallservice.handleData_New(this.dbName, 'Finolex/countFinolexDetails', 1, 1, {}, this.month + this.year)
-      .subscribe((res: Response) => {
-        this.current_count = res;
       });
   };
 

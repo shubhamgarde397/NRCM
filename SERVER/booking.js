@@ -10,9 +10,9 @@ router.use(bodyParser.json());
 var dbName = common_data.database.dbNameNRCM;
 var apiCalls = common_data.APICALLS;
 
-router.post('/getBookingDetails/:name', urlencodedParser, function (req, res) {
+router.post('/getBookingDetails', urlencodedParser, function (req, res) {
 
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.name, { 'Date': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, 'Pipe', { 'Date': 1 }, { 'nop': req.body.name }, req.body)
         .then(function (result) {
             res.send(result);
         })
@@ -22,7 +22,7 @@ router.post('/getBookingDetails/:name', urlencodedParser, function (req, res) {
 });
 
 router.post('/getBookingDetailsDateWise/:name/:startdate/:enddate', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.name, { 'Date': 1 }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.name, { 'Date': 1 }, { 'Date': { $gte: req.params.startdate, $lte: req.params.enddate } })
         .then(function (result) {
             res.send(result);
         })
@@ -32,7 +32,7 @@ router.post('/getBookingDetailsDateWise/:name/:startdate/:enddate', urlencodedPa
 });
 
 router.post('/getBookingDetailsTruckWiseCount/:name/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, req.params.name, {}, { 'truckno': req.params.truckno })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.name, {}, { 'truckno': req.params.truckno })
         .then(function (result) {
             res.send(result);
         })
@@ -42,9 +42,9 @@ router.post('/getBookingDetailsTruckWiseCount/:name/:truckno', urlencodedParser,
 });
 
 router.post('/countTruckWiseParty/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'gstdetails')
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, 'gstdetails')
         .then(function (GST) {
-            countAll(GST, req.params.truckno, req.body.dbName)
+            countAll(GST, req.params.truckno)
                 .then((result) => {
                     res.send(result);
                 })
@@ -80,7 +80,7 @@ function countAll(GST, truckno, dbName) {
 }
 
 router.post('/getBookingDetailsAllTrucks/:name/:truckno', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, req.params.name, {}, { 'truckno': req.params.truckno })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, req.params.name, {}, { 'truckno': req.params.truckno })
         .then(function (result) {
             res.send(result);
         })
@@ -90,7 +90,7 @@ router.post('/getBookingDetailsAllTrucks/:name/:truckno', urlencodedParser, func
 });
 
 router.post('/getBookingDetailsCount/:name', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, req.params.name)
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, req.params.name)
         .then(function (result) {
             res.send(result);
         })
@@ -100,7 +100,7 @@ router.post('/getBookingDetailsCount/:name', urlencodedParser, function (req, re
 });
 
 router.post('/addbookingdata/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, req.params.nop, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, req.params.nop, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -109,8 +109,8 @@ router.post('/addbookingdata/:nop', urlencodedParser, function (req, res) {
         });
 });
 
-router.post('/addpartydata/:tab', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, req.params.tab, {}, {}, req.body, {})
+router.post('/addpartydata', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, 'Pipe', {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -119,8 +119,8 @@ router.post('/addpartydata/:tab', urlencodedParser, function (req, res) {
         });
 });
 
-router.post('/delBookingdetailsdata/:id/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, req.params.nop, {}, {}, {}, req.params.id)
+router.post('/delBookingdetailsdata', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, 'Pipe', {}, {}, req.body, req.body.id)
         .then(function (result) {
             res.send(result);
         })
@@ -129,8 +129,8 @@ router.post('/delBookingdetailsdata/:id/:nop', urlencodedParser, function (req, 
         });
 });
 
-router.put('/updateBookingData/:nop', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, req.params.nop, {}, {},
+router.put('/updateBookingData', urlencodedParser, function (req, res) {
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, 'Pipe', {}, {},
         {
             "Date": req.body.Date,
             "nop": req.body.nop,

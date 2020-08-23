@@ -28,13 +28,12 @@ export class BookingTruckWiseDisplayComponent implements OnInit {
   public newAuthor: any;
   public nameToBeDisplayed: any;
   public tabledata: false;
-  public dbName;
+  public dbName = 1;
   public partyname;
   public truckno;
   public commonArray;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.commonArray = this.securityCheck.commonArray;
   }
 

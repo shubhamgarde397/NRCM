@@ -18,16 +18,16 @@ export class PochAccountDateComponent implements OnInit {
   public dailydatadetailsnamelist;
   public DailyDataPartyName: string;
   public showdate: boolean;
-  public dbName;
+  public dbName = 1;
   public startDate;
   public endDate;
 
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService, public router: Router,
-    public securityCheck: SecurityCheckService) { this.dbName = this.securityCheck.saveFinancialYear; }
+    public securityCheck: SecurityCheckService) { }
 
   ngOnInit() {
 
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/getRegularPartyData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularParty/getRegularPartyData', 1, 0)
       .subscribe((res: Response) => {
         this.regularPartynamelist = res;
       });

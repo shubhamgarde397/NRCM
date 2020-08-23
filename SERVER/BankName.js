@@ -11,7 +11,7 @@ var collectionName = common_data.table_name.BankNames;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getBankNameData', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { "bankname": 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { "bankname": 1 })
         .then((result) => {
             res.send(result);
         })
@@ -21,7 +21,7 @@ router.post('/getBankNameData', function (req, res) {
 });
 
 router.post('/addbanknamedata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then((result) => {
             res.send(result);
         })
@@ -31,7 +31,7 @@ router.post('/addbanknamedata', urlencodedParser, function (req, res) {
 });
 
 router.post('/deleteBankNamedetails/:id', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -41,7 +41,7 @@ router.post('/deleteBankNamedetails/:id', function (req, res) {
 });
 
 router.put('/updateBankNamedata', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "bankname": req.body.bankname,
             "IFSCode": req.body.IFSCode

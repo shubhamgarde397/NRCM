@@ -12,7 +12,7 @@ var collectionName = common_data.table_name.CashExpenses;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getCashExpenses', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, {}, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, {}, {})
         .then(function (result) {
             res.send(result);
         })
@@ -22,7 +22,7 @@ router.post('/getCashExpenses', urlencodedParser, function (req, res) {
 });
 
 router.post('/addCashExpenses', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -32,7 +32,7 @@ router.post('/addCashExpenses', urlencodedParser, function (req, res) {
 });
 
 router.post('/delCashExpenses/:id', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -42,7 +42,7 @@ router.post('/delCashExpenses/:id', urlencodedParser, function (req, res) {
 });
 
 router.put('/updateCashExpenses', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             'Date': req.body.Date,
             'TruckNo': req.body.TruckNo,

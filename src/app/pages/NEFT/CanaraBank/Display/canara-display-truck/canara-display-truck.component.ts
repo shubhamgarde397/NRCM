@@ -28,18 +28,17 @@ export class CanaraDisplayTruckComponent implements OnInit {
   public myFormGroup: FormGroup;
   public newData;
   public truckDataFound = false;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
     public router: Router,
     public formBuilder: FormBuilder,
     public handlefunction: handleFunction,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   find() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'CanaraBankNEFT/getCanBankNEFTTrucks', 1, 0)
+    this.apiCallservice.handleData_New(0, 'CanaraBankNEFT/getCanBankNEFTTrucks', 1, 0)
       .subscribe((res: Response) => {
         this.uniqueTrucks = res;
         console.log(this.uniqueTrucks);

@@ -20,12 +20,11 @@ export class AdvanceAccountDateComponent implements OnInit {
   public showdate: boolean;
   public startDate;
   public endDate;
-  public dbName;
+  public dbName = 1;
   public commonArray;
 
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -33,7 +32,7 @@ export class AdvanceAccountDateComponent implements OnInit {
     this.regularPartynamelist = this.commonArray.regularparty;
   }
   find = function () {
-    this.apiCallservice.handleData_New('NRCM_Information', 'advanceAccount/getAdvanceDetailsByDate', 1, 3, {},
+    this.apiCallservice.handleData_New(0, 'advanceAccount/getAdvanceDetailsByDate', 1, 3, {},
       this.startDate, this.endDate, this.DailyDataPartyName)
       .subscribe((res: Response) => {
         this.advanceDataList = res;

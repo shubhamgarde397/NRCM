@@ -22,11 +22,10 @@ export class CashExpensesDisplayComponent implements OnInit {
   public NEFTArray = [];
   public DataArray = [];
   options: any;
-  public dbName;
+  public dbName = 1;
   @ViewChild('chartTarget') chartTarget: ElementRef;
   constructor(public apiCallservice: ApiCallsService, public handleData: HandleDataService, public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
 
   }
 

@@ -37,7 +37,7 @@ export class RegularPartyUpdateComponent implements OnInit {
     const name = data.value.name;
     const id = this.handledata.Data._id;
     this.arr = { name, id };
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/updateregularparty', 3, 0, this.arr)
+    this.apiCallservice.handleData_New(0, 'regularParty/updateregularparty', 3, 0, this.arr)
       .subscribe((response: Response) => {
         alert('done');
         this.sec.commonArray['regularparty'] = [];

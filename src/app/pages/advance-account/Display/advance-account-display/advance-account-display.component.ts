@@ -14,12 +14,11 @@ import { SecurityCheckService } from '../../../../common/services/Data/security-
 @Input()
 export class AdvanceAccountDisplayComponent implements OnInit {
   public show = false;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService, public router: Router,
     public handledata: HandleDataService,
     public securityCheck: SecurityCheckService
   ) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   fetchData = function () {

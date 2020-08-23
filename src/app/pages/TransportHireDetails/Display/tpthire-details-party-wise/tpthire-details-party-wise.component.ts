@@ -17,14 +17,13 @@ export class TPTHireDetailsPartyWiseComponent implements OnInit {
   public dailydatadetailsnamelist: string;
   public tabledata = false;
   public show = false;
-  public dbName;
+  public dbName = 1;
   constructor(
     public apiCallservice: ApiCallsService,
     public spinnerService: Ng4LoadingSpinnerService,
     public handledata: HandleDataService,
     public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
@@ -40,7 +39,7 @@ export class TPTHireDetailsPartyWiseComponent implements OnInit {
   };
 
   fetchData = function () {
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/getRegularPartyData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularParty/getRegularPartyData', 1, 0)
       .subscribe((res: Response) => {
         this.dailydatadetailsnamelist = res;
       });

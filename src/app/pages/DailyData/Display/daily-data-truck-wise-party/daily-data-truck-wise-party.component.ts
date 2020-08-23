@@ -18,14 +18,13 @@ export class DailyDataTruckWisePartyComponent implements OnInit {
   public showcount = false;
   public moreDetailsOfTruck = true;
   public dailybookingnamelist;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularTruck/getregulartruckdata', 1, 0).
+    this.apiCallservice.handleData_New(0, 'regularTruck/getregulartruckdata', 1, 0).
       subscribe((res: Response) => {
         this.ownerdetailslist = res;
       });

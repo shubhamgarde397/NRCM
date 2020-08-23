@@ -25,7 +25,7 @@
         </div>
     </div>
 
-    <br/>
+    <br />
     <div *ngIf="!show && tabledata" class="row">
         <div class="col-lg-12">
             <table class="table" style="width:100%" align="center">
@@ -60,12 +60,14 @@
                         <td>{{i.PaymentRecDate}}</td>
                         <td>{{i.Payment}}</td>
                         <td>
-                            <button mat-raised-button (click)="deleteBookingDetails(i._id,i.nop)" class="btn btn-danger btn-sm btn-just-icon delete">
+                            <button mat-raised-button (click)="deleteBookingDetails(i._id,i.nop)"
+                                class="btn btn-danger btn-sm btn-just-icon delete">
                                 <i class="material-icons">delete_forever</i>
                             </button>
                         </td>
                         <td>
-                            <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon edit">
+                            <button mat-raised-button type="button" (click)="showDatabyid(i)"
+                                class="btn-primary btn-sm btn-just-icon edit" disabled>
                                 <i class="material-icons">edit</i>
                             </button>
                         </td>

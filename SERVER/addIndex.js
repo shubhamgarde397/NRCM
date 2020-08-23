@@ -12,10 +12,10 @@ var collectionName = common_data.table_name.gstdetails;
 var apiCalls = common_data.APICALLS;
 
 router.post('/createIndex', function (req, res) {
-    var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, 'gstdetails')
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, 'gstdetails')
         .then(function (result) {
             result.forEach(element => {
-                mongoFunctions.handleData(req.body.dbName, apiCalls.INDEX, element.name)
+                mongoFunctions.handleData(apiCalls.INDEX, element.name)
                     .then(function (result) {
                         res.send({ status: 'Done Indexing' });
                     })

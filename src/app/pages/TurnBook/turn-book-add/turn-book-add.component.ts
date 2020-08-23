@@ -26,14 +26,13 @@ export class TurnBookAddComponent implements OnInit {
   public hireAmount: string;
   public village_name: string;
   public alertBoxSuccess = false;
-  public dbName;
+  public dbName = 1;
   public truckNamesOwner = [];
   public commonArray;
   public trucklist: any;
   public hireExtendingMoney = [];
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService, public handlefunction: handleFunction) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
 
@@ -68,7 +67,6 @@ export class TurnBookAddComponent implements OnInit {
   }
   storeTurnBookData({ value, valid }: { value: turn, valid: boolean }) {
     this.submitted = true;
-    value['newDB'] = this.securityCheck.saveFinancialYear;
     value['partyName'] = "";
     value['place'] = "";
     value['check'] = false;

@@ -47,14 +47,29 @@ function createIndexCollection(body) {
 
 }
 
+function createDbName(data) {
+    fa1 = [1, 2, 3];
+    fa2 = [4, 5, 6, 7, 8, 9, 10, 11, 12];
+    var datee = new Date(data.replace(/-/g, ','));
+    var month = datee.getMonth() + 1;
+    var year = datee.getFullYear();
+    var tf = fa1.includes(month) ? true : false;
+    switch (tf) {
+        case true:
+            return 'NRCM_' + (year - 1) + '_' + year;
+        case false:
+            return 'NRCM_' + (year) + '_' + (year + 1);
+    }
+}
 module.exports = {
-    handleData: function (dbName, apiCall, collectionName = '', sortData = {}, findData = {}, body = {}, manupulateData = {}, limit = null, justColumn = {}) {
+    handleData: function (apiCall, collectionName = '', sortData = {}, findData = {}, body = {}, manupulateData = {}, limit = null, justColumn = {}) {
         var promise = new Promise((resolve, reject) => {
             mongoClient.connect(url, function (err, client) {
                 if (err) { console.log(common_data.Messages.error, err); }
                 else {
                     getTableName(collectionName)
                         .then((tableName) => {
+                            dbName = (body.code == 1) ? createDbName(body.Date) : 'NRCM_Information';
                             var db = client.db(dbName);
                             switch (apiCall) {
                                 case 0:

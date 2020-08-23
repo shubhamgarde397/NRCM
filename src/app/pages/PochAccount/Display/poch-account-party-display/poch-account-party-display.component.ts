@@ -22,14 +22,13 @@ export class PochAccountPartyDisplayComponent implements OnInit {
   public regularpartylist: any;
   public nopid: any;
   public newAuthor: any;
-  public dbName;
+  public dbName = 1;
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService, public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
   }
 
   ngOnInit() {
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/getRegularPartyData', 1, 0)
+    this.apiCallservice.handleData_New(0, 'regularParty/getRegularPartyData', 1, 0)
       .subscribe((res: Response) => {
         this.regularpartylist = res;
       });

@@ -46,7 +46,7 @@ export class DriverUpdateComponent implements OnInit {
     const dname = data.value.dname;
     const mobileno = data.value.mobileno;
     this.arr = { truckno, dname, mobileno, id };
-    this.apiCallservice.handleData_New('NRCM_Information', 'driverDetails/updatedriverdetailsdata', 3, 0, this.arr)
+    this.apiCallservice.handleData_New(0, 'driverDetails/updatedriverdetailsdata', 3, 0, this.arr)
       .subscribe((response: Response) => {
         this.sec.commonArray['driverdetails'] = [];
         this.sec.commonArray['driverdetails'] = response;

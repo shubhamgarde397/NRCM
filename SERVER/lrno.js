@@ -14,7 +14,7 @@ var collectionNameNot = common_data.table_name.LRDetailsNot;
 var apiCalls = common_data.APICALLS;
 
 router.post('/getLRDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionName, { 'lrno': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'lrno': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -24,7 +24,7 @@ router.post('/getLRDetails', function (req, res) {
 });
 
 router.post('/addLRDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionName, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionName, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -34,7 +34,7 @@ router.post('/addLRDetails', urlencodedParser, function (req, res) {
 });
 
 router.post('/getLRDetailsNot', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.GET, collectionNameNot, { 'lrno': 1 })
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionNameNot, { 'lrno': 1 })
         .then((result) => {
             res.send(result);
         })
@@ -44,7 +44,7 @@ router.post('/getLRDetailsNot', function (req, res) {
 });
 
 router.post('/pushLRDetailsNot', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.POST, collectionNameNot, {}, {}, req.body, {})
+    var receivedData = mongoFunctions.handleData(apiCalls.POST, collectionNameNot, {}, {}, req.body, {})
         .then(function (result) {
             res.send(result);
         })
@@ -54,7 +54,7 @@ router.post('/pushLRDetailsNot', urlencodedParser, function (req, res) {
 });
 
 router.post('/LRCountAll', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName)
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName)
         .then(function (result) {
             res.send(result);
         })
@@ -64,7 +64,7 @@ router.post('/LRCountAll', function (req, res) {
 });
 
 router.post('/LRDetailsFalseCount', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.COUNT, collectionName, {}, { 'Check': false })
+    var receivedData = mongoFunctions.handleData(apiCalls.COUNT, collectionName, {}, { 'Check': false })
         .then(function (result) {
             res.send(result);
         })
@@ -74,7 +74,7 @@ router.post('/LRDetailsFalseCount', function (req, res) {
 });
 
 router.post('/deleteLRDetails/:id', function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
+    var receivedData = mongoFunctions.handleData(apiCalls.DELETE, collectionName, {}, {}, {}, req.params.id)
         .then(function (result) {
             res.send(result);
         })
@@ -84,7 +84,7 @@ router.post('/deleteLRDetails/:id', function (req, res) {
 });
 
 router.put('/updateLRDetails', urlencodedParser, function (req, res) {
-    var receivedData = mongoFunctions.handleData(req.body.dbName, apiCalls.UPDATE, collectionName, {}, {},
+    var receivedData = mongoFunctions.handleData(apiCalls.UPDATE, collectionName, {}, {},
         {
             "date": req.body.date,
             "lrno": req.body.lrno,

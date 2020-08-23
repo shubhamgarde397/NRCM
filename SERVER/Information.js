@@ -15,7 +15,7 @@ router.post('/getCommonInformation', urlencodedParser, function (req, res) {
     let index = 0;
     commonArray = [];
     tableArray[0].forEach((element) => {
-        var receivedData = mongoFunctions.handleData('NRCM_Information', apiCalls.GET, element, getSorted(element))
+        var receivedData = mongoFunctions.handleData(apiCalls.GET, element, getSorted(element))
             .then((result) => {
                 commonObjectSend[element.toString()] = result;
                 index = index + 1;

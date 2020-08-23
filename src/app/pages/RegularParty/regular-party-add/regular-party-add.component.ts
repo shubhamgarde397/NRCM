@@ -34,7 +34,7 @@ export class RegularPartyAddComponent implements OnInit {
 
   storeRegularPartyData({ value, valid }: { value: data, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New('NRCM_Information', 'regularParty/addregularpartydata', 1, 0, value)
+    this.apiCallservice.handleData_New(0, 'regularParty/addregularpartydata', 1, 0, value)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['regularparty'] = [];

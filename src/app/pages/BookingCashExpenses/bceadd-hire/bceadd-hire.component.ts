@@ -40,7 +40,7 @@ export class BCEAddHireComponent implements OnInit {
   public place: string;
   public hireAmount: string;
   public Payment: string;
-  public dbName;
+  public dbName = 1;
   public commonArray;
   constructor(
     public apiCallservice: ApiCallsService,
@@ -49,7 +49,6 @@ export class BCEAddHireComponent implements OnInit {
     public formBuilder: FormBuilder,
     public router: Router,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
     this.commonArray = this.securityCheck.commonArray;
   }
 

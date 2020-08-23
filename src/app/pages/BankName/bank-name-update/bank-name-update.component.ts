@@ -47,7 +47,7 @@ export class BankNameUpdateComponent implements OnInit {
     const bankname = data.value.bankname;
     const IFSCode = data.value.IFSCode;
     this.arr = { bankname, IFSCode, id };
-    this.apiCallservice.handleData_New('NRCM_Information', 'bankName/updateBankNamedata', 3, 0, this.arr)
+    this.apiCallservice.handleData_New(0, 'bankName/updateBankNamedata', 3, 0, this.arr)
       .subscribe((response: Response) => {
         this.sec.commonArray['BankNames'] = [];
         this.sec.commonArray['BankNames'] = response;

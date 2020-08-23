@@ -19,13 +19,11 @@ export class BookingTruckWisePartyComponent implements OnInit {
   public showcount = false;
   public moreDetailsOfTruck = true;
   public bookingnamelist;
-  public dbName;
+  public dbName = 1;
   public commonArray;
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService) {
-    this.dbName = this.securityCheck.saveFinancialYear;
-
     this.commonArray = this.securityCheck.commonArray;
   }
 
