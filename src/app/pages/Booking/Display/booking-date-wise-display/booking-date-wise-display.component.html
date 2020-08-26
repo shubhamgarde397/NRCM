@@ -1,0 +1,217 @@
+<div class="well container">
+  <div class="row">
+    <div class="form-group col-xs-2" align="center">
+      <select class="form-control " [(ngModel)]="partyname">
+        <option>Select Name</option>
+        <option *ngFor="let mon of gstdetailslist">{{mon.name}}</option>
+      </select>
+    </div>
+    <div class="form-group col-xs-2" align="center">
+      <input type="date" #startdate class="form-control">
+    </div>
+
+    <div class="form-group col-xs-2" align="center">
+      <input type="date" #enddate class="form-control">
+    </div>
+
+
+    <div class="col-xs-6" style="text-align: center">
+      <span style="font-weight:bold;font-size: 40px;"> {{nameToBeDisplayed}}</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-2">
+      <button type="submit" class="btn btn-info" (click)="find(startdate.value,enddate.value)">
+        <i class="material-icons">search</i>
+      </button>
+    </div>
+
+  </div>
+  <br/>
+  <div *ngIf="!show && tabledata" class="row">
+    <div class="col-lg-12">
+      <table class="table" style="width:100%" align="center">
+
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>LRNO</th>
+            <th>Truck No</th>
+            <th>Hire Amount</th>
+            <th>Place</th>
+            <th>Amount</th>
+            <th>Payment Date</th>
+            <th>Payment</th>
+            <th>Delete</th>
+            <th>Update</th>
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of bookingnamelist;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.Date|date: 'dd-MM-yyyy'}}</td>
+            <!-- |date: 'dd/MM/yyyy'}}</td> -->
+            <td>{{i.lrno}}</td>
+            <td (click)="getTruckDetails(i)" data-toggle="modal" data-target="#truckModal">
+              {{i.truckno}}</td>
+            <td>{{i.hamt}}</td>
+            <td>{{i.place}}</td>
+            <td>{{i.amt}}</td>
+            <td>{{i.PaymentRecDate}}</td>
+            <td>{{i.Payment}}</td>
+            <td>
+              <button mat-raised-button (click)="deleteBookingDetails(i._id,i.nop)" class="btn btn-danger btn-sm btn-just-icon delete">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+            <td>
+              <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon edit" disabled>
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- Modal content-->
+      <div class="modal fade" id="truckModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title" style="text-align: center">{{modelTruckNo}}</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table table-hover">
+                <tr>
+                  <th>TruckNo</th>
+                  <td>{{modelTruckNo}}</td>
+                </tr>
+                <tr>
+                  <th>Owner Name</th>
+                  <td>{{modelOwnerName}}</td>
+                </tr>
+                <tr>
+                  <th>PAN</th>
+                  <td>{{modelPAN}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal content-->
+    </div>
+  </div>
+  <div *ngIf="show">
+
+
+    <table>
+      <tr>
+        <td>Date</td>
+        <td>
+          <input #ndate type="text" value={{found.date}}>
+        </td>
+      </tr>
+
+      <tr>
+        <td>LRNO</td>
+        <td>
+          <input #lrno type="text" value={{found.lrno}} disabled>
+        </td>
+      </tr>
+      <tr>
+        <td>From Party</td>
+        <td>
+          <input #fp type="text" value={{found.FromParty}} disabled>
+        </td>
+      </tr>
+      <tr>
+        <td>From Party GST</td>
+        <td>
+          <input #fpgst type="text" value={{found.FromPartyGST}} disabled>
+        </td>
+      </tr>
+      <tr>
+        <td>Name of the Party</td>
+        <td>
+          <input #nop type="text" value={{found.nop}}>
+        </td>
+      </tr>
+      <tr>
+        <td>To Party GST</td>
+        <td>
+          <input #nopgst type="text" value={{found.ToPartyGST}} disabled>
+        </td>
+      </tr>
+      <tr>
+        <td>Truck no</td>
+        <td>
+          <input #truckno type="text" value={{found.truckno}}>
+        </td>
+      </tr>
+      <tr>
+        <td>Owner Name</td>
+        <td>
+          <input #oname type="text" value={{found.OwnerName}} disabled>
+        </td>
+      </tr>
+      <tr>
+        <td>PAN</td>
+        <td>
+          <input #pan type="text" value={{found.PAN}} disabled>
+        </td>
+      </tr>
+      <tr>
+        <td>Hire Amount</td>
+        <td>
+          <input #hamt type="text" value={{found.hamt}}>
+        </td>
+      </tr>
+      <tr>
+        <td>Place</td>
+        <td>
+          <input #place type="text" value={{found.place}}>
+        </td>
+      </tr>
+      <tr>
+        <td>Amount</td>
+        <td>
+          <input #amt type="text" value={{found.amt}}>
+        </td>
+      </tr>
+      <tr>
+        <td>Payment</td>
+        <td>
+          <input #pay type="text" value={{found.Payment}}>
+        </td>
+      </tr>
+      <tr>
+        <td>PaymentRecDate</td>
+        <td>
+          <input #payd type="text" value={{found.PaymentRecDate}}>
+        </td>
+      </tr>
+      <tr>
+
+        <td>
+          <button type="submit" class="btn btn-info" (click)="change(ndate.value,lrno.value,nop.value,truckno.value,hamt.value,place.value,amt.value,month.value,year.value)">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+        <td>
+          <button type="submit" class="btn btn-info" (click)="back()">
+            <i class="material-icons">reply</i>
+          </button>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+</div>

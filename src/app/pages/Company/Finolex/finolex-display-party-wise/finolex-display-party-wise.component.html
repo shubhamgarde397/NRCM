@@ -1,0 +1,106 @@
+<div class="well container">
+  <div class="row">
+
+
+
+    <div class="form-group col-sm-2">
+
+      <select class="form-control" [(ngModel)]="year" (change)="getMonthsLocal()">
+        <option>Year</option>
+        <option *ngFor="let years of yearNames">{{years}}</option>
+      </select>
+
+    </div>
+
+    <div class="form-group col-sm-2" align="center">
+
+      <select class="form-control " [(ngModel)]="month">
+        <option>Month</option>
+        <option *ngFor="let mon of monthNames">{{mon}}</option>
+      </select>
+
+    </div>
+
+    <div class="form-group col-xs-2" align="center">
+      <select class="form-control " [(ngModel)]="partyname" (change)="find()">
+        <option>Select Name</option>
+        <option>ALS_And_T_Co</option>
+        <option *ngFor="let i of parties">{{i.name}}</option>
+      </select>
+    </div>
+
+    <div class="col-xs-6" style="text-align: center" *ngIf="tabledata">
+      <span style="font-weight:bold;font-size: 40px;"> {{month}}{{year}} : {{count}}</span>
+    </div>
+
+  </div>
+  <br/>
+  <div *ngIf="!show && tabledata">
+    <div class=" col-lg-12 ">
+      <table class="table " style="width:100% " align="center ">
+
+        <thead align="center " style="font-weight: bold ">
+          <tr class=table-header>
+            <th>Date</th>
+            <th>LRNO</th>
+            <th>Party Name</th>
+            <th>Hire Amount</th>
+            <th>Place</th>
+            <th>Amount</th>
+            <th>Payment Date</th>
+            <th>Payment</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+
+        <tbody align="center ">
+          <tr *ngFor="let i of finolexpartytrucklist;let j=i ndex ">
+            <td>{{i.Date|date: 'dd-MM-yyyy'}}</td>
+            <td>{{i.lrno}}</td>
+            <td (click)="getPartyDetails(i)" data-toggle="modal" data-target="#partyModal">
+              {{i.nop}}</td>
+            <td>{{i.hamt}}</td>
+            <td>{{i.place}}</td>
+            <td>{{i.amt}}</td>
+            <td>{{i.PaymentRecDate}}</td>
+            <td>{{i.Payment}}</td>
+            <td>
+              <button mat-raised-button (click)="deleteFinolexDetails(i._id,i)" class="btn-danger btn-sm btn-just-icon">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- Modal content-->
+      <div class="modal fade" id="partyModal" role="dialog">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title" style="text-align: center">{{modelPartyName}}</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table table-hover">
+                <tr>
+                  <th>Name of Party</th>
+                  <td>{{modelPartyName}}</td>
+                </tr>
+                <tr>
+                  <th>GST Number</th>
+                  <td>{{modelPartyGST}}</td>
+                </tr>
+              </table>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal content-->
+    </div>
+  </div>
+
+</div>

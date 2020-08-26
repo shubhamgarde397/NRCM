@@ -1,0 +1,131 @@
+{
+    "required": {
+        "http": "http",
+        "cors": "cors",
+        "url": "mongodb+srv://Shubham:leogarde1!@24728293031365366-zyejm.mongodb.net/test?retryWrites=true&w=majority",
+        "url-n": "mongodb://localhost:27017",
+        "bodyParser": "body-parser",
+        "mongodb": "mongodb",
+        "express": "express"
+    },
+    "database": {
+        "0": "NRCM_Information",
+        "1": "NRCM",
+        "2": "NRCM_2019_2020"
+    },
+    "APICALLS": {
+        "GET": 0,
+        "POST": 1,
+        "DELETE": 2,
+        "UPDATE": 3,
+        "COUNT": 4,
+        "DELETE_DB": 5,
+        "LIMIT": 6,
+        "AGGREGATE": 7,
+        "DISTINCT": 8,
+        "INDEX": 9,
+        "ALL": 10
+    },
+    "APIS": {
+        "GST": {
+            "GET": {
+                "getBasic": "/getGSTDetails",
+                "getCount": "/countGSTDetailsbyid/:tab",
+                "getById": "/getGSTDetailsbyid/:id",
+                "getByIdDest": "/getGSTDetailsbyid/:nopid/:nopiddest"
+            },
+            "POST": {
+                "add": "/addgstdetailsdata"
+            },
+            "DELETE": {
+                "delete": "/delgstdetailsdata"
+            },
+            "UPDATE": {
+                "update": "/updategstdetailsdata"
+            }
+        },
+        "VILLAGE": {
+            "GET": {
+                "get": "/getVillageData"
+            },
+            "POST": {
+                "add": "/addvillagedata"
+            },
+            "DELETE": {
+                "delete": "/deletevillagedatadetails"
+            },
+            "UPDATE": {
+                "update": "/updatevillagedata"
+            }
+        }
+    },
+    "table_name": {
+        "AdvanceAccount": "AdvanceAccount",
+        "BankDetails": "BankDetails",
+        "BankNames": "BankNames",
+        "CanaraBankNEFT": "CanaraBankNEFT",
+        "CanaraBankPayment": "CanaraBankPayment",
+        "CashExpenses": "CashExpenses",
+        "change": "change",
+        "dailydata": "dailydata",
+        "driverdetails": "driverdetails",
+        "fileData": "fileData",
+        "gstdetails": "gstdetails",
+        "impgstdetails": "impgstdetails",
+        "login": "login",
+        "LRDetails": "LRDetails",
+        "LRDetailsNot": "LRDetailsNot",
+        "months": "months",
+        "Notifications": "Notifications",
+        "ownerdetails": "ownerdetails",
+        "PochAccount": "PochAccount",
+        "regularparty": "regularparty",
+        "turnBook": "turnBook",
+        "RegularTruck": "RegularTruck",
+        "TPTHireDetals": "TPTHireDetals",
+        "TruckBankDetails": "TruckBankDetails",
+        "villagenames": "villagenames"
+    },
+    "tables": [
+        [
+            "BankDetails",
+            "BankNames",
+            "driverdetails",
+            "gstdetails",
+            "impgstdetails",
+            "months",
+            "ownerdetails",
+            "regularparty",
+            "RegularTruck",
+            "TruckBankDetails",
+            "villagenames"
+        ]
+    ],
+    "Messages": {
+        "success": {
+            "update": "Data Updated Successfully!"
+        },
+        "error": {
+            "database": "Error connecting to the Database!",
+            "update": "Error in Updating the current data"
+        },
+        "serverStartMsg": "NRCM MAIN SERVER : 3000"
+    },
+    "sortBy": {
+        "byVillageName": {
+            "village_name": 1
+        },
+        "byTruckNo": {
+            "truckno": 1
+        },
+        "byregulartruck": {
+            "regulartruck": 1
+        },
+        "byAccountName": {
+            "accountname": 1
+        },
+        "byName": {
+            "name": 1
+        }
+    }
+}
