@@ -5,7 +5,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { LRNumberHandlerComponent } from './lrnumber-handler/lrnumber-handler.component';
 import { LRNumberDisplayComponent } from './lrnumber-display/lrnumber-display.component';
-import { LRNumberAddComponent } from './lrnumber-add/lrnumber-add.component';
 import { LRNumberUpdateComponent } from './lrnumber-update/lrnumber-update.component';
 import { LrnumberNotComponent } from './lrnumber-not/lrnumber-not.component';
 
@@ -13,7 +12,6 @@ import { LrnumberNotComponent } from './lrnumber-not/lrnumber-not.component';
     declarations: [
         LRNumberHandlerComponent,
         LRNumberDisplayComponent,
-        LRNumberAddComponent,
         LRNumberUpdateComponent,
         LrnumberNotComponent
     ],
