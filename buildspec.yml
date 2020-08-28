@@ -6,6 +6,8 @@ phases:
       nodejs: 10
     commands:
       - echo "Building"
+      - npm install
+      - npm install -g @angular/cli
   build:
     commands:
       - ng build --prod --aot
