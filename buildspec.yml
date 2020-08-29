@@ -12,6 +12,11 @@ phases:
     commands:
       - ng build --prod --aot
       - echo "Build successful"
+# artifacts:
+#   files:
+#     - 'NRCM/**'
 artifacts:
   files:
-    - 'NRCM/**'
+    - "**/*"
+  discard-paths: no
+  base-directory: NRCM
