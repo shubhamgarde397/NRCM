@@ -14,4 +14,4 @@ phases:
       - echo "Build successful"
 artifacts:
   files:
-    - 'dist/Authentication/*'
+    - 'dist/Authentication/**'
