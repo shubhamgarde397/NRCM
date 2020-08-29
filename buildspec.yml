@@ -12,3 +12,6 @@ phases:
     commands:
       - ng build --prod --aot
       - echo "Build successful"
+artifacts:
+  files:
+    - '**/*'
