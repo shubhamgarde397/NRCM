@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SecurityCheckService {
-  public yearNames = ['2019', '2020'];
+  public yearNames = [];
   public monthNames;
   public commonArray = [];
   public AUTH = false;
 
   constructor() {
-    console.log('called');
+    this.yearNames = this.generateYears();
   }
 
   authenticate(a) {
@@ -19,6 +19,17 @@ export class SecurityCheckService {
     } else {
       return false;
     }
+  }
+
+  generateYears() {
+    let startYear = 2019
+    let currentYear = new Date().getFullYear();
+    let toAdd = currentYear - startYear;
+    let arr = [2019];
+    for (let i = 0; i < toAdd; i++) {
+      arr.push(startYear + i + 1)
+    }
+    return arr;
   }
 
 }
