@@ -13,6 +13,7 @@ import { FormGroup } from '@angular/forms';
 import { Validators, FormsModule } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { timeout } from 'rxjs/operators';
+import { log } from 'console';
 
 @Component({
   selector: 'app-finolexdisplaysend',
@@ -57,7 +58,7 @@ export class FinolexdisplaysendComponent implements OnInit {
 
   ngOnInit() {
     this.yearNames = this.securityCheck.yearNames;
-
+    console.log(this.yearNames);
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
 
@@ -78,8 +79,8 @@ export class FinolexdisplaysendComponent implements OnInit {
 
   find = function () {
     this.showdate = true;
-    const tab = this.month + this.year;
-    this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 1, {}, tab)
+    let date = this.year + '-' + this.handlefunction.generate2DigitNumber(String(this.handlefunction.getMonthNumber(this.month)));
+    this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 0, { Date: date })
       .subscribe((res: Response) => {
         this.finolexdetailslist = res;
         if (this.finolexdetailslist.length > 0) {
@@ -87,11 +88,6 @@ export class FinolexdisplaysendComponent implements OnInit {
         } else {
           this.tabledata = false;
         }
-      });
-
-    this.apiCallservice.handleData_New(this.dbName, 'Finolex/countFinolexDetails', 1, 1, {}, tab)
-      .subscribe((res: Response) => {
-        this.current_count = res;
       });
   };
 
