@@ -6,8 +6,6 @@ import { CommonModule } from '@angular/common';
 import { FinolexHandlerComponent } from './finolex-handler/finolex-handler.component';
 import { FinolexdisplayComponent } from './finolexdisplay/finolexdisplay.component';
 import { FinolexdisplaysendComponent } from './finolexdisplaysend/finolexdisplaysend.component';
-import { FinolexTruckWiseDisplayComponent } from './finolex-truck-wise-display/finolex-truck-wise-display.component';
-import { FinolexDisplayPartyWiseComponent } from './finolex-display-party-wise/finolex-display-party-wise.component';
 import { FinolexUpdateComponent } from './finolex-update/finolex-update.component';
 
 @NgModule({
@@ -15,8 +13,6 @@ import { FinolexUpdateComponent } from './finolex-update/finolex-update.componen
         FinolexHandlerComponent,
         FinolexdisplayComponent,
         FinolexdisplaysendComponent,
-        FinolexTruckWiseDisplayComponent,
-        FinolexDisplayPartyWiseComponent,
         FinolexUpdateComponent
     ],
     imports: [
