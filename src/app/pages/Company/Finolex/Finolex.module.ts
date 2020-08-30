@@ -4,14 +4,12 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { FinolexHandlerComponent } from './finolex-handler/finolex-handler.component';
-import { FinolexdisplayComponent } from './finolexdisplay/finolexdisplay.component';
 import { FinolexdisplaysendComponent } from './finolexdisplaysend/finolexdisplaysend.component';
 import { FinolexUpdateComponent } from './finolex-update/finolex-update.component';
 
 @NgModule({
     declarations: [
         FinolexHandlerComponent,
-        FinolexdisplayComponent,
         FinolexdisplaysendComponent,
         FinolexUpdateComponent
     ],

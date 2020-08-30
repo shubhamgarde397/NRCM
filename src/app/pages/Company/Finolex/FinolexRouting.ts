@@ -1,7 +1,6 @@
 import { RouterModule, Routes } from '@angular/router';
 import { Component } from '@angular/core';
 import { FinolexHandlerComponent } from './finolex-handler/finolex-handler.component';
-import { FinolexdisplayComponent } from './finolexdisplay/finolexdisplay.component';
 import { FinolexdisplaysendComponent } from './finolexdisplaysend/finolexdisplaysend.component';
 
 export const FinolexRouting: Routes =
@@ -17,11 +16,7 @@ export const FinolexRouting: Routes =
                 [
                     {
                         path: '',
-                        component: FinolexdisplayComponent
-                    },
-                    {
-                        path: 'FinolexDisp',
-                        component: FinolexdisplayComponent
+                        component: FinolexdisplaysendComponent
                     },
                     {
                         path: 'FinolexDispSend',
