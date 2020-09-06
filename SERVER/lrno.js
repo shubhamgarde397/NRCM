@@ -13,9 +13,14 @@ var collectionName = common_data.table_name.LRDetails;
 var collectionNameNot = common_data.table_name.LRDetailsNot;
 var apiCalls = common_data.APICALLS;
 
-router.post('/getLRDetails', function (req, res) {
-    var receivedData = mongoFunctions.handleData(apiCalls.GET, collectionName, { 'lrno': 1 })
-        .then((result) => {
+router.post('/getLRDetails', urlencodedParser, function (req, res) {
+    let body = {};
+    keys = Object.keys(req.body).length;
+    body['Date'] = req.body.startDate;
+    let data = keys == 2 ? { 'lrno': req.body.lrno } : { 'Date': { $gte: req.body.startDate, $lte: req.body.endDate } }
+    console.log(data);
+    var receivedData = mongoFunctions.handleData(apiCalls.GET, 'Pipe', { 'Date': 1 }, data, body)
+        .then(function (result) {
             res.send(result);
         })
         .catch((err) => {
