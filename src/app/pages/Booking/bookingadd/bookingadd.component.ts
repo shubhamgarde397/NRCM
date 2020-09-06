@@ -55,7 +55,7 @@ export class BookingaddComponent implements OnInit {
   public y = this.now.getFullYear();
   public monthDay: number;
   public Date: string;
-  public lrno: number;
+  public lrno: string;
   public nop: string;
   public PartyGST: string;
   public truckno: string;
@@ -146,27 +146,24 @@ export class BookingaddComponent implements OnInit {
     const tab = this.m + this.y;
     this.monthno = this.handlefunction.getMonthNumber(this.m);
     value.Date = this.handlefunction.getDate(day, this.monthno, this.y);
-    // value.FromParty = this.impgstdetailslistid[0].name;
-    value.FromParty = 'Finolex Industries Limited';
-    // value.FromPartyGST = this.impgstdetailslistid[0].gst;
-    value.FromPartyGST = '27AAACF2634A1Z9';
+    value.FromParty = '1';//finolexx
     value.ToPartyGST = this.gstdetailslistid.gst;
-    // value.OwnerName = this.ownerdetailslistid[0].oname;
-    // value.PAN = this.ownerdetailslistid[0].pan;
     value.OwnerName = this.ownerdetailslistid.oname;
     value.PAN = this.ownerdetailslistid.pan;
     value.truckno = this.ownerdetailslistid.truckno;
     value.nop = this.gstdetailslistid.name;
-    value.PaymentRecDate = null;
-    value.Payment = null;
+    value.PaymentRecDate = '';
+    value.Payment = '';
     value.amt = '0';
     value['Check'] = false;
     value['recDate'] = '';
+    value['lrno'] = String(value['lrno']);
 
     this.submitted = true;
     this.apiCallservice.handleData_New(this.dbName, 'booking/addpartydata', 1, 0, value)
       .subscribe((res) => {
         if (res['done']) {
+          this.apiCallservice.handleData_New_Temp('booking', 1, value, this.dbName);
           alert('Data entered Successfully');
         } else {
           this.toggle();
