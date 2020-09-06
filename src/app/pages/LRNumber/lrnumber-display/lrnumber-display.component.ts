@@ -3,6 +3,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { Router } from '@angular/router';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-lrnumber-display',
@@ -13,9 +14,10 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 export class LRNumberDisplayComponent implements OnInit {
   public show = false;
   public dbName = 1;
-
+  public myFormGroup: FormGroup;
+  public twotypes = 'date';
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService, public router: Router,
-    public securityCheck: SecurityCheckService) {
+    public securityCheck: SecurityCheckService, public formBuilder: FormBuilder) {
   }
 
   find = function () {
@@ -23,35 +25,26 @@ export class LRNumberDisplayComponent implements OnInit {
       .subscribe((res: Response) => {
         this.lrdetails = res;
       });
-
-    this.apiCallservice.handleData_New(this.dbName, 'lrno/LRCountAll', 1, 0)
-      .subscribe((res: Response) => {
-        this.fullCount = res;
-      });
-
-    this.apiCallservice.handleData_New(this.dbName, 'lrno/LRDetailsFalseCount', 1, 0)
-      .subscribe((res: Response) => {
-        this.notRecievedCount = res;
-      });
   };
 
-  delete = function (id) {
-    if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New(this.dbName, 'lrno/deleteLRDetails', 1, 1, {}, id)
-        .subscribe((response: Response) => {
-          this.find();
-        });
-    }
-  };
+  getDetails({ value, valid }: { value: {}, valid: boolean }) {
+    this.apiCallservice.handleData_New(this.dbName, 'lrno/getLRDetails', 1, 0, value)
+      .subscribe((res: Response) => {
 
-  showDatabyid(yo) {
-    this.handledata.saveData(yo);
-    this.show = true;
-    this.router.navigate(['Navigation/LRNumber_HANDLER/LRNumberUpdate']);
+      });
+  }
+  check() {
+    this.twotypes = this.myFormGroup.value.twotypes;
+    console.log(this.twotypes);
+
   }
 
-
   ngOnInit() {
-    this.find();
+    this.myFormGroup = this.formBuilder.group({
+      startDate: [''],
+      endDate: [''],
+      lrno: [],
+      twotypes: []
+    });
   }
 }
