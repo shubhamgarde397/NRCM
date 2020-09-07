@@ -160,15 +160,15 @@ export class BookingaddComponent implements OnInit {
     value['lrno'] = String(value['lrno']);
 
     this.submitted = true;
-    this.apiCallservice.handleData_New(this.dbName, 'booking/addpartydata', 1, 0, value)
-      .subscribe((res) => {
-        if (res['done']) {
-          this.apiCallservice.handleData_New_Temp('booking', 1, value, this.dbName);
-          alert('Data entered Successfully');
-        } else {
-          this.toggle();
-        }
-      });
+    // this.apiCallservice.handleData_New(this.dbName, 'booking/addpartydata', 1, 0, value)
+    //   .subscribe((res) => {
+    //     if (res['done']) {
+    this.apiCallservice.handleData_New_Temp('booking', 1, value, this.dbName);
+    alert('Data entered Successfully');
+    //   } else {
+    //     this.toggle();
+    //   }
+    // });
 
 
   }

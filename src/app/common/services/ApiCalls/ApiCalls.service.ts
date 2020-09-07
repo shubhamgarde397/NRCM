@@ -77,7 +77,7 @@ export class ApiCallsService {
         console.log(this.URL);
         switch (apiCall) {
           case 0: this.http.get(this.URL).pipe(map((res) => res));
-          case 1: this.http.post(this.URL, formBody, headers).subscribe((res) => { console.log(res) }, (err) => { console.log(err) });
+          case 1: this.http.post(this.URL, formBody, headers).subscribe((res) => { alert('Done') }, (err) => { console.log(err) });
           case 2: this.http.delete(this.URL).pipe(map((res) => res));
           case 3: this.httpClient.put(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
           case 4: this.httpClient.post(this.URL, formBody, { headers: this.headerPost, responseType: 'text' }).pipe(map((res) => res));
