@@ -55,7 +55,7 @@ export class BookingaddComponent implements OnInit {
   public y = this.now.getFullYear();
   public monthDay: number;
   public Date: string;
-  public lrno: string;
+  public lrno: number;
   public nop: string;
   public PartyGST: string;
   public truckno: string;
@@ -148,30 +148,39 @@ export class BookingaddComponent implements OnInit {
     const tab = this.m + this.y;
     this.monthno = this.handlefunction.getMonthNumber(this.m);
     value.Date = this.handlefunction.getDate(day, this.monthno, this.y);
-    value.FromParty = '1';//finolexx show gsstd which is contanct here
-    // value.ToPartyGST = this.gstdetailslistid.gst;
-    // value.OwnerName = this.ownerdetailslistid.oname;
-    // value.PAN = this.ownerdetailslistid.pan;
-    value.truckno = this.ownerdetailslistid.srno;//on display show pan and oname by truckNo
-    value.nop = this.gstdetailslistid.srno;//show to party gst no and place from gst name
-    value.PaymentRecDate = '';
-    value.Payment = '';
+    // value.FromParty = '1';//finolexx show gsstd which is contanct here
+    value.FromParty = 'Finolex Industries Limited';
+    value.FromPartyGST = '27AAACF2634A1Z9';
+    value.ToPartyGST = this.gstdetailslistid.gst;
+    value.OwnerName = this.ownerdetailslistid.oname;
+    value.PAN = this.ownerdetailslistid.pan;
+    // value.truckno = this.ownerdetailslistid.srno;//on display show pan and oname by truckNo
+    // value.nop = this.gstdetailslistid.srno;//show to party gst no and place from gst name
+
+    value.truckno = this.ownerdetailslistid.truckno;//on display show pan and oname by truckNo
+    value.nop = this.gstdetailslistid.name;//show to party gst no and place from gst name
+
+    // value.PaymentRecDate = '';
+    // value.Payment = '';
+    value.PaymentRecDate = null;
+    value.Payment = null;
     value.amt = '0';
     value['Check'] = false;
     value['recDate'] = '';
-    value['lrno'] = String(value['lrno']);
-    value['place'] = String(value['place']);
-    value['truckno'] = String(value['truckno']);
+    // value['lrno'] = String(value['lrno']);
+    // value['place'] = String(value['place']);
+    // value['truckno'] = String(value['truckno']);
     // value.place =
     this.submitted = true;
-    // this.apiCallservice.handleData_New(this.dbName, 'booking/addpartydata', 1, 0, value)
-    //   .subscribe((res) => {
-    //     if (res['done']) {
-    this.apiCallservice.handleData_New_Temp('booking', 1, value, this.dbName);
-    //   } else {
-    //     this.toggle();
-    //   }
-    // });
+    this.apiCallservice.handleData_New(this.dbName, 'booking/addpartydata', 1, 0, value)
+      .subscribe((res) => {
+        if (res['done']) {
+          alert('Done')
+          // this.apiCallservice.handleData_New_Temp('booking', 1, value, this.dbName);
+        } else {
+          this.toggle();
+        }
+      });
 
 
   }

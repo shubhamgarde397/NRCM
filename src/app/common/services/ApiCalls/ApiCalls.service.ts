@@ -13,6 +13,7 @@ import { SecurityCheckService } from '../Data/security-check.service';
 import { MatLineSetter } from '@angular/material';
 import { Router } from '@angular/router';
 import { promise } from 'protractor';
+import { ObsServiceService } from '../Data/obs-service.service';
 
 const PoolData = {
   UserPoolId: 'ap-south-1_ZzgcCts3f',
@@ -27,7 +28,7 @@ export class ApiCallsService {
   public authSuccess = this.authService.asObservable();
   public headerPost: HttpHeaders;
   public URL = '';
-  constructor(public http: Http, public httpClient: HttpClient, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
+  constructor(public http: Http, public httpClient: HttpClient, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
   handleAWS(api, formBody = {}) {
     this.getAuthenticatedUser().getSession((err, session) => {
       let headers = new Headers({ 'Authorization': session.getIdToken().getJwtToken() })
@@ -81,6 +82,7 @@ export class ApiCallsService {
           case 2: this.http.delete(this.URL).pipe(map((res) => res));
           case 3: this.httpClient.put(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
           case 4: this.httpClient.post(this.URL, formBody, { headers: this.headerPost, responseType: 'text' }).pipe(map((res) => res));
+          case 5: this.http.post(this.URL, formBody, headers).subscribe((res) => { this.obs.savePipe(res.json()) }, (err) => { console.log(err) });
         }
       }
     })

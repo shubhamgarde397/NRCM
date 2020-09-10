@@ -14,6 +14,7 @@ import { Validators, FormsModule } from '@angular/forms';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { timeout } from 'rxjs/operators';
 import { log } from 'console';
+import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 
 @Component({
   selector: 'app-finolexdisplaysend',
@@ -48,17 +49,19 @@ export class FinolexdisplaysendComponent implements OnInit {
   public model: dataForMail;
   public modelSubmitted: dataForMail;
   public submitted = false;
+  public commonArray;
   constructor(
     public apiCallservice: ApiCallsService,
     public handlefunction: handleFunction,
     public excelService: ExcelService,
     public securityCheck: SecurityCheckService
     , public formBuilder: FormBuilder,
-    public spinner: Ng4LoadingSpinnerService) { }
+    public spinner: Ng4LoadingSpinnerService,
+    public obs: ObsServiceService) { }
 
   ngOnInit() {
     this.yearNames = this.securityCheck.yearNames;
-    console.log(this.yearNames);
+    this.commonArray = this.securityCheck.commonArray;
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
 
@@ -66,6 +69,17 @@ export class FinolexdisplaysendComponent implements OnInit {
     this.myFormGroupE = this.formBuilder.group({
       password: ['', Validators.required]
     });
+
+    // this.obs.pipe.subscribe((res) => {
+    //   console.log(res);
+    //   this.finolexdetailslist = res;
+    //   if (this.finolexdetailslist.length > 0) {
+    //     this.tabledata = true;
+    //   } else {
+    //     this.tabledata = false;
+    //   }
+    // });
+
 
   }
 
@@ -80,6 +94,7 @@ export class FinolexdisplaysendComponent implements OnInit {
   find = function () {
     this.showdate = true;
     let date = this.year + '-' + this.handlefunction.generate2DigitNumber(String(this.handlefunction.getMonthNumber(this.month)));
+    // this.apiCallservice.handleData_New_Temp('booking/alldetails', 1, { Date: date }, this.dbName);
     this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 0, { Date: date })
       .subscribe((res: Response) => {
         this.finolexdetailslist = res;

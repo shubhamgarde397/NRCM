@@ -2,7 +2,7 @@ export class booking {
   ToPartyGST: any;
   constructor(
     public Date?: string,
-    public lrno?: string,
+    public lrno?: number,
     public nop?: string,
     public PartyGST?: string,
     public FromPartyGST?: string,

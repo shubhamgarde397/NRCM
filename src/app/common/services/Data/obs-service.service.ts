@@ -8,6 +8,9 @@ export class ObsServiceService {
 
   public dataService = new BehaviorSubject([]);
   public data = this.dataService.asObservable();
+
+  public pipeService = new BehaviorSubject([]);
+  public pipe = this.pipeService.asObservable();
   constructor() { }
   resetData() {
     this.dataService.next([]);
@@ -46,5 +49,8 @@ export class ObsServiceService {
         break;
     }
     this.dataService.next(currentValue);
+  }
+  savePipe(data) {
+    this.pipeService.next(data);
   }
 }

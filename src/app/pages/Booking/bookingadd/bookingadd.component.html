@@ -112,7 +112,8 @@
             <div class="col-xs-6">
               <select id="palce" class="form-control" formControlName="place">
                 <option disabled selected>Select Place</option>
-                <option *ngFor="let own of villagelist" value="{{own.srno}}">{{own.village_name}}</option>
+                <!-- <option *ngFor="let own of villagelist" value="{{own.srno}}">{{own.village_name}}</option> -->
+                <option *ngFor="let own of villagelist">{{own.village_name}}</option>
               </select>
             </div>
 
