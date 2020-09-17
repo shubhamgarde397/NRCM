@@ -33,11 +33,20 @@ export class GstdisplayComponent implements OnInit {
 
   deleteGSTDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New(this.dbName, 'gstDetails/delgstdetailsdata', 1, 0, { id: id })
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'gstdetails';
+
+      this.apiCallservice.handleData_New_python('commoninformation/commonmethods', 1, formbody, 0)
         .subscribe((response: Response) => {
-          this.sec.commonArray['gstdetails'] = [];
-          this.sec.commonArray['gstdetails'] = response;
-          this.gstdetailslist = response;
+          let bb;
+          let j = 0;
+          this.gstdetailslist.forEach((res) => {
+            if (res._id == id) { bb = j; }
+            j = j + 1;
+          })
+          this.gstdetailslist.splice(bb, 1);
         });
     }
   };

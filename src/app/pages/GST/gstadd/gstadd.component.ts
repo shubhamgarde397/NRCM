@@ -36,8 +36,8 @@ export class GstaddComponent implements OnInit {
     this.model = new gstdata(this.Name, this.Gst, this.Dest);
     this.myFormGroup = this.formBuilder.group({
       name: [this.model.Name, Validators.required],
-      gst_no: [this.model.GST_No, [Validators.required, Validators.pattern('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9]{1}[A-Z]{1}[0-9|A-Z]{1}')]],
-      village: [this.model.Village, Validators.required]
+      gst: [this.model.GST_No, [Validators.required, Validators.pattern('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9]{1}[A-Z]{1}[0-9|A-Z]{1}')]],
+      dest: [this.model.Village, Validators.required]
     });
 
     this.villagenamelist = this.commonArray.villagenames;
@@ -45,14 +45,13 @@ export class GstaddComponent implements OnInit {
 
   storeGstDetailsData({ value, valid }: { value: gstdata, valid: boolean }) {
     this.submitted = true;
-
-    console.log(value)
-    // this.apiCallservice.handleData_New_Temp('gstdetails', 0, value, 0)
-    this.apiCallservice.handleData_New('gstDetails/addgstdetailsdata', 0, value, 0)
+    value['method'] = 'insert';
+    value['tablename'] = 'gstdetails';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation/commonmethods', 1, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
-        this.securityCheck.commonArray['gstdetails'] = [];
-        this.securityCheck.commonArray['gstdetails'] = res;
+        this.securityCheck.commonArray['gstdetails'].push(res);
       });
   }
 
