@@ -28,7 +28,7 @@ export class ApiCallsService {
   public authSuccess = this.authService.asObservable();
   public headerPost: HttpHeaders;
   public URL = '';
-  constructor(public http: Http, public httpClient: HttpClient, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
+  constructor(public http: Http, public httpClient: HttpClient, public securityCheck: SecurityCheckService, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
   handleAWS(api, formBody = {}) {
     this.getAuthenticatedUser().getSession((err, session) => {
       let headers = new Headers({ 'Authorization': session.getIdToken().getJwtToken() })
@@ -88,6 +88,22 @@ export class ApiCallsService {
     })
 
   }
+
+  handleData_New_python(api, apiCall, formBody = {}, code) {
+    formBody['code'] = code;
+    this.headerPost = new HttpHeaders();
+    this.headerPost.append('Content-Type', 'application/json');
+    this.URL = this.getfullapi.getFullAPI(api);
+    console.log(this.URL);
+    switch (apiCall) {
+      case 0: return this.http.get(this.URL).pipe(map((res) => res));
+      case 1: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
+      case 2: return this.http.delete(this.URL).pipe(map((res) => res));
+      case 3: return this.httpClient.put(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
+      case 4: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost, responseType: 'text' }).pipe(map((res) => res));
+    }
+  }
+
 
   handleImage(formBody, api) {
     // this.handlefunction.createHeader();

@@ -44,15 +44,26 @@ export class GstupdateComponent implements OnInit {
 
   change = function (data) {
     this.submitted = true;
-    const name = data.value.name;
-    const gst = data.value.gst;
-    const dest = data.value.dest;
-    const id = this.handledata.Data._id;
-    this.arr = { name, gst, dest, id };
-    this.apiCallservice.handleData_New(this.dbName, 'gstDetails/updategstdetailsdata', 3, 0, this.arr)
+
+    let formbody = {}
+    formbody['name'] = data.value.name;
+    formbody['gst'] = data.value.gst;
+    formbody['dest'] = data.value.dest;
+    formbody['_id'] = this.handledata.Data._id;
+    formbody['method'] = 'update';
+    formbody['tablename'] = 'gstdetails';
+
+    this.apiCallservice.handleData_New_python('commoninformation/commonmethods', 1, formbody, 0)
       .subscribe((response: Response) => {
-        this.sec.commonArray['gstdetails'] = [];
-        this.sec.commonArray['gstdetails'] = response;
+        alert(response['Status']);
+        this.sec.commonArray['gstdetails'].forEach((res) => {
+          if (res._id == this.handledata.Data._id) {
+            res['name'] = data.value.name;
+            res['gst'] = data.value.gst;
+            res['dest'] = data.value.dest;
+          }
+        })
+
         this.show = !this.show;
         this._location.back();
       });

@@ -33,52 +33,22 @@ export class OddispComponent implements OnInit {
     this.ownerdetailslist = this.commonArray.ownerdetails;
   };
 
-  movetoLambda(data) {
-    var obj = {}
-    obj['driver'] = [];
-    var tempObj = {};
-    tempObj['truckNo'] = data.truckno;
-    tempObj['name'] = data.oname;
-    tempObj['pan'] = data.pan;
-    tempObj['village'] = '';
-    tempObj['mobileNo'] = [""];
-    obj['owner'] = tempObj;
-    let arr = {
-      "lambda": "true",
-      "id": data._id,
-      'truckno': data.truckno,
-      'oname': data.oname,
-      'pan': data.pan,
-      'mobileno': data.mobileno,
-    }
-
-    this.apiCallservice.handleData_New(0, 'ownerDetails/updatelambda', 3, 0, arr)
-      .subscribe((response: any) => {
-        this.sec.commonArray['ownerdetails'] = [];
-        this.sec.commonArray['ownerdetails'] = response;
-        this.ownerdetailslist = response;
-      });
-    this.lambdaArr.push(obj);
-    this.index = this.index + 1;
-    if (this.index == 4) {
-      alert('Add?');
-      this.apiCallservice.handleAWS('lambdaupdate', this.lambdaArr);
-      console.log(this.lambdaArr);
-      this.lambdaArr = [];
-      this.index = 0;
-
-    }
-  }
-
   deleteOwnerDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New(0, 'ownerDetails/deleteownerdetails', 1, 0, { id: id })
-        .subscribe((response: Response) => {
-          this.sec.commonArray['ownerdetails'] = [];
-          this.sec.commonArray['ownerdetails'] = response;
-          this.ownerdetailslist = response;
-          console.log(response);
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'ownerdetails';
 
+      this.apiCallservice.handleData_New_python('commoninformation/commonmethods', 1, formbody, 0)
+        .subscribe((response: Response) => {
+          let bb;
+          let j = 0;
+          this.ownerdetailslist.forEach((res) => {
+            if (res._id == id) { bb = j; }
+            j = j + 1;
+          })
+          this.ownerdetailslist.splice(bb, 1);
         });
     }
   };

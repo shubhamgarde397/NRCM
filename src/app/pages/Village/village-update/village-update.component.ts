@@ -34,13 +34,19 @@ export class VillageUpdateComponent implements OnInit {
   }
   change = function (data) {
     this.submitted = true;
-    const village_name = data.value.village_name;
-    const id = this.handledata.Data._id;
-    this.arr = { village_name, id };
-    this.apiCallservice.handleData_New(this.dbName, 'Village/updatevillagedata', 3, 0, this.arr)
+    let formbody = {}
+    formbody['village_name'] = data.value.village_name;
+    formbody['_id'] = this.handledata.Data._id;
+    formbody['method'] = 'update';
+    formbody['tablename'] = 'villagenames';
+
+    this.apiCallservice.handleData_New_python('commoninformation/commonmethods', 1, formbody, 0)
       .subscribe((response: Response) => {
-        this.sec.commonArray['villagenames'] = [];
-        this.sec.commonArray['villagenames'] = response;
+        alert(response['Status']);
+        this.sec.commonArray['villagenames'].forEach((res) => {
+          if (res._id == this.handledata.Data._id) { res['village_name'] = data.value.village_name }
+        })
+
         this.show = !this.show;
         this._location.back();
       });

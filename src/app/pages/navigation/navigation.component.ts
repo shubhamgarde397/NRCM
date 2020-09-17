@@ -45,22 +45,13 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.getInformationData();
     this.AUTH = this.securit.AUTH;
-    this.apiCallservice.handleData_New(this.dbName, 'notification/countNotifications', 1, 0)
-      .subscribe((res: Response) => {
-        this.data = res;
-        if (this.data > 0) {
-          (<HTMLElement>document.querySelector('.NotificationBell')).style.color = 'red';
-        } else {
-          (<HTMLElement>document.querySelector('.NotificationBell')).style.color = 'white';
-        }
-      });
   }
 
   getInformationData() {
     console.log('hit');
 
-    this.spin.show();
-    this.apiCallservice.handleData_New(0, 'Information/getCommonInformation', 1, 0)
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, {}, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray = [];
         this.securityCheck.commonArray = res;
