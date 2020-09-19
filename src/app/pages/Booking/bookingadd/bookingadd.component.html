@@ -20,7 +20,7 @@
 
   <div class="well container" *ngIf="togglemenu">
 
-    <form [formGroup]="myFormGroup" (ngSubmit)="storeBookingData(myFormGroup,day.value)" submitted=true
+    <form [formGroup]="myFormGroup" (ngSubmit)="storeBookingData1(myFormGroup,day.value)" submitted=true
       enctype="multipart/form data" action="/" name="myform" id="myform">
       <div class="row">
         <div class="col-sm-10">
@@ -113,7 +113,7 @@
               <select id="palce" class="form-control" formControlName="place">
                 <option disabled selected>Select Place</option>
                 <!-- <option *ngFor="let own of villagelist" value="{{own.srno}}">{{own.village_name}}</option> -->
-                <option *ngFor="let own of villagelist">{{own.village_name}}</option>
+                <option *ngFor="let own of villagelist" value="{{own._id}}">{{own.village_name}}</option>
               </select>
             </div>
 

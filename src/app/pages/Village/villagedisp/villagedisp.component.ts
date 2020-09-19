@@ -35,7 +35,7 @@ export class VillagedispComponent implements OnInit {
       formbody['method'] = 'delete';
       formbody['tablename'] = 'villagenames';
 
-      this.apiCallservice.handleData_New_python('commoninformation/commonmethods', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
         .subscribe((response: Response) => {
           let bb;
           let j = 0;

@@ -23,7 +23,7 @@ import { ObsServiceService } from 'src/app/common/services/Data/obs-service.serv
   providers: [ApiCallsService, handleFunction]
 })
 export class FinolexdisplaysendComponent implements OnInit {
-
+  public date;
   public data;
   public yearNames: any[];
   public finolexdetailslist;
@@ -70,17 +70,6 @@ export class FinolexdisplaysendComponent implements OnInit {
       password: ['', Validators.required]
     });
 
-    // this.obs.pipe.subscribe((res) => {
-    //   console.log(res);
-    //   this.finolexdetailslist = res;
-    //   if (this.finolexdetailslist.length > 0) {
-    //     this.tabledata = true;
-    //   } else {
-    //     this.tabledata = false;
-    //   }
-    // });
-
-
   }
 
   getMonthsLocal() {
@@ -93,10 +82,22 @@ export class FinolexdisplaysendComponent implements OnInit {
 
   find = function () {
     this.showdate = true;
-    let date = this.year + '-' + this.handlefunction.generate2DigitNumber(String(this.handlefunction.getMonthNumber(this.month)));
+    this.date = this.year + '-' + this.handlefunction.generate2DigitNumber(String(this.handlefunction.getMonthNumber(this.month)));
     // this.apiCallservice.handleData_New_Temp('booking/alldetails', 1, { Date: date }, this.dbName);
-    this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 0, { Date: date })
-      .subscribe((res: Response) => {
+    // this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 0, { Date: date })
+    //   .subscribe((res: Response) => {
+    //     this.finolexdetailslist = res;
+    //     if (this.finolexdetailslist.length > 0) {
+    //       this.tabledata = true;
+    //     } else {
+    //       this.tabledata = false;
+    //     }
+    //   });
+    let formBody = {}
+    formBody['method'] = 'display';
+    formBody['Date'] = this.date
+    this.apiCallservice.handleData_New_python('booking', 1, formBody, 1)
+      .subscribe((res) => {
         this.finolexdetailslist = res;
         if (this.finolexdetailslist.length > 0) {
           this.tabledata = true;
@@ -106,6 +107,25 @@ export class FinolexdisplaysendComponent implements OnInit {
       });
   };
 
+  delete(id) {
+    if (confirm('Are you sure?')) {
+      let formBody = {}
+      formBody['method'] = 'delete';
+      formBody['_id'] = id;
+      formBody['Date'] = this.date;
+      this.apiCallservice.handleData_New_python('booking', 1, formBody, 1)
+        .subscribe((res) => {
+          alert(res['Status']);
+          let bb;
+          let j = 0;
+          this.finolexdetailslist.forEach((res) => {
+            if (res._id == id) { bb = j; }
+            j = j + 1;
+          })
+          this.finolexdetailslist.splice(bb, 1);
+        });
+    }
+  }
   exportAsXLSX(): void {
 
     const tab = this.month + this.year;

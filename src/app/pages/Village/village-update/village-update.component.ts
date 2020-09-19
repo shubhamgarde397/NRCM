@@ -40,7 +40,7 @@ export class VillageUpdateComponent implements OnInit {
     formbody['method'] = 'update';
     formbody['tablename'] = 'villagenames';
 
-    this.apiCallservice.handleData_New_python('commoninformation/commonmethods', 1, formbody, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
         alert(response['Status']);
         this.sec.commonArray['villagenames'].forEach((res) => {

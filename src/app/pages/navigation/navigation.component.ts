@@ -51,7 +51,7 @@ export class NavigationComponent implements OnInit {
     console.log('hit');
 
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, {}, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, { "method": "display" }, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray = [];
         this.securityCheck.commonArray = res;

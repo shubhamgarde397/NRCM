@@ -48,7 +48,7 @@ export class GstaddComponent implements OnInit {
     value['method'] = 'insert';
     value['tablename'] = 'gstdetails';
     this.apiCallservice.handleData_New_python
-      ('commoninformation/commonmethods', 1, value, 0)
+      ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['gstdetails'].push(res);

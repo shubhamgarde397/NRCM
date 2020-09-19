@@ -38,7 +38,7 @@ export class GstdisplayComponent implements OnInit {
       formbody['method'] = 'delete';
       formbody['tablename'] = 'gstdetails';
 
-      this.apiCallservice.handleData_New_python('commoninformation/commonmethods', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
         .subscribe((response: Response) => {
           let bb;
           let j = 0;
