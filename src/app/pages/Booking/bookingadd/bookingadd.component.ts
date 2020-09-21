@@ -12,6 +12,7 @@ import { handleFunction } from '../../../common/services/functions/handleFunctio
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import { odata } from '../../OwnerDetails/odadd/odata';
+import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 
 @Component({
   selector: 'app-bookingadd',
@@ -52,7 +53,7 @@ export class BookingaddComponent implements OnInit {
   public d = this.days[this.now.getDate()];
   // public m = this.monthNames[this.now.getMonth()];
   public m;
-  public y = this.now.getFullYear();
+  public y = '2020';
   public monthDay: number;
   public Date: string;
   public lrno: number;
@@ -89,15 +90,21 @@ export class BookingaddComponent implements OnInit {
 
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
-    public securityCheck: SecurityCheckService) {
+    public securityCheck: SecurityCheckService, public obs: ObsServiceService) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
   }
 
 
   ngOnInit() {
+    this.obs.dateService.subscribe((res: any) => {
+      let arr = res.split('_');
+      this.m = this.handlefunction.generateMonthName(arr[0]);
+      this.y = arr[1];
+    })
+
+
     this.commonArray = this.securityCheck.commonArray;
-    this.m = this.handlefunction.getNewMonths(this.commonArray.months);
     this.hireExtendingMoney = this.handlefunction.getMoney();
 
     this.model = new booking(this.Date, this.lrno, this.nop, this.PartyGST,
@@ -141,7 +148,29 @@ export class BookingaddComponent implements OnInit {
     this.impgstdetailslist = this.commonArray.impgstdetails;
     this.villagelist = this.commonArray.villagenames;
   }
-
+  storeBookingData1({ value, valid }: { value: booking, valid: boolean }, day) {
+    let formBody = {};
+    this.monthno = this.handlefunction.getMonthNumber(this.m);
+    value.Date = this.handlefunction.getDate(day, this.monthno, this.y);
+    formBody['Date'] = value.Date;
+    formBody['partyid'] = this.gstdetailslistid._id;
+    formBody['ownerid'] = this.ownerdetailslistid._id;
+    formBody['frompartyid'] = '1';
+    formBody['lrno'] = value.lrno;
+    formBody['placeid'] = value.place;
+    formBody['PaymentRecDate'] = null;
+    formBody['Payment'] = null;
+    formBody['amt'] = '0';
+    formBody['Check'] = false;
+    formBody['recDate'] = '';
+    formBody['hamt'] = value['hamt'];
+    formBody['method'] = 'insert';
+    this.submitted = true;
+    this.apiCallservice.handleData_New_python('booking', 1, formBody, 1)
+      .subscribe((res: any) => {
+        alert('Added Successfully');
+      });
+  }
   storeBookingData({ value, valid }: { value: booking, valid: boolean }, day) {
     console.log(this.ownerdetailslistid);
 

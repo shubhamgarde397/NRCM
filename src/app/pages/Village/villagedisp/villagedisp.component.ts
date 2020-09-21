@@ -27,13 +27,23 @@ export class VillagedispComponent implements OnInit {
     this.villageslist = this.commonArray.villagenames;
   };
 
+
   deleteVillageDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New(this.dbName, 'Village/deletevillagedatadetails', 1, 0, { id: id })
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'villagenames';
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
         .subscribe((response: Response) => {
-          this.sec.commonArray['villagenames'] = [];
-          this.sec.commonArray['villagenames'] = response;
-          this.villageslist = response;
+          let bb;
+          let j = 0;
+          this.villageslist.forEach((res) => {
+            if (res._id == id) { bb = j; }
+            j = j + 1;
+          })
+          this.villageslist.splice(bb, 1);
         });
     }
   };

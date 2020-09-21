@@ -36,18 +36,19 @@ export class OdaddComponent implements OnInit {
       truckno: [this.model.TruckNo, [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]],
       oname: [this.model.OwnerName, Validators.required],
       pan: [this.model.PAN, [Validators.required, Validators.pattern('^[A-Z]{5}[0-9]{4}[A-Z]{1}')]],
-      mobileno: [this.model.MobileNo, [Validators.required, Validators.pattern('^[9|8|7|6]{1}[0-9]{9}')]]
+      mobileno: ['9999999999', [Validators.required, Validators.pattern('^[9|8|7|6]{1}[0-9]{9}')]]
     });
   }
 
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {
     this.submitted = true;
-    // this.apiCallservice.handleData_New_Temp('ownerdetails', 1, value, 0)
-    this.apiCallservice.handleData_New(0, 'ownerDetails/addownerdetailsdata', 1, 0, value, 0)
+    value['method'] = 'insert';
+    value['tablename'] = 'ownerdetails';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
-        this.securityCheck.commonArray['ownerdetails'] = [];
-        this.securityCheck.commonArray['ownerdetails'] = res;
+        this.securityCheck.commonArray['ownerdetails'].push(res);
       });
   }
 

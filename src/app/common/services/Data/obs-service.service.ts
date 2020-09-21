@@ -11,6 +11,10 @@ export class ObsServiceService {
 
   public pipeService = new BehaviorSubject([]);
   public pipe = this.pipeService.asObservable();
+
+  public dateService = new BehaviorSubject([]);
+  public monthYear = this.dateService.asObservable();
+
   constructor() { }
   resetData() {
     this.dataService.next([]);
@@ -52,5 +56,9 @@ export class ObsServiceService {
   }
   savePipe(data) {
     this.pipeService.next(data);
+  }
+
+  saveDate(data) {
+    this.dateService.next(data);
   }
 }

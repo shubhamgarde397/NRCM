@@ -46,21 +46,32 @@ export class OwnerUpdateComponent implements OnInit {
   }
   change = function (data) {
     this.submitted = true;
-    const id = this.handledata.Data._id;
-    const truckno = data.value.truckno;
-    const oname = data.value.oname;
-    const pan = data.value.pan;
-    const mobileno = data.value.mobileno;
-    this.arr = { truckno, oname, pan, mobileno, id };
-    console.log(this.arr);
 
-    this.apiCallservice.handleData_New(0, 'ownerDetails/updateownerdetailsdata', 3, 0, this.arr)
+    let formbody = {}
+    formbody['truckno'] = data.value.truckno;
+    formbody['oname'] = data.value.oname;
+    formbody['pan'] = data.value.pan;
+    formbody['mobileno'] = data.value.mobileno;
+    formbody['_id'] = this.handledata.Data._id;
+    formbody['method'] = 'update';
+    formbody['tablename'] = 'ownerdetails';
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
-        this.sec.commonArray['ownerdetails'] = [];
-        this.sec.commonArray['ownerdetails'] = response;
+        alert(response['Status']);
+        this.sec.commonArray['ownerdetails'].forEach((res) => {
+          if (res._id == this.handledata.Data._id) {
+            res['truckno'] = data.value.truckno;
+            res['oname'] = data.value.oname;
+            res['pan'] = data.value.pan;
+            res['mobileno'] = data.value.mobileno;
+          }
+        })
+
         this.show = !this.show;
         this._location.back();
       });
+
   };
 
 }

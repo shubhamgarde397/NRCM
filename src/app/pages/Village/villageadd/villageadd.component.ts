@@ -34,12 +34,13 @@ export class VillageaddComponent implements OnInit {
 
   storeVillageData({ value, valid }: { value: village, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New
-      (this.dbName, 'Village/addvillagedata', 1, 0, value)
+    value['method'] = 'insert';
+    value['tablename'] = 'villagenames';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
-        this.securityCheck.commonArray['villagenames'] = [];
-        this.securityCheck.commonArray['villagenames'] = res;
+        this.securityCheck.commonArray['villagenames'].push(res);
       });
   }
 
@@ -47,3 +48,4 @@ export class VillageaddComponent implements OnInit {
     this.submitted = !this.submitted;
   }
 }
+

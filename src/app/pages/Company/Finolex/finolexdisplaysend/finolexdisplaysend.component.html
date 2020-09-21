@@ -57,17 +57,15 @@
 
           <th>Date</th>
           <th>LRNO</th>
+          <!-- <th>Party Name</th>
+          <th>GST No.</th> -->
           <th>Party Name</th>
-          <th>GST No.</th>
-          <th>Party Name</th>
-          <th>GST No.</th>
+          <!-- <th>GST No.</th> -->
           <th>Truck No</th>
           <th>Hire</th>
           <th>Place</th>
-          <th>Owner</th>
-          <th>PAN</th>
           <th>Amount</th>
-
+          <th>Delete</th>
         </tr>
       </thead>
 
@@ -90,17 +88,19 @@
           <td>{{i.amt}}</td> -->
           <td>{{i.Date|date:'dd-MM-yyyy'}}</td>
           <td>{{i.lrno}}</td>
-          <td>{{i.FromParty}}</td>
-          <td>{{i.FromPartyGST}}</td>
-          <td>{{i.nop}}</td>
-          <td>{{i.ToPartyGST}}</td>
-          <td>{{i.truckno}}</td>
+          <!-- <td>{{i.FromParty}}</td>
+          <td>{{i.FromPartyGST}}</td> -->
+          <td>{{i.partyDetails[0].name}}</td>
+          <!-- <td>{{i.ToPartyGST}}</td> -->
+          <td>{{i.ownerDetails[0].truckno}}</td>
           <td>{{i.hamt}}</td>
-          <td>{{i.place}}</td>
-          <td>{{i.OwnerName}}</td>
-          <td>{{i.PAN}}</td>
+          <td>{{i.villageDetails[0].village_name}}</td>
           <td>{{i.amt}}</td>
-
+          <td>
+            <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button>
+          </td>
         </tr>
       </tbody>
     </table>

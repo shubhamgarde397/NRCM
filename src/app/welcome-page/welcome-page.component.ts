@@ -17,7 +17,6 @@ export class WelcomePageComponent implements OnInit {
     public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
-    this.getInformationData();
   }
 
   findBin() {
@@ -36,15 +35,6 @@ export class WelcomePageComponent implements OnInit {
     arr = [];
   }
 
-  getInformationData() {
-    this.spin.show();
-    this.apiCallservice.handleData_New(0, 'Information/getCommonInformation', 1, 0)
-      .subscribe((res: any) => {
-        this.securityCheck.commonArray = [];
-        this.securityCheck.commonArray = res;
-        this.spin.hide();
-      });
-  }
 
   storeImage(image) {
     console.log(image);

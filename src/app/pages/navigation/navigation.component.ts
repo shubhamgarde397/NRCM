@@ -6,6 +6,8 @@ import { HandleDataService } from '../../common/services/Data/handle-data.servic
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { NotificationDisplayComponent } from '../Notification/notification-display/notification-display.component';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
+import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 // import * as moment from 'moment';
 
 @Component({
@@ -27,13 +29,17 @@ export class NavigationComponent implements OnInit {
   public year = this.now.getFullYear();
   public dbName = 'NRCM_Information';
   public AUTH;
+  public date = new Date();
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
     public location: Location,
     public handledata: HandleDataService,
     public securit: SecurityCheckService,
-    public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService
+    public securityCheck: SecurityCheckService,
+    public spin: Ng4LoadingSpinnerService,
+    public obs: ObsServiceService,
+    public hF: handleFunction
   ) { }
 
 
@@ -45,22 +51,13 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.getInformationData();
     this.AUTH = this.securit.AUTH;
-    this.apiCallservice.handleData_New(this.dbName, 'notification/countNotifications', 1, 0)
-      .subscribe((res: Response) => {
-        this.data = res;
-        if (this.data > 0) {
-          (<HTMLElement>document.querySelector('.NotificationBell')).style.color = 'red';
-        } else {
-          (<HTMLElement>document.querySelector('.NotificationBell')).style.color = 'white';
-        }
-      });
+    this.month = this.date.getMonth() + 1
+    this.year = this.date.getFullYear();
+    this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
   }
 
   getInformationData() {
-    console.log('hit');
-
-    this.spin.show();
-    this.apiCallservice.handleData_New(0, 'Information/getCommonInformation', 1, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, { "method": "display" }, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray = [];
         this.securityCheck.commonArray = res;
