@@ -12,6 +12,7 @@ import { handleFunction } from '../../../common/services/functions/handleFunctio
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import { odata } from '../../OwnerDetails/odadd/odata';
+import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 
 @Component({
   selector: 'app-bookingadd',
@@ -89,16 +90,21 @@ export class BookingaddComponent implements OnInit {
 
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
-    public securityCheck: SecurityCheckService) {
+    public securityCheck: SecurityCheckService, public obs: ObsServiceService) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
   }
 
 
   ngOnInit() {
+    this.obs.dateService.subscribe((res: any) => {
+      let arr = res.split('_');
+      this.m = this.handlefunction.generateMonthName(arr[0]);
+      this.y = arr[1];
+    })
+
+
     this.commonArray = this.securityCheck.commonArray;
-    this.m = 'September'
-    // this.m = this.handlefunction.getNewMonths(this.commonArray.months);
     this.hireExtendingMoney = this.handlefunction.getMoney();
 
     this.model = new booking(this.Date, this.lrno, this.nop, this.PartyGST,
