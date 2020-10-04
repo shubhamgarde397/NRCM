@@ -57,10 +57,7 @@
 
           <th>Date</th>
           <th>LRNO</th>
-          <!-- <th>Party Name</th>
-          <th>GST No.</th> -->
           <th>Party Name</th>
-          <!-- <th>GST No.</th> -->
           <th>Truck No</th>
           <th>Hire</th>
           <th>Place</th>
@@ -72,26 +69,9 @@
 
       <tbody>
         <tr *ngFor="let i of finolexdetailslist;let j = index">
-
-          <!-- <td>{{i.Date|date:'dd-MM-yyyy'}}</td>
-          <td>{{i.lrno}}</td>
-          <td>{{i.FromParty}}</td>
-          <td>{{i.FromPartyGST}}</td>
-          <td>{{commonArray.gstdetails[i.ToParty-1].name}}
-            <td>{{i.ToPartyGST}}</td>
-          <td>{{commonArray.ownerdetails[i.truckno-1].truckno}}</td>
-          <td>{{i.hamt}}</td>
-          <td>{{commonArray.villagenames[i.place-1].village_name}}
-          </td>
-          <td>{{commonArray.ownerdetails[i.truckno-1].oname}}
-          <td>{{commonArray.ownerdetails[i.truckno-1].pan}}
-          <td>{{i.amt}}</td> -->
           <td>{{i.Date|date:'dd-MM-yyyy'}}</td>
           <td>{{i.lrno}}</td>
-          <!-- <td>{{i.FromParty}}</td>
-          <td>{{i.FromPartyGST}}</td> -->
           <td>{{i.partyDetails[0].name}}</td>
-          <!-- <td>{{i.ToPartyGST}}</td> -->
           <td>{{i.ownerDetails[0].truckno}}</td>
           <td>{{i.hamt}}</td>
           <td>{{i.villageDetails[0].village_name}}</td>

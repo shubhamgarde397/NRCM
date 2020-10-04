@@ -151,6 +151,10 @@ export const routes: Routes =
                         loadChildren: './pages/advance-account/advance-account.module#AdvanceAccountModule'
                     },
                     {
+                        path: 'BOOKING_OTHER_HANDLER',
+                        loadChildren: './pages/BookingOther/app.module#AppModule'
+                    },
+                    {
                         path: 'PochAccount',
                         loadChildren: './pages/PochAccount/poch-account.module#PochAccountModule'
                     },

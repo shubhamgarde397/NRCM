@@ -158,8 +158,8 @@ export class BookingaddComponent implements OnInit {
     formBody['frompartyid'] = '1';
     formBody['lrno'] = value.lrno;
     formBody['placeid'] = value.place;
-    formBody['PaymentRecDate'] = null;
-    formBody['Payment'] = null;
+    formBody['PaymentRecDate'] = "";
+    formBody['Payment'] = "";
     formBody['amt'] = '0';
     formBody['Check'] = false;
     formBody['recDate'] = '';
@@ -216,6 +216,8 @@ export class BookingaddComponent implements OnInit {
 
 
   findgst() {
+    console.log(this.nopid);
+
     this.gstdetailslistid = this.handlefunction.findgst(this.nopid, this.gstdetailslist);
     this.gstID = true;
   }
