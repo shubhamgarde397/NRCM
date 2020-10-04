@@ -32,11 +32,20 @@ export class RegularPartyDispComponent implements OnInit {
 
   deleteRegularPartyDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New(0, 'regularParty/deleteregulardatadetails', 1, 0, { id: id })
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'regularparty';
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
         .subscribe((response: Response) => {
-          this.sec.commonArray['regularparty'] = [];
-          this.sec.commonArray['regularparty'] = response;
-          this.regulardatalist = response;
+          let bb;
+          let j = 0;
+          this.regulardatalist.forEach((res) => {
+            if (res._id == id) { bb = j; }
+            j = j + 1;
+          })
+          this.regulardatalist.splice(bb, 1);
         });
     }
   };
@@ -52,3 +61,4 @@ export class RegularPartyDispComponent implements OnInit {
     this.fetchData();
   }
 }
+

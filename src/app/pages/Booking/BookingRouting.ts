@@ -30,26 +30,7 @@ export const BookingRouting: Routes =
                     },
                     {
                         path: 'BookAdd',
-                        component: BookingaddComponent,
-                        children:
-                            [
-                                // {
-                                //     path: 'GST_HANDLER',
-                                //     loadChildren: './pages/GST/app.module#AppModule'
-                                // },
-                                // {
-                                //     path: 'OWNER_HANDLER',
-                                //     component: OdaddComponent
-                                // },
-                                // {
-                                //     path: 'IMP_GST_HANDLER',
-                                //     component: ImpgstaddComponent,
-                                // },
-                                // {
-                                //     path: 'VILLAGE_HANDLER',
-                                //     component: VillageaddComponent,
-                                // }
-                            ]
+                        component: BookingaddComponent
                     },
                     {
                         path: 'BookDispMain',

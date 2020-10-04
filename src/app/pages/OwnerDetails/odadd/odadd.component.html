@@ -38,7 +38,8 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A">
+        <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A"
+          pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}">
       </div>
       <div class="col-xs-2">
         <div [hidden]="myFormGroup.controls.pan.valid">

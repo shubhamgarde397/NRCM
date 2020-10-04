@@ -33,15 +33,22 @@ export class RegularPartyUpdateComponent implements OnInit {
       name: [this.handledata.Data.name, [Validators.required]]
     });
   }
+
   change = function (data) {
-    const name = data.value.name;
-    const id = this.handledata.Data._id;
-    this.arr = { name, id };
-    this.apiCallservice.handleData_New(0, 'regularParty/updateregularparty', 3, 0, this.arr)
+    this.submitted = true;
+    let formbody = {}
+    formbody['name'] = data.value.name;
+    formbody['_id'] = this.handledata.Data._id;
+    formbody['method'] = 'update';
+    formbody['tablename'] = 'regularparty';
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
-        alert('done');
-        this.sec.commonArray['regularparty'] = [];
-        this.sec.commonArray['regularparty'] = response;
+        alert(response['Status']);
+        this.sec.commonArray['regularparty'].forEach((res) => {
+          if (res._id == this.handledata.Data._id) { res['name'] = data.value.name }
+        })
+
         this.show = !this.show;
         this._location.back();
       });
