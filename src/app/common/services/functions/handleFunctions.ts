@@ -113,6 +113,10 @@ export class handleFunction {
                     return gstArray[data.slice(-1)];
                 case 26:
                     return gstArray[data.slice(-2)];
+                case 27:
+                    return gstArray[data.slice(-3)];
+                case 28:
+                    return gstArray[data.slice(-4)];
             }
         }
     }
@@ -127,6 +131,8 @@ export class handleFunction {
                     return ownerArray[data.slice(-2)];
                 case 27:
                     return ownerArray[data.slice(-3)];
+                case 27:
+                    return ownerArray[data.slice(-4)];
             }
         }
     }

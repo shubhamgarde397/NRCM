@@ -36,13 +36,20 @@ export class RegularTruckUpdateComponent implements OnInit {
     });
   }
   change = function (data) {
-    const regulartruck = data.value.regulartruck;
-    const id = this.handledata.Data._id;
-    this.arr = { regulartruck, id };
-    this.apiCallservice.handleData_New(0, 'regularTruck/updateregulartruckdata', 3, 0, this.arr)
+    this.submitted = true;
+    let formbody = {}
+    formbody['regulartruck'] = data.value.regulartruck;
+    formbody['_id'] = this.handledata.Data._id;
+    formbody['method'] = 'update';
+    formbody['tablename'] = 'RegularTruck';
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
-        this.sec.commonArray['RegularTruck'] = [];
-        this.sec.commonArray['RegularTruck'] = response;
+        alert(response['Status']);
+        this.sec.commonArray['RegularTruck'].forEach((res) => {
+          if (res._id == this.handledata.Data._id) { res['regulartruck'] = data.value.regulartruck }
+        })
+
         this.show = !this.show;
         this._location.back();
       });

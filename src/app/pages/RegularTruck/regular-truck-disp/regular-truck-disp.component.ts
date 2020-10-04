@@ -31,11 +31,20 @@ export class RegularTruckDispComponent implements OnInit {
 
   deleteRegularTruckDetails = function (id) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New(0, 'regularTruck/delregulartruckdata', 1, 0, { id: id })
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'RegularTruck';
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
         .subscribe((response: Response) => {
-          this.sec.commonArray['RegularTruck'] = [];
-          this.sec.commonArray['RegularTruck'] = response;
-          this.regulartrucklist = response;
+          let bb;
+          let j = 0;
+          this.regulartrucklist.forEach((res) => {
+            if (res._id == id) { bb = j; }
+            j = j + 1;
+          })
+          this.regulartrucklist.splice(bb, 1);
         });
     }
   };

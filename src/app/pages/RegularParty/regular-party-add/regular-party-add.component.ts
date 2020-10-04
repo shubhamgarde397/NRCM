@@ -32,16 +32,18 @@ export class RegularPartyAddComponent implements OnInit {
     });
   }
 
+
   storeRegularPartyData({ value, valid }: { value: data, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New(0, 'regularParty/addregularpartydata', 1, 0, value)
+    value['method'] = 'insert';
+    value['tablename'] = 'regularparty';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
-        this.securityCheck.commonArray['regularparty'] = [];
-        this.securityCheck.commonArray['regularparty'] = res;
+        this.securityCheck.commonArray['regularparty'].push(res);
       });
   }
-
   back() {
     this.submitted = !this.submitted;
   }

@@ -37,11 +37,13 @@ export class RegularTruckAddComponent implements OnInit {
 
   storeRegularTruckData({ value, valid }: { value: regulartruck, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New(0, 'regularTruck/addregulartruckdata', 1, 0, value)
+    value['method'] = 'insert';
+    value['tablename'] = 'RegularTruck';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
-        this.securityCheck.commonArray['RegularTruck'] = [];
-        this.securityCheck.commonArray['RegularTruck'] = res;
+        this.securityCheck.commonArray['RegularTruck'].push(res);
       });
   }
   back() {

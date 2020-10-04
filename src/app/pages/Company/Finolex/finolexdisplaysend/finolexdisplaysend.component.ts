@@ -128,14 +128,9 @@ export class FinolexdisplaysendComponent implements OnInit {
   }
   exportAsXLSX(): void {
 
-    const tab = this.month + this.year;
-    console.log(tab);
-    this.newAuthor = this.apiCallservice.handleData_New(this.dbName, 'Finolex/getFinolexDetails', 1, 1, {}, tab)
-      .subscribe((res: Response) => {
-        this.createData(res)
-          .then((data) => {
-            this.excelService.exportAsExcelFile(data, 'GST_ACCOUNT_DETAILS_' + this.month + '_' + this.year);
-          });
+    this.createData(this.finolexdetailslist)
+      .then((data) => {
+        this.excelService.exportAsExcelFile(data, 'GST_ACCOUNT_DETAILS_' + this.month + '_' + this.year);
       });
   }
 
@@ -146,15 +141,15 @@ export class FinolexdisplaysendComponent implements OnInit {
         dataArray.push({
           'Date': element.Date,
           'Lrno': element.lrno,
-          'From Party': element.FromParty,
-          'From Party GST': element.FromPartyGST,
-          'Name Of Party': element.nop,
-          'To Party GST': element.ToPartyGST,
-          'Truck No': element.truckno,
+          'From Party': 'Finolex Industries Limited',
+          'From Party GST': '27AAACF2634A1Z9',
+          'Name Of Party': element.partyDetails[0].name,
+          'To Party GST': element.partyDetails[0].gst,
+          'Truck No': element.ownerDetails[0].truckno,
           'Hire Amount': element.hamt,
-          'Place': element.place,
-          'Owner Name': element.OwnerName,
-          'PAN': element.PAN
+          'Place': element.villageDetails[0].village_name,
+          'Owner Name': element.ownerDetails[0].oname,
+          'PAN': element.ownerDetails[0].pan
         });
       });
       resolve(dataArray);
