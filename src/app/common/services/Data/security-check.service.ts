@@ -8,7 +8,7 @@ export class SecurityCheckService {
   public monthNames;
   public commonArray = [];
   public AUTH = false;
-
+  public username;
   constructor() {
     this.yearNames = this.generateYears();
   }
@@ -30,6 +30,9 @@ export class SecurityCheckService {
       arr.push(startYear + i + 1)
     }
     return arr;
+  }
+  setUsername(username) {
+    this.username = username;
   }
 
 }

@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
   login({ value, valid }: { value: login, valid: boolean }) {
     this.spinnerService.show();
     // this.apiCallservice.logout();
+    this.security.setUsername(value.username);
     this.apiCallservice.signIn(value.username, value.password);
   }
 
