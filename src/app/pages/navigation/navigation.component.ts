@@ -18,7 +18,6 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 })
 @Input()
 export class NavigationComponent implements OnInit {
-  @ViewChild('Bell') ndc: ElementRef;
   data;
   notRecievedCount;
 
@@ -31,6 +30,7 @@ export class NavigationComponent implements OnInit {
   public AUTH;
   public date = new Date();
   public username;
+  public role = 6;
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -43,14 +43,10 @@ export class NavigationComponent implements OnInit {
     public hF: handleFunction
   ) { }
 
-
-  // ngAfterViewChecked() {
-  //   console.log(this.ndc);
-
-  // }
-
   ngOnInit() {
     this.username = this.securityCheck.username;
+
+
     this.getInformationData();
     this.AUTH = this.securit.AUTH;
     this.month = this.date.getMonth() + 1
@@ -64,6 +60,8 @@ export class NavigationComponent implements OnInit {
       .subscribe((res: any) => {
         this.securityCheck.commonArray = [];
         this.securityCheck.commonArray = res;
+        this.securityCheck.role = res.Role;
+        this.role = res.Role;
         this.spin.hide();
       });
   }
