@@ -14,7 +14,7 @@
         </a>
       </li>
 
-      <li class="dropdown" *ngIf="AUTH">
+      <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">Company
           <span class="caret"></span>
         </a>
@@ -25,7 +25,7 @@
         </ul>
       </li>
 
-      <li class="dropdown" *ngIf="AUTH">
+      <li class="dropdown" *ngIf="role==1||role==2||role==3">
         <a class="dropdown-toggle" data-toggle="dropdown">Book
           <span class="caret"></span>
         </a>
@@ -37,7 +37,7 @@
             <a routerLink="LRNumber_HANDLER">LR Number</a>
           </li>
           <li>
-            <a routerLink="BCE_HANDLER">BookingCashExpenses</a>
+            <a routerLink="BCE_HANDLER" *ngIf="role==1||role==2">BookingCashExpenses</a>
           </li>
         </ul>
       </li>
@@ -50,7 +50,7 @@
           <li>
             <a routerLink="TURN_BOOK_HANDLER">Turn Book</a>
           </li>
-          <li>
+          <li *ngIf="role==1||role==2">
             <a routerLink="DAILY_LOADING_HANDLER">Daily Loading</a>
           </li>
         </ul>
@@ -60,7 +60,7 @@
 
       </li>
 
-      <li class="dropdown" *ngIf="AUTH">
+      <li class="dropdown" *ngIf="role==1||role==2||role==3">
         <a class="dropdown-toggle" data-toggle="dropdown">DailyData
           <span class="caret"></span>
         </a>
@@ -73,7 +73,7 @@
         </ul>
       </li>
 
-      <li class="dropdown" *ngIf="AUTH">
+      <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown" routerLink="TPTHire_HANDLER">Tpt Hire
           <span class="caret"></span>
         </a>
@@ -81,7 +81,7 @@
       </li>
 
 
-      <li class="dropdown" *ngIf="AUTH">
+      <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">Accounts
           <span class="caret"></span>
         </a>
@@ -105,7 +105,7 @@
 
 
 
-      <li class="dropdown" *ngIf="AUTH">
+      <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">Canara Bank
           <span class="caret"></span>
         </a>
@@ -128,7 +128,7 @@
         </ul>
       </li>
 
-      <li class="dropdown" *ngIf="AUTH">
+      <li class="dropdown" *ngIf="role==1||role==2">
 
         <a class="dropdown-toggle" data-toggle="dropdown">Details
           <span class="caret"></span>
@@ -142,18 +142,6 @@
         </ul>
 
 
-      </li>
-
-      <li>
-        <div class="NotificationBell" #Bell>
-          <i class="material-icons" routerLink="NotificationLL">notifications</i>
-        </div>
-        <!-- <div style="color: red" *ngIf="notRecievedCount!=0">red
-          <i class="material-icons" routerLink="NotificationLL">notifications</i>
-        </div>
-        <div style="color: white" *ngIf="notRecievedCount==0">white
-          <i class="material-icons" routerLink="NotificationLL">notifications</i>
-        </div> -->
       </li>
 
 

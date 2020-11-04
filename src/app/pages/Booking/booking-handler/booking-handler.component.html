@@ -9,11 +9,12 @@
     <button mat-raised-button class="btn-danger btn-sm btn-just-icon pull-right" routerLink="BookAdd">
       <i class="material-icons">add</i>
     </button>
-    <button mat-raised-button class="btn-success btn-sm btn-just-icon pull-right" routerLink="BookDispMain">
+    <button mat-raised-button class="btn-success btn-sm btn-just-icon pull-right" routerLink="BookDispMain"
+      *ngIf="role==1||role==2">
       <i class="material-icons">desktop_windows</i>
     </button>
   </div>
-  <br/>
+  <br />
   <div>
     <router-outlet></router-outlet>
   </div>

@@ -4,17 +4,19 @@
     <div class="col-sm-2">
 
 
-      <a class="btn btn-warning btn-block" routerLink="GST_HANDLER" *ngIf="AUTH">GST</a>
+      <a class="btn btn-warning btn-block" routerLink="GST_HANDLER" *ngIf="role==1||role==2">GST</a>
       <a class="btn btn-warning btn-block" routerLink="OWNER_HANDLER">Owner</a>
-      <a class="btn btn-warning btn-block" routerLink="IMP_GST_HANDLER" *ngIf="AUTH">Imp GST</a>
+      <a class="btn btn-warning btn-block" routerLink="IMP_GST_HANDLER" *ngIf="role==1||role==2">Imp GST</a>
       <a class="btn btn-warning btn-block" routerLink="DRIVER_HANDLER">Driver</a>
-      <a class="btn btn-warning btn-block" routerLink="REGULAR_PARTY_HANDLER">Regular Party</a>
+      <a class="btn btn-warning btn-block" routerLink="REGULAR_PARTY_HANDLER" *ngIf="role==1||role==2">Regular Party</a>
       <a class="btn btn-warning btn-block" routerLink="REGULAR_TRUCK_HANDLER">Regular Truck</a>
       <a class="btn btn-warning btn-block" routerLink="VILLAGE_HANDLER">Village</a>
-      <a class="btn btn-warning btn-block" routerLink="BANKDETAILS_HANDLER">Bank Details</a>
-      <a class="btn btn-warning btn-block" routerLink="BANKNAME_HANDLER">Bank Name</a>
-      <a class="btn btn-warning btn-block" routerLink="TRUCKBANKDETAILS_HANDLER">Truck Bank Details</a>
-      <a class="btn btn-warning btn-block" routerLink="OWNER_DEATILED_HANDLER">Owner Details</a>
+      <a class="btn btn-warning btn-block" routerLink="BANKDETAILS_HANDLER" *ngIf="role==1||role==2">Bank Details</a>
+      <a class="btn btn-warning btn-block" routerLink="BANKNAME_HANDLER" *ngIf="role==1||role==2">Bank Name</a>
+      <a class="btn btn-warning btn-block" routerLink="TRUCKBANKDETAILS_HANDLER" *ngIf="role==1||role==2">Truck Bank
+        Details</a>
+      <a class="btn btn-warning btn-block" routerLink="OWNER_DEATILED_HANDLER" *ngIf="role==1||role==2">Owner
+        Details</a>
       <a class="btn btn-warning btn-block" routerLink="MonthName_Handler">Months</a>
 
 

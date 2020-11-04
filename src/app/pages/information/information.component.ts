@@ -10,10 +10,12 @@ export class informationComponent implements OnInit {
 
   toggle = true;
   public AUTH;
+  public role = 6;
   constructor(
     public securit: SecurityCheckService) { }
 
   ngOnInit() {
     this.AUTH = this.securit.AUTH;
+    this.role = this.securit.role;
   }
 }

@@ -1,24 +1,5 @@
 <div>
-  <button class="btn btn-primary" (click)="refreshData()">
-    <font color="white" tooltip="Refresh The Data">
-      <span class="glyphicon glyphicon-refresh"></span>
-    </font>
-  </button>
-
-
-
-  <div *ngIf="!togglemenu">
-    <div class="well">
-      <h1 style="text-align: center;">
-        Duplicate LRNO found, Please check LR again, Thank you!
-      </h1>
-      <div class="row">
-        <button class="btn btn-danger" style="width:100%" (click)="toggle()">Click to go Back</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="well container" *ngIf="togglemenu">
+  <div class="well container">
 
     <form [formGroup]="myFormGroup" (ngSubmit)="storeBookingData1(myFormGroup,day.value)" submitted=true
       enctype="multipart/form data" action="/" name="myform" id="myform">
@@ -251,7 +232,7 @@
           </div>
           <!--LRNO-->
           <!--Hire Amount-->
-          <div class="form-group row">
+          <div class="form-group row" *ngIf='role==1||role==2'>
 
             <div class="col-xs-1">
               <label for="hamt"> Hire Amount </label>

@@ -87,7 +87,7 @@ export class BookingaddComponent implements OnInit {
   public Pan: string;
   public MobileNo: string;
   public mobilenoauto;
-
+  public role = 6;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService) {
@@ -116,7 +116,7 @@ export class BookingaddComponent implements OnInit {
       // FromParty: [this.model.FromParty, Validators.required],
       truckno: [this.model.truckno, Validators.required],
       place: [this.model.place, Validators.required],
-      hamt: [this.model.hamt, Validators.required],
+      hamt: ['0'],
       PaymentRecDate: [this.model.PaymentRecDate],
       Payment: [this.model.Payment],
       amt: [this.model.amt]
@@ -132,6 +132,7 @@ export class BookingaddComponent implements OnInit {
 
 
     this.fetchBasic();
+    this.role = this.securityCheck.role;
   }
 
   ngAfterViewInit() {
