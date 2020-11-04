@@ -25,7 +25,7 @@ export const BookingRouting: Routes =
                 [
                     {
                         path: '',
-                        redirectTo: 'BookDispMain',
+                        redirectTo: 'BookAdd',
                         pathMatch: 'full'
                     },
                     {

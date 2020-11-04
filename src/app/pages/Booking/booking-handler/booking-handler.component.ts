@@ -9,6 +9,7 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 export class BookingHandlerComponent implements OnInit {
   public check = true;
   public passwordCheck: string;
+  public role = 6;
   constructor(
     public security: SecurityCheckService
   ) { }
@@ -24,6 +25,7 @@ export class BookingHandlerComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.role = this.security.role;
   }
 
 }

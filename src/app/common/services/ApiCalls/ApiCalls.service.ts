@@ -94,7 +94,6 @@ export class ApiCallsService {
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
     this.URL = this.getfullapi.getFullAPI(api);
-    console.log(this.URL);
     switch (apiCall) {
       case 0: return this.http.get(this.URL).pipe(map((res) => res));
       case 1: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
