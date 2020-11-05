@@ -50,6 +50,7 @@ export class FinolexdisplaysendComponent implements OnInit {
   public modelSubmitted: dataForMail;
   public submitted = false;
   public commonArray;
+  public updateDataContent;
   constructor(
     public apiCallservice: ApiCallsService,
     public handlefunction: handleFunction,
@@ -125,6 +126,17 @@ export class FinolexdisplaysendComponent implements OnInit {
           this.finolexdetailslist.splice(bb, 1);
         });
     }
+  }
+  showUpdate(data){
+this.updateDataContent=data;
+this.show=!this.show;
+  }
+  update(data){
+    //show all the data in input boxes and editable, once all the data is modified, click on update to hit an update api and redirect user to the previous page
+    //
+  }
+  back(){
+    this.show=!this.show;
   }
   exportAsXLSX(): void {
 

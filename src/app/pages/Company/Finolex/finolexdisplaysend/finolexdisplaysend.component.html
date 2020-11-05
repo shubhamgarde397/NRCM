@@ -62,6 +62,7 @@
           <th>Hire</th>
           <th>Place</th>
           <th>Amount</th>
+          <th>Update</th>
           <th>Delete</th>
         </tr>
       </thead>
@@ -77,6 +78,11 @@
           <td>{{i.villageDetails[0].village_name}}</td>
           <td>{{i.amt}}</td>
           <td>
+            <button mat-raised-button (click)="update(i)" class="btn-warning btn-sm btn-just-icon">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>
+          <td>
             <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
               <i class="material-icons">delete_forever</i>
             </button>
@@ -84,6 +90,14 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  <div *ngIf="show">
+{{updateDataContent}}
+<!-- Show input boxes here and show the user all the fields editable -->
+<!-- truckno and party only be allowed to edit by superadmin else delete and add new -->
+<button mat-raised-button (click)="back()" class="btn-danger btn-sm btn-just-icon">
+  <i class="material-icons">edit</i>
+</button>
   </div>
 </div>
 
