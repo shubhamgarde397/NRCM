@@ -51,6 +51,18 @@ export class FinolexdisplaysendComponent implements OnInit {
   public submitted = false;
   public commonArray;
   public updateDataContent;
+  public myFormGroup: FormGroup;
+  public ownerdetailslist;
+  public gstdetailslist;
+  public villagelist;
+  public updateDate;
+  public updatenop;
+  public updatelrno;
+  public updatetruckno;
+  public updateplace;
+  public updatehamt;
+  public gstdetailslistid = {};
+  public ownerdetailslistid = {};
   constructor(
     public apiCallservice: ApiCallsService,
     public handlefunction: handleFunction,
@@ -61,16 +73,26 @@ export class FinolexdisplaysendComponent implements OnInit {
     public obs: ObsServiceService) { }
 
   ngOnInit() {
+
     this.yearNames = this.securityCheck.yearNames;
     this.commonArray = this.securityCheck.commonArray;
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
-
+    this.fetchBasic();
     this.model = new dataForMail(this.Mailsubject, this.Mailbody);
     this.myFormGroupE = this.formBuilder.group({
       password: ['', Validators.required]
     });
 
+  }
+
+  fetchBasic() {
+    this.ownerdetailslist = [];
+    this.gstdetailslist = [];
+    this.villagelist = [];
+    this.ownerdetailslist = this.commonArray.ownerdetails;
+    this.gstdetailslist = this.commonArray.gstdetails;
+    this.villagelist = this.commonArray.villagenames;
   }
 
   getMonthsLocal() {
@@ -127,16 +149,47 @@ export class FinolexdisplaysendComponent implements OnInit {
         });
     }
   }
-  showUpdate(data){
-this.updateDataContent=data;
-this.show=!this.show;
+  showUpdate(data) {
+    this.updateDataContent = data;
+
+    this.updateDate = data.Date.slice(-2);
+    this.updatenop = data.partyDetails[0].name;
+    this.updatelrno = data.lrno;
+    this.updatetruckno = data.ownerDetails[0].truckno;
+    this.updateplace = data.villageDetails[0].village_name;
+    this.updatehamt = data.hamt;
+
+
+    this.show = !this.show;
   }
-  update(data){
+  update(data) {
+    console.log(this.updateDataContent);
+
+    console.log(this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id']);
+    console.log(this.updatelrno);
+    console.log(this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id']);
+    if (this.updateDataContent.villageDetails[0].village_name === this.updateplace) {
+      console.log(this.updateDataContent.villageDetails[0]._id);
+    }
+    else {
+      console.log(this.handlefunction.findplace(this.updateplace));
+    }
+
+    console.log(this.updatehamt);
+
     //show all the data in input boxes and editable, once all the data is modified, click on update to hit an update api and redirect user to the previous page
     //
   }
-  back(){
-    this.show=!this.show;
+
+  findgst() {
+    this.gstdetailslistid = this.handlefunction.findgst(this.updatenop, this.gstdetailslist);
+  }
+
+  findowner() {
+    this.ownerdetailslistid = this.handlefunction.findowner(this.updatetruckno, this.ownerdetailslist);
+  }
+  back() {
+    this.show = !this.show;
   }
   exportAsXLSX(): void {
 

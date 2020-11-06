@@ -131,8 +131,28 @@ export class handleFunction {
                     return ownerArray[data.slice(-2)];
                 case 27:
                     return ownerArray[data.slice(-3)];
-                case 27:
+                case 28:
                     return ownerArray[data.slice(-4)];
+            }
+        }
+    }
+
+    findplace(trucknoid) {
+        if (trucknoid !== 'Select Truck Number') {
+            const data = trucknoid;
+            console.log(data);
+
+            switch (data.length) {
+                case 24:
+                    return data;
+                case 25:
+                    return data.slice(-1);
+                case 26:
+                    return data.slice(-2);
+                case 27:
+                    return data.slice(-3);
+                case 28:
+                    return data.slice(-4);
             }
         }
     }
