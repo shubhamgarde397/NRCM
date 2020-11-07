@@ -63,6 +63,7 @@ export class FinolexdisplaysendComponent implements OnInit {
   public updatehamt;
   public gstdetailslistid = {};
   public ownerdetailslistid = {};
+  public days = [];
   constructor(
     public apiCallservice: ApiCallsService,
     public handlefunction: handleFunction,
@@ -70,7 +71,9 @@ export class FinolexdisplaysendComponent implements OnInit {
     public securityCheck: SecurityCheckService
     , public formBuilder: FormBuilder,
     public spinner: Ng4LoadingSpinnerService,
-    public obs: ObsServiceService) { }
+    public obs: ObsServiceService) {
+    this.days = this.handlefunction.generateDays();
+  }
 
   ngOnInit() {
 
@@ -158,28 +161,46 @@ export class FinolexdisplaysendComponent implements OnInit {
     this.updatetruckno = data.ownerDetails[0].truckno;
     this.updateplace = data.villageDetails[0].village_name;
     this.updatehamt = data.hamt;
-
-
     this.show = !this.show;
-  }
-  update(data) {
-    console.log(this.updateDataContent);
+    console.log(data);
 
-    console.log(this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id']);
-    console.log(this.updatelrno);
-    console.log(this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id']);
+  }
+  update() {
+    // console.log(this.updateDataContent);
+    // console.log(this.handlefunction.getDate(this.updateDate, this.handlefunction.getMonthNumber(this.m), this.y));
+
+    // console.log(this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id']);
+    // console.log(this.updatelrno);
+    // console.log(this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id']);
+
+
+    // console.log(this.updatehamt);
+    let formBody = {};
+    formBody['Date'] = this.handlefunction.getDate(parseInt(this.updateDate), this.handlefunction.getMonthNumber(this.month), this.y);
+    formBody['partyid'] = this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id'];
+    formBody['ownerid'] = this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id'];
+    formBody['lrno'] = this.updatelrno;
     if (this.updateDataContent.villageDetails[0].village_name === this.updateplace) {
-      console.log(this.updateDataContent.villageDetails[0]._id);
+      // console.log(this.updateDataContent.villageDetails[0]._id);
+      formBody['placeid'] = this.updateDataContent.villageDetails[0]._id;
     }
     else {
-      console.log(this.handlefunction.findplace(this.updateplace));
+      // console.log(this.handlefunction.findplace(this.updateplace));
+      formBody['placeid'] = this.handlefunction.findplace(this.updateplace);
     }
 
-    console.log(this.updatehamt);
+    formBody['hamt'] = this.updatehamt;
+    formBody['method'] = 'update';
+    formBody['_id'] = this.updateDataContent['_id'];
 
-    //show all the data in input boxes and editable, once all the data is modified, click on update to hit an update api and redirect user to the previous page
-    //
+    this.apiCallservice.handleData_New_python('booking', 1, formBody, 1)
+      .subscribe((res) => {
+        alert(res['Status']);
+        this.show = false;
+        this.find();
+      });
   }
+
 
   findgst() {
     this.gstdetailslistid = this.handlefunction.findgst(this.updatenop, this.gstdetailslist);

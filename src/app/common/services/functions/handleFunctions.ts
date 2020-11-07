@@ -36,6 +36,9 @@ export class handleFunction {
     generateDays() {
         for (let i = 1; i < 32; i++) { this.days.push(i); } return this.days;
     }
+    generateDays2() {
+        for (let i = 1; i < 32; i++) { String(i).length > 1 ? this.days.push(i) : this.days.push(parseInt('0' + i)); } return this.days;
+    }
 
     getMonthNumber(month) {
         switch (month) {

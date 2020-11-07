@@ -242,12 +242,12 @@ export class BookingaddComponent implements OnInit {
   reset() {
     this.ownerID = false;
     this.gstID = false;
-    this.submitted = !this.submitted;
+    this.submitted = false;
     this.myFormGroup.patchValue({ nop: '' });
     this.myFormGroup.patchValue({ lrno: '' });
     this.myFormGroup.patchValue({ truckno: '' });
     this.myFormGroup.patchValue({ place: '' });
-    this.myFormGroup.patchValue({ hamt: '' });
+    this.myFormGroup.patchValue({ hamt: '0' });
     this.myFormGroup.patchValue({ PaymentRecDate: '' });
     this.myFormGroup.patchValue({ Payment: '' });
     this.myFormGroup.patchValue({ amt: '' });
