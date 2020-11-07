@@ -31,6 +31,7 @@ export class NavigationComponent implements OnInit {
   public date = new Date();
   public username;
   public role = 6;
+  public nameOfUser = 'Guest';
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -45,7 +46,7 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() {
     this.username = this.securityCheck.username;
-
+    this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
 
     this.getInformationData();
     this.AUTH = this.securit.AUTH;
@@ -63,6 +64,7 @@ export class NavigationComponent implements OnInit {
         this.securityCheck.role = res.Role;
         this.role = res.Role;
         this.spin.hide();
+        this.router.navigate(['Navigation/NRCM_HOME'])
       });
   }
 

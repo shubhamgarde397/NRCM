@@ -50,6 +50,20 @@ export class FinolexdisplaysendComponent implements OnInit {
   public modelSubmitted: dataForMail;
   public submitted = false;
   public commonArray;
+  public updateDataContent;
+  public myFormGroup: FormGroup;
+  public ownerdetailslist;
+  public gstdetailslist;
+  public villagelist;
+  public updateDate;
+  public updatenop;
+  public updatelrno;
+  public updatetruckno;
+  public updateplace;
+  public updatehamt;
+  public gstdetailslistid = {};
+  public ownerdetailslistid = {};
+  public days = [];
   constructor(
     public apiCallservice: ApiCallsService,
     public handlefunction: handleFunction,
@@ -57,19 +71,31 @@ export class FinolexdisplaysendComponent implements OnInit {
     public securityCheck: SecurityCheckService
     , public formBuilder: FormBuilder,
     public spinner: Ng4LoadingSpinnerService,
-    public obs: ObsServiceService) { }
+    public obs: ObsServiceService) {
+    this.days = this.handlefunction.generateDays();
+  }
 
   ngOnInit() {
+
     this.yearNames = this.securityCheck.yearNames;
     this.commonArray = this.securityCheck.commonArray;
     this.m = this.monthNames[this.now.getMonth()];
     this.y = this.now.getFullYear();
-
+    this.fetchBasic();
     this.model = new dataForMail(this.Mailsubject, this.Mailbody);
     this.myFormGroupE = this.formBuilder.group({
       password: ['', Validators.required]
     });
 
+  }
+
+  fetchBasic() {
+    this.ownerdetailslist = [];
+    this.gstdetailslist = [];
+    this.villagelist = [];
+    this.ownerdetailslist = this.commonArray.ownerdetails;
+    this.gstdetailslist = this.commonArray.gstdetails;
+    this.villagelist = this.commonArray.villagenames;
   }
 
   getMonthsLocal() {
@@ -125,6 +151,66 @@ export class FinolexdisplaysendComponent implements OnInit {
           this.finolexdetailslist.splice(bb, 1);
         });
     }
+  }
+  showUpdate(data) {
+    this.updateDataContent = data;
+
+    this.updateDate = data.Date.slice(-2);
+    this.updatenop = data.partyDetails[0].name;
+    this.updatelrno = data.lrno;
+    this.updatetruckno = data.ownerDetails[0].truckno;
+    this.updateplace = data.villageDetails[0].village_name;
+    this.updatehamt = data.hamt;
+    this.show = !this.show;
+    console.log(data);
+
+  }
+  update() {
+    // console.log(this.updateDataContent);
+    // console.log(this.handlefunction.getDate(this.updateDate, this.handlefunction.getMonthNumber(this.m), this.y));
+
+    // console.log(this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id']);
+    // console.log(this.updatelrno);
+    // console.log(this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id']);
+
+
+    // console.log(this.updatehamt);
+    let formBody = {};
+    formBody['Date'] = this.handlefunction.getDate(parseInt(this.updateDate), this.handlefunction.getMonthNumber(this.month), this.y);
+    formBody['partyid'] = this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id'];
+    formBody['ownerid'] = this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id'];
+    formBody['lrno'] = this.updatelrno;
+    if (this.updateDataContent.villageDetails[0].village_name === this.updateplace) {
+      // console.log(this.updateDataContent.villageDetails[0]._id);
+      formBody['placeid'] = this.updateDataContent.villageDetails[0]._id;
+    }
+    else {
+      // console.log(this.handlefunction.findplace(this.updateplace));
+      formBody['placeid'] = this.handlefunction.findplace(this.updateplace);
+    }
+
+    formBody['hamt'] = this.updatehamt;
+    formBody['method'] = 'update';
+    formBody['_id'] = this.updateDataContent['_id'];
+
+    this.apiCallservice.handleData_New_python('booking', 1, formBody, 1)
+      .subscribe((res) => {
+        alert(res['Status']);
+        this.show = false;
+        this.find();
+      });
+  }
+
+
+  findgst() {
+    this.gstdetailslistid = this.handlefunction.findgst(this.updatenop, this.gstdetailslist);
+  }
+
+  findowner() {
+    this.ownerdetailslistid = this.handlefunction.findowner(this.updatetruckno, this.ownerdetailslist);
+  }
+  back() {
+    this.show = !this.show;
   }
   exportAsXLSX(): void {
 

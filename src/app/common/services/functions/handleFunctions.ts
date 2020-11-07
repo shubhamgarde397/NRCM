@@ -36,6 +36,9 @@ export class handleFunction {
     generateDays() {
         for (let i = 1; i < 32; i++) { this.days.push(i); } return this.days;
     }
+    generateDays2() {
+        for (let i = 1; i < 32; i++) { String(i).length > 1 ? this.days.push(i) : this.days.push(parseInt('0' + i)); } return this.days;
+    }
 
     getMonthNumber(month) {
         switch (month) {
@@ -131,8 +134,28 @@ export class handleFunction {
                     return ownerArray[data.slice(-2)];
                 case 27:
                     return ownerArray[data.slice(-3)];
-                case 27:
+                case 28:
                     return ownerArray[data.slice(-4)];
+            }
+        }
+    }
+
+    findplace(trucknoid) {
+        if (trucknoid !== 'Select Truck Number') {
+            const data = trucknoid;
+            console.log(data);
+
+            switch (data.length) {
+                case 24:
+                    return data;
+                case 25:
+                    return data.slice(-1);
+                case 26:
+                    return data.slice(-2);
+                case 27:
+                    return data.slice(-3);
+                case 28:
+                    return data.slice(-4);
             }
         }
     }

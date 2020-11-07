@@ -24,6 +24,10 @@ export class VillagedispComponent implements OnInit {
   ) { }
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
+    console.log(this.sec);
+
+    console.log(this.commonArray);
+
     this.villageslist = this.commonArray.villagenames;
   };
 
