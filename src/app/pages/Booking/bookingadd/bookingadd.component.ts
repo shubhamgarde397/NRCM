@@ -150,6 +150,7 @@ export class BookingaddComponent implements OnInit {
     this.villagelist = this.commonArray.villagenames;
   }
   storeBookingData1({ value, valid }: { value: booking, valid: boolean }, day) {
+    this.spinnerService.show();
     let formBody = {};
     this.monthno = this.handlefunction.getMonthNumber(this.m);
     value.Date = this.handlefunction.getDate(day, this.monthno, this.y);
@@ -169,7 +170,9 @@ export class BookingaddComponent implements OnInit {
     this.submitted = true;
     this.apiCallservice.handleData_New_python('booking', 1, formBody, 1)
       .subscribe((res: any) => {
-        alert('Added Successfully');
+        this.spinnerService.hide();
+        alert(res.Status);
+        this.reset();
       });
   }
   storeBookingData({ value, valid }: { value: booking, valid: boolean }, day) {
