@@ -1,36 +1,60 @@
 <div class="well">
 
-  <form [formGroup]="myFormGroup" (ngSubmit)="addTemp(myFormGroup)" submitted=true enctype="multipart/form data"
+  <form [formGroup]="myFormGroup" (ngSubmit)="saveBalanceHire(myFormGroup)" submitted=true enctype="multipart/form data"
     action="/">
 
     <div class="col-lg-12">
-      <button mat-raised-button (click)="leftRight('back')" class="btn btn-danger btn-sm btn-just-icon delete">
+      <button mat-raised-button type="button" (click)="leftRight('back')"
+        class="btn btn-danger btn-sm btn-just-icon delete">
         Back
-      </button><button mat-raised-button (click)="leftRight('ahead')"
+      </button><button mat-raised-button type="button" (click)="leftRight('ahead')"
         class="btn btn-primary btn-sm btn-just-icon delete">
         Ahead
       </button>
     </div>
 
     <h3>{{today}}</h3>
-
-
+    <!-- TruckDate -->
     <div class="form-group row">
       <div class="col-xs-3">
-
-
-        <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN02 AB 2045">
+        <input type="date" id="truckDate" class="form-control" formControlName="truckDate" [(ngModel)]="truckDate"
+          placeholder="2020-01-20">
       </div>
       <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.truckno.valid">
+        <div [hidden]="myFormGroup.controls.truckDate.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
         </div>
       </div>
-      <button (click)="addtrucks()">Add</button>
     </div>
 
+    <div class="form-group row">
+      <div class="col-xs-3">
+
+
+        <!-- <input type="text" id="truckno" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
+          placeholder="TN02 AB 2045">
+      </div> -->
+
+        <div class="col-xs-3">
+          <input type="text" list="cars" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
+            placeholder="TN02 AB 2045" />
+          <datalist id="cars">
+            <option *ngFor="let i of trucklist">{{i}}</option>
+          </datalist>
+        </div>
+
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.truckno.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+      </div>
+    </div>
     <div class="form-group row">
       <div class="col-xs-3">
         <input type="number" id="pageno" class="form-control" formControlName="pageno" placeholder="Page Number">
@@ -59,53 +83,44 @@
         </div>
       </div>
     </div>
+    <!-- keep adding these data here -->
 
-
+    <!-- TruckDate -->
     <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="text" id="date" class="form-control" formControlName="date" [(ngModel)]="date"
-          placeholder="2020-01-20">
+      <div class="col-sm-1">
+        <button type="button" (click)="addtrucks()">Add</button>
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.date.valid" (click)="appendContact()">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Page No</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let i of truckArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.truckno}}</td>
+            <td>{{i.pageno}}</td>
+            <td>{{i.amount}}</td>
+          </tr>
+        </table>
       </div>
+
     </div>
+
+
+
 
     <div class="row">
 
       <div class="form-group" class="col-xs-2">
-        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+        <button type=" submit" class="btn btn-primary" [disabled]='truckArray.length==0'>
           <i class="material-icons">send</i>
         </button>
       </div>
-
-      <div *ngIf="!submitted" class="col-xs-2">
-
-        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
-          Clear
-        </button>
-      </div>
-
-      <div *ngIf="submitted" class="col-xs-3">
-        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
-          <i class="material-icons">add</i>
-        </button>
-      </div>
-
-
-      <!-- <div class="col-xs-3">
-        <input class="form-control" (change)="incomingFile($event)" type="file">
-        {{filePath}}
-      </div>
-      <div class="col-xs-2">
-        <button class="btn btn-warnign" id="dnext" (click)="upload()">Multiple</button>
-
-
-      </div> -->
 
     </div>
   </form>

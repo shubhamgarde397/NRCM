@@ -16,47 +16,93 @@ export class BalancehireaddComponent implements OnInit {
   public myFormGroup: FormGroup;
   public submitted = false;
   public date = new Date();
-  public todaysDate;
+  public truckno = '';
+  public truckDate = '';
+  public todayDate;
   public today;
   public dateFromUI;
+  public truckArray = [];
+  public commonArray;
+  public trucklist;
   constructor(public apiCallservice: ApiCallsService, public handleF: handleFunction, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService) { }
 
   ngOnInit() {
-    this.todaysDate = this.date.getDate();
+    this.commonArray = this.securityCheck.commonArray;
+
+    this.todayDate = this.date.getDate();
     this.today = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
     this.myFormGroup = this.formBuilder.group({
       truckno: ['', Validators.required],
       pageno: ['', Validators.required],
       amount: ['', Validators.required],
-      date: ['', Validators.required]
-    });
+      truckDate: ['', Validators.required],
+      bankname: '',
+      ifsc: '',
+      accountNumber: '',
+      accountName: ''
+    });//todayDate
+
   }
-  addTemp() {
-    //add to array [] [{}] [{},{}]
+  getTrucks() {
+    this.trucklist = this.commonArray.ownerdetails;
+  }
+  addtrucks(data) {
+    console.log(this.myFormGroup);
+
+    //add trucks to an array say truckArray
+    /**
+     * truckarray=[]//declare in ngoninit()
+     * truckarray.push(data)
+     */
+    if (this.truckDate === '' || this.truckno === '' || this.myFormGroup.value.pageno === '' || this.myFormGroup.value.amount === '') { alert('Cant enter empt entries!') } else {
+      let tempObj = {};
+      tempObj['date'] = this.truckDate;
+      tempObj['truckno'] = this.truckno;
+      tempObj['pageno'] = this.myFormGroup.value.pageno;
+      tempObj['amount'] = this.myFormGroup.value.amount;
+      this.truckArray.push(tempObj);
+      this.myFormGroup.patchValue({ truckno: '' });
+      this.myFormGroup.patchValue({ truckDate: '' });
+      this.myFormGroup.patchValue({ pageno: '' });
+      this.myFormGroup.patchValue({ amount: '' });
+    }
 
   }
 
-  saveBalanceHire({ value, valid }: { value: [], valid: boolean }) {
+  saveBalanceHire({ value, valid }: { value: {}, valid: boolean }) {
+
+    //send mainarrray to be inserted in db
     this.submitted = true;
-    value['method'] = 'insert';
-    value['tablename'] = 'balancehire';
+    let tempObj = {}
+    tempObj['method'] = 'insert';
+    tempObj['tablename'] = 'BalanceHire';
+    tempObj['todayDate'] = this.today;
+    tempObj['truckData'] = this.truckArray;
+    tempObj['bankname'] = '';
+    tempObj['ifsc'] = '';
+    tempObj['accountNumber'] = '';
+    tempObj['accountName'] = '';
+    console.log(tempObj);
+
+
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, value, 0)
+      ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
+        this.truckArray = [];
       });
   }
 
   leftRight(LR) {
     switch (LR) {
       case 'back':
-        this.todaysDate = this.todaysDate - 1;
-        this.today = this.handleF.getDate(this.todaysDate, (this.date.getMonth() + 1), this.date.getFullYear());
+        this.todayDate = this.todayDate - 1;
+        this.today = this.handleF.getDate(this.todayDate, (this.date.getMonth() + 1), this.date.getFullYear());
         break;
       case 'ahead':
-        this.todaysDate = this.todaysDate + 1;
-        this.today = this.handleF.getDate(this.todaysDate, (this.date.getMonth() + 1), this.date.getFullYear());
+        this.todayDate = this.todayDate + 1;
+        this.today = this.handleF.getDate(this.todayDate, (this.date.getMonth() + 1), this.date.getFullYear());
         break;
       case 'realDate':
         this.today = this.dateFromUI;
