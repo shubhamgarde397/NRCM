@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 
 @Component({
@@ -10,8 +12,9 @@ export class BookingHandlerComponent implements OnInit {
   public check = true;
   public passwordCheck: string;
   public role = 6;
+  public securityCheck;
   constructor(
-    public security: SecurityCheckService
+    public security: SecurityCheckService, public apiCallservice: ApiCallsService, public spin: Ng4LoadingSpinnerService,
   ) { }
 
   login() {
@@ -26,6 +29,21 @@ export class BookingHandlerComponent implements OnInit {
 
   ngOnInit() {
     this.role = this.security.role;
+    this.getOwners();
+  }
+
+  getOwners() {
+    this.spin.show();
+    this.apiCallservice.handleData_New_python('commoninformation', 1, { "method": "displayOwner", 'tablename': 'ownerdetails' }, 0)
+      .subscribe((res: any) => {
+        console.log(res);
+
+        this.securityCheck.commonArray['ownerdetails'] = [];
+        this.securityCheck.commonArray['ownerdetails'] = res;
+        console.log(this.securityCheck.commonArray);
+
+        this.spin.hide();
+      });
   }
 
 }

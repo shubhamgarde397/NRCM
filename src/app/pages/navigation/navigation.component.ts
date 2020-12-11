@@ -47,8 +47,8 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.username = this.securityCheck.username;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
-    this.role = 1;
-    // this.getInformationData();
+    // this.role = 1;
+    this.getInformationData();
     this.AUTH = this.securit.AUTH;
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();
@@ -57,6 +57,7 @@ export class NavigationComponent implements OnInit {
   }
 
   getInformationData() {
+    this.spin.show();
     this.apiCallservice.handleData_New_python('commoninformation', 1, { "method": "display", "username": this.username }, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray = [];

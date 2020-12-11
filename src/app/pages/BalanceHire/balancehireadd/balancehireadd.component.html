@@ -30,30 +30,28 @@
     </div>
 
     <div class="form-group row">
-      <div class="col-xs-3">
 
 
-        <!-- <input type="text" id="truckno" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
+      <!-- <input type="text" id="truckno" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
           placeholder="TN02 AB 2045">
       </div> -->
 
-        <div class="col-xs-3">
-          <input type="text" list="cars" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
-            placeholder="TN02 AB 2045" />
-          <datalist id="cars">
-            <option *ngFor="let i of trucklist">{{i}}</option>
-          </datalist>
-        </div>
-
-        <div class="col-xs-2">
-          <div [hidden]="myFormGroup.controls.truckno.valid">
-            <font color="red">
-              <span class="glyphicon glyphicon-remove"></span>
-            </font>
-          </div>
-        </div>
-
+      <div class="col-xs-3">
+        <input type="text" list="cars" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
+          placeholder="TN02 AB 2045" />
+        <datalist id="cars">
+          <option *ngFor="let i of trucklist">{{i.truckno}}</option>
+        </datalist>
       </div>
+
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.truckno.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
     </div>
     <div class="form-group row">
       <div class="col-xs-3">

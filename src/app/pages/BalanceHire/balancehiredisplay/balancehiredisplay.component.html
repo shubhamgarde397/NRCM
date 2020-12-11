@@ -1,3 +1,32 @@
-<p>
-  balancehiredisplay works!
-</p>
+<div class="well container">
+  <div class="row">
+    <div class="form-group col-xs-2" align="center">
+      <!-- <select class="form-control " [(ngModel)]="name" (change)="find()">
+        <option selected>Select Name</option>
+        <option *ngFor="let mon of gstdetailslist">{{mon.name}}</option>
+      </select> -->
+      <input type="date" [(ngModel)]="selectedDate">
+      <button (click)="find()">Find</button>
+    </div>
+
+    <div class="col-xs-2">
+      <button (click)="download()" class="btn btn-warning btn-sm btn-just-icon">
+        <i class="material-icons" style="color:white">save_alt</i>
+      </button>
+    </div>
+    <div class="col-xs-2">
+      <button (click)="exportAsXLSX()">
+        <i class="fa fa-file-excel-o" style="font-size:48px;color:blue"></i>
+      </button>
+    </div>
+
+    <div class="col-xs-10" style="text-align: center" *ngIf="tabledata">
+      <div class="row">
+        <span style="font-weight:bold;font-size: 40px;"> {{name}} : {{BookingCount}}</span>
+      </div>
+    </div>
+  </div>
+
+  <br />
+
+</div>

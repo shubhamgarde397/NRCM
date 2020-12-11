@@ -29,7 +29,7 @@ export class BalancehireaddComponent implements OnInit {
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
-
+    this.getTrucks();
     this.todayDate = this.date.getDate();
     this.today = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
     this.myFormGroup = this.formBuilder.group({
@@ -83,9 +83,7 @@ export class BalancehireaddComponent implements OnInit {
     tempObj['ifsc'] = '';
     tempObj['accountNumber'] = '';
     tempObj['accountName'] = '';
-    console.log(tempObj);
-
-
+    tempObj['comments'] = '';
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
