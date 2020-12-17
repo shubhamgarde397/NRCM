@@ -83,7 +83,6 @@ export class BookingOtherAddComponent implements OnInit {
     formbody['cash_recDate'] = value['cash_recDate']
     formbody['method'] = 'insert';
     this.submitted = true;
-    console.log(formbody);
     this.apiCallservice.handleData_New_python('otherbooking', 1, formbody, 1)
       .subscribe((res: any) => {
         alert('Added Successfully');

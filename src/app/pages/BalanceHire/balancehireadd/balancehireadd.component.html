@@ -1,0 +1,130 @@
+<div class="well">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="saveBalanceHire(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
+
+    <div class="col-lg-12">
+      <button mat-raised-button type="button" (click)="leftRight('back')"
+        class="btn btn-danger btn-sm btn-just-icon delete">
+        Back
+      </button><button mat-raised-button type="button" (click)="leftRight('ahead')"
+        class="btn btn-primary btn-sm btn-just-icon delete">
+        Ahead
+      </button>
+    </div>
+
+    <h3>{{today}}</h3>
+    <!-- TruckDate -->
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="date" id="truckDate" class="form-control" formControlName="truckDate" [(ngModel)]="truckDate"
+          placeholder="2020-01-20">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.truckDate.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+
+
+      <!-- <input type="text" id="truckno" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
+          placeholder="TN02 AB 2045">
+      </div> -->
+
+      <div class="col-xs-3">
+        <input type="text" list="cars" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
+          placeholder="TN02 AB 2045" />
+        <datalist id="cars">
+          <option *ngFor="let i of trucklist">{{i.truckno}}</option>
+        </datalist>
+      </div>
+
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.truckno.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="number" id="pageno" class="form-control" formControlName="pageno" placeholder="Page Number">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.pageno.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="number" id="amount" class="form-control" formControlName="amount">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.amount.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!-- keep adding these data here -->
+
+    <!-- TruckDate -->
+    <div class="form-group row">
+      <div class="col-sm-1">
+        <button type="button" (click)="addtrucks()">Add</button>
+      </div>
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Page No</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let i of truckArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.truckno}}</td>
+            <td>{{i.pageno}}</td>
+            <td>{{i.amount}}</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+
+
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='truckArray.length==0'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+
+
+
+
+</div>

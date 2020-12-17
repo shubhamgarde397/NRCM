@@ -26,7 +26,6 @@ export class RegularPartyDispComponent implements OnInit {
 
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
-    console.log(this.commonArray);
     this.regulardatalist = this.commonArray.regularparty;
   };
 

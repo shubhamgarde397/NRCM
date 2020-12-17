@@ -47,7 +47,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.username = this.securityCheck.username;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
-
+    // this.role = 1;
     this.getInformationData();
     this.AUTH = this.securit.AUTH;
     this.month = this.date.getMonth() + 1
@@ -57,10 +57,12 @@ export class NavigationComponent implements OnInit {
   }
 
   getInformationData() {
-    this.apiCallservice.handleData_New_python('commoninformation', 1, { "method": "display", "username": this.username }, 0)
+    this.spin.show();
+    let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray('first') };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.securityCheck.commonArray = [];
         this.securityCheck.commonArray = res;
+        this.securityCheck.commonArray['Role'] = res.Role;
         this.securityCheck.role = res.Role;
         this.role = res.Role;
         this.spin.hide();

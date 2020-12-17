@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-
+import { Consts } from '../../constants/const';
+import { SecurityCheckService } from '../Data/security-check.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -7,7 +8,17 @@ export class HandleDataService {
 
   public Data;
   public flag = false;
-  constructor() { }
+  public commonArray = {
+    "gstdetails": [{}],
+    "ownerdetails": [{}],
+    "villagenames": [{}],
+    "regularparty": [{}],
+    "RegularTruck": [{}],
+    "thoughts": [{}],
+    "Role": 6
+  }
+  public IP = [];
+  constructor(public securityCheck: SecurityCheckService) { }
 
   notification(value) {
     this.flag = value;
@@ -20,4 +31,84 @@ export class HandleDataService {
   saveData(data) {
     this.Data = data;
   }
+
+  createConsiderArray(data) {
+    let tempCArr = [];
+    let tempArrofAPI = [];
+    tempArrofAPI = this.getIndexes(data);
+
+    for (let i = 0; i < tempArrofAPI.length; i++) {
+      tempCArr[tempArrofAPI[i][0].index] = 1;//use here tempArrOfAPI[0].index
+    }
+    for (let i = 0; i < 7; i++) {
+      if (tempCArr[i] == undefined) { tempCArr[i] = 0; }
+    }
+    // return this.checkForData(tempCArr, tempArrofAPI);
+    return this.checkForData(tempCArr);
+    // return tempCArr;
+  }
+  getIndexes(data) {
+    switch (data) {
+      case 'first':
+        return [Consts.ROLE_INDEX, Consts.OWNER_INDEX];//send everything not sprecific to index
+      case 'booking':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
+      case 'infogst':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
+      case 'infoowner':
+        return [Consts.OWNER_INDEX];
+      case 'infovillage':
+        return [Consts.VILLAGE_INDEX];
+      // case 'infonewowner':
+      //   return [Consts.NEW_OWNER_INDEX];
+      case 'inforegularparty':
+        return [Consts.REGULARPARTY_INDEX];
+      case 'inforegulartruck':
+        return [Consts.REGULARTRUCK_INDEX];
+
+    }
+  }
+
+  checkForData2(Arr, API) {
+
+
+    this.commonArray = this.securityCheck.commonArray;
+
+    for (let j = 0; j < API.length; j++) {//this looping system is not working
+      if (API[j][0]['name'] === 'Role') { }
+      else if (Object.keys(this.commonArray[API[j][0]['name']][0]).length > 0) {
+        Arr[API[j['index']]] = 0;
+      }
+    }
+    return Arr;
+  }
+  checkForData(Arr) {
+    this.IP = this.securityCheck.IP;
+    let Answer = [];
+    for (let i = 0; i < this.IP.length; i++) {
+      if (Arr[i] == 0) {
+        Answer.push(Arr[i]);
+      }
+      else if (Arr[i] === 1) {
+        if (this.IP[i] === 0) {
+          Answer.push(Arr[i]);
+          this.IP[i] = 1;
+        }
+        else if (this.IP[i] === 1) {
+          Answer.push(0)
+        }
+      }
+    }
+    this.securityCheck.IP = this.IP;
+    return Answer;
+  }
+
+  goAhead(data) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i] === 1) { return true; }
+    }
+    return false;
+  }
+
+
 }

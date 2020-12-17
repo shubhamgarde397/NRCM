@@ -30,12 +30,10 @@ import {
   MatRippleModule,
   MatTooltipModule,
   MatSelectModule,
-  MatFormField,
   MatIconModule,
   MatSidenavModule
 } from '@angular/material';
 import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
-import { SecurityCheckService } from './common/services/Data/security-check.service';
 import { MonthNamesComponent } from './pages/month-names/month-names.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
 import { C2wComponent } from './pages/C2W/c2w/c2w.component';
