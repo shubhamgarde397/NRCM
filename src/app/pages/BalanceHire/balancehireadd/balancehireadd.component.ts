@@ -47,7 +47,7 @@ export class BalancehireaddComponent implements OnInit {
   getTrucks() {
     this.trucklist = this.commonArray.ownerdetails;
   }
-  addtrucks(data) {
+  addtrucks() {
 
     //add trucks to an array say truckArray
     /**
