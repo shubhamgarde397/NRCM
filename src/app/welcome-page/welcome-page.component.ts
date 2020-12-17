@@ -50,7 +50,6 @@ export class WelcomePageComponent implements OnInit {
 
 
   storeImage(image) {
-    console.log(image);
   }
 
 }

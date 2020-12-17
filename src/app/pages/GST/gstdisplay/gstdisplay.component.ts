@@ -4,6 +4,7 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-gstdisplay',
@@ -18,16 +19,20 @@ export class GstdisplayComponent implements OnInit {
   public found;
   public dbName = 'NRCM_Information';
   public commonArray;
+  public considerArray;
   constructor(
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
     public router: Router,
-    public sec: SecurityCheckService
+    public sec: SecurityCheckService,
+    public spinnerService: Ng4LoadingSpinnerService
   ) {
   }
 
   ngOnInit() {
     this.commonArray = this.sec.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infogst')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.gstdetailslist = this.commonArray.gstdetails;
   }
 
@@ -57,4 +62,21 @@ export class GstdisplayComponent implements OnInit {
     this.found = data;
     this.router.navigate(['Navigation/Information/GST_HANDLER/GSTUpdate']);
   };
+  getInformationData() {
+    this.spinnerService.show();
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.sec.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.sec.commonArray['gstdetails'];;
+        this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];;
+        this.fetchBasic();
+        this.spinnerService.hide();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.sec.commonArray;
+    this.gstdetailslist = [];
+    this.gstdetailslist = this.commonArray.gstdetails;
+  }
 }

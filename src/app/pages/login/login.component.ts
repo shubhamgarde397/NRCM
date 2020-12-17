@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
       password: [this.model.password, Validators.required]
     });
     this.apiCallservice.authSuccess.subscribe(
-      (res: any) => { console.log(res); this.isLoginSuccess = res; }
+      (res: any) => { this.isLoginSuccess = res; }
     );
     this.apiCallservice.initAuth();
   }

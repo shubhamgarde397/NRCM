@@ -69,7 +69,6 @@ export class AdvanceAccountUpdateComponent implements OnInit {
     data.value.id = this.handledata.Data._id;
     this.apiCallservice.handleData_New(1, 'advanceAccount/updateAdvanceAccountdata', 3, 0, data.value)
       .subscribe((response: Response) => {
-        console.log('eachedr');
         this.show = !this.show;
         this._location.back();
       });

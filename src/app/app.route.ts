@@ -105,6 +105,16 @@ export const routes: Routes =
                                 }
                             ]
                     },
+
+
+                    {
+                        path: 'BALANCE_HIRE_HANDLER',
+                        loadChildren: './pages/BalanceHire/app.module#AppModule'
+                    },
+                    // {
+                    //     path: 'BALANCE_HIRE_ADMIN_HANDLER',//yet to configure
+                    //     loadChildren: './pages/DailyData/daily-data.module#DailyDataModule'//yet to configure
+                    // },
                     {
                         path: 'Finolex_Handler',
                         loadChildren: './pages/Company/Finolex/Finolex.module#FinolexModule'

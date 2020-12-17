@@ -206,7 +206,6 @@ export class C2wComponent implements OnInit {
         dataaa.forEach(element => {
           this.oldData.push(element);
         });
-        console.log(this.oldData);
 
       })
 
@@ -238,12 +237,10 @@ export class C2wComponent implements OnInit {
   save() {
     // this.apiCallservice.handleData_New('', 'chats/writeChat', 1, 0, { data: this.oldData })
     //   .subscribe((res) => {
-    //     console.log(res);
 
     //   })
     this.apiCallservice.handleData_New('', 'chats/advanced', 1, 0, { numbers: this.arrayOfNumbers })
       .subscribe((res) => {
-        console.log(res);
 
       })
   }

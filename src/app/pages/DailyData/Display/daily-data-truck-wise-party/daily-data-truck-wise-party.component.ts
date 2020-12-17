@@ -33,7 +33,6 @@ export class DailyDataTruckWisePartyComponent implements OnInit {
   find() {
     this.apiCallservice.handleData_New(this.dbName, 'dailydata/countTruckWiseParty', 1, 1, {}, this.truckno)
       .subscribe((res: Response) => {
-        console.log('res : ', res);
         this.showcount = true;
         this.countByDate = res;
       });

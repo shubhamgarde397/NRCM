@@ -13,6 +13,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import { odata } from '../../OwnerDetails/odadd/odata';
 import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
+import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 
 @Component({
   selector: 'app-bookingadd',
@@ -88,9 +89,10 @@ export class BookingaddComponent implements OnInit {
   public MobileNo: string;
   public mobilenoauto;
   public role = 6;
+  public considerArray;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
-    public securityCheck: SecurityCheckService, public obs: ObsServiceService) {
+    public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
   }
@@ -131,8 +133,22 @@ export class BookingaddComponent implements OnInit {
     });
 
 
-    this.fetchBasic();
+    this.considerArray = this.handledata.createConsiderArray('booking')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+
     this.role = this.securityCheck.role;
+  }
+
+  getInformationData() {
+    this.spinnerService.show();
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
+        this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
+        this.fetchBasic();
+        this.spinnerService.hide();
+      });
   }
 
   ngAfterViewInit() {
@@ -140,13 +156,14 @@ export class BookingaddComponent implements OnInit {
   }
 
   fetchBasic() {
+    this.commonArray = this.securityCheck.commonArray;
     this.ownerdetailslist = [];
     this.gstdetailslist = [];
     this.impgstdetailslist = [];
     this.villagelist = [];
     this.ownerdetailslist = this.commonArray.ownerdetails;
     this.gstdetailslist = this.commonArray.gstdetails;
-    this.impgstdetailslist = this.commonArray.impgstdetails;
+    // this.impgstdetailslist = this.commonArray.impgstdetails;
     this.villagelist = this.commonArray.villagenames;
   }
   storeBookingData1({ value, valid }: { value: booking, valid: boolean }, day) {
@@ -176,7 +193,6 @@ export class BookingaddComponent implements OnInit {
       });
   }
   storeBookingData({ value, valid }: { value: booking, valid: boolean }, day) {
-    console.log(this.ownerdetailslistid);
 
     const tab = this.m + this.y;
     this.monthno = this.handlefunction.getMonthNumber(this.m);
@@ -220,7 +236,6 @@ export class BookingaddComponent implements OnInit {
 
 
   findgst() {
-    console.log(this.nopid);
 
     this.gstdetailslistid = this.handlefunction.findgst(this.nopid, this.gstdetailslist);
     this.gstID = true;
