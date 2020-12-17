@@ -48,7 +48,6 @@ export class BalancehireaddComponent implements OnInit {
     this.trucklist = this.commonArray.ownerdetails;
   }
   addtrucks(data) {
-    console.log(this.myFormGroup);
 
     //add trucks to an array say truckArray
     /**

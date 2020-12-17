@@ -54,7 +54,6 @@ export class NotificationDisplayComponent implements OnInit {
   fetchData = function () {
     this.apiCallservice.handleData_New(this.dbName, 'notification/getNotifications', 1, 0).
       subscribe((res: Response) => {
-        console.log(res);
         this.notificationList = res;
 
       });

@@ -1,6 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Consts } from '../../constants/const';
-
 export class handleFunction {
 
     public hireExtendingMoney = [];
@@ -143,7 +142,6 @@ export class handleFunction {
     findplace(trucknoid) {
         if (trucknoid !== 'Select Truck Number') {
             const data = trucknoid;
-            console.log(data);
 
             switch (data.length) {
                 case 24:
@@ -230,7 +228,6 @@ export class handleFunction {
             let new_MorseCode = this.inverseMorseCode(Consts.MORSE_CODE[data.split("")[i]])
             forCounter++;
         }
-        console.log('Final : ', this.MorseCryptedFinalCode);
         return this.MorseCryptedFinalCode;
         // if (forCounter === data.length) {
         //     this.complexIt(this.MorseCryptedFinalCode.split('2'))
@@ -272,4 +269,5 @@ export class handleFunction {
         }
 
     }
+
 }

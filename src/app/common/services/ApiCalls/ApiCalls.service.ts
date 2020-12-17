@@ -75,7 +75,6 @@ export class ApiCallsService {
       if (err) { console.log(err); return err }
       else {
         this.URL = this.getfullapi.getFullAPI(api);
-        console.log(this.URL);
         switch (apiCall) {
           case 0: this.http.get(this.URL).pipe(map((res) => res));
           case 1: this.http.post(this.URL, formBody, headers).subscribe((res) => { alert('Done') }, (err) => { console.log(err) });
@@ -133,7 +132,6 @@ export class ApiCallsService {
     const that = this;
     cognitoUSer.authenticateUser(authDetails, {
       onSuccess(res: CognitoUserSession) {
-        console.log(res);
         that.setter('true');
         that.security.AUTH = true;
         that.router.navigate(['Navigation']);

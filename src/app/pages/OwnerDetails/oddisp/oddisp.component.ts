@@ -3,6 +3,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { Router } from '@angular/router';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-oddisp',
@@ -20,11 +21,13 @@ export class OddispComponent implements OnInit {
   public commonArray;
   public lambdaArr = [];
   public index = 0;
+  public considerArray;
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
     public handledata: HandleDataService,
-    public sec: SecurityCheckService
+    public sec: SecurityCheckService,
+    public spinnerService: Ng4LoadingSpinnerService
 
   ) { }
 
@@ -81,6 +84,29 @@ export class OddispComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.commonArray = this.sec.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infoowner')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.fetchData();
   }
+
+  getInformationData() {
+    this.spinnerService.show();
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.sec.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.sec.commonArray['ownerdetails'];;
+        this.fetchBasic();
+        this.spinnerService.hide();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.sec.commonArray;
+
+    this.ownerdetailslist = [];
+
+    this.ownerdetailslist = this.commonArray.ownerdetails;
+  }
+
 }

@@ -29,21 +29,8 @@ export class BookingHandlerComponent implements OnInit {
 
   ngOnInit() {
     this.role = this.security.role;
-    this.getOwners();
   }
 
-  getOwners() {
-    this.spin.show();
-    this.apiCallservice.handleData_New_python('commoninformation', 1, { "method": "displayOwner", 'tablename': 'ownerdetails' }, 0)
-      .subscribe((res: any) => {
-        console.log(res);
 
-        this.securityCheck.commonArray['ownerdetails'] = [];
-        this.securityCheck.commonArray['ownerdetails'] = res;
-        console.log(this.securityCheck.commonArray);
-
-        this.spin.hide();
-      });
-  }
 
 }

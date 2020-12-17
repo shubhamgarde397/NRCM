@@ -35,7 +35,6 @@ export class LRNumberDisplayComponent implements OnInit {
   }
   check() {
     this.twotypes = this.myFormGroup.value.twotypes;
-    console.log(this.twotypes);
 
   }
 

@@ -33,7 +33,6 @@ export class ChangeComponent implements OnInit {
     this.apiCallservice.handleData_New(this.dbName, 'change/getChangeDetails', 1, 0).
       subscribe((res: Response) => {
         this.changeDetails = res;
-        console.log(res);
         this.oldData = this.changeDetails[0].oldLrno;
         this.newData = this.changeDetails[0].newLrno;
       });

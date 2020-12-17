@@ -120,7 +120,6 @@ export class PDFComponent implements OnInit {
 
 
   dateSetter() {
-    console.log(this.dateFromUI);
 
     return this.dateFromUI.slice(8, 11) + '-' + this.dateFromUI.slice(5, 7) + '-' + this.dateFromUI.slice(0, 4)
   }

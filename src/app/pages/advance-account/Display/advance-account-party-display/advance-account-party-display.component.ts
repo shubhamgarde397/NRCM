@@ -38,7 +38,6 @@ export class AdvanceAccountPartyDisplayComponent implements OnInit {
   find = function () {
     this.apiCallservice.handleData_New(this.dbName, 'advanceAccount/getAdvanceDataDetailsbyName', 1, 1, {}, this.nopid)
       .subscribe((res: Response) => {
-        console.log(res);
         this.tabledata = true;
         this.advancedetailslist = res;
       });

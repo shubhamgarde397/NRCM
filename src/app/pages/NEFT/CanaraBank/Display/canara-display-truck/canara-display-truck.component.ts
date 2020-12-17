@@ -41,7 +41,6 @@ export class CanaraDisplayTruckComponent implements OnInit {
     this.apiCallservice.handleData_New(0, 'CanaraBankNEFT/getCanBankNEFTTrucks', 1, 0)
       .subscribe((res: Response) => {
         this.uniqueTrucks = res;
-        console.log(this.uniqueTrucks);
         // this.uniqueTrucks = this.handlefunction.reduceData2(res);
       });
   }

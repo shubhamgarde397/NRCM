@@ -48,7 +48,6 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   find = function () {
-    console.log(this.selectedDate);
 
     let tempObj = {};
     tempObj['method'] = 'BalanceHireDisplay';
@@ -58,7 +57,6 @@ export class BalancehiredisplayComponent implements OnInit {
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.balanceDate = res;
-        console.log(res);
 
       });
   };

@@ -4,6 +4,7 @@ import * as XLSX from 'xlsx';
 import { Router } from '@angular/router';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-villagedisp',
@@ -19,15 +20,12 @@ export class VillagedispComponent implements OnInit {
   public arr;
   public dbName = 'NRCM_Information';
   public commonArray;
-  constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService,
+  public considerArray;
+  constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,
     public sec: SecurityCheckService
   ) { }
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
-    console.log(this.sec);
-
-    console.log(this.commonArray);
-
     this.villageslist = this.commonArray.villagenames;
   };
 
@@ -59,8 +57,24 @@ export class VillagedispComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.commonArray = this.sec.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infovillage')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchData();
     this.fetchData();
 
   }
+
+  getInformationData() {
+    this.spinnerService.show();
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];;
+        this.fetchData();
+        this.spinnerService.hide();
+      });
+  }
+
+
 
 }

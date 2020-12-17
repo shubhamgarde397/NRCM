@@ -49,7 +49,6 @@ export class MainPageComponent implements OnInit {
     this.loginV = true;
   }
   reverseMe() {
-    // console.log(this.hehe);
     this.hehe = this.hehe.split('').reverse().join('');
   }
 
@@ -87,7 +86,6 @@ export class MainPageComponent implements OnInit {
     this.fileFormDataPython.append('input', this.pythonVar);
     this.apiCallservice.handleData_Pyhon('rohit', 0, this.fileFormDataPython)
       .subscribe((res: any) => {
-        console.log(res);
         this.pythonVar = '';
       })
 

@@ -162,30 +162,17 @@ export class FinolexdisplaysendComponent implements OnInit {
     this.updateplace = data.villageDetails[0].village_name;
     this.updatehamt = data.hamt;
     this.show = !this.show;
-    console.log(data);
-
   }
   update() {
-    // console.log(this.updateDataContent);
-    // console.log(this.handlefunction.getDate(this.updateDate, this.handlefunction.getMonthNumber(this.m), this.y));
-
-    // console.log(this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id']);
-    // console.log(this.updatelrno);
-    // console.log(this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id']);
-
-
-    // console.log(this.updatehamt);
     let formBody = {};
     formBody['Date'] = this.handlefunction.getDate(parseInt(this.updateDate), this.handlefunction.getMonthNumber(this.month), this.y);
     formBody['partyid'] = this.gstdetailslistid['_id'] === undefined ? this.updateDataContent.partyDetails[0]._id : this.gstdetailslistid['_id'];
     formBody['ownerid'] = this.ownerdetailslistid['_id'] === undefined ? this.updateDataContent.ownerDetails[0]._id : this.ownerdetailslistid['_id'];
     formBody['lrno'] = this.updatelrno;
     if (this.updateDataContent.villageDetails[0].village_name === this.updateplace) {
-      // console.log(this.updateDataContent.villageDetails[0]._id);
       formBody['placeid'] = this.updateDataContent.villageDetails[0]._id;
     }
     else {
-      // console.log(this.handlefunction.findplace(this.updateplace));
       formBody['placeid'] = this.handlefunction.findplace(this.updateplace);
     }
 
