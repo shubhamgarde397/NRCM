@@ -1,24 +1,58 @@
 <div class="well container">
   <div class="row">
     <div class="form-group col-xs-2" align="center">
-      <!-- <select class="form-control " [(ngModel)]="name" (change)="find()">
-        <option selected>Select Name</option>
-        <option *ngFor="let mon of gstdetailslist">{{mon.name}}</option>
-      </select> -->
       <input type="date" [(ngModel)]="selectedDate">
-      <button (click)="find()">Find</button>
+      <button class="btn btn-warning" (click)="find()">Find</button>
     </div>
 
-    <div class="col-xs-2">
-      <button (click)="download()" class="btn btn-warning btn-sm btn-just-icon">
-        <i class="material-icons" style="color:white">save_alt</i>
-      </button>
-    </div>
+    <div class="col-xs-10" style="text-align: center">
+      {{balanceDate}}
+      <table class="table" style="width:100%" align="center">
 
-    <div class="col-xs-10" style="text-align: center" *ngIf="tabledata">
-      <div class="row">
-        <span style="font-weight:bold;font-size: 40px;"> {{name}} : {{BookingCount}}</span>
-      </div>
+        <thead class="table-header">
+          <tr>
+            <th>Srno</th>
+            <th>Today Date</th>
+            <th>Date</th>
+            <th>PgNo</th>
+            <th>Amount</th>
+            <th>Truckno</th>
+            <th>AccountNo-IFSC</th>
+            <th>Account Name</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+          <tr *ngFor="let i of balanceDate;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.todayDate}}</td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.date}}</li>
+              </ul>
+            </td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.pageno}}</li>
+              </ul>
+            </td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.amount}}</li>
+              </ul>
+            </td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.truckno}}</li>
+              </ul>
+            </td>
+            <td>{{i.accountNumber}}-{{i.ifsc}}</td>
+            <td>{{i.accountName}}</td>
+
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 

@@ -56,7 +56,8 @@ export class BalancehiredisplayComponent implements OnInit {
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.balanceDate = res;
+        this.balanceDate = res.balanceData;
+        console.log(this.balanceDate);
 
       });
   };
