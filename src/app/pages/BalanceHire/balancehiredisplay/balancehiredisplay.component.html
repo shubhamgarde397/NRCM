@@ -3,6 +3,7 @@
     <div class="form-group col-xs-2" align="center">
       <input type="date" [(ngModel)]="selectedDate">
       <button class="btn btn-warning" (click)="find()">Find</button>
+      <button class="btn btn-danger" (click)="download()">PDF</button>
     </div>
 
     <div class="col-xs-10" style="text-align: center">
@@ -14,9 +15,9 @@
             <th>Srno</th>
             <th>Today Date</th>
             <th>Date</th>
-            <th>PgNo</th>
-            <th>Amount</th>
             <th>Truckno</th>
+            <th>Amount</th>
+            <th>PgNo</th>
             <th>AccountNo-IFSC</th>
             <th>Account Name</th>
           </tr>
@@ -32,11 +33,13 @@
                 <li>{{k.date}}</li>
               </ul>
             </td>
+
             <td>
               <ul *ngFor="let k of i.truckData">
-                <li>{{k.pageno}}</li>
+                <li>{{k.truckno}}</li>
               </ul>
             </td>
+
             <td>
               <ul *ngFor="let k of i.truckData">
                 <li>{{k.amount}}</li>
@@ -44,7 +47,7 @@
             </td>
             <td>
               <ul *ngFor="let k of i.truckData">
-                <li>{{k.truckno}}</li>
+                <li>{{k.pageno}}</li>
               </ul>
             </td>
             <td>{{i.accountNumber}}-{{i.ifsc}}</td>
