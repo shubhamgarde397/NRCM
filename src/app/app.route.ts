@@ -100,6 +100,14 @@ export const routes: Routes =
                                     loadChildren: './pages/BankName/bank-name.module#BankNameModule'
                                 },
                                 {
+                                    path: 'PERSONAL_DETAILS_HANDLER',
+                                    loadChildren: './pages/personaldetails/app.module#PDModule'
+                                },
+                                {
+                                    path: 'ACCOUNT_DETAILS_HANDLER',
+                                    loadChildren: './pages/AccountDetails/app.module#ADModule'
+                                },
+                                {
                                     path: 'MonthName_Handler',
                                     component: MonthNamesComponent
                                 }

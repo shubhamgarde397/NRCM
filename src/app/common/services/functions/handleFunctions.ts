@@ -123,8 +123,8 @@ export class handleFunction {
         }
     }
 
-    findowner(trucknoid, ownerArray) {
-        if (trucknoid !== 'Select Truck Number') {
+    findowner(trucknoid, ownerArray, text) {
+        if (trucknoid !== text) {
             const data = trucknoid;
             switch (data.length) {
                 case 25:

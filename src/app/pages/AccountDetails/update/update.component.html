@@ -1,0 +1,190 @@
+<div class="well">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="Name" disabled>
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.truckno.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <!--Personal Details-->
+    <div class="form-group row">
+
+      <div class="col-xs-1">
+        <label for="name"> Personal</label>
+      </div>
+
+      <div class="col-xs-6">
+        <select id="name" class="form-control " formControlName="name" [(ngModel)]="pdid" (change)="findpd()">
+          <option disabled selected>{{personaldetailslistid.name}}</option>
+          <option *ngFor="let i of personaldetailslist;let j=index;" value={{i._id+j}}>{{i.name}}</option>
+        </select>
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.name.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+      <!-- <div class="col-xs-4" align="center">
+        <table>
+          <tr>
+            <th>PAN</th>
+            <th>Contact</th>
+          </tr>
+          <tr *ngIf="PID">
+            <td>
+              <input type="text" value="{{personaldetailslistid.pan}}" #pdpan ([ngModel])="pdpan" disabled>
+            </td>
+            <td>
+              <input type="text" value="{{personaldetailslistid.contact}}" #pdcontact ([ngModel])="pdcontact" disabled>
+          </tr>
+        </table>
+      </div> -->
+
+    </div>
+    <!--Personal Details-->
+
+    <!-- Account details -->
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="ABC">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.accountName.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="number" id="accountNumber" class="form-control" formControlName="accountNumber"
+          placeholder="325689741">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.accountNumber.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="bankName" class="form-control" formControlName="bankName" placeholder="Bank Name">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.bankName.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.ifsc.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!-- keep adding these data here -->
+
+    <!-- TruckDate -->
+    <div class="form-group row">
+      <div class="col-sm-1">
+        <button type="button" (click)="addaccount()">Add</button>
+      </div>
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Bank</th>
+            <th>IFSC</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let i of accountArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.accountName}}</td>
+            <td>{{i.accountNumber}}</td>
+            <td>{{i.bankName}}</td>
+            <td>{{i.ifsc}}</td>
+            <td (click)="deleteOne(i,j)">Delete</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+    <!-- Account Details -->
+    <div class="form-group row">
+
+      <div class="col-xs-1">
+        <label for="name"> Reference</label>
+      </div>
+
+      <div class="col-xs-6">
+        <select id="name" class="form-control " formControlName="nametdid" [(ngModel)]="tdid" (change)="findtd()">
+          <option disabled selected>{{tdid}}</option>
+          <option *ngFor="let i of truckdetailslist;let j=index;" value={{i._id+j}}>{{i.truckno}}</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-1">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-1">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+
+
+
+
+</div>

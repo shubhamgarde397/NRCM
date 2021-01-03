@@ -1,0 +1,99 @@
+<div class="well">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="add(myFormGroup)" submitted=true enctype="multipart/form data" action="/">
+
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+
+
+        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Name">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.name.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A"
+          pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.pan.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
+          [(ngModel)]="contactA">
+      </div>
+      <div class="col-xs-2">
+        <button type="button" class="btn btn-primary" (click)="addMore()">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+      <div class="col-xs-3">
+        <table>
+          <tr>
+            <th>Contact</th>
+          </tr>
+          <tr *ngFor="let i of contactArray;">
+            <td>{{i}}</td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-2">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-3">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+
+      <!-- <div class="col-xs-3">
+        <input class="form-control" (change)="incomingFile($event)" type="file">
+        {{filePath}}
+      </div>
+      <div class="col-xs-2">
+        <button class="btn btn-warnign" id="dnext" (click)="upload()">Multiple</button>
+
+
+      </div> -->
+
+    </div>
+  </form>
+
+
+
+
+
+</div>

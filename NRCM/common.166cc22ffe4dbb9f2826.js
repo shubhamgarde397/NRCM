@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[0],{"9K8n":function(n,i,o){"use strict";o.d(i,"a",function(){return t});var t=function(n,i,o,t){this.TruckNo=n,this.OwnerName=i,this.PAN=o,this.MobileNo=t}}}]);

@@ -122,7 +122,7 @@ export class BookingUpdateComponent implements OnInit {
   }
 
   findowner() {
-    this.ownerdetailslistid = this.handlefunction.findowner(this.trucknoid, this.ownerdetailslist);
+    this.ownerdetailslistid = this.handlefunction.findowner(this.trucknoid, this.ownerdetailslist, '');
     this.ownerID = true;
   }
 
