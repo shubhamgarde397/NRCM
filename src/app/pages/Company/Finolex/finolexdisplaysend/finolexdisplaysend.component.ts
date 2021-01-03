@@ -194,7 +194,7 @@ export class FinolexdisplaysendComponent implements OnInit {
   }
 
   findowner() {
-    this.ownerdetailslistid = this.handlefunction.findowner(this.updatetruckno, this.ownerdetailslist);
+    this.ownerdetailslistid = this.handlefunction.findowner(this.updatetruckno, this.ownerdetailslist, '');
   }
   back() {
     this.show = !this.show;

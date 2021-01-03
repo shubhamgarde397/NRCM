@@ -430,7 +430,6 @@ export class MainPageComponent implements OnInit {
 
     }
     //Dynamic Part End
-    console.log(i);
 
     doc.save('tp.pdf')
   }
@@ -467,8 +466,6 @@ export class MainPageComponent implements OnInit {
       })
   }
   ngOnInit() {
-    console.log(this.temp);
-
     setInterval(() => {
       this.now = new Date();
       if (this.now.getSeconds() % 10 === 0) {

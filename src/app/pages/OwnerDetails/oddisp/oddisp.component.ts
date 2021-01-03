@@ -77,6 +77,7 @@ export class OddispComponent implements OnInit {
   }
 
   showDatabyid = function (data) {
+
     this.show = true;
     this.found = data;
     this.handledata.saveData(data);

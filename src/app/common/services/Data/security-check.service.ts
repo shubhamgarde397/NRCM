@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class SecurityCheckService {
   public yearNames = [];
   public monthNames;
-  public IP = [0, 0, 0, 0, 0, 0, 0];
+  public IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   public commonArray = {
     "gstdetails": [{}],
     "ownerdetails": [{}],
@@ -14,6 +14,8 @@ export class SecurityCheckService {
     "regularparty": [{}],
     "RegularTruck": [{}],
     "thoughts": [{}],
+    "personaldetails": [{}],
+    "truckdetails": [{}],
     "Role": 6
   }
 

@@ -37,15 +37,15 @@ export class BalancehiredisplayComponent implements OnInit {
   public todayDate;
   public balanceDate = [];
   public selectedDate;
-  public document = new jsPDF();
-
+  public role = 6;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
-    public handleData: HandleDataService, public excelService: ExcelService,
+    public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService) {
     this.commonArray = this.securityCheck.commonArray;
   }
 
   ngOnInit() {
+    this.role = this.securityCheck.role;
   }
 
   find = function () {
@@ -57,23 +57,33 @@ export class BalancehiredisplayComponent implements OnInit {
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
+        this.balanceDate = [];
         this.balanceDate = res.balanceData;
-        console.log(this.balanceDate);
-
       });
   };
-
+  deleteBH(data) {
+    if (confirm('Are you sure?')) {
+      data['comments'] = data['comments'] === 'cancel' ? '' : 'cancel';
+      data['method'] = 'update';
+      data['tablename'] = 'BalanceHire';
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, data, 0)
+        .subscribe((res: any) => {
+          this.balanceDate.find(r => r._id == data._id)['comments'] = data['comments'];
+        });
+    }
+  }
 
 
   download() {//threshhold is 295
-
-    var doc = this.document;
+    let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
+    var doc = new jsPDF();
     //Static Part Start
     //Date
     doc.setFontSize('15');
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
-    doc.text(this.balanceDate[0].todayDate, 90, 5)
+    doc.text(dateFormat, 90, 5)
     //Date
     //line after date
     doc.setDrawColor(0, 0, 0);
@@ -112,8 +122,6 @@ export class BalancehiredisplayComponent implements OnInit {
     doc.setFontType('normal');
     doc.setTextColor(0, 0, 0);
     let i = 18;
-    console.log('start : ', i);
-
     // doc.text('Shubham is awesome', 1, i);
     for (let z = 0; z < this.balanceDate.length; z++) {
       let data = this.balanceDate[z].truckData;
@@ -124,7 +132,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.setFontSize('15');
         doc.setFontType('bold');
         doc.setTextColor(0, 0, 0);
-        doc.text(this.balanceDate[0].todayDate, 90, 5)
+        doc.text(dateFormat, 90, 5)
         //Date
         //line after date
         doc.setDrawColor(0, 0, 0);
@@ -166,10 +174,12 @@ export class BalancehiredisplayComponent implements OnInit {
       }
 
       let K = 0
+      doc.setFontSize('20');
+      doc.text(this.balanceDate[z].comments, 23.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('20');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 1, i);//amount
-        // doc.text(this.balanceDate[z].truckData[k].amount,i,10);//comments
+
         doc.setFontSize('15');
         doc.text(String(this.balanceDate[z].truckData[k].pageno), 46.5, i);//pgno
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7), 57.5, i);//date
@@ -180,18 +190,19 @@ export class BalancehiredisplayComponent implements OnInit {
       }
       doc.line(0, i + 7, 210, i + 7);
       doc.setFontSize('15');
-      doc.text(this.balanceDate[z].accountNumber, 121.5, i - (data.length * 6));//accno
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankname, 121.5, i + 6 - (data.length * 6));//ifsc-bankname
+      doc.text(String(this.balanceDate[z].accountNumber), 121.5, i - (data.length * 6));//accno
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 121.5, i + 6 - (data.length * 6));//ifsc-bankname
       doc.text(this.balanceDate[z].accountName, 121.5, i + 12 - (data.length * 6));//accname
       i = i + 15;
-      console.log('val of i : ', i);
-
-
     }
     //Dynamic Part End
-    console.log('end i : ', i);
-
-    doc.save('tp.pdf')
+    doc.save(dateFormat + '.pdf')
   }
+  showDatabyid = function (data) {
+    this.show = true;
+    this.found = data;
+    this.handledata.saveData(data);
+    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
+  };
 }
 
