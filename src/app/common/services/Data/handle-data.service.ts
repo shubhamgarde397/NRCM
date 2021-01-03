@@ -15,6 +15,8 @@ export class HandleDataService {
     "regularparty": [{}],
     "RegularTruck": [{}],
     "thoughts": [{}],
+    "personaldetails": [{}],
+    "truckdetails": [{}],
     "Role": 6
   }
   public IP = [];
@@ -36,11 +38,10 @@ export class HandleDataService {
     let tempCArr = [];
     let tempArrofAPI = [];
     tempArrofAPI = this.getIndexes(data);
-
     for (let i = 0; i < tempArrofAPI.length; i++) {
       tempCArr[tempArrofAPI[i][0].index] = 1;//use here tempArrOfAPI[0].index
     }
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < Object.keys(this.commonArray).length; i++) {
       if (tempCArr[i] == undefined) { tempCArr[i] = 0; }
     }
     // return this.checkForData(tempCArr, tempArrofAPI);
@@ -59,12 +60,16 @@ export class HandleDataService {
         return [Consts.OWNER_INDEX];
       case 'infovillage':
         return [Consts.VILLAGE_INDEX];
-      // case 'infonewowner':
-      //   return [Consts.NEW_OWNER_INDEX];
       case 'inforegularparty':
         return [Consts.REGULARPARTY_INDEX];
       case 'inforegulartruck':
         return [Consts.REGULARTRUCK_INDEX];
+      case 'infopersonaldetails':
+        return [Consts.PERSONALDETAILS_INDEX];
+      case 'infotruckdetails':
+        return [Consts.TRUCKDETAILS_INDEX];
+      case 'infotruckpersonal':
+        return [Consts.TRUCKDETAILS_INDEX, Consts.PERSONALDETAILS_INDEX];
 
     }
   }

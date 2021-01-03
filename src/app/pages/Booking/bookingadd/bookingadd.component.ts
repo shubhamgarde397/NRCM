@@ -239,7 +239,7 @@ export class BookingaddComponent implements OnInit {
   }
 
   findowner() {
-    this.ownerdetailslistid = this.handlefunction.findowner(this.trucknoid, this.ownerdetailslist);
+    this.ownerdetailslistid = this.handlefunction.findowner(this.trucknoid, this.ownerdetailslist, 'Select Truck Number');
     this.ownerID = true;
   }
 

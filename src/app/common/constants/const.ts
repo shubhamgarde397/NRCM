@@ -11,6 +11,8 @@ export class Consts {
     public static REGULARPARTY_INDEX = [{ 'index': 4, 'name': 'regularparty' }];
     public static REGULARTRUCK_INDEX = [{ 'index': 5, 'name': 'regulartruck' }];
     public static THOUGHT_INDEX = [{ 'index': 6, 'name': 'thought' }];
+    public static PERSONALDETAILS_INDEX = [{ 'index': 7, 'name': 'personaldetails' }];
+    public static TRUCKDETAILS_INDEX = [{ 'index': 8, 'name': 'truckdetails' }];
     public static monthNames =
         [
             'January', 'February', 'March', 'April', 'May', 'June',

@@ -6,12 +6,14 @@ import { CommonModule } from '@angular/common';
 import { BalancehirehandlerComponent } from './balancehirehandler/balancehirehandler.component';
 import { BalancehireaddComponent } from './balancehireadd/balancehireadd.component';
 import { BalancehiredisplayComponent } from './balancehiredisplay/balancehiredisplay.component';
+import { UpdateComponent } from './update/update.component';
 
 @NgModule({
     declarations: [
         BalancehirehandlerComponent,
         BalancehireaddComponent,
-        BalancehiredisplayComponent
+        BalancehiredisplayComponent,
+        UpdateComponent
     ],
     imports: [
         CommonModule,

@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { BalancehirehandlerComponent } from './balancehirehandler/balancehirehandler.component';
 import { BalancehireaddComponent } from './balancehireadd/balancehireadd.component';
 import { BalancehiredisplayComponent } from './balancehiredisplay/balancehiredisplay.component';
+import { UpdateComponent } from './update/update.component';
 
 export const BalanceHireRouting: Routes =
     [
@@ -27,6 +28,10 @@ export const BalanceHireRouting: Routes =
                     {
                         path: 'BalanceHireDisp',
                         component: BalancehiredisplayComponent
+                    },
+                    {
+                        path: 'Update',
+                        component: UpdateComponent
                     }
 
                 ]
