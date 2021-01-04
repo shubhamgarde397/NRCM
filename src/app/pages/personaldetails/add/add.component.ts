@@ -42,7 +42,13 @@ export class AddComponent implements OnInit {
       ('commoninformation', 1, formBody, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
-        this.securityCheck.commonArray['personaldetails'].push(res);
+
+        let tempObj = {}
+        tempObj['name'] = value['name'];
+        tempObj['pan'] = value['pan'];
+        tempObj['contact'] = this.contactArray;
+        tempObj['_id'] = res._id;
+        this.securityCheck.commonArray['personaldetails'].push(tempObj);
       });
   }
 

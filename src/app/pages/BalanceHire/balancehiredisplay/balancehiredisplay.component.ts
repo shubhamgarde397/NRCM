@@ -80,7 +80,7 @@ export class BalancehiredisplayComponent implements OnInit {
     var doc = new jsPDF();
     //Static Part Start
     //Date
-    doc.setFontSize('15');
+    doc.setFontSize('10');
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
     doc.text(dateFormat, 90, 5)
@@ -94,22 +94,22 @@ export class BalancehiredisplayComponent implements OnInit {
     //vertical line after date
     doc.setDrawColor(0, 0, 0);
     doc.setLineWidth(0.5);
-    doc.line(22, 6, 22, 300);
-    doc.line(46, 6, 46, 300);
-    doc.line(57, 6, 55.4, 300);
-    doc.line(72, 6, 72, 300);
-    doc.line(120, 6, 120, 300);
+    doc.line(37, 6, 37, 300);
+    doc.line(61, 6, 61, 300);
+    doc.line(72, 6, 70.4, 300);
+    doc.line(92, 6, 92, 300);
+    doc.line(135, 6, 135, 300);
     //vertical line after date
     //Headers
     doc.setFontSize('10');
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
-    doc.text('Amount', 1, 10)
-    doc.text('Comments', 23, 10)
-    doc.text('Pg', 48, 10)
-    doc.text('Date', 57.5, 10)
-    doc.text('TruckNo', 72.5, 10)
-    doc.text('Account Details', 120.5, 10)
+    doc.text('Amount', 16, 10)
+    doc.text('Comments', 38, 10)
+    doc.text('Pg', 63, 10)
+    doc.text('Date', 72.5, 10)
+    doc.text('TruckNo', 92.5, 10)
+    doc.text('Account Details', 135.5, 10)
     //Headers End
     //Line after headers
     doc.setDrawColor(0, 0, 0);
@@ -118,7 +118,7 @@ export class BalancehiredisplayComponent implements OnInit {
     //Line after headers
     //Static Part End
     //Dynamic Part Start
-    doc.setFontSize('20');
+    doc.setFontSize('10');
     doc.setFontType('normal');
     doc.setTextColor(0, 0, 0);
     let i = 18;
@@ -129,7 +129,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.addPage();
         //Static Part Start
         //Date
-        doc.setFontSize('15');
+        doc.setFontSize('10');
         doc.setFontType('bold');
         doc.setTextColor(0, 0, 0);
         doc.text(dateFormat, 90, 5)
@@ -143,22 +143,22 @@ export class BalancehiredisplayComponent implements OnInit {
         //vertical line after date
         doc.setDrawColor(0, 0, 0);
         doc.setLineWidth(0.5);
-        doc.line(22, 6, 22, 300);
-        doc.line(46, 6, 46, 300);
-        doc.line(57, 6, 55.4, 300);
-        doc.line(72, 6, 72, 300);
-        doc.line(120, 6, 120, 300);
+        doc.line(37, 6, 37, 300);
+        doc.line(61, 6, 61, 300);
+        doc.line(72, 6, 70.4, 300);
+        doc.line(92, 6, 92, 300);
+        doc.line(135, 6, 135, 300);
         //vertical line after date
         //Headers
         doc.setFontSize('10');
         doc.setFontType('bold');
         doc.setTextColor(0, 0, 0);
-        doc.text('Amount', 1, 10)
-        doc.text('Comments', 23, 10)
-        doc.text('Pg', 48, 10)
-        doc.text('Date', 57.5, 10)
-        doc.text('TruckNo', 72.5, 10)
-        doc.text('Account Details', 120.5, 10)
+        doc.text('Amount', 16, 10)
+        doc.text('Comments', 38, 10)
+        doc.text('Pg', 63, 10)
+        doc.text('Date', 72.5, 10)
+        doc.text('TruckNo', 92.5, 10)
+        doc.text('Account Details', 135.5, 10)
         //Headers End
         //Line after headers
         doc.setDrawColor(0, 0, 0);
@@ -167,32 +167,33 @@ export class BalancehiredisplayComponent implements OnInit {
         //Line after headers
         //Static Part End
         //Dynamic Part Start
-        doc.setFontSize('20');
+        doc.setFontSize('10');
         doc.setFontType('normal');
         doc.setTextColor(0, 0, 0);
         i = 18;
       }
 
       let K = 0
-      doc.setFontSize('20');
-      doc.text(this.balanceDate[z].comments, 23.5, i);//comments
+      doc.setFontSize('10');
+      doc.text(this.balanceDate[z].comments, 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
-        doc.setFontSize('20');
-        doc.text(String(this.balanceDate[z].truckData[k].amount), 1, i);//amount
+        doc.setFontSize('10');
+        doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
 
-        doc.setFontSize('15');
-        doc.text(String(this.balanceDate[z].truckData[k].pageno), 46.5, i);//pgno
-        doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7), 57.5, i);//date
-        doc.setFontSize('20');
-        doc.text(this.balanceDate[z].truckData[k].truckno, 72.5, i);//truckno
+        doc.setFontSize('10');
+        doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
+        doc.setFontSize('10');
+        doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
+        doc.setFontSize('10');
+        doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
         K = k;
         i = i + 6;
       }
       doc.line(0, i + 7, 210, i + 7);
-      doc.setFontSize('15');
-      doc.text(String(this.balanceDate[z].accountNumber), 121.5, i - (data.length * 6));//accno
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 121.5, i + 6 - (data.length * 6));//ifsc-bankname
-      doc.text(this.balanceDate[z].accountName, 121.5, i + 12 - (data.length * 6));//accname
+      doc.setFontSize('10');
+      doc.text(String(this.balanceDate[z].accountNumber), 136.5, i - (data.length * 6));//accno
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 136.5, i + 6 - (data.length * 6));//ifsc-bankname
+      doc.text(this.balanceDate[z].accountName, 136.5, i + 12 - (data.length * 6));//accname
       i = i + 15;
     }
     //Dynamic Part End

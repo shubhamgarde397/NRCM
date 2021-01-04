@@ -33,6 +33,8 @@ export class DisplayComponent implements OnInit {
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
     this.personaldetailslist = this.commonArray.personaldetails;
+    console.log(this.personaldetailslist);
+
   };
 
 
@@ -62,7 +64,7 @@ export class DisplayComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.considerArray = this.handledata.createConsiderArray('infopersonaldetails')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    this.fetchData();
+    this.fetchBasic();
   }
 
   delete = function (id) {
@@ -102,6 +104,7 @@ export class DisplayComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.personaldetailslist = [];
     this.personaldetailslist = this.commonArray.personaldetails;
+    console.log(this.personaldetailslist);
   }
 
   showDatabyid = function (data) {

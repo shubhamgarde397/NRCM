@@ -95,7 +95,13 @@ export class AddComponent implements OnInit {
       ('commoninformation', 1, formBody, 0)
       .subscribe((res: any) => {
         alert('Added Successfully');
-        this.securityCheck.commonArray['personaldetails'].push(res);
+        let tempObj = {};
+        tempObj['personalDetails'] = this.personaldetailslistid['_id'];
+        tempObj['truckno'] = value['truckno'];
+        tempObj['accountDetails'] = this.accountArray;
+        tempObj['reference'] = this.truckdetailslistid['_id'];
+        tempObj['_id'] = res._id;
+        this.securityCheck.commonArray['truckdetails'].push(tempObj);
       });
   }
   findpd() {
