@@ -78,7 +78,7 @@ export class BalancehireaddComponent implements OnInit {
     tempObj['tablename'] = 'BalanceHire';
     tempObj['todayDate'] = this.today;
     tempObj['truckData'] = this.truckArray;
-    tempObj['bankname'] = '';
+    tempObj['bankName'] = '';
     tempObj['ifsc'] = '';
     tempObj['accountNumber'] = '';
     tempObj['accountName'] = '';
