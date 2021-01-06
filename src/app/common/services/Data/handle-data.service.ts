@@ -56,6 +56,8 @@ export class HandleDataService {
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
       case 'infogst':
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
+      case 'infogstonly':
+        return [Consts.GST_INDEX];
       case 'infoowner':
         return [Consts.OWNER_INDEX];
       case 'infovillage':

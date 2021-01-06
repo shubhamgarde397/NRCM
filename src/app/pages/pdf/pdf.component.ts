@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import * as  jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
+import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 @Component({
   selector: 'app-declaration',
@@ -12,6 +14,7 @@ export class PDFComponent implements OnInit {
   public newAuthor: any;
   public dateFromUI;
   public timeLog;
+  public timeLogYear;
   public addr1 = '';
   public addr2 = '';
   public addr3 = '';
@@ -22,15 +25,38 @@ export class PDFComponent implements OnInit {
   public amt;
   gstdetailslist = [];
   commonArray;
+  public considerArray;
+  public colorfromUI;
+  public colorfromUILine;
   constructor(
-    public securityCheck: SecurityCheckService) {
+    public securityCheck: SecurityCheckService, public apiCallservice: ApiCallsService, public handledata: HandleDataService) {
 
   }
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
     this.gstdetailslist = this.commonArray.gstdetails;
+
+    this.considerArray = this.handledata.createConsiderArray('infogstonly')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
   }
+
+  getInformationData() {
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
+        this.fetchBasic();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.securityCheck.commonArray;
+    this.gstdetailslist = [];
+    this.gstdetailslist = this.commonArray.gstdetails;
+  }
+
+
   changeTab(tabs) {
     this.tabber = tabs;
   }
@@ -44,12 +70,12 @@ export class PDFComponent implements OnInit {
     this.amt = '';
   }
   downloadBank() {
-
+    var colorfromUI = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUI);
+    var colorfromUILine = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUILine);
     var doc = new jsPDF()
-
     doc.setFontSize('30');
     doc.setFontType('bold');
-    doc.setTextColor(234, 1, 0);
+    doc.setTextColor(parseInt(colorfromUI[1], 16), parseInt(colorfromUI[2], 16), parseInt(colorfromUI[3], 16));
     doc.text('Nitin Roadways And Cargo Movers', 15, 25)
 
     doc.setFontSize('16');
@@ -58,16 +84,16 @@ export class PDFComponent implements OnInit {
     doc.setTextColor(0, 0, 0);
     doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
 
-    doc.setDrawColor(153, 29, 39);
+    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
     doc.setLineWidth(0.5);
     doc.line(15, 38, 195, 38);
 
     doc.setFontSize('15');
     doc.setFontType('bold');
-    doc.setTextColor(215, 6, 9);
+    doc.setTextColor(parseInt(colorfromUI[1], 16), parseInt(colorfromUI[2], 16), parseInt(colorfromUI[3], 16));
     doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15, 43)
 
-    doc.setDrawColor(153, 29, 29);
+    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
     doc.setLineWidth(0.5);
     doc.line(15, 44, 195, 44);
 
@@ -84,11 +110,11 @@ export class PDFComponent implements OnInit {
     doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 25, 65)
 
 
-    doc.setDrawColor(153, 29, 29);
+    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
     doc.setLineWidth(0.8);
     doc.line(15, 67, 195, 67);
 
-    doc.setDrawColor(153, 29, 29);
+    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
     doc.setLineWidth(0.2);
     doc.line(15, 68, 195, 68);
 
@@ -96,7 +122,7 @@ export class PDFComponent implements OnInit {
     doc.setFontType('normal');
     doc.setTextColor(0, 0, 0);
 
-    doc.text(this.timeLog.toString(), 50, 73)
+    doc.text(this.timeLog.toString() + ' - ' + this.timeLogYear.toString(), 50, 73)
     doc.text('Date :- ' + this.dateSetter(), 141, 73)
     doc.text('To,', 25, 80)
     doc.text('Branch Manager,', 40, 85)
@@ -106,21 +132,38 @@ export class PDFComponent implements OnInit {
 
     doc.setFontSize('15');
     let totalAmt = 0;
+    let amountPrinter = true;
+    for (let i = 0; i < this.bankArray.length; i++) {
+      if (this.bankArray[i].Amount === undefined) {
+        amountPrinter = false;
+        break;
+      }
+    }
     for (let i = 0; i < this.bankArray.length; i++) {
       doc.text(this.bankArray[i].Name, 70, (110 + (i * 6)))
-      doc.text(this.bankArray[i].Amount.toString(), 140, (110 + (i * 6)))
-      totalAmt = totalAmt + this.bankArray[i].Amount;
+      if (!amountPrinter) { }
+      else {
+        doc.text(this.bankArray[i].Amount.toString(), 140, (110 + (i * 6)))
+        totalAmt = totalAmt + this.bankArray[i].Amount;
+      }
     }
-    doc.text('Total', 70, (110 + ((this.bankArray.length + 1) * 6)))
-    doc.text(totalAmt.toString(), 140, (110 + ((this.bankArray.length + 1) * 6)))
+    if (totalAmt === 0) { }
+    else {
+      doc.text('Total', 70, (110 + ((this.bankArray.length + 1) * 6)))
+      doc.text(totalAmt.toString(), 140, (110 + ((this.bankArray.length + 1) * 6)))
+    }
 
     doc.text('Declarant', 150, 268)
     doc.save(this.timeLog.toString() + '.pdf')
   }
-
+  delete(data, i) {
+    this.bankArray.splice(i, 1);
+  }
 
   dateSetter() {
-
+    if (this.dateFromUI === undefined || this.dateFromUI === '') {
+      return '';
+    }
     return this.dateFromUI.slice(8, 11) + '-' + this.dateFromUI.slice(5, 7) + '-' + this.dateFromUI.slice(0, 4)
   }
   download() {
@@ -134,6 +177,7 @@ export class PDFComponent implements OnInit {
 
 
     var doc = new jsPDF()
+
 
     doc.setFontSize('30');
     doc.setFontType('bold');
