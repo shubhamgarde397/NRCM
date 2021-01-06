@@ -28,6 +28,7 @@ export class PDFComponent implements OnInit {
   public considerArray;
   public colorfromUI;
   public colorfromUILine;
+  public max;
   constructor(
     public securityCheck: SecurityCheckService, public apiCallservice: ApiCallsService, public handledata: HandleDataService) {
 
@@ -64,17 +65,14 @@ export class PDFComponent implements OnInit {
     let a = this.nop;
     a = a.trim().split('_')[0];
     this.bankArray.push({ 'Name': a, 'Amount': this.amt });
-    // if (this.nop.slice(0, 12) === 'ALS And T Co')
-    //   this.bankArray.push({ 'Name': this.nop.slice(0, 12), 'Amount': this.amt });
-    // else {
-    //   this.bankArray.push({ 'Name': this.nop, 'Amount': this.amt });
-    // }
     this.nop = '';
     this.amt = '';
   }
   downloadBank() {
     var colorfromUI = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUI);
     var colorfromUILine = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUILine);
+    this.max = this.bankArray[0].Amount;
+    this.bankArray.forEach(r => { if (r.Amount > this.max) { this.max = r.Amount; } })
     var doc = new jsPDF()
     doc.setFontSize('30');
     doc.setFontType('bold');
@@ -132,6 +130,7 @@ export class PDFComponent implements OnInit {
     doc.text('Canara Bank,', 40, 90)
     doc.text('Dhankawadi Branch,', 40, 95)
     doc.text('Pune.', 40, 100)
+    console.log(this.bankArray);
 
     doc.setFontSize('15');
     let totalAmt = 0;
@@ -146,18 +145,26 @@ export class PDFComponent implements OnInit {
       doc.text(this.bankArray[i].Name, 70, (110 + (i * 6)))
       if (!amountPrinter) { }
       else {
-        doc.text(this.bankArray[i].Amount.toString(), 140, (110 + (i * 6)))
+        doc.text(this.appendwithspaces(this.bankArray[i].Amount.toString()), 170, (110 + (i * 6)))
         totalAmt = totalAmt + this.bankArray[i].Amount;
       }
     }
-    if (!amountPrinter) { }
+    if (totalAmt === 0) { }
     else {
       doc.text('Total', 70, (110 + ((this.bankArray.length + 1) * 6)))
-      doc.text(totalAmt.toString(), 140, (110 + ((this.bankArray.length + 1) * 6)))
+      doc.text(totalAmt.toString(), 167.5, (110 + ((this.bankArray.length + 1) * 6)))//one digit is 2.5
     }
 
-    doc.text('Declarant', 150, 268)
+    // doc.text('Declarant', 150, 268)
     doc.save(this.timeLog.toString() + '.pdf')
+  }
+
+  appendwithspaces(amount) {
+    let d = "";
+    for (let i = 0; i < String(this.max).length - String(amount).length; i++) {
+      d = d + "  ";
+    }
+    return d + amount;
   }
   delete(data, i) {
     this.bankArray.splice(i, 1);
@@ -297,3 +304,20 @@ export class PDFComponent implements OnInit {
     doc.save('Declaration_' + this.addr1 + '.pdf')
   }
 }
+
+// [{ Name: "Sri Ram Traders", "Amount": 12345 },
+// { Name: "SS Agency", "Amount": 1234 },
+// { Name: "Shri Vijay PVC Distributors", "Amount": 1234 },
+// { Name: "Kumaran Co", "Amount": 1234 },
+// { Name: "Shri Vijay PVC Corporation", "Amount": 1234 },
+// { Name: "ALS And T Co", "Amount": 123 },
+// { Name: "GB Commercial", "Amount": 123456 },
+// { Name: "K2 Polymer", "Amount": 123 },
+// { Name: "Green Tech Irrigation System", "Amount": 123 },
+// { Name: "Universal Marketing", "Amount": 1234 },
+// { Name: "Shri Jayalaxmi Store", "Amount": 1234 },
+// { Name: "Tirumala Pipe Distributors", "Amount": 1234 },
+// { Name: "Sekar And Co", "Amount": 123456 },
+// { Name: "Ganapathy Irritecc", "Amount": 1234 },
+// { Name: "South India Motar And Pipe", "Amount": 1234 },
+// { Name: "Shakti Agency", "Amount": 12345 }]
