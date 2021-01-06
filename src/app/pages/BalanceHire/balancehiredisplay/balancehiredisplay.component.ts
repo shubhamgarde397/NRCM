@@ -76,6 +76,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
 
   download() {//threshhold is 295
+    let pageno = 1;
     let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
     var doc = new jsPDF();
     //Static Part Start
@@ -84,6 +85,8 @@ export class BalancehiredisplayComponent implements OnInit {
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
     doc.text(dateFormat, 90, 5)
+    doc.text(String(pageno), 190, 5)
+    pageno = pageno + 1;
     //Date
     //line after date
     doc.setDrawColor(0, 0, 0);
@@ -133,6 +136,8 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.setFontType('bold');
         doc.setTextColor(0, 0, 0);
         doc.text(dateFormat, 90, 5)
+        doc.text(String(pageno), 190, 5)
+        pageno = pageno + 1;
         //Date
         //line after date
         doc.setDrawColor(0, 0, 0);
