@@ -61,11 +61,14 @@ export class PDFComponent implements OnInit {
     this.tabber = tabs;
   }
   addDetails() {
-    if (this.nop.slice(0, 12) === 'ALS And T Co')
-      this.bankArray.push({ 'Name': this.nop.slice(0, 12), 'Amount': this.amt });
-    else {
-      this.bankArray.push({ 'Name': this.nop, 'Amount': this.amt });
-    }
+    let a = this.nop;
+    a = a.trim().split('_')[0];
+    this.bankArray.push({ 'Name': a, 'Amount': this.amt });
+    // if (this.nop.slice(0, 12) === 'ALS And T Co')
+    //   this.bankArray.push({ 'Name': this.nop.slice(0, 12), 'Amount': this.amt });
+    // else {
+    //   this.bankArray.push({ 'Name': this.nop, 'Amount': this.amt });
+    // }
     this.nop = '';
     this.amt = '';
   }
@@ -147,7 +150,7 @@ export class PDFComponent implements OnInit {
         totalAmt = totalAmt + this.bankArray[i].Amount;
       }
     }
-    if (totalAmt === 0) { }
+    if (!amountPrinter) { }
     else {
       doc.text('Total', 70, (110 + ((this.bankArray.length + 1) * 6)))
       doc.text(totalAmt.toString(), 140, (110 + ((this.bankArray.length + 1) * 6)))
