@@ -46,6 +46,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
   ngOnInit() {
     this.role = this.securityCheck.role;
+    this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
   }
 
   find = function () {
@@ -59,6 +60,7 @@ export class BalancehiredisplayComponent implements OnInit {
       .subscribe((res: any) => {
         this.balanceDate = [];
         this.balanceDate = res.balanceData;
+        this.securityCheck.commonBalanceHire = res.balanceData;
       });
   };
   deleteBH(data) {
@@ -204,9 +206,10 @@ export class BalancehiredisplayComponent implements OnInit {
     //Dynamic Part End
     doc.save(dateFormat + '.pdf')
   }
-  showDatabyid = function (data) {
+  showDatabyid = function (data, j) {
     this.show = true;
     this.found = data;
+    data['index'] = j;
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
   };

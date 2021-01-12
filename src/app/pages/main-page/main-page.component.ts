@@ -354,7 +354,9 @@ export class MainPageComponent implements OnInit {
   public document = new jsPDF();
   // 
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
-    public router: Router, public handlefunction: handleFunction) { }
+    public router: Router, public handlefunction: handleFunction) {
+    localStorage.clear();
+  }
   pdf() {//threshhold is 295
 
     var doc = this.document;

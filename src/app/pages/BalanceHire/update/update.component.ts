@@ -114,15 +114,11 @@ export class UpdateComponent implements OnInit {
     tempObj['_id'] = this.handledata.Data._id;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((response: Response) => {
-        this.sec.commonArray['ownerdetails'].forEach((res) => {
-          if (res._id == this.handledata.Data._id) {
-            tempObj['bankName'] = data.value.bankName;
-            tempObj['ifsc'] = data.value.ifsc;
-            tempObj['accountNumber'] = data.value.accountNumber;
-            tempObj['accountName'] = data.value.accountName;
-          }
-        })
-
+        let tempObj = this.sec.commonBalanceHire[this.handledata.Data.index];
+        tempObj['bankName'] = this.myFormGroup.value.bankName;
+        tempObj['ifsc'] = this.myFormGroup.value.ifsc;
+        tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
+        tempObj['accountName'] = this.myFormGroup.value.accountName;
         this.show = !this.show;
         this._location.back();
       });

@@ -10,11 +10,11 @@
       </div>
 
       <div class="col-xs-3">
-        <input type="date" id="date" class="form-control" formControlName="date">
+        <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate">
       </div>
 
       <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.date.valid">
+        <div [hidden]="myFormGroup.controls.turnbookDate.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
@@ -32,12 +32,12 @@
       </div>
 
       <div class="col-xs-3">
-        <select id="truckNo" class="form-control " formControlName="truckNo">
-          <option> Truck No</option>
-          <option *ngFor="let i of trucklist">{{i}}</option>
-        </select>
+        <input type="text" list="cars" class="form-control" formControlName="truckNo" [(ngModel)]="trucknoid"
+          (change)="findtruckdetails()" id="truckNoone" />
+        <datalist id="cars">
+          <option *ngFor="let i of truckdetailslist;let j = index;">{{j+1}}.) {{i.truckno}}</option>
+        </datalist>
       </div>
-
       <div class="col-xs-1">
         <div [hidden]="myFormGroup.controls.truckNo.valid">
           <font color="red">
@@ -48,23 +48,43 @@
 
     </div>
     <!--Truckno-->
-
-    <!--Hire Amount-->
+    <!-- partyType-->
     <div class="form-group row">
 
-      <div class="col-xs-1">
-        <label for="hireAmount"> Hire Amount </label>
+      <div class="col-sm-2">
+        <label for="partyType"> From </label>
       </div>
 
-      <div class="col-xs-6">
-        <input type="text" list="cars" class="form-control" formControlName="hireAmount" />
-        <datalist id="cars">
-          <option *ngFor="let i of hireExtendingMoney">{{i}}</option>
-        </datalist>
+      <div class="col-xs-3">
+        <select class="form-control" id="partyType" formControlName="partyType">
+          <option>NRCM</option>
+          <option>NR</option>
+        </select>
+      </div>
+
+
+      <div [hidden]="myFormGroup.controls.partyType.valid" class="col-xs-1">
+        <font color="red">
+          <span class="glyphicon glyphicon-remove"></span>
+        </font>
+      </div>
+    </div>
+    <!--From -->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="place"> Place </label>
+      </div>
+
+      <div class="col-xs-3">
+        <select id="palce" class="form-control" formControlName="place" [(ngModel)]="villageData">
+          <option disabled selected>Select Place</option>
+          <option *ngFor="let own of villagelist" value="{{own._id}}+{{own.village_name}}">{{own.village_name}}</option>
+        </select>
       </div>
 
       <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.hireAmount.valid">
+        <div [hidden]="myFormGroup.controls.place.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
@@ -72,7 +92,6 @@
       </div>
 
     </div>
-    <!--HireAmount-->
 
 
     <div class="row">
@@ -98,7 +117,5 @@
 
     </div>
   </form>
-
-
 
 </div>

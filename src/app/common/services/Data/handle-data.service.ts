@@ -72,6 +72,9 @@ export class HandleDataService {
         return [Consts.TRUCKDETAILS_INDEX];
       case 'infotruckpersonal':
         return [Consts.TRUCKDETAILS_INDEX, Consts.PERSONALDETAILS_INDEX];
+      case 'turnbook':
+        // return [Consts.TRUCKDETAILS_INDEX];
+        return [Consts.VILLAGE_INDEX, Consts.TRUCKDETAILS_INDEX];
 
     }
   }

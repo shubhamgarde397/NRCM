@@ -38,62 +38,28 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public dbName = 1;
   public commonArray;
   public date = new Date();
-  turnbooklist: any;
+  public turnbooklist: any;
   public dateFromUI;
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
-    this.commonArray = this.securityCheck.commonArray;
   }
 
   ngOnInit() {
-    this.gstdetailslist = this.commonArray.gstdetails;
     this.todaysDate = this.date.getDate();
-    this.find();
   }
 
   find = function () {
-    this.today = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
-    let body = {};
-    body['today'] = this.today;
-    this.apiCallservice.handleData_New(this.dbName, 'turnBook/getturnbookdata', 1, 0, body).
-      subscribe((res: Response) => {
-        this.turnbooklist = res;
-      });
-  };
+    let tempObj = {};
+    tempObj['turnbookDate'] = this.dateFromUI;
+    tempObj['tablename'] = 'turnbook'
+    tempObj['method'] = 'displayTB'
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        this.turnbooklist = res.Data;
 
-  leftRight(LR) {
-    switch (LR) {
-      case 'back':
-        this.todaysDate = this.todaysDate - 1;
-        this.today = this.handleF.getDate(this.todaysDate, (this.date.getMonth() + 1), this.date.getFullYear());
-        break;
-      case 'ahead':
-        this.todaysDate = this.todaysDate + 1;
-        this.today = this.handleF.getDate(this.todaysDate, (this.date.getMonth() + 1), this.date.getFullYear());
-        break;
-      case 'realDate':
-        this.today = this.dateFromUI;
-        break;
-    }
-    let body = {};
-    body['today'] = this.today;
-    this.apiCallservice.handleData_New(this.dbName, 'turnBook/getturnbookdata', 1, 0, body).
-      subscribe((res: Response) => {
-        this.turnbooklist = res;
       });
-  }
-
-  deleteTurnBookDetails = function (id) {
-    if (confirm('Are you sure?')) {
-      this.spinnerService.show();
-      this.apiCallservice.handleData_New(this.dbName, 'turnBook/delturnbookdata', 1, 0, { id: id })
-        .subscribe((response: Response) => {
-          this.find();
-          this.spinnerService.hide();
-        });
-    }
   };
 
   showDatabyid = function (data) {
