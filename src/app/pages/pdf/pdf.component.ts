@@ -152,12 +152,19 @@ export class PDFComponent implements OnInit {
     if (totalAmt === 0) { }
     else {
       doc.text('Total', 70, (110 + ((this.bankArray.length + 1) * 6)))
-      doc.text(totalAmt.toString(), 167.5, (110 + ((this.bankArray.length + 1) * 6)))//one digit is 2.5
+      doc.text(totalAmt.toString(), 170 - this.spaceToLeave(totalAmt, this.max), (110 + ((this.bankArray.length + 1) * 6)))//one digit is 2.5
     }
 
     // doc.text('Declarant', 150, 268)
     doc.save(this.timeLog.toString() + '.pdf')
   }
+
+  spaceToLeave(totalAmt, max) {
+    let spaces = String(totalAmt).length - String(max).length;
+    return (spaces * 2.5)
+  }
+
+
 
   appendwithspaces(amount) {
     let d = "";

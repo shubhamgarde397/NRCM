@@ -18,6 +18,7 @@ export class SecurityCheckService {
     "truckdetails": [{}],
     "Role": 6
   }
+  public commonBalanceHire = [];
 
   public AUTH = false;
   public username;

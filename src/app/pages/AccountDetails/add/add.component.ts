@@ -50,8 +50,8 @@ export class AddComponent implements OnInit {
     let tempObj = { "method": "displaynew", "consider": this.considerArray };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.securityCheck.commonArray['personaldetails'] = Object.keys(res.personaldetails[0]).length > 0 ? res.personaldetails : this.securityCheck.commonArray['personaldetails'];
-        this.securityCheck.commonArray['truckdetails'] = Object.keys(res.truckdetails[0]).length > 0 ? res.truckdetails : this.securityCheck.commonArray['truckdetails'];
+        this.securityCheck.commonArray['personaldetails'] = Object.keys(res.personaldetails).length > 0 ? res.personaldetails : this.securityCheck.commonArray['personaldetails'];
+        this.securityCheck.commonArray['truckdetails'] = Object.keys(res.truckdetails).length > 0 ? res.truckdetails : this.securityCheck.commonArray['truckdetails'];
         this.fetchBasic();
         this.spinnerService.hide();
       });
@@ -88,7 +88,7 @@ export class AddComponent implements OnInit {
     formBody['personalDetails'] = this.personaldetailslistid['_id'];
     formBody['truckno'] = value['truckno'];
     formBody['accountDetails'] = this.accountArray;
-    formBody['reference'] = this.truckdetailslistid['_id'];
+    formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
 
     this.submitted = true;
     this.apiCallservice.handleData_New_python
@@ -99,7 +99,7 @@ export class AddComponent implements OnInit {
         tempObj['personalDetails'] = this.personaldetailslistid['_id'];
         tempObj['truckno'] = value['truckno'];
         tempObj['accountDetails'] = this.accountArray;
-        tempObj['reference'] = this.truckdetailslistid['_id'];
+        tempObj['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
         tempObj['_id'] = res._id;
         this.securityCheck.commonArray['truckdetails'].push(tempObj);
       });

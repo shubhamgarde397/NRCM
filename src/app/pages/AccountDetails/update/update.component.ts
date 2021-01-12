@@ -48,6 +48,7 @@ export class UpdateComponent implements OnInit {
     this.truckdetailslist = this.commonArray.truckdetails;
     this.myFormGroup = this.formBuilder.group({
       truckno: [this.handledata.Data.truckno, [Validators.required]],
+      tempname: [this.handledata.Data.name],
       name: [this.personaldetailslist[this.handledata.Data.index].name, [Validators.required]],
       accountName: '',
       accountNumber: '',
@@ -56,10 +57,11 @@ export class UpdateComponent implements OnInit {
       nametdid: ''
     });
     this.accountArray = this.handledata.Data.accountDetails;
-    this.truckdetailslistid = this.truckdetailslist.find(element => element._id == this.handledata.Data.reference);
-    this.personaldetailslistid = this.personaldetailslist.find(element => element._id == this.handledata.Data.personalDetails);
-    this.tdid = this.truckdetailslistid.truckno;
-    this.pdid = this.personaldetailslistid.name;
+    this.truckdetailslistid = this.truckdetailslist === undefined ? "" : this.truckdetailslist.find(element => element._id == this.handledata.Data.reference);
+    let tempFinder = this.personaldetailslist.find(element => element._id == this.handledata.Data.personalDetails);
+    this.personaldetailslistid = tempFinder === undefined ? { _id: "", pan: "", name: "", preferences: Array(0), contact: Array(0) } : tempFinder;
+    this.tdid = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid.truckno;
+    this.pdid = this.personaldetailslistid === undefined ? "" : this.personaldetailslistid.name;
   }
 
   back() {
@@ -94,7 +96,7 @@ export class UpdateComponent implements OnInit {
     formBody['personalDetails'] = this.personaldetailslistid['_id'];
 
     formBody['accountDetails'] = this.accountArray;
-    formBody['reference'] = this.truckdetailslistid['_id'];
+    formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
     formBody['_id'] = this.handledata.Data._id;
     formBody['method'] = 'update';
     formBody['tablename'] = 'truckdetails';
@@ -104,7 +106,7 @@ export class UpdateComponent implements OnInit {
         alert(response['Status']);
         this.sec.commonArray['truckdetails'].forEach((res) => {
           if (res._id == this.handledata.Data._id) {
-            res['reference'] = this.truckdetailslistid['_id'];
+            res['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
             res['accountDetails'] = this.accountArray;
             res['personalDetails'] = this.personaldetailslistid['_id'];
           }
@@ -124,6 +126,3 @@ export class UpdateComponent implements OnInit {
     this.truckdetailslistid = this.handlefunction.findowner(this.tdid, this.truckdetailslist, 'Select Truck');
   }
 }
-
-
-

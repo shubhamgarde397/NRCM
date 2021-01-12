@@ -35,8 +35,8 @@ export class FinolexdisplaysendComponent implements OnInit {
   public newAuthor: any;
   public tabledata = false;
   public now = new Date();
-  public m = this.monthNames[this.now.getMonth()];
-  public y = this.now.getFullYear();
+  public m;
+  public y;
   public showdate = false;
   public current_count: string;
   public year = '';
@@ -79,8 +79,6 @@ export class FinolexdisplaysendComponent implements OnInit {
 
     this.yearNames = this.securityCheck.yearNames;
     this.commonArray = this.securityCheck.commonArray;
-    this.m = this.monthNames[this.now.getMonth()];
-    this.y = this.now.getFullYear();
     this.fetchBasic();
     this.model = new dataForMail(this.Mailsubject, this.Mailbody);
     this.myFormGroupE = this.formBuilder.group({
@@ -153,6 +151,8 @@ export class FinolexdisplaysendComponent implements OnInit {
     }
   }
   showUpdate(data) {
+    this.m = this.monthNames[data.Date.slice(5, 7)];
+    this.y = data.Date.slice(0, 4);
     this.updateDataContent = data;
 
     this.updateDate = data.Date.slice(-2);
