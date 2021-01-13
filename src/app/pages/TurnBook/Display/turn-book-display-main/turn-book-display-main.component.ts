@@ -18,19 +18,8 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
   providers: [ApiCallsService]
 })
 export class TurnBookDisplayMainComponent implements OnInit {
-
   data: any;
-  modelPAN: any;
-  modelTruckNo: any;
-  modelOwnerName: any;
-  gstdetailslist: any;
   show = false;
-  found;
-  bookingnamelist;
-  arr;
-  api;
-  newAuthor: any;
-  nameToBeDisplayed: any;
   tabledata: false;
   public today;
   public todaysDate;
@@ -40,7 +29,11 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public date = new Date();
   public turnbooklist: any;
   public dateFromUI;
-
+  public buttonValue: any = 'Avaliable Trucks';
+  public buttonOption = '1';
+  public trucknoid;
+  public dynDate;
+  public displayoptions = [{ 'value': '1', 'viewvalue': 'Avaliable Trucks' }, { 'value': '2', 'viewvalue': 'Truck Arrival' }, { 'value': '3', 'viewvalue': 'Truck Dispatched' }]
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
@@ -49,12 +42,33 @@ export class TurnBookDisplayMainComponent implements OnInit {
   ngOnInit() {
     this.todaysDate = this.date.getDate();
   }
+  findOption() {
+    console.log(this.trucknoid);
 
-  find = function () {
+    this.buttonOption = this.trucknoid;
+    this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
+  }
+  find = function () {//only for data from 1st jan 2021 and loading data is empty
     let tempObj = {};
-    tempObj['turnbookDate'] = this.dateFromUI;
+    switch (this.buttonOption) {
+      case '1':
+        tempObj['turnbookDate'] = '2021-01-01';
+        break;
+      case '2':
+        tempObj['turnbookDate'] = this.dynDate;
+        break;
+      case '3':
+        tempObj['turnbookDate'] = this.dynDate;
+        break;
+
+      default:
+        break;
+    }
+
+
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayTB'
+    tempObj['display'] = this.buttonOption;
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
         this.turnbooklist = res.Data;

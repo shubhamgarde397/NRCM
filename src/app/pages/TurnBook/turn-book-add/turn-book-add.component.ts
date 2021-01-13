@@ -40,46 +40,15 @@ export class TurnBookAddComponent implements OnInit {
   public partyType;
   public method;
   public turnArray = [];
-  public truckdetailslist = [
-
-    {
-      "_id": "5ff97b640622860524c9ee75",
-      "truckno": "TN92 C 2619",
-      "name": "Sarvanan A Lagirisamy",
-      "reference": [],
-      "accountDetails": [],
-      "personalDetails": "5ff92ecaf63deb177c231e2d"
-    },
-    {
-      "_id": "5ff97b640622860524c9ee76",
-      "truckno": "TN92 C 5315",
-      "name": "Anand Selvaraj",
-      "reference": [],
-      "accountDetails": [],
-      "personalDetails": "5ff92ecaf63deb177c231e2e"
-    },
-    {
-      "_id": "5ff97b640622860524c9ee77",
-      "truckno": "TN92 C 7044",
-      "name": "Veeraputhiran Poranal",
-      "reference": [],
-      "accountDetails": [],
-      "personalDetails": "5ff92ecaf63deb177c231e2f"
-    },
-    {
-      "_id": "5ff97b640622860524c9ee78",
-      "truckno": "TN93 5927",
-      "name": "S Subashini",
-      "reference": [],
-      "accountDetails": [],
-      "personalDetails": "5ff92ecaf63deb177c231e30"
-    }
-  ];
+  public truckdetailslist = [];
   public gstdetailslist;
   public gstdetailslistid;
   public villagelist;
   public trucknoid;
   public villageData;
+  public trucknoidno;
+  public manualTruck = false;
+  public trucknoM;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
@@ -105,6 +74,7 @@ export class TurnBookAddComponent implements OnInit {
       truckNo: ['', Validators.required],
       partyType: '',
       place: '',
+      trucknoM: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]]
 
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
@@ -138,30 +108,30 @@ export class TurnBookAddComponent implements OnInit {
   }
 
   findtruckdetails() {
-    console.log(this.truckdetailslist);
-
-    console.log(this.trucknoid.split('.) '));
-
-    let tf = this.trucknoid.split('.) ').length > 1 ? true : false;
+    let tf = this.trucknoid.split('+')[0] === 'Other' ? true : false;
     if (tf) {
-      this.ownerid = this.truckdetailslist[(this.trucknoid.split('.) ')[0]) - 1]['_id'];
-      this.method = "insert,old";
-    }
-    else {
+      this.manualTruck = true;
       this.ownerid = '';
       this.method = "insert,new";
+    } else {
+      this.manualTruck = false;
+      this.myFormGroup.patchValue({ trucknoM: this.trucknoid.split('+')[1] })
+      this.ownerid = this.trucknoid.split('+')[0];
+      this.method = "insert,old";
     }
-
   }
 
   storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
     this.submitted = true;
+    console.log(this.trucknoM);
+
     let tempobj = {};
 
-    tempobj['truckno'] = this.trucknoid.split('.) ').length > 1 ? this.trucknoid.split('.) ')[1] : this.trucknoid.split('.) ')[0];
+    tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
     tempobj['placeid'] = this.villageData === undefined ? '' : this.villageData.split('+')[0];
     tempobj['partytype'] = value['partyType'];
+    tempobj['loadingDate'] = '';
     tempobj['turnbookDate'] = value['turnbookDate'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber((this.date.getMonth() + 1)) + '-' + this.date.getDate();
     tempobj['tablename'] = 'turnbook';
@@ -177,13 +147,14 @@ export class TurnBookAddComponent implements OnInit {
           if (this.method === "insert,new") {
             let tempObj1 = {};
             tempObj1['personalDetails'] = "";
-            tempObj1['truckno'] = this.trucknoid.split('.) ').length > 1 ? this.trucknoid.split('.) ')[1] : this.trucknoid.split('.) ')[0];
+            tempObj1['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoidno : this.trucknoid.split('+')[1];
             tempObj1['accountDetails'] = "";
             tempObj1['reference'] = "";
             tempObj1['_id'] = res['_id'].split('+')[1];
             this.securityCheck.commonArray['truckdetails'].push(tempObj1);
+            alert('Inserted Successfully!');
           } else {
-            alert('Inserted Successfullt!');
+            alert('Inserted Successfully!');
           }
         }
 
@@ -191,12 +162,12 @@ export class TurnBookAddComponent implements OnInit {
       });
   }
   reset() {
+    this.manualTruck = false;
     this.submitted = false;
     this.myFormGroup.patchValue({ truckNo: '' });
     this.myFormGroup.patchValue({ partyType: '' });
     this.myFormGroup.patchValue({ place: '' });
 
-    document.getElementById('truckNoone').focus();
   }
   delete(data) {
     if (confirm('Are you sure?')) {
