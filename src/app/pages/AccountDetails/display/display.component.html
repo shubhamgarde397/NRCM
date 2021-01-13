@@ -9,9 +9,9 @@
         <th>Srno</th>
         <th>TruckNumber</th>
         <th>Account Details</th>
-        <th>Delete</th>
+        <th *ngIf="role==1||role==2">Delete</th>
         <th>Update</th>
-        <th>View</th>
+        <th *ngIf="role==1||role==2"> View</th>
       </tr>
     </thead>
 
@@ -28,7 +28,7 @@
             <hr>
           </ul>
         </td>
-        <td>
+        <td *ngIf="role==1||role==2">
           <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
             <i class="material-icons">delete_forever</i>
           </button>
@@ -38,7 +38,7 @@
             <i class="material-icons">edit</i>
           </button>
         </td>
-        <td>
+        <td *ngIf="role==1||role==2">
           <button mat-raised-button type="button" (click)="view(i)" class="btn-primary btn-sm btn-just-icon">
             <i class="material-icons">edit</i>
           </button>

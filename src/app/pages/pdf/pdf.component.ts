@@ -130,7 +130,6 @@ export class PDFComponent implements OnInit {
     doc.text('Canara Bank,', 40, 90)
     doc.text('Dhankawadi Branch,', 40, 95)
     doc.text('Pune.', 40, 100)
-    console.log(this.bankArray);
 
     doc.setFontSize('15');
     let totalAmt = 0;

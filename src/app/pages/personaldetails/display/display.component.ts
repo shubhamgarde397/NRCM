@@ -16,7 +16,7 @@ export class DisplayComponent implements OnInit {
   public found;
   public arr;
   public data;
-
+  public role = 6;
   public commonArray;
   public lambdaArr = [];
   public index = 0;
@@ -33,7 +33,6 @@ export class DisplayComponent implements OnInit {
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
     this.personaldetailslist = this.commonArray.personaldetails;
-    console.log(this.personaldetailslist);
 
   };
 
@@ -61,6 +60,7 @@ export class DisplayComponent implements OnInit {
 
 
   ngOnInit() {
+    this.role = this.sec.role;
     this.commonArray = this.sec.commonArray;
     this.considerArray = this.handledata.createConsiderArray('infopersonaldetails')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -104,7 +104,6 @@ export class DisplayComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.personaldetailslist = [];
     this.personaldetailslist = this.commonArray.personaldetails;
-    console.log(this.personaldetailslist);
   }
 
   showDatabyid = function (data) {

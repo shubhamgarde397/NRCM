@@ -34,7 +34,7 @@
             <a routerLink="Booking_Handler">Daily Bookings</a>
           </li>
           <li>
-            <a routerLink="LRNumber_HANDLER">LR Number</a>
+            <a routerLink="LRNumber_HANDLER" *ngIf="role==1||role==2">LR Number</a>
           </li>
           <li>
             <a routerLink="BCE_HANDLER" *ngIf="role==1||role==2">BookingCashExpenses</a>
@@ -63,7 +63,7 @@
 
       </li>
 
-      <li class="dropdown" *ngIf="role==1||role==2||role==3">
+      <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">DailyData
           <span class="caret"></span>
         </a>
@@ -120,7 +120,7 @@
         </ul>
       </li>
 
-      <li class="dropdown">
+      <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">CashExpenses
           <span class="caret"></span>
         </a>

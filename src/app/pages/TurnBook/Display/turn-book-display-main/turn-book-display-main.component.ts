@@ -33,6 +33,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public buttonOption = '1';
   public trucknoid;
   public dynDate;
+  public role = 6;
   public displayoptions = [{ 'value': '1', 'viewvalue': 'Avaliable Trucks' }, { 'value': '2', 'viewvalue': 'Truck Arrival' }, { 'value': '3', 'viewvalue': 'Truck Dispatched' }]
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
@@ -40,10 +41,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.role = this.securityCheck.role;
     this.todaysDate = this.date.getDate();
   }
   findOption() {
-    console.log(this.trucknoid);
 
     this.buttonOption = this.trucknoid;
     this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
@@ -71,6 +72,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['display'] = this.buttonOption;
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
+
         this.turnbooklist = res.Data;
 
       });
@@ -78,8 +80,46 @@ export class TurnBookDisplayMainComponent implements OnInit {
 
   showDatabyid = function (data) {
     this.show = true;
+
+    let tempObj = {};
+    tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
+    tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
+    tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
+
+    tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
+    tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
+    tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
+
+    tempObj['entryDate'] = data.entryDate;
+    tempObj['_id'] = data._id;
+
+    tempObj['partyType'] = data.partyType;
+    tempObj['turnbookDate'] = data.turnbookDate;
+    tempObj['loadingDate'] = data.loadingDate;
+    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
+    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
+    tempObj['advance'] = data.advance === undefined ? 0 : data.advance;
+    tempObj['balance'] = data.balance === undefined ? 0 : data.balance;
+    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
+    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
+
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
-    this.handleData.saveData(data);
+    this.handleData.saveData(tempObj);
   };
+
+  delete(id, j) {
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = id._id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'turnbook';
+      formbody['turnbookDate'] = id.turnbookDate;
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+        .subscribe((response: Response) => {
+          this.turnbooklist.splice(j, 1);
+        });
+    }
+  }
 
 }

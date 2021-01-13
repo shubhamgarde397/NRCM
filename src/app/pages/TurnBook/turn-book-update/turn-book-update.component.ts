@@ -34,6 +34,8 @@ export class TurnBookUpdateComponent implements OnInit {
   public truckno;
   public party;
   public place;
+  public considerArray = [];
+  public role = 6;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -43,72 +45,79 @@ export class TurnBookUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.role = this.securityCheck.role;
+
+    this.commonArray = this.securityCheck.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('turnbookadd')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+    this.role = this.securityCheck.role;
+
     this.myFormGroup = this.formBuilder.group({
-      date: [this.handledata.Data.date, Validators.required],
-      truckNo: [this.handledata.Data.truckNo, Validators.required],
-      hireAmount: [this.handledata.Data.hireAmount, Validators.required],
-      partyName: [this.handledata.Data.partyName, Validators.required],
-      place: [this.handledata.Data.place, Validators.required],
-      check: [this.handledata.Data.check, Validators.required]
-
-
+      turnbookDate: this.handledata.Data.turnbookDate,
+      truckno: this.handledata.Data.truckno,
+      place: this.handledata.Data.place,
+      partyName: this.handledata.Data.partyName,
+      loadingDate: this.handledata.Data.loadingDate,
+      lrno: this.handledata.Data.lrno,
+      partyType: this.handledata.Data.partyType,
+      hamt: this.handledata.Data.hamt,
+      advance: this.handledata.Data.advance,
+      balance: this.handledata.Data.balance,
+      pochDate: this.handledata.Data.pochDate,
+      pochPayment: this.handledata.Data.pochPayment
     });
+    this.place = this.handledata.Data.place;
+    this.party = this.handledata.Data.partyName;
+
     this.hireExtendingMoney = this.handlefunction.getMoney();
     this.commonArray = this.securityCheck.commonArray;
-    this.trucklist = this.getTruckNames(this.commonArray.ownerdetails, 'owner').concat(this.getTruckNames(this.commonArray.RegularTruck, 'regulartruck'));
-    this.parties = this.getPartyNames(this.commonArray.regularparty, 'regular').concat(this.getPartyNames(this.commonArray.gstdetails, 'pipe'));
+  }
+
+  getInformationData() {
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
+        this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
+        this.fetchBasic();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.securityCheck.commonArray;
+    this.parties = [];
+    this.villagelist = [];
+    this.parties = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
-    this.truckno = this.handledata.Data.truckNo;
-    this.party = this.handledata.Data.partyName;
-    this.place = this.handledata.Data.place;
   }
 
-  getTruckNames(data, type) {
-    let truckData = []
-    switch (type) {
-      case 'owner':
-        data.forEach(element => {
-          truckData.push(element.truckno)
-        });
-        return truckData;
-      case 'regulartruck':
-        data.forEach(element => {
-          truckData.push(element.regulartruck)
-        });
-        return truckData;
-    }
-  }
 
-  getPartyNames(data, type) {
-    let partyData = []
-    switch (type) {
-      case 'regular':
-        data.forEach(element => {
-          partyData.push(element.name)
-        });
-        return partyData;
-      case 'pipe':
-        data.forEach(element => {
-          partyData.push(element.name)
-        });
-        return partyData;
-    }
+  balance() {
+    this.myFormGroup.patchValue({ balance: this.myFormGroup.value.hamt - this.myFormGroup.value.advance })
   }
 
   change = function (data) {
-    this.submitted = true;
-    const date = data.value.date;
-    const truckNo = data.value.truckNo;
-    const hireAmount = data.value.hireAmount;
-    const partyName = data.value.partyName;
-    const check = data.value.check;
-    const place = data.value.place;
-    const id = this.handledata.Data._id;
-    this.arr = { date, truckNo, hireAmount, partyName, check, place, id };
-    this.apiCallservice.handleData_New(this.dbName, 'turnBook/updateturnbookdata', 3, 0, this.arr)
-      .subscribe((response: Response) => {
-        this.show = !this.show;
-        this._location.back();
+    let tempObj = {};
+    tempObj["turnbookDate"] = this.handledata.Data.turnbookDate,
+      tempObj["entryDate"] = this.handledata.Data.entryDate,
+      tempObj['method'] = 'update';
+    tempObj['tablename'] = 'turnbook';
+    tempObj["placeid"] = this.myFormGroup.value.place,//what if we already have entry of thios
+      tempObj["partyid"] = this.myFormGroup.value.partyName,//what if we already have entry of thios
+      tempObj["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+      tempObj['_id'] = this.handledata.Data._id;
+    tempObj["loadingDate"] = this.myFormGroup.value.loadingDate,
+      tempObj["lrno"] = this.myFormGroup.value.lrno,
+      tempObj["partyType"] = this.myFormGroup.value.partyType,
+      tempObj["hamt"] = this.myFormGroup.value.hamt,
+      tempObj["advance"] = this.myFormGroup.value.advance,
+      tempObj["balance"] = this.myFormGroup.value.balance,
+      tempObj["pochDate"] = this.myFormGroup.value.pochDate,
+      tempObj["pochPayment"] = this.myFormGroup.value.pochPayment
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        alert(res.Status)
       });
   };
 

@@ -23,6 +23,7 @@ export class DisplayComponent implements OnInit {
   public considerArray;
   public personaldetailslist;
   public truckdetailslist;
+  public role = 6;
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -65,6 +66,7 @@ export class DisplayComponent implements OnInit {
   };
 
   ngOnInit() {
+    this.role = this.sec.role;
     this.commonArray = this.sec.commonArray;
     this.considerArray = this.handledata.createConsiderArray('infotruckpersonal')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
