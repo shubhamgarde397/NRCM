@@ -32,14 +32,25 @@
       </div>
 
       <div class="col-xs-3">
-        <input type="text" list="cars" class="form-control" formControlName="truckNo" [(ngModel)]="trucknoid"
+        <!-- <input type="text" list="cars" class="form-control" formControlName="truckNo" [(ngModel)]="trucknoid"
           (change)="findtruckdetails()" id="truckNoone" />
         <datalist id="cars">
           <option *ngFor="let i of truckdetailslist;let j = index;">{{j+1}}.) {{i.truckno}}</option>
-        </datalist>
+        </datalist> -->
+
+        <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
+          (change)="findtruckdetails()" id="truckNoone" *ngIf="!manualTruck">
+          <option value="Other+">Other</option>
+          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}</option>
+        </select>
+
+        <input type="text" *ngIf="manualTruck" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM">
+
+
+
       </div>
       <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.truckNo.valid">
+        <div [hidden]="myFormGroup.controls.trucknoM.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
