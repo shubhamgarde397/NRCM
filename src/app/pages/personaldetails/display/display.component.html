@@ -10,7 +10,7 @@
         <th>Owner Name</th>
         <th>PAN</th>
         <th>Contact</th>
-        <th>Delete</th>
+        <th *ngIf="role==1||role==2">Delete</th>
         <th>Update</th>
       </tr>
     </thead>
@@ -27,7 +27,7 @@
           </ul>
         </td>
 
-        <td>
+        <td *ngIf="role==1||role==2">
           <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
             <i class="material-icons">delete_forever</i>
           </button>

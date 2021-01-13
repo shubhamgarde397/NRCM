@@ -4,19 +4,34 @@
     action="/" name="myform" id="myform">
 
 
-    <!-- DATE-->
+    <!-- turnbookDate-->
     <div class="form-group row">
 
       <div class="col-xs-2">
-        <label for="date"> date</label>
+        <label for="turnbookDate"> Turn Book Date</label>
       </div>
 
       <div class="col-xs-3">
-        <input type="date" id="date" class="form-control" formControlName="date">
+        <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate" disabled>
+      </div>
+
+
+    </div>
+    <!--turnbookDate -->
+
+    <!-- loadingDate-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="loadingDate"> Loading Date</label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
       </div>
 
       <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.date.valid">
+        <div [hidden]="myFormGroup.controls.loadingDate.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
@@ -24,7 +39,7 @@
       </div>
 
     </div>
-    <!--DATE -->
+    <!--loadingDate -->
 
     <!--Truckno-->
     <div class="form-group row">
@@ -34,44 +49,12 @@
       </div>
 
       <div class="col-xs-3">
-        <select id="truckNo" class="form-control " formControlName="truckNo">
-          <option selected>{{truckno}}</option>
-          <option *ngFor="let i of trucklist">{{i}}</option>
-        </select>
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.truckNo.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+        <input type="text" id="text" class="form-control" formControlName="truckno" disabled>
       </div>
 
     </div>
     <!--Truckno-->
-    <!--NOP-->
-    <div class="form-group row">
 
-      <div class="col-xs-2">
-        <label for="partyName"> Name of Party </label>
-      </div>
-      <div class="col-xs-3">
-        <select id="partyName" class="form-control " formControlName="partyName">
-          <option>{{party}}</option>
-          <option *ngFor="let i of parties">{{i}}</option>
-        </select>
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.partyName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-    <!--NOP-->
     <!--Place-->
     <div class="form-group row">
       <div class="col-xs-2">
@@ -81,7 +64,7 @@
 
         <select id="place" class="form-control" formControlName="place">
           <option selected>{{place}}</option>
-          <option *ngFor="let own of villagelist">{{own.village_name}}</option>
+          <option *ngFor="let own of villagelist" value="{{own._id}}">{{own.village_name}}</option>
         </select>
       </div>
       <div class="col-xs-1">
@@ -94,43 +77,169 @@
     </div>
     <!--place-->
 
-
-    <!-- Amoount -->
+    <!--Place-->
     <div class="form-group row">
       <div class="col-xs-2">
-        <label for="hireAmount"> Hire Amount </label>
+        <label for="partyType"> Party Type </label>
       </div>
       <div class="col-xs-3">
-        <input type="text" id="hireAmount" class="form-control" formControlName="hireAmount">
+
+        <select id="partyType" class="form-control" formControlName="partyType">
+          <option>NRCM</option>
+          <option>NR</option>
+        </select>
       </div>
+    </div>
+    <!--place-->
+
+    <!--LRNO-->
+    <div class="form-group row">
+
       <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.hireAmount.valid">
+        <label for="lrno"> LRNO </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="number" id="lrno" class="form-control" formControlName="lrno">
+      </div>
+
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.lrno.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--LRNO-->
+
+
+    <!--NOP-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="partyName"> Name of Party </label>
+      </div>
+      <div class="col-xs-3">
+        <select id="partyName" class="form-control " formControlName="partyName">
+          <option>{{party}}</option>
+          <option *ngFor="let i of parties" value={{i._id}}>{{i.name}}</option>
+        </select>
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.partyName.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
         </div>
       </div>
     </div>
+    <!--NOP-->
 
-    <!-- Amount -->
+
+
+    <!--Hire Amount-->
+    <div class="form-group row" *ngIf="role==1||role==2">
+
+      <div class="col-xs-1">
+        <label for="hamt"> Hire Amount </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="number" class="form-control" formControlName="hamt" (change)="balance()" />
+
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.hamt.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--HireAmount-->
+
+
+    <!--Advance-->
+    <div class="form-group row" *ngIf="role==1||role==2">
+
+      <div class="col-xs-1">
+        <label for="advance"> Advance </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="number" class="form-control" formControlName="advance" (change)="balance()" />
+
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.advance.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--Advance-->
+
+    <!--Balance-->
+    <div class="form-group row" *ngIf="role==1||role==2">
+
+      <div class="col-xs-1">
+        <label for="balance"> balance </label>
+      </div>
+
+      <div class="col-xs-6">
+        <input type="text" class="form-control" formControlName="balance" disabled />
+
+      </div>
+
+    </div>
+    <!--Balaance-->
+
+    <!-- DATE-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="date"> Poch Date</label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="date" id="pochDate" class="form-control" formControlName="pochDate">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.pochDate.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--DATE -->
+
 
     <!-- Check -->
 
     <div class="form-group row">
 
       <div class="col-xs-2">
-        <label for="check"> Check</label>
+        <label for="pochPayment"> Poch Payment </label>
       </div>
 
       <div class="col-xs-3">
-        <input type="checkbox" id="check" class="form-control" formControlName="check" style="zoom:1.5">
+        <input type="checkbox" id="pochPayment" class="form-control" formControlName="pochPayment" style="zoom:1.5">
       </div>
 
     </div>
 
     <!--  Check-->
-
-
 
 
     <div class="row">
@@ -140,20 +249,6 @@
           <i class="material-icons">send</i>
         </button>
       </div>
-
-      <div *ngIf="!submitted" class="col-xs-1">
-
-        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
-          <i class="material-icons">undo</i>
-        </button>
-      </div>
-
-      <div *ngIf="submitted" class="col-xs-1">
-        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
-          <i class="material-icons">add</i>
-        </button>
-      </div>
-
     </div>
 
   </form>

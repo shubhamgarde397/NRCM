@@ -14,6 +14,7 @@ import { MatLineSetter } from '@angular/material';
 import { Router } from '@angular/router';
 import { promise } from 'protractor';
 import { ObsServiceService } from '../Data/obs-service.service';
+import { HandleDataService } from '../Data/handle-data.service';
 
 const PoolData = {
   UserPoolId: 'ap-south-1_ZzgcCts3f',
@@ -28,7 +29,7 @@ export class ApiCallsService {
   public authSuccess = this.authService.asObservable();
   public headerPost: HttpHeaders;
   public URL = '';
-  constructor(public http: Http, public httpClient: HttpClient, public securityCheck: SecurityCheckService, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
+  constructor(public hs: HandleDataService, public http: Http, public httpClient: HttpClient, public securityCheck: SecurityCheckService, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
   handleAWS(api, formBody = {}) {
     this.getAuthenticatedUser().getSession((err, session) => {
       let headers = new Headers({ 'Authorization': session.getIdToken().getJwtToken() })
@@ -147,6 +148,7 @@ export class ApiCallsService {
     return userPoolData.getCurrentUser();
   }
   logout() {
+    this.hs.resetArray('full');
     this.getAuthenticatedUser().signOut();
     this.authService.next('false');
   }

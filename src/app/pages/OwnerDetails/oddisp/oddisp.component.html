@@ -11,7 +11,7 @@
                 <th>Owner Name</th>
                 <th>PAN</th>
                 <th>Mobile No.</th>
-                <th>Delete</th>
+                <th *ngIf="role==1||role==2">Delete</th>
                 <th>Update</th>
             </tr>
         </thead>
@@ -24,7 +24,7 @@
                 <td>{{i.oname}}</td>
                 <td>{{i.pan}}</td>
                 <td>{{i.mobileno}}</td>
-                <td>
+                <td *ngIf="role==1||role==2">
                     <button mat-raised-button (click)="deleteOwnerDetails(i._id)"
                         class="btn-danger btn-sm btn-just-icon">
                         <i class="material-icons">delete_forever</i>

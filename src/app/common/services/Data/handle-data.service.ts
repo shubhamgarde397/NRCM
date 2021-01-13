@@ -75,8 +75,20 @@ export class HandleDataService {
       case 'turnbook':
         // return [Consts.TRUCKDETAILS_INDEX];
         return [Consts.VILLAGE_INDEX, Consts.TRUCKDETAILS_INDEX];
+      case 'turnbookadd':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
 
     }
+  }
+
+  resetArray(data) {
+    switch (data) {
+      case 'turnbook':
+        this.securityCheck.IP[Consts.TRUCKDETAILS_INDEX[0].index] = 0;
+      case 'full':
+        this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+    }
+
   }
 
   checkForData2(Arr, API) {

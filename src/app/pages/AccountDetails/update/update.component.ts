@@ -49,7 +49,7 @@ export class UpdateComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       truckno: [this.handledata.Data.truckno, [Validators.required]],
       tempname: [this.handledata.Data.name],
-      name: [this.personaldetailslist[this.handledata.Data.index].name, [Validators.required]],
+      name: [this.personaldetailslist[this.handledata.Data.index].name],
       accountName: '',
       accountNumber: '',
       bankName: '',

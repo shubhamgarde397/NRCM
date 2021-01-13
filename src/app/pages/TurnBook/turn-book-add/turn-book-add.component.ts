@@ -45,7 +45,7 @@ export class TurnBookAddComponent implements OnInit {
   public gstdetailslistid;
   public villagelist;
   public trucknoid;
-  public villageData;
+  public villageData = "";
   public trucknoidno;
   public manualTruck = false;
   public trucknoM;
@@ -103,11 +103,18 @@ export class TurnBookAddComponent implements OnInit {
     this.villagelist = [];
     this.gstdetailslist = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
-    console.log(this.villagelist);
+
+  }
+
+  revert() {
+    this.manualTruck = false;
+    this.myFormGroup.patchValue({ trucknoM: '' });
+    this.trucknoid = '';
 
   }
 
   findtruckdetails() {
+
     let tf = this.trucknoid.split('+')[0] === 'Other' ? true : false;
     if (tf) {
       this.manualTruck = true;
@@ -123,22 +130,24 @@ export class TurnBookAddComponent implements OnInit {
 
   storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
     this.submitted = true;
-    console.log(this.trucknoM);
-
     let tempobj = {};
-
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
-    tempobj['placeid'] = this.villageData === undefined ? '' : this.villageData.split('+')[0];
-    tempobj['partytype'] = value['partyType'];
+    tempobj['placeid'] = this.villageData === "" ? '5bcdecdab6b821389c8abde0' : this.villageData;
+    tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
+    tempobj['partyType'] = value['partyType'];
     tempobj['loadingDate'] = '';
     tempobj['turnbookDate'] = value['turnbookDate'];
-    tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber((this.date.getMonth() + 1)) + '-' + this.date.getDate();
+    tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.date.getDate();
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = this.method;
+
     this.submitted = true;
     this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
       .subscribe((res: any) => {
+        this.manualTruck = false;
+        this.myFormGroup.patchValue({ place: '' });
+        this.villageData = "";
         this.spinnerService.hide();
         this.fetchBasic();
         if (res.status === "Duplicate Entry Found.") {
