@@ -122,4 +122,11 @@ export class TurnBookDisplayMainComponent implements OnInit {
     }
   }
 
+  edit(data) {
+    this.show = true;
+    data['index'] = 0;
+    this.handleData.saveData(data);
+    this.router.navigate(['Navigation/Information/ACCOUNT_DETAILS_HANDLER/Update']);
+  }
+
 }
