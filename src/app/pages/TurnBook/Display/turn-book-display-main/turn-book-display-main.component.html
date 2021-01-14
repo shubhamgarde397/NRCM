@@ -42,11 +42,17 @@
         </thead>
 
         <tbody align="center">
-          <tr *ngFor="let i of turnbooklist;let j = index">
+          <tr *ngFor="let i of turnbooklist;let j = index"
+            [ngStyle]="{'color': i.ownerDetails[0].personalDetails==='' ||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }">
             <td>{{j+1}}</td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.ownerDetails[0].truckno}}</td>
+            <td>{{i.ownerDetails[0].truckno}}
+              <button class="btn btn-warning" type="button" (click)="edit(i.ownerDetails[0])" class="btn-primary"
+                *ngIf="i.ownerDetails[0].personalDetails==='' ||i.ownerDetails[0].accountDetails.length===0">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
             <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}</td>
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>

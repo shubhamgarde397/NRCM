@@ -35,6 +35,7 @@ export class UpdateComponent implements OnInit {
   public refTruck;
   public pdpan;
   public pdcontact;
+  public considerArray;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -43,6 +44,9 @@ export class UpdateComponent implements OnInit {
     public sec: SecurityCheckService, public handlefunction: handleFunction) { }
 
   ngOnInit() {
+    this.considerArray = this.handledata.createConsiderArray('infotruckpersonal')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+    this.fetchBasic();
     this.commonArray = this.sec.commonArray;
     this.personaldetailslist = this.commonArray.personaldetails;
     this.truckdetailslist = this.commonArray.truckdetails;
@@ -58,10 +62,31 @@ export class UpdateComponent implements OnInit {
     });
     this.accountArray = this.handledata.Data.accountDetails;
     this.truckdetailslistid = this.truckdetailslist === undefined ? "" : this.truckdetailslist.find(element => element._id == this.handledata.Data.reference);
-    let tempFinder = this.personaldetailslist.find(element => element._id == this.handledata.Data.personalDetails);
-    this.personaldetailslistid = tempFinder === undefined ? { _id: "", pan: "", name: "", preferences: Array(0), contact: Array(0) } : tempFinder;
+
     this.tdid = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid.truckno;
     this.pdid = this.personaldetailslistid === undefined ? "" : this.personaldetailslistid.name;
+  }
+
+  getInformationData() {
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.sec.commonArray['personaldetails'] = Object.keys(res.personaldetails[0]).length > 0 ? res.personaldetails : this.sec.commonArray['personaldetails'];
+        this.sec.commonArray['truckdetails'] = Object.keys(res.truckdetails[0]).length > 0 ? res.truckdetails : this.sec.commonArray['truckdetails'];
+        let tempFinder = this.personaldetailslist.find(element => element._id == this.handledata.Data.personalDetails);
+        this.personaldetailslistid = tempFinder === undefined ? { _id: "", pan: "", name: "", preferences: Array(0), contact: Array(0) } : tempFinder;
+        this.fetchBasic();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.sec.commonArray;
+    this.personaldetailslist = this.commonArray.personaldetails;
+    this.truckdetailslist = this.commonArray.truckdetails;
+    let tempFinder = this.personaldetailslist.find(element => element._id == this.handledata.Data.personalDetails);
+    this.personaldetailslistid = tempFinder === undefined ? { _id: "", pan: "", name: "", preferences: Array(0), contact: Array(0) } : tempFinder;
+
+
   }
 
   back() {
