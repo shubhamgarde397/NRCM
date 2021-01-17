@@ -103,8 +103,8 @@ export class TurnBookUpdateComponent implements OnInit {
       tempObj["entryDate"] = this.handledata.Data.entryDate,
       tempObj['method'] = 'update';
     tempObj['tablename'] = 'turnbook';
-    tempObj["placeid"] = this.myFormGroup.value.place,//what if we already have entry of thios
-      tempObj["partyid"] = this.myFormGroup.value.partyName,//what if we already have entry of thios
+    tempObj["placeid"] = data.value.place,//what if we already have entry of thios
+      tempObj["partyid"] = data.value.partyName,//what if we already have entry of thios
       tempObj["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
       tempObj['_id'] = this.handledata.Data._id;
     tempObj["loadingDate"] = this.myFormGroup.value.loadingDate,
@@ -117,7 +117,8 @@ export class TurnBookUpdateComponent implements OnInit {
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
-        alert(res.Status)
+        alert(res.Status);
+        this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });
   };
 

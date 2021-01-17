@@ -37,6 +37,7 @@
             <th>Place</th>
             <th>Party</th>
             <th *ngIf="role==1||role==2">Delete</th>
+            <th>Cancel</th>
             <th>Edit</th>
           </tr>
         </thead>
@@ -60,6 +61,12 @@
               <button mat-raised-button (click)="delete(i,j)" *ngIf="role==1||role==2"
                 class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+            <td>
+              <button mat-raised-button type="button" (click)="showDatabyid2(i)"
+                class="btn-warning btn-sm btn-just-icon">
+                <i class="material-icons">delete</i>
               </button>
             </td>
             <td>

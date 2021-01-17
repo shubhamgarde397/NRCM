@@ -107,6 +107,42 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.handleData.saveData(tempObj);
   };
 
+
+  showDatabyid2 = function (data) {
+    if (confirm('Do you want to Cancel this Vehicle?')) {
+      this.show = true;
+
+      let tempObj = {};
+      tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
+      tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
+      tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
+      tempObj['_id'] = data._id;
+      tempObj['loadingDate'] = '2099-12-12';
+
+
+      tempObj['method'] = 'update';
+      tempObj['tablename'] = 'turnbook';
+      tempObj["turnbookDate"] = data.turnbookDate,
+        tempObj["entryDate"] = data.entryDate,
+        tempObj["lrno"] = '';
+      tempObj["partyType"] = '';
+      tempObj["hamt"] = '';
+      tempObj["advance"] = '';
+      tempObj["balance"] = '';
+      tempObj["pochDate"] = '';
+      tempObj["pochPayment"] = '';
+
+      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+        .subscribe((res: any) => {
+          alert(res.Status)
+          this.find();
+        });
+    }
+    else {
+
+    }
+  };
+
   delete(id, j) {
     if (confirm('Are you sure?')) {
       let formbody = {}
