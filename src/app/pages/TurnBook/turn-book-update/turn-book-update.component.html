@@ -63,7 +63,7 @@
       <div class="col-xs-3">
 
         <select id="place" class="form-control" formControlName="place">
-          <option selected>{{place}}</option>
+          <option value="{{placeid}}" selected>{{place}}</option>
           <option *ngFor="let own of villagelist" value="{{own._id}}">{{own.village_name}}</option>
         </select>
       </div>
@@ -95,20 +95,12 @@
     <!--LRNO-->
     <div class="form-group row">
 
-      <div class="col-xs-1">
+      <div class="col-xs-2">
         <label for="lrno"> LRNO </label>
       </div>
 
-      <div class="col-xs-6">
+      <div class="col-xs-3">
         <input type="number" id="lrno" class="form-control" formControlName="lrno">
-      </div>
-
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.lrno.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
       </div>
 
     </div>
@@ -122,8 +114,8 @@
         <label for="partyName"> Name of Party </label>
       </div>
       <div class="col-xs-3">
-        <select id="partyName" class="form-control " formControlName="partyName">
-          <option>{{party}}</option>
+        <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
+          <option selected value={{partyid}}>{{party}}</option>
           <option *ngFor="let i of parties" value={{i._id}}>{{i.name}}</option>
         </select>
       </div>

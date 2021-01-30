@@ -107,6 +107,12 @@ export class BalancehireaddComponent implements OnInit {
     }
   }
 
+  deleteRow(data, j) {
+    if (confirm('Are you sure?')) {
+      this.truckArray.splice(j, 1);
+    }
+  }
+
   back() {
     this.submitted = !this.submitted;
   }

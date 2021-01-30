@@ -33,8 +33,16 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public buttonOption = '1';
   public trucknoid;
   public dynDate;
+  public dynDate2;
   public role = 6;
-  public displayoptions = [{ 'value': '1', 'viewvalue': 'Avaliable Trucks' }, { 'value': '2', 'viewvalue': 'Truck Arrival' }, { 'value': '3', 'viewvalue': 'Truck Dispatched' }]
+  public dataTruck;
+  public displayoptions = [
+    { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
+    { 'value': '2', 'viewvalue': 'Truck Arrival' },
+    { 'value': '3', 'viewvalue': 'Truck Dispatched' },
+    { 'value': '4', 'viewvalue': 'To From' }
+  ]
+
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
@@ -42,8 +50,34 @@ export class TurnBookDisplayMainComponent implements OnInit {
 
   ngOnInit() {
     this.role = this.securityCheck.role;
-    this.todaysDate = this.date.getDate();
+
+    this.todaysDate = this.date.getDate() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getFullYear();;
+    this.turnbooklist = [];
+    this.turnbooklist = this.handleData.giveTurn();
+
   }
+
+  newData() {
+    if (this.dataTruck === '' || this.dataTruck === null || this.dataTruck === undefined) {
+      this.turnbooklist = [];
+      this.turnbooklist = this.handleData.giveTurn();
+    }
+    else {
+      let tempList = this.handleData.giveTurn();
+      this.turnbooklist = this.handleData.giveTurn();
+      this.turnbooklist = [];
+      let tempData = [];
+      tempList.filter((res, index) => {
+        if (res.ownerDetails[0]['truckno'].includes(this.dataTruck.toUpperCase())) {
+          tempData.push(res);
+        }
+
+      })
+      this.turnbooklist = tempData;
+
+    }
+  }
+
   findOption() {
 
     this.buttonOption = this.trucknoid;
@@ -61,6 +95,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
       case '3':
         tempObj['turnbookDate'] = this.dynDate;
         break;
+      case '4':
+        tempObj['turnbookDate'] = this.dynDate;
+        tempObj['turnbookDateFrom'] = this.dynDate2;
+        break;
 
       default:
         break;
@@ -74,11 +112,11 @@ export class TurnBookDisplayMainComponent implements OnInit {
       .subscribe((res: any) => {
 
         this.turnbooklist = res.Data;
-
+        this.handleData.saveTurn(this.turnbooklist);
       });
   };
 
-  showDatabyid = function (data) {
+  showDatabyid = function (data, j) {
     this.show = true;
 
     let tempObj = {};
@@ -102,13 +140,13 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['balance'] = data.balance === undefined ? 0 : data.balance;
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
-
+    tempObj['index'] = j;
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
     this.handleData.saveData(tempObj);
   };
 
 
-  showDatabyid2 = function (data) {
+  showDatabyid2 = function (data, j) {
     if (confirm('Do you want to Cancel this Vehicle?')) {
       this.show = true;
 
@@ -131,11 +169,35 @@ export class TurnBookDisplayMainComponent implements OnInit {
       tempObj["balance"] = '';
       tempObj["pochDate"] = '';
       tempObj["pochPayment"] = '';
-
+      tempObj['index'] = j;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
-          alert(res.Status)
-          this.find();
+          alert(res.Status);
+          this.handleData.turnData[j]['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
+          this.handleData.turnData[j]['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
+          this.handleData.turnData[j]['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
+          this.handleData.turnData[j]['loadingDate'] = '2099-12-12';
+          this.handleData.turnData[j]["turnbookDate"] = data.turnbookDate,
+            this.handleData.turnData[j]["entryDate"] = data.entryDate,
+            this.handleData.turnData[j]["lrno"] = '';
+          this.handleData.turnData[j]["partyType"] = '';
+          this.handleData.turnData[j]["hamt"] = '';
+          this.handleData.turnData[j]["advance"] = '';
+          this.handleData.turnData[j]["balance"] = '';
+          this.handleData.turnData[j]["pochDate"] = '';
+          this.handleData.turnData[j]["pochPayment"] = '';
+          this.handleData.turnData[j]['index'] = j;
+
+
+
+          let tempData = this.handleData.giveTurn();
+          this.handleData.saveTurn([]);
+          let tempArray = []
+          tempArray = tempData;
+          tempArray.splice(j, 1)
+          this.handleData.saveTurn(tempArray)
+          this.turnbooklist = [];
+          this.turnbooklist = this.handleData.giveTurn();
         });
     }
     else {

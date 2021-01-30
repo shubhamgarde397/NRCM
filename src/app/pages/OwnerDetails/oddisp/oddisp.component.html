@@ -10,7 +10,10 @@
                 <th>TruckNumber</th>
                 <th>Owner Name</th>
                 <th>PAN</th>
-                <th>Mobile No.</th>
+                <th>Contact</th>
+                <th *ngIf="role==1||role==2">Account Details</th>
+                <th>Preferences</th>
+                <!-- <th>Reference</th> -->
                 <th *ngIf="role==1||role==2">Delete</th>
                 <th>Update</th>
             </tr>
@@ -23,7 +26,25 @@
                 <td>{{i.truckno}}</td>
                 <td>{{i.oname}}</td>
                 <td>{{i.pan}}</td>
-                <td>{{i.mobileno}}</td>
+                <td>
+                    <ul *ngFor="let k of i.contact">
+                        <li>{{k}}</li>
+                    </ul>
+                </td>
+                <td *ngIf="role==1||role==2">
+                    <ul *ngFor="let k of i.accountDetails">
+                        <li>{{k.accountName}} : {{k.bankName}}</li>
+                        <li>{{k.accountNumber}}</li>
+                        <li>{{k.ifsc}}</li>
+                        <hr>
+                    </ul>
+                </td>
+                <td>
+                    <ul *ngFor="let k of i.preferences">
+                        <li>{{k}}</li>
+                    </ul>
+                </td>
+                <!-- <td>Work Under Progress</td> -->
                 <td *ngIf="role==1||role==2">
                     <button mat-raised-button (click)="deleteOwnerDetails(i._id)"
                         class="btn-danger btn-sm btn-just-icon">

@@ -45,7 +45,7 @@ export class UpdateComponent implements OnInit {
 
   ngOnInit() {
     this.commonArray = this.sec.commonArray;
-    this.considerArray = this.handledata.createConsiderArray('infotruckdetails')
+    this.considerArray = this.handledata.createConsiderArray('infoonlyowner')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchData();
     this.fetchData();
 
@@ -59,7 +59,7 @@ export class UpdateComponent implements OnInit {
   }
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
-    this.truckdetailslist = this.commonArray.truckdetails;
+    this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;
 
   };
@@ -88,7 +88,7 @@ export class UpdateComponent implements OnInit {
     let tempObj = { "method": "displaynew", "consider": this.considerArray };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.sec.commonArray['truckdetails'] = Object.keys(res.truckdetails[0]).length > 0 ? res.truckdetails : this.sec.commonArray['truckdetails'];
+        this.sec.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.sec.commonArray['ownerdetails'];
         this.fetchData();
         this.spinnerService.hide();
       });

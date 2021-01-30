@@ -90,8 +90,8 @@ export class TurnBookAddComponent implements OnInit {
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
-        this.securityCheck.commonArray['truckdetails'] = Object.keys(res.truckdetails[0]).length > 0 ? res.truckdetails : this.securityCheck.commonArray['truckdetails'];;
-        this.truckdetailslist = this.commonArray.truckdetails;
+        this.securityCheck.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.securityCheck.commonArray['ownerdetails'];;
+        this.truckdetailslist = this.commonArray.ownerdetails;
         this.fetchBasic();
         this.spinnerService.hide();
       });
@@ -101,8 +101,10 @@ export class TurnBookAddComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.gstdetailslist = [];
     this.villagelist = [];
+    this.truckdetailslist = [];
     this.gstdetailslist = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
+    this.truckdetailslist = this.commonArray.ownerdetails;
 
   }
 
@@ -145,28 +147,32 @@ export class TurnBookAddComponent implements OnInit {
     this.submitted = true;
     this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
       .subscribe((res: any) => {
-        this.manualTruck = false;
-        this.myFormGroup.patchValue({ place: '' });
-        this.villageData = "";
-        this.spinnerService.hide();
-        this.fetchBasic();
         if (res.status === "Duplicate Entry Found.") {
           alert(res.status);
         } else {
           if (this.method === "insert,new") {
             let tempObj1 = {};
-            tempObj1['personalDetails'] = "";
-            tempObj1['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoidno : this.trucknoid.split('+')[1];
-            tempObj1['accountDetails'] = "";
+            tempObj1['oname'] = "";
+            tempObj1['pan'] = "";
+            tempObj1['contact'] = [];
+            tempObj1['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
+            tempObj1['accountDetails'] = [];
             tempObj1['reference'] = "";
+            tempObj1['preferences'] = [];
             tempObj1['_id'] = res['_id'].split('+')[1];
-            this.securityCheck.commonArray['truckdetails'].push(tempObj1);
+            console.log(tempObj1)
+            this.securityCheck.commonArray['ownerdetails'].push(tempObj1);
             alert('Inserted Successfully!');
           } else {
             alert('Inserted Successfully!');
           }
         }
-
+        this.manualTruck = false;
+        this.myFormGroup.patchValue({ place: '' });
+        this.myFormGroup.patchValue({ trucknoM: '' })
+        this.villageData = "";
+        this.spinnerService.hide();
+        this.fetchBasic();
         this.reset();
       });
   }

@@ -24,6 +24,15 @@ export class OwnerUpdateComponent implements OnInit {
   public mobileno: number;
   public myFormGroup: FormGroup;
   public submitted = false;
+  public role = 6;
+  public contactArray = [];
+  public accountArray = [];
+  public contactA;
+  public preferenceArray = [];
+  public pA;
+  public villagedetailslist;
+  public commonArray;
+  public considerArray = [];
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -32,12 +41,36 @@ export class OwnerUpdateComponent implements OnInit {
     public sec: SecurityCheckService) { }
 
   ngOnInit() {
+    this.commonArray = this.sec.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infoowner')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.myFormGroup = this.formBuilder.group({
-      truckno: [this.handledata.Data.truckno, [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]],
-      oname: [this.handledata.Data.oname, Validators.required],
-      pan: [this.handledata.Data.pan, [Validators.required, Validators.pattern('^[A-Z]{5}[0-9]{4}[A-Z]{1}')]],
-      mobileno: [this.handledata.Data.mobileno, [Validators.required, Validators.pattern('^[9|8|7|6]{1}[0-9]{9}')]]
+      truckno: [this.handledata.Data.truckno],
+      oname: [this.handledata.Data.oname],
+      pan: [this.handledata.Data.pan],
+      contact: [this.handledata.Data.contact],
+      accountName: '',
+      accountNumber: '',
+      bankName: '',
+      ifsc: ''
     });
+    this.contactArray = this.handledata.Data.contact;
+    this.accountArray = this.handledata.Data.accountDetails;
+    this.preferenceArray = this.handledata.Data.preferences;
+    this.role = this.sec.role;
+  }
+
+  getInformationData() {
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.sec.commonArray;
+    this.villagedetailslist = this.commonArray.villagenames;
   }
 
   back() {
@@ -51,27 +84,74 @@ export class OwnerUpdateComponent implements OnInit {
     formbody['truckno'] = data.value.truckno;
     formbody['oname'] = data.value.oname;
     formbody['pan'] = data.value.pan;
-    formbody['mobileno'] = data.value.mobileno;
+    formbody['contact'] = this.contactArray;
     formbody['_id'] = this.handledata.Data._id;
+    formbody['accountDetails'] = this.accountArray;
+    formbody['preferences'] = this.preferenceArray;
+    formbody['reference'] = this.handledata.Data.reference;
     formbody['method'] = 'update';
     formbody['tablename'] = 'ownerdetails';
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
-        alert(response['Status']);
-        this.sec.commonArray['ownerdetails'].forEach((res) => {
-          if (res._id == this.handledata.Data._id) {
-            res['truckno'] = data.value.truckno;
-            res['oname'] = data.value.oname;
-            res['pan'] = data.value.pan;
-            res['mobileno'] = data.value.mobileno;
-          }
-        })
+        if (response['Status'] === 'Updated') {
+          alert(response['Status']);
+          this.sec.commonArray['ownerdetails'].forEach((res) => {
+            if (res._id == this.handledata.Data._id) {
+              res['truckno'] = data.value.truckno;
+              res['oname'] = data.value.oname;
+              res['pan'] = data.value.pan;
+              res['contact'] = this.contactArray;
+              res['accountDetails'] = this.accountArray;
+              res['preferences'] = this.preferenceArray;
+            }
+          })
 
-        this.show = !this.show;
-        this._location.back();
+          this.show = !this.show;
+          this._location.back();
+        }
       });
 
   };
+
+  addMore() {
+    this.contactArray.push(this.contactA)
+    this.contactA = '';
+  }
+
+  deleteOne(i, j) {
+    this.contactArray.splice(j, 1);
+  }
+
+  addaccount() {
+    if (this.myFormGroup.value.accountnumber === '' || this.myFormGroup.value.accountname === '' || this.myFormGroup.value.bankname === '' || this.myFormGroup.value.ifsc === '') { alert('Cant enter empt entries!') } else {
+
+      let tempObj = {};
+      tempObj['accountName'] = this.myFormGroup.value.accountName;
+      tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
+      tempObj['bankName'] = this.myFormGroup.value.bankName;
+      tempObj['ifsc'] = this.myFormGroup.value.ifsc;
+      this.accountArray.push(tempObj);
+      this.myFormGroup.patchValue({ accountName: '' });
+      this.myFormGroup.patchValue({ accountNumber: '' });
+      this.myFormGroup.patchValue({ bankName: '' });
+      this.myFormGroup.patchValue({ ifsc: '' });
+    }
+  }
+
+  deleteOneA(i, j) {
+    if (confirm('Are you sure?')) {
+      this.accountArray.splice(j, 1);
+    }
+  }
+
+  addMoreP() {
+    this.preferenceArray.push(this.pA)
+    this.pA = ''
+  }
+
+  deleteOneP(i, j) {
+    this.preferenceArray.splice(j, 1);
+  }
 
 }

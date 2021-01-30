@@ -50,20 +50,172 @@
       </div>
     </div>
 
-
+    <!--  -->
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="mobileno" class="form-control" formControlName="mobileno" [(ngModel)]="mobilenoauto"
-          placeholder="9876543211">
+        <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
+          [(ngModel)]="contactA">
       </div>
       <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.mobileno.valid" (click)="appendContact()">
+        <button type="button" class="btn btn-primary" (click)="addMore()">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+      <div class="col-xs-3">
+        <table>
+          <tr>
+            <th>Contact</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let i of contactArray;let j = index;">
+            <td>{{i}}</td>
+            <td><button (click)="deleteArray(j,1)">Delete</button></td>
+          </tr>
+
+        </table>
+      </div>
+    </div>
+    <!--  -->
+
+    <!-- Account details -->
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="ABC">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.accountName.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
         </div>
       </div>
     </div>
+
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="number" id="accountNumber" class="form-control" formControlName="accountNumber"
+          placeholder="325689741">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.accountNumber.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="text" id="bankName" class="form-control" formControlName="bankName" placeholder="Bank Name">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.bankName.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.ifsc.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!-- keep adding these data here -->
+
+    <!-- TruckDate -->
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-sm-1">
+        <button type="button" (click)="addaccount()">Add</button>
+      </div>
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Bank</th>
+            <th>IFSC</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let i of accountArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.accountName}}</td>
+            <td>{{i.accountNumber}}</td>
+            <td>{{i.bankName}}</td>
+            <td>{{i.ifsc}}</td>
+            <td><button (click)="deleteArray(j,2)">Delete</button></td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+    <!-- Account Details -->
+
+    <!--  -->
+    <div class="form-group row">
+
+      <div class="col-xs-1">
+        <label for="name"> Reference</label>
+      </div>
+
+      <div class="col-xs-6">
+        <select id="name" class="form-control " formControlName="reference" [(ngModel)]="tdid" (change)="findtd()">
+          <option disabled selected>Select Truck</option>
+          <option *ngFor="let i of ownerdetailslist;let j=index;" value={{i._id+j}}>{{i.truckno}}</option>
+        </select>
+      </div>
+
+    </div>
+    <!--  -->
+
+    <!-- Village -->
+    <div class="form-group row" *ngIf='role==1||role==2'>
+
+      <div class="col-xs-1">
+        <label for="preferences">Preference</label>
+      </div>
+
+      <div class="col-xs-3">
+        <select id="preferences" class="form-control " formControlName="preferences" [(ngModel)]="vid">
+          <option disabled selected>Select Village</option>
+          <option *ngFor="let i of villagedetailslist;let j=index;" value={{i.village_name}}>{{i.village_name}}</option>
+        </select>
+      </div>
+      <div class="col-xs-2">
+        <button type="button" class="btn btn-primary" (click)="addMoreV()">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+      <div class="col-xs-3">
+        <table>
+          <tr>
+            <th>Preferences</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let i of villageArray;">
+            <td>{{i}}</td>
+            <td><button (click)="deleteArray(j,3)">Delete</button></td>
+          </tr>
+
+        </table>
+      </div>
+
+    </div>
+    <!-- Village -->
 
     <div class="row">
 
@@ -72,31 +224,6 @@
           <i class="material-icons">send</i>
         </button>
       </div>
-
-      <div *ngIf="!submitted" class="col-xs-2">
-
-        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
-          <i class="material-icons">undo</i>
-        </button>
-      </div>
-
-      <div *ngIf="submitted" class="col-xs-3">
-        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
-          <i class="material-icons">add</i>
-        </button>
-      </div>
-
-
-      <!-- <div class="col-xs-3">
-        <input class="form-control" (change)="incomingFile($event)" type="file">
-        {{filePath}}
-      </div>
-      <div class="col-xs-2">
-        <button class="btn btn-warnign" id="dnext" (click)="upload()">Multiple</button>
-
-
-      </div> -->
-
     </div>
   </form>
 

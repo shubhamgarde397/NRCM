@@ -47,13 +47,13 @@
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
-          <li>
+          <li *ngIf="role==1||role==2">
             <a routerLink="TURN_BOOK_HANDLER">Turn Book</a>
           </li>
           <!-- <li *ngIf="role==1||role==2">
             <a routerLink="DAILY_LOADING_HANDLER">Daily Loading</a>
           </li> -->
-          <li *ngIf="role==1||role==2">
+          <li>
             <a routerLink="BALANCE_HIRE_HANDLER">Balance Hire</a>
           </li>
         </ul>
@@ -155,7 +155,7 @@
       </li>
 
       <li class="time">
-        {{day}}-{{month+1 }}-{{year}}
+        {{day}}-{{month}}-{{year}}
       </li>
       <li style="    color: white;
       font-size: 20px;

@@ -1,21 +1,13 @@
 <div class="well">
 
-  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data" action="/">
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
 
 
 
     <div class="form-group row">
       <div class="col-xs-3">
-
-
-        <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN02 AB 2045">
-      </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.truckno.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+        <input type="text" id="truckno" class="form-control" formControlName="truckno" disabled>
       </div>
     </div>
 
@@ -48,10 +40,29 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="mobileno" class="form-control" formControlName="mobileno" placeholder="9876543211">
+        <input type="text" id="contact" class="form-control" [(ngModel)]="contactA"
+          [ngModelOptions]="{standalone: true}" placeholder="9876543211">
+        <button type="button" class="btn btn-primary" (click)="addMore()">Add</button>
+      </div>
+      <div class="col-xs-4">
+        <ul *ngFor="let i of contactArray;let j =index;">
+          <li>{{i}} <button type="button" mat-raised-button (click)="deleteOne(i,j)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+
+
+    <!-- Account details -->
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="ABC">
       </div>
       <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.mobileno.valid">
+        <div [hidden]="myFormGroup.controls.accountName.valid">
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
@@ -59,24 +70,106 @@
       </div>
     </div>
 
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="number" id="accountNumber" class="form-control" formControlName="accountNumber"
+          placeholder="325689741">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.accountNumber.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="text" id="bankName" class="form-control" formControlName="bankName" placeholder="Bank Name">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.bankName.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-xs-3">
+        <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.ifsc.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!-- keep adding these data here -->
+
+    <!-- TruckDate -->
+    <div class="form-group row" *ngIf='role==1||role==2'>
+      <div class="col-sm-1">
+        <button type="button" (click)="addaccount()">Add</button>
+      </div>
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>Bank</th>
+            <th>IFSC</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let i of accountArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.accountName}}</td>
+            <td>{{i.accountNumber}}</td>
+            <td>{{i.bankName}}</td>
+            <td>{{i.ifsc}}</td>
+            <td (click)="deleteOneA(i,j)">Delete</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+    <hr *ngIf='role==1||role==2'>
+    <!-- Account Details -->
+    <!-- Preference -->
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="preferences" class="form-control" [(ngModel)]="pA" [ngModelOptions]="{standalone: true}">
+          <option disabled selected>Select Village</option>
+          <option *ngFor="let i of villagedetailslist;let j=index;" value={{i.village_name}}>{{i.village_name}}
+          </option>
+        </select>
+        <button type="button" class="btn btn-primary" (click)="addMoreP()">Add</button>
+      </div>
+      <div class="col-xs-4">
+        <ul *ngFor="let i of preferenceArray;let j =index;">
+          <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneP(i,j)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button></li>
+        </ul>
+      </div>
+    </div>
+    <!-- Preference -->
+
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>
       <div class="form-group" class="col-xs-1">
         <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
           <i class="material-icons">send</i>
-        </button>
-      </div>
-
-      <div *ngIf="!submitted" class="col-xs-1">
-
-        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
-          <i class="material-icons">undo</i>
-        </button>
-      </div>
-
-      <div *ngIf="submitted" class="col-xs-1">
-        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
-          <i class="material-icons">add</i>
         </button>
       </div>
 

@@ -29,7 +29,11 @@ export class ApiCallsService {
   public authSuccess = this.authService.asObservable();
   public headerPost: HttpHeaders;
   public URL = '';
-  constructor(public hs: HandleDataService, public http: Http, public httpClient: HttpClient, public securityCheck: SecurityCheckService, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) { }
+  public username;
+
+  constructor(public hs: HandleDataService, public http: Http, public httpClient: HttpClient, public securityCheck: SecurityCheckService, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) {
+    this.username = this.securityCheck.username
+  }
   handleAWS(api, formBody = {}) {
     this.getAuthenticatedUser().getSession((err, session) => {
       let headers = new Headers({ 'Authorization': session.getIdToken().getJwtToken() })
@@ -90,7 +94,7 @@ export class ApiCallsService {
   }
 
   handleData_New_python(api, apiCall, formBody = {}, code) {
-    formBody['code'] = code;
+    formBody['user'] = this.username;
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
     this.URL = this.getfullapi.getFullAPI(api);

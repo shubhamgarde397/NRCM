@@ -15,11 +15,10 @@ export class HandleDataService {
     "regularparty": [{}],
     "RegularTruck": [{}],
     "thoughts": [{}],
-    "personaldetails": [{}],
-    "truckdetails": [{}],
     "Role": 6
   }
   public IP = [];
+  public turnData = [];
   constructor(public securityCheck: SecurityCheckService) { }
 
   notification(value) {
@@ -33,6 +32,12 @@ export class HandleDataService {
   saveData(data) {
     this.Data = data;
   }
+  saveTurn(data) {
+    this.turnData = data;
+  }
+
+  giveTurn() { return this.turnData; }
+
 
   createConsiderArray(data) {
     let tempCArr = [];
@@ -59,6 +64,8 @@ export class HandleDataService {
       case 'infogstonly':
         return [Consts.GST_INDEX];
       case 'infoowner':
+        return [Consts.OWNER_INDEX, Consts.VILLAGE_INDEX];
+      case 'infoonlyowner':
         return [Consts.OWNER_INDEX];
       case 'infovillage':
         return [Consts.VILLAGE_INDEX];
@@ -66,15 +73,8 @@ export class HandleDataService {
         return [Consts.REGULARPARTY_INDEX];
       case 'inforegulartruck':
         return [Consts.REGULARTRUCK_INDEX];
-      case 'infopersonaldetails':
-        return [Consts.PERSONALDETAILS_INDEX];
-      case 'infotruckdetails':
-        return [Consts.TRUCKDETAILS_INDEX];
-      case 'infotruckpersonal':
-        return [Consts.TRUCKDETAILS_INDEX, Consts.PERSONALDETAILS_INDEX];
       case 'turnbook':
-        // return [Consts.TRUCKDETAILS_INDEX];
-        return [Consts.VILLAGE_INDEX, Consts.TRUCKDETAILS_INDEX];
+        return [Consts.VILLAGE_INDEX, Consts.OWNER_INDEX];
       case 'turnbookadd':
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
 
@@ -83,8 +83,8 @@ export class HandleDataService {
 
   resetArray(data) {
     switch (data) {
-      case 'turnbook':
-        this.securityCheck.IP[Consts.TRUCKDETAILS_INDEX[0].index] = 0;
+      // case 'turnbook':
+      //   this.securityCheck.IP[Consts.TRUCKDETAILS_INDEX[0].index] = 0;
       case 'full':
         this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     }

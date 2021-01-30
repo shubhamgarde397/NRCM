@@ -98,6 +98,7 @@
             <th>TruckNo</th>
             <th>Page No</th>
             <th>Amount</th>
+            <th>Delete</th>
           </tr>
           <tr *ngFor="let i of truckArray;let j = index;">
             <td>{{j+1}}</td>
@@ -105,6 +106,7 @@
             <td>{{i.truckno}}</td>
             <td>{{i.pageno}}</td>
             <td>{{i.amount}}</td>
+            <td><button (click)="deleteRow(i,j)">Delete</button></td>
           </tr>
         </table>
       </div>

@@ -1,12 +1,13 @@
 <div class="well container">
   <div class="row">
     <div class="form-group col-xs-2" align="center">
-      <input type="date" [(ngModel)]="selectedDate">
+      <input type="date" [(ngModel)]="selectedDate" *ngIf="role==1||role==2">
       <button class="btn btn-warning" (click)="find()">Find</button>
       <button class="btn btn-danger" (click)="download()" *ngIf="role==1||role==2">PDF</button>
     </div>
 
     <div class="col-xs-10" style="text-align: center">
+      <h3>{{selectedDate}}</h3>
       <table class="table" style="width:100%" align="center">
 
         <thead class="table-header">
@@ -17,8 +18,8 @@
             <th>Truckno</th>
             <th>Amount</th>
             <th>PgNo</th>
-            <th>AccountNo-IFSC</th>
-            <th>Account Name</th>
+            <th *ngIf="role==1||role==2">AccountNo-IFSC</th>
+            <th *ngIf="role==1||role==2">Account Name</th>
             <th>Delete</th>
             <th *ngIf="role==1||role==2">Edit</th>
           </tr>
@@ -52,8 +53,8 @@
                 <li>{{k.pageno}}</li>
               </ul>
             </td>
-            <td>{{i.accountNumber}}-{{i.ifsc}}</td>
-            <td>{{i.accountName}}</td>
+            <td *ngIf="role==1||role==2">{{i.accountNumber}}-{{i.ifsc}}</td>
+            <td *ngIf="role==1||role==2">{{i.accountName}}</td>
             <td *ngIf="i.comments===''">
               <button mat-raised-button (click)="deleteBH(i)" class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete_forever</i>

@@ -10,12 +10,17 @@
             <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
           </select>
         </div>
-        <div class="col-sm-7" *ngIf="buttonOption!=='1'">
+        <div class="col-sm-3" *ngIf="buttonOption!=='1'">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
+        </div>
+        <div class="col-sm-3" *ngIf="buttonOption!=='4'">
+          <input type="date" class="form-control" [(ngModel)]="dynDate2">
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-4"></div>
+        <div class="col-sm-4">
+          <!-- <input type="text" [(ngModel)]="dataTruck" (input)="newData()"> -->
+        </div>
         <div class="col-sm-4">
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
             {{buttonValue}}
@@ -25,7 +30,7 @@
       </div>
       <!--DATE -->
 
-      <h3>{{today}}</h3>
+      <h3>{{todaysDate}}</h3>
 
       <table class="table" style="width:100%" align="center">
         <thead align="center" style="font-weight: bold">
@@ -44,16 +49,17 @@
 
         <tbody align="center">
           <tr *ngFor="let i of turnbooklist;let j = index"
-            [ngStyle]="{'color': i.ownerDetails[0].personalDetails==='' ||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }">
+            [ngStyle]="{'color': i.ownerDetails[0]===undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }">
             <td>{{j+1}}</td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.ownerDetails[0].truckno}}
+            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}
               <button class="btn btn-warning" type="button" (click)="edit(i.ownerDetails[0])" class="btn-primary"
-                *ngIf="i.ownerDetails[0].personalDetails==='' ||i.ownerDetails[0].accountDetails.length===0">
+                *ngIf="i.ownerDetails[0]!==undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0">
                 <i class="material-icons">edit</i>
               </button>
             </td>
+            <td *ngIf="i.ownerDetails[0]===undefined"></td>
             <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}</td>
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
@@ -64,13 +70,13 @@
               </button>
             </td>
             <td>
-              <button mat-raised-button type="button" (click)="showDatabyid2(i)"
+              <button mat-raised-button type="button" (click)="showDatabyid2(i,j)"
                 class="btn-warning btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
               </button>
             </td>
             <td>
-              <button mat-raised-button type="button" (click)="showDatabyid(i)"
+              <button mat-raised-button type="button" (click)="showDatabyid(i,j)"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>

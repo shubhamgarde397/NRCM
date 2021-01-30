@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { ExcelService } from '../../../common/services/sharedServices/excel.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 // import { SecurityCheckService } from '../../../../common/services/Data/security-check.service';
 
 @Component({
@@ -40,7 +41,7 @@ export class BalancehiredisplayComponent implements OnInit {
   public role = 6;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
-    public securityCheck: SecurityCheckService) {
+    public securityCheck: SecurityCheckService, public handleF: handleFunction) {
     this.commonArray = this.securityCheck.commonArray;
   }
 
@@ -50,11 +51,15 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   find = function () {
-
     let tempObj = {};
+    if (this.selectedDate === undefined) {
+      this.selectedDate = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
+      tempObj['todayDate'] = this.selectedDate;
+    } else {
+      tempObj['todayDate'] = this.selectedDate;
+    }
     tempObj['method'] = 'BalanceHireDisplay';
     tempObj['tablename'] = 'BalanceHire';
-    tempObj['todayDate'] = this.selectedDate;//
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
@@ -198,9 +203,10 @@ export class BalancehiredisplayComponent implements OnInit {
       }
       doc.line(0, i + 7, 210, i + 7);
       doc.setFontSize('10');
-      doc.text(String(this.balanceDate[z].accountNumber), 136.5, i - (data.length * 6));//accno
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 136.5, i + 6 - (data.length * 6));//ifsc-bankname
-      doc.text(this.balanceDate[z].accountName, 136.5, i + 12 - (data.length * 6));//accname
+      doc.text(this.balanceDate[z].accountName, 136.5, i - (data.length * 6));//accno
+      doc.text(String(this.balanceDate[z].accountNumber), 136.5, i + 6 - (data.length * 6));//accname
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 136.5, i + 12 - (data.length * 6));//ifsc-bankname
+
       i = i + 15;
     }
     //Dynamic Part End
