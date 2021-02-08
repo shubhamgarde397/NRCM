@@ -40,7 +40,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
     { 'value': '2', 'viewvalue': 'Truck Arrival' },
     { 'value': '3', 'viewvalue': 'Truck Dispatched' },
-    { 'value': '4', 'viewvalue': 'To From' }
+    { 'value': '4', 'viewvalue': 'To From' },
+    { 'value': '5', 'viewvalue': 'Monthly Data' },
   ]
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
@@ -98,6 +99,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
       case '4':
         tempObj['turnbookDate'] = this.dynDate;
         tempObj['turnbookDateFrom'] = this.dynDate2;
+        break;
+      case '5':
+        tempObj['turnbookDate'] = this.dynDate.slice(0, 7);
         break;
 
       default:
@@ -224,7 +228,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.show = true;
     data['index'] = 0;
     this.handleData.saveData(data);
-    this.router.navigate(['Navigation/Information/ACCOUNT_DETAILS_HANDLER/Update']);
+    this.router.navigate(['Navigation/Information/OWNER_HANDLER/OwnerUpdate']);
   }
 
 }

@@ -16,319 +16,136 @@ import { handleFunction } from '../../common/services/functions/handleFunctions'
 export class MainPageComponent implements OnInit {
   temp = [
     {
-      "_id": "5fd05b4139d88ed9d85df96c",
+      "_id": "60182bdbdeb170e12b66052b",
       "truckData": [
         {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
+          "amount": 2950
+        }, {
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
           "amount": 2950
         },
         {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
+          "amount": 2950
+        },
+        {
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
           "amount": 2950
         }
       ],
-      "todayDate": "2020-12-09",
-      "bankname": "ICICI",
-      "ifsc": "ICIC0",
-      "accountNumber": "3265",
-      "accountName": "Shubham"
-    },
-
-    {
-      "_id": "5fdef546d778c0bc817ffa9c",
-      "truckData": [
-        {
-          "date": "2020-12-09",
-          "truckno": "AP03 TC 6831",
-          "pageno": 23,
-          "amount": 123
-        },
-        {
-          "date": "2020-12-21",
-          "truckno": "AP03 TC 5589",
-          "pageno": 23,
-          "amount": 3456
-        },
-        {
-          "date": "2020-12-09",
-          "truckno": "AP03 TC 6831",
-          "pageno": 23,
-          "amount": 123
-        }, {
-          "date": "2020-12-09",
-          "truckno": "AP03 TC 6831",
-          "pageno": 23,
-          "amount": 123
-        }, {
-          "date": "2020-12-09",
-          "truckno": "AP03 TC 6831",
-          "pageno": 23,
-          "amount": 123
-        }, {
-          "date": "2020-12-09",
-          "truckno": "AP03 TC 6831",
-          "pageno": 23,
-          "amount": 123
-        }
-      ],
-      "todayDate": "2020-12-09",
-      "bankname": "Canara",
-      "ifsc": "CNRB",
-      "accountNumber": "6258",
-      "accountName": "Nitin"
+      "todayDate": "2021-02-01",
+      "bankName": "5",
+      "ifsc": "5",
+      "accountNumber": "5",
+      "accountName": "5",
+      "comments": ""
     },
     {
-      "_id": "5fd05b4139d88ed9d85df96c",
+      "_id": "60182bdbdeb170e12b66052b",
       "truckData": [
         {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
+          "amount": 2950
+        }, {
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
           "amount": 2950
         },
         {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
+          "amount": 2950
+        },
+        {
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
           "amount": 2950
         }
       ],
-      "todayDate": "2020-12-09",
-      "bankname": "ICICI",
-      "ifsc": "ICIC0",
-      "accountNumber": "3265",
-      "accountName": "Shubham"
+      "todayDate": "2021-02-01",
+      "bankName": "5",
+      "ifsc": "5",
+      "accountNumber": "5",
+      "accountName": "5",
+      "comments": ""
     },
     {
-      "_id": "5fd05b4139d88ed9d85df96c",
+      "_id": "60182bdbdeb170e12b66052b",
       "truckData": [
         {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 29500
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 29500
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
           "amount": 2950
         }
       ],
-      "todayDate": "2020-12-09",
-      "bankname": "ICICI",
-      "ifsc": "ICIC0",
-      "accountNumber": "3265",
-      "accountName": "Shubham"
+      "todayDate": "2021-02-01",
+      "bankName": "5",
+      "ifsc": "5",
+      "accountNumber": "5",
+      "accountName": "5",
+      "comments": ""
+    },
+    {
+      "_id": "60182bdbdeb170e12b66052b",
+      "truckData": [
+        {
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
+          "amount": 2950
+        },
+        {
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
+          "amount": 2950
+        }
+      ],
+      "todayDate": "2021-02-01",
+      "bankName": "5",
+      "ifsc": "5",
+      "accountNumber": "5",
+      "accountName": "5",
+      "comments": ""
     }, {
-      "_id": "5fd05b4139d88ed9d85df96c",
+      "_id": "60182bdbdeb170e12b66052b",
       "truckData": [
         {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
           "amount": 2950
         },
         {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 29500
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 29500
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
+          "date": "2021-01-08",
+          "truckno": "TN59 BT 8597",
+          "pageno": 130,
           "amount": 2950
         }
       ],
-      "todayDate": "2020-12-09",
-      "bankname": "ICICI",
-      "ifsc": "ICIC0",
-      "accountNumber": "3265",
-      "accountName": "Shubham"
-    }, {
-      "_id": "5fd05b4139d88ed9d85df96c",
-      "truckData": [
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 29500
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 29500
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        },
-        {
-          "date": "2020-12-08",
-          "truckno": "TN32 M 2542",
-          "pageno": 78,
-          "amount": 2950
-        }
-      ],
-      "todayDate": "2020-12-09",
-      "bankname": "ICICI",
-      "ifsc": "ICIC0",
-      "accountNumber": "3265",
-      "accountName": "Shubham"
-    }]
+      "todayDate": "2021-02-01",
+      "bankName": "5",
+      "ifsc": "5",
+      "accountNumber": "5",
+      "accountName": "5",
+      "comments": ""
+    },
+  ]
 
 
   modalData;
@@ -357,83 +174,179 @@ export class MainPageComponent implements OnInit {
     public router: Router, public handlefunction: handleFunction) {
     localStorage.clear();
   }
-  pdf() {//threshhold is 295
+  download() {//threshhold is 295
+    let i;
+    if (confirm('Fresh Page?')) {
+      i = 16;
+    } else {
+      let z = '';
+      let str = "";
+      while (z != null) {
+        z = prompt('Enter Truck Numbers');
+        if (z.length > 1) {
+          alert('Cannot have more than 9 trucks, Please enter lesser value or print on new page.')
+        } else {
+          if (z == null || z == "") {
+            break;
+          }
+          str = str + z + "11";
+        }
+      }
 
-    var doc = this.document;
+
+
+      i = this.getValueofI(str) + 16;
+    }
+    if (i > 280) {
+      i = 16;
+    }
+
+
+    let pageno = 1;
+    let dateFormat = this.temp[0].todayDate.slice(8, 10) + '-' + this.temp[0].todayDate.slice(5, 7) + '-' + this.temp[0].todayDate.slice(0, 4);
+    var doc = new jsPDF();
     //Static Part Start
     //Date
-    doc.setFontSize('15');
+    doc.setFontSize('10');
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
-    doc.text(this.temp[0].todayDate, 90, 5)
+    doc.text(dateFormat, 90, i + 5 - 16)
+    doc.text(String(pageno), 190, i + 5 - 16)
+    pageno = pageno + 1;
     //Date
     //line after date
     doc.setDrawColor(0, 0, 0);
     doc.setLineWidth(0.5);
-    doc.line(0, 6, 210, 6);
+    doc.line(0, i + 6 - 16, 210, i + 6 - 16);
     //line after date
     //5 vertical lines for amount, comments, pageno,date,trucno, account details(account details is further divided into 3 parts per data need a loop here)
     //vertical line after date
     doc.setDrawColor(0, 0, 0);
     doc.setLineWidth(0.5);
-    doc.line(22, 6, 22, 300);
-    doc.line(47, 6, 47, 300);
-    doc.line(57, 6, 55.4, 300);
-    doc.line(72, 6, 72, 300);
-    doc.line(120, 6, 120, 300);
-    //vertical line after date
+    doc.line(37, i + 6 - 16, 37, i + 12 - 16);
+    doc.line(61, i + 6 - 16, 61, i + 12 - 16);
+    doc.line(72, i + 6 - 16, 72, i + 12 - 16);
+    doc.line(92, i + 6 - 16, 92, i + 12 - 16);
+    doc.line(135, i + 6 - 16, 135, i + 12 - 16);
+
+
+    //vertical line after date till headers
     //Headers
     doc.setFontSize('10');
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
-    doc.text('Amount', 1, 10)
-    doc.text('Comments', 23, 10)
-    doc.text('Pg', 48, 10)
-    doc.text('Date', 57.5, 10)
-    doc.text('TruckNo', 72.5, 10)
-    doc.text('Account Details', 120.5, 10)
+    doc.text('Amount', 16, i + 10 - 16)
+    doc.text('Comments', 38, i + 10 - 16)
+    doc.text('Pg', 63, i + 10 - 16)
+    doc.text('Date', 72.5, i + 10 - 16)
+    doc.text('TruckNo', 92.5, i + 10 - 16)
+    doc.text('Account Details', 135.5, i + 10 - 16)
     //Headers End
     //Line after headers
     doc.setDrawColor(0, 0, 0);
     doc.setLineWidth(0.5);
-    doc.line(0, 12, 210, 12);
+    doc.line(0, i + 12 - 16, 210, i + 12 - 16);
     //Line after headers
     //Static Part End
     //Dynamic Part Start
-    doc.setFontSize('20');
+    doc.setFontSize('10');
     doc.setFontType('normal');
     doc.setTextColor(0, 0, 0);
-    let i = 18;
     // doc.text('Shubham is awesome', 1, i);
     for (let z = 0; z < this.temp.length; z++) {
       let data = this.temp[z].truckData;
-      if (data.length == 1) {
 
-      }
-      if (data.length > 1) {
-        let K = 0
-        for (let k = 0; k < data.length; k++) {
-          doc.text(String(this.temp[z].truckData[k].amount), 1, i);//amount
-          // doc.text(this.temp[z].truckData[k].amount,i,10);//comments
-          doc.setFontSize('15');
-          doc.text(String(this.temp[z].truckData[k].pageno), 48, i);//pgno
-          doc.text(this.temp[z].truckData[k].date.slice(8, 10) + '/' + this.temp[z].truckData[k].date.slice(5, 7), 57.5, i);//date
-          doc.setFontSize('20');
-          doc.text(this.temp[z].truckData[k].truckno, 72.5, i);//truckno
-          K = k;
-          i = i + 6;
-        }
-        doc.line(0, i + 1, 210, i + 1);
-        doc.text(this.temp[z].accountNumber, 121.5, i - (data.length * 6));//accno
-        doc.text(this.temp[z].ifsc + '-' + this.temp[z].bankname, 121.5, i + 6 - (data.length * 6));//ifsc-bankname
-        doc.text(this.temp[z].accountName, 121.5, i + 12 - (data.length * 6));//accname
-        i = i + 7;
-      }
 
+      if (((data.length * 6) + 15 + i) > 295) {
+        doc.addPage();
+        //Static Part Start
+        //Date
+        doc.setFontSize('10');
+        doc.setFontType('bold');
+        doc.setTextColor(0, 0, 0);
+        doc.text(dateFormat, 90, 5)
+        doc.text(String(pageno), 190, 5)
+        pageno = pageno + 1;
+        //Date
+        //line after date
+        doc.setDrawColor(0, 0, 0);
+        doc.setLineWidth(0.5);
+        doc.line(0, 6, 210, 6);
+        //line after date
+        //5 vertical lines for amount, comments, pageno,date,trucno, account details(account details is further divided into 3 parts per data need a loop here)
+        //vertical line after date
+        doc.setDrawColor(0, 0, 0);
+        doc.setLineWidth(0.5);
+        doc.line(37, 6, 37, 12);
+        doc.line(61, 6, 61, 12);
+        doc.line(72, 6, 72, 12);
+        doc.line(92, 6, 92, 12);
+        doc.line(135, 6, 135, 12);
+        //vertical line after date
+        //Headers
+        doc.setFontSize('10');
+        doc.setFontType('bold');
+        doc.setTextColor(0, 0, 0);
+        doc.text('Amount', 16, 10)
+        doc.text('Comments', 38, 10)
+        doc.text('Pg', 63, 10)
+        doc.text('Date', 72.5, 10)
+        doc.text('TruckNo', 92.5, 10)
+        doc.text('Account Details', 135.5, 10)
+        //Headers End
+        //Line after headers
+        doc.setDrawColor(0, 0, 0);
+        doc.setLineWidth(0.5);
+        doc.line(0, 12, 210, 12);
+        //Line after headers
+        //Static Part End
+        //Dynamic Part Start
+        doc.setFontSize('10');
+        doc.setFontType('normal');
+        doc.setTextColor(0, 0, 0);
+        i = 16;
+      }
+      let K = 0
+      doc.setFontSize('10');
+      doc.text(this.temp[z].comments, 38.5, i);//comments
+      for (let k = 0; k < data.length; k++) {
+        doc.setFontSize('10');
+        doc.text(String(this.temp[z].truckData[k].amount), 16, i);//amount
+
+        doc.setFontSize('10');
+        doc.text(String(this.temp[z].truckData[k].pageno), 61.5, i);//pgno
+        doc.setFontSize('10');
+        doc.text(this.temp[z].truckData[k].date.slice(8, 10) + '/' + this.temp[z].truckData[k].date.slice(5, 7) + '/' + this.temp[z].truckData[k].date.slice(0, 4), 72.5, i);//date
+        doc.setFontSize('10');
+        doc.text(this.temp[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
+        K = k;
+        i = i + 6;
+      }
+      doc.line(0, i + 7, 210, i + 7);
+
+
+
+      //console.log(i - (data.length * 6));
+      // doc.line(37, 29, 37, 29);
+      // doc.line(61, 29, 61, 29);
+      // doc.line(72, 29, 72, 29);
+      // doc.line(92, 29, 92, 29);
+      // doc.line(135, 29, 135, 29);
+      doc.line(37, i - (data.length * 6) - 5, 37, i + 7);
+      doc.line(61, i - (data.length * 6) - 5, 61, i + 7);
+      doc.line(72, i - (data.length * 6) - 5, 72, i + 7);
+      doc.line(92, i - (data.length * 6) - 5, 92, i + 7);
+      doc.line(135, i - (data.length * 6) - 5, 135, i + 7);
+
+      doc.setFontSize('10');
+      doc.text(this.temp[z].accountName, 136.5, i - (data.length * 6));//accno
+      doc.text(String(this.temp[z].accountNumber), 136.5, i + 6 - (data.length * 6));//accname
+      doc.text(this.temp[z].ifsc + '-' + this.temp[z].bankName, 136.5, i + 12 - (data.length * 6));//ifsc-bankname
+
+      i = i + 12;
     }
     //Dynamic Part End
-
-    doc.save('tp.pdf')
+    doc.save(dateFormat + '.pdf')
   }
 
   login() {
@@ -464,7 +377,7 @@ export class MainPageComponent implements OnInit {
       .subscribe((res) => {
         this.fileFormData = new FormData();
       }, err => {
-        console.log(err);
+
       })
   }
   ngOnInit() {
@@ -515,5 +428,34 @@ export class MainPageComponent implements OnInit {
   clueCall() {
     this.clue = true;
   }
+  // a will be the array to pass for eg: 412212111
+  //4 trucks wale in bulk are a digit number which is 2
+  //2 trucks wale in bulk are a digit number which is 2
+  //1 trucks wale in bulk are a digit number which is 1
+  getValueofI(a) {
+    let I = 16;
+    for (let i = 0; i < a.length; i) {
+      let x = parseInt(a[i]);
+      let l = parseInt(a[i + 1]);
+      let X = parseInt(a.slice(i + 2, i + 2 + l));
+      I = I + ((6 * X) * (x + 2))
+      i = i + l + 2
+    }
+    return I;
+  }
 }
 
+
+
+// for(let i=0;i<a.length;i=i+l+2){
+
+//   let x=parseInt(a[i]);
+
+//   let l=parseInt(a[i+1]);
+
+//   let X=parseInt(a.slice(i+2,i+2+l));
+
+
+//   I=I+((6*parseInt(X))*(x+2))
+
+// }
