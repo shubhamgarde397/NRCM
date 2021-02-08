@@ -140,7 +140,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['partyType'] = value['partyType'];
     tempobj['loadingDate'] = '';
     tempobj['turnbookDate'] = value['turnbookDate'];
-    tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.date.getDate();
+    tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = this.method;
 

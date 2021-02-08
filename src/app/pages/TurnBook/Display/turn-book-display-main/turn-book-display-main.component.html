@@ -13,7 +13,7 @@
         <div class="col-sm-3" *ngIf="buttonOption!=='1'">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
-        <div class="col-sm-3" *ngIf="buttonOption!=='4'">
+        <div class="col-sm-3" *ngIf="buttonOption==='4'">
           <input type="date" class="form-control" [(ngModel)]="dynDate2">
         </div>
       </div>
@@ -54,10 +54,17 @@
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
             <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}
-              <button class="btn btn-warning" type="button" (click)="edit(i.ownerDetails[0])" class="btn-primary"
-                *ngIf="i.ownerDetails[0]!==undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0">
-                <i class="material-icons">edit</i>
+
+              <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
+                style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
+                PAN
               </button>
+
+              <button class="btn btn-warning" type="button" (click)="edit(i.ownerDetails[0])"
+                style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].accountDetails.length===0">
+                Account
+              </button>
+
             </td>
             <td *ngIf="i.ownerDetails[0]===undefined"></td>
             <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}</td>
