@@ -38,6 +38,8 @@ export class TurnBookUpdateComponent implements OnInit {
   public role = 6;
   public placeid;
   public partyid;
+  public tempVNAME;
+  public tempPNAME;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -78,10 +80,14 @@ export class TurnBookUpdateComponent implements OnInit {
   }
 
   setPartyName() {
-    this.partyid = this.myFormGroup.value.partyName;
+    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
+    this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
+    this.myFormGroup.value.partyName = this.tempPNAME;
   }
   setPlaceName() {
-    this.placeid = this.myFormGroup.value.place;
+    this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
+    this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
+    this.myFormGroup.value.place = this.tempVNAME;
   }
 
   getInformationData() {
@@ -130,12 +136,16 @@ export class TurnBookUpdateComponent implements OnInit {
       .subscribe((res: any) => {
         alert(res.Status);
         let tempData = this.handledata.giveTurn();
-
         tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
           tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
-          tempData[this.handledata.Data.index]["placeid"] = data.value.place,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]["partyid"] = data.value.partyName,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+          // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
+          tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
+          // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
+          tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
+          // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = this.handledata.Data.ownerid,
           tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
           tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
           tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
@@ -147,9 +157,7 @@ export class TurnBookUpdateComponent implements OnInit {
         this.handledata.saveTurn([]);
         let tempArray = []
         tempArray = tempData;
-
-        tempArray.splice(this.handledata.Data.index, 1)
-
+        // tempArray.splice(this.handledata.Data.index, 1)
         this.handledata.saveTurn(tempArray);
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });

@@ -41,6 +41,8 @@
             <th>Truck No</th>
             <th>Place</th>
             <th>Party</th>
+            <th>LRNO</th>
+            <th *ngIf="role==1||role==2">PN</th>
             <th *ngIf="role==1||role==2">Delete</th>
             <th>Cancel</th>
             <th>Edit</th>
@@ -70,6 +72,8 @@
             <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}</td>
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
+            <td>{{i.lrno}}</td>
+            <td *ngIf="role==1||role==2">{{i.partyDetails[0].name}}</td>
             <td>
               <button mat-raised-button (click)="delete(i,j)" *ngIf="role==1||role==2"
                 class="btn-danger btn-sm btn-just-icon">

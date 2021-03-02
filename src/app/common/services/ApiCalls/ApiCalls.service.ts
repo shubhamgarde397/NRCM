@@ -139,9 +139,13 @@ export class ApiCallsService {
       onSuccess(res: CognitoUserSession) {
         that.setter('true');
         that.security.AUTH = true;
-        that.router.navigate(['Navigation']);
+        if (username === 'anil') {
+          that.router.navigate(['404']);
+        } else {
+          that.router.navigate(['Navigation']);
+        }
       }, onFailure(err) {
-        alert('There was an error signing u in');
+        alert('There was an error signing you in');
         that.setter('false');
         that.security.AUTH = false;
       }

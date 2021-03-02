@@ -22,8 +22,10 @@ export class BalancehireaddComponent implements OnInit {
   public today;
   public dateFromUI;
   public truckArray = [];
+  public accountDetais = [];
   public commonArray;
   public trucklist;
+  public gAD;
   constructor(public apiCallservice: ApiCallsService, public handleF: handleFunction, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService) { }
 
@@ -69,6 +71,18 @@ export class BalancehireaddComponent implements OnInit {
 
   }
 
+  getADD() {
+    this.truckArray.forEach((res) => {
+      this.gAD = this.trucklist.find(r => r.truckno === res.truckno);
+      if (this.gAD !== undefined) {
+        return this.gAD;
+      } else {
+        this.gAD = { 'accountDetails': [] };
+        return this.gAD;
+      }
+    });
+  }
+
   saveBalanceHire({ value, valid }: { value: {}, valid: boolean }) {
 
     //send mainarrray to be inserted in db
@@ -78,15 +92,16 @@ export class BalancehireaddComponent implements OnInit {
     tempObj['tablename'] = 'BalanceHire';
     tempObj['todayDate'] = this.today;
     tempObj['truckData'] = this.truckArray;
-    tempObj['bankName'] = '';
-    tempObj['ifsc'] = '';
-    tempObj['accountNumber'] = '';
-    tempObj['accountName'] = '';
+    let aD = this.getADD();
+    tempObj['bankName'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['bankName'];
+    tempObj['ifsc'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['ifsc'];
+    tempObj['accountNumber'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['accountNumber'];
+    tempObj['accountName'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['accountName'];
     tempObj['comments'] = '';
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        alert('Added Successfully');
+        alert(res['Status']);
         this.truckArray = [];
       });
   }
