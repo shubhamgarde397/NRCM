@@ -24,6 +24,7 @@ export class TurnBookUpdateComponent implements OnInit {
   public list;
   public village_name: string;
   public myFormGroup: FormGroup;
+  public myFormGroup1: FormGroup;
   public truckNamesOwner = [];
   public commonArray;
   public trucklist: any;
@@ -38,6 +39,14 @@ export class TurnBookUpdateComponent implements OnInit {
   public role = 6;
   public placeid;
   public partyid;
+  public tempVNAME;
+  public tempPNAME;
+  public trucknoid;
+  public trucknoM;
+  public ownerid;
+  public updateOption = 1;
+  public oldTruckNo;
+  public truckdetailslist;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -47,6 +56,8 @@ export class TurnBookUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(this.handledata.Data);
+
 
     this.role = this.securityCheck.role;
 
@@ -69,19 +80,49 @@ export class TurnBookUpdateComponent implements OnInit {
       pochDate: this.handledata.Data.pochDate,
       pochPayment: this.handledata.Data.pochPayment
     });
+    this.myFormGroup1 = this.formBuilder.group({
+      turnbookDate: this.handledata.Data.turnbookDate,
+      truckno: this.handledata.Data.truckno,
+      place: this.handledata.Data.place,
+      partyName: this.handledata.Data.partyName,
+      loadingDate: this.handledata.Data.loadingDate,
+      lrno: this.handledata.Data.lrno,
+      partyType: this.handledata.Data.partyType,
+      hamt: this.handledata.Data.hamt,
+      advance: this.handledata.Data.advance,
+      balance: this.handledata.Data.balance,
+      pochDate: this.handledata.Data.pochDate,
+      pochPayment: this.handledata.Data.pochPayment,
+      entryDate: this.handledata.Data.entryDate,
+      truckNo: ['', Validators.required],
+    });
     this.place = this.handledata.Data.place;
     this.placeid = this.handledata.Data.placeid;
     this.party = this.handledata.Data.partyName;
     this.partyid = this.handledata.Data.partyid;
     this.hireExtendingMoney = this.handlefunction.getMoney();
     this.commonArray = this.securityCheck.commonArray;
+    this.updateOption = this.handledata.Data.number;
+    this.oldTruckNo = this.handledata.Data.truckno;
+  }
+
+  findtruckdetails() {
+
+
+    this.myFormGroup.patchValue({ trucknoM: this.trucknoid.split('+')[1] })
+    this.ownerid = this.trucknoid.split('+')[0];
+
   }
 
   setPartyName() {
-    this.partyid = this.myFormGroup.value.partyName;
+    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
+    this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
+    this.myFormGroup.value.partyName = this.tempPNAME;
   }
   setPlaceName() {
-    this.placeid = this.myFormGroup.value.place;
+    this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
+    this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
+    this.myFormGroup.value.place = this.tempVNAME;
   }
 
   getInformationData() {
@@ -98,8 +139,10 @@ export class TurnBookUpdateComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.parties = [];
     this.villagelist = [];
+    this.truckdetailslist = [];
     this.parties = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
+    this.truckdetailslist = this.commonArray.ownerdetails;
   }
 
 
@@ -130,12 +173,16 @@ export class TurnBookUpdateComponent implements OnInit {
       .subscribe((res: any) => {
         alert(res.Status);
         let tempData = this.handledata.giveTurn();
-
         tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
           tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
-          tempData[this.handledata.Data.index]["placeid"] = data.value.place,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]["partyid"] = data.value.partyName,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+          // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
+          tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
+          // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
+          tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
+          // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = this.handledata.Data.ownerid,
           tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
           tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
           tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
@@ -147,13 +194,58 @@ export class TurnBookUpdateComponent implements OnInit {
         this.handledata.saveTurn([]);
         let tempArray = []
         tempArray = tempData;
-
-        tempArray.splice(this.handledata.Data.index, 1)
-
+        // tempArray.splice(this.handledata.Data.index, 1)
         this.handledata.saveTurn(tempArray);
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });
   };
+
+  change2 = function (data) {
+    console.log(data);
+    console.log(this.trucknoid);
+
+    let tempObj = {};
+    tempObj['ownerid'] = data.value.truckNo.split('+')[0];
+    tempObj['turnbookDate'] = data.value.turnbookDate;
+    tempObj['method'] = 'update';
+    tempObj['part'] = 2;
+    tempObj['truckno'] = data.value.truckNo.split('+')[1];
+    tempObj["user"] = "shubham";
+    tempObj["tablename"] = "turnbook";
+    tempObj['_id'] = this.handledata.Data._id;
+
+
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        let tempData = this.handledata.giveTurn();
+        tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
+          tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
+          // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
+          tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
+          // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
+          tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
+          // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+          tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = data.value.truckNo.split('+')[0],
+          tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
+          tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
+          tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
+          tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
+          tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
+          tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
+          tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
+          tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
+        this.handledata.saveTurn([]);
+        let tempArray = []
+        tempArray = tempData;
+        // tempArray.splice(this.handledata.Data.index, 1)
+        this.handledata.saveTurn(tempArray);
+        this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
+      });
+
+  }
 
   back() {
     this.show = !this.show;

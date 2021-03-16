@@ -36,6 +36,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public dynDate2;
   public role = 6;
   public dataTruck;
+  public adminAccess = false;
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
     { 'value': '2', 'viewvalue': 'Truck Arrival' },
@@ -56,6 +57,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();
 
+  }
+
+  getAdminAccess() {
+    this.adminAccess = !this.adminAccess;
   }
 
   newData() {
@@ -127,6 +132,34 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
     tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
     tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
+    tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
+    tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
+    tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
+    tempObj['entryDate'] = data.entryDate;
+    tempObj['_id'] = data._id;
+    tempObj['partyType'] = data.partyType;
+    tempObj['turnbookDate'] = data.turnbookDate;
+    tempObj['loadingDate'] = data.loadingDate;
+    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
+    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
+    tempObj['advance'] = data.advance === undefined ? 0 : data.advance;
+    tempObj['balance'] = data.balance === undefined ? 0 : data.balance;
+    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
+    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
+    tempObj['index'] = j;
+    tempObj['number'] = 1;
+    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
+    this.handleData.saveData(tempObj);
+  };
+
+
+  showDatabyid3 = function (data, j) {
+    this.show = true;
+
+    let tempObj = {};
+    tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
+    tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
+    tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
 
     tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
     tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
@@ -145,10 +178,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
     tempObj['index'] = j;
+    tempObj['number'] = 3;
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
     this.handleData.saveData(tempObj);
   };
-
 
   showDatabyid2 = function (data, j) {
     if (confirm('Do you want to Cancel this Vehicle?')) {
@@ -174,6 +207,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
       tempObj["pochDate"] = '';
       tempObj["pochPayment"] = '';
       tempObj['index'] = j;
+      tempObj['number'] = 2;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
           alert(res.Status);
