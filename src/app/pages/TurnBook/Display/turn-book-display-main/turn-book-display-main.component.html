@@ -26,7 +26,7 @@
             {{buttonValue}}
           </button>
         </div>
-        <div class="col-sm-4"></div>
+        <div class="col-sm-4" *ngIf="role==1||role==2" (click)="getAdminAccess()">Admin Access</div>
       </div>
       <!--DATE -->
 
@@ -46,6 +46,7 @@
             <th *ngIf="role==1||role==2">Delete</th>
             <th>Cancel</th>
             <th>Edit</th>
+            <th *ngIf="adminAccess">TNO</th>
           </tr>
         </thead>
 
@@ -88,6 +89,12 @@
             </td>
             <td>
               <button mat-raised-button type="button" (click)="showDatabyid(i,j)"
+                class="btn-primary btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
+            <td *ngIf="adminAccess">
+              <button mat-raised-button type="button" (click)="showDatabyid3(i,j)"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>

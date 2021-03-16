@@ -1,4 +1,4 @@
-<div class="well container">
+<div class="well container" *ngIf="updateOption!==3">
 
   <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
     action="/" name="myform" id="myform">
@@ -232,6 +232,92 @@
     </div>
 
     <!--  Check-->
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+    </div>
+
+  </form>
+
+
+
+</div>
+
+<div class="well container" *ngIf="updateOption==3">
+
+  <form [formGroup]="myFormGroup1" (ngSubmit)="change2(myFormGroup1)" submitted=true enctype="multipart/form data"
+    action="/" name="myform" id="myform">
+
+
+
+
+    <!--OldTruckNo-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="OldTruckNo"> Old TruckNo </label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="text" id="text" class="form-control" [(ngModel)]="oldTruckNo" [ngModelOptions]="{standalone: true}"
+          disabled>
+      </div>
+
+    </div>
+    <!--OldTruckNo-->
+
+
+    <!-- turnbookDate-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="turnbookDate"> Turn Book Date</label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate" disabled>
+      </div>
+
+
+    </div>
+    <!--turnbookDate -->
+    <!-- entryDate-->
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="entryDate"> entryDate</label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="date" id="entryDate" class="form-control" formControlName="entryDate" disabled>
+      </div>
+
+
+    </div>
+    <!--entryDate -->
+
+
+
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="truckNo"> Truckno </label>
+      </div>
+
+      <div class="col-xs-3">
+        <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
+          (change)="findtruckdetails()" id="truckNoone">
+          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}</option>
+        </select>
+      </div>
+
+    </div>
 
 
     <div class="row">
