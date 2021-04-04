@@ -157,26 +157,6 @@ export const routes: Routes =
                         loadChildren: './pages/TransportHireDetails/tpt-hire-details.module#TptHireDetailsModule'
                     },
                     {
-                        path: 'AdvanceAccount',
-                        loadChildren: './pages/advance-account/advance-account.module#AdvanceAccountModule'
-                    },
-                    {
-                        path: 'BOOKING_OTHER_HANDLER',
-                        loadChildren: './pages/BookingOther/app.module#AppModule'
-                    },
-                    {
-                        path: 'PochAccount',
-                        loadChildren: './pages/PochAccount/poch-account.module#PochAccountModule'
-                    },
-                    {
-                        path: 'CanaraBankNeft_HANDLER',
-                        loadChildren: './pages/NEFT/CanaraBank/canara-bank.module#CanaraBankModule'
-                    },
-                    {
-                        path: 'CanaraBankPayment_HANDLER',
-                        loadChildren: './pages/NEFT/CanaraBankPayment/canara-bank-payment.module#CanaraBankPaymentModule'
-                    },
-                    {
                         path: 'Truck_CASH_EXPENSES_HANDLER',
                         loadChildren: './pages/CashExpenses/cash-expenses.module#CashExpensesModule'
                     },
