@@ -1,0 +1,117 @@
+<div class="well container">
+
+  <br />
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- DATE-->
+      <div class="form-group row">
+        <div class="col-sm-2">
+          <select class="form-control" id="partyType" [(ngModel)]="trucknoid" (change)="findOption()" id="truckNoone">
+            <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
+          </select>
+        </div>
+        <div class="col-sm-10" *ngIf="buttonOption==='1'">
+          <!--NOP-->
+          <div class="form-group row">
+
+            <div class="col-sm-4">
+              <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
+                <option disabled selected>Select Name of The Party</option>
+                <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+                  {{gst.name}}
+                </option>
+              </select>
+            </div>
+
+          </div>
+          <!--NOP-->
+        </div>
+        <!-- Date -->
+        <div class="col-sm-10" *ngIf="buttonOption==='2'">
+          <div class="row">
+            <div class="col-sm-4">
+              <input type="date" class="form-control col-sm-2" [(ngModel)]="date1">
+            </div>
+            <div class="col-sm-4">
+              <input type="date" class="form-control col-sm-2" [(ngModel)]="date2">
+            </div>
+          </div>
+        </div>
+        <!-- Date -->
+
+
+        <!-- Both-->
+        <div class="col-sm-10" *ngIf="buttonOption==='3'">
+          <div class="form-group row">
+
+            <div class="col-sm-4">
+              <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
+                <option disabled selected>Select Name of The Party</option>
+                <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+                  {{gst.name}}
+                </option>
+              </select>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <input type="date" class="form-control col-sm-2" [(ngModel)]="date1">
+            </div>
+            <div class="col-sm-4">
+              <input type="date" class="form-control col-sm-2" [(ngModel)]="date2">
+            </div>
+          </div>
+        </div>
+        <!-- Both -->
+
+
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            {{buttonValue}}
+          </button>
+        </div>
+        <div class="col-sm-4" *ngIf="role==1||role==2"><button class="btn btn-info"
+            (click)="getAdminAccess()">Admin</button></div>
+      </div>
+      <!--DATE -->
+
+      <h3>{{todaysDate}}</h3>
+
+      <table class="table" style="width:100%" align="center" *ngIf="tableData">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>Party</th>
+            <th>Amount</th>
+            <th *ngIf="adminAccess">Delete</th>
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of paymentData;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.date|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.partyName}}</td>
+            <td>{{i.amount}}</td>
+            <td *ngIf="adminAccess">
+              <button mat-raised-button type="button" (click)="delete(i,j)" class="btn-danger btn-sm btn-just-icon">
+                <i class="material-icons">delete</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+<div *ngIf="show">
+
+  <!-- <router-outlet></router-outlet> -->
+</div>

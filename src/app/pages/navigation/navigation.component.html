@@ -14,7 +14,7 @@
         </a>
       </li>
 
-      <li class="dropdown" *ngIf="role==1||role==2">
+      <!-- <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">Company
           <span class="caret"></span>
         </a>
@@ -23,10 +23,10 @@
             <a routerLink="Finolex_Handler">Finolex</a>
           </li>
         </ul>
-      </li>
+      </li> -->
 
-      <li class="dropdown" *ngIf="role==1||role==2||role==3">
-        <a class="dropdown-toggle" data-toggle="dropdown">Book
+      <li class="dropdown" *ngIf="role==1||role==2||role==3" disabled>
+        <a class="dropdown-toggle" data-toggle="dropdown" disabled>Book
           <span class="caret"></span>
         </a>
         <ul class="dropdown-menu">
@@ -56,6 +56,10 @@
           <li>
             <a routerLink="BALANCE_HIRE_HANDLER">Balance Hire</a>
           </li>
+
+          <li>
+            <a routerLink="PARTY_PAYMENT_HANDLER">Payment</a>
+          </li>
         </ul>
 
 
@@ -63,7 +67,7 @@
 
       </li>
 
-      <li class="dropdown" *ngIf="role==1||role==2">
+      <!-- <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">DailyData
           <span class="caret"></span>
         </a>
@@ -74,16 +78,16 @@
 
 
         </ul>
-      </li>
+      </li> -->
 
-      <li class="dropdown" *ngIf="role==1||role==2">
+      <!-- <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown" routerLink="TPTHire_HANDLER">Tpt Hire
           <span class="caret"></span>
         </a>
 
-      </li>
+      </li> -->
 
-      <li class="dropdown" *ngIf="role==1||role==2">
+      <!-- <li class="dropdown" *ngIf="role==1||role==2">
         <a class="dropdown-toggle" data-toggle="dropdown">CashExpenses
           <span class="caret"></span>
         </a>
@@ -92,7 +96,7 @@
             <a routerLink="Truck_CASH_EXPENSES_HANDLER">Cash Expenses</a>
           </li>
         </ul>
-      </li>
+      </li> -->
 
       <li class="dropdown" *ngIf="role==1||role==2">
 
@@ -103,7 +107,7 @@
           <li>
             <a routerLink="Email_Handler">Email</a>
             <a routerLink="PDF">PDF</a>
-            <a routerLink="C2W">C2W</a>
+            <a routerLink="C2W" disabled>C2W</a>
           </li>
         </ul>
 

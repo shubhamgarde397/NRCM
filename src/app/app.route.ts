@@ -133,6 +133,10 @@ export const routes: Routes =
                         loadChildren: './pages/TurnBook/turn-book.module#TurnBookModule'
                     },
                     {
+                        path: 'PARTY_PAYMENT_HANDLER',
+                        loadChildren: './pages/PartyPayment/app.module#AppModule'
+                    },
+                    {
                         path: 'BCE_HANDLER',
                         loadChildren: './pages/BookingCashExpenses/bce.module#BCEModule'
                     },

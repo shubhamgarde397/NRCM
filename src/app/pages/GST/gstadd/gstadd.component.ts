@@ -54,7 +54,7 @@ export class GstaddComponent implements OnInit {
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {
-        alert('Added Successfully');
+        alert(res['Status']);
         this.securityCheck.commonArray['gstdetails'].push(res);
       });
   }

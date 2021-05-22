@@ -1,0 +1,12 @@
+button{
+    border-radius: 100px;
+}
+
+.header-head{
+    background-color: orange;
+    color:white;
+    padding: 1%;
+        border-radius: 100px;
+        text-align: center;
+  }
+  
