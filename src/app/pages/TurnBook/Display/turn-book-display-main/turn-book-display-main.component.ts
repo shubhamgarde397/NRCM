@@ -89,11 +89,11 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.buttonOption = this.trucknoid;
     this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
   }
-  find = function () {//only for data from 1st jan 2021 and loading data is empty
+  find = function () {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};
     switch (this.buttonOption) {
       case '1':
-        tempObj['turnbookDate'] = '2021-01-01';
+        tempObj['turnbookDate'] = '2021-04-01';
         break;
       case '2':
         tempObj['turnbookDate'] = this.dynDate;

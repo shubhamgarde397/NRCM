@@ -1,4 +1,4 @@
-<div class="well">
+<div class="well" *ngIf="editOption==0">
 
   <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
     action="/">
@@ -88,6 +88,59 @@
         </div>
       </div>
     </div>
+
+    <!--  -->
+
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+
+
+
+
+</div>
+
+<div class="well" *ngIf="editOption==1">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
+
+    <!-- TruckDate -->
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Page No</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let i of truckArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.truckno}}</td>
+            <td>{{i.pageno}}</td>
+            <td>{{i.amount}}</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <!--  -->
+
+
+
 
     <!--  -->
 

@@ -56,9 +56,6 @@ export class TurnBookUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.handledata.Data);
-
-
     this.role = this.securityCheck.role;
 
     this.commonArray = this.securityCheck.commonArray;
@@ -172,32 +169,35 @@ export class TurnBookUpdateComponent implements OnInit {
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert(res.Status);
-        let tempData = this.handledata.giveTurn();
-        tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
-          tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
-          // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
-          tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
-          // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
-          tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
-          // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = this.handledata.Data.ownerid,
-          tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
-          tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
-          tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
-          tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
-          tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
-          tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
-          tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
-          tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
-        this.handledata.saveTurn([]);
-        let tempArray = []
-        tempArray = tempData;
-        // tempArray.splice(this.handledata.Data.index, 1)
-        this.handledata.saveTurn(tempArray);
+        if (res.Status === 'Updated') {
+          let tempData = this.handledata.giveTurn();
+          tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
+            tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
+            // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
+            tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
+            tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.handledata.Data.place,
+            // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
+            tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
+            tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.handledata.Data.partyName,
+            // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+            tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = this.handledata.Data.ownerid,
+            tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
+            tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
+            tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
+            tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
+            tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
+            tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
+            tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
+            tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
+          this.handledata.saveTurn([]);
+          let tempArray = []
+          tempArray = tempData;
+          // tempArray.splice(this.handledata.Data.index, 1)
+          this.handledata.saveTurn(tempArray);
+        }
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });
+
   };
 
   change2 = function (data) {
@@ -218,30 +218,32 @@ export class TurnBookUpdateComponent implements OnInit {
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert(res.Status);
-        let tempData = this.handledata.giveTurn();
-        tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
-          tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
-          // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
-          tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
-          // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
-          tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
-          // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
-          tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = data.value.truckNo.split('+')[0],
-          tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
-          tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
-          tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
-          tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
-          tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
-          tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
-          tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
-          tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
-        this.handledata.saveTurn([]);
-        let tempArray = []
-        tempArray = tempData;
-        // tempArray.splice(this.handledata.Data.index, 1)
-        this.handledata.saveTurn(tempArray);
+        if (res.Status === 'Updated') {
+          let tempData = this.handledata.giveTurn();
+          tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
+            tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
+            // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
+            tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
+            tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
+            // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
+            tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
+            tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
+            // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
+            tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = data.value.truckNo.split('+')[0],
+            tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
+            tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
+            tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
+            tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
+            tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
+            tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
+            tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
+            tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
+          this.handledata.saveTurn([]);
+          let tempArray = []
+          tempArray = tempData;
+          // tempArray.splice(this.handledata.Data.index, 1)
+          this.handledata.saveTurn(tempArray);
+        }
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });
 

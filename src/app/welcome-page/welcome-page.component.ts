@@ -52,4 +52,24 @@ export class WelcomePageComponent implements OnInit {
   storeImage(image) {
   }
 
+  moveTo(data) {
+    switch (data) {
+      case 'partyAdd':
+        this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Add'])
+        break;
+      case 'partyDisplay':
+        this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Display'])
+        break;
+      case 'turnAdd':
+        this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookAdd'])
+        break;
+      case 'turnDisplay':
+        this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler'])
+        break;
+      case 'truckdetails':
+        this.router.navigate(['Navigation/Information/OWNER_HANDLER'])
+        break;
+    }
+
+  }
 }

@@ -39,6 +39,7 @@ export class BalancehiredisplayComponent implements OnInit {
   public balanceDate = [];
   public selectedDate;
   public role = 6;
+  public admin = false;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -48,6 +49,10 @@ export class BalancehiredisplayComponent implements OnInit {
   ngOnInit() {
     this.role = this.securityCheck.role;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
+  }
+
+  adminAccess() {
+    this.admin = !this.admin;
   }
 
   find = function () {
@@ -79,6 +84,29 @@ export class BalancehiredisplayComponent implements OnInit {
           this.balanceDate.find(r => r._id == data._id)['comments'] = data['comments'];
         });
     }
+  }
+
+  deleteBHComplete(data, j) {
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = data._id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'BalanceHire';
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, formbody, 0)
+        .subscribe((res: any) => {
+          this.balanceDate.splice(j, 1);
+        });
+    }
+  }
+
+  showDatabyidEditForm(data, j) {
+    this.show = true;
+    this.found = data;
+    data['index'] = j;
+    data['editOption'] = 1;
+    this.handledata.saveData(data);
+    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
   }
 
 
@@ -415,6 +443,7 @@ export class BalancehiredisplayComponent implements OnInit {
     this.show = true;
     this.found = data;
     data['index'] = j;
+    data['editOption'] = 0;
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
   };

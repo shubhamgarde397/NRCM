@@ -4,6 +4,7 @@
       <input type="date" [(ngModel)]="selectedDate" *ngIf="role==1||role==2">
       <button class="btn btn-warning" (click)="find()" *ngIf="role==1||role==2">Find</button>
       <button class="btn btn-danger" (click)="download()" *ngIf="role==1||role==2">PDF</button>
+      <button class="btn btn-danger" (click)="adminAccess()" *ngIf="role==1||role==2">Admin</button>
     </div>
 
     <div class="col-xs-10" style="text-align: center">
@@ -20,8 +21,10 @@
             <th>PgNo</th>
             <th *ngIf="role==1||role==2">AccountNo-IFSC</th>
             <th *ngIf="role==1||role==2">Account Name</th>
-            <th>Delete</th>
-            <th *ngIf="role==1||role==2">Edit</th>
+            <th *ngIf="!admin">Delete</th>
+            <th *ngIf="(role==1||role==2)&&(!admin)">Edit</th>
+            <th *ngIf="admin">Delete Admin</th>
+            <th *ngIf="(role==1||role==2)&&(admin)">Edit Admin</th>
           </tr>
         </thead>
 
@@ -55,22 +58,35 @@
             </td>
             <td *ngIf="role==1||role==2">{{i.accountNumber}}-{{i.ifsc}}</td>
             <td *ngIf="role==1||role==2">{{i.accountName}}</td>
-            <td *ngIf="i.comments===''">
+            <td *ngIf="(i.comments==='')&&(!admin)">
               <button mat-raised-button (click)="deleteBH(i)" class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete_forever</i>
               </button>
             </td>
-            <td *ngIf="i.comments==='cancel'">
+            <td *ngIf="(i.comments==='cancel')&&(!admin)">
               <button mat-raised-button type="button" (click)="deleteBH(i)" class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">add</i>
               </button>
             </td>
-            <td>
+            <td *ngIf="(role==1||role==2)&&(!admin)">
               <button mat-raised-button type="button" (click)="showDatabyid(i,j)"
-                class="btn-primary btn-sm btn-just-icon" *ngIf="role==1||role==2">
+                class="btn-primary btn-sm btn-just-icon" *ngIf="(role==1||role==2)&&(!admin)">
                 <i class="material-icons">edit</i>
               </button>
             </td>
+            <td *ngIf="(role==1||role==2)&&(admin)">
+              <button mat-raised-button type="button" (click)="showDatabyidEditForm(i,j)"
+                class="btn-primary btn-sm btn-just-icon" *ngIf="(role==1||role==2)&&(admin)">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
+            <td>
+              <button mat-raised-button (click)="deleteBHComplete(i,j)" *ngIf="(role==1||role==2)&&(admin)"
+                class="btn-danger btn-sm btn-just-icon">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+
           </tr>
         </tbody>
       </table>

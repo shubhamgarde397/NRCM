@@ -1,0 +1,134 @@
+<div class="well">
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeTurnBookData(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <!-- DATE-->
+    <div class="form-group row">
+
+      <div class="col-xs-1">
+        <label for="date"> Date</label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="date" id="date" class="form-control" formControlName="date">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.date.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--DATE -->
+
+    <!--partyName-->
+    <div class="form-group row" *ngIf='role==1||role==2'>
+
+      <div class="col-xs-1">
+        <label for="partyName"> Party Name </label>
+      </div>
+      <div class="col-xs-3">
+        <select id="partyName" class="form-control " formControlName="partyName" [(ngModel)]="nopid"
+          (change)="findgst()">
+          <option disabled selected>Select Name of The Party</option>
+          <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+            {{gst.name}}...{{gst.dest}}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.partyName.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--partyName-->
+
+    <!--amount-->
+    <div class="form-group row">
+
+      <div class="col-xs-1">
+        <label for="amount"> amount </label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="number" id="amount" class="form-control" formControlName="amount">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.amount.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--amount-->
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-1">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-1">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+</div>
+
+<div class="well" *ngIf="partyData.length > 0">
+  <table class="table" style="width:100%" align="center">
+
+    <thead align="center" style="font-weight: bold">
+      <tr class=table-header>
+        <th>Srno</th>
+        <th>Date</th>
+        <th>Party Name</th>
+        <th>Amount</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+
+    <tbody align="center">
+      <tr *ngFor="let i of partyData;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.date|date: 'dd-MM-yyyy'}}</td>
+        <td>{{i.partyName}}</td>
+        <td>{{i.amount}}</td>
+        <td>
+          <button mat-raised-button (click)="delete(j)" class="btn btn-danger btn-sm btn-just-icon delete">
+            <i class="material-icons">delete_forever</i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="well col-sm-12">
+    <button mat-raised-button (click)="submit()" style="width:inherit;" class="btn btn-warning btn-lg btn-just-icon">
+      <i class="material-icons">send</i>
+    </button>
+  </div>
+</div>

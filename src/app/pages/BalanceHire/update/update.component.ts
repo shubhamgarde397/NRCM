@@ -35,6 +35,7 @@ export class UpdateComponent implements OnInit {
   public accountNumber;
   public ifsc;
   public bankName;
+  public editOption;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -56,6 +57,7 @@ export class UpdateComponent implements OnInit {
       accountNumber: this.handledata.Data.accountNumber,
       accountName: this.handledata.Data.accountName
     });
+    this.editOption = this.handledata.Data.editOption;
   }
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
