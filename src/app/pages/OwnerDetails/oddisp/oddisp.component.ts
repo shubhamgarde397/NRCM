@@ -72,7 +72,6 @@ export class OddispComponent implements OnInit {
         }
       })
       this.ownerdetailslist = tempData;
-
     }
   }
 

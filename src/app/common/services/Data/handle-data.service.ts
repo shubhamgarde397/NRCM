@@ -19,6 +19,7 @@ export class HandleDataService {
   }
   public IP = [];
   public turnData = [];
+  public BHData = [];
   constructor(public securityCheck: SecurityCheckService) { }
 
   notification(value) {
@@ -37,6 +38,13 @@ export class HandleDataService {
   }
 
   giveTurn() { return this.turnData; }
+
+  saveBH(data) {
+    this.BHData = [];
+    this.BHData = data;
+  }
+
+  giveBH() { return this.BHData; }
 
 
   createConsiderArray(data) {
