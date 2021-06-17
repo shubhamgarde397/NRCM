@@ -37,28 +37,169 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public role = 6;
   public dataTruck;
   public adminAccess = false;
+  public trucklist;
+  public dateFilter;
+  public truckFilter;
+  public truckFilter2;
+  public dateFilterB = true;
+  public truckFilterB = false;
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
     { 'value': '2', 'viewvalue': 'Truck Arrival' },
     { 'value': '3', 'viewvalue': 'Truck Dispatched' },
     { 'value': '4', 'viewvalue': 'To From' },
     { 'value': '5', 'viewvalue': 'Monthly Data' },
+    { 'value': '6', 'viewvalue': 'Balance Hire' },
+    { 'value': '7', 'viewvalue': 'Update Poch Check' }
   ]
-
+  public years = []
+  public buttons = []
+  public balanceHireArrray = [];
+  public tempArray = [];
+  public finalObject = {};
+  public finalArray = [];
+  public tempObj = {};
+  public saveToCheckArrayBoolean = true;
+  public finalCheckDone = true;
+  public balance;
+  public pageno;
+  public gAD;
+  public ids = [];
+  public pochDiv = true;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
   }
 
-  ngOnInit() {
-    this.role = this.securityCheck.role;
+  ngOnInit() {//"^2021-04.*"
+    this.getButtons()
 
-    this.todaysDate = this.date.getDate() + '-' + (this.date.getMonth() + 1) + '-' + this.date.getFullYear();;
+
+
+    this.role = this.securityCheck.role;
+    this.commonArray = this.securityCheck.commonArray;
+    this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();
-
+    this.getTrucks()
   }
 
+  getButtons() {
+
+    for (let i = 0; i < new Date().getFullYear() - 2019; i++) {
+      this.years.push(i + 2020)
+    }
+    for (let i = 0; i < this.years.length; i++) {
+      let months = new Date().getFullYear() - this.years[i] == 0 ? new Date().getMonth() + 1 : 12;
+      for (let j = 0; j < months; j++) {
+        let date = new Date(String(i + 2020) + '-' + this.handleF.generate2DigitNumber(String(j + 1)) + '-01');
+        let month = date.toLocaleString('default', { month: 'short' });
+        this.tempObj['value'] = "^" + String(i + 2020) + "-" + this.handleF.generate2DigitNumber(String(j + 1)) + ".*";
+        this.tempObj['viewValue'] = month + '-' + String(i + 2020).slice(-2);
+        this.buttons.push(this.tempObj);
+        this.tempObj = {}
+      }
+    }
+    // for(i=0;i<years.length;i++){
+    //   months=new Date().getFullYear()-years[i]==0?new Date().getMonth()+1:12;
+    //   for(j=0;j<months;j++){
+    //     //console.log(String(i+2020).slice(-2),generate2DigitNumber(String(j+1)));
+    //      date = new Date(String(i+2020)+'-'+generate2DigitNumber(String(j+1))+'-01');
+    // month = date.toLocaleString('default', { month: 'short' });
+    // console.log(month+'-'+String(i+2020).slice(-2));
+    //     console.log("^"+String(i+2020)+"-"+generate2DigitNumber(String(j+1))+".*")
+    //   }
+    // }this works
+  }
+  filter(sh) {
+    switch (sh) {
+      case 'date':
+        if (this.dateFilter === '' || this.dateFilter === null || this.dateFilter === undefined) {
+          this.turnbooklist = [];
+          this.turnbooklist = this.handleData.giveBH();
+        }
+        else {
+          let tempList = this.handleData.giveBH();
+          this.turnbooklist = this.handleData.giveBH();
+          this.turnbooklist = [];
+          let tempData = [];
+          tempList.filter((res, index) => {
+            if (res['loadingDate'].includes(this.dateFilter)) {
+              tempData.push(res);
+            }
+          })
+          this.turnbooklist = tempData;
+          this.handleData.saveBH(this.turnbooklist)
+          this.dateFilterB = !this.dateFilterB;
+          this.truckFilterB = !this.truckFilterB;
+        }
+        break;
+      case 'truck':
+        if (this.truckFilter === '' || this.truckFilter === null || this.truckFilter === undefined) {
+          this.turnbooklist = [];
+          this.turnbooklist = this.handleData.giveBH();
+        }
+        else {
+          let tempList = this.handleData.giveBH();
+          this.turnbooklist = this.handleData.giveBH();
+          this.turnbooklist = [];
+          let tempData = [];
+          console.log(tempList);
+          console.log(this.truckFilter);
+          tempList.filter((res, index) => {
+            if (res['truckno'].includes(this.truckFilter)) {
+              tempData.push(res);
+            }
+          })
+          this.turnbooklist = tempData;
+          this.dateFilterB = !this.dateFilterB;
+          this.truckFilterB = !this.truckFilterB;
+        }
+        break;
+      case 'skipDate':
+        this.dateFilterB = !this.dateFilterB;
+        this.truckFilterB = !this.truckFilterB;
+        break;
+
+      case '':
+        this.dateFilterB = true;
+        this.truckFilterB = false;
+        this.turnbooklist = this.handleData.giveBH();
+        break;
+    }
+  }
+  filter2(sh) {
+    switch (sh) {
+      case 'truck':
+        if (this.truckFilter2 === '' || this.truckFilter2 === null || this.truckFilter2 === undefined) {
+          this.turnbooklist = [];
+          this.turnbooklist = this.handleData.giveBH();
+        }
+        else {
+          let tempList = this.handleData.giveBH();
+          this.turnbooklist = this.handleData.giveBH();
+          this.turnbooklist = [];
+          let tempData = [];
+          console.log(tempList);
+          console.log(this.truckFilter2);
+
+          tempList.filter((res, index) => {
+            if (res['ownerDetails'][0]['truckno'].includes(this.truckFilter2)) {
+              tempData.push(res);
+            }
+          })
+          this.turnbooklist = tempData;
+          this.handleData.saveBH(this.turnbooklist)
+        }
+        break;
+      case 'back':
+        this.pochDiv = true;
+        break;
+      case '':
+        this.turnbooklist = this.handleData.giveBH();
+        break;
+    }
+  }
   getAdminAccess() {
     this.adminAccess = !this.adminAccess;
   }
@@ -85,11 +226,11 @@ export class TurnBookDisplayMainComponent implements OnInit {
   }
 
   findOption() {
-
+    this.pochDiv = true;
     this.buttonOption = this.trucknoid;
     this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
   }
-  find = function () {//only for data from 1st april 2021 and loading data is empty
+  find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};
     switch (this.buttonOption) {
       case '1':
@@ -108,7 +249,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
       case '5':
         tempObj['turnbookDate'] = this.dynDate.slice(0, 7);
         break;
-
+      case '7':
+        tempObj['date'] = data;
+        break;
       default:
         break;
     }
@@ -119,11 +262,37 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['display'] = this.buttonOption;
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-
-        this.turnbooklist = res.Data;
-        this.handleData.saveTurn(this.turnbooklist);
+        if (this.buttonOption == '6') {
+          this.turnbooklist = res.Data;
+          this.handleData.saveBH(this.turnbooklist);
+        }
+        else if (this.buttonOption == '7') {
+          this.pochDiv = false;
+          this.turnbooklist = res.Data;
+          this.handleData.saveBH(this.turnbooklist);
+        }
+        else {
+          this.turnbooklist = res.Data;
+          this.handleData.saveTurn(this.turnbooklist);
+        }
       });
   };
+
+  uncheckPoch(data, j) {
+    let tempObj = {};
+    tempObj['method'] = 'updatePoch';
+    tempObj['tablename'] = 'turnbook';
+    tempObj['_id'] = data['_id'];
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
+      .subscribe((res: any) => {
+
+        this.pochDiv = !this.pochDiv;
+        this.turnbooklist = res.Data;
+        this.handleData.saveBH(this.turnbooklist.splice(j, 1));
+
+      });
+
+  }
 
   showDatabyid = function (data, j) {
     this.show = true;
@@ -200,7 +369,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
       tempObj["turnbookDate"] = data.turnbookDate,
         tempObj["entryDate"] = data.entryDate,
         tempObj["lrno"] = '';
-      tempObj["partyType"] = '';
+      tempObj["partyType"] = 'Cancel';
       tempObj["hamt"] = '';
       tempObj["advance"] = '';
       tempObj["balance"] = '';
@@ -264,5 +433,127 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.handleData.saveData(data);
     this.router.navigate(['Navigation/Information/OWNER_HANDLER/OwnerUpdate']);
   }
+  addToCheckArray(i, j, c) {
+    // i['index'] = j;
+    if (i['loadingDate'] == "") {
+      alert('Loading Date cant be empty.')
+    }
+    else {
+      this.turnbooklist[j]['checker'] = c;
+      if (c == 1) {
+        this.tempArray.push(i);
+      } else if (c == 0) {
+        this.tempArray.splice(j, 1);
+      }
+    }
+  }
 
+  addToCheckArray2(i, j, c) {
+    this.balanceHireArrray[i][j]['checker'] = c;
+    this.balanceHireArrray[i].splice(j, 1)
+    // this.turnbooklist.push(this.balanceHireArrray[i][j])
+  }
+
+  saveToCheckArray() {
+    this.balanceHireArrray.push(this.tempArray);
+    this.tempArray = []
+
+
+    this.turnbooklist = this.reduceArray();
+  }
+
+  reduceArray() {
+    let tempArray = []
+    for (let i = 0; i < this.turnbooklist.length; i++) {
+      if (this.turnbooklist[i].checker == 0) {
+        tempArray.push(this.turnbooklist[i])
+      }
+    }
+    return tempArray;
+  }
+
+  moveToFinalStep() {
+    this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
+  }
+  moveToFinalStep2() {
+    this.finalCheckDone = !this.finalCheckDone;
+  }
+  moveToFinalStepReset() {
+    this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
+    this.balanceHireArrray = [];
+    this.tempArray = [];
+    this.finalObject = {};
+    this.finalArray = [];
+    this.find()
+  }
+
+  setBalPage() {
+    let breaker = false;
+    for (let i = 0; i < this.balanceHireArrray.length; i++) {
+      let truckData = []
+      if (breaker) { break; }
+      for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
+        if (breaker) { break; }
+        let tempObj = {};
+        if (((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) || ((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value.length == 0)) {
+          alert('Please fill in all the fields.');
+          breaker = true;
+          break;
+        }
+        else {
+          if (breaker) { break; }
+          this.ids.push(this.balanceHireArrray[i][j]['_id']);//ObjectId to mongoform in lambda write a loop
+          tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
+          tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
+          tempObj['pageno'] = (<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value;
+          tempObj['amount'] = (<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value;
+          truckData.push(tempObj);
+          //write logic to update the TurnBook_2020_2021 and change pochPayment to true when sent to lambda
+        }
+
+      }
+      if (breaker) { break; }
+      this.finalObject['truckData'] = truckData
+      this.finalObject['todayDate'] = this.todaysDate;
+      this.finalObject['comments'] = "";
+      this.finalObject['print'] = false;
+      let aD = this.getADD(truckData);
+      this.finalObject['bankName'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['bankName'];
+      this.finalObject['ifsc'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['ifsc'];
+      this.finalObject['accountNumber'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['accountNumber'];
+      this.finalObject['accountName'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['accountName'];
+      this.finalArray.push(this.finalObject);
+      this.finalObject = {};
+    }
+    this.finalFunction();
+  }
+
+  finalFunction() {
+    let tempObj = {}
+    tempObj['bhData'] = this.finalArray;
+    tempObj['method'] = 'insertmany.many';
+    tempObj['tablename'] = 'BalanceHire';
+    tempObj['ids'] = this.ids;
+    tempObj['todayDate'] = this.todaysDate;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.moveToFinalStepReset();
+      });
+    //update the pochPayment = true for those trucks whose entry was done in BalanceHire
+  }
+
+  getTrucks() {
+    this.trucklist = this.commonArray.ownerdetails;
+  }
+
+  getADD(array) {
+    array.forEach(res => {
+      let g = this.trucklist.find(r => r.truckno === res.truckno);
+      if (g['accountDetails'].length > 0) { this.gAD = g; }
+      else { this.gAD = { 'accountDetails': [] }; }
+    });
+    return this.gAD;
+  }
 }
+

@@ -10,19 +10,21 @@
             <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
           </select>
         </div>
-        <div class="col-sm-3" *ngIf="buttonOption!=='1'">
+        <div class="col-sm-3" *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='4'">
           <input type="date" class="form-control" [(ngModel)]="dynDate2">
         </div>
+
       </div>
       <div class="row">
         <div class="col-sm-4">
           <!-- <input type="text" [(ngModel)]="dataTruck" (input)="newData()"> -->
         </div>
         <div class="col-sm-4">
-          <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+          <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;"
+            [disabled]="buttonOption==='7'">
             {{buttonValue}}
           </button>
         </div>
@@ -32,7 +34,7 @@
 
       <h3>{{todaysDate}}</h3>
 
-      <table class="table" style="width:100%" align="center">
+      <table class="table" style="width:100%" align="center" *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
@@ -102,6 +104,213 @@
           </tr>
         </tbody>
       </table>
+      <div class="row" *ngIf="buttonOption==='6'">
+
+        <div class="col-sm-3">
+          <input type="date" class="form-control" [(ngModel)]="dateFilter" (input)="filter('date')"
+            [disabled]="truckFilterB">
+        </div>
+        <div class="col-sm-3">
+          <input type="text" class="form-control" [(ngModel)]="truckFilter" [disabled]="dateFilterB">
+        </div>
+        <div class="col-sm-2">
+          <button mat-raised-button type="button" (click)="filter('truck')">Filter</button>
+        </div>
+
+        <div class="col-sm-2">
+          <button mat-raised-button type="button" (click)="filter('skipDate')">Skip Date</button>
+        </div>
+        <div class="col-sm-2">
+          <button mat-raised-button type="button" (click)="filter('')">Erase Filters</button>
+        </div>
+      </div>
+      <div *ngIf="saveToCheckArrayBoolean">
+
+        <table class="table" style="width:100%" align="center" *ngIf="buttonOption==='6'">
+          <thead align="center" style="font-weight: bold">
+            <tr class=table-header>
+              <th>Srno</th>
+              <th>Date</th>
+              <th>Loading Date</th>
+              <th>Truck No</th>
+              <th>Place</th>
+              <th>Party</th>
+              <th>LRNO</th>
+              <th>Select</th>
+            </tr>
+          </thead>
+
+          <tbody align="center">
+            <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'black' }">
+              <td>{{j+1}}</td>
+              <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
+              <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+              <td>{{i.ownerDetails[0].truckno}}</td>
+              <td>{{i.villageDetails[0].village_name}}</td>
+              <td>{{i.partyType}}</td>
+              <td>{{i.lrno}}</td>
+              <td *ngIf='i.checker===0'>
+                <button mat-raised-button type="button" (click)="addToCheckArray(i,j,1)"
+                  class="btn-primary btn-sm btn-just-icon">
+                  <i class="material-icons">add</i>
+                </button>
+              </td>
+              <td *ngIf='i.checker===1'>
+                <button mat-raised-button type="button" (click)="addToCheckArray(i,j,0)"
+                  class="btn-danger btn-sm btn-just-icon" disabled>
+                  <i class="material-icons">remove</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="buttonOption==='6'">
+          <button mat-raised-button type="button" (click)="saveToCheckArray()" class="btn-danger btn-sm btn-just-icon">
+            <i class="material-icons">add</i>
+          </button>
+        </div>
+        <div *ngIf="buttonOption==='6'">
+          <button mat-raised-button type="button" (click)="moveToFinalStep()" class="btn-success btn-sm btn-just-icon"
+            *ngIf="balanceHireArrray.length>0">
+            <i class="material-icons">arrow_forward</i>
+          </button>
+        </div>
+      </div>
+      <div *ngIf="!saveToCheckArrayBoolean">
+        <div *ngIf="finalCheckDone">
+          <div *ngFor="let k of balanceHireArrray;let kk=index;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Srno</th>
+                  <th>Loading Date</th>
+                  <th>Truck No</th>
+                  <th>Cancel</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ii of k;let jj=index;">
+                  <td>{{jj+1}}</td>
+                  <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}</td>
+                  <td><button mat-raised-button type="button" (click)="addToCheckArray2(kk,jj,0)"
+                      class="btn-danger btn-sm btn-just-icon">
+                      <i class="material-icons">remove</i>
+                    </button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button mat-raised-button type="button" (click)="moveToFinalStepReset()"
+            class="btn-warning btn-sm btn-just-icon">
+            <i class="material-icons">autorenew</i>
+          </button>
+          <button mat-raised-button type="button" (click)="moveToFinalStep2()" class="btn-success btn-sm btn-just-icon">
+            <i class="material-icons">arrow_forward</i>
+          </button>
+        </div>
+
+        <div *ngIf="!finalCheckDone">
+          <div *ngFor="let k of balanceHireArrray;let kk=index;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Srno</th>
+                  <th>Loading Date</th>
+                  <th>Truck No</th>
+                  <th>Balance</th>
+                  <th>Pageno</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let ii of k;let jj=index;">
+                  <td>{{jj+1}}</td>
+                  <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}</td>
+                  <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}">
+                  </td>
+                  <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <button mat-raised-button type="button" (click)="moveToFinalStep2()" class="btn-warning btn-sm btn-just-icon">
+            <i class="material-icons">arrow_back</i>
+          </button>
+          <button mat-raised-button type="button" (click)="setBalPage()" class="btn-success btn-sm btn-just-icon">
+            <i class="material-icons">arrow_forward</i>
+          </button>
+
+        </div>
+      </div>
+
+      <div class="col-sm-12" *ngIf="buttonOption==='7'">
+        <div class="row" *ngIf="pochDiv">
+          <div class="col-sm-2" *ngFor="let i of buttons">
+            <button mat-raised-button class="btn btn-warning" style="margin:1vh;"
+              (click)="find(i.value)">{{i.viewValue}}</button>
+          </div>
+        </div>
+        <div *ngIf="!pochDiv" class="row">
+          <div class="row">
+            <div class="col-sm-2">
+              <input type="text" class="form-control" [(ngModel)]="truckFilter2">
+            </div>
+            <div class="col-sm-2">
+              <button mat-raised-button type="button" class="btn btn-warning" (click)="filter2('truck')">
+                Filter</button>
+            </div>
+            <div class="col-sm-2">
+              <button mat-raised-button type="button" class="btn btn-warning" (click)="filter2('')">Erase
+                Filters</button>
+            </div>
+
+            <div class="col-sm-2">
+              <button mat-raised-button type="button" class="btn btn-danger" (click)="filter2('back')">Back</button>
+            </div>
+          </div>
+
+          <table class="table" style="width:100%" align="center" *ngIf="buttonOption==='7'">
+            <thead align="center" style="font-weight: bold">
+              <tr class=table-header>
+                <th>Srno</th>
+                <th>Date</th>
+                <th>Loading Date</th>
+                <th>Truck No</th>
+                <th>Place</th>
+                <th>Party</th>
+                <th>LRNO</th>
+                <th>Select</th>
+              </tr>
+            </thead>
+
+            <tbody align="center">
+              <tr *ngFor="let i of turnbooklist;let j = index">
+                <td>{{j+1}}</td>
+                <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
+                <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                <td>{{i.ownerDetails[0].truckno}}</td>
+                <td>{{i.villageDetails[0].village_name}}</td>
+                <td>{{i.partyType}}</td>
+                <td>{{i.lrno}}</td>
+                <td *ngIf='i.checker===0'>
+                  <button mat-raised-button type="button" (click)="uncheckPoch(i,j)"
+                    class="btn-primary btn-sm btn-just-icon">
+                    <i class="material-icons">add</i>
+                  </button>
+                </td>
+                <td *ngIf='i.checker===1'>
+                  <button mat-raised-button type="button" class="btn-danger btn-sm btn-just-icon" disabled>
+                    <i class="material-icons">remove</i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
 
     </div>
   </div>
