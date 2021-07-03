@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
-import { environment } from '../../../../environments/environment';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -9,7 +8,7 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { ExcelService } from '../../../common/services/sharedServices/excel.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
-// import { SecurityCheckService } from '../../../../common/services/Data/security-check.service';
+import { t } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-balancehiredisplay',
@@ -17,51 +16,76 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
   styleUrls: ['./balancehiredisplay.component.css']
 })
 export class BalancehiredisplayComponent implements OnInit {
-
-  data: any;
-  modelPAN: any;
-  modelTruckNo: any;
-  modelOwnerName: any;
-  gstdetailslist: any;
-  show = false;
-  found;
-  bookingnamelist;
-  arr;
-  api;
-  newAuthor: any;
-  nameToBeDisplayed: any;
-  tabledata: false;
-  public name: string;
-  public dbName = 1;
-  public commonArray;
+  public show = false;
+  public found;
   public date = new Date();
-  public todayDate;
   public balanceDate = [];
   public selectedDate;
   public role = 6;
   public admin = false;
+  public printed: Boolean = true;
+  public years = [];
+  public createdDate = '';
+  public displayoptions = [
+    { 'value': '1', 'viewvalue': 'Balance Hire' },
+    { 'value': '2', 'viewvalue': 'Check Prints' }
+  ]
+  public months = [
+    { '1': 'Jan' },
+    { '2': 'Feb' },
+    { '3': 'Mar' },
+    { '4': 'Apr' },
+    { '5': 'May' },
+    { '6': 'Jun' },
+    { '7': 'Jul' },
+    { '8': 'Aug' },
+    { '9': 'Sep' },
+    { '10': 'Oct' },
+    { '11': 'Nov' },
+    { '12': 'Dec' },
+  ]
+  public actualMonths = [];
+  public yeardiv = true;
+  public monthdiv = false;
+  public daydiv = false;
+  public printInfo = false;
+  public buttonValue: any = 'Balance Hire';
+  public buttonOption = '0';
+  public displayType;
+  public data;
+  public dayData;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
-    this.commonArray = this.securityCheck.commonArray;
   }
 
   ngOnInit() {
     this.role = this.securityCheck.role;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
+    for (let i = 0; i < new Date().getFullYear() - 2020; i++) {
+      this.years.push(i + 2021)
+    }
   }
 
   adminAccess() {
     this.admin = !this.admin;
   }
 
+  findOption() {
+    this.buttonOption = this.displayType;
+    this.buttonValue = this.displayoptions[parseInt(this.displayType) - 1].viewvalue;
+    this.yeardiv = true;
+    this.monthdiv = false;
+    this.daydiv = false;
+
+  }
   find = function () {
     let tempObj = {};
     if (this.selectedDate === undefined) {
       this.selectedDate = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
-      tempObj['todayDate'] = this.selectedDate;
+      tempObj['createdDate'] = this.selectedDate;
     } else {
-      tempObj['todayDate'] = this.selectedDate;
+      tempObj['createdDate'] = this.selectedDate;
     }
     tempObj['method'] = 'BalanceHireDisplay';
     tempObj['tablename'] = 'BalanceHire';
@@ -71,8 +95,65 @@ export class BalancehiredisplayComponent implements OnInit {
         this.balanceDate = [];
         this.balanceDate = res.balanceData;
         this.securityCheck.commonBalanceHire = res.balanceData;
+        this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
       });
   };
+  find2(data, type, set = true) {
+    if (set) {
+      switch (type) {
+        case 'year':
+          this.createdDate = this.createdDate + data;
+          this.yeardiv = false;
+          this.monthdiv = true;
+          break;
+        case 'month':
+
+          this.createdDate = this.createdDate + '-' + this.handleF.generate2DigitNumber(String(data['number']));
+          this.monthdiv = false;
+          this.daydiv = true;
+          break;
+        case 'day':
+          this.createdDate = this.createdDate + '-' + data['_id'].slice(8);
+          console.log(this.createdDate);
+          console.log(data['_id']);
+          console.log(data['_id'].slice(8));
+          console.log(this.createdDate);
+
+
+          this.daydiv = false;
+          this.printInfo = true;
+          break;
+      }
+    }
+    this.actualMonths = [];
+    let tempObj = {};
+    tempObj['method'] = 'BalanceHireDisplay';
+    tempObj['tablename'] = 'BalanceHire';
+    tempObj['createdDate'] = type === 'year' ? '^' + data + '.*' : type === 'month' ? this.createdDate : type === 'day' ? this.createdDate : null;
+    tempObj['type'] = type;
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        if (type === 'year') {
+          res.balanceData.forEach((res) => {
+            let temp = {}
+            temp['name'] = res['name'];
+            temp['number'] = res['_id'];
+            temp['count'] = res['data']
+            temp['print'] = res['print']
+            this.actualMonths.push(temp)
+          });
+        }
+        else if (type === 'month') {
+          this.dayData = res.balanceData;
+        }
+        else {
+          this.balanceDate = res.balanceData;
+        }
+      })
+  }
+
+
   deleteBH(data) {
     if (confirm('Are you sure?')) {
       data['comments'] = data['comments'] === 'cancel' ? '' : 'cancel';
@@ -84,6 +165,22 @@ export class BalancehiredisplayComponent implements OnInit {
           this.balanceDate.find(r => r._id == data._id)['comments'] = data['comments'];
         });
     }
+  }
+  printUpdate() {
+    let data = {};
+    if (confirm('Document printed?')) {
+      data['method'] = 'update';
+      data['tablename'] = 'BalanceHire';
+      data['todayDate'] = this.selectedDate;
+      data['print'] = true;
+      data['part'] = 0;
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, data, 0)
+        .subscribe((res: any) => {
+          alert(res.Status);
+          this.printed = !this.printed;
+        });
+    } else { }
   }
 
   deleteBHComplete(data, j) {
@@ -447,5 +544,33 @@ export class BalancehiredisplayComponent implements OnInit {
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
   };
+  back(type) {
+    switch (type) {
+      case 'year':
+        this.yeardiv = true;
+        this.monthdiv = false;
+        this.daydiv = false;
+        this.printInfo = false;
+        this.createdDate = "";
+        break;
+      case 'month':
+        this.yeardiv = false;
+        this.monthdiv = true;
+        this.daydiv = false;
+        this.printInfo = false;
+        this.createdDate = this.createdDate.slice(0, 4);
+        this.find2(this.createdDate, 'year', false)
+        break;
+      case 'day':
+        this.yeardiv = false;
+        this.monthdiv = false;
+        this.daydiv = true;
+        this.printInfo = false;
+        this.createdDate = this.createdDate.slice(0, 7);
+        this.find2(this.createdDate, 'month', false)
+        break;
+    }
+  }
 }
+
 

@@ -34,6 +34,7 @@ export class BalancehireaddComponent implements OnInit {
     this.getTrucks();
     this.todayDate = this.date.getDate();
     this.today = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
+
     this.myFormGroup = this.formBuilder.group({
       truckno: ['', Validators.required],
       pageno: ['', Validators.required],
@@ -98,6 +99,7 @@ export class BalancehireaddComponent implements OnInit {
     tempObj['accountNumber'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['accountNumber'];
     tempObj['accountName'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['accountName'];
     tempObj['comments'] = '';
+    tempObj['print'] = false;
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
@@ -109,6 +111,8 @@ export class BalancehireaddComponent implements OnInit {
   leftRight(LR) {
     switch (LR) {
       case 'back':
+        let month = new Date().getMonth() + 1;
+        let day = new Date().getDate();
         this.todayDate = this.todayDate - 1;
         this.today = this.handleF.getDate(this.todayDate, (this.date.getMonth() + 1), this.date.getFullYear());
         break;

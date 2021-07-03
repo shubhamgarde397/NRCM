@@ -63,6 +63,8 @@ export class HandleDataService {
   }
   getIndexes(data) {
     switch (data) {
+      case 'default':
+        return [Consts.ROLE_INDEX];
       case 'first':
         return [Consts.ROLE_INDEX, Consts.OWNER_INDEX];//send everything not sprecific to index
       case 'booking':

@@ -32,6 +32,7 @@ export class NavigationComponent implements OnInit {
   public username;
   public role = 6;
   public nameOfUser = 'Guest';
+  public URL = '';
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -45,6 +46,7 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.URL = window.location.href.split('/')[1];
     this.username = this.securityCheck.username;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
     // this.role = 1;//comment
@@ -58,7 +60,8 @@ export class NavigationComponent implements OnInit {
 
   getInformationData() {
     this.spin.show();
-    let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray('first') };
+    let caller = this.URL === 'www.nitinroadways.in' ? 'first' : 'default';
+    let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray(caller) };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray = res;

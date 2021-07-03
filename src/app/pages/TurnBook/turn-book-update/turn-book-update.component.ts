@@ -17,9 +17,9 @@ import { Router } from '@angular/router';
 })
 export class TurnBookUpdateComponent implements OnInit {
 
-  regulartrucklist: any;
-  regularpartylist: any;
-  villagelist: any;
+  public regulartrucklist: any;
+  public regularpartylist: any;
+  public villagelist: any;
   public show = false;
   public list;
   public village_name: string;

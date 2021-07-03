@@ -1,15 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ApiCallsService } from '../../../../common/services/ApiCalls/ApiCalls.service';
-import { environment } from '../../../../../environments/environment';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
-import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { Router } from '@angular/router';
 import { HandleDataService } from '../../../../common/services/Data/handle-data.service';
-import { ExcelService } from '../../../../common/services/sharedServices/excel.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
-// import { SecurityCheckService } from '../../../../common/services/Data/security-check.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-turn-book-display-main',
@@ -18,9 +15,13 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
   providers: [ApiCallsService]
 })
 export class TurnBookDisplayMainComponent implements OnInit {
-  data: any;
-  show = false;
-  tabledata: false;
+  public loadingDateDynamic;
+  public showbuttonOption8 = false;
+  public showbuttonOption82 = false;
+  public showbuttonOption821 = false;
+  public data: any;
+  public show = false;
+  public tabledata: false;
   public today;
   public todaysDate;
   public name: string;
@@ -50,7 +51,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '4', 'viewvalue': 'To From' },
     { 'value': '5', 'viewvalue': 'Monthly Data' },
     { 'value': '6', 'viewvalue': 'Balance Hire' },
-    { 'value': '7', 'viewvalue': 'Update Poch Check' }
+    { 'value': '7', 'viewvalue': 'Update Poch Check' },
+    { 'value': '8', 'viewvalue': 'Monthly By Series' }
   ]
   public years = []
   public buttons = []
@@ -66,22 +68,53 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public gAD;
   public ids = [];
   public pochDiv = true;
+  public selectedMonth;
+  public selectedYear;
+  public selectedmy;
+  public turnbooklist_trucks = [];
+  public myFormGroup: FormGroup;
+  public considerArray;
+  public villagelist: any;
+  public parties: any;
+  public tempVNAME;
+  public placeid;
+  public partyid;
+  public tempPNAME;
+  public toSendid;
+  public show8Msg = "";
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
-    public securityCheck: SecurityCheckService) {
+    public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
   }
 
   ngOnInit() {//"^2021-04.*"
+    this.considerArray = this.handleData.createConsiderArray('turnbookadd')
+    this.handleData.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.getButtons()
-
-
-
     this.role = this.securityCheck.role;
     this.commonArray = this.securityCheck.commonArray;
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();
     this.getTrucks()
+  }
+
+  getInformationData() {
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
+        this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
+        this.fetchBasic();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.securityCheck.commonArray;
+    this.parties = [];
+    this.villagelist = [];
+    this.parties = this.commonArray.gstdetails;
+    this.villagelist = this.commonArray.villagenames;
   }
 
   getButtons() {
@@ -100,6 +133,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
         this.tempObj = {}
       }
     }
+
     // for(i=0;i<years.length;i++){
     //   months=new Date().getFullYear()-years[i]==0?new Date().getMonth()+1:12;
     //   for(j=0;j<months;j++){
@@ -252,6 +286,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
       case '7':
         tempObj['date'] = data;
         break;
+      case '8':
+        tempObj['date'] = this.selectedmy;
+        break;
       default:
         break;
     }
@@ -271,12 +308,76 @@ export class TurnBookDisplayMainComponent implements OnInit {
           this.turnbooklist = res.Data;
           this.handleData.saveBH(this.turnbooklist);
         }
+        else if (this.buttonOption == '8') {
+          if (res.Data.length > 0) {
+            this.showbuttonOption8 = true;
+            this.turnbooklist = res.Data;
+            this.handleData.saveTurn(this.turnbooklist);
+            this.myFormGroup = this.formBuilder.group({
+              loadingDateDynamic: '',
+              turnbookDate: '',
+              truckno: '',
+              place: '',
+              partyName: '',
+              loadingDate: '',
+              lrno: '',
+              hamt: '',
+            });
+          } else {
+            this.showbuttonOption8 = false;
+            this.show8Msg = "All set for this month.";
+          }
+        }
         else {
           this.turnbooklist = res.Data;
           this.handleData.saveTurn(this.turnbooklist);
         }
       });
   };
+
+  getOtherDetails() {
+    this.showbuttonOption82 = true;
+    this.turnbooklist_trucks = this.turnbooklist.filter(r => r.loadingDate == this.myFormGroup.value.loadingDateDynamic)
+  }
+  getOtherDetails2() {
+    let tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup.value.truckno);
+    this.toSendid = tempDate[0]._id;
+    this.showbuttonOption821 = true;
+    this.myFormGroup.patchValue({ turnbookDate: tempDate[0]['turnbookDate'] })
+    this.myFormGroup.patchValue({ place: tempDate[0][''] })
+    this.myFormGroup.patchValue({ partyName: tempDate[0][''] })
+    this.myFormGroup.patchValue({ lrno: tempDate[0][''] })
+    this.myFormGroup.patchValue({ hamt: tempDate[0][''] })
+  }
+
+  change(data) {
+    let tempData = {}
+    tempData['placeid'] = this.placeid;
+    tempData['partyid'] = this.partyid
+    tempData['lrno'] = data.value.lrno
+    tempData['hamt'] = data.value.hamt
+    tempData['_id'] = this.toSendid;
+    tempData['tablename'] = 'turnbook'
+    tempData['method'] = 'update'
+    tempData['part'] = 2;
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempData, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        let newData = this.turnbooklist.filter(r => r._id !== this.toSendid);
+        this.handleData.saveTurn(newData);
+        this.turnbooklist = newData;
+
+        this.myFormGroup.patchValue({ turnbookDate: '' })
+        this.myFormGroup.patchValue({ place: '' })
+        this.myFormGroup.patchValue({ partyName: '' })
+        this.myFormGroup.patchValue({ lrno: '' })
+        this.myFormGroup.patchValue({ hamt: '' })
+        this.showbuttonOption82 = false;
+        this.showbuttonOption821 = false;
+
+      });
+
+  }
 
   uncheckPoch(data, j) {
     let tempObj = {};
@@ -285,13 +386,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['_id'] = data['_id'];
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-
         this.pochDiv = !this.pochDiv;
         this.turnbooklist = res.Data;
         this.handleData.saveBH(this.turnbooklist.splice(j, 1));
-
       });
-
   }
 
   showDatabyid = function (data, j) {
@@ -333,10 +431,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
     tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
     tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
-
     tempObj['entryDate'] = data.entryDate;
     tempObj['_id'] = data._id;
-
     tempObj['partyType'] = data.partyType;
     tempObj['turnbookDate'] = data.turnbookDate;
     tempObj['loadingDate'] = data.loadingDate;
@@ -357,7 +453,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
       this.show = true;
 
       let tempObj = {};
-      tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
+      tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
       tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
       tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
       tempObj['_id'] = data._id;
@@ -531,7 +627,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   finalFunction() {
     let tempObj = {}
     tempObj['bhData'] = this.finalArray;
-    tempObj['method'] = 'insertmany.many';
+    tempObj['method'] = 'insertmany,many';
     tempObj['tablename'] = 'BalanceHire';
     tempObj['ids'] = this.ids;
     tempObj['todayDate'] = this.todaysDate;
@@ -555,5 +651,20 @@ export class TurnBookDisplayMainComponent implements OnInit {
     });
     return this.gAD;
   }
+
+  setPlaceName() {
+    this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
+    this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
+    this.myFormGroup.value.place = this.tempVNAME;
+  }
+
+  setPartyName() {
+    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
+    this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
+    this.myFormGroup.value.partyName = this.tempPNAME;
+  }
+
+
+
 }
 

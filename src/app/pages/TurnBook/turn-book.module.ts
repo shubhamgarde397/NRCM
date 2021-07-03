@@ -8,6 +8,7 @@ import { TurnBookHandlerComponent } from './turn-book-handler/turn-book-handler.
 import { TurnBookDisplayHandlerComponent } from './Display/turn-book-display-handler/turn-book-display-handler.component';
 import { TurnBookDisplayMainComponent } from './Display/turn-book-display-main/turn-book-display-main.component';
 import { TurnBookUpdateComponent } from './turn-book-update/turn-book-update.component';
+import { TurnBookAddUpdateRequiredComponent } from './turn-book-add-update-required/turn-book-add-update-required.component';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { TurnBookUpdateComponent } from './turn-book-update/turn-book-update.com
         TurnBookDisplayHandlerComponent,
         TurnBookDisplayMainComponent,
         TurnBookUpdateComponent,
+        TurnBookAddUpdateRequiredComponent,
     ],
     imports: [
         CommonModule,
