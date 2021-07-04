@@ -346,8 +346,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.myFormGroup.patchValue({ turnbookDate: tempDate[0]['turnbookDate'] })
     this.myFormGroup.patchValue({ place: tempDate[0][''] })
     this.myFormGroup.patchValue({ partyName: tempDate[0][''] })
-    this.myFormGroup.patchValue({ lrno: tempDate[0][''] })
-    this.myFormGroup.patchValue({ hamt: tempDate[0][''] })
+    this.myFormGroup.patchValue({ lrno: tempDate[0]['lrno'] })
+    this.myFormGroup.patchValue({ hamt: tempDate[0]['hamt'] })
   }
 
   change(data) {

@@ -46,7 +46,7 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.URL = window.location.href.split('/')[1];
+    this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.username;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
     // this.role = 1;//comment
