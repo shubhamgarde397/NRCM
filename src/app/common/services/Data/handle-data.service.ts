@@ -12,9 +12,9 @@ export class HandleDataService {
     "gstdetails": [{}],
     "ownerdetails": [{}],
     "villagenames": [{}],
-    "regularparty": [{}],
-    "RegularTruck": [{}],
-    "thoughts": [{}],
+    // "regularparty": [{}],
+    // "RegularTruck": [{}],
+    // "thoughts": [{}],
     "Role": 6
   }
   public IP = [];
@@ -79,10 +79,6 @@ export class HandleDataService {
         return [Consts.OWNER_INDEX];
       case 'infovillage':
         return [Consts.VILLAGE_INDEX];
-      case 'inforegularparty':
-        return [Consts.REGULARPARTY_INDEX];
-      case 'inforegulartruck':
-        return [Consts.REGULARTRUCK_INDEX];
       case 'turnbook':
         return [Consts.VILLAGE_INDEX, Consts.OWNER_INDEX];
       case 'turnbookadd':

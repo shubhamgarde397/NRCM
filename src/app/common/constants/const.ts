@@ -8,9 +8,9 @@ export class Consts {
     public static GST_INDEX = [{ 'index': 1, 'name': 'gstdetails' }];
     public static OWNER_INDEX = [{ 'index': 2, 'name': 'ownerdetails' }];
     public static VILLAGE_INDEX = [{ 'index': 3, 'name': 'villagenames' }];
-    public static REGULARPARTY_INDEX = [{ 'index': 4, 'name': 'regularparty' }];
-    public static REGULARTRUCK_INDEX = [{ 'index': 5, 'name': 'regulartruck' }];
-    public static THOUGHT_INDEX = [{ 'index': 6, 'name': 'thought' }];
+    // public static REGULARPARTY_INDEX = [{ 'index': 4, 'name': 'regularparty' }];
+    // public static REGULARTRUCK_INDEX = [{ 'index': 5, 'name': 'regulartruck' }];
+    // public static THOUGHT_INDEX = [{ 'index': 6, 'name': 'thought' }];
     public static monthNames =
         [
             'January', 'February', 'March', 'April', 'May', 'June',

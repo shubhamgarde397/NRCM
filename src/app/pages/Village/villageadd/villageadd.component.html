@@ -1,14 +1,14 @@
 <div class="well">
 
-  <form [formGroup]="myFormGroup" (ngSubmit)="storeVillageData(myFormGroup)" submitted=true enctype="multipart/form data" action="/"
-    name="myform" id="myform">
-    <!-- value is not going in ts file    ,nopid.value-->
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeVillageData(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/" name="myform" id="myform">
 
     <!--Name-->
     <div class="form-group row">
 
       <div class="col-xs-3">
-        <input type="text" id="village_name" class="form-control" formControlName="village_name" placeholder="Village Name">
+        <input type="text" id="village_name" class="form-control" formControlName="village_name"
+          placeholder="Village Name">
       </div>
       <div class="col-xs-2">
         <div [hidden]="myFormGroup.controls.village_name.valid">

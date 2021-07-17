@@ -44,6 +44,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public truckFilter2;
   public dateFilterB = true;
   public truckFilterB = false;
+  public turnbooklistnew = [];
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
     { 'value': '2', 'viewvalue': 'Truck Arrival' },
@@ -52,7 +53,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '5', 'viewvalue': 'Monthly Data' },
     { 'value': '6', 'viewvalue': 'Balance Hire' },
     { 'value': '7', 'viewvalue': 'Update Poch Check' },
-    { 'value': '8', 'viewvalue': 'Monthly By Series' }
+    { 'value': '8', 'viewvalue': 'Monthly By Series' },
+    { 'value': '9', 'viewvalue': 'Cancelled Vehicles' },
   ]
   public years = []
   public buttons = []
@@ -82,6 +84,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public tempPNAME;
   public toSendid;
   public show8Msg = "";
+  public selectpartyType;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -97,6 +100,24 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();
     this.getTrucks()
+  }
+
+  showDatabyParty() {
+    this.turnbooklist = this.handleData.giveTurn();
+    let tempData = [];
+    switch (this.selectpartyType) {
+      case 'NRCM':
+        tempData = this.turnbooklist.filter(r => r.partyType === 'NRCM')
+        break;
+      case 'NR':
+        tempData = this.turnbooklist.filter(r => r.partyType === 'NR')
+        break;
+      case 'All':
+        tempData = this.turnbooklist.filter(r => r.partyType)
+        break;
+
+    }
+    this.turnbooklist = tempData;
   }
 
   getInformationData() {
@@ -292,6 +313,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
       default:
         break;
     }
+    if (this.buttonOption !== '8') {
+      this.showbuttonOption8 = false;
+    }
 
 
     tempObj['tablename'] = 'turnbook'
@@ -311,8 +335,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
         else if (this.buttonOption == '8') {
           if (res.Data.length > 0) {
             this.showbuttonOption8 = true;
-            this.turnbooklist = res.Data;
-            this.handleData.saveTurn(this.turnbooklist);
+            this.turnbooklistnew = res.Data;
             this.myFormGroup = this.formBuilder.group({
               loadingDateDynamic: '',
               turnbookDate: '',
@@ -337,7 +360,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
 
   getOtherDetails() {
     this.showbuttonOption82 = true;
-    this.turnbooklist_trucks = this.turnbooklist.filter(r => r.loadingDate == this.myFormGroup.value.loadingDateDynamic)
+    this.turnbooklist_trucks = this.turnbooklistnew.filter(r => r.loadingDate == this.myFormGroup.value.loadingDateDynamic)
   }
   getOtherDetails2() {
     let tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup.value.truckno);
@@ -392,7 +415,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
       });
   }
 
-  showDatabyid = function (data, j) {
+  showDatabyid = function (data, j, number) {
     this.show = true;
 
     let tempObj = {};
@@ -414,41 +437,24 @@ export class TurnBookDisplayMainComponent implements OnInit {
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
     tempObj['index'] = j;
-    tempObj['number'] = 1;
+    tempObj['number'] = number;
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
     this.handleData.saveData(tempObj);
   };
 
-
-  showDatabyid3 = function (data, j) {
-    this.show = true;
-
-    let tempObj = {};
-    tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
-    tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
-    tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
-
-    tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
-    tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
-    tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
-    tempObj['entryDate'] = data.entryDate;
-    tempObj['_id'] = data._id;
-    tempObj['partyType'] = data.partyType;
-    tempObj['turnbookDate'] = data.turnbookDate;
-    tempObj['loadingDate'] = data.loadingDate;
-    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
-    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
-    tempObj['advance'] = data.advance === undefined ? 0 : data.advance;
-    tempObj['balance'] = data.balance === undefined ? 0 : data.balance;
-    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
-    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
-    tempObj['index'] = j;
-    tempObj['number'] = 3;
-    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
-    this.handleData.saveData(tempObj);
-  };
-
-  showDatabyid2 = function (data, j) {
+  showDatabyid2 = function (data, j, type) {
+    let newdate;
+    let newtype;
+    switch (type) {
+      case 'cancel':
+        newdate = '2099-12-12';
+        newtype = 'Cancel';
+        break;
+      case 'uncancel':
+        newdate = '';
+        newtype = '';
+        break;
+    }
     if (confirm('Do you want to Cancel this Vehicle?')) {
       this.show = true;
 
@@ -457,7 +463,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
       tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
       tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
       tempObj['_id'] = data._id;
-      tempObj['loadingDate'] = '2099-12-12';
+      tempObj['loadingDate'] = newdate;
 
 
       tempObj['method'] = 'update';
@@ -465,7 +471,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
       tempObj["turnbookDate"] = data.turnbookDate,
         tempObj["entryDate"] = data.entryDate,
         tempObj["lrno"] = '';
-      tempObj["partyType"] = 'Cancel';
+      tempObj["partyType"] = newtype;
       tempObj["hamt"] = '';
       tempObj["advance"] = '';
       tempObj["balance"] = '';
@@ -479,20 +485,17 @@ export class TurnBookDisplayMainComponent implements OnInit {
           this.handleData.turnData[j]['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
           this.handleData.turnData[j]['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
           this.handleData.turnData[j]['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
-          this.handleData.turnData[j]['loadingDate'] = '2099-12-12';
+          this.handleData.turnData[j]['loadingDate'] = newdate;
           this.handleData.turnData[j]["turnbookDate"] = data.turnbookDate,
             this.handleData.turnData[j]["entryDate"] = data.entryDate,
             this.handleData.turnData[j]["lrno"] = '';
-          this.handleData.turnData[j]["partyType"] = '';
+          this.handleData.turnData[j]["partyType"] = newtype;
           this.handleData.turnData[j]["hamt"] = '';
           this.handleData.turnData[j]["advance"] = '';
           this.handleData.turnData[j]["balance"] = '';
           this.handleData.turnData[j]["pochDate"] = '';
           this.handleData.turnData[j]["pochPayment"] = '';
           this.handleData.turnData[j]['index'] = j;
-
-
-
           let tempData = this.handleData.giveTurn();
           this.handleData.saveTurn([]);
           let tempArray = []

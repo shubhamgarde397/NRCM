@@ -208,7 +208,7 @@ export class TurnBookUpdateComponent implements OnInit {
     tempObj['ownerid'] = data.value.truckNo.split('+')[0];
     tempObj['turnbookDate'] = data.value.turnbookDate;
     tempObj['method'] = 'update';
-    tempObj['part'] = 2;
+    tempObj['part'] = 3;//imp
     tempObj['truckno'] = data.value.truckNo.split('+')[1];
     tempObj["user"] = "shubham";
     tempObj["tablename"] = "turnbook";

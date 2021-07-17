@@ -1,7 +1,6 @@
 <div class="well">
 
-  <form [formGroup]="myFormGroup" (ngSubmit)="saveBalanceHire(myFormGroup)" submitted=true enctype="multipart/form data"
-    action="/">
+  <form [formGroup]="myFormGroup" (ngSubmit)="saveBalanceHire(myFormGroup)" enctype="multipart/form data" action="/">
 
     <div class="col-lg-12">
       <button mat-raised-button type="button" (click)="leftRight('back')"
@@ -28,14 +27,11 @@
         </div>
       </div>
     </div>
+    <!-- TruckDate -->
+
+    <!-- TrucknO -->
 
     <div class="form-group row">
-
-
-      <!-- <input type="text" id="truckno" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
-          placeholder="TN02 AB 2045">
-      </div> -->
-
       <div class="col-xs-3">
         <input type="text" list="cars" class="form-control" formControlName="truckno" [(ngModel)]="truckno"
           placeholder="TN02 AB 2045" />
@@ -51,13 +47,10 @@
           </font>
         </div>
       </div>
-
     </div>
+    <!-- TrucknO -->
 
-
-
-
-
+    <!-- Amount -->
     <div class="form-group row">
       <div class="col-xs-3">
         <input type="number" id="amount" class="form-control" formControlName="amount">
@@ -70,7 +63,9 @@
         </div>
       </div>
     </div>
+    <!-- Amount -->
 
+    <!-- PageNo -->
     <div class="form-group row">
       <div class="col-xs-3">
         <input type="number" id="pageno" class="form-control" formControlName="pageno" placeholder="Page Number">
@@ -83,9 +78,8 @@
         </div>
       </div>
     </div>
-    <!-- keep adding these data here -->
+    <!-- PageNo -->
 
-    <!-- TruckDate -->
     <div class="form-group row">
       <div class="col-sm-1">
         <button type="button" (click)="addtrucks()">Add</button>
@@ -106,29 +100,18 @@
             <td>{{i.truckno}}</td>
             <td>{{i.pageno}}</td>
             <td>{{i.amount}}</td>
-            <td><button (click)="deleteRow(i,j)">Delete</button></td>
+            <td><button (click)="deleteRow(j)">Delete</button></td>
           </tr>
         </table>
       </div>
-
     </div>
 
-
-
-
     <div class="row">
-
       <div class="form-group" class="col-xs-2">
         <button type=" submit" class="btn btn-primary" [disabled]='truckArray.length==0'>
           <i class="material-icons">send</i>
         </button>
       </div>
-
     </div>
   </form>
-
-
-
-
-
 </div>

@@ -60,6 +60,7 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.printInfo = false;
     this.role = this.securityCheck.role;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
     for (let i = 0; i < new Date().getFullYear() - 2020; i++) {
@@ -77,6 +78,8 @@ export class BalancehiredisplayComponent implements OnInit {
     this.yeardiv = true;
     this.monthdiv = false;
     this.daydiv = false;
+    this.printInfo = this.buttonOption == '1' ? true : false;
+    this.createdDate = '';
 
   }
   find = function () {
@@ -92,6 +95,7 @@ export class BalancehiredisplayComponent implements OnInit {
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
+        this.printInfo = true;
         this.balanceDate = [];
         this.balanceDate = res.balanceData;
         this.securityCheck.commonBalanceHire = res.balanceData;
@@ -114,12 +118,6 @@ export class BalancehiredisplayComponent implements OnInit {
           break;
         case 'day':
           this.createdDate = this.createdDate + '-' + data['_id'].slice(8);
-          console.log(this.createdDate);
-          console.log(data['_id']);
-          console.log(data['_id'].slice(8));
-          console.log(this.createdDate);
-
-
           this.daydiv = false;
           this.printInfo = true;
           break;
