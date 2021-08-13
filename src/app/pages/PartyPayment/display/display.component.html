@@ -41,7 +41,7 @@
 
 
         <!-- Both-->
-        <div class="col-sm-10" *ngIf="buttonOption==='3'">
+        <div class="col-sm-10" *ngIf="(buttonOption==='3')||(buttonOption==='4')">
           <div class="form-group row">
 
             <div class="col-sm-4">
@@ -87,8 +87,10 @@
           <tr class=table-header>
             <th>Srno</th>
             <th>Date</th>
+            <th>Lrno</th>
             <th>Party</th>
             <th>Amount</th>
+            <th>Value</th>
             <th *ngIf="adminAccess">Delete</th>
           </tr>
         </thead>
@@ -97,8 +99,10 @@
           <tr *ngFor="let i of paymentData;let j = index">
             <td>{{j+1}}</td>
             <td>{{i.date|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.lrno}}</td>
             <td>{{i.partyName}}</td>
             <td>{{i.amount}}</td>
+            <td>{{i.value}}</td>
             <td *ngIf="adminAccess">
               <button mat-raised-button type="button" (click)="delete(i,j)" class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
@@ -107,11 +111,9 @@
           </tr>
         </tbody>
       </table>
-
+      <button mat-raised-button type="button" (click)="downloadBank()" class="btn-danger btn-sm btn-just-icon">
+        Download
+      </button>
     </div>
   </div>
-</div>
-<div *ngIf="show">
-
-  <!-- <router-outlet></router-outlet> -->
 </div>

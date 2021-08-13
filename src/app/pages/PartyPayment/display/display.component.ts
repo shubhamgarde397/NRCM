@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import * as  jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-display',
@@ -39,7 +41,8 @@ export class DisplayComponent implements OnInit {
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Party' },
     { 'value': '2', 'viewvalue': 'Date' },
-    { 'value': '3', 'viewvalue': 'Both' }
+    { 'value': '3', 'viewvalue': 'Both' },
+    { 'value': '4', 'viewvalue': 'PDF' }
   ]
   public paymentData;
 
@@ -83,11 +86,14 @@ export class DisplayComponent implements OnInit {
   find = function () {
     let flag = false;
     let tempObj = {};
+    let balanceFollow = {};
+
     switch (this.buttonOption) {
       case '1':
         if (this.partyid === '') { alert('Select a Party Name'); break; }
         else {
           tempObj['partyid'] = this.partyid['_id'];
+          tempObj['method'] = 'displayPP';
           flag = true;
         }
         break;
@@ -96,6 +102,7 @@ export class DisplayComponent implements OnInit {
         else {
           tempObj['from'] = this.date1;
           tempObj['to'] = this.date2;
+          tempObj['method'] = 'displayPP';
           flag = true;
         }
         break;
@@ -104,7 +111,28 @@ export class DisplayComponent implements OnInit {
         else {
           tempObj['from'] = this.date1;
           tempObj['to'] = this.date2;
+          tempObj['method'] = 'displayPP';
           tempObj['partyid'] = this.partyid['_id'];
+          flag = true;
+        }
+        break;
+      case '4':
+        let msg = '';
+        let amt = 0;
+        if ((this.date1 === undefined) || (this.date2 === undefined) || (this.partyid === '')) { alert('Select a Date and Party'); break; }
+        else {
+          tempObj['from'] = this.date1;
+          tempObj['to'] = this.date2;
+          tempObj['method'] = 'partyPaymentPDF';
+          tempObj['partyid'] = this.partyid['_id'];
+          if (confirm('Want to add Balance Follow?')) {
+            msg = prompt('Balance Follow Message');
+            amt = parseInt(prompt('Balance Follow Amount'));
+            balanceFollow['partyName'] = msg;
+            balanceFollow['amount'] = amt;
+            balanceFollow['type'] = 'buy';
+            balanceFollow['lrno'] = 'Balance Follow';
+          }
           flag = true;
         }
         break;
@@ -113,11 +141,14 @@ export class DisplayComponent implements OnInit {
     }
     if (flag) {
       tempObj['tablename'] = 'partyPayment'
-      tempObj['method'] = 'displayPP'
+
       tempObj['display'] = parseInt(this.buttonOption);
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
         .subscribe((res: any) => {
           this.paymentData = res.paymentData;
+          this.paymentData = this.buttonOption == '4' ? this.pdfJSON(res.paymentData, balanceFollow) : res.paymentData;
+          console.log(this.paymentData);
+
           if (this.paymentData.length > 0) {
             this.tableData = true;
           } else {
@@ -127,6 +158,23 @@ export class DisplayComponent implements OnInit {
         });
     }
   };
+
+  pdfJSON(data, balanceFollow) {
+    let val = 0
+    data.unshift(balanceFollow);
+    data.forEach((res) => {
+      if (res['type'] == 'buy') {
+        val = val + res['amount'];
+        res['value'] = val;
+
+      }
+      else if (res['type'] == 'payment') {
+        val = val - res['amount'];
+        res['value'] = val;
+      }
+    })
+    return data;
+  }
 
   delete(id, j) {
     if (confirm('Are you sure?')) {
@@ -149,6 +197,22 @@ export class DisplayComponent implements OnInit {
 
   getAdminAccess() {
     this.adminAccess = !this.adminAccess;
+  }
+
+  downloadBank() {
+    var doc = new jsPDF()
+    doc.setFontSize('30');
+    doc.setFontType('bold');
+    doc.text(this.partyid['name'], 15, 25)
+
+    doc.setTextColor(255, 255, 255);
+    doc.setLineWidth(0.8);
+    doc.line(0, 28, 215, 28);
+
+    doc.setFontSize('15');
+
+    // doc.text('Declarant', 150, 268)
+    doc.save('tp1' + '.pdf')
   }
 }
 
