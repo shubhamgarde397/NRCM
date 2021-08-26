@@ -10,8 +10,9 @@
             <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
           </select>
         </div>
+
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')">
+          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&&(buttonOption!=='9' )">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='4'">
@@ -23,7 +24,13 @@
             <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
           </select>
         </div>
-
+        <div class="col-sm-3">
+          <select class="form-control" [(ngModel)]="selectpartyType" (change)="showDatabyParty()">
+            <option>All</option>
+            <option>NR</option>
+            <option>NRCM</option>
+          </select>
+        </div>
       </div>
       <div class="row">
         <div class="col-sm-4">
@@ -52,11 +59,12 @@
             <th>Place</th>
             <th>Party</th>
             <th>LRNO</th>
-            <th *ngIf="role==1||role==2">PN</th>
-            <th *ngIf="role==1||role==2">Delete</th>
-            <th>Cancel</th>
-            <th>Edit</th>
-            <th *ngIf="adminAccess">TNO</th>
+            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">PN</th>
+            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">Delete</th>
+            <th *ngIf="buttonOption!=='9'">Cancel</th>
+            <th *ngIf="buttonOption!=='9'">Edit</th>
+            <th *ngIf="(adminAccess)&&(buttonOption!=='9')">TNO</th>
+            <th *ngIf="buttonOption=='9'">Undo</th>
           </tr>
         </thead>
 
@@ -84,27 +92,33 @@
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
-            <td *ngIf="role==1||role==2">{{i.partyDetails[0].name}}</td>
+            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')">{{i.partyDetails[0].name}}</td>
             <td>
-              <button mat-raised-button (click)="delete(i,j)" *ngIf="role==1||role==2"
+              <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
                 class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete_forever</i>
               </button>
             </td>
             <td>
-              <button mat-raised-button type="button" (click)="showDatabyid2(i,j)"
+              <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid2(i,j,'cancel')"
                 class="btn-warning btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
               </button>
             </td>
             <td>
-              <button mat-raised-button type="button" (click)="showDatabyid(i,j)"
+              <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid(i,j,1)"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>
             </td>
-            <td *ngIf="adminAccess">
-              <button mat-raised-button type="button" (click)="showDatabyid3(i,j)"
+            <td *ngIf="(adminAccess)&&(buttonOption!=='9')">
+              <button mat-raised-button type="button" (click)="showDatabyid(i,j,3)"
+                class="btn-primary btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
+            <td *ngIf="buttonOption=='9'">
+              <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>
@@ -333,7 +347,9 @@
             <div class="col-xs-3">
               <select id="loadingDateDynamic" class="form-control " formControlName="loadingDateDynamic"
                 (change)="getOtherDetails()">
-                <option *ngFor="let i of turnbooklist;let j = index;" value={{i.loadingDate}}>{{i.loadingDate}}</option>
+                <option>Blank</option>
+                <option *ngFor="let i of turnbooklistnew;let j = index;" value={{i.loadingDate}}>{{i.loadingDate}}
+                </option>
               </select>
             </div>
 
@@ -352,6 +368,7 @@
 
             <div class="col-xs-3">
               <select id="" class="form-control" formControlName="truckno" (change)="getOtherDetails2()">
+                <option>Blank</option>
                 <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}
                 </option>
               </select>

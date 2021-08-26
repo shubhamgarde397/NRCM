@@ -16,135 +16,210 @@ import { handleFunction } from '../../common/services/functions/handleFunctions'
 export class MainPageComponent implements OnInit {
   temp = [
     {
-      "_id": "60182bdbdeb170e12b66052b",
-      "truckData": [
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        }, {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        },
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        },
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        }
-      ],
-      "todayDate": "2021-02-01",
-      "bankName": "5",
-      "ifsc": "5",
-      "accountNumber": "5",
-      "accountName": "5",
-      "comments": ""
+      "bf": true,
+      "type": "buy",
+      "partyName": "Balance Follow",
+      "amount": 0,
+      "value": 0
     },
     {
-      "_id": "60182bdbdeb170e12b66052b",
-      "truckData": [
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        }, {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        },
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        },
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        }
-      ],
-      "todayDate": "2021-02-01",
-      "bankName": "5",
-      "ifsc": "5",
-      "accountNumber": "5",
-      "accountName": "5",
-      "comments": ""
+      "lrno": 6909,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "KA01 AH 7778",
+      "date": "2021-01-06",
+      "amount": 44000
     },
     {
-      "_id": "60182bdbdeb170e12b66052b",
-      "truckData": [
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        }
-      ],
-      "todayDate": "2021-02-01",
-      "bankName": "5",
-      "ifsc": "5",
-      "accountNumber": "5",
-      "accountName": "5",
-      "comments": ""
+      "lrno": 6970,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN28 AR 0660",
+      "date": "2021-01-08",
+      "amount": 41500
     },
     {
-      "_id": "60182bdbdeb170e12b66052b",
-      "truckData": [
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        },
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        }
-      ],
-      "todayDate": "2021-02-01",
-      "bankName": "5",
-      "ifsc": "5",
-      "accountNumber": "5",
-      "accountName": "5",
-      "comments": ""
-    }, {
-      "_id": "60182bdbdeb170e12b66052b",
-      "truckData": [
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        },
-        {
-          "date": "2021-01-08",
-          "truckno": "TN59 BT 8597",
-          "pageno": 130,
-          "amount": 2950
-        }
-      ],
-      "todayDate": "2021-02-01",
-      "bankName": "5",
-      "ifsc": "5",
-      "accountNumber": "5",
-      "accountName": "5",
-      "comments": ""
+      "lrno": 6978,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN58 BA 5305",
+      "date": "2021-01-18",
+      "amount": 41500
     },
+    {
+      "lrno": 6935,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN64 S 2077",
+      "date": "2021-01-22",
+      "amount": 44000
+    },
+    {
+      "date": "2021-02-01",
+      "amount": 215000,
+      "type": "payment",
+      "partyName": "Universal Marketing"
+    },
+    {
+      "lrno": 6998,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN58 AV 9982",
+      "date": "2021-02-06",
+      "amount": 41500
+    },
+    {
+      "lrno": 7108,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN64 L 4871",
+      "date": "2021-02-13",
+      "amount": 44000
+    },
+    {
+      "lrno": 7111,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN25 AL 2516",
+      "date": "2021-02-15",
+      "amount": 45000
+    },
+    {
+      "lrno": 7119,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN34 AD 2144",
+      "date": "2021-02-17",
+      "amount": 44000
+    },
+    {
+      "lrno": 7067,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN93 5927",
+      "date": "2021-03-01",
+      "amount": 44500
+    },
+    {
+      "lrno": 7197,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN29 BL 9891",
+      "date": "2021-03-05",
+      "amount": 47000
+    },
+    {
+      "lrno": 7187,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "MH12 QW 3212",
+      "date": "2021-03-05",
+      "amount": 47000
+    },
+    {
+      "lrno": 7196,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "MH12 QW 3059",
+      "date": "2021-03-05",
+      "amount": 47000
+    },
+    {
+      "lrno": 7077,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN57 AX 2599",
+      "date": "2021-03-11",
+      "amount": 44500
+    },
+    {
+      "lrno": 7088,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN32 J 8469",
+      "date": "2021-03-20",
+      "amount": 42500
+    },
+    {
+      "lrno": 7273,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN83 C 1074",
+      "date": "2021-03-25",
+      "amount": 47000
+    },
+    {
+      "lrno": 7309,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN66 Z 1909",
+      "date": "2021-04-05",
+      "amount": 44500
+    },
+    {
+      "lrno": 7318,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN32 AR 7320",
+      "date": "2021-04-09",
+      "amount": 44500
+    },
+    {
+      "lrno": 7330,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN38 CX 3299",
+      "date": "2021-04-19",
+      "amount": 44500
+    },
+    {
+      "lrno": 7347,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN54 S 7843",
+      "date": "2021-04-24",
+      "amount": 44500
+    },
+    {
+      "lrno": 7350,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN58 BA 5305",
+      "date": "2021-04-29",
+      "amount": 45500
+    },
+    {
+      "lrno": 7584,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN38 CU 6769",
+      "date": "2021-06-25",
+      "amount": 44500
+    },
+    {
+      "lrno": 7600,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN58 BD 4917",
+      "date": "2021-07-06",
+      "amount": 44500
+    },
+    {
+      "lrno": 7719,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN93 B 2604",
+      "date": "2021-07-17",
+      "amount": 44500
+    },
+    {
+      "lrno": 7713,
+      "type": "buy",
+      "partyName": "Universal Marketing",
+      "truckNo": "TN64 H 2272",
+      "date": "2021-07-22",
+      "amount": 44500
+    }
   ]
 
 
@@ -175,178 +250,86 @@ export class MainPageComponent implements OnInit {
     localStorage.clear();
   }
   download() {//threshhold is 295
-    let i;
-    if (confirm('Fresh Page?')) {
-      i = 16;
-    } else {
-      let z = '';
-      let str = "";
-      while (z != null) {
-        z = prompt('Enter Truck Numbers');
-        if (z.length > 1) {
-          alert('Cannot have more than 9 trucks, Please enter lesser value or print on new page.')
-        } else {
-          if (z == null || z == "") {
-            break;
-          }
-          str = str + z + "11";
-        }
-      }
-
-
-
-      i = this.getValueofI(str) + 16;
-    }
-    if (i > 280) {
-      i = 16;
-    }
-
-
-    let pageno = 1;
-    let dateFormat = this.temp[0].todayDate.slice(8, 10) + '-' + this.temp[0].todayDate.slice(5, 7) + '-' + this.temp[0].todayDate.slice(0, 4);
-    var doc = new jsPDF();
-    //Static Part Start
-    //Date
-    doc.setFontSize('10');
+    var doc = new jsPDF()
+    doc.setFontSize('25');
     doc.setFontType('bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text(dateFormat, 90, i + 5 - 16)
-    doc.text(String(pageno), 190, i + 5 - 16)
-    pageno = pageno + 1;
-    //Date
-    //line after date
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.line(0, i + 6 - 16, 210, i + 6 - 16);
-    //line after date
-    //5 vertical lines for amount, comments, pageno,date,trucno, account details(account details is further divided into 3 parts per data need a loop here)
-    //vertical line after date
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.line(37, i + 6 - 16, 37, i + 12 - 16);
-    doc.line(61, i + 6 - 16, 61, i + 12 - 16);
-    doc.line(72, i + 6 - 16, 72, i + 12 - 16);
-    doc.line(92, i + 6 - 16, 92, i + 12 - 16);
-    doc.line(135, i + 6 - 16, 135, i + 12 - 16);
-
-
-    //vertical line after date till headers
-    //Headers
+    doc.text('Nitin', 15, 15)//partyname
     doc.setFontSize('10');
-    doc.setFontType('bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text('Amount', 16, i + 10 - 16)
-    doc.text('Comments', 38, i + 10 - 16)
-    doc.text('Pg', 63, i + 10 - 16)
-    doc.text('Date', 72.5, i + 10 - 16)
-    doc.text('TruckNo', 92.5, i + 10 - 16)
-    doc.text('Account Details', 135.5, i + 10 - 16)
-    //Headers End
-    //Line after headers
-    doc.setDrawColor(0, 0, 0);
+    doc.text('08-01-2020 to 08-08-2021', 165, 19)//date
+    doc.setFontSize('25');
     doc.setLineWidth(0.5);
-    doc.line(0, i + 12 - 16, 210, i + 12 - 16);
-    //Line after headers
-    //Static Part End
-    //Dynamic Part Start
+    doc.line(0, 20, 210, 20);//line after main header
+    doc.line(20, 20, 20, 300);//punching area line
+    //headers
     doc.setFontSize('10');
-    doc.setFontType('normal');
-    doc.setTextColor(0, 0, 0);
-    // doc.text('Shubham is awesome', 1, i);
-    for (let z = 0; z < this.temp.length; z++) {
-      let data = this.temp[z].truckData;
+    let y = 24;
+    let starty = 24;
+    doc.text('Sr', 23, y)//partyname
+    doc.text('Date', 38, y)//partyname
+    doc.text('TruckNo', 57, y)//partyname
+    doc.text('Lrno', 88, y)//partyname
+    doc.text('Credit', 108, y)//partyname
+    doc.text('Debit', 133, y)//partyname
+    doc.text('Balance', 155, y)//partyname
+    doc.text('Notes', 182, y)//partyname
+    //headers
+    doc.line(0, 25, 210, 25);//line after header
 
-
-      if (((data.length * 6) + 15 + i) > 295) {
-        doc.addPage();
-        //Static Part Start
-        //Date
-        doc.setFontSize('10');
-        doc.setFontType('bold');
-        doc.setTextColor(0, 0, 0);
-        doc.text(dateFormat, 90, 5)
-        doc.text(String(pageno), 190, 5)
-        pageno = pageno + 1;
-        //Date
-        //line after date
-        doc.setDrawColor(0, 0, 0);
-        doc.setLineWidth(0.5);
-        doc.line(0, 6, 210, 6);
-        //line after date
-        //5 vertical lines for amount, comments, pageno,date,trucno, account details(account details is further divided into 3 parts per data need a loop here)
-        //vertical line after date
-        doc.setDrawColor(0, 0, 0);
-        doc.setLineWidth(0.5);
-        doc.line(37, 6, 37, 12);
-        doc.line(61, 6, 61, 12);
-        doc.line(72, 6, 72, 12);
-        doc.line(92, 6, 92, 12);
-        doc.line(135, 6, 135, 12);
-        //vertical line after date
-        //Headers
-        doc.setFontSize('10');
-        doc.setFontType('bold');
-        doc.setTextColor(0, 0, 0);
-        doc.text('Amount', 16, 10)
-        doc.text('Comments', 38, 10)
-        doc.text('Pg', 63, 10)
-        doc.text('Date', 72.5, 10)
-        doc.text('TruckNo', 92.5, 10)
-        doc.text('Account Details', 135.5, 10)
-        //Headers End
-        //Line after headers
-        doc.setDrawColor(0, 0, 0);
-        doc.setLineWidth(0.5);
-        doc.line(0, 12, 210, 12);
-        //Line after headers
-        //Static Part End
-        //Dynamic Part Start
-        doc.setFontSize('10');
-        doc.setFontType('normal');
-        doc.setTextColor(0, 0, 0);
-        i = 16;
-      }
-      let K = 0
-      doc.setFontSize('10');
-      doc.text(this.temp[z].comments, 38.5, i);//comments
-      for (let k = 0; k < data.length; k++) {
-        doc.setFontSize('10');
-        doc.text(String(this.temp[z].truckData[k].amount), 16, i);//amount
-
-        doc.setFontSize('10');
-        doc.text(String(this.temp[z].truckData[k].pageno), 61.5, i);//pgno
-        doc.setFontSize('10');
-        doc.text(this.temp[z].truckData[k].date.slice(8, 10) + '/' + this.temp[z].truckData[k].date.slice(5, 7) + '/' + this.temp[z].truckData[k].date.slice(0, 4), 72.5, i);//date
-        doc.setFontSize('10');
-        doc.text(this.temp[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
-        K = k;
-        i = i + 6;
-      }
-      doc.line(0, i + 7, 210, i + 7);
-
-
-
-      //console.log(i - (data.length * 6));
-      // doc.line(37, 29, 37, 29);
-      // doc.line(61, 29, 61, 29);
-      // doc.line(72, 29, 72, 29);
-      // doc.line(92, 29, 92, 29);
-      // doc.line(135, 29, 135, 29);
-      doc.line(37, i - (data.length * 6) - 5, 37, i + 7);
-      doc.line(61, i - (data.length * 6) - 5, 61, i + 7);
-      doc.line(72, i - (data.length * 6) - 5, 72, i + 7);
-      doc.line(92, i - (data.length * 6) - 5, 92, i + 7);
-      doc.line(135, i - (data.length * 6) - 5, 135, i + 7);
-
-      doc.setFontSize('10');
-      doc.text(this.temp[z].accountName, 136.5, i - (data.length * 6));//accno
-      doc.text(String(this.temp[z].accountNumber), 136.5, i + 6 - (data.length * 6));//accname
-      doc.text(this.temp[z].ifsc + '-' + this.temp[z].bankName, 136.5, i + 12 - (data.length * 6));//ifsc-bankname
-
-      i = i + 12;
+    //vertical lines
+    doc.line(30, 20, 30, 25);//srno
+    doc.line(55, 20, 55, 25);//date
+    doc.line(83, 20, 83, 25);//truckno
+    doc.line(100, 20, 100, 25);//lrno
+    doc.line(125, 20, 125, 25);//credit
+    doc.line(150, 20, 150, 25);//debit
+    doc.line(180, 20, 180, 20);//balance
+    //vertical lines
+    if (this.temp[0]['bf'] == true) {
+      y = y + 5;
+      starty = 31;
+      doc.text(this.temp[0].partyName, 30, y)//partyname
+      doc.text(String(this.temp[0].value), 155, y)//partyname
+      doc.line(20, 31, 210, 31);
+      doc.line(150, 25, 150, 31);
+      y = y + 6;
     }
-    //Dynamic Part End
-    doc.save(dateFormat + '.pdf')
+
+    for (let i = 1; i < this.temp.length; i++) {
+      doc.text(String(i), 23, y)//partyname
+      doc.text(this.temp[i].date, 32, y)//partyname
+
+      if (this.temp[i].type === 'buy') {
+        doc.text(String(this.temp[i].lrno), 88, y)//lrno
+        doc.text(this.temp[i].truckNo, 57, y)//truckno
+      } else {
+        doc.text(String('-'), 88, y)//lrno
+        doc.text(String('-'), 57, y)//truckno
+      }
+      if (this.temp[i].type === 'buy') {
+        doc.text(String(this.temp[i].amount), 108, y)//partyname
+        doc.text(String('-'), 133, y)//partyname
+      } else {
+        doc.text(String(this.temp[i].amount), 133, y)//partyname
+        doc.text(String('-'), 108, y)//partyname
+      }
+
+      doc.text(String(this.temp[i].value), 155, y)//partyname
+      doc.line(20, y + 1, 210, y + 1);//line after header
+      y = y + 5;
+    }
+
+    //vertical lines
+    doc.line(30, starty, 30, y - 4);//srno
+    doc.line(55, starty, 55, y - 4);//date
+    doc.line(83, starty, 83, y - 4);//truckno
+    doc.line(100, starty, 100, y - 4);//lrno
+    doc.line(125, starty, 125, y - 4);//credit
+    doc.line(150, starty, 150, y - 4);//debit
+    doc.line(180, 20, 180, y - 4);//balance
+    //vertical lines
+
+
+    doc.save('tp2' + '.pdf')
   }
 
   login() {

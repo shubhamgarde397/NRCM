@@ -86,7 +86,7 @@ export class handleFunction {
         return convertedDate;
     }
 
-    getDate(day, monthno, year) {
+    getDate(day, monthno, year) {//yymmdd
         if (day < 10 && day > 0) {
             if (monthno < 10 && monthno > 0) { return year + "-0" + monthno + "-0" + day; }
             else { return year + "-" + monthno + "-0" + day; }
@@ -95,6 +95,13 @@ export class handleFunction {
             if (monthno < 10 && monthno > 0) { return year + "-0" + monthno + "-" + day; }
             else { return year + "-" + monthno + "-" + day; }
         }
+    }
+
+    getDateddmmyy(date) {
+        let day=date.slice(8);
+        let monthno=date.slice(5,7);
+        let year=date.slice(0,4);
+       return day+'-'+monthno+'-'+year;
     }
 
     getMoney() {

@@ -13,23 +13,10 @@ export class WelcomePageComponent implements OnInit {
   public avatar: any;
   public bin: number;
   binNumber = [];
-  arrOfThoughts = [];
-  public commonArray;
-  public thoughtforTheDay;
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService,
     public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService, public sec: SecurityCheckService) { }
 
   ngOnInit() {
-    setTimeout(() => {
-      this.fetchData();
-    }, 1000);
-
-  }
-
-  fetchData() {
-    this.commonArray = this.sec.commonArray;
-    this.arrOfThoughts = this.commonArray.thoughts;
-    this.thoughtforTheDay = this.arrOfThoughts[(Math.floor((Math.random() * this.arrOfThoughts.length) + 1)) - 1].thought;
   }
 
   findBin() {

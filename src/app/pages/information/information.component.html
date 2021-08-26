@@ -2,31 +2,12 @@
   <div class="row">
 
     <div class="col-sm-2">
-
-
       <a class="btn btn-warning btn-block" routerLink="GST_HANDLER" *ngIf="role==1||role==2">GST</a>
       <a class="btn btn-warning btn-block" routerLink="OWNER_HANDLER" *ngIf="role==1||role==2">Owner</a>
       <a class="btn btn-warning btn-block" routerLink="IMP_GST_HANDLER" *ngIf="role==1||role==2">Imp GST</a>
-      <a class="btn btn-warning btn-block" routerLink="DRIVER_HANDLER" *ngIf="role==1||role==2">Driver</a>
-      <a class="btn btn-warning btn-block" routerLink="REGULAR_PARTY_HANDLER" *ngIf="role==1||role==2">Regular Party</a>
-      <a class="btn btn-warning btn-block" routerLink="REGULAR_TRUCK_HANDLER" *ngIf="role==1||role==2">Regular Truck</a>
       <a class="btn btn-warning btn-block" routerLink="VILLAGE_HANDLER" *ngIf="role==1||role==2">Village</a>
-      <a class="btn btn-warning btn-block" routerLink="BANKDETAILS_HANDLER" *ngIf="role==1||role==2">Bank Details</a>
-      <a class="btn btn-warning btn-block" routerLink="BANKNAME_HANDLER" *ngIf="role==1||role==2">Bank Name</a>
-      <a class="btn btn-warning btn-block" routerLink="TRUCKBANKDETAILS_HANDLER" *ngIf="role==1||role==2">Truck Bank
-        Details</a>
-      <a class="btn btn-warning btn-block" routerLink="OWNER_DEATILED_HANDLER" *ngIf="role==1||role==2">Owner
-        Details</a>
-      <a class="btn btn-warning btn-block" routerLink="MonthName_Handler" *ngIf="role==1||role==2">Months</a>
-
-
-
-
     </div>
-    <!-- <div class="col-sm-2" *ngIf="!toggle"></div> -->
-
     <div class="col-sm-10">
-
       <router-outlet></router-outlet>
     </div>
 

@@ -20,10 +20,8 @@ import { DrawerComponent } from './drawer/drawer.component';
 import { HandleDataService } from './common/services/Data/handle-data.service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
-import { ChangeComponent } from './pages/Change/change/change.component';
 import { ExcelService } from './common/services/sharedServices/excel.service';
-import { HashLocationStrategy, Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
-// PathLocationStrategy,HashLocation
+import { HashLocationStrategy, Location, LocationStrategy } from '@angular/common';
 import {
   MatButtonModule,
   MatInputModule,
@@ -34,7 +32,6 @@ import {
   MatSidenavModule
 } from '@angular/material';
 import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
-import { MonthNamesComponent } from './pages/month-names/month-names.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
 import { C2wComponent } from './pages/C2W/c2w/c2w.component';
 
@@ -49,9 +46,7 @@ import { C2wComponent } from './pages/C2W/c2w/c2w.component';
     DrawerComponent,
     PageNotFoundComponent,
     MainPageComponent,
-    ChangeComponent,
     WhatsappTowhysappComponent,
-    MonthNamesComponent,
     PDFComponent,
     C2wComponent
   ],

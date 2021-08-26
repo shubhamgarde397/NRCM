@@ -1,10 +1,9 @@
-import { Component, OnInit, Input, ViewChild, QueryList, ElementRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiCallsService } from '../../common/services/ApiCalls/ApiCalls.service';
 import { Location } from '@angular/common';
 import { HandleDataService } from '../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
-import { NotificationDisplayComponent } from '../Notification/notification-display/notification-display.component';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
@@ -46,7 +45,7 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.URL = window.location.href.split('/')[1];
+    this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.username;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
     // this.role = 1;//comment

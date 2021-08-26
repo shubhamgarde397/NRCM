@@ -14,33 +14,6 @@
         </a>
       </li>
 
-      <!-- <li class="dropdown" *ngIf="role==1||role==2">
-        <a class="dropdown-toggle" data-toggle="dropdown">Company
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <a routerLink="Finolex_Handler">Finolex</a>
-          </li>
-        </ul>
-      </li> -->
-
-      <li class="dropdown" *ngIf="role==1||role==2||role==3" disabled>
-        <a class="dropdown-toggle" data-toggle="dropdown" disabled>Book
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <a routerLink="Booking_Handler">Daily Bookings</a>
-          </li>
-          <li>
-            <a routerLink="LRNumber_HANDLER" *ngIf="role==1||role==2">LR Number</a>
-          </li>
-          <li>
-            <a routerLink="BCE_HANDLER" *ngIf="role==1||role==2">BookingCashExpenses</a>
-          </li>
-        </ul>
-      </li>
 
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown">Daily Truck Details
@@ -50,9 +23,6 @@
           <li *ngIf="role==1||role==2">
             <a routerLink="TURN_BOOK_HANDLER">Turn Book</a>
           </li>
-          <!-- <li *ngIf="role==1||role==2">
-            <a routerLink="DAILY_LOADING_HANDLER">Daily Loading</a>//github check
-          </li> -->
           <li>
             <a routerLink="BALANCE_HIRE_HANDLER">Balance Hire</a>
           </li>
@@ -67,36 +37,7 @@
 
       </li>
 
-      <!-- <li class="dropdown" *ngIf="role==1||role==2">
-        <a class="dropdown-toggle" data-toggle="dropdown">DailyData
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <a routerLink="DailyData_HANDLER">Daily Data</a>
-          </li>
 
-
-        </ul>
-      </li> -->
-
-      <!-- <li class="dropdown" *ngIf="role==1||role==2">
-        <a class="dropdown-toggle" data-toggle="dropdown" routerLink="TPTHire_HANDLER">Tpt Hire
-          <span class="caret"></span>
-        </a>
-
-      </li> -->
-
-      <!-- <li class="dropdown" *ngIf="role==1||role==2">
-        <a class="dropdown-toggle" data-toggle="dropdown">CashExpenses
-          <span class="caret"></span>
-        </a>
-        <ul class="dropdown-menu">
-          <li>
-            <a routerLink="Truck_CASH_EXPENSES_HANDLER">Cash Expenses</a>
-          </li>
-        </ul>
-      </li> -->
 
       <li class="dropdown" *ngIf="role==1||role==2">
 

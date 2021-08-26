@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Http, Response } from '@angular/http';
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
-import { Validators, FormsModule } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
@@ -14,15 +13,12 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 })
 export class BalancehireaddComponent implements OnInit {
   public myFormGroup: FormGroup;
-  public submitted = false;
   public date = new Date();
   public truckno = '';
   public truckDate = '';
   public todayDate;
   public today;
-  public dateFromUI;
   public truckArray = [];
-  public accountDetais = [];
   public commonArray;
   public trucklist;
   public gAD;
@@ -31,7 +27,7 @@ export class BalancehireaddComponent implements OnInit {
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
-    this.getTrucks();
+    this.trucklist = this.commonArray.ownerdetails;
     this.todayDate = this.date.getDate();
     this.today = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
 
@@ -44,19 +40,10 @@ export class BalancehireaddComponent implements OnInit {
       ifsc: '',
       accountNumber: '',
       accountName: ''
-    });//todayDate
+    });
+  }
 
-  }
-  getTrucks() {
-    this.trucklist = this.commonArray.ownerdetails;
-  }
   addtrucks() {
-
-    //add trucks to an array say truckArray
-    /**
-     * truckarray=[]//declare in ngoninit()
-     * truckarray.push(data)
-     */
     if (this.truckDate === '' || this.truckno === '' || this.myFormGroup.value.pageno === '' || this.myFormGroup.value.amount === '') { alert('Cant enter empt entries!') } else {
       let tempObj = {};
       tempObj['date'] = this.truckDate;
@@ -85,15 +72,12 @@ export class BalancehireaddComponent implements OnInit {
   }
 
   saveBalanceHire({ value, valid }: { value: {}, valid: boolean }) {
-
-    //send mainarrray to be inserted in db
-    this.submitted = true;
     let tempObj = {}
     tempObj['method'] = 'insert';
     tempObj['tablename'] = 'BalanceHire';
     tempObj['todayDate'] = this.today;
     tempObj['truckData'] = this.truckArray;
-    let aD = this.getADD();
+    this.getADD();
     tempObj['bankName'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['bankName'];
     tempObj['ifsc'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['ifsc'];
     tempObj['accountNumber'] = (this.gAD['accountDetails'].length > 1 || this.gAD['accountDetails'].length == 0) ? '' : this.gAD['accountDetails'][0]['accountNumber'];
@@ -120,20 +104,13 @@ export class BalancehireaddComponent implements OnInit {
         this.todayDate = this.todayDate + 1;
         this.today = this.handleF.getDate(this.todayDate, (this.date.getMonth() + 1), this.date.getFullYear());
         break;
-      case 'realDate':
-        this.today = this.dateFromUI;
-        break;
     }
   }
 
-  deleteRow(data, j) {
+  deleteRow(j) {
     if (confirm('Are you sure?')) {
       this.truckArray.splice(j, 1);
     }
-  }
-
-  back() {
-    this.submitted = !this.submitted;
   }
 }
 

@@ -10,9 +10,7 @@ import {
 } from 'amazon-cognito-identity-js'
 import { BehaviorSubject, Observable } from 'rxjs';
 import { SecurityCheckService } from '../Data/security-check.service';
-import { MatLineSetter } from '@angular/material';
 import { Router } from '@angular/router';
-import { promise } from 'protractor';
 import { ObsServiceService } from '../Data/obs-service.service';
 import { HandleDataService } from '../Data/handle-data.service';
 
