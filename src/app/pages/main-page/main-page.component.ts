@@ -26,200 +26,199 @@ export class MainPageComponent implements OnInit {
       "lrno": 6909,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "KA01 AH 7778",
       "date": "2021-01-06",
-      "amount": 44000,
-      "value": 44000
+      "amount": 44000
     },
     {
       "lrno": 6970,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN28 AR 0660",
       "date": "2021-01-08",
-      "amount": 41500,
-      "value": 85500
+      "amount": 41500
     },
     {
       "lrno": 6978,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN58 BA 5305",
       "date": "2021-01-18",
-      "amount": 41500,
-      "value": 127000
+      "amount": 41500
     },
     {
       "lrno": 6935,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN64 S 2077",
       "date": "2021-01-22",
-      "amount": 44000,
-      "value": 171000
+      "amount": 44000
     },
     {
       "date": "2021-02-01",
       "amount": 215000,
       "type": "payment",
-      "partyName": "Universal Marketing",
-      "value": -44000
+      "partyName": "Universal Marketing"
     },
     {
       "lrno": 6998,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN58 AV 9982",
       "date": "2021-02-06",
-      "amount": 41500,
-      "value": -2500
+      "amount": 41500
     },
     {
       "lrno": 7108,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN64 L 4871",
       "date": "2021-02-13",
-      "amount": 44000,
-      "value": 41500
+      "amount": 44000
     },
     {
       "lrno": 7111,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN25 AL 2516",
       "date": "2021-02-15",
-      "amount": 45000,
-      "value": 86500
+      "amount": 45000
     },
     {
       "lrno": 7119,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN34 AD 2144",
       "date": "2021-02-17",
-      "amount": 44000,
-      "value": 130500
+      "amount": 44000
     },
     {
       "lrno": 7067,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN93 5927",
       "date": "2021-03-01",
-      "amount": 44500,
-      "value": 175000
+      "amount": 44500
     },
     {
       "lrno": 7197,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN29 BL 9891",
       "date": "2021-03-05",
-      "amount": 47000,
-      "value": 222000
+      "amount": 47000
     },
     {
       "lrno": 7187,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "MH12 QW 3212",
       "date": "2021-03-05",
-      "amount": 47000,
-      "value": 269000
+      "amount": 47000
     },
     {
       "lrno": 7196,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "MH12 QW 3059",
       "date": "2021-03-05",
-      "amount": 47000,
-      "value": 316000
+      "amount": 47000
     },
     {
       "lrno": 7077,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN57 AX 2599",
       "date": "2021-03-11",
-      "amount": 44500,
-      "value": 360500
+      "amount": 44500
     },
     {
       "lrno": 7088,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN32 J 8469",
       "date": "2021-03-20",
-      "amount": 42500,
-      "value": 403000
+      "amount": 42500
     },
     {
       "lrno": 7273,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN83 C 1074",
       "date": "2021-03-25",
-      "amount": 47000,
-      "value": 450000
+      "amount": 47000
     },
     {
       "lrno": 7309,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN66 Z 1909",
       "date": "2021-04-05",
-      "amount": 44500,
-      "value": 494500
+      "amount": 44500
     },
     {
       "lrno": 7318,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN32 AR 7320",
       "date": "2021-04-09",
-      "amount": 44500,
-      "value": 539000
+      "amount": 44500
     },
     {
       "lrno": 7330,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN38 CX 3299",
       "date": "2021-04-19",
-      "amount": 44500,
-      "value": 583500
+      "amount": 44500
     },
     {
       "lrno": 7347,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN54 S 7843",
       "date": "2021-04-24",
-      "amount": 44500,
-      "value": 628000
+      "amount": 44500
     },
     {
       "lrno": 7350,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN58 BA 5305",
       "date": "2021-04-29",
-      "amount": 45500,
-      "value": 673500
+      "amount": 45500
     },
     {
       "lrno": 7584,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN38 CU 6769",
       "date": "2021-06-25",
-      "amount": 44500,
-      "value": 718000
+      "amount": 44500
     },
     {
       "lrno": 7600,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN58 BD 4917",
       "date": "2021-07-06",
-      "amount": 44500,
-      "value": 762500
+      "amount": 44500
     },
     {
       "lrno": 7719,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN93 B 2604",
       "date": "2021-07-17",
-      "amount": 44500,
-      "value": 807000
+      "amount": 44500
     },
     {
       "lrno": 7713,
       "type": "buy",
       "partyName": "Universal Marketing",
+      "truckNo": "TN64 H 2272",
       "date": "2021-07-22",
-      "amount": 44500,
-      "value": 851500
+      "amount": 44500
     }
   ]
 
@@ -252,40 +251,85 @@ export class MainPageComponent implements OnInit {
   }
   download() {//threshhold is 295
     var doc = new jsPDF()
-    doc.setFontSize('30');
+    doc.setFontSize('25');
     doc.setFontType('bold');
-    doc.text('Nitin', 20, 20)//partyname
+    doc.text('Nitin', 15, 15)//partyname
+    doc.setFontSize('10');
+    doc.text('08-01-2020 to 08-08-2021', 165, 19)//date
+    doc.setFontSize('25');
+    doc.setLineWidth(0.5);
+    doc.line(0, 20, 210, 20);//line after main header
+    doc.line(20, 20, 20, 300);//punching area line
+    //headers
+    doc.setFontSize('10');
+    let y = 24;
+    let starty = 24;
+    doc.text('Sr', 23, y)//partyname
+    doc.text('Date', 38, y)//partyname
+    doc.text('TruckNo', 57, y)//partyname
+    doc.text('Lrno', 88, y)//partyname
+    doc.text('Credit', 108, y)//partyname
+    doc.text('Debit', 133, y)//partyname
+    doc.text('Balance', 155, y)//partyname
+    doc.text('Notes', 182, y)//partyname
+    //headers
+    doc.line(0, 25, 210, 25);//line after header
 
-    doc.setLineWidth(0.8);
-    doc.line(0, 28, 210, 28);
-    doc.line(20, 28, 20, 300);
-
-    doc.setFontSize('12');
-    doc.text('Srno', 23, 35)//partyname
-    doc.text('Date', 48, 35)//partyname
-    doc.text('Lrno', 78, 35)//partyname
-    doc.text('Amount', 115, 35)//partyname
-    doc.text('Balance', 165, 35)//partyname
-    doc.line(0, 38, 210, 38);
-    doc.line(20, 28, 20, 300);
-
-    doc.line(38, 28, 38, 38);
-    doc.line(68, 28, 68, 38);
-    doc.line(98, 28, 98, 38);
-    doc.line(148, 28, 148, 38);
-
+    //vertical lines
+    doc.line(30, 20, 30, 25);//srno
+    doc.line(55, 20, 55, 25);//date
+    doc.line(83, 20, 83, 25);//truckno
+    doc.line(100, 20, 100, 25);//lrno
+    doc.line(125, 20, 125, 25);//credit
+    doc.line(150, 20, 150, 25);//debit
+    doc.line(180, 20, 180, 20);//balance
+    //vertical lines
     if (this.temp[0]['bf'] == true) {
-      doc.text(this.temp[0].partyName, 30, 45)//partyname
-      doc.text(String(this.temp[0].value), 165, 45)//partyname
-      doc.line(0, 48, 210, 48);
-      doc.line(148, 38, 148, 48);
+      y = y + 5;
+      starty = 31;
+      doc.text(this.temp[0].partyName, 30, y)//partyname
+      doc.text(String(this.temp[0].value), 155, y)//partyname
+      doc.line(20, 31, 210, 31);
+      doc.line(150, 25, 150, 31);
+      y = y + 6;
     }
 
+    for (let i = 1; i < this.temp.length; i++) {
+      doc.text(String(i), 23, y)//partyname
+      doc.text(this.temp[i].date, 32, y)//partyname
 
-    doc.setFontSize('15');
+      if (this.temp[i].type === 'buy') {
+        doc.text(String(this.temp[i].lrno), 88, y)//lrno
+        doc.text(this.temp[i].truckNo, 57, y)//truckno
+      } else {
+        doc.text(String('-'), 88, y)//lrno
+        doc.text(String('-'), 57, y)//truckno
+      }
+      if (this.temp[i].type === 'buy') {
+        doc.text(String(this.temp[i].amount), 108, y)//partyname
+        doc.text(String('-'), 133, y)//partyname
+      } else {
+        doc.text(String(this.temp[i].amount), 133, y)//partyname
+        doc.text(String('-'), 108, y)//partyname
+      }
+
+      doc.text(String(this.temp[i].value), 155, y)//partyname
+      doc.line(20, y + 1, 210, y + 1);//line after header
+      y = y + 5;
+    }
+
+    //vertical lines
+    doc.line(30, starty, 30, y - 4);//srno
+    doc.line(55, starty, 55, y - 4);//date
+    doc.line(83, starty, 83, y - 4);//truckno
+    doc.line(100, starty, 100, y - 4);//lrno
+    doc.line(125, starty, 125, y - 4);//credit
+    doc.line(150, starty, 150, y - 4);//debit
+    doc.line(180, 20, 180, y - 4);//balance
+    //vertical lines
 
 
-    doc.save('tp1' + '.pdf')
+    doc.save('tp2' + '.pdf')
   }
 
   login() {

@@ -52,9 +52,20 @@
                 </option>
               </select>
             </div>
-
           </div>
-          <div class="row">
+<div class="row">
+          <div class="col-sm-4" *ngIf="buttonOption==='4'">
+            <select class="form-control" [(ngModel)]="displayType" (change)="findDisplayOption()">
+              <option *ngFor="let i of buttonOptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
+            </select>
+          </div>
+          <div class="col-sm-2" *ngIf="buttonOption==='4'">
+          <button mat-raised-button class="btn btn-primary" style="width: 100%;margin-top: 10px;" disabled>
+            {{displayValue}}
+          </button>
+        </div>
+      </div>
+          <div class="row" *ngIf="(displayOption==='5')||(displayOption==='0')">
             <div class="col-sm-4">
               <input type="date" class="form-control col-sm-2" [(ngModel)]="date1">
             </div>
@@ -62,6 +73,15 @@
               <input type="date" class="form-control col-sm-2" [(ngModel)]="date2">
             </div>
           </div>
+
+          <div class="row" *ngIf="displayOption==='4'">
+            <div class="col-sm-4">
+             <select class="form-control" [(ngModel)]="monthName" (change)="setDateMonth()">
+              <option *ngFor="let i of monthNames;let j = index;" value={{i}}>{{i}}</option>
+            </select>
+          </div>
+          </div>
+
         </div>
         <!-- Both -->
 
@@ -111,7 +131,7 @@
           </tr>
         </tbody>
       </table>
-      <button mat-raised-button type="button" (click)="downloadBank()" class="btn-danger btn-sm btn-just-icon">
+      <button mat-raised-button type="button" (click)="download()" class="btn-danger btn-sm btn-just-icon">
         Download
       </button>
     </div>
