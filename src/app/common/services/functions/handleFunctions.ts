@@ -1,4 +1,5 @@
 import { HttpHeaders } from '@angular/common/http';
+import { parse } from 'querystring';
 import { Consts } from '../../constants/const';
 export class handleFunction {
 
@@ -62,20 +63,44 @@ export class handleFunction {
             return data;
         }
     }
-    generateMonthName(month) {
-        switch (month) {
-            case "01": return "January"
-            case "02": return "February"
-            case "03": return "March"
-            case "04": return "April"
-            case "05": return "May"
-            case "06": return "June"
-            case "07": return "July"
-            case "08": return "August"
-            case "09": return "September"
-            case "10": return "October"
-            case "11": return "November"
-            case "12": return "December"
+    generateMonthName(month) {//month is a string of number eg: "05"
+        let months=["January","February","March","April","May","June","July","August","September","October","November","December"];
+        return months[parseInt(month)-1]
+    }
+
+    noOfDaysInMonth(month,year){//no of days in a month, pass the month number and get the no. of months in that month
+        let months=["T","O","T","F","T","F","T","T","F","T","F","T"]
+        let days=months[parseInt(month)-1]==="T"?31:(months[parseInt(month)-1]==="F"?30:(((0 == year % 4) && (0 != year % 100) || (0 == year % 400))?29:28))
+        return days
+    }
+
+    subtractDay(day,month,year,method){//day,month,year,method=>add/subtract
+        let date=[];
+        let day1;
+        let month1;
+        let year1;
+        switch (method) {
+            case 'subtract':
+            date=[];//day,month,year
+            day1=parseInt(day)>1?parseInt(day)-1:this.noOfDaysInMonth(parseInt(month)-1,year);
+            date.push(day1);
+            month1=parseInt(day)>1?parseInt(month):(parseInt(month)===1?12:parseInt(month)-1);
+            date.push(month1);
+            year1=parseInt(month)===1?parseInt(year)-1:parseInt(year);
+            date.push(year1);
+            return date;
+        case 'add':
+            date=[];//day,month,year
+            let noofdays=this.noOfDaysInMonth(parseInt(month),year)
+
+            day1=parseInt(day)<noofdays?parseInt(day)+1:1;
+            date.push(day1);
+
+            month1=parseInt(day)<noofdays?parseInt(month):(parseInt(month)===12?1:parseInt(month)+1);//month has 28,29,30,31 days
+            date.push(month1);
+            year1=(parseInt(month)===12&&parseInt(day)===31)?parseInt(year)+1:parseInt(year);
+            date.push(year1);
+            return date;
         }
     }
 

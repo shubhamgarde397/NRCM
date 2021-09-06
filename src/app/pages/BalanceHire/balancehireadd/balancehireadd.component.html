@@ -11,8 +11,10 @@
         Ahead
       </button>
     </div>
-
-    <h3>{{today}}</h3>
+<div class="row">
+    <div class="col-sm-6"><h3>{{today|date:'dd-MM-yyyy'}}</h3></div>
+    <div class="col-sm-6"><h4 *ngIf="totalCount>0">Total Count : {{totalCount}}</h4></div>
+  </div>
     <!-- TruckDate -->
     <div class="form-group row">
       <div class="col-xs-3">

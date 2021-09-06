@@ -102,7 +102,7 @@ export class BalancehiredisplayComponent implements OnInit {
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
       });
   };
-  find2(data, type, set = true) {
+  find2(data, type, set = true) {//set the  data['todayDate'] = this.selectedDate; to the data['todayDate']
     if (set) {
       switch (type) {
         case 'year':
@@ -148,8 +148,13 @@ export class BalancehiredisplayComponent implements OnInit {
         else {
           this.balanceDate = res.balanceData;
         }
+        this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
+        this.selectedDate=this.createdDate;
       })
   }
+
+  // {"method":"update","tablename":"BalanceHire","todayDate":"2021-09-04","print":true,"part":0,"user":"shubham"}
+  //{"method":"update","tablename":"BalanceHire","print":true,"part":0,"user":"shubham"}
 
 
   deleteBH(data) {
@@ -389,6 +394,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
     let pageno = 1;
     let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
+    let totalAmount=0;
     var doc = new jsPDF();
     //Static Part Start
     //Date
@@ -439,6 +445,7 @@ export class BalancehiredisplayComponent implements OnInit {
     doc.setTextColor(0, 0, 0);
     // doc.text('Shubham is awesome', 1, i);
     for (let z = 0; z < this.balanceDate.length; z++) {
+      totalAmount=0;
       let data = this.balanceDate[z].truckData;
 
 
@@ -506,17 +513,13 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
         K = k;
         i = i + 6;
+        totalAmount=totalAmount+this.balanceDate[z].truckData[k].amount;
+      }
+      if(data.length>1){
+      doc.line(5, i-4, 32, i-4);
+      doc.text(String(totalAmount),16,i)
       }
       doc.line(0, i + 7, 210, i + 7);
-
-
-
-      //console.log(i - (data.length * 6));
-      // doc.line(37, 29, 37, 29);
-      // doc.line(61, 29, 61, 29);
-      // doc.line(72, 29, 72, 29);
-      // doc.line(92, 29, 92, 29);
-      // doc.line(135, 29, 135, 29);
       doc.line(37, i - (data.length * 6) - 5, 37, i + 7);
       doc.line(61, i - (data.length * 6) - 5, 61, i + 7);
       doc.line(72, i - (data.length * 6) - 5, 72, i + 7);
