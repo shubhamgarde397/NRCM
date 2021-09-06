@@ -22,6 +22,7 @@ export class BalancehireaddComponent implements OnInit {
   public commonArray;
   public trucklist;
   public gAD;
+  public totalCount=0;
   constructor(public apiCallservice: ApiCallsService, public handleF: handleFunction, public formBuilder: FormBuilder,
     public securityCheck: SecurityCheckService) { }
 
@@ -29,7 +30,7 @@ export class BalancehireaddComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.trucklist = this.commonArray.ownerdetails;
     this.todayDate = this.date.getDate();
-    this.today = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
+    this.today = this.handleF.getDate(this.handleF.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
 
     this.myFormGroup = this.formBuilder.group({
       truckno: ['', Validators.required],
@@ -55,6 +56,7 @@ export class BalancehireaddComponent implements OnInit {
       this.myFormGroup.patchValue({ truckDate: '' });
       this.myFormGroup.patchValue({ pageno: '' });
       this.myFormGroup.patchValue({ amount: '' });
+      this.totalCount=this.totalCount+1;
     }
 
   }
@@ -93,16 +95,18 @@ export class BalancehireaddComponent implements OnInit {
   }
 
   leftRight(LR) {
+    let tempArray;
+    let date;
     switch (LR) {
       case 'back':
-        let month = new Date().getMonth() + 1;
-        let day = new Date().getDate();
-        this.todayDate = this.todayDate - 1;
-        this.today = this.handleF.getDate(this.todayDate, (this.date.getMonth() + 1), this.date.getFullYear());
+        tempArray=this.today.split('-');
+        date=this.handleF.subtractDay(tempArray[2],tempArray[1],tempArray[0],'subtract')
+        this.today = this.handleF.getDate(this.handleF.generate2DigitNumber(date[0]), date[1], date[2]);
         break;
       case 'ahead':
-        this.todayDate = this.todayDate + 1;
-        this.today = this.handleF.getDate(this.todayDate, (this.date.getMonth() + 1), this.date.getFullYear());
+        tempArray=this.today.split('-');
+        date=this.handleF.subtractDay(tempArray[2],tempArray[1],tempArray[0],'add')
+        this.today = this.handleF.getDate(this.handleF.generate2DigitNumber(date[0]), date[1], date[2]);
         break;
     }
   }
