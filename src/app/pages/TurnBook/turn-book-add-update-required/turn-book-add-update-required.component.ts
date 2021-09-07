@@ -132,8 +132,6 @@ export class TurnBookAddUpdateRequiredComponent implements OnInit {
   storeBookingData1({ value, valid }: { value: [{}], valid: boolean }) {
     this.spinnerService.show();
     let formBody = {};
-    console.log(value);
-
     this.monthno = this.handlefunction.getMonthNumber(this.m);
     formBody['loadingDate'] = value['loadingDate'];
     formBody['partyid'] = this.gstdetailslistid._id;

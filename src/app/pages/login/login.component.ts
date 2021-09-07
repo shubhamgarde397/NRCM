@@ -27,6 +27,8 @@ export class LoginComponent implements OnInit {
   public financialYear;
   public dbName = 'NRCM_Information';
   public isLoginSuccess = 'false';
+  public userTypeHTML;
+  public userTypeTS;
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -41,19 +43,23 @@ export class LoginComponent implements OnInit {
     this.model = new login(this.username, this.password);
     this.myFormGroup = this.formBuilder.group({
       username: [this.model.username, Validators.required],
-      password: [this.model.password, Validators.required]
+      password: [this.model.password, Validators.required],
+      type: [this.model.type, Validators.required]
     });
     this.apiCallservice.authSuccess.subscribe(
       (res: any) => { this.isLoginSuccess = res; }
     );
     this.apiCallservice.initAuth();
   }
+  setUser(){
+    this.userTypeTS=this.userTypeHTML;
+  }
 
   login({ value, valid }: { value: login, valid: boolean }) {
     this.spinnerService.show();
     // this.apiCallservice.logout();
     this.security.setUsername(value.username);
-    this.apiCallservice.signIn(value.username, value.password);
+    this.apiCallservice.signIn(value.username, value.password,parseInt(value.type));
   }
 
 

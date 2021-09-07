@@ -160,7 +160,6 @@ export class TurnBookAddComponent implements OnInit {
             tempObj1['reference'] = "";
             tempObj1['preferences'] = [];
             tempObj1['_id'] = res['_id'].split('+')[1];
-            console.log(tempObj1)
             this.securityCheck.commonArray['ownerdetails'].push(tempObj1);
             alert('Inserted Successfully!');
           } else {

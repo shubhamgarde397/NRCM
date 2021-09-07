@@ -101,6 +101,8 @@ export class DisplayComponent implements OnInit {
 
     }else if(this.buttonOption==='4'){
       this.displayOption='1';
+    }else if(this.buttonOption==='2'){
+      this.displayOption='5';
     }else{
       this.displayOption='1';
     }
@@ -116,8 +118,6 @@ export class DisplayComponent implements OnInit {
     this.date2="2021-"+this.handleF.generate2DigitNumber(String(this.handleF.getMonthNumber(this.monthName)))+"-31"
   }
   find = function () {
-    console.log(this.monthName);
-    
     this.paymentData=[];
     let flag = false;
     let tempObj = {};

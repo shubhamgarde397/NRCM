@@ -201,9 +201,6 @@ export class TurnBookUpdateComponent implements OnInit {
   };
 
   change2 = function (data) {
-    console.log(data);
-    console.log(this.trucknoid);
-
     let tempObj = {};
     tempObj['ownerid'] = data.value.truckNo.split('+')[0];
     tempObj['turnbookDate'] = data.value.turnbookDate;

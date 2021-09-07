@@ -129,8 +129,9 @@
       <div class="row" *ngIf="buttonOption==='6'">
 
         <div class="col-sm-3">
-          <input type="date" class="form-control" [(ngModel)]="dateFilter" (input)="filter('date')"
+          <input type="date" class="form-control" [(ngModel)]="dateFilter"
             [disabled]="truckFilterB">
+            <button class="btn btn-warning" (click)="filter('date')">By Date</button>
         </div>
         <div class="col-sm-3">
           <input type="text" class="form-control" [(ngModel)]="truckFilter" [disabled]="dateFilterB">

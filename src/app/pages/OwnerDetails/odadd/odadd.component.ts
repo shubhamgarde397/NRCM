@@ -75,8 +75,6 @@ export class OdaddComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.ownerdetailslist = this.commonArray.ownerdetails;
     this.villagedetailslist = this.commonArray.villagenames;
-    console.log(this.villagedetailslist);
-
   }
 
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {

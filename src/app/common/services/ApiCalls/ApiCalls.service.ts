@@ -28,9 +28,11 @@ export class ApiCallsService {
   public headerPost: HttpHeaders;
   public URL = '';
   public username;
+  public typeofuser=3;
 
   constructor(public hs: HandleDataService, public http: Http, public httpClient: HttpClient, public securityCheck: SecurityCheckService, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) {
     this.username = this.securityCheck.username
+    this.typeofuser=this.securityCheck.typeofuser;
   }
   handleAWS(api, formBody = {}) {
     this.getAuthenticatedUser().getSession((err, session) => {
@@ -93,6 +95,7 @@ export class ApiCallsService {
 
   handleData_New_python(api, apiCall, formBody = {}, code) {
     formBody['user'] = this.username;
+    formBody['typeofuser'] = this.typeofuser;
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
     this.URL = this.getfullapi.getFullAPI(api);
@@ -121,7 +124,8 @@ export class ApiCallsService {
       // case 0: return this.http.post(`${'http://18.219.49.104:5000/' + api}`, formBody).pipe(map((res: any) => res));
     }
   }
-  signIn(username: string, password: string): void {
+  signIn(username: string, password: string,user:number): void {
+    this.securityCheck.setTypeOfUser(user);
     const authData = {
       Username: username,
       Password: password

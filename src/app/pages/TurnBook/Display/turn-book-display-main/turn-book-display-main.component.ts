@@ -158,11 +158,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     // for(i=0;i<years.length;i++){
     //   months=new Date().getFullYear()-years[i]==0?new Date().getMonth()+1:12;
     //   for(j=0;j<months;j++){
-    //     //console.log(String(i+2020).slice(-2),generate2DigitNumber(String(j+1)));
     //      date = new Date(String(i+2020)+'-'+generate2DigitNumber(String(j+1))+'-01');
     // month = date.toLocaleString('default', { month: 'short' });
-    // console.log(month+'-'+String(i+2020).slice(-2));
-    //     console.log("^"+String(i+2020)+"-"+generate2DigitNumber(String(j+1))+".*")
     //   }
     // }this works
   }
@@ -199,8 +196,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
           this.turnbooklist = this.handleData.giveBH();
           this.turnbooklist = [];
           let tempData = [];
-          console.log(tempList);
-          console.log(this.truckFilter);
           tempList.filter((res, index) => {
             if (res['truckno'].includes(this.truckFilter)) {
               tempData.push(res);
@@ -235,9 +230,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
           this.turnbooklist = this.handleData.giveBH();
           this.turnbooklist = [];
           let tempData = [];
-          console.log(tempList);
-          console.log(this.truckFilter2);
-
           tempList.filter((res, index) => {
             if (res['ownerDetails'][0]['truckno'].includes(this.truckFilter2)) {
               tempData.push(res);
@@ -386,10 +378,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.apiCallservice.handleData_New_python('turnbook', 1, tempData, 1)
       .subscribe((res: any) => {
         alert(res.Status);
-        let newData = this.turnbooklist.filter(r => r._id !== this.toSendid);
+        let newData = this.turnbooklistnew.filter(r => r._id !== this.toSendid);
+        this.handleData.saveTurn([]);
         this.handleData.saveTurn(newData);
-        this.turnbooklist = newData;
-
+        this.turnbooklistnew = newData;
         this.myFormGroup.patchValue({ turnbookDate: '' })
         this.myFormGroup.patchValue({ place: '' })
         this.myFormGroup.patchValue({ partyName: '' })
