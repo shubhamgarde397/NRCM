@@ -32,6 +32,7 @@ export class NavigationComponent implements OnInit {
   public role = 6;
   public nameOfUser = 'Guest';
   public URL = '';
+  public showThisMsg = false
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -54,7 +55,7 @@ export class NavigationComponent implements OnInit {
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
-
+    this.showThisMsg = this.securityCheck.typeofuser !== 1 ? true : false;
   }
 
   getInformationData() {

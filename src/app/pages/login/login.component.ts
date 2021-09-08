@@ -29,6 +29,7 @@ export class LoginComponent implements OnInit {
   public isLoginSuccess = 'false';
   public userTypeHTML;
   public userTypeTS;
+  public modalUser = false;
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -51,15 +52,20 @@ export class LoginComponent implements OnInit {
     );
     this.apiCallservice.initAuth();
   }
-  setUser(){
-    this.userTypeTS=this.userTypeHTML;
+  setUser() {
+    this.userTypeTS = this.userTypeHTML;
+
+    this.userTypeHTML !== 1 ? (this.myFormGroup.patchValue({ username: 'test123' })) : null;
+    this.userTypeHTML !== 1 ? (this.myFormGroup.patchValue({ password: 'test123' })) : null;
+    this.userTypeHTML !== 1 ? (alert('Temporary User')) : null;
+
   }
 
   login({ value, valid }: { value: login, valid: boolean }) {
     this.spinnerService.show();
     // this.apiCallservice.logout();
     this.security.setUsername(value.username);
-    this.apiCallservice.signIn(value.username, value.password,parseInt(value.type));
+    this.apiCallservice.signIn(value.username, value.password, parseInt(value.type));
   }
 
 

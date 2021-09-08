@@ -17,6 +17,7 @@ export class WelcomePageComponent implements OnInit {
     public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService, public sec: SecurityCheckService) { }
 
   ngOnInit() {
+
   }
 
   findBin() {

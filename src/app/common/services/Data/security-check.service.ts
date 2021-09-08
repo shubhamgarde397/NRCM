@@ -23,7 +23,7 @@ export class SecurityCheckService {
   public AUTH = false;
   public username;
   public role = 6;
-  public typeofuser=3;
+  public typeofuser = 3;
   constructor() {
     this.yearNames = this.generateYears();
   }
@@ -54,10 +54,10 @@ export class SecurityCheckService {
     this.role = role;
   }
 
-  setTypeOfUser(data){
-    this.typeofuser=data;
+  setTypeOfUser(data) {
+    this.typeofuser = data;
   }
-  getTypeOfUser(){
+  getTypeOfUser() {
     return this.typeofuser
   }
 
