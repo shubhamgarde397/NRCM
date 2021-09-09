@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   public userTypeHTML;
   public userTypeTS;
   public modalUser = false;
+  public loginButton = false;
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -54,18 +55,36 @@ export class LoginComponent implements OnInit {
   }
   setUser() {
     this.userTypeTS = this.userTypeHTML;
-
-    this.userTypeHTML !== 1 ? (this.myFormGroup.patchValue({ username: 'test123' })) : null;
-    this.userTypeHTML !== 1 ? (this.myFormGroup.patchValue({ password: 'test123' })) : null;
-    this.userTypeHTML !== 1 ? (alert('Temporary User')) : null;
-
+    if (this.userTypeHTML !== '1') {
+      this.myFormGroup.patchValue({ username: 'test123' });
+      this.myFormGroup.patchValue({ password: 'test123' });
+      this.loginButton = true;
+      this.myFormGroup.controls['username'].disable();
+      this.myFormGroup.controls['password'].disable();
+    } else {
+      this.loginButton = false;
+      this.myFormGroup.controls['username'].enable();
+      this.myFormGroup.controls['password'].enable();
+    }
   }
 
-  login({ value, valid }: { value: login, valid: boolean }) {
-    this.spinnerService.show();
-    // this.apiCallservice.logout();
-    this.security.setUsername(value.username);
-    this.apiCallservice.signIn(value.username, value.password, parseInt(value.type));
+  login({ value, valid }: { value: login, valid: boolean }, check) {
+    value = value === undefined ? {} : value;
+
+    if (check) {
+
+      if (this.userTypeHTML !== '1') {
+        value['username'] = 'test123';
+        value['password'] = 'test123';
+        value['type'] = '2';
+        this.security.setTypeOfUser(2);
+      }
+
+      this.spinnerService.show();
+      let type = value['username'] === 'test123' ? 2 : parseInt(value['type'])
+      this.security.setUsername(value['username']);
+      this.apiCallservice.signIn(value['username'], value['password'], type);
+    }
   }
 
 
