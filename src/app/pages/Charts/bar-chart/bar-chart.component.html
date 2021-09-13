@@ -1,0 +1,44 @@
+<div class="form-group row">
+  <div class="col-xs-3" *ngIf="typeOfChartDiv">
+    <select class="form-control" [(ngModel)]="selectedType" (change)="turnDiv('year')">
+      <option selected disabled>Select Type</option>
+      <option *ngFor="let own of types" value={{own.value}}>{{own.viewValue}}</option>
+    </select>
+  </div>
+  <div class="col-xs-3" *ngIf="yearDiv">
+    <select class="form-control" [(ngModel)]="selectedYear" (change)="turnDiv('month')">
+      <option selected disabled>Select Year</option>
+      <option *ngFor="let own of years">{{own}}</option>
+    </select>
+  </div>
+
+  <div class="col-xs-3"  *ngIf="monthDiv">
+    <select class="form-control" [(ngModel)]="selectedMonth"  (change)="turnDiv('button')">
+      <option selected disabled>Select Month</option>
+      <option *ngFor="let own of months">{{own}}</option>
+    </select>
+  </div>
+
+  <div class="col-xs-3" *ngIf="partyDiv">
+    <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
+      <option disabled selected>Select Name of The Party</option>
+      <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+        {{gst.name}}
+      </option>
+    </select>
+  </div>
+
+  <div class="col-xs-3"  *ngIf="buttonDiv">
+    <button class="btn btn-warning" (click)="callChart()">Fetch</button>
+  </div>
+
+
+
+  </div>
+
+
+<div>
+  <div id="divChart" style="display: block">
+    <canvas id="myChart"></canvas>
+  </div>
+</div>

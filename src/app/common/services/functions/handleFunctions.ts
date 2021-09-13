@@ -56,7 +56,7 @@ export class handleFunction {
             case "December": return 12
         }
     }
-    generate2DigitNumber(data) {
+    generate2DigitNumber(data) {//pass a string
         if (data.length == 1) {
             return '0' + data;
         } else {
