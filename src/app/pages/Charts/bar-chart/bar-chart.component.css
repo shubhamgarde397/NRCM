@@ -3,3 +3,11 @@
     width :800px;
     height: 800px;
 }
+
+.width100{
+    width: 100%;
+}
+
+.textaligncenter{
+    text-align: center;
+}

@@ -1,19 +1,19 @@
 <div class="form-group row">
   <div class="col-xs-3" *ngIf="typeOfChartDiv">
-    <select class="form-control" [(ngModel)]="selectedType" (change)="turnDiv('year')">
+    <select class="form-control" [(ngModel)]="selectedType" (change)="turnDiv()">
       <option selected disabled>Select Type</option>
       <option *ngFor="let own of types" value={{own.value}}>{{own.viewValue}}</option>
     </select>
   </div>
   <div class="col-xs-3" *ngIf="yearDiv">
-    <select class="form-control" [(ngModel)]="selectedYear" (change)="turnDiv('month')">
+    <select class="form-control" [(ngModel)]="selectedYear">
       <option selected disabled>Select Year</option>
       <option *ngFor="let own of years">{{own}}</option>
     </select>
   </div>
 
   <div class="col-xs-3"  *ngIf="monthDiv">
-    <select class="form-control" [(ngModel)]="selectedMonth"  (change)="turnDiv('button')">
+    <select class="form-control" [(ngModel)]="selectedMonth">
       <option selected disabled>Select Month</option>
       <option *ngFor="let own of months">{{own}}</option>
     </select>
@@ -27,9 +27,13 @@
       </option>
     </select>
   </div>
+  
+  <div class="col-xs-3"  *ngIf="partyModalSelectButton">
+    <button class="btn btn-info width100" data-toggle="modal" data-target="#myModal">Select Parties</button>
+  </div>
 
   <div class="col-xs-3"  *ngIf="buttonDiv">
-    <button class="btn btn-warning" (click)="callChart()">Fetch</button>
+    <button class="btn btn-warning width100" (click)="callChart()">Fetch</button>
   </div>
 
 
@@ -42,3 +46,65 @@
     <canvas id="myChart"></canvas>
   </div>
 </div>
+
+
+
+<!-- Modals -->
+<!-- Party Selecting Modal -->
+<div class="container">
+  <h2>Select Parties</h2>
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+<div class="row">
+          <div class="col-xs-12">
+            <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
+              <option disabled selected>Select Name of The Party</option>
+              <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+                {{gst.name}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Srno</th>
+                  <th>Name</th>
+                  <th>Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let i of gstdetailslistidList;let j=index">
+                  <td class="textaligncenter">{{j+1}}</td>
+                  <td class="textaligncenter">{{i.name}}</td>
+                  <td>  
+                    <!-- <div class="col-xs-1"> -->
+                    <button class="btn btn-danger width100 textaligncenter" (click)="removeFromGstList(i.id,j)">Delete</button>
+                  <!-- </div> -->
+                </td>
+                </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+<!-- Party Selecting Modal -->
+<!-- Modals -->

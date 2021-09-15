@@ -23,6 +23,8 @@ export class BarChartComponent implements OnInit {
     public types=[
         {viewValue:'By Month',value:'byMonth'},//select year and month avalaible only for NRCM charts
         {viewValue:'By Party Yearwise',value:'byPartyYearwise'},//select party and year
+        {viewValue:'By Selected Party',value:'bySelectedPartyYearwise'},//select party you want in the chart min 2 max 30 and year
+        // {viewValue:'By Selected Party MonthWise',value:'bySelectedPartyYearMonthwise'},//select party you want in the chart min 2 max 30 and year and showcase 12 charts
     ];
 
     public typeOfChartDiv=true;
@@ -30,6 +32,7 @@ export class BarChartComponent implements OnInit {
     public monthDiv=false;
     public buttonDiv=false;
     public partyDiv=false;
+    public partyModalSelectButton=false;
 
     public selectedYear;
     public selectedMonth;
@@ -39,6 +42,7 @@ export class BarChartComponent implements OnInit {
     public commonArray;
     public gstdetailslist;
     public gstdetailslistid;
+    public gstdetailslistidList=[];
     public considerArray;
     public nopid='';
 
@@ -77,35 +81,57 @@ export class BarChartComponent implements OnInit {
 
   findgst() {
     this.gstdetailslistid = this.handleFunction.findgst(this.nopid, this.gstdetailslist);
+    if(this.selectedType==='bySelectedPartyYearwise'){
+        this.gstdetailslistidList.push({'id':this.gstdetailslistid._id,'name':this.gstdetailslistid['name']});
+    }
+  }
+  removeFromGstList(i,j){
+this.gstdetailslistidList.splice(j,1)
   }
   
-  turnDiv(data){
-    switch (data) {
-        case 'year':
-            if(this.selectedType=='byMonth'){
+  turnDiv(){
+    switch (this.selectedType) {
+        case 'byMonth':
                 this.monthDiv=true;
                 this.yearDiv=true;
                 this.partyDiv=false;
                 this.buttonDiv=true;
-            }else if(this.selectedType=='byPartyYearwise'){
+                this.partyModalSelectButton=false;
+                break;
+                case 'byPartyYearwise':
                 this.monthDiv=false;
                 this.yearDiv=true;
                 this.partyDiv=true;
                 this.buttonDiv=true;
-            }
+                this.partyModalSelectButton=false;
+                break;
+                case 'bySelectedPartyYearwise':
+                this.monthDiv=false;
+                this.yearDiv=true;
+                this.partyDiv=false;
+                this.partyModalSelectButton=true;
+                this.buttonDiv=true;
         break;
     }
   }
   
   callChart(){//as per the type change the required fields
     let tempObj={}
+   console.log(this.gstdetailslistidList);
    
     tempObj['method']="chart";
     tempObj['tablename']="TurnBook_2020_2021"
     tempObj['type']=this.selectedType;
     tempObj['from']=this.selectedType==='byMonth'?this.selectedYear+'-'+this.handleFunction.generate2DigitNumber(String(this.handleFunction.getMonthNumber(this.selectedMonth)))+'-01':this.selectedYear+'-01-01';
     tempObj['to']=this.selectedType==='byMonth'?this.selectedYear+'-'+this.handleFunction.generate2DigitNumber(String(this.handleFunction.getMonthNumber(this.selectedMonth)))+'-31':this.selectedYear+'-12-31';
-    tempObj['id']=this.nopid===''?null:this.gstdetailslistid['_id'];
+    // tempObj['id']=this.nopid===''?null:this.gstdetailslistid['_id'];//pass different parties ID
+    if(this.selectedType==='bySelectedPartyYearwise')
+    {
+        tempObj['id']=this.gstdetailslistidList.map(r=>r.id)
+    }
+    else if(this.selectedType==='byPartyYearwise'){
+        tempObj['id']=this.gstdetailslistid['_id']
+    }
     this.apiCallservice.handleData_New_python
     ('commoninformation', 1, tempObj, 0)
     .subscribe((res: any) => {
@@ -168,6 +194,9 @@ export class BarChartComponent implements OnInit {
                 return 'Data by Month for the year '+this.selectedYear+'-'+this.selectedMonth;
             case 'byPartyYearwise':
                 return 'Data by Year-'+this.selectedYear+' : '+this.gstdetailslistid['name'];
+            case 'bySelectedPartyYearwise':
+                return 'Data by Year for Selected Parties for the year : '+this.selectedYear;
+                
         }
 
     }
