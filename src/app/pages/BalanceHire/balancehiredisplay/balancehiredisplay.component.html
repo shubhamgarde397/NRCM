@@ -76,8 +76,8 @@
             <th *ngIf="role==1||role==2">Account Name</th>
             <th *ngIf="!admin">Delete</th>
             <th *ngIf="(role==1||role==2)&&(!admin)">Edit</th>
-            <th *ngIf="admin">Edit Admin</th>
-            <th *ngIf="(role==1||role==2)&&(admin)">Delete Admin</th>
+            <th *ngIf="admin">Delete Admin</th>
+            <th *ngIf="(role==1||role==2)&&(admin)">Edit Admin</th>
           </tr>
         </thead>
 

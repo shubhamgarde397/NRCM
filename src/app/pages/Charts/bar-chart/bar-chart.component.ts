@@ -24,7 +24,7 @@ export class BarChartComponent implements OnInit {
         {viewValue:'By Month',value:'byMonth'},//select year and month avalaible only for NRCM charts
         {viewValue:'By Party Yearwise',value:'byPartyYearwise'},//select party and year
         {viewValue:'By Selected Party',value:'bySelectedPartyYearwise'},//select party you want in the chart min 2 max 30 and year
-        // {viewValue:'By Selected Party MonthWise',value:'bySelectedPartyYearMonthwise'},//select party you want in the chart min 2 max 30 and year and showcase 12 charts
+        {viewValue:'By Selected Party MonthWise',value:'bySelectedPartyYearMonthwise'},//select party you want in the chart min 2 max 30 and year and showcase 12 charts
     ];
 
     public typeOfChartDiv=true;
@@ -82,7 +82,7 @@ export class BarChartComponent implements OnInit {
   findgst() {
     this.gstdetailslistid = this.handleFunction.findgst(this.nopid, this.gstdetailslist);
     if(this.selectedType==='bySelectedPartyYearwise'){
-        this.gstdetailslistidList.push({'id':this.gstdetailslistid._id,'name':this.gstdetailslistid['name']});
+        this.gstdetailslistidList.length===15?alert('Cannot add more than 15'):this.gstdetailslistidList.push({'id':this.gstdetailslistid._id,'name':this.gstdetailslistid['name']});
     }
   }
   removeFromGstList(i,j){
@@ -111,7 +111,8 @@ this.gstdetailslistidList.splice(j,1)
                 this.partyDiv=false;
                 this.partyModalSelectButton=true;
                 this.buttonDiv=true;
-        break;
+                case 'bySelectedPartyYearMonthwise':
+                  break;
     }
   }
   

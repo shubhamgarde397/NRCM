@@ -84,8 +84,52 @@
 
         </div>
         <!-- Both -->
+<!-- PDF Party -->
+<div class="col-sm-10" *ngIf="buttonOption==='5'">
+  <div class="form-group row">
 
+    <div class="col-sm-4">
+      <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
+        <option disabled selected>Select Name of The Party</option>
+        <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+          {{gst.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+<div class="row">
+  <div class="col-sm-4" *ngIf="buttonOption==='4'">
+    <select class="form-control" [(ngModel)]="displayType" (change)="findDisplayOption()">
+      <option *ngFor="let i of buttonOptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
+    </select>
+  </div>
+  <div class="col-sm-2" *ngIf="buttonOption==='4'">
+  <button mat-raised-button class="btn btn-primary" style="width: 100%;margin-top: 10px;" disabled>
+    {{displayValue}}
+  </button>
+</div>
+</div>
+  <div class="row">
+    <h4>Truck Loading Dates : </h4>
+    <div class="col-sm-4">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="fromloading">
+    </div>
+    <div class="col-sm-4">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="toloading">
+    </div>
+    </div>
+    <div class="row">
+      <h4>Payment Dates : </h4>
+    <div class="col-sm-4">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="frompayment">
+    </div>
+    <div class="col-sm-4">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="topayment">
+    </div>
+  </div>
 
+</div>
+<!-- PDF Party -->
       </div>
       <div class="row">
         <div class="col-sm-4">
@@ -101,7 +145,30 @@
       <!--DATE -->
 
       <h3>{{todaysDate}}</h3>
+      <div class="row" *ngIf="tableData">
+        <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
+        Download
+      </button>
+    </div>
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
+        PDF : Party
+      </button>
+    </div>
 
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
+        PDF : Self
+      </button>
+    </div>
+      
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="mailSendButton" (click)="mailSentSave()" class="btn-danger btn-sm btn-just-icon">
+        Mail Sent
+      </button>
+    </div>
+    </div>
       <table class="table" style="width:100%" align="center" *ngIf="tableData">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
@@ -131,9 +198,30 @@
           </tr>
         </tbody>
       </table>
-      <button mat-raised-button type="button" (click)="download()" class="btn-danger btn-sm btn-just-icon">
+      <div class="row" *ngIf="tableData">
+        <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
         Download
       </button>
+    </div>
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
+        PDF : Party
+      </button>
+    </div>
+
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
+        PDF: Self
+      </button>
+    </div>
+      
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="mailSendButton" (click)="mailSentSave()" class="btn-danger btn-sm btn-just-icon">
+        Mail Sent
+      </button>
+    </div>
+    </div>
     </div>
   </div>
 </div>

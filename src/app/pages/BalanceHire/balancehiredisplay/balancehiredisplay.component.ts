@@ -57,9 +57,11 @@ export class BalancehiredisplayComponent implements OnInit {
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
+     
   }
 
   ngOnInit() {
+// NgOninit is being called automatically when clicked on edit by admin in balance follow, chk how very important
     this.printInfo = false;
     this.role = this.securityCheck.role;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
@@ -205,8 +207,9 @@ export class BalancehiredisplayComponent implements OnInit {
     this.found = data;
     data['index'] = j;
     data['editOption'] = 1;
+    data['truckData'].map(r=>{r.field=true;})
     this.handledata.saveData(data);
-    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
+    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/UpdateSingle']);
   }
 
 

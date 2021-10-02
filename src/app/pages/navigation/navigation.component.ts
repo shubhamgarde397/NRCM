@@ -7,6 +7,8 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import * as  jsPDF from 'jspdf';
+import 'jspdf-autotable';
 // import * as moment from 'moment';
 
 @Component({
@@ -33,6 +35,7 @@ export class NavigationComponent implements OnInit {
   public nameOfUser = 'Guest';
   public URL = '';
   public showThisMsg = false
+  public reportData=[];
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -73,6 +76,122 @@ export class NavigationComponent implements OnInit {
       });
   }
 
+  receivedReport(){
+    let tempObj={};
+    let today=new Date();
+    let last7Days=new Date(today.getFullYear(), today.getMonth(), today.getDate()-7);
+    tempObj['method']='receivedReport';
+    tempObj['tablename']='turnbook';
+    tempObj['date']=last7Days.getFullYear()+'-'+this.hF.generate2DigitNumber(String(last7Days.getMonth()+1))+'-'+this.hF.generate2DigitNumber(String(last7Days.getDate()));
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+this.reportData=res.chartData;
+this.download(this.reportData);
+
+      });
+  }
+  download(data) {//threshhold is 295
+    let pager=1;
+     
+     var doc = new jsPDF()
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Poch Details', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(new Date().getFullYear()+'-'+this.hF.generate2DigitNumber(String(new Date().getMonth()+1))+'-'+this.hF.generate2DigitNumber(String(new Date().getDate())), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 24;
+     doc.text('Sr', 23, y)//partyname
+     doc.text('Date', 38, y)//partyname
+     doc.text('TruckNo', 57, y)//partyname
+     doc.text('Party', 88, y)//partyname
+     doc.text('Village', 136, y)//partyname
+     doc.text('Contact', 165, y)//partyname
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(30, 20, 30, 25);//srno
+     doc.line(55, 20, 55, 25);//date
+     doc.line(83, 20, 83, 25);//truckno
+     doc.line(135, 20, 135, 25);//lrno
+     doc.line(163, 20, 163, 25);//credit
+     //vertical lines
+     let startforI=0;
+       y = y + 6;
+       startforI=0;
+     
+ 
+     for (let i = startforI; i < data.length; i++) {
+ 
+       if(y>290){
+         y=30;
+         
+     starty = 20;
+         doc.addPage();
+         doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Report', 15, 15)//partyname
+     doc.setFontSize('10');
+    //  doc.text(this.hF.getDateddmmyy(this.date1)+' to '+this.hF.getDateddmmyy(this.date2), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 23, y-6)//partyname
+     doc.text('Date', 38, y-6)//partyname
+     doc.text('TruckNo', 57, y-6)//partyname
+     doc.text('Party', 88, y-6)//partyname
+     doc.text('Village', 136, y-6)//partyname
+     doc.text('Contact', 165, y-6)//partyname
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(30, 20, 30, 25);//srno
+     doc.line(55, 20, 55, 25);//date
+     doc.line(83, 20, 83, 25);//truckno
+     doc.line(135, 20, 135, 25);//lrno
+     doc.line(163, 20, 163, 25);//credit
+     //vertical lines
+     }
+       doc.text(String(i+1), 23, y)//partyname
+       doc.text(this.hF.getDateddmmyy(data[i].loadingDate), 32, y)//partyname
+  
+         doc.text(String(data[i].party_name.split('_')[0]), 88, y)//lrno
+         doc.text(data[i].truck_no, 57, y)//truckno
+      
+         doc.text(String(data[i].village_name), 136, y)//partyname
+ 
+       doc.text(String(data[i].contact[0]), 164, y)//partyname
+       doc.line(20, y + 1, 210, y + 1);//line after header
+       y = y + 5;
+ 
+       
+     //vertical lines//getting applied for every loop, make it happen once only
+     doc.line(30, starty, 30, y - 4);//srno
+     doc.line(55, starty, 55, y - 4);//date
+     doc.line(83, starty, 83, y - 4);//truckno
+     doc.line(135, starty, 135, y - 4);//lrno
+     doc.line(163, starty, 163, y - 4);//credit
+     //vertical lines
+ 
+     }
+     doc.save('Report.pdf')
+   }
+ 
 
 
   logout() {

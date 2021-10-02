@@ -55,6 +55,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '7', 'viewvalue': 'Update Poch Check' },
     { 'value': '8', 'viewvalue': 'Monthly By Series' },
     { 'value': '9', 'viewvalue': 'Cancelled Vehicles' },
+    { 'value': '10', 'viewvalue': 'By Party' },
   ]
   public years = []
   public buttons = []
@@ -85,6 +86,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public toSendid;
   public show8Msg = "";
   public selectpartyType;
+  public partyVar;
+
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -137,6 +140,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.parties = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
   }
+
 
   getButtons() {
 
@@ -272,6 +276,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
     }
   }
 
+  findgst() {
+    this.partyid = this.handleF.findgst(this.partyVar, this.parties);
+  }
+
   findOption() {
     this.pochDiv = true;
     this.buttonOption = this.trucknoid;
@@ -301,6 +309,12 @@ export class TurnBookDisplayMainComponent implements OnInit {
         break;
       case '8':
         tempObj['date'] = this.selectedmy;
+        break;
+        case '10':
+        if (this.partyVar === '') { alert('Select a Party Name'); break; }
+        else {
+          tempObj['partyid'] = this.partyid['_id'];
+        }
         break;
       default:
         break;
@@ -596,8 +610,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
           this.ids.push(this.balanceHireArrray[i][j]['_id']);//ObjectId to mongoform in lambda write a loop
           tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
           tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
-          tempObj['pageno'] = (<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value;
-          tempObj['amount'] = (<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value;
+          tempObj['pageno'] = parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value);
+          tempObj['amount'] = parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
           truckData.push(tempObj);
           //write logic to update the TurnBook_2020_2021 and change pochPayment to true when sent to lambda
         }
@@ -622,7 +636,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   finalFunction() {
     let tempObj = {}
     tempObj['bhData'] = this.finalArray;
-    tempObj['method'] = 'insertmany,many';
+    tempObj['method'] = 'insertmany.many';
     tempObj['tablename'] = 'BalanceHire';
     tempObj['ids'] = this.ids;
     tempObj['todayDate'] = this.todaysDate;
@@ -639,6 +653,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
   }
 
   getADD(array) {
+    console.log(array);
+    console.log(this.trucklist);
+    
+    
     array.forEach(res => {
       let g = this.trucklist.find(r => r.truckno === res.truckno);
       if (g['accountDetails'].length > 0) { this.gAD = g; }

@@ -63,6 +63,9 @@ export class UpdateComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;
+    console.log(this.truckArray);
+    
+
 
   };
 
@@ -126,6 +129,13 @@ export class UpdateComponent implements OnInit {
       });
   };
 
+  makeFieldEditable(j){
+
+  }
+
+  enableInternalAddition(i,j){
+    this.truckArray[j]['field']=false;
+  }
 
 
 }
