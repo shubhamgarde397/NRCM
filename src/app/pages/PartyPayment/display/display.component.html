@@ -179,6 +179,7 @@
             <th>Amount</th>
             <th>Value</th>
             <th *ngIf="adminAccess">Delete</th>
+            <th *ngIf="!adminAccess">Temp Delete</th>
           </tr>
         </thead>
 
@@ -192,6 +193,11 @@
             <td>{{i.value}}</td>
             <td *ngIf="adminAccess">
               <button mat-raised-button type="button" (click)="delete(i,j)" class="btn-danger btn-sm btn-just-icon">
+                <i class="material-icons">delete</i>
+              </button>
+            </td>
+            <td *ngIf="!adminAccess">
+              <button mat-raised-button type="button" (click)="deleteTemp(i,j)" class="btn-warning btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
               </button>
             </td>

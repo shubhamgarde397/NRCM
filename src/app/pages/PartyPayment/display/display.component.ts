@@ -68,7 +68,7 @@ export class DisplayComponent implements OnInit {
   public topayment;
   public mailSentDate;
   public mailSendButton=false;
-
+public balanceFollowGlobal={};
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
@@ -262,10 +262,11 @@ export class DisplayComponent implements OnInit {
       tempObj['tablename'] = 'partyPayment'
 
       tempObj['display'] = parseInt(this.buttonOption);
+      this.balanceFollowGlobal=balanceFollow;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
         .subscribe((res: any) => {
           this.paymentData = res.paymentData;
-          this.paymentData = this.buttonOption == '4' ? this.pdfJSON(res.paymentData, balanceFollow) : ( this.buttonOption == '5'? this.pdfJSONForParty(res.paymentData,balanceFollow):res.paymentData);
+          this.paymentData = this.buttonOption == '4' ? this.pdfJSON(res.paymentData, balanceFollow,'addBalance') : ( this.buttonOption == '5'? this.pdfJSONForParty(res.paymentData,balanceFollow,'addBalance'):res.paymentData);
           if (this.paymentData.length > 0) {
             this.tableData = true;
           } else {
@@ -293,7 +294,6 @@ export class DisplayComponent implements OnInit {
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
     .subscribe((res: any) => {
-      console.log(res);
       
       alert(res.Status)
 
@@ -301,11 +301,13 @@ export class DisplayComponent implements OnInit {
     
   }
 
-  pdfJSON(data, balanceFollow) {
+  pdfJSON(data, balanceFollow,todo) {
     let val = 0
+    if(todo=='addBalance'){
     if(balanceFollow['bf']){
     data.unshift(balanceFollow);
     }
+  }
     
     
     data.forEach((res) => {
@@ -321,11 +323,14 @@ export class DisplayComponent implements OnInit {
     })
     return data;
   }
-  pdfJSONForParty(data, balanceFollow) {
+  pdfJSONForParty(data, balanceFollow,todo) {
+    
     let val = 0
+    if(todo=='addBalance'){
     if(balanceFollow['bf']){
     data.unshift(balanceFollow);
     }
+  }
     data.forEach((res) => {
       if (res['type'] == 'buy') {
         val = val + res['amount'];
@@ -337,6 +342,7 @@ export class DisplayComponent implements OnInit {
         res['value'] = val;
       }
     })
+    
     return data;
   }
 
@@ -356,6 +362,24 @@ export class DisplayComponent implements OnInit {
             this.tableData = false;
           }
         });
+    }
+  }
+
+  deleteTemp(id,j){
+    if (confirm('Are you sure to temporarily delete?')) {
+      if(id['bF']){
+        this.balanceFollowGlobal={}
+        this.balanceFollowGlobal['bF']=false;
+      }
+          this.paymentData.splice(j, 1);
+          if (this.paymentData.length > 0) {
+            this.tableData = true;
+          } else {
+            this.tableData = false;
+          }
+          
+          this.paymentData =this.buttonOption == '4' ? this.pdfJSON(this.paymentData, this.balanceFollowGlobal,'addBalance') : ( this.buttonOption == '5'? this.pdfJSONForParty(this.paymentData,this.balanceFollowGlobal,''):this.paymentData);
+          alert('Done!');
     }
   }
 
