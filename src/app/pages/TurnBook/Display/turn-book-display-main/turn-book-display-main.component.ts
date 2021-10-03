@@ -96,7 +96,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   ngOnInit() {//"^2021-04.*"
     this.considerArray = this.handleData.createConsiderArray('turnbookadd')
     this.handleData.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    this.getButtons()
+    this.buttons=this.getButtons()
     this.role = this.securityCheck.role;
     this.commonArray = this.securityCheck.commonArray;
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
@@ -143,7 +143,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
 
 
   getButtons() {
-
+let buttons=[]
     for (let i = 0; i < new Date().getFullYear() - 2019; i++) {
       this.years.push(i + 2020)
     }
@@ -154,10 +154,11 @@ export class TurnBookDisplayMainComponent implements OnInit {
         let month = date.toLocaleString('default', { month: 'short' });
         this.tempObj['value'] = "^" + String(i + 2020) + "-" + this.handleF.generate2DigitNumber(String(j + 1)) + ".*";
         this.tempObj['viewValue'] = month + '-' + String(i + 2020).slice(-2);
-        this.buttons.push(this.tempObj);
+        buttons.push(this.tempObj);
         this.tempObj = {}
       }
     }
+    return buttons.reverse();
 
     // for(i=0;i<years.length;i++){
     //   months=new Date().getFullYear()-years[i]==0?new Date().getMonth()+1:12;
@@ -653,10 +654,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
   }
 
   getADD(array) {
-    console.log(array);
-    console.log(this.trucklist);
-    
-    
     array.forEach(res => {
       let g = this.trucklist.find(r => r.truckno === res.truckno);
       if (g['accountDetails'].length > 0) { this.gAD = g; }
