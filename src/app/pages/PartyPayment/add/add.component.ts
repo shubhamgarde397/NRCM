@@ -76,7 +76,6 @@ export class AddComponent implements OnInit {
     this.submitted = true;
     let tempobj = {};
     tempobj['partyid'] = this.gstdetailslistid._id;
-    tempobj['partyName'] = this.gstdetailslistid.name;
     tempobj['date'] = value['date'];
     tempobj['amount'] = value['amount'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));

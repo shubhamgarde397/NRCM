@@ -42,8 +42,8 @@ export class DisplayComponent implements OnInit {
     { 'value': '1', 'viewvalue': 'Party' },
     { 'value': '2', 'viewvalue': 'Date' },
     { 'value': '3', 'viewvalue': 'Both' },
-    { 'value': '4', 'viewvalue': 'PDF Data' },
-    { 'value': '5', 'viewvalue': 'For Party' },
+    { 'value': '4', 'viewvalue': 'Only Lorry Details' },
+    { 'value': '5', 'viewvalue': 'Payment And Lorry' },
   ]
   public buttonOptions=[
     { 'value': '1', 'viewvalue': 'This Month' },
@@ -67,6 +67,7 @@ export class DisplayComponent implements OnInit {
   public toloading;
   public topayment;
   public mailSentDate;
+  public partyids=[];
   public mailSendButton=false;
 public balanceFollowGlobal={};
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
@@ -81,9 +82,15 @@ public balanceFollowGlobal={};
     this.monthNames=this.handleF.genaratemonthNames()
     this.role = this.securityCheck.role;
   }
+  ngAfterViewInit(){
+    console.log('Done');
+    
+    
+  }
 
   findgst() {
     this.partyid = this.handleF.findgst(this.nopid, this.gstdetailslist);
+    this.partyids.push(this.handleF.findgst(this.nopid, this.gstdetailslist))
   }
   getInformationData() {
     this.spinnerService.show();
@@ -134,14 +141,17 @@ public balanceFollowGlobal={};
     let balanceFollow = {};
     switch(this.displayOption){
       case '0':
-        tempObj['from'] = this.date.getFullYear()+'-'+this.handleF.generate2DigitNumber(String(parseInt(this.date.getMonth())+1)) +'-01';
+        tempObj['from'] = '2020-01-01';
           tempObj['to'] = this.date.getFullYear()+'-'+this.handleF.generate2DigitNumber(String(parseInt(this.date.getMonth())+1)) +'-31';
           this.date1=tempObj['from'];
           this.date2=tempObj['to'];
         break;
         case '1':
-          tempObj['from'] = this.date.getFullYear()+'-'+this.handleF.generate2DigitNumber(String(parseInt(this.date.getMonth())+1)) +'-01';
+          // tempObj['from'] = this.date.getFullYear()+'-'+this.handleF.generate2DigitNumber(String(parseInt(this.date.getMonth())+1)) +'-01';
+          tempObj['from'] = '2020-01-01';
           tempObj['to'] = this.date.getFullYear()+'-'+this.handleF.generate2DigitNumber(String(parseInt(this.date.getMonth())+1)) +'-31';
+          // tempObj['from'] = this.date1.getFullYear()+'-'+this.handleF.generate2DigitNumber(String(parseInt(this.date1.getMonth())+1)) +'-'+this.date1.getDay();
+          // tempObj['to'] = this.date2.getFullYear()+'-'+this.handleF.generate2DigitNumber(String(parseInt(this.date2.getMonth())+1)) +'-'+this.date1.getDay();
           this.date1=tempObj['from'];
           this.date2=tempObj['to'];
           break;
@@ -176,7 +186,8 @@ public balanceFollowGlobal={};
       case '1':
         if (this.partyid === '') { alert('Select a Party Name'); break; }
         else {
-          tempObj['partyid'] = this.partyid['_id'];
+          // tempObj['partyid'] = this.partyid['_id'];
+          tempObj['partyid']=this.partyids;
           tempObj['method'] = 'displayPP';
           flag = true;
         }
@@ -196,7 +207,8 @@ public balanceFollowGlobal={};
           tempObj['from'] = this.date1;
           tempObj['to'] = this.date2;
           tempObj['method'] = 'displayPP';
-          tempObj['partyid'] = this.partyid['_id'];
+          // tempObj['partyid'] = this.partyid['_id'];
+          tempObj['partyid']=this.partyids;
           flag = true;
         }
         break;
@@ -208,7 +220,8 @@ public balanceFollowGlobal={};
           tempObj['from'] = this.date1;
           tempObj['to'] = this.date2;
           tempObj['method'] = 'partyPaymentPDF';
-          tempObj['partyid'] = this.partyid['_id'];
+          // tempObj['partyid'] = this.partyid['_id'];
+          tempObj['partyid']=this.partyids;
           if (confirm('Want to add Balance Follow?')) {
             msg = prompt('Balance Follow Message');
             amt = parseInt(prompt('Balance Follow Amount'));
@@ -234,7 +247,8 @@ public balanceFollowGlobal={};
           tempObj['fromloading'] = this.fromloading;
           tempObj['toloading'] = this.toloading;
           tempObj['method'] = 'partyPaymentPDFForParty';
-          tempObj['partyid'] = this.partyid['_id'];
+          // tempObj['partyid'] = this.partyid['_id'];
+          tempObj['partyid']=this.partyids;
 
           this.frompayment=tempObj['frompayment'];
           this.topayment=tempObj['topayment'];
@@ -260,8 +274,10 @@ public balanceFollowGlobal={};
     
     if (flag) {
       tempObj['tablename'] = 'partyPayment'
-
+tempObj['partyid']=this.partyids.map(r=>r._id);
       tempObj['display'] = parseInt(this.buttonOption);
+      console.log(tempObj);
+      
       this.balanceFollowGlobal=balanceFollow;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
         .subscribe((res: any) => {
@@ -277,11 +293,15 @@ public balanceFollowGlobal={};
     }
   };
 
+  deletePartyIds(i,j){
+    this.partyids.splice(j,1);
+  }
   mailSentSave(){
     let tempObj={}
     let newDate=new Date()
     this.mailSentDate= newDate.getFullYear()+'-'+(this.handleF.generate2DigitNumber(String(newDate.getMonth()+1)))+'-'+newDate.getDate()
-    tempObj['partyid']=this.partyid['_id'];
+    // tempObj['partyid']=this.partyid['_id'];
+    tempObj['partyid']=this.partyids[0]['_id'];
     tempObj['loadingFrom']=this.fromloading;
     tempObj['loadingTo']=this.toloading;
     tempObj['paymentFrom']=this.frompayment;
@@ -364,6 +384,26 @@ public balanceFollowGlobal={};
         });
     }
   }
+  edit(i,j){
+    var amt=prompt('Enter the updating amount')
+      let formbody = {'partyData':{}}
+      console.log(i);
+      
+      formbody['_id'] = i._id;
+      formbody['method'] = 'update';
+      formbody['tablename'] = 'partyPayment';
+      formbody['partyData']['date']=i.date;
+      formbody['partyData']['partyid']=i.partyid;
+      formbody['partyData']['amount']=parseInt(amt);
+      console.log(formbody);
+      
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+        .subscribe((response: Response) => {
+          alert(response['Status']);
+          this.paymentData[j]['amount']=parseInt(amt);
+        });
+    }
+  
 
   deleteTemp(id,j){
     if (confirm('Are you sure to temporarily delete?')) {
@@ -387,29 +427,13 @@ public balanceFollowGlobal={};
     this.adminAccess = !this.adminAccess;
   }
 
-  downloadBank() {
-    var doc = new jsPDF()
-    doc.setFontSize('30');
-    doc.setFontType('bold');
-    doc.text(this.partyid['name'], 15, 25)
-
-    doc.setTextColor(255, 255, 255);
-    doc.setLineWidth(0.8);
-    doc.line(0, 28, 215, 28);
-
-    doc.setFontSize('15');
-
-    // doc.text('Declarant', 150, 268)
-    doc.save('tp1' + '.pdf')
-  }
-
   download() {//threshhold is 295
    let pager=1;
     
     var doc = new jsPDF()
     doc.setFontSize('25');
     doc.setFontType('bold');
-    doc.text(this.partyid['name'], 15, 15)//partyname
+    doc.text(this.partyids[0]['name'], 15, 15)//partyname
     doc.setFontSize('10');
     doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
     doc.text(String(pager), 180, 5)//pageno
@@ -426,10 +450,9 @@ public balanceFollowGlobal={};
     doc.text('Date', 38, y)//partyname
     doc.text('TruckNo', 57, y)//partyname
     doc.text('Lrno', 88, y)//partyname
-    doc.text('Debit', 108, y)//partyname
-    doc.text('Credit', 133, y)//partyname
-    doc.text('Balance', 155, y)//partyname
-    doc.text('Notes', 182, y)//partyname
+    doc.text('Amount', 108, y)//partyname
+    doc.text('Place', 128, y)//partyname
+    doc.text('Notes', 170, y)//partyname
     //headers
     doc.line(0, 25, 210, 25);//line after header
 
@@ -439,8 +462,7 @@ public balanceFollowGlobal={};
     doc.line(83, 20, 83, 25);//truckno
     doc.line(100, 20, 100, 25);//lrno
     doc.line(125, 20, 125, 25);//credit
-    doc.line(150, 20, 150, 25);//debit
-    doc.line(180, 20, 180, 20);//balance
+    doc.line(155, 20, 155, 25);//debit
     //vertical lines
     let startforI=0;
     if (this.paymentData[0]['bf'] == true) {
@@ -466,7 +488,7 @@ public balanceFollowGlobal={};
         doc.addPage();
         doc.setFontSize('25');
     doc.setFontType('bold');
-    doc.text(this.partyid['name'], 15, 15)//partyname
+    doc.text(this.partyids[0]['name'], 15, 15)//partyname
     doc.setFontSize('10');
     doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
     doc.text(String(pager), 180, 5)//pageno
@@ -477,14 +499,13 @@ public balanceFollowGlobal={};
     doc.line(20, 20, 20, 300);//punching area line
     //headers
     doc.setFontSize('10');
-    doc.text('Sr', 23, y-6)//partyname
-    doc.text('Date', 38, y-6)//partyname
-    doc.text('TruckNo', 57, y-6)//partyname
-    doc.text('Lrno', 88, y-6)//partyname
-    doc.text('Debit', 108, y-6)//partyname
-    doc.text('Credit', 133, y-6)//partyname
-    doc.text('Balance', 155, y-6)//partyname
-    doc.text('Notes', 182, y-6)//partyname
+    doc.text('Sr', 23, y)//partyname
+    doc.text('Date', 38, y)//partyname
+    doc.text('TruckNo', 57, y)//partyname
+    doc.text('Lrno', 88, y)//partyname
+    doc.text('Amount', 108, y)//partyname
+    doc.text('Place', 128, y)//partyname
+    doc.text('Notes', 175, y)//partyname
     //headers
     doc.line(0, 25, 210, 25);//line after header
 
@@ -494,44 +515,28 @@ public balanceFollowGlobal={};
     doc.line(83, 20, 83, 25);//truckno
     doc.line(100, 20, 100, 25);//lrno
     doc.line(125, 20, 125, 25);//credit
-    doc.line(150, 20, 150, 25);//debit
-    doc.line(180, 20, 180, 20);//balance
+    doc.line(155, 20, 155, 25);//debit
     //vertical lines
     }
       doc.text(String(i+1), 23, y)//partyname
       doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
-      if (this.paymentData[i].type === 'buy') {
-        doc.text(String(this.paymentData[i].lrno), 88, y)//lrno
-        doc.text(this.paymentData[i].truckNo, 57, y)//truckno
-      } else {
-        doc.text(String('-'), 88, y)//lrno
-        doc.text(String('-'), 57, y)//truckno
-      }
-      if (this.paymentData[i].type === 'buy') {
-        doc.text(String(this.paymentData[i].amount), 108, y)//partyname
-        doc.text(String('-'), 133, y)//partyname
-      } else {
-        doc.text(String(this.paymentData[i].amount), 133, y)//partyname
-        doc.text(String('-'), 108, y)//partyname
-      }
-
-      doc.text(String(this.paymentData[i].value), 155, y)//partyname
+      doc.text(String(this.paymentData[i].lrno), 88, y)//lrno
+      doc.text(this.paymentData[i].truckNo, 57, y)//truckno
+      doc.text(String(this.paymentData[i].amount), 108, y)//partyname
+      doc.text(this.paymentData[i].placeName, 128, y)//partyname
       doc.line(20, y + 1, 210, y + 1);//line after header
       y = y + 5;
-
-      
     //vertical lines//getting applied for every loop, make it happen once only
     doc.line(30, starty, 30, y - 4);//srno
     doc.line(55, starty, 55, y - 4);//date
     doc.line(83, starty, 83, y - 4);//truckno
     doc.line(100, starty, 100, y - 4);//lrno
     doc.line(125, starty, 125, y - 4);//credit
-    doc.line(150, starty, 150, y - 4);//debit
-    doc.line(180, 20, 180, y - 4);//balance
+    doc.line(155, starty, 155, y - 4);//debit
     //vertical lines
 
     }
-    doc.save(this.partyid['name']+'_'+this.handleF.getDateddmmyy(this.date1)+'_'+this.handleF.getDateddmmyy(this.date2)+ '.pdf')
+    doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.date1)+'_'+this.handleF.getDateddmmyy(this.date2)+ '.pdf')
   }
 
   downloadForParty(data) {//threshhold is 295
@@ -541,7 +546,7 @@ public balanceFollowGlobal={};
      var doc = new jsPDF()
      doc.setFontSize('25');
      doc.setFontType('bold');
-     doc.text(this.partyid['name'], 15, 15)//partyname
+     doc.text(this.partyids[0]['name'], 15, 15)//partyname
      doc.setFontSize('10');
     //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
      doc.text(String(pager), 180, 5)//pageno
@@ -602,7 +607,7 @@ public balanceFollowGlobal={};
          doc.addPage();
          doc.setFontSize('25');
      doc.setFontType('bold');
-     doc.text(this.partyid['name'], 15, 15)//partyname
+     doc.text(this.partyids[0]['name'], 15, 15)//partyname
      doc.setFontSize('10');
     //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
      doc.text(String(pager), 180, 5)//pageno
@@ -708,7 +713,7 @@ public balanceFollowGlobal={};
     //  doc.text(String(payment),105,bigValueofY+20);
      doc.text(String(amount)+' - '+String(payment)+' = '+String(balance),80,bigValueofY+30);
 
-     doc.save(this.partyid['name']+'_'+this.handleF.getDateddmmyy(this.date1)+'_'+this.handleF.getDateddmmyy(this.date2)+ '.pdf')
+     doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.date1)+'_'+this.handleF.getDateddmmyy(this.date2)+ '.pdf')
    }
 
    returnAmountPaymentBalance(){

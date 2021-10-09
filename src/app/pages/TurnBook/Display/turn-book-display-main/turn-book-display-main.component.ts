@@ -56,6 +56,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '8', 'viewvalue': 'Monthly By Series' },
     { 'value': '9', 'viewvalue': 'Cancelled Vehicles' },
     { 'value': '10', 'viewvalue': 'By Party' },
+    { 'value': '11', 'viewvalue': 'Details By Truck' },
   ]
   public years = []
   public buttons = []
@@ -69,6 +70,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public balance;
   public pageno;
   public gAD;
+  public trucks=[];
   public ids = [];
   public pochDiv = true;
   public selectedMonth;
@@ -87,6 +89,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public show8Msg = "";
   public selectpartyType;
   public partyVar;
+  public truckVar;
+  public truckid;
+  public byTruckName=false;
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
@@ -103,6 +108,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();
     this.getTrucks()
+    console.log(this.commonArray);
+    
   }
 
   showDatabyParty() {
@@ -136,8 +143,10 @@ export class TurnBookDisplayMainComponent implements OnInit {
   fetchBasic() {
     this.commonArray = this.securityCheck.commonArray;
     this.parties = [];
+    this.trucks=[]
     this.villagelist = [];
     this.parties = this.commonArray.gstdetails;
+    this.trucks = this.commonArray.ownerdetails;
     this.villagelist = this.commonArray.villagenames;
   }
 
@@ -281,6 +290,10 @@ let buttons=[]
     this.partyid = this.handleF.findgst(this.partyVar, this.parties);
   }
 
+  findtruck() {
+    this.truckid = this.handleF.findowner(this.truckVar, this.trucks,'Select Truck No');
+  }
+
   findOption() {
     this.pochDiv = true;
     this.buttonOption = this.trucknoid;
@@ -288,6 +301,7 @@ let buttons=[]
   }
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};
+    this.byTruckName=false;
     switch (this.buttonOption) {
       case '1':
         tempObj['turnbookDate'] = '2021-04-01';
@@ -317,6 +331,12 @@ let buttons=[]
           tempObj['partyid'] = this.partyid['_id'];
         }
         break;
+        case '11':
+        if (this.truckVar === '') { alert('Select a Truck'); break; }
+        else {
+          tempObj['id'] = this.truckid['_id'];
+        }
+        break;
       default:
         break;
     }
@@ -328,6 +348,9 @@ let buttons=[]
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayTB'
     tempObj['display'] = this.buttonOption;
+
+if(this.buttonOption !== '11'){
+
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
         if (this.buttonOption == '6') {
@@ -363,6 +386,20 @@ let buttons=[]
           this.handleData.saveTurn(this.turnbooklist);
         }
       });
+    }
+    else if(this.buttonOption==='11'){
+let tempObj1={};
+    tempObj1['tablename'] = 'turnbook'
+    tempObj1['method'] = 'singleTruck'
+    tempObj1['display'] = this.buttonOption;
+    tempObj1['id'] = this.truckid['_id'];
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
+      .subscribe((res: any) => {
+        this.byTruckName=true;
+        this.turnbooklist = res.Data;
+      });
+    }
+
   };
 
   getOtherDetails() {
@@ -623,6 +660,7 @@ let buttons=[]
       this.finalObject['todayDate'] = this.todaysDate;
       this.finalObject['comments'] = "";
       this.finalObject['print'] = false;
+      
       let aD = this.getADD(truckData);
       this.finalObject['bankName'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['bankName'];
       this.finalObject['ifsc'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['ifsc'];
@@ -654,6 +692,9 @@ let buttons=[]
   }
 
   getADD(array) {
+    console.log(array);
+    console.log(this.trucklist);
+    
     array.forEach(res => {
       let g = this.trucklist.find(r => r.truckno === res.truckno);
       if (g['accountDetails'].length > 0) { this.gAD = g; }

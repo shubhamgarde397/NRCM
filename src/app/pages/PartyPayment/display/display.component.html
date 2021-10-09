@@ -52,6 +52,12 @@
                 </option>
               </select>
             </div>
+            <div class="col-sm-4">
+              <table>
+                <tr><th>Name</th><th>Delete</th></tr>
+                <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
+              </table>
+            </div>
           </div>
 <div class="row">
           <div class="col-sm-4" *ngIf="buttonOption==='4'">
@@ -96,6 +102,12 @@
         </option>
       </select>
     </div>
+    <div class="col-sm-4">
+      <table>
+        <tr><th>Name</th><th>Delete</th></tr>
+        <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
+      </table>
+    </div>
   </div>
 <div class="row">
   <div class="col-sm-4" *ngIf="buttonOption==='4'">
@@ -113,18 +125,22 @@
     <h4>Truck Loading Dates : </h4>
     <div class="col-sm-4">
       <input type="date" class="form-control col-sm-2" [(ngModel)]="fromloading">
+      <label>{{fromloading}}</label>
     </div>
     <div class="col-sm-4">
       <input type="date" class="form-control col-sm-2" [(ngModel)]="toloading">
+      <label>{{toloading}}</label>
     </div>
     </div>
     <div class="row">
       <h4>Payment Dates : </h4>
     <div class="col-sm-4">
       <input type="date" class="form-control col-sm-2" [(ngModel)]="frompayment">
+      <label>{{frompayment}}</label>
     </div>
     <div class="col-sm-4">
       <input type="date" class="form-control col-sm-2" [(ngModel)]="topayment">
+      <label>{{topayment}}</label>
     </div>
   </div>
 
@@ -148,7 +164,7 @@
       <div class="row" *ngIf="tableData">
         <div class="col-sm-3">
       <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
-        Download
+        Download Only Lorry
       </button>
     </div>
       <div class="col-sm-3">
@@ -179,6 +195,7 @@
             <th>Amount</th>
             <th>Value</th>
             <th *ngIf="adminAccess">Delete</th>
+            <th *ngIf="adminAccess">Edit</th>
             <th *ngIf="!adminAccess">Temp Delete</th>
           </tr>
         </thead>
@@ -196,6 +213,11 @@
                 <i class="material-icons">delete</i>
               </button>
             </td>
+            <td *ngIf="adminAccess">
+              <button mat-raised-button type="button" (click)="edit(i,j)" class="btn-primary btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
             <td *ngIf="!adminAccess">
               <button mat-raised-button type="button" (click)="deleteTemp(i,j)" class="btn-warning btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
@@ -207,7 +229,7 @@
       <div class="row" *ngIf="tableData">
         <div class="col-sm-3">
       <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
-        Download
+        Download Only Lorry
       </button>
     </div>
       <div class="col-sm-3">

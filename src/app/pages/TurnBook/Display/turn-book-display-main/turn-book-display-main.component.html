@@ -12,7 +12,7 @@
         </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&&(buttonOption!=='9' )&&(buttonOption!=='10' )">
+          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='4'">
@@ -29,6 +29,14 @@
             <option disabled selected>Select Name of The Party</option>
             <option *ngFor="let gst of parties;let j = index;" value={{gst._id+j}}>
               {{gst.name}}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-3" *ngIf="buttonOption==='11'">
+          <select id="nop" class="form-control" [(ngModel)]="truckVar" (change)="findtruck()">
+            <option disabled selected>Select Truck No</option>
+            <option *ngFor="let gst of trucks;let j = index;" value={{gst._id+j}}>
+              {{gst.truckno}}
             </option>
           </select>
         </div>
@@ -57,7 +65,7 @@
       <h3>{{todaysDate}}</h3>
 
       <table class="table" style="width:100%" align="center"
-        *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')&&(buttonOption!=='8')">
+        *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')&&(buttonOption!=='8')&&(buttonOption!=='11')">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
@@ -504,8 +512,38 @@
 
         </form>
       </div>
-
-
+<div class="row" *ngIf="buttonOption=='11'">
+  <table class="table" style="width:100%" align="center" *ngIf="byTruckName">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Entry Date</th>
+            <th>Loading Date</th>
+            <th>Truck No</th>
+            <th>Place</th>
+            <th>Party</th>
+            <th>Type</th>
+            <th>LRNO</th>
+            <th>Amount</th>
+            <th>PochDate : Pgno</th>
+          </tr>
+        </thead>
+        <tbody align="center">
+          <tr *ngFor="let i of turnbooklist;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.truckName.truckno}}</td>
+            <td>{{i.placeName.village_name}}</td>
+            <td>{{i.partyName.name}}</td>
+            <td>{{i.partyType}}</td>
+            <td>{{i.lrno}}</td>
+            <td>{{i.hamt}}</td>
+            <td>{{i.pochDate}} : {{i.pgno}}</td>
+          </tr>
+        </tbody>
+      </table>
+</div>
     </div>
   </div>
 </div>
