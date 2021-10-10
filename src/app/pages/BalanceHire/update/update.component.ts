@@ -63,10 +63,6 @@ export class UpdateComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;
-    console.log(this.truckArray);
-    
-
-
   };
 
   findAccountDetails() {

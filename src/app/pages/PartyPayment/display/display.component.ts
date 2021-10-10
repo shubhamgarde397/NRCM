@@ -82,11 +82,6 @@ public balanceFollowGlobal={};
     this.monthNames=this.handleF.genaratemonthNames()
     this.role = this.securityCheck.role;
   }
-  ngAfterViewInit(){
-    console.log('Done');
-    
-    
-  }
 
   findgst() {
     this.partyid = this.handleF.findgst(this.nopid, this.gstdetailslist);
@@ -276,8 +271,7 @@ public balanceFollowGlobal={};
       tempObj['tablename'] = 'partyPayment'
 tempObj['partyid']=this.partyids.map(r=>r._id);
       tempObj['display'] = parseInt(this.buttonOption);
-      console.log(tempObj);
-      
+  
       this.balanceFollowGlobal=balanceFollow;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
         .subscribe((res: any) => {
@@ -387,16 +381,14 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
   edit(i,j){
     var amt=prompt('Enter the updating amount')
       let formbody = {'partyData':{}}
-      console.log(i);
-      
+
       formbody['_id'] = i._id;
       formbody['method'] = 'update';
       formbody['tablename'] = 'partyPayment';
       formbody['partyData']['date']=i.date;
       formbody['partyData']['partyid']=i.partyid;
       formbody['partyData']['amount']=parseInt(amt);
-      console.log(formbody);
-      
+
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
         .subscribe((response: Response) => {
           alert(response['Status']);

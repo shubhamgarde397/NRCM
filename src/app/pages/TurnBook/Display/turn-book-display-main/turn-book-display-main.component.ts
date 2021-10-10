@@ -108,8 +108,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();
     this.getTrucks()
-    console.log(this.commonArray);
-    
   }
 
   showDatabyParty() {
@@ -692,9 +690,6 @@ let tempObj1={};
   }
 
   getADD(array) {
-    console.log(array);
-    console.log(this.trucklist);
-    
     array.forEach(res => {
       let g = this.trucklist.find(r => r.truckno === res.truckno);
       if (g['accountDetails'].length > 0) { this.gAD = g; }

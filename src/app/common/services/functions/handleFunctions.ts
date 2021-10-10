@@ -308,8 +308,6 @@ export class handleFunction {
     }
 
     reverseArray(arr,spliter){//array and the data to split with
-        console.log(arr);
-        
         let data=arr.split(spliter);
         return data[1]+spliter+data[0];
     }

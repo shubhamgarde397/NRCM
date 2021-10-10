@@ -118,8 +118,6 @@ this.gstdetailslistidList.splice(j,1)
   
   callChart(){//as per the type change the required fields
     let tempObj={}
-   console.log(this.gstdetailslistidList);
-   
     tempObj['method']="chart";
     tempObj['tablename']="TurnBook_2020_2021"
     tempObj['type']=this.selectedType;

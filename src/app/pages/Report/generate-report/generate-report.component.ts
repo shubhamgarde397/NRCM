@@ -42,11 +42,7 @@ public toFillData=[];
   setOptionValues(){
     this.buttonOption = this.selectedOption;
     this.buttonValue = this.options[parseInt(this.selectedOption) - 1].viewValue;
-    console.log(this.buttonOption);
-    
     if(this.buttonOption==='2'){
-      console.log('came');
-      
       this.getData(5)
     }
   }
@@ -83,8 +79,6 @@ public toFillData=[];
         tempObj['method']='pipelinePan'
         tempObj['tablename']='';
         tempObj['option']=this.buttonOption==='1'?this.buttons[parseInt(this.selectedMY)]['option']:option;
-        console.log(tempObj);
-        
         this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
         .subscribe((res: any) => {
         this.emptyData=res.chartData;
