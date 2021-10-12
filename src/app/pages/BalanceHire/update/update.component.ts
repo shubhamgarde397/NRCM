@@ -106,6 +106,7 @@ export class UpdateComponent implements OnInit {
     tempObj['method'] = 'update';
     tempObj['tablename'] = 'BalanceHire';
     tempObj['todayDate'] = this.handledata.Data.todayDate;
+    tempObj['print'] = false;
     tempObj['truckData'] = this.handledata.Data.truckData;
     tempObj['bankName'] = this.myFormGroup.value.bankName;
     tempObj['ifsc'] = this.myFormGroup.value.ifsc;
@@ -115,6 +116,7 @@ export class UpdateComponent implements OnInit {
     tempObj['_id'] = this.handledata.Data._id;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((response: Response) => {
+        alert(response['Status'])
         let tempObj = this.sec.commonBalanceHire[this.handledata.Data.index];
         tempObj['bankName'] = this.myFormGroup.value.bankName;
         tempObj['ifsc'] = this.myFormGroup.value.ifsc;

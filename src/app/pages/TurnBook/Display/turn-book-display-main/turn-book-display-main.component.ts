@@ -381,6 +381,8 @@ if(this.buttonOption !== '11'){
         }
         else {
           this.turnbooklist = res.Data;
+          console.log(this.turnbooklist);
+          
           this.handleData.saveTurn(this.turnbooklist);
         }
       });
@@ -445,21 +447,20 @@ let tempObj1={};
   }
 
   uncheckPoch(data, j) {
+    console.log(j);
+    
     let tempObj = {};
     tempObj['method'] = 'updatePoch';
     tempObj['tablename'] = 'turnbook';
     tempObj['_id'] = data['_id'];
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-        this.pochDiv = !this.pochDiv;
-        this.turnbooklist = res.Data;
         this.handleData.saveBH(this.turnbooklist.splice(j, 1));
       });
   }
 
   showDatabyid = function (data, j, number) {
     this.show = true;
-
     let tempObj = {};
     tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
     tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
@@ -625,6 +626,7 @@ let tempObj1={};
     this.tempArray = [];
     this.finalObject = {};
     this.finalArray = [];
+    this.ids=[];
     this.find()
   }
 

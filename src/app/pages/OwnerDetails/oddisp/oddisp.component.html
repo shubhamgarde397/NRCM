@@ -10,6 +10,8 @@
                 <th>TruckNumber</th>
                 <th>Owner Name</th>
                 <th>PAN</th>
+                <th>RC</th>
+                <th>DL</th>
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
                 <th>Preferences</th>
@@ -26,6 +28,8 @@
                 <td>{{i.truckno}}</td>
                 <td>{{i.oname}}</td>
                 <td>{{i.pan}}</td>
+                <td>{{i.regCard}}</td>
+                <td>{{i.drivingLic}}</td>
                 <td>
                     <ul *ngFor="let k of i.contact">
                         <li>{{k}}</li>

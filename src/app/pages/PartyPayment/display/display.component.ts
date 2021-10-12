@@ -293,7 +293,7 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
   mailSentSave(){
     let tempObj={}
     let newDate=new Date()
-    this.mailSentDate= newDate.getFullYear()+'-'+(this.handleF.generate2DigitNumber(String(newDate.getMonth()+1)))+'-'+newDate.getDate()
+    this.mailSentDate= newDate.getFullYear()+'-'+(this.handleF.generate2DigitNumber(String(newDate.getMonth()+1)))+'-'+(this.handleF.generate2DigitNumber(newDate.getDate()));
     // tempObj['partyid']=this.partyid['_id'];
     tempObj['partyid']=this.partyids[0]['_id'];
     tempObj['loadingFrom']=this.fromloading;

@@ -73,6 +73,10 @@ export const routes: Routes =
                         path: 'OTHER_REPORT',
                         loadChildren: './pages/Report/generate-report/app.module#AppModule'
                     },
+                    {
+                        path: 'MAIL_DISPLAY',
+                        loadChildren: './pages/Mail/mail-display/app.module#AppModule'
+                    },
 
                     {
                         path: 'BALANCE_HIRE_HANDLER',

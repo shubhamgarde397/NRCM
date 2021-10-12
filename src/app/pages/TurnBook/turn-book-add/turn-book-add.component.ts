@@ -160,8 +160,8 @@ let toAddData;
     let last14Days=new Date(today.getFullYear(), today.getMonth(), today.getDate()-14);
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayA14Days'
-    tempObj['display'] = '1';
-    tempObj['turnbookDate'] = '2021-04-01';
+    tempObj['display'] = '0';
+    tempObj['turnbookDate'] = today.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(today.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(today.getDate()));
     tempObj['turnbookDateS14']=last14Days.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getDate()));
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
