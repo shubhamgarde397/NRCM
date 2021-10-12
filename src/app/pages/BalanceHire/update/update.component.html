@@ -108,15 +108,18 @@
 
 
 </div>
-
+<!-- 
 <div class="well" *ngIf="editOption==1">
 
   <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
     action="/">
 
-    <!-- TruckDate -->
+
     <div class="form-group row">
       <div class="col-sm-6">
+        <button type=" submit" class="btn btn-primary" (click)="eneableInternalAddition()">
+          Add Here
+        </button>
         <table class="table table-bordered">
           <tr>
             <th>Srno</th>
@@ -124,25 +127,27 @@
             <th>TruckNo</th>
             <th>Page No</th>
             <th>Amount</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
           <tr *ngFor="let i of truckArray;let j = index;">
             <td>{{j+1}}</td>
-            <td>{{i.date}}</td>
-            <td>{{i.truckno}}</td>
-            <td>{{i.pageno}}</td>
-            <td>{{i.amount}}</td>
+            <td><input  [disabled]='i.field===true' value={{i.date}}></td>
+            <td><input  [disabled]='i.field===true' value={{i.truckno}}></td>
+            <td><input  [disabled]='i.field===true' value={{i.pageno}}></td>
+            <td><input  [disabled]='i.field===true' value={{i.amount}}></td>
+            <td><button type=" submit" class="btn btn-info" (click)="enableInternalAddition(i,j)">
+              <i class="material-icons">edit</i>
+            </button></td>
+            <td><button type=" submit" class="btn btn-danger" (click)="deleteInternalElement(i,j)">
+              <i class="material-icons">delete_forever</i>
+            </button></td>
           </tr>
         </table>
       </div>
 
     </div>
 
-    <!--  -->
-
-
-
-
-    <!--  -->
 
 
     <div class="row">
@@ -160,4 +165,4 @@
 
 
 
-</div>
+</div> -->

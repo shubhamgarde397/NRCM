@@ -20,6 +20,7 @@ export class HandleDataService {
   public IP = [];
   public turnData = [];
   public BHData = [];
+
   constructor(public securityCheck: SecurityCheckService) { }
 
   notification(value) {
@@ -46,6 +47,7 @@ export class HandleDataService {
 
   giveBH() { return this.BHData; }
 
+ 
 
   createConsiderArray(data) {
     let tempCArr = [];

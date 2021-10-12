@@ -121,12 +121,12 @@ export class TurnBookAddComponent implements OnInit {
     if (tf) {
       this.manualTruck = true;
       this.ownerid = '';
-      this.method = "insert,new";
+      this.method = "insert.new";
     } else {
       this.manualTruck = false;
       this.myFormGroup.patchValue({ trucknoM: this.trucknoid.split('+')[1] })
       this.ownerid = this.trucknoid.split('+')[0];
-      this.method = "insert,old";
+      this.method = "insert.old";
     }
   }
 
@@ -143,38 +143,69 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = this.method;
-
-    this.submitted = true;
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
+    tempobj["user"]= "shubham";
+    tempobj["typeofuser"]= 1;
+    tempobj["lrno"]= 0;
+    tempobj["advance"]= 0;
+    tempobj["balance"]= 0;
+    tempobj["hamt"]= 0;
+    tempobj["pochDate"]= "";
+    tempobj["pochPayment"]= false;
+    tempobj["pgno"]= 999;
+    tempobj["input"]= "manual";
+let toAdd=true;
+let toAddData;
+    let tempObj={};
+    let today=new Date();
+    let last14Days=new Date(today.getFullYear(), today.getMonth(), today.getDate()-14);
+    tempObj['tablename'] = 'turnbook'
+    tempObj['method'] = 'displayA14Days'
+    tempObj['display'] = '0';
+    tempObj['turnbookDate'] = today.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(today.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(today.getDate()));
+    tempObj['turnbookDateS14']=last14Days.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getDate()));
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-        if (res.status === "Duplicate Entry Found.") {
-          alert(res.status);
-        } else {
-          if (this.method === "insert,new") {
-            let tempObj1 = {};
-            tempObj1['oname'] = "";
-            tempObj1['pan'] = "";
-            tempObj1['contact'] = [];
-            tempObj1['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
-            tempObj1['accountDetails'] = [];
-            tempObj1['reference'] = "";
-            tempObj1['preferences'] = [];
-            tempObj1['_id'] = res['_id'].split('+')[1];
-            console.log(tempObj1)
-            this.securityCheck.commonArray['ownerdetails'].push(tempObj1);
-            alert('Inserted Successfully!');
+      toAddData=res.Data.filter(r=>r.ownerDetails[0]._id===this.ownerid);
+      toAdd=toAddData.length>0?true:false;
+      if(toAdd){
+        alert('Entry Already Present.\nTurnbook Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].turnbookDate))+'.\nTruck No : '+toAddData[0].ownerDetails[0].truckno);
+        toAdd=!confirm('Do you still Want to add?');
+       }
+       if(!toAdd){
+      this.submitted = true;
+      this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
+        .subscribe((res: any) => {
+          if (res.status === "Duplicate Entry Found.") {
+            alert(res.status);
           } else {
-            alert('Inserted Successfully!');
+            if (this.method === "insert.new") {
+              let tempObj1 = {};
+              tempObj1['oname'] = "";
+              tempObj1['pan'] = "";
+              tempObj1['contact'] = [];
+              tempObj1['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
+              tempObj1['accountDetails'] = [];
+              tempObj1['reference'] = "";
+              tempObj1['preferences'] = [];
+              tempObj1['_id'] = res['_id'].split('+')[1];
+              this.securityCheck.commonArray['ownerdetails'].push(tempObj1);
+              alert('Inserted Successfully!');
+            } else {
+              alert('Inserted Successfully!');
+            }
           }
-        }
-        this.manualTruck = false;
-        this.myFormGroup.patchValue({ place: '' });
-        this.myFormGroup.patchValue({ trucknoM: '' })
-        this.villageData = "";
-        this.spinnerService.hide();
-        this.fetchBasic();
-        this.reset();
-      });
+          this.manualTruck = false;
+          this.myFormGroup.patchValue({ place: '' });
+          this.myFormGroup.patchValue({ trucknoM: '' })
+          this.villageData = "";
+          this.spinnerService.hide();
+          this.fetchBasic();
+          this.reset();
+        });
+      }
+    });
+ 
+    
   }
   reset() {
     this.manualTruck = false;

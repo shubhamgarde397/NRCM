@@ -5,6 +5,7 @@ import { BalancehirehandlerComponent } from './balancehirehandler/balancehirehan
 import { BalancehireaddComponent } from './balancehireadd/balancehireadd.component';
 import { BalancehiredisplayComponent } from './balancehiredisplay/balancehiredisplay.component';
 import { UpdateComponent } from './update/update.component';
+import { UpdateSingleComponent } from './update-single/update-single.component';
 
 export const BalanceHireRouting: Routes =
     [
@@ -32,6 +33,11 @@ export const BalanceHireRouting: Routes =
                     {
                         path: 'Update',
                         component: UpdateComponent
+                    }
+                    ,
+                    {
+                        path: 'UpdateSingle',
+                        component: UpdateSingleComponent
                     }
 
                 ]

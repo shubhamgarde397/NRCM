@@ -7,13 +7,16 @@ import { BalancehirehandlerComponent } from './balancehirehandler/balancehirehan
 import { BalancehireaddComponent } from './balancehireadd/balancehireadd.component';
 import { BalancehiredisplayComponent } from './balancehiredisplay/balancehiredisplay.component';
 import { UpdateComponent } from './update/update.component';
+import { UpdateSingleComponent } from './update-single/update-single.component';
+
 
 @NgModule({
     declarations: [
         BalancehirehandlerComponent,
         BalancehireaddComponent,
         BalancehiredisplayComponent,
-        UpdateComponent
+        UpdateComponent,
+        UpdateSingleComponent
     ],
     imports: [
         CommonModule,

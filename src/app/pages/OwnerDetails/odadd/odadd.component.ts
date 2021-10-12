@@ -38,6 +38,8 @@ export class OdaddComponent implements OnInit {
   public villagedetailslist;
   public tdid;
   public vid;
+  public regCard;
+  public drivingLic;
   public role = 6;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, public securityCheck: SecurityCheckService) { }
 
@@ -48,9 +50,11 @@ export class OdaddComponent implements OnInit {
     this.model = new odata(this.TruckNo, this.Name, this.Pan, this.MobileNo);
     this.myFormGroup = this.formBuilder.group({
       truckno: [this.model.TruckNo, [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]],
-      oname: [this.model.OwnerName,],
-      pan: [this.model.PAN],
+      oname: '',
+      pan: '',
       contact: [],
+      regCard:'',
+      drivingLic:'',
       accountName: '',
       accountNumber: '',
       bankName: '',
@@ -75,8 +79,6 @@ export class OdaddComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.ownerdetailslist = this.commonArray.ownerdetails;
     this.villagedetailslist = this.commonArray.villagenames;
-    console.log(this.villagedetailslist);
-
   }
 
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {
@@ -88,6 +90,8 @@ export class OdaddComponent implements OnInit {
     formBody['oname'] = value['oname'];
     formBody['pan'] = value['pan'];
     formBody['contact'] = this.contactArray;
+    formBody['regCard'] = value['regCard'];
+    formBody['drivingLic'] = value['drivingLic'];
     formBody['accountDetails'] = this.accountArray;
     formBody['preferences'] = this.villageArray;
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
@@ -96,10 +100,12 @@ export class OdaddComponent implements OnInit {
       .subscribe((res: any) => {
         alert('Added Successfully');
         let formres = {};
-        formres['_id'] = value['res._id'];
+        formres['_id'] = res['_id'];
         formres['truckno'] = value['truckno'];
         formres['oname'] = value['oname'];
         formres['pan'] = value['pan'];
+        formres['regCard'] = value['regCard'];
+        formres['drivingLic'] = value['drivingLic'];
         formres['contact'] = this.contactArray;
         formres['accountDetails'] = this.accountArray;
         formres['preferences'] = this.villageArray;

@@ -48,6 +48,8 @@ export class OwnerUpdateComponent implements OnInit {
       truckno: [this.handledata.Data.truckno],
       oname: [this.handledata.Data.oname],
       pan: [this.handledata.Data.pan],
+      regCard: [this.handledata.Data.regCard],
+      drivingLic: [this.handledata.Data.drivingLic],
       contact: [this.handledata.Data.contact],
       accountName: '',
       accountNumber: '',
@@ -82,11 +84,12 @@ export class OwnerUpdateComponent implements OnInit {
   }
   change = function (data) {
     this.submitted = true;
-
     let formbody = {}
     formbody['truckno'] = data.value.truckno;
     formbody['oname'] = data.value.oname;
     formbody['pan'] = data.value.pan;
+    formbody['regCard'] = data.value.regCard;
+    formbody['drivingLic'] = data.value.drivingLic;
     formbody['contact'] = this.contactArray;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
@@ -104,6 +107,8 @@ export class OwnerUpdateComponent implements OnInit {
               res['truckno'] = data.value.truckno;
               res['oname'] = data.value.oname;
               res['pan'] = data.value.pan;
+              res['regCard'] = data.value.regCard;
+              res['drivingLic'] = data.value.drivingLic;
               res['contact'] = this.contactArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;

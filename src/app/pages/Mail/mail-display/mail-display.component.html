@@ -1,0 +1,41 @@
+<div class="well">
+  <table class="table" style="width:100%" align="center">
+
+      <thead class="table-header">
+          <tr>
+              <th>Srno</th>
+              <th>Mail</th>
+              <th>Party Name</th>
+             <th>Loading</th>
+             <th>Payment</th>
+              <th>Delete</th>
+              <th>Update</th>
+          </tr>
+      </thead>
+
+
+      <tbody>
+          <tr *ngFor="let i of data;let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i.mailSentDate|date:'dd-MM-yyyy'}}</td>
+              <td>{{i.partyDetails[0].name}}</td>
+              <td>{{i.loadingFrom|date:'dd-MM-yyyy'}} - {{i.loadingTo|date:'dd-MM-yyyy'}}</td>
+              <td>{{i.paymentFrom|date:'dd-MM-yyyy'}} - {{i.paymentTo|date:'dd-MM-yyyy'}}</td>
+              <td>
+                  <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
+                      <i class="material-icons">delete_forever</i>
+                  </button>
+              </td>
+              <td>
+                  <button mat-raised-button type="button" (click)="download(i)" class="btn-primary btn-sm btn-just-icon">
+                      <i class="material-icons">edit</i>
+                  </button>
+              </td>
+
+          </tr>
+      </tbody>
+  </table>
+</div>
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>

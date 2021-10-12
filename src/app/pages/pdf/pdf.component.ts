@@ -71,9 +71,6 @@ export class PDFComponent implements OnInit {
   downloadBank() {
     var colorfromUI = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUI);
     var colorfromUILine = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUILine);
-    console.log(colorfromUI);
-    console.log(colorfromUILine);
-
     this.max = this.bankArray[0].Amount;
     this.bankArray.forEach(r => { if (r.Amount > this.max) { this.max = r.Amount; } })
     var doc = new jsPDF()

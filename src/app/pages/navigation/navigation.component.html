@@ -31,12 +31,30 @@
             <a routerLink="PARTY_PAYMENT_HANDLER">Payment</a>
           </li>
         </ul>
-
-
-
-
       </li>
 
+
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown">Reports
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+          <li>
+            <a routerLink="CHART">Charts</a>
+          </li>
+
+          <li>
+            <a (click)="receivedReport()">Received Report</a>
+          </li>
+
+          <li>
+            <a routerLink="OTHER_REPORT">Other Report</a>
+          </li>
+          <li>
+            <a routerLink="MAIL_DISPLAY">Mail Display</a>
+          </li>
+        </ul>
+      </li>
 
 
       <li class="dropdown" *ngIf="role==1||role==2">
@@ -69,6 +87,11 @@
       font-size: 20px;
       margin-top: 10px;
       margin-left: 15px;">Welcome {{nameOfUser}}</li>
+
+      <li style="color: red;
+font-size: 20px;
+margin-top: 10px;
+margin-left: 15px;" *ngIf="showThisMsg">Testing Database Used</li>
     </ul>
 
   </div>

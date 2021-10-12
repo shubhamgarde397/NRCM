@@ -56,7 +56,7 @@ export class handleFunction {
             case "December": return 12
         }
     }
-    generate2DigitNumber(data) {
+    generate2DigitNumber(data) {//pass a string
         if (data.length == 1) {
             return '0' + data;
         } else {
@@ -137,7 +137,12 @@ export class handleFunction {
         }
         return this.hireExtendingMoney;
     }
-
+    removeDuplicates(arr){
+        let unique=[]
+        arr.map(r=>{
+        unique.filter(a=>a.truckno == r.truckno).length>0?null:unique.push(r)});
+        return unique;
+    }
 
     findgst(nopid, gstArray) {
         if (nopid !== 'Select Name of The Party') {
@@ -300,6 +305,11 @@ export class handleFunction {
             FinalizedComplextion = FinalizedComplextion + parseInt(dataToComplex[i]) * (i + 1);
         }
 
+    }
+
+    reverseArray(arr,spliter){//array and the data to split with
+        let data=arr.split(spliter);
+        return data[1]+spliter+data[0];
     }
 
 }

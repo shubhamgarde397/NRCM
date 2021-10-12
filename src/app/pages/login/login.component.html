@@ -12,8 +12,8 @@
   </div>
   <div class="row ">
     <div class="col-xs-12" id="main">
-      <form [formGroup]="myFormGroup" (ngSubmit)="login(myFormGroup)" submitted=true enctype="multipart/form data"
-        action="/" name="myform" id="myform" class="form-horizontal">
+      <form [formGroup]="myFormGroup" (ngSubmit)="login(myFormGroup,!loginButton)" submitted=true
+        enctype="multipart/form data" action="/" name="myform" id="myform" class="form-horizontal">
 
         <div class="form-group">
           <div
@@ -40,15 +40,74 @@
           </div>
         </div>
 
+        <div class="form-group">
+          <div class="col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2">
+            <select formControlName="type" class="form-control" style="color:black;" required [(ngModel)]="userTypeHTML"
+              (change)="setUser()">
+              <option value=1 selected aria-selected="true">Admin</option>
+              <option value=2>HR/Interviewer</option>
+              <option value=3>Testing/Development</option>
+            </select>
+          </div>
+          <div [hidden]="myFormGroup.controls.type.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+
 
 
         <div class="form-group">
           <button type="submit"
-            class="btn btn-primary col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2">
+            class="btn btn-primary col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2"
+            data-toggle="modal" data-target="#myModal" *ngIf="loginButton">
+            <i class="material-icons">lock_open</i>
+          </button>
+          <button type="submit"
+            class="btn btn-primary col-xs-4 col-xs-offset-4 col-sm-5 col-sm-offset-4 col-md-5 col-lg-4 col-lg-offset-6 col-xlg-2"
+            *ngIf="!loginButton">
             <i class="material-icons">lock_open</i>
           </button>
         </div>
       </form>
     </div>
   </div>
+</div>
+
+
+<div class="container">
+  <h2>Welcome</h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"
+            (click)="login(myFormGroup,loginButton)">&times;</button>
+          <h4 class="modal-title">Welcome to NRCM Portal!</h4>
+        </div>
+        <div class="modal-body">
+          <ul>
+            <li>You have logged in Using the Temporary User</li>
+            <li>Your temporary username and password is test123 and test123</li>
+            <li>Please contact the Admin to get the Admin Access.</li>
+            <li>Thank you</li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal"
+            (click)="login(myFormGroup,loginButton)">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>

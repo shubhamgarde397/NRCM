@@ -65,7 +65,18 @@ export const routes: Routes =
                                     loadChildren: './pages/Village/app.module#AppModule'
                                 }]
                     },
-
+                    {
+                        path: 'CHART',
+                        loadChildren: './pages/Charts/bar-chart/app.module#AppModule'
+                    },
+                    {
+                        path: 'OTHER_REPORT',
+                        loadChildren: './pages/Report/generate-report/app.module#AppModule'
+                    },
+                    {
+                        path: 'MAIL_DISPLAY',
+                        loadChildren: './pages/Mail/mail-display/app.module#AppModule'
+                    },
 
                     {
                         path: 'BALANCE_HIRE_HANDLER',
