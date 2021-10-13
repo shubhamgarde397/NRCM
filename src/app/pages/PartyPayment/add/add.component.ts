@@ -75,8 +75,11 @@ export class AddComponent implements OnInit {
   storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
     this.submitted = true;
     let tempobj = {};
+  console.log(this.gstdetailslistid);
+  
     tempobj['partyid'] = this.gstdetailslistid._id;
     tempobj['date'] = value['date'];
+    tempobj['partyName']=this.gstdetailslistid.name;
     tempobj['amount'] = value['amount'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     this.partyData.push(tempobj);//before pushing, check if it is duplicate or not.. write a function
@@ -102,6 +105,7 @@ export class AddComponent implements OnInit {
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'partyPayment';
     tempobj['method'] = 'insertmany';
+    tempobj['partyData'].map(r=>delete r['partyName']);
     this.submitted = true;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
       .subscribe((res: any) => {

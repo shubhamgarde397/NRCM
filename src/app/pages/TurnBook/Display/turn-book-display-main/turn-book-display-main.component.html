@@ -81,6 +81,7 @@
             <th *ngIf="buttonOption!=='9'">Edit</th>
             <th *ngIf="(adminAccess)&&(buttonOption!=='9')">TNO</th>
             <th *ngIf="buttonOption=='9'">Undo</th>
+            <th>S</th>
           </tr>
         </thead>
 
@@ -138,6 +139,9 @@
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>
+            </td>
+            <td *ngIf="buttonOption=='1'">
+              <input type="checkbox">
             </td>
           </tr>
         </tbody>

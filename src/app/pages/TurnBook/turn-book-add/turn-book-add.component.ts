@@ -49,6 +49,7 @@ export class TurnBookAddComponent implements OnInit {
   public trucknoidno;
   public manualTruck = false;
   public trucknoM;
+  public turnbookDate;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
@@ -59,7 +60,7 @@ export class TurnBookAddComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.obs.dateService.subscribe((res: any) => {
       let arr = res.split('_');
       this.m = this.handlefunction.generateMonthName(arr[0]);
@@ -139,7 +140,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
     tempobj['partyType'] = value['partyType'];
     tempobj['loadingDate'] = '';
-    tempobj['turnbookDate'] = value['turnbookDate'];
+    tempobj['turnbookDate'] = this.turnbookDate;//value['turnbookDate'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = this.method;
@@ -153,6 +154,8 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["pochPayment"]= false;
     tempobj["pgno"]= 999;
     tempobj["input"]= "manual";
+    console.log(tempobj);
+    
 let toAdd=true;
 let toAddData;
     let tempObj={};
@@ -165,6 +168,8 @@ let toAddData;
     tempObj['turnbookDateS14']=last14Days.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getDate()));
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
+        console.log(res);
+        
       toAddData=res.Data.filter(r=>r.ownerDetails[0]._id===this.ownerid);
       toAdd=toAddData.length>0?true:false;
       if(toAdd){
@@ -223,5 +228,22 @@ let toAddData;
 
   back() {
     this.submitted = false;
+  }
+
+  leftRight(LR) {
+    let tempArray;
+    let date;
+    switch (LR) {
+      case 'back':
+        tempArray=this.turnbookDate.split('-');
+        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'subtract')
+        this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        break;
+      case 'ahead':
+        tempArray=this.turnbookDate.split('-');
+        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'add')
+        this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        break;
+    }
   }
 }
