@@ -33,6 +33,8 @@ export class MainPageComponent implements OnInit {
   ]
 
 
+
+
   modalData;
   public loginV = false;
   public hoverThis = false;
@@ -182,6 +184,7 @@ export class MainPageComponent implements OnInit {
         this.changed = false;
       }
     }, 1000);
+    
   }
 
   sendData() {

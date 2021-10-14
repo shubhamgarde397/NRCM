@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ApiCallsService } from '../../../../common/services/ApiCalls/ApiCalls.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import 'jspdf-autotable';
+import * as  jsPDF from 'jspdf';
 import { Router } from '@angular/router';
 import { HandleDataService } from '../../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
@@ -15,6 +16,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   providers: [ApiCallsService]
 })
 export class TurnBookDisplayMainComponent implements OnInit {
+  public isAvailable=false;
   public loadingDateDynamic;
   public showbuttonOption8 = false;
   public showbuttonOption82 = false;
@@ -381,8 +383,7 @@ if(this.buttonOption !== '11'){
         }
         else {
           this.turnbooklist = res.Data;
-          console.log(this.turnbooklist);
-          
+          this.isAvailable=true;
           this.handleData.saveTurn(this.turnbooklist);
         }
       });
@@ -712,7 +713,101 @@ let tempObj1={};
     this.myFormGroup.value.partyName = this.tempPNAME;
   }
 
+  downloadAvailableData(){//threshhold is 295
+    let data=this.turnbooklist;
+    let pager=1;
+     let bigValueofY=0;
+     var doc = new jsPDF()
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Available Trucks Details : ', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 25;
+     doc.text('Sr', 2, y)//partyname
+     doc.text('TruckNo', 8, y)//partyname
+     doc.text('Acc', 33.5, y)//partyname
+     doc.text('Pan', 43, y)//partyname
+     doc.text('RC', 53, y)//partyname
+     doc.text('DL', 63, y)//partyname
+     doc.text('Con', 71, y)//partyname
+     doc.text('Notes', 105, y)//partyname
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(7, 20, 7, 25);//srno
+     doc.line(33, 20, 33, 25);//date
+     doc.line(40, 20, 40, 25);//truckno
+     doc.line(50, 20, 50, 25);//truckno
+     doc.line(60, 20, 60, 25);//truckno
+     doc.line(70, 20, 70, 25);//truckno
+     doc.line(80, 20, 80, 25);//truckno
+     //vertical lines
+     let startforI=0;
+     y = y + 6;
+     startforI=0;
+     console.log(data.length);
+     
+     for (let i = startforI; i < data.length; i++) {
+ 
+       if(y>290){
+         y=30;
+     starty = 25;
+         doc.addPage();
+         doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Available Trucks Details : ', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 2, y-6)//partyname
+     doc.text('TruckNo', 8, y-6)//partyname
+     doc.text('Acc', 33.5, y-6)//partyname
+     doc.text('Pan', 43, y-6)//partyname
+     doc.text('RC', 53, y-6)//partyname
+     doc.text('DL', 63, y-6)//partyname
+     doc.text('Con', 71, y-6)//partyname
+     doc.text('Notes', 105, y-6)//partyname
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+     }
+     
+      doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
+     doc.text(data[i].ownerDetails[0].truckno.split(' ')[0]+''+data[i].ownerDetails[0].truckno.split(' ')[1]+''+data[i].ownerDetails[0].truckno.split(' ')[2], 8, y-1)//partyname
+     doc.text(data[i].ownerDetails[0].accountDetails.length>0?"Ok":"X",34, y-1)//partyname
+     doc.text(data[i].ownerDetails[0].pan!==""?'Ok':'X', 43, y-1)//partyname
+     doc.text(data[i].ownerDetails[0].drivingLic!==""?'Ok':'X', 53, y-1)//partyname
+     doc.text(data[i].ownerDetails[0].regCard!==""?'Ok':'X', 63, y-1)//partyname
+     doc.text(data[i].ownerDetails[0].contact.length>0?'Ok':'X', 73, y-1)//partyname
+                
+       doc.line(0, y +2, 210, y +2);//line after header
+       y = y + 10;
+     }
+        //vertical lines//getting applied for every loop, make it happen once only
+        doc.line(7, starty, 7, y-8);//date
+        doc.line(33, starty,33, y-8);//truckno
+        doc.line(40, starty, 40, y-8);//credit
+        doc.line(50, starty, 50, y-8);//credit
+        doc.line(60, starty, 60, y-8);//credit
+        doc.line(70, starty, 70, y-8);//credit
+        doc.line(80, starty, 80, y-8);//credit
+        //vertical lines
 
+     doc.save('Available-Data.pdf')
+   }
 
 }
 

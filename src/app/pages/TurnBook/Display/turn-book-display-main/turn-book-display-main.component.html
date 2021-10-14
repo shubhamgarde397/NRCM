@@ -24,6 +24,9 @@
             <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
           </select>
         </div>
+        <div class="col-sm-3" *ngIf="isAvailable">
+          <button class="btn btn-warning" (click)="downloadAvailableData()" style="width: 100%;">PDF Available Data</button>
+        </div>
         <div class="col-sm-3" *ngIf="buttonOption==='10'">
           <select id="nop" class="form-control" [(ngModel)]="partyVar" (change)="findgst()">
             <option disabled selected>Select Name of The Party</option>
