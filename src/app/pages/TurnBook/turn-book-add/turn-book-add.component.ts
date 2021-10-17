@@ -170,10 +170,10 @@ let toAddData;
       .subscribe((res: any) => {
         console.log(res);
         
-      toAddData=res.Data.filter(r=>r.ownerDetails[0]._id===this.ownerid);
+      toAddData=res.Data.filter(r=>r.truckid===this.ownerid);
       toAdd=toAddData.length>0?true:false;
       if(toAdd){
-        alert('Entry Already Present.\nTurnbook Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].turnbookDate))+'.\nTruck No : '+toAddData[0].ownerDetails[0].truckno);
+        alert('Entry Already Present.\nTurnbook Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].turnbookDate))+'.\nTruck No : '+toAddData[0].truckno+'.\nLoading Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].loadingDate))+'.\nParty Name : ' +toAddData[0].partyName);
         toAdd=!confirm('Do you still Want to add?');
        }
        if(!toAdd){

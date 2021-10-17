@@ -25,7 +25,13 @@
           </select>
         </div>
         <div class="col-sm-3" *ngIf="isAvailable">
-          <button class="btn btn-warning" (click)="downloadAvailableData()" style="width: 100%;">PDF Available Data</button>
+          <button class="btn btn-warning" (click)="downloadAvailableData()" style="width: 100%;">Available Details</button>
+        </div>
+        <div class="col-sm-3" *ngIf="isAvailable">
+          <button class="btn btn-warning" (click)="downloadAvailable()" style="width: 100%;">Available Deep Details</button>
+        </div>
+        <div class="col-sm-3" *ngIf="buttonOption==='11'">
+          <button class="btn btn-warning" (click)="downloadDeepData()" style="width: 100%;">PDF Deep Detail</button>
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='10'">
           <select id="nop" class="form-control" [(ngModel)]="partyVar" (change)="findgst()">
@@ -84,7 +90,8 @@
             <th *ngIf="buttonOption!=='9'">Edit</th>
             <th *ngIf="(adminAccess)&&(buttonOption!=='9')">TNO</th>
             <th *ngIf="buttonOption=='9'">Undo</th>
-            <th>S</th>
+            <th  *ngIf="buttonOption=='1'">S</th>
+            <th  *ngIf="buttonOption=='1'">U</th>
           </tr>
         </thead>
 
@@ -140,8 +147,11 @@
             <td *ngIf="buttonOption=='9'">
               <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
                 class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">edit</i>
+                <i class="material-icons">undo</i>
               </button>
+            </td>
+            <td *ngIf="buttonOption=='1'">
+              <input type="checkbox">
             </td>
             <td *ngIf="buttonOption=='1'">
               <input type="checkbox">

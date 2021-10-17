@@ -95,6 +95,7 @@ export class OdaddComponent implements OnInit {
     formBody['accountDetails'] = this.accountArray;
     formBody['preferences'] = this.villageArray;
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
+    if(formBody['oname'].length>25){alert('Name too long. Only 25 characters allowed.')}else{
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, formBody, 0)
       .subscribe((res: any) => {
@@ -114,6 +115,7 @@ export class OdaddComponent implements OnInit {
         this.reset();
       });
   }
+}
 
   back() {
     this.submitted = false;
