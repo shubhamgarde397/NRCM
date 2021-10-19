@@ -75,6 +75,7 @@ export class TurnBookUpdateComponent implements OnInit {
       advance: this.handledata.Data.advance,
       balance: this.handledata.Data.balance,
       pochDate: this.handledata.Data.pochDate,
+      pgno: this.handledata.Data.pgno,
       pochPayment: this.handledata.Data.pochPayment
     });
     this.myFormGroup1 = this.formBuilder.group({
@@ -90,6 +91,7 @@ export class TurnBookUpdateComponent implements OnInit {
       balance: this.handledata.Data.balance,
       pochDate: this.handledata.Data.pochDate,
       pochPayment: this.handledata.Data.pochPayment,
+      pgno: this.handledata.Data.pgno,
       entryDate: this.handledata.Data.entryDate,
       truckNo: ['', Validators.required],
     });
@@ -164,7 +166,8 @@ export class TurnBookUpdateComponent implements OnInit {
       tempObj["advance"] = this.myFormGroup.value.advance,
       tempObj["balance"] = this.myFormGroup.value.balance,
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
-      tempObj["pochPayment"] = this.myFormGroup.value.pochPayment
+      tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
+      tempObj["pgno"] = this.myFormGroup.value.pgno
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
@@ -189,6 +192,7 @@ export class TurnBookUpdateComponent implements OnInit {
             tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
+            tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
@@ -235,6 +239,7 @@ export class TurnBookUpdateComponent implements OnInit {
             tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
+            tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;

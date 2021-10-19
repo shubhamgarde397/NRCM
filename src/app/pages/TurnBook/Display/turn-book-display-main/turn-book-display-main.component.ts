@@ -481,6 +481,7 @@ let tempObj1={};
     tempObj['balance'] = data.balance === undefined ? 0 : data.balance;
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
+    tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
     tempObj['index'] = j;
     tempObj['number'] = number;
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
@@ -521,7 +522,8 @@ let tempObj1={};
       tempObj["advance"] = '';
       tempObj["balance"] = '';
       tempObj["pochDate"] = '';
-      tempObj["pochPayment"] = '';
+      tempObj["pochPayment"] = false;
+      tempObj["pgno"] = 999;
       tempObj['index'] = j;
       tempObj['number'] = 2;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
@@ -540,6 +542,7 @@ let tempObj1={};
           this.handleData.turnData[j]["balance"] = '';
           this.handleData.turnData[j]["pochDate"] = '';
           this.handleData.turnData[j]["pochPayment"] = '';
+          this.handleData.turnData[j]["pgno"] = '';
           this.handleData.turnData[j]['index'] = j;
           let tempData = this.handleData.giveTurn();
           this.handleData.saveTurn([]);
@@ -854,7 +857,7 @@ let tempObj1={};
      startforI=0;
      for (let i = startforI; i < data.length; i++) {
  
-       if(y>290){
+       if(y>276){
         doc.line(7, starty, 7, y-4);//srno
         doc.line(33, starty, 33, y-4);//date 
         doc.line(97, starty, 97, y-4);//date

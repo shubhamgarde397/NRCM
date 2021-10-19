@@ -20,6 +20,7 @@ export class AddComponent implements OnInit {
   public submitted = false;
   public response: any;
   public date = new Date();
+  public paymentDate;
   public alertBoxSuccess = false;
   public dbName = 1;
   public truckNamesOwner = [];
@@ -37,10 +38,11 @@ export class AddComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.paymentDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.commonArray = this.securityCheck.commonArray;
     this.myFormGroup = this.formBuilder.group({
       partyName: ['', Validators.required],
-      date: ['', Validators.required],
+      paymentDate: ['', Validators.required],
       amount: ['', Validators.required]
     });
     this.considerArray = this.handledata.createConsiderArray('infogstonly')
@@ -75,10 +77,8 @@ export class AddComponent implements OnInit {
   storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
     this.submitted = true;
     let tempobj = {};
-  console.log(this.gstdetailslistid);
-  
     tempobj['partyid'] = this.gstdetailslistid._id;
-    tempobj['date'] = value['date'];
+    tempobj['date'] = value['paymentDate'];
     tempobj['partyName']=this.gstdetailslistid.name;
     tempobj['amount'] = value['amount'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
@@ -89,7 +89,6 @@ export class AddComponent implements OnInit {
   reset() {
     this.submitted = false;
     this.myFormGroup.patchValue({ partyName: '' });
-    this.myFormGroup.patchValue({ date: '' });
     this.myFormGroup.patchValue({ amount: '' });
   }
 
@@ -116,5 +115,21 @@ export class AddComponent implements OnInit {
   }
   back() {
     this.submitted = false;
+  }
+  leftRight(LR) {
+    let tempArray;
+    let date;
+    switch (LR) {
+      case 'back':
+        tempArray=this.paymentDate.split('-');
+        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'subtract')
+        this.paymentDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        break;
+      case 'ahead':
+        tempArray=this.paymentDate.split('-');
+        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'add')
+        this.paymentDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        break;
+    }
   }
 }

@@ -474,7 +474,7 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
     for (let i = startforI; i < this.paymentData.length; i++) {
 
       if(y>290){
-        y=30;
+        y=24;
         
     starty = 20;
         doc.addPage();
@@ -683,6 +683,7 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
      doc.text('Total', 62, bigValueofY)//partyname
      doc.text(String(amount), 106, bigValueofY)//partyname
      doc.text(String(payment), 130, bigValueofY)//partyname
+     doc.text(String(balance), 153, bigValueofY)//partyname
      doc.line(30, starty, 30, bigValueofY+1);//srno
      doc.line(55, starty, 55, bigValueofY+1);//date
      doc.line(83, starty, 83, bigValueofY+1);//truckno
@@ -696,14 +697,9 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
 
 
 
-     doc.setFontSize('20');
-    //  doc.text('Total Lorry Bill : ',25,bigValueofY+10);
-    //  doc.text('Total Payment Received : ',25,bigValueofY+20);
-     doc.text('Total Balance : ',25,bigValueofY+30);
-
-    //  doc.text(String(amount),105,bigValueofY+10);
-    //  doc.text(String(payment),105,bigValueofY+20);
-     doc.text(String(amount)+' - '+String(payment)+' = '+String(balance),80,bigValueofY+30);
+    //  doc.setFontSize('20');
+    //  doc.text('Total Balance : ',25,bigValueofY+30);
+    //  doc.text(String(amount)+' - '+String(payment)+' = '+String(balance),80,bigValueofY+30);
 
      doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.date1)+'_'+this.handleF.getDateddmmyy(this.date2)+ '.pdf')
    }

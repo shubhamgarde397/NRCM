@@ -75,7 +75,7 @@ export class TurnBookAddComponent implements OnInit {
       truckNo: ['', Validators.required],
       partyType: '',
       place: '',
-      trucknoM: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]]
+      trucknoM: ['', [Validators.required]]
 
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
