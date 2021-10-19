@@ -449,8 +449,6 @@ let tempObj1={};
   }
 
   uncheckPoch(data, j) {
-    console.log(j);
-    
     let tempObj = {};
     tempObj['method'] = 'updatePoch';
     tempObj['tablename'] = 'turnbook';
@@ -758,8 +756,6 @@ let tempObj1={};
      let startforI=0;
      y = y + 6;
      startforI=0;
-     console.log(data.length);
-     
      for (let i = startforI; i < data.length; i++) {
  
        if(y>290){

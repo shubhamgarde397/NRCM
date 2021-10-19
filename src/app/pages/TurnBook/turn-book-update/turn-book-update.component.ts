@@ -181,7 +181,7 @@ export class TurnBookUpdateComponent implements OnInit {
             tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.handledata.Data.place,
             // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
             tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
-            tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.handledata.Data.partyName,
+            tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
             // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
             tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = this.handledata.Data.ownerid,
             tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
