@@ -462,6 +462,7 @@ let tempObj1={};
   showDatabyid = function (data, j, number) {
     this.show = true;
     let tempObj = {};
+
     tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
     tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
     tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
@@ -480,6 +481,7 @@ let tempObj1={};
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
     tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
+    tempObj['payment'] = data.paymentDetails;
     tempObj['index'] = j;
     tempObj['number'] = number;
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);

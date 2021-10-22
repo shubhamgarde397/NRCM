@@ -251,6 +251,31 @@
 
     <!--  Check-->
 
+    <!-- partyPayment -->
+
+    <div class="form-group row">
+
+      <div class="col-xs-2">
+        <label for="partyPayment"> Party Payment </label>
+      </div>
+
+      <div class="col-xs-6">
+        <div class="row">
+          <div class="col-sm-6">
+            <select id="partyPayment" class="form-control" formControlName="partyPayment" [(ngModel)]="partyPayment" (change)="setPaymentName()">
+              <option selected disabled>{{paymentName}}</option>
+              <option *ngFor="let i of newPayment;let j = index;" value={{i._id}}+{{j}}>{{i.date}}_{{i.amount}}</option>
+            </select>
+          </div>
+          <div class="col-sm-6">
+            <input type="text" id="paymentName" class="form-control" formControlName="paymentName" disabled>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!--  partyPayment-->
 
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>

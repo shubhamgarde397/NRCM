@@ -122,6 +122,10 @@ export class handleFunction {
         }
     }
 
+    createDate(date){
+        return this.getDate(date.getDate(),date.getMonth()+1,date.getFullYear())
+    }
+
     getDateddmmyy(date) {
         let day=date.slice(8);
         let monthno=date.slice(5,7);

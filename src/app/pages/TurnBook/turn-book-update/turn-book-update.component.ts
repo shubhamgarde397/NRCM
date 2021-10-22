@@ -47,6 +47,13 @@ export class TurnBookUpdateComponent implements OnInit {
   public updateOption = 1;
   public oldTruckNo;
   public truckdetailslist;
+  public date=new Date();
+  public newPayment;
+  public partyPayment;
+  public partyPaymentValue;
+  public paymentid;
+  public paymentName;
+  public tempPaymentNAME;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -62,6 +69,7 @@ export class TurnBookUpdateComponent implements OnInit {
     this.considerArray = this.handledata.createConsiderArray('turnbookadd')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.role = this.securityCheck.role;
+console.log(this.handledata.Data);
 
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: this.handledata.Data.turnbookDate,
@@ -76,7 +84,9 @@ export class TurnBookUpdateComponent implements OnInit {
       balance: this.handledata.Data.balance,
       pochDate: this.handledata.Data.pochDate,
       pgno: this.handledata.Data.pgno,
-      pochPayment: this.handledata.Data.pochPayment
+      pochPayment: this.handledata.Data.pochPayment,
+      partyPayment: this.handledata.Data.payment[0]['_id'],
+      paymentName:this.handledata.Data.payment[0]['date']+'_'+this.handledata.Data.payment[0]['amount']
     });
     this.myFormGroup1 = this.formBuilder.group({
       turnbookDate: this.handledata.Data.turnbookDate,
@@ -99,10 +109,43 @@ export class TurnBookUpdateComponent implements OnInit {
     this.placeid = this.handledata.Data.placeid;
     this.party = this.handledata.Data.partyName;
     this.partyid = this.handledata.Data.partyid;
+    // this.paymentid = this.handledata.Data.paymentid;
+    this.paymentName=this.handledata.Data.payment[0].date+'_'+this.handledata.Data.payment[0].amount
     this.hireExtendingMoney = this.handlefunction.getMoney();
     this.commonArray = this.securityCheck.commonArray;
     this.updateOption = this.handledata.Data.number;
     this.oldTruckNo = this.handledata.Data.truckno;
+    this.fetchPaymentData(this.handledata.Data.loadingDate,this.handledata.Data.partyid);
+  }
+  fetchPaymentData(loadingDate,partyid){
+let tempObj={}
+tempObj['from']='2021-05-31'//loadingDate;
+tempObj['to']=this.handlefunction.createDate(this.date);
+    tempObj['partyid']=[partyid];
+    tempObj['method'] = 'displayPP';
+    tempObj['tablename'] = 'partyPayment'
+    tempObj['display']=3;
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        console.log(res);
+        this.newPayment=res.paymentData;
+        
+      });
+  }
+//   setPayment(){
+// this.partyPaymentValue=this.partyPayment;
+//   }
+  savePayment(){
+    console.log(this.partyPayment);
+    
+    // let tempObj={}
+    // this.apiCallservice.handleData_New_python('commoninformation1', 1, tempObj, 0)
+    // .subscribe((res: any) => {
+    //   console.log(res);
+    //   this.newPayment=res.paymentData;
+      
+    // });
   }
 
   findtruckdetails() {
@@ -111,6 +154,12 @@ export class TurnBookUpdateComponent implements OnInit {
     this.myFormGroup.patchValue({ trucknoM: this.trucknoid.split('+')[1] })
     this.ownerid = this.trucknoid.split('+')[0];
 
+  }
+  setPaymentName(){
+    this.paymentid = this.newPayment[this.myFormGroup.value.partyPayment.split('+')[1]]._id;
+    this.tempPaymentNAME = this.newPayment[this.myFormGroup.value.partyPayment.split('+')[1]].date+'_'+this.newPayment[this.myFormGroup.value.partyPayment.split('+')[1]].amount;
+    this.paymentName=this.tempPaymentNAME;
+    this.myFormGroup.value.paymentName = this.tempPaymentNAME;
   }
 
   setPartyName() {
@@ -151,6 +200,8 @@ export class TurnBookUpdateComponent implements OnInit {
 
   change = function (data) {
     let tempObj = {};
+    console.log(this.myFormGroup.value);
+    
     tempObj["turnbookDate"] = this.handledata.Data.turnbookDate,
       tempObj["entryDate"] = this.handledata.Data.entryDate,
       tempObj['method'] = 'update';
@@ -168,6 +219,7 @@ export class TurnBookUpdateComponent implements OnInit {
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
       tempObj["pgno"] = this.myFormGroup.value.pgno
+      tempObj["paymentid"] = this.paymentid//Make changes in backend
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
@@ -193,6 +245,7 @@ export class TurnBookUpdateComponent implements OnInit {
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
+            tempData[this.handledata.Data.index]["paymentid"] = this.paymentid;
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
