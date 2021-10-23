@@ -194,9 +194,11 @@
             <th>Party</th>
             <th>Amount</th>
             <th>Value</th>
+            <th>Trucks</th>
             <th *ngIf="adminAccess">Delete</th>
             <th *ngIf="adminAccess">Edit</th>
             <th *ngIf="!adminAccess">Temp Delete</th>
+            <th *ngIf="adminAccess">Delete Trucks</th>
           </tr>
         </thead>
 
@@ -208,6 +210,11 @@
             <td>{{i.partyName}}</td>
             <td>{{i.amount}}</td>
             <td>{{i.value}}</td>
+            <td>
+              <ul *ngFor="let k of i['loadingDate'];let l = index;">
+                <li>{{k.split('_')[1]}}:{{k.split('_')[3]}}</li>
+              </ul>
+          </td>
             <td *ngIf="adminAccess">
               <button mat-raised-button type="button" (click)="delete(i,j)" class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
@@ -221,6 +228,11 @@
             <td *ngIf="!adminAccess">
               <button mat-raised-button type="button" (click)="deleteTemp(i,j)" class="btn-warning btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
+              </button>
+            </td>
+            <td *ngIf="adminAccess">
+              <button mat-raised-button type="button" (click)="deleteTrucks(i,j)" class="btn-warning btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
               </button>
             </td>
           </tr>

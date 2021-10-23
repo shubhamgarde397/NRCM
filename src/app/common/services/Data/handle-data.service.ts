@@ -20,9 +20,19 @@ export class HandleDataService {
   public IP = [];
   public turnData = [];
   public BHData = [];
+public PPData=[];
+  
 
   constructor(public securityCheck: SecurityCheckService) { }
 
+
+  savePPData(data){
+    this.PPData=data;
+  }
+  givePPData(){
+    return this.PPData;
+  }
+  
   notification(value) {
     this.flag = value;
   }

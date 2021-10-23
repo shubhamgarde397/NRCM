@@ -526,6 +526,7 @@ let tempObj1={};
       tempObj["pgno"] = 999;
       tempObj['index'] = j;
       tempObj['number'] = 2;
+      tempObj['paymentid'] = data.paymentDetails[0]._id;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
           alert(res.Status);

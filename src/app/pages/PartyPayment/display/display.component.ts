@@ -81,6 +81,7 @@ public balanceFollowGlobal={};
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.monthNames=this.handleF.genaratemonthNames()
     this.role = this.securityCheck.role;
+    this.partyids=[];
   }
 
   findgst() {
@@ -394,6 +395,11 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
           alert(response['Status']);
           this.paymentData[j]['amount']=parseInt(amt);
         });
+    }
+
+    deleteTrucks(i,j){
+      this.handledata.savePPData([i])
+      this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Update']);
     }
   
 

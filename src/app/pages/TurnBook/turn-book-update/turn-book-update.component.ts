@@ -54,6 +54,7 @@ export class TurnBookUpdateComponent implements OnInit {
   public paymentid;
   public paymentName;
   public tempPaymentNAME;
+  public addtoTB=false;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -63,14 +64,10 @@ export class TurnBookUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.role = this.securityCheck.role;
-
     this.commonArray = this.securityCheck.commonArray;
     this.considerArray = this.handledata.createConsiderArray('turnbookadd')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.role = this.securityCheck.role;
-console.log(this.handledata.Data);
-
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: this.handledata.Data.turnbookDate,
       truckno: this.handledata.Data.truckno,
@@ -109,17 +106,18 @@ console.log(this.handledata.Data);
     this.placeid = this.handledata.Data.placeid;
     this.party = this.handledata.Data.partyName;
     this.partyid = this.handledata.Data.partyid;
-    // this.paymentid = this.handledata.Data.paymentid;
+    this.paymentid = this.handledata.Data.payment[0]._id;
     this.paymentName=this.handledata.Data.payment[0].date+'_'+this.handledata.Data.payment[0].amount
     this.hireExtendingMoney = this.handlefunction.getMoney();
     this.commonArray = this.securityCheck.commonArray;
     this.updateOption = this.handledata.Data.number;
     this.oldTruckNo = this.handledata.Data.truckno;
-    this.fetchPaymentData(this.handledata.Data.loadingDate,this.handledata.Data.partyid);
+
+    this.paymentid==='617114b7baa1bf3b9386a6a9'?this.fetchPaymentData(this.handledata.Data.loadingDate,this.handledata.Data.partyid):this.myFormGroup.controls.partyPayment.disable();
   }
   fetchPaymentData(loadingDate,partyid){
 let tempObj={}
-tempObj['from']='2021-05-31'//loadingDate;
+tempObj['from']=loadingDate;
 tempObj['to']=this.handlefunction.createDate(this.date);
     tempObj['partyid']=[partyid];
     tempObj['method'] = 'displayPP';
@@ -128,38 +126,20 @@ tempObj['to']=this.handlefunction.createDate(this.date);
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        console.log(res);
         this.newPayment=res.paymentData;
-        
       });
-  }
-//   setPayment(){
-// this.partyPaymentValue=this.partyPayment;
-//   }
-  savePayment(){
-    console.log(this.partyPayment);
-    
-    // let tempObj={}
-    // this.apiCallservice.handleData_New_python('commoninformation1', 1, tempObj, 0)
-    // .subscribe((res: any) => {
-    //   console.log(res);
-    //   this.newPayment=res.paymentData;
-      
-    // });
   }
 
   findtruckdetails() {
-
-
     this.myFormGroup.patchValue({ trucknoM: this.trucknoid.split('+')[1] })
     this.ownerid = this.trucknoid.split('+')[0];
-
   }
   setPaymentName(){
     this.paymentid = this.newPayment[this.myFormGroup.value.partyPayment.split('+')[1]]._id;
     this.tempPaymentNAME = this.newPayment[this.myFormGroup.value.partyPayment.split('+')[1]].date+'_'+this.newPayment[this.myFormGroup.value.partyPayment.split('+')[1]].amount;
     this.paymentName=this.tempPaymentNAME;
     this.myFormGroup.value.paymentName = this.tempPaymentNAME;
+    this.addtoTB=true;
   }
 
   setPartyName() {
@@ -200,8 +180,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
 
   change = function (data) {
     let tempObj = {};
-    console.log(this.myFormGroup.value);
-    
     tempObj["turnbookDate"] = this.handledata.Data.turnbookDate,
       tempObj["entryDate"] = this.handledata.Data.entryDate,
       tempObj['method'] = 'update';
@@ -220,6 +198,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
       tempObj["pgno"] = this.myFormGroup.value.pgno
       tempObj["paymentid"] = this.paymentid//Make changes in backend
+      this.addtoTB===true?tempObj['addtotbids']=true:false
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {

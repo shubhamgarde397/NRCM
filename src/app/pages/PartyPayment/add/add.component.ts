@@ -81,6 +81,7 @@ export class AddComponent implements OnInit {
     tempobj['date'] = value['paymentDate'];
     tempobj['partyName']=this.gstdetailslistid.name;
     tempobj['amount'] = value['amount'];
+    tempobj['tbids']=["61739cccd00acebeefa834e1"];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     this.partyData.push(tempobj);//before pushing, check if it is duplicate or not.. write a function
     this.reset();

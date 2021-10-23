@@ -155,8 +155,6 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["pgno"]= 999;
     tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";
     tempobj["input"]= "manual";
-    console.log(tempobj);
-    
 let toAdd=true;
 let toAddData;
     let tempObj={};
@@ -169,8 +167,6 @@ let toAddData;
     tempObj['turnbookDateS14']=last14Days.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getDate()));
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-        console.log(res);
-        
       toAddData=res.Data.filter(r=>r.truckid===this.ownerid);
       toAdd=toAddData.length>0?true:false;
       if(toAdd){
