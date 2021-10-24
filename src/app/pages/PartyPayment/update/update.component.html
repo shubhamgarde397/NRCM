@@ -1,4 +1,58 @@
-<div class="well" *ngIf="!show">
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4"><h3>{{allData[0].partyName}}</h3></div>
+        <div class="col-sm-4"><h3>{{allData[0].amount}}</h3></div>
+        <div class="col-sm-4"><h3>{{allData[0].date}}</h3></div>
+    </div>
+</div>
+<div class="well" *ngIf="show===1">
+    <div class="row">
+        <div class="col-sm-6"><button class="btn btn-warning" (click)="trucks(2)">Add Trucks</button></div>
+        <div class="col-sm-6"><button class="btn btn-warning" (click)="trucks(3)">Delete Trucks</button></div>
+    </div>
+        <div class="col-sm-6"><button class="btn btn-warning" (click)="trucks(0)">Back</button></div>
+</div>
+<div class="well" *ngIf="show===2">
+    
+    <div class="form-group row">
+        <div class="col-xs-6">
+          <select id="pp" class="form-control" [(ngModel)]="pp" (change)="addToArray()">
+            <option selected>Select Trucks</option>
+            <option *ngFor="let own of pendingTrucks; let j = index;" value={{own._id+j}}>
+                {{own.data.split('_')[0]|date: 'dd-MM-yyyy'}}:{{own.data.split('_')[2]}}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+            
+    <table class="table" style="width:100%" align="center">
+
+        <thead class="table-header">
+            <tr>
+                <th>Srno</th>
+                <th>Date</th>
+                <th>TruckNo</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+
+
+        <tbody>
+            <tr *ngFor="let i of addToArrayVar;let j = index;">
+                <td>{{j+1}}</td>
+                <td>{{i.date|date: 'dd-MM-yyyy'}}</td>
+                <td>{{i.truckno}}</td>
+                <td><button class="btn btn-danger" (click)="tempDelete(j)">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success" (click)="addToSave()">Add</button>
+        </div>
+      </div>
+
+    <button class="btn btn-success" (click)="trucks(1)">Back</button>
+</div>
+<div class="well" *ngIf="show===3">
 
   <table class="table" style="width:100%" align="center">
 
@@ -27,7 +81,5 @@
           </tr>
       </tbody>
   </table>
-</div>
-<div *ngIf="show">
-  <router-outlet></router-outlet>
+  <button class="btn btn-success" (click)="trucks(1)">Back</button>
 </div>

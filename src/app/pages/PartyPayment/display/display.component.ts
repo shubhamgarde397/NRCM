@@ -82,6 +82,7 @@ public balanceFollowGlobal={};
     this.monthNames=this.handleF.genaratemonthNames()
     this.role = this.securityCheck.role;
     this.partyids=[];
+    this.paymentData=this.handledata.givePaymentData();
   }
 
   findgst() {
@@ -280,6 +281,7 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
           this.paymentData = this.buttonOption == '4' ? this.pdfJSON(res.paymentData, balanceFollow,'addBalance') : ( this.buttonOption == '5'? this.pdfJSONForParty(res.paymentData,balanceFollow,'addBalance'):res.paymentData);
           if (this.paymentData.length > 0) {
             this.tableData = true;
+            this.handledata.savePaymentData(this.tableData);
           } else {
             alert('No Data Available.');
             this.tableData = false;
@@ -381,6 +383,7 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
   }
   edit(i,j){
     var amt=prompt('Enter the updating amount')
+    if(amt!==null){
       let formbody = {'partyData':{}}
 
       formbody['_id'] = i._id;
@@ -396,7 +399,7 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
           this.paymentData[j]['amount']=parseInt(amt);
         });
     }
-
+  }
     deleteTrucks(i,j){
       this.handledata.savePPData([i])
       this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Update']);

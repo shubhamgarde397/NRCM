@@ -164,6 +164,24 @@ export class handleFunction {
         }
     }
 
+    findpayment(nopid) {
+        if (nopid !== 'Select Trucks') {
+            const data = nopid;
+            switch (data.length) {
+                case 25:
+                    return data.slice(-1);
+                case 26:
+                    return data.slice(-2);
+                case 27:
+                    return data.slice(-3);
+                case 28:
+                    return data.slice(-4);
+                case 29:
+                    return data.slice(-5);
+            }
+        }
+    }
+
     findowner(trucknoid, ownerArray, text) {
         if (trucknoid !== text) {
             const data = trucknoid;

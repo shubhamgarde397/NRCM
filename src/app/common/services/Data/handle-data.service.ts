@@ -21,11 +21,16 @@ export class HandleDataService {
   public turnData = [];
   public BHData = [];
 public PPData=[];
-  
+  public PaymentData=[]
 
   constructor(public securityCheck: SecurityCheckService) { }
 
-
+  savePaymentData(data){
+    this.PaymentData=data;
+  }
+  givePaymentData(){
+    return this.PaymentData;
+  }
   savePPData(data){
     this.PPData=data;
   }

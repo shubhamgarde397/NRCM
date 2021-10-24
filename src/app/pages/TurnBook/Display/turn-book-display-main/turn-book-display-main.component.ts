@@ -59,6 +59,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '9', 'viewvalue': 'Cancelled Vehicles' },
     { 'value': '10', 'viewvalue': 'By Party' },
     { 'value': '11', 'viewvalue': 'Details By Truck' },
+    // { 'value': '12', 'viewValue': 'Pending Payment'}
   ]
   public years = []
   public buttons = []
