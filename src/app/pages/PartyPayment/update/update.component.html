@@ -19,7 +19,7 @@
           <select id="pp" class="form-control" [(ngModel)]="pp" (change)="addToArray()">
             <option selected>Select Trucks</option>
             <option *ngFor="let own of pendingTrucks; let j = index;" value={{own._id+j}}>
-                {{own.data.split('_')[0]|date: 'dd-MM-yyyy'}}:{{own.data.split('_')[2]}}
+                {{own.data.split('_')[0]|date: 'dd-MM-yyyy'}}:{{own.data.split('_')[2]}}:{{own.partyName}}
             </option>
           </select>
         </div>
@@ -32,6 +32,7 @@
                 <th>Srno</th>
                 <th>Date</th>
                 <th>TruckNo</th>
+                <th>LRNO</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -42,6 +43,7 @@
                 <td>{{j+1}}</td>
                 <td>{{i.date|date: 'dd-MM-yyyy'}}</td>
                 <td>{{i.truckno}}</td>
+                <td>{{i.lrno}}</td>
                 <td><button class="btn btn-danger" (click)="tempDelete(j)">Delete</button></td>
             </tr>
         </tbody>
@@ -61,6 +63,7 @@
               <th>Srno</th>
               <th>Date</th>
               <th>Truckno</th>
+              <!-- <th>LRNO</th> -->
               <th>TB Date</th>
               <th>Delete</th>
           </tr>
@@ -72,6 +75,7 @@
               <td>{{j+1}}</td>
               <td>{{i.split('_')[1]}}</td>
               <td>{{i.split('_')[3]}}</td>
+              <!-- <td>{{i.split('_')[4]}}</td> -->
               <td>{{i.split('_')[2]}}</td>
               <td>
                   <button mat-raised-button (click)="delete(j)" class="btn-danger btn-sm btn-just-icon">

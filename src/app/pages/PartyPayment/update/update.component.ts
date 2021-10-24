@@ -21,6 +21,8 @@ export class UpdateComponent implements OnInit {
   ngOnInit() {
     this.loadingDate=this.hd.givePPData()[0]['loadingDate'];
     this.allData=this.hd.givePPData();
+    console.log(this.allData);
+    
   }
 
   trucks(data){
@@ -30,7 +32,9 @@ export class UpdateComponent implements OnInit {
 
   getAllTBPendingTrucks(){
     let tempobj={}
+    console.log(this.allData);
     
+      tempobj['partyid']=this.allData[0]['partyid'];
       tempobj["method"]= "pendingPayment",
       tempobj["tablename"]= "partyPayment",
       tempobj["user"]= "shubham",
@@ -50,6 +54,7 @@ export class UpdateComponent implements OnInit {
     
     tempObj['truckno']=this.pendingTrucks[this.hf.findpayment(this.pp)]['data'].split('_')[2]
     tempObj['date']=this.pendingTrucks[this.hf.findpayment(this.pp)]['data'].split('_')[0]
+    tempObj['lrno']=this.pendingTrucks[this.hf.findpayment(this.pp)]['lrno']
     tempObj['id']=this.pendingTrucks[this.hf.findpayment(this.pp)]['_id']
     this.addToArrayVar.push(tempObj)
   }
