@@ -17,7 +17,7 @@
     <div class="form-group row">
         <div class="col-xs-6">
           <select id="pp" class="form-control" [(ngModel)]="pp" (change)="addToArray()">
-            <option selected>Select Trucks</option>
+            <option selected disabled>Select Trucks</option>
             <option *ngFor="let own of pendingTrucks; let j = index;" value={{own._id+j}}>
                 {{own.data.split('_')[0]|date: 'dd-MM-yyyy'}}:{{own.data.split('_')[2]}}:{{own.partyName}}
             </option>
@@ -44,7 +44,7 @@
                 <td>{{i.date|date: 'dd-MM-yyyy'}}</td>
                 <td>{{i.truckno}}</td>
                 <td>{{i.lrno}}</td>
-                <td><button class="btn btn-danger" (click)="tempDelete(j)">Delete</button></td>
+                <td><button class="btn btn-danger" (click)="tempDelete(j,i)">Delete</button></td>
             </tr>
         </tbody>
     </table>

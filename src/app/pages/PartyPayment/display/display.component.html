@@ -2,6 +2,14 @@
 
   <br />
   <div class="row">
+    <div class="col-sm-4" *ngIf="partyids.length>0">
+      <table>
+        <tr><th>Name</th><th>Delete</th></tr>
+        <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="row">
     <div class="col-lg-12">
       <!-- DATE-->
       <div class="form-group row">
@@ -52,12 +60,6 @@
                 </option>
               </select>
             </div>
-            <div class="col-sm-4">
-              <table>
-                <tr><th>Name</th><th>Delete</th></tr>
-                <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
-              </table>
-            </div>
           </div>
 <div class="row">
           <div class="col-sm-4" *ngIf="buttonOption==='4'">
@@ -102,12 +104,7 @@
         </option>
       </select>
     </div>
-    <div class="col-sm-4">
-      <table>
-        <tr><th>Name</th><th>Delete</th></tr>
-        <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
-      </table>
-    </div>
+   
   </div>
 <div class="row">
   <div class="col-sm-4" *ngIf="buttonOption==='4'">
@@ -162,11 +159,7 @@
 
       <h3>{{todaysDate}}</h3>
       <div class="row" *ngIf="tableData">
-        <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
-        Download Only Lorry
-      </button>
-    </div>
+       
       <div class="col-sm-3">
       <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
         PDF : Party
@@ -239,11 +232,7 @@
         </tbody>
       </table>
       <div class="row" *ngIf="tableData">
-        <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
-        Download Only Lorry
-      </button>
-    </div>
+        
       <div class="col-sm-3">
       <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
         PDF : Party
