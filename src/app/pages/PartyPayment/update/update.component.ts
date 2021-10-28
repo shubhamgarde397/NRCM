@@ -66,7 +66,7 @@ export class UpdateComponent implements OnInit {
     tempobj['id']=this.allData[0]['_id'];
     tempobj['method']='addIdsToPartyAndTB';
     tempobj['tablename']='partyPayment';
-    this.apiCallservice.handleData_New_python('commoninformation1', 1, tempobj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 0)
         .subscribe((response: Response) => {
           alert(response['Status']);
         });

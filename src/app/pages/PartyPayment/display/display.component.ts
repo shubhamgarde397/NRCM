@@ -83,6 +83,7 @@ public balanceFollowGlobal={};
     this.role = this.securityCheck.role;
     this.partyids=[];
     this.paymentData=this.handledata.givePaymentData();
+    this.paymentData.length>0?this.tableData = true:this.tableData = false;
   }
 
   findgst() {
@@ -281,7 +282,7 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
           this.paymentData = this.buttonOption == '4' ? this.pdfJSON(res.paymentData, balanceFollow,'addBalance') : ( this.buttonOption == '5'? this.pdfJSONForParty(res.paymentData,balanceFollow,'addBalance'):res.paymentData);
           if (this.paymentData.length > 0) {
             this.tableData = true;
-            this.handledata.savePaymentData(this.tableData);
+            this.handledata.savePaymentData(this.paymentData);
           } else {
             alert('No Data Available.');
             this.tableData = false;
