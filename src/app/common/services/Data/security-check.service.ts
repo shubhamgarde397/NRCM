@@ -11,11 +11,10 @@ export class SecurityCheckService {
     "gstdetails": [{}],
     "ownerdetails": [{}],
     "villagenames": [{}],
-    "regularparty": [{}],
-    "RegularTruck": [{}],
-    "thoughts": [{}],
-    "personaldetails": [{}],
-    "truckdetails": [{}],
+    "lrlist": [{}],
+    // "regularparty": [{}],
+    // "RegularTruck": [{}],
+    // "thoughts": [{}],
     "Role": 6
   }
   public commonBalanceHire = [];

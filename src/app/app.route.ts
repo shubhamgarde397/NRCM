@@ -63,7 +63,12 @@ export const routes: Routes =
                                 {
                                     path: 'VILLAGE_HANDLER',
                                     loadChildren: './pages/Village/app.module#AppModule'
-                                }]
+                                },
+                                {
+                                    path:'REASON_HANDLER',
+                                    loadChildren: './pages/MissingReason/app.module#AppModule'
+                                }
+                        ]
                     },
                     {
                         path: 'CHART',
@@ -76,6 +81,10 @@ export const routes: Routes =
                     {
                         path: 'MAIL_DISPLAY',
                         loadChildren: './pages/Mail/mail-display/app.module#AppModule'
+                    },
+                    {
+                        path:'MISSING_LR',
+                        loadChildren: './pages/MissingLRNOS/missing-display/app.module#AppModule'
                     },
 
                     {

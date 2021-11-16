@@ -12,6 +12,7 @@ export class HandleDataService {
     "gstdetails": [{}],
     "ownerdetails": [{}],
     "villagenames": [{}],
+    "lrlist": [{}],
     // "regularparty": [{}],
     // "RegularTruck": [{}],
     // "thoughts": [{}],
@@ -68,6 +69,8 @@ public PPData=[];
     let tempCArr = [];
     let tempArrofAPI = [];
     tempArrofAPI = this.getIndexes(data);
+    console.log(tempArrofAPI);
+    
     for (let i = 0; i < tempArrofAPI.length; i++) {
       tempCArr[tempArrofAPI[i][0].index] = 1;//use here tempArrOfAPI[0].index
     }
@@ -100,6 +103,8 @@ public PPData=[];
         return [Consts.VILLAGE_INDEX, Consts.OWNER_INDEX];
       case 'turnbookadd':
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
+      case 'infolrlist':
+        return [Consts.LRLIST_INDEX]
 
     }
   }
