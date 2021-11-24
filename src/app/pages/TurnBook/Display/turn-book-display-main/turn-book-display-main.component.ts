@@ -580,7 +580,7 @@ let tempObj1={};
     this.show = true;
     data['index'] = 0;
     this.handleData.saveData(data);
-    this.router.navigate(['Navigation/Information/OWNER_HANDLER/OwnerUpdate']);
+    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   }
   addToCheckArray(i, j, c) {
     // i['index'] = j;

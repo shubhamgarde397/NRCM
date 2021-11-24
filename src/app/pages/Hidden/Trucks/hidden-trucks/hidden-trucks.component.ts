@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
+import { ApiCallsService } from '../../../../common/services/ApiCalls/ApiCalls.service';
 import { Router } from '@angular/router';
-import { HandleDataService } from '../../../common/services/Data/handle-data.service';
+import { HandleDataService } from '../../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 
 @Component({
-  selector: 'app-oddisp',
-  templateUrl: './oddisp.component.html',
-  styleUrls: ['./oddisp.component.css'],
-  providers: [ApiCallsService]
+  selector: 'app-hidden-trucks',
+  templateUrl: './hidden-trucks.component.html',
+  styleUrls: ['./hidden-trucks.component.css']
 })
-export class OddispComponent implements OnInit {
+export class HiddenTrucksComponent implements OnInit {
   public ownerdetailslist = [];
   public date3month;
   public todayDate;

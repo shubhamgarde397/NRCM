@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { informationComponent } from './pages/information/information.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavigationComponent } from './pages/navigation/navigation.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -9,6 +8,8 @@ import { MainPageComponent } from './pages/main-page/main-page.component';
 import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
 import { C2wComponent } from './pages/C2W/c2w/c2w.component';
+import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
+import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 
 export const routes: Routes =
     [
@@ -44,31 +45,28 @@ export const routes: Routes =
                         component: WelcomePageComponent
                     },
                     {
-                        path: 'Information',
-                        component: informationComponent,
-                        children:
-                            [
-                                {
-                                    path: 'GST_HANDLER',
-                                    loadChildren: './pages/GST/app.module#AppModule'
-                                },
-                                {
-                                    path: 'OWNER_HANDLER',
-                                    loadChildren: './pages/OwnerDetails/app.module#OwnerModule'
-                                },
-                                {
-                                    path: 'IMP_GST_HANDLER',
-                                    loadChildren: './pages/ImpGST/app.module#AppModule'
-                                },
-                                {
-                                    path: 'VILLAGE_HANDLER',
-                                    loadChildren: './pages/Village/app.module#AppModule'
-                                },
-                                {
-                                    path:'REASON_HANDLER',
-                                    loadChildren: './pages/MissingReason/app.module#AppModule'
-                                }
-                        ]
+                        path: 'GST_HANDLER',
+                        loadChildren: './pages/GST/app.module#AppModule'
+                    },
+                    {
+                        path: 'OWNER_HANDLER',
+                        loadChildren: './pages/OwnerDetails/app.module#OwnerModule'
+                    },
+                    {
+                        path: 'HIDDEN_OWNER_HANDLER',
+                        component:HiddenTrucksComponent
+                    },
+                    {
+                        path: 'IMP_GST_HANDLER',
+                        loadChildren: './pages/ImpGST/app.module#AppModule'
+                    },
+                    {
+                        path: 'VILLAGE_HANDLER',
+                        loadChildren: './pages/Village/app.module#AppModule'
+                    },
+                    {
+                        path:'REASON_HANDLER',
+                        loadChildren: './pages/MissingReason/app.module#AppModule'
                     },
                     {
                         path: 'CHART',
@@ -99,6 +97,10 @@ export const routes: Routes =
                     {
                         path: 'TURN_BOOK_HANDLER',
                         loadChildren: './pages/TurnBook/turn-book.module#TurnBookModule'
+                    },
+                    {
+                        path: 'TURN_BOOK_LOCATION_DISP',
+                        component:TurnBookLocationDispComponent
                     },
                     {
                         path: 'PARTY_PAYMENT_HANDLER',

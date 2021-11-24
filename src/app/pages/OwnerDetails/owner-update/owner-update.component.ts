@@ -50,6 +50,14 @@ export class OwnerUpdateComponent implements OnInit {
       pan: [this.handledata.Data.pan],
       regCard: [this.handledata.Data.regCard],
       drivingLic: [this.handledata.Data.drivingLic],
+      drivingLicExpiry: [this.handledata.Data.drivingLicExpiry],
+      policy: [this.handledata.Data.policy],
+      policyExpiry: [this.handledata.Data.policyExpiry],
+      regCardExpiry: [this.handledata.Data.regCardExpiry],
+      aadhar: [this.handledata.Data.aadhar],
+      dob: [this.handledata.Data.dob],
+      engNo: [this.handledata.Data.engNo],
+      chasisNo: [this.handledata.Data.chasisNo],
       contact: [this.handledata.Data.contact],
       accountName: '',
       accountNumber: '',
@@ -90,6 +98,14 @@ export class OwnerUpdateComponent implements OnInit {
     formbody['pan'] = data.value.pan;
     formbody['regCard'] = data.value.regCard;
     formbody['drivingLic'] = data.value.drivingLic;
+    formbody['drivingLicExpiry'] = data.value.drivingLicExpiry;
+    formbody['policy'] = data.value.policy;
+    formbody['policyExpiry'] = data.value.policyExpiry;
+    formbody['regCardExpiry'] = data.value.regCardExpiry;
+    formbody['aadhar'] = data.value.aadhar;
+    formbody['dob'] = data.value.dob;
+    formbody['engNo'] = data.value.engNo;
+    formbody['chasisNo'] = data.value.chasisNo;
     formbody['contact'] = this.contactArray;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
@@ -109,6 +125,14 @@ export class OwnerUpdateComponent implements OnInit {
               res['pan'] = data.value.pan;
               res['regCard'] = data.value.regCard;
               res['drivingLic'] = data.value.drivingLic;
+              res['drivingLicExpiry'] = data.value.drivingLicExpiry;
+              res['policy'] = data.value.policy;
+              res['policyExpiry'] = data.value.policyExpiry;
+              res['regCardExpiry'] = data.value.regCardExpiry;
+              res['aadhar'] = data.value.aadhar;
+              res['dob'] = data.value.dob;
+              res['engNo'] = data.value.engNo;
+              res['chasisNo'] = data.value.chasisNo;
               res['contact'] = this.contactArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;

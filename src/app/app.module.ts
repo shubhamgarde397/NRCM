@@ -6,7 +6,6 @@ import { RouterModule } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { informationComponent } from './pages/information/information.component';
 import { LoginComponent } from './pages/login/login.component';
 import { NavigationComponent } from './pages/navigation/navigation.component';
 import { RegisterComponent } from './pages/register/register.component';
@@ -34,11 +33,12 @@ import {
 import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
 import { C2wComponent } from './pages/C2W/c2w/c2w.component';
+import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
+import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    informationComponent,
     LoginComponent,
     NavigationComponent,
     RegisterComponent,
@@ -48,7 +48,9 @@ import { C2wComponent } from './pages/C2W/c2w/c2w.component';
     MainPageComponent,
     WhatsappTowhysappComponent,
     PDFComponent,
-    C2wComponent
+    C2wComponent,
+    TurnBookLocationDispComponent,
+    HiddenTrucksComponent
   ],
   imports: [
     BrowserModule,

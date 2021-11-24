@@ -8,6 +8,7 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-odadd',
@@ -41,7 +42,10 @@ export class OdaddComponent implements OnInit {
   public regCard;
   public drivingLic;
   public role = 6;
-  constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, public securityCheck: SecurityCheckService) { }
+  constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, 
+    public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, 
+    public securityCheck: SecurityCheckService,
+    public _location:Location) { }
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
@@ -54,12 +58,20 @@ export class OdaddComponent implements OnInit {
       pan: '',
       contact: [],
       regCard:'',
+      regCardExpiry:'',
+      aadhar:"",
+      dob:"",
       drivingLic:'',
+      drivingLicExpiry:'2021-11-20',
+      policy:'',
+      policyExpiry:'2021-11-20',
       accountName: '',
       accountNumber: '',
       bankName: '',
       ifsc: '',
       reference: '',
+      engNo: '',
+      chasisNo: '',
       preferences: []
     });
     this.role = this.securityCheck.role;
@@ -92,6 +104,14 @@ export class OdaddComponent implements OnInit {
     formBody['contact'] = this.contactArray;
     formBody['regCard'] = value['regCard'];
     formBody['drivingLic'] = value['drivingLic'];
+    formBody['drivingLicExpiry'] = value['drivingLicExpiry'];
+    formBody['policy'] = value['policy'];
+    formBody['policyExpiry'] = value['policyExpiry'];
+    formBody['regCardExpiry'] = value['regCardExpiry'];
+    formBody['aadhar'] = value['aadhar'];
+    formBody['dob'] = value['dob'];
+    formBody['engNo'] = '';
+    formBody['chasisNo'] = '';
     formBody['accountDetails'] = this.accountArray;
     formBody['preferences'] = this.villageArray;
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
@@ -107,12 +127,21 @@ export class OdaddComponent implements OnInit {
         formres['pan'] = value['pan'];
         formres['regCard'] = value['regCard'];
         formres['drivingLic'] = value['drivingLic'];
+        formres['drivingLicExpiry'] = value['drivingLicExpiry'];
+    formres['policy'] = value['policy'];
+    formres['policyExpiry'] = value['policyExpiry'];
+    formres['regCardExpiry'] = value['regCardExpiry'];
+    formres['aadhar'] = value['aadhar'];
+    formres['dob'] = value['dob'];
+    formres['engNo'] = value['engNo'];
+    formres['chasisNo'] = value['chasisNo'];
         formres['contact'] = this.contactArray;
         formres['accountDetails'] = this.accountArray;
         formres['preferences'] = this.villageArray;
         formres['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
         this.securityCheck.commonArray['ownerdetails'].push(formres);
         this.reset();
+        this._location.back();
       });
   }
 }

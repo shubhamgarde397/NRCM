@@ -151,6 +151,8 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["balance"]= 0;
     tempobj["hamt"]= 0;
     tempobj["pochDate"]= "";
+    tempobj["invoice"]= 0;
+    tempobj["locations"]= ["5bcdecdab6b821389c8abde0"];
     tempobj["pochPayment"]= false;
     tempobj["pgno"]= 999;
     tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";

@@ -18,10 +18,4 @@ export class GsthandlerComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  indexing() {
-    this.apiCallservice.handleData_New(1, 'addIndex/createIndex', 1, 0)
-      .subscribe((res) => {
-      });
-  }
 }

@@ -1,35 +1,56 @@
 <div class="well" *ngIf="!show">
 
     <input type="text" [(ngModel)]="data" (input)="newData()">
-
+    <button class="btn btn-danger" (click)="refresh()"><i class="material-icons">undo</i></button>
     <table class="table" style="width:100%" align="center">
 
         <thead>
             <tr class="table-header">
                 <th>Srno</th>
                 <th>TruckNumber</th>
-                <th>Owner Name</th>
-                <th>PAN</th>
-                <th>RC</th>
-                <th>DL</th>
+                <th>Owner Name<br>Aadhar<br>DOB</th>
+                <th>PAN<br>Chasis<br>Engine</th>
+                <th>RC<br>Expiry</th>
+                <th>DL<br>Expiry</th>
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
-                <th>Preferences</th>
+                <th>Policy<br>Expiry</th>
                 <!-- <th>Reference</th> -->
-                <th *ngIf="role==1||role==2">Delete</th>
-                <th>Update</th>
+                <th *ngIf="role==1||role==2">Delete<br>Update</th>
             </tr>
         </thead>
-
-
+        <!-- [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'black' }" -->
+        <!-- [ngStyle]="{'color': i.ownerDetails[0]===undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }" -->
         <tbody>
             <tr *ngFor="let i of ownerdetailslist;let j = index">
-                <td>{{j+1}}</td>
+                <td [ngStyle]="{'color': i.regCardExpiry < todayDate ? 'red' : 'black' }">{{j+1}}</td>
                 <td>{{i.truckno}}</td>
-                <td>{{i.oname}}</td>
-                <td>{{i.pan}}</td>
-                <td>{{i.regCard}}</td>
-                <td>{{i.drivingLic}}</td>
+                <td>
+                    <ul>
+                        <li>{{i.oname}}</li>
+                        <li>{{i.aadhar}}</li>
+                        <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
+                        </ul>
+                    </td>
+                <td>
+                    <ul>
+                        <li>{{i.pan}}</li>
+                        <li>{{i.chasisNo}}</li>
+                        <li>{{i.engNo}}</li>
+                    </ul>
+                    
+                </td>
+                <td><ul>
+                    <li>{{i.regCard}}</li>
+                    <li>{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul>
+                    <li>{{i.drivingLic}}</li>
+                    <li>{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
+                </ul>
+                </td>
                 <td>
                     <ul *ngFor="let k of i.contact">
                         <li>{{k}}</li>
@@ -44,9 +65,10 @@
                     </ul>
                 </td>
                 <td>
-                    <ul *ngFor="let k of i.preferences">
-                        <li>{{k}}</li>
-                    </ul>
+                   <ul>
+                       <li>{{i.policy}}</li>
+                       <li>{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
+                   </ul>
                 </td>
                 <!-- <td>Work Under Progress</td> -->
                 <td *ngIf="role==1||role==2">
@@ -54,8 +76,6 @@
                         class="btn-danger btn-sm btn-just-icon">
                         <i class="material-icons">delete_forever</i>
                     </button>
-                </td>
-                <td>
                     <button mat-raised-button type="button" (click)="showDatabyid(i)"
                         class="btn-primary btn-sm btn-just-icon">
                         <i class="material-icons">edit</i>
