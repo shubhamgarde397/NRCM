@@ -12,11 +12,19 @@
         </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )">
+          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )&&(buttonOption!=='12' )&&(buttonOption!=='13')">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='4'">
           <input type="date" class="form-control" [(ngModel)]="dynDate2">
+        </div>
+
+        <div class="col-sm-3" *ngIf="buttonOption==='12'">
+          <input type="text" class="form-control" [(ngModel)]="byInvoice">
+        </div>
+
+        <div class="col-sm-3" *ngIf="buttonOption==='13'">
+          <input type="number" class="form-control" [(ngModel)]="bylrno">
         </div>
 
         <div class="col-sm-3" *ngIf="buttonOption==='8'">
@@ -24,11 +32,11 @@
             <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
           </select>
         </div>
-        <div class="col-sm-3" *ngIf="isAvailable">
-          <button class="btn btn-warning" (click)="downloadAvailableData()" style="width: 100%;">Available Details</button>
+        <div class="col-sm-3" *ngIf="buttonOption==='10'">
+          <button class="btn btn-warning" (click)="downloadAvailableData()" style="width: 100%;">Party Details</button>
         </div>
         <div class="col-sm-3" *ngIf="isAvailable">
-          <button class="btn btn-warning" (click)="downloadAvailable()" style="width: 100%;">Available Deep Details</button>
+          <button class="btn btn-warning" (click)="downloadAvailable()" style="width: 100%;">Available Details</button>
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='11'">
           <button class="btn btn-warning" (click)="downloadDeepData()" style="width: 100%;">PDF Deep Detail</button>
@@ -84,14 +92,15 @@
             <th>Place</th>
             <th>Party</th>
             <th>LRNO</th>
+            <th>Amount</th>
             <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">PN</th>
-            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">Delete</th>
+            <th *ngIf="buttonOption!=='9'">Options</th>
+            <!-- <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">Delete</th>
             <th *ngIf="buttonOption!=='9'">Cancel</th>
             <th *ngIf="buttonOption!=='9'">Edit</th>
-            <th *ngIf="(adminAccess)&&(buttonOption!=='9')">TNO</th>
+            <th *ngIf="(adminAccess)&&(buttonOption!=='9')">TNO</th> -->
             <th *ngIf="buttonOption=='9'">Undo</th>
             <th  *ngIf="buttonOption=='1'">S</th>
-            <th  *ngIf="buttonOption=='1'">U</th>
           </tr>
         </thead>
 
@@ -105,12 +114,16 @@
 
               <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
-                PAN
+                <i class="material-icons">
+                  local_parking
+                  </i>
               </button>
 
               <button class="btn btn-warning" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].accountDetails.length===0">
-                Account
+                <i class="material-icons">
+                  account_balance
+                  </i>
               </button>
 
             </td>
@@ -119,8 +132,31 @@
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
+            <td>{{i.hamt}}</td>
             <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')">{{i.partyDetails[0].name}}</td>
-            <td>
+<td>
+            <div class="btn-group-vertical">
+              <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button>
+            <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid2(i,j,'cancel')"
+            class="btn-warning btn-sm btn-just-icon">
+            <i class="material-icons">delete</i>
+          </button>
+          <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid(i,j,1)"
+          class="btn-primary btn-sm btn-just-icon">
+          <i class="material-icons">edit</i>
+        </button>
+        <button mat-raised-button type="button" (click)="showDatabyid(i,j,3)"
+                class="btn-primary btn-sm btn-just-icon">
+                <i class="material-icons">
+                  local_shipping
+                </i>
+              </button>
+            </div>
+          </td>
+            <!-- <td>
               <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
                 class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete_forever</i>
@@ -143,15 +179,13 @@
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>
-            </td>
+            </td> -->
+
             <td *ngIf="buttonOption=='9'">
               <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">undo</i>
               </button>
-            </td>
-            <td *ngIf="buttonOption=='1'">
-              <input type="checkbox">
             </td>
             <td *ngIf="buttonOption=='1'">
               <input type="checkbox">

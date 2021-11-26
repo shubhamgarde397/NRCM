@@ -48,12 +48,12 @@ export class OwnerUpdateComponent implements OnInit {
       truckno: [this.handledata.Data.truckno],
       oname: [this.handledata.Data.oname],
       pan: [this.handledata.Data.pan],
-      regCard: [this.handledata.Data.regCard],
       drivingLic: [this.handledata.Data.drivingLic],
       drivingLicExpiry: [this.handledata.Data.drivingLicExpiry],
       policy: [this.handledata.Data.policy],
       policyExpiry: [this.handledata.Data.policyExpiry],
       regCardExpiry: [this.handledata.Data.regCardExpiry],
+      fitnessExpiry: [this.handledata.Data.fitnessExpiry],
       aadhar: [this.handledata.Data.aadhar],
       dob: [this.handledata.Data.dob],
       engNo: [this.handledata.Data.engNo],
@@ -96,12 +96,12 @@ export class OwnerUpdateComponent implements OnInit {
     formbody['truckno'] = data.value.truckno;
     formbody['oname'] = data.value.oname;
     formbody['pan'] = data.value.pan;
-    formbody['regCard'] = data.value.regCard;
     formbody['drivingLic'] = data.value.drivingLic;
     formbody['drivingLicExpiry'] = data.value.drivingLicExpiry;
     formbody['policy'] = data.value.policy;
     formbody['policyExpiry'] = data.value.policyExpiry;
     formbody['regCardExpiry'] = data.value.regCardExpiry;
+    formbody['fitnessExpiry'] = data.value.fitnessExpiry;
     formbody['aadhar'] = data.value.aadhar;
     formbody['dob'] = data.value.dob;
     formbody['engNo'] = data.value.engNo;
@@ -123,12 +123,12 @@ export class OwnerUpdateComponent implements OnInit {
               res['truckno'] = data.value.truckno;
               res['oname'] = data.value.oname;
               res['pan'] = data.value.pan;
-              res['regCard'] = data.value.regCard;
               res['drivingLic'] = data.value.drivingLic;
               res['drivingLicExpiry'] = data.value.drivingLicExpiry;
               res['policy'] = data.value.policy;
               res['policyExpiry'] = data.value.policyExpiry;
               res['regCardExpiry'] = data.value.regCardExpiry;
+              res['fitnessExpiry'] = data.value.fitnessExpiry;
               res['aadhar'] = data.value.aadhar;
               res['dob'] = data.value.dob;
               res['engNo'] = data.value.engNo;

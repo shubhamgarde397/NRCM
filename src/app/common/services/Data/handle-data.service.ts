@@ -13,6 +13,7 @@ export class HandleDataService {
     "ownerdetails": [{}],
     "villagenames": [{}],
     "lrlist": [{}],
+    "hiddenlist": [{}],
     // "regularparty": [{}],
     // "RegularTruck": [{}],
     // "thoughts": [{}],
@@ -105,6 +106,8 @@ public PPData=[];
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
       case 'infolrlist':
         return [Consts.LRLIST_INDEX]
+        case 'infohiddenlist':
+          return [Consts.HIDDEN_TRUCK_INDEX]
 
     }
   }

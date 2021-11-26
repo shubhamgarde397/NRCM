@@ -59,6 +59,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '9', 'viewvalue': 'Cancelled Vehicles' },
     { 'value': '10', 'viewvalue': 'By Party' },
     { 'value': '11', 'viewvalue': 'Details By Truck' },
+    { 'value': '12', 'viewvalue': 'Invoice' },
+    { 'value': '13', 'viewvalue': 'LRNO' },
     // { 'value': '12', 'viewValue': 'Pending Payment'}
   ]
   public years = []
@@ -95,6 +97,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public truckVar;
   public truckid;
   public byTruckName=false;
+  public byInvoice;
+  public bylrno;
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
@@ -109,7 +113,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
     this.turnbooklist = [];
-    this.turnbooklist = this.handleData.giveTurn();
+    this.turnbooklist = this.handleData.giveTurn();    
     this.getTrucks()
   }
 
@@ -337,6 +341,11 @@ let buttons=[]
         else {
           tempObj['id'] = this.truckid['_id'];
         }
+        case '12':
+          tempObj['invoice']=this.byInvoice;
+        break;
+        case '13':
+          tempObj['lrno']=this.bylrno;
         break;
       default:
         break;
@@ -485,6 +494,7 @@ let tempObj1={};
     tempObj['payment'] = data.paymentDetails;
     tempObj['index'] = j;
     tempObj['number'] = number;
+    tempObj['invoice'] = data.invoice;
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
     this.handleData.saveData(tempObj);
   };
@@ -518,6 +528,7 @@ let tempObj1={};
       tempObj["turnbookDate"] = data.turnbookDate,
         tempObj["entryDate"] = data.entryDate,
         tempObj["lrno"] = '';
+        tempObj["invoice"] = '';
       tempObj["partyType"] = newtype;
       tempObj["hamt"] = '';
       tempObj["advance"] = '';
@@ -720,13 +731,15 @@ let tempObj1={};
   }
 
   downloadAvailableData(){//threshhold is 295
+ 
+    
     let data=this.turnbooklist;
     let pager=1;
      let bigValueofY=0;
      var doc = new jsPDF()
      doc.setFontSize('25');
      doc.setFontType('bold');
-     doc.text('Available Trucks Details : ', 15, 15)//partyname
+     doc.text(data[0]['partyDetails'][0]['name'], 15, 15)//partyname
      doc.setFontSize('10');
      doc.text(String(pager), 180, 5)//pageno
      pager=pager+1;
@@ -739,23 +752,17 @@ let tempObj1={};
      let starty = 25;
      doc.text('Sr', 2, y)//partyname
      doc.text('TruckNo', 8, y)//partyname
-     doc.text('Acc', 33.5, y)//partyname
-     doc.text('Pan', 43, y)//partyname
-     doc.text('RC', 53, y)//partyname
-     doc.text('DL', 63, y)//partyname
-     doc.text('Con', 71, y)//partyname
+     doc.text('Date', 34, y)//partyname
+     doc.text('Destination', 56, y)//partyname
      doc.text('Notes', 105, y)//partyname
      //headers
      doc.line(0, 25, 210, 25);//line after header
  
      //vertical lines
      doc.line(7, 20, 7, 25);//srno
-     doc.line(33, 20, 33, 25);//date
-     doc.line(40, 20, 40, 25);//truckno
-     doc.line(50, 20, 50, 25);//truckno
-     doc.line(60, 20, 60, 25);//truckno
-     doc.line(70, 20, 70, 25);//truckno
-     doc.line(80, 20, 80, 25);//truckno
+     doc.line(33, 20, 33, 25);//truck
+     doc.line(55, 20, 55, 25);//date
+     doc.line(81, 20, 81, 25);//village
      //vertical lines
      let startforI=0;
      y = y + 6;
@@ -763,12 +770,17 @@ let tempObj1={};
      for (let i = startforI; i < data.length; i++) {
  
        if(y>290){
+        
          y=30;
      starty = 25;
+     doc.line(7, starty, 7, 292);//date
+        doc.line(33, starty,33, 292);//truckno
+        doc.line(55, starty, 55, 292);//credit
+        doc.line(81, starty, 81, 292);//village
          doc.addPage();
          doc.setFontSize('25');
      doc.setFontType('bold');
-     doc.text('Available Trucks Details : ', 15, 15)//partyname
+     doc.text(data[0]['partyDetails'][0]['name'], 15, 15)//partyname
      doc.setFontSize('10');
      doc.text(String(pager), 180, 5)//pageno
      pager=pager+1;
@@ -779,38 +791,36 @@ let tempObj1={};
      doc.setFontSize('10');
      doc.text('Sr', 2, y-6)//partyname
      doc.text('TruckNo', 8, y-6)//partyname
-     doc.text('Acc', 33.5, y-6)//partyname
-     doc.text('Pan', 43, y-6)//partyname
-     doc.text('RC', 53, y-6)//partyname
-     doc.text('DL', 63, y-6)//partyname
-     doc.text('Con', 71, y-6)//partyname
+     doc.text('Date', 34, y-6)//partyname
+     doc.text('Destination', 56, y-6)//partyname
      doc.text('Notes', 105, y-6)//partyname
      //headers
+     //vertical lines
+     doc.line(7, 20, 7, 25);//srno
+     doc.line(33, 20, 33, 25);//truck
+     doc.line(55, 20, 55, 25);//date
+     doc.line(81, 20, 81, 25);//village
+     //vertical lines
      doc.line(0, 25, 210, 25);//line after header
      }
      
-      doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
-     doc.text(data[i].ownerDetails[0].truckno.split(' ')[0]+''+data[i].ownerDetails[0].truckno.split(' ')[1]+''+data[i].ownerDetails[0].truckno.split(' ')[2], 8, y-1)//partyname
-     doc.text(data[i].ownerDetails[0].accountDetails.length>0?"Ok":"X",34, y-1)//partyname
-     doc.text(data[i].ownerDetails[0].pan!==""?'Ok':'X', 43, y-1)//partyname
-     doc.text(data[i].ownerDetails[0].drivingLic!==""?'Ok':'X', 53, y-1)//partyname
-     doc.text(data[i].ownerDetails[0].regCard!==""?'Ok':'X', 63, y-1)//partyname
-     doc.text(data[i].ownerDetails[0].contact.length>0?'Ok':'X', 73, y-1)//partyname
-                
-       doc.line(0, y +2, 210, y +2);//line after header
+    doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
+    doc.text(data[i].ownerDetails[0].truckno.split(' ')[0]+''+data[i].ownerDetails[0].truckno.split(' ')[1]+''+data[i].ownerDetails[0].truckno.split(' ')[2], 8, y-1)//partyname
+    doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 34, y-1)//Date              
+    doc.text(data[i].villageDetails[0]['village_name'], 56, y-1)//Destination
+    doc.line(0, y +2, 210, y +2);//line after header
        y = y + 10;
+       
      }
         //vertical lines//getting applied for every loop, make it happen once only
         doc.line(7, starty, 7, y-8);//date
         doc.line(33, starty,33, y-8);//truckno
-        doc.line(40, starty, 40, y-8);//credit
-        doc.line(50, starty, 50, y-8);//credit
-        doc.line(60, starty, 60, y-8);//credit
-        doc.line(70, starty, 70, y-8);//credit
-        doc.line(80, starty, 80, y-8);//credit
+        doc.line(55, starty, 55, y-8);//credit
+        doc.line(81, starty, 81, y-8);//village
         //vertical lines
 
-     doc.save('Available-Data.pdf')
+    //  doc.save('Available-Data.pdf')
+     doc.save(data[0]['partyDetails'][0]['name']+'.pdf')//partyname
    }
 
    downloadDeepData(){

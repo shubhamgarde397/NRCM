@@ -39,7 +39,6 @@ export class OdaddComponent implements OnInit {
   public villagedetailslist;
   public tdid;
   public vid;
-  public regCard;
   public drivingLic;
   public role = 6;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, 
@@ -57,7 +56,6 @@ export class OdaddComponent implements OnInit {
       oname: '',
       pan: '',
       contact: [],
-      regCard:'',
       regCardExpiry:'',
       aadhar:"",
       dob:"",
@@ -65,6 +63,7 @@ export class OdaddComponent implements OnInit {
       drivingLicExpiry:'2021-11-20',
       policy:'',
       policyExpiry:'2021-11-20',
+      fitnessExpiry:'2021-11-20',
       accountName: '',
       accountNumber: '',
       bankName: '',
@@ -102,16 +101,17 @@ export class OdaddComponent implements OnInit {
     formBody['oname'] = value['oname'];
     formBody['pan'] = value['pan'];
     formBody['contact'] = this.contactArray;
-    formBody['regCard'] = value['regCard'];
     formBody['drivingLic'] = value['drivingLic'];
     formBody['drivingLicExpiry'] = value['drivingLicExpiry'];
     formBody['policy'] = value['policy'];
     formBody['policyExpiry'] = value['policyExpiry'];
     formBody['regCardExpiry'] = value['regCardExpiry'];
+    formBody['fitnessExpiry'] = value['fitnessExpiry'];
     formBody['aadhar'] = value['aadhar'];
     formBody['dob'] = value['dob'];
     formBody['engNo'] = '';
     formBody['chasisNo'] = '';
+    formBody['show'] = true;
     formBody['accountDetails'] = this.accountArray;
     formBody['preferences'] = this.villageArray;
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
@@ -125,12 +125,12 @@ export class OdaddComponent implements OnInit {
         formres['truckno'] = value['truckno'];
         formres['oname'] = value['oname'];
         formres['pan'] = value['pan'];
-        formres['regCard'] = value['regCard'];
         formres['drivingLic'] = value['drivingLic'];
         formres['drivingLicExpiry'] = value['drivingLicExpiry'];
     formres['policy'] = value['policy'];
     formres['policyExpiry'] = value['policyExpiry'];
     formres['regCardExpiry'] = value['regCardExpiry'];
+    formres['fitnessExpiry'] = value['fitnessExpiry'];
     formres['aadhar'] = value['aadhar'];
     formres['dob'] = value['dob'];
     formres['engNo'] = value['engNo'];
@@ -138,6 +138,7 @@ export class OdaddComponent implements OnInit {
         formres['contact'] = this.contactArray;
         formres['accountDetails'] = this.accountArray;
         formres['preferences'] = this.villageArray;
+        formres['show'] = true;
         formres['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
         this.securityCheck.commonArray['ownerdetails'].push(formres);
         this.reset();

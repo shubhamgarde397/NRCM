@@ -12,7 +12,7 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
   styleUrls: ['./hidden-trucks.component.css']
 })
 export class HiddenTrucksComponent implements OnInit {
-  public ownerdetailslist = [];
+  public hiddendetailslist = [];
   public date3month;
   public todayDate;
   public show = false;
@@ -36,14 +36,16 @@ export class HiddenTrucksComponent implements OnInit {
 
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
-    this.ownerdetailslist = this.commonArray.ownerdetails;
+    this.hiddendetailslist = this.commonArray.hiddenlist;
   };
 
-  deleteOwnerDetails = function (id) {
+  showOwnerDetails = function (id) {
     if (confirm('Are you sure?')) {
       let formbody = {}
       formbody['_id'] = id;
-      formbody['method'] = 'delete';
+      formbody['method'] = 'show';
+      formbody['show']=true;
+      formbody['find']=false;
       formbody['tablename'] = 'ownerdetails';
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
@@ -51,52 +53,52 @@ export class HiddenTrucksComponent implements OnInit {
           alert(response.Status)
           let bb;
           let j = 0;
-          this.ownerdetailslist.forEach((res) => {
-            if (res._id == id) { bb = j; }
+          let data;
+          this.hiddendetailslist.forEach((res) => {
+            if (res._id == id) { 
+              bb = j;
+              data=res ;
+              this.sec.commonArray['ownerdetails'].push(data);
+            }
             j = j + 1;
           })
-          this.ownerdetailslist.splice(bb, 1);
+          this.hiddendetailslist.splice(bb, 1);
+          
+          
+          
         });
     }
   };
 
   newData() {
     if (this.data === '' || this.data === null || this.data === undefined) {
-      this.ownerdetailslist = [];
-      this.ownerdetailslist = this.commonArray.ownerdetails;
+      this.hiddendetailslist = [];
+      this.hiddendetailslist = this.commonArray.hiddenlist;
     }
     else {
-      let tempList = this.commonArray.ownerdetails;
-      this.ownerdetailslist = this.commonArray.ownerdetails;
-      this.ownerdetailslist = [];
+      let tempList = this.commonArray.hiddenlist;
+      this.hiddendetailslist = this.commonArray.hiddenlist;
+      this.hiddendetailslist = [];
       let tempData = [];
       tempList.filter((res, index) => {
         if (res['truckno'].includes(this.data.toUpperCase())) {
           tempData.push(res);
         }
       })
-      this.ownerdetailslist = tempData;
+      this.hiddendetailslist = tempData;
     }
   }
-
-  showDatabyid = function (data) {
-
-    this.show = true;
-    this.found = data;
-    this.handledata.saveData(data);
-    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
-  };
 
   ngOnInit() {
     this.todayDate=this.handleF.createDate(new Date());
     this.role = this.sec.role;
     this.commonArray = this.sec.commonArray;
-    this.considerArray = this.handledata.createConsiderArray('infoowner')
+    this.considerArray = this.handledata.createConsiderArray('infohiddenlist')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.fetchData();
   }
   refresh(){
-    this.considerArray=[0,0,1,0,0]
+    this.considerArray=[0,0,0,0,0,1]
     this.getInformationData()
   }
 
@@ -105,8 +107,7 @@ export class HiddenTrucksComponent implements OnInit {
     let tempObj = { "method": "displaynew", "consider": this.considerArray };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.sec.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.sec.commonArray['ownerdetails'];;
-        this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];
+        this.sec.commonArray['hiddenlist'] = Object.keys(res.hiddenownerdetails[0]).length > 0 ? res.hiddenownerdetails : this.sec.commonArray['hiddenlist'];;
         this.fetchBasic();
         this.spinnerService.hide();
       });
@@ -115,9 +116,9 @@ export class HiddenTrucksComponent implements OnInit {
   fetchBasic() {
     this.commonArray = this.sec.commonArray;
 
-    this.ownerdetailslist = [];
+    this.hiddendetailslist = [];
 
-    this.ownerdetailslist = this.commonArray.ownerdetails;
+    this.hiddendetailslist = this.commonArray.hiddenlist;
   }
 
 }

@@ -14,7 +14,7 @@
                 <th>DL<br>Expiry</th>
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
-                <th>Policy<br>Expiry</th>
+                <th>Policy<br>Expiry<br>Fitness</th>
                 <!-- <th>Reference</th> -->
                 <th *ngIf="role==1||role==2">Delete<br>Update</th>
             </tr>
@@ -23,7 +23,7 @@
         <!-- [ngStyle]="{'color': i.ownerDetails[0]===undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }" -->
         <tbody>
             <tr *ngFor="let i of ownerdetailslist;let j = index">
-                <td [ngStyle]="{'color': i.regCardExpiry < todayDate ? 'red' : 'black' }">{{j+1}}</td>
+                <td>{{j+1}}</td>
                 <td>{{i.truckno}}</td>
                 <td>
                     <ul>
@@ -41,14 +41,14 @@
                     
                 </td>
                 <td><ul>
-                    <li>{{i.regCard}}</li>
-                    <li>{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li>{{i.truckno}}</li>
+                    <li [ngStyle]="{'background-color': i.rE}">{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
                     </ul>
                 </td>
                 <td>
                     <ul>
                     <li>{{i.drivingLic}}</li>
-                    <li>{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li [ngStyle]="{'background-color': i.dE}">{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
                 </ul>
                 </td>
                 <td>
@@ -67,7 +67,8 @@
                 <td>
                    <ul>
                        <li>{{i.policy}}</li>
-                       <li>{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
+                       <li [ngStyle]="{'background-color': i.pE}">{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
+                       <li [ngStyle]="{'background-color': i.fE}">{{i.fitnessExpiry|date:'dd-MM-yyyy'}}</li>
                    </ul>
                 </td>
                 <!-- <td>Work Under Progress</td> -->

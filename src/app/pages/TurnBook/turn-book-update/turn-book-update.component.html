@@ -169,6 +169,18 @@
     </div>
     <!--HireAmount-->
 
+    <!--Invoice-->
+    <div class="form-group row" *ngIf="role==1||role==2">
+
+      <div class="col-xs-2">
+        <label for="invoice"> Invoice </label>
+      </div>
+      <div class="col-xs-3">
+        <input type="text" class="form-control" formControlName="invoice"/>
+      </div>
+    </div>
+    <!--Invoice-->
+
 
     <!--Advance-->
     <div class="form-group row" *ngIf="role==1||role==2">

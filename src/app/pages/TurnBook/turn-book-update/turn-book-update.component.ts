@@ -77,6 +77,7 @@ export class TurnBookUpdateComponent implements OnInit {
       lrno: this.handledata.Data.lrno,
       partyType: this.handledata.Data.partyType,
       hamt: this.handledata.Data.hamt,
+      invoice:this.handledata.Data.invoice,
       advance: this.handledata.Data.advance,
       balance: this.handledata.Data.balance,
       pochDate: this.handledata.Data.pochDate,
@@ -96,6 +97,7 @@ export class TurnBookUpdateComponent implements OnInit {
       hamt: this.handledata.Data.hamt,
       advance: this.handledata.Data.advance,
       balance: this.handledata.Data.balance,
+      invoice:this.handledata.Data.invoice,
       pochDate: this.handledata.Data.pochDate,
       pochPayment: this.handledata.Data.pochPayment,
       pgno: this.handledata.Data.pgno,
@@ -196,8 +198,9 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["balance"] = this.myFormGroup.value.balance,
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
-      tempObj["pgno"] = this.myFormGroup.value.pgno
-      tempObj["paymentid"] = this.paymentid//Make changes in backend
+      tempObj["pgno"] = this.myFormGroup.value.pgno;
+      tempObj["invoice"]=this.myFormGroup.value.invoice;
+      tempObj["paymentid"] = this.paymentid;//Make changes in backend
       this.addtoTB===true?tempObj['addtotbids']=true:false
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
@@ -225,6 +228,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
             tempData[this.handledata.Data.index]["paymentid"] = this.paymentid;
+            tempData[this.handledata.Data.index]["invoice"] = this.invoice;
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
@@ -272,6 +276,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
+            tempData[this.handledata.Data.index]["invoice"] = this.myFormGroup.value.invoice
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;

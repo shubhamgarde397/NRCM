@@ -73,8 +73,6 @@ export class TurnBookAddComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: ['', Validators.required],
       truckNo: ['', Validators.required],
-      partyType: '',
-      place: '',
       trucknoM: ['', [Validators.required]]
 
     });
@@ -136,9 +134,9 @@ export class TurnBookAddComponent implements OnInit {
     let tempobj = {};
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
-    tempobj['placeid'] = this.villageData === "" ? '5bcdecdab6b821389c8abde0' : this.villageData;
+    tempobj['placeid'] = '5bcdecdab6b821389c8abde0';
     tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
-    tempobj['partyType'] = value['partyType'];
+    tempobj['partyType'] = '';
     tempobj['loadingDate'] = '';
     tempobj['turnbookDate'] = this.turnbookDate;//value['turnbookDate'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
@@ -151,7 +149,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["balance"]= 0;
     tempobj["hamt"]= 0;
     tempobj["pochDate"]= "";
-    tempobj["invoice"]= 0;
+    tempobj["invoice"]= "";
     tempobj["locations"]= ["5bcdecdab6b821389c8abde0"];
     tempobj["pochPayment"]= false;
     tempobj["pgno"]= 999;
@@ -179,9 +177,24 @@ let toAddData;
       this.submitted = true;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
         .subscribe((res: any) => {
-          if (res.status === "Duplicate Entry Found.") {
-            alert(res.status);
-          } else {
+          console.log(res)
+          if (res.hidden) {
+            alert(res.Status);
+            var question=confirm('Vehicle present but its hidden, do you want to unhide and add?');
+            if(question){
+            tempobj['truckno'] = this.trucknoM;
+            tempobj['method'] = 'showAndAdd';
+            tempobj['show']=true;
+            tempobj['find']=true;
+            tempobj['tablename'] = 'ownerdetails';
+            this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
+            .subscribe((res: any) => {
+              alert(res.Status);
+              this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
+            })
+            }
+          } else if(!res.hidden){alert(res.Status)}
+          else{
             if (this.method === "insert.new") {
               let tempObj1 = {};
               tempObj1['oname'] = "";

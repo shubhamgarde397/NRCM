@@ -84,50 +84,6 @@
 
     </div>
     <!--Truckno-->
-    <!-- partyType-->
-    <div class="form-group row">
-
-      <div class="col-sm-2">
-        <label for="partyType"> From </label>
-      </div>
-
-      <div class="col-xs-3">
-        <select class="form-control" id="partyType" formControlName="partyType">
-          <option>NRCM</option>
-          <option>NR</option>
-        </select>
-      </div>
-
-
-      <div [hidden]="myFormGroup.controls.partyType.valid" class="col-xs-1">
-        <font color="red">
-          <span class="glyphicon glyphicon-remove"></span>
-        </font>
-      </div>
-    </div>
-    <!--From -->
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="place"> Place </label>
-      </div>
-
-      <div class="col-xs-3">
-        <select id="palce" class="form-control" formControlName="place" [(ngModel)]="villageData">
-          <option disabled selected>Select Place</option>
-          <option *ngFor="let own of villagelist" value="{{own._id}}">{{own.village_name}}</option>
-        </select>
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.place.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-
-    </div>
 
 
     <div class="row">

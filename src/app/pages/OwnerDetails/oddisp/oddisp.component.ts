@@ -44,7 +44,9 @@ export class OddispComponent implements OnInit {
     if (confirm('Are you sure?')) {
       let formbody = {}
       formbody['_id'] = id;
-      formbody['method'] = 'delete';
+      formbody['method'] = 'show';
+      formbody['show']=false;
+      formbody['find']=false;
       formbody['tablename'] = 'ownerdetails';
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
@@ -53,7 +55,7 @@ export class OddispComponent implements OnInit {
           let bb;
           let j = 0;
           this.ownerdetailslist.forEach((res) => {
-            if (res._id == id) { bb = j; }
+            if (res._id == id) { bb = j; this.sec.commonArray['hiddenlist'].push(res);}
             j = j + 1;
           })
           this.ownerdetailslist.splice(bb, 1);
@@ -97,7 +99,7 @@ export class OddispComponent implements OnInit {
     this.fetchData();
   }
   refresh(){
-    this.considerArray=[0,0,1,0,0]
+    this.considerArray=[0,0,1,0,0,0]
     this.getInformationData()
   }
 

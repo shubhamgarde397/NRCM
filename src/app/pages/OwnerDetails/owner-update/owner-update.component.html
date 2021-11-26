@@ -13,7 +13,7 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="oname" class="form-control" formControlName="oname" placeholder="Name">
+        Name - <input type="text" id="oname" class="form-control" formControlName="oname" placeholder="Name">
       </div>
       <div class="col-xs-2">
         <div [hidden]="myFormGroup.controls.oname.valid">
@@ -26,7 +26,7 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A">
+        Pan - <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A">
       </div>
       <div class="col-xs-2">
         <div [hidden]="myFormGroup.controls.pan.valid">
@@ -40,34 +40,37 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="regCard" class="form-control" formControlName="regCard" placeholder="Registration Card">
+        RC - <input type="text" id="truckno" class="form-control" formControlName="truckno" disabled>
       </div>
       <div class="col-xs-3">
-        <input type="date" id="regCardExpiry" class="form-control" formControlName="regCardExpiry">
-      </div>
-    </div>
-
-
-    <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="text" id="drivingLic" class="form-control" formControlName="drivingLic" placeholder="DL Number">
-      </div>
-      <div class="col-xs-3">
-        <input type="date" id="drivingLicExpiry" class="form-control" formControlName="drivingLicExpiry">
+        Expiry - <input type="date" id="regCardExpiry" class="form-control" formControlName="regCardExpiry">
       </div>
     </div>
 
+
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="policy" class="form-control" formControlName="policy" placeholder="Policy Number">
+       License - <input type="text" id="drivingLic" class="form-control" formControlName="drivingLic" placeholder="DL Number">
       </div>
       <div class="col-xs-3">
-        <input type="date" id="policyExpiry" class="form-control" formControlName="policyExpiry">
+        Expiry - <input type="date" id="drivingLicExpiry" class="form-control" formControlName="drivingLicExpiry">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Policy - <input type="text" id="policy" class="form-control" formControlName="policy" placeholder="Policy Number">
+      </div>
+      <div class="col-xs-3">
+       Expiry -  <input type="date" id="policyExpiry" class="form-control" formControlName="policyExpiry">
+      </div>
+      <div class="col-xs-3">
+        Fitness Expiry - <input type="date" id="fitnessExpiry" class="form-control" formControlName="fitnessExpiry">
       </div>
     </div>
     <div class="form-group row">
       <div class="col-xs-3">
-        Date of Birth - 
+        DoB - 
       </div>
       <div class="col-xs-3">
         <input type="date" id="dob" class="form-control" formControlName="dob">
@@ -83,10 +86,10 @@
     </div>
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="engNo" class="form-control" formControlName="engNo" placeholder="Engine Number">
+        Engine - <input type="text" id="engNo" class="form-control" formControlName="engNo" placeholder="Engine Number">
       </div>
       <div class="col-xs-3">
-        <input type="text" id="chasisNo" class="form-control" formControlName="chasisNo" placeholder="Chasis Number">
+        Chasis - <input type="text" id="chasisNo" class="form-control" formControlName="chasisNo" placeholder="Chasis Number">
       </div>
     </div>
 
@@ -109,15 +112,34 @@
 
 
     <!-- Account details -->
+    <div class="well">
     <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="ABC">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.accountName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
+      <div class="form-group row" *ngIf='role==1||role==2'>
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-danger" style="width: 100%;" (click)="addaccount()">Add</button>
+        </div>
+        <div class="col-sm-6">
+          <table class="table table-bordered">
+            <tr>
+              <th>Srno</th>
+              <th>Name</th>
+              <th>Number</th>
+              <th>Bank</th>
+              <th>IFSC</th>
+              <th>Delete</th>
+            </tr>
+            <tr *ngFor="let i of accountArray;let j = index;">
+              <td>{{j+1}}</td>
+              <td>{{i.accountName}}</td>
+              <td>{{i.accountNumber}}</td>
+              <td>{{i.bankName}}</td>
+              <td>{{i.ifsc}}</td>
+              <td (click)="deleteOneA(i,j)">Delete</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
@@ -168,7 +190,7 @@
     <!-- keep adding these data here -->
 
     <!-- TruckDate -->
-    <div class="form-group row" *ngIf='role==1||role==2'>
+    <!-- <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-sm-1">
         <button type="button" (click)="addaccount()">Add</button>
       </div>
@@ -192,7 +214,7 @@
           </tr>
         </table>
       </div>
-
+    </div> -->
     </div>
     <hr *ngIf='role==1||role==2'>
     <!-- Account Details -->
