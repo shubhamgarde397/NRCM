@@ -35,6 +35,7 @@ import { PDFComponent } from './pages/pdf/pdf.component';
 import { C2wComponent } from './pages/C2W/c2w/c2w.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
+import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidde
     PDFComponent,
     C2wComponent,
     TurnBookLocationDispComponent,
-    HiddenTrucksComponent
+    HiddenTrucksComponent,
+    WhatsappComponent
   ],
   imports: [
     BrowserModule,

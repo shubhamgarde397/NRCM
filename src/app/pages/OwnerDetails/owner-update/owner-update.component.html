@@ -9,7 +9,16 @@
       <div class="col-xs-3">
         <input type="text" id="truckno" class="form-control" formControlName="truckno" disabled>
       </div>
+      <div class="col-xs-3">
+        Type - <select [(ngModel)]='typeOfVehicle' class="form-control" formControlName="typeOfVehicle" >
+          <option selected disabled>{{type}}</option>
+          <option>Open</option>
+          <option>Container</option>
+          <option>Taurus</option>
+        </select>
+      </div>
     </div>
+
 
     <div class="form-group row">
       <div class="col-xs-3">

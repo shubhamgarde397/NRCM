@@ -17,6 +17,7 @@ import { Location } from '@angular/common';
   providers: [ApiCallsService]
 })
 export class OdaddComponent implements OnInit {
+  public typeOfVehicle='';
   public myFormGroup: FormGroup;
   public model: odata; // mapped it to a variable
   public modelSubmitted: odata;
@@ -64,6 +65,7 @@ export class OdaddComponent implements OnInit {
       policy:'',
       policyExpiry:'2021-11-20',
       fitnessExpiry:'2021-11-20',
+      typeOfVehicle:'',
       accountName: '',
       accountNumber: '',
       bankName: '',
@@ -109,6 +111,7 @@ export class OdaddComponent implements OnInit {
     formBody['fitnessExpiry'] = value['fitnessExpiry'];
     formBody['aadhar'] = value['aadhar'];
     formBody['dob'] = value['dob'];
+    formBody['typeOfVehicle']=value['typeOfVehicle'];
     formBody['engNo'] = '';
     formBody['chasisNo'] = '';
     formBody['show'] = true;
@@ -135,6 +138,7 @@ export class OdaddComponent implements OnInit {
     formres['dob'] = value['dob'];
     formres['engNo'] = value['engNo'];
     formres['chasisNo'] = value['chasisNo'];
+    formres['typeOfVehicle'] = value['typeOfVehicle'];
         formres['contact'] = this.contactArray;
         formres['accountDetails'] = this.accountArray;
         formres['preferences'] = this.villageArray;

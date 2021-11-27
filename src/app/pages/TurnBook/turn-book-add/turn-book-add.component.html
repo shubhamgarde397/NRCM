@@ -2,26 +2,6 @@
   <form [formGroup]="myFormGroup" (ngSubmit)="storeTurnBookData(myFormGroup)" submitted=true
     enctype="multipart/form data" action="/">
 
-    <!-- DATE-->
-    <!-- <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="date">Turnbook Date</label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate">
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.turnbookDate.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-
-    </div> -->
     <div class="row">
       <div class="col-lg-1"><label for="date">Turnbook</label></div>
     <div class="col-lg-9">
@@ -45,13 +25,7 @@
     </div>
     </div>
   </div>
-<!-- <div class="row">
-    <div class="col-sm-6"><h3>{{todayTurn|date:'dd-MM-yyyy'}}</h3></div>
-    
-  </div> -->
-    <!--DATE -->
 
-    <!--Truckno-->
     <div class="form-group row">
 
       <div class="col-xs-2">
@@ -62,7 +36,7 @@
         <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
           (change)="findtruckdetails()" id="truckNoone" *ngIf="!manualTruck">
           <option value="Other+">Other</option>
-          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}</option>
+          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}-{{i.typeOfVehicle}}</option>
         </select>
 
         <input type="text" *ngIf="manualTruck" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM">

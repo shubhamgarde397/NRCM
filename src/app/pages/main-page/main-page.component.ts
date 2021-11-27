@@ -14,6 +14,7 @@ import { handleFunction } from '../../common/services/functions/handleFunctions'
   providers: [ApiCallsService]
 })
 export class MainPageComponent implements OnInit {
+  public contact;
   temp = [
     {
       "bf": true,
@@ -146,6 +147,43 @@ export class MainPageComponent implements OnInit {
 
   login() {
     this.router.navigate(['Login']);
+    this.loginV = true;
+  }
+  sendMsg(type,typo){
+
+    switch (typo) {
+      case 'wa':
+        switch (type) {
+          case 'nitin':
+            window.open('https://wa.me/+919822288257/?text=Hi','_blank');    
+            break;
+            case 'shubham':
+            window.open('https://wa.me/+919766707061/?text=Hi','_blank');    
+            break;
+        }
+        break;
+        case 'txt':
+          console.log('here');
+          
+        switch (type) {
+          case 'nitin':
+            window.open('sms:+919822288257&body=Hi','_blank');    
+            break;
+            case 'shubham':
+              console.log('here');
+              
+            window.open('sms:+919766707061&body=Hi','_blank');    
+            break;
+        }
+        break;
+    
+      
+    }
+    
+    
+      }
+  whatsapp() {
+    this.router.navigate(['Whatsapp']);
     this.loginV = true;
   }
 

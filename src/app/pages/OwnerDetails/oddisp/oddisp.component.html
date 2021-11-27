@@ -7,7 +7,7 @@
         <thead>
             <tr class="table-header">
                 <th>Srno</th>
-                <th>TruckNumber</th>
+                <th>TruckNumber-Type</th>
                 <th>Owner Name<br>Aadhar<br>DOB</th>
                 <th>PAN<br>Chasis<br>Engine</th>
                 <th>RC<br>Expiry</th>
@@ -24,7 +24,7 @@
         <tbody>
             <tr *ngFor="let i of ownerdetailslist;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.truckno}}</td>
+                <td>{{i.truckno}}-{{i.typeOfVehicle}}</td>
                 <td>
                     <ul>
                         <li>{{i.oname}}</li>

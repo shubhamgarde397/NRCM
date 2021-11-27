@@ -53,7 +53,7 @@
           <select id="nop" class="form-control" [(ngModel)]="truckVar" (change)="findtruck()">
             <option disabled selected>Select Truck No</option>
             <option *ngFor="let gst of trucks;let j = index;" value={{gst._id+j}}>
-              {{gst.truckno}}
+              {{gst.truckno}}-{{gst.typeOfVehicle}}
             </option>
           </select>
         </div>
@@ -88,7 +88,7 @@
             <th>Srno</th>
             <th>Date</th>
             <th>Loading Date</th>
-            <th>Truck No</th>
+            <th>Truck No-Type</th>
             <th>Place</th>
             <th>Party</th>
             <th>LRNO</th>
@@ -110,7 +110,7 @@
             <td>{{j+1}}</td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}
+            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}
 
               <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
@@ -222,7 +222,7 @@
               <th>Srno</th>
               <th>Date</th>
               <th>Loading Date</th>
-              <th>Truck No</th>
+              <th>Truck No-Type</th>
               <th>Place</th>
               <th>Party</th>
               <th>LRNO</th>
@@ -235,7 +235,7 @@
               <td>{{j+1}}</td>
               <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
               <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-              <td>{{i.ownerDetails[0].truckno}}</td>
+              <td>{{i.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
               <td>{{i.villageDetails[0].village_name}}</td>
               <td>{{i.partyType}}</td>
               <td>{{i.lrno}}</td>
@@ -274,7 +274,7 @@
                 <tr>
                   <th>Srno</th>
                   <th>Loading Date</th>
-                  <th>Truck No</th>
+                  <th>Truck No-Type</th>
                   <th>Cancel</th>
                 </tr>
               </thead>
@@ -282,7 +282,7 @@
                 <tr *ngFor="let ii of k;let jj=index;">
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-                  <td>{{ii.ownerDetails[0].truckno}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
                   <td><button mat-raised-button type="button" (click)="addToCheckArray2(kk,jj,0)"
                       class="btn-danger btn-sm btn-just-icon">
                       <i class="material-icons">remove</i>
@@ -307,7 +307,7 @@
                 <tr>
                   <th>Srno</th>
                   <th>Loading Date</th>
-                  <th>Truck No</th>
+                  <th>Truck No-Type</th>
                   <th>Balance</th>
                   <th>Pageno</th>
                 </tr>
@@ -316,7 +316,7 @@
                 <tr *ngFor="let ii of k;let jj=index;">
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-                  <td>{{ii.ownerDetails[0].truckno}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
                   <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}">
                   </td>
                   <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">
@@ -367,7 +367,7 @@
                 <th>Srno</th>
                 <th>Date</th>
                 <th>Loading Date</th>
-                <th>Truck No</th>
+                <th>Truck No-Type</th>
                 <th>Place</th>
                 <th>Party</th>
                 <th>LRNO</th>
@@ -380,7 +380,7 @@
                 <td>{{j+1}}</td>
                 <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
                 <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{i.ownerDetails[0].truckno}}</td>
+                <td>{{i.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
                 <td>{{i.villageDetails[0].village_name}}</td>
                 <td>{{i.partyType}}</td>
                 <td>{{i.lrno}}</td>
@@ -432,13 +432,13 @@
           <div class="form-group row" *ngIf="showbuttonOption82">
 
             <div class="col-xs-2">
-              <label for="truckNo"> Truckno </label>
+              <label for="truckNo"> Truckno-Type </label>
             </div>
 
             <div class="col-xs-3">
               <select id="" class="form-control" formControlName="truckno" (change)="getOtherDetails2()">
                 <option>Blank</option>
-                <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}
+                <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}-{{i.ownerDetails[0].typeOfVehicle}}
                 </option>
               </select>
             </div>
@@ -570,7 +570,7 @@
             <th>Srno</th>
             <th>Entry Date</th>
             <th>Loading Date</th>
-            <th>Truck No</th>
+            <th>Truck No-Type</th>
             <th>Place</th>
             <th>Party</th>
             <th>Type</th>
@@ -584,7 +584,7 @@
             <td>{{j+1}}</td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.truckName.truckno}}</td>
+            <td>{{i.truckName.truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
             <td>{{i.placeName.village_name}}</td>
             <td>{{i.partyName.name}}</td>
             <td>{{i.partyType}}</td>

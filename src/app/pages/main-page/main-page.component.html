@@ -49,6 +49,7 @@
     <div class="row">
       <div class="col-sm-3"><button style="width: 50%;height: 100%;" (click)="login()" class="btn btn-success">Personal
           Login</button></div>
+          <div class="col-sm-3"><button style="width: 50%;height: 100%;" (click)="whatsapp()" class="btn btn-success">Whatsapp</button></div>
       <!-- <div class="col-sm-3"><button style="width: 50%;height: 100%;" (click)="download()"
           class="btn btn-warning">PDF</button></div> -->
     </div>
@@ -96,9 +97,21 @@
     <div class="row container">
       <h2>Feel free to reach out to us on :</h2>
       <h3>Give us a call on :</h3>
-      <h4>+91 9822288257</h4>
-      <h4>+91 9423580221</h4>
-      <h4>+91 9766707061</h4>
+      <h4>
+        <a href="tel:+91 9822288257">+91 9822288257</a> &nbsp;&nbsp;
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('nitin','wa')"><i class="material-icons"> whatsapp</i></button>
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
+      </h4>
+      <h4>
+        <a href="tel:+91 9423580221">+91 9423580221</a> &nbsp;&nbsp;
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','wa')"><i class="material-icons">whatsapp</i></button>
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
+      </h4>
+      <h4>
+        <a href="tel:+91 9766707061">+91 9766707061</a> &nbsp;&nbsp;
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('shubham','wa')"><i class="material-icons">whatsapp</i></button>
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('shubham','txt')"><i class="material-icons">chat</i></button>
+      </h4>
 
       <h3>Mail us to :</h3>
       <h4>nitinroadways@gmail.com</h4>

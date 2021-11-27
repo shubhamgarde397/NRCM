@@ -10,6 +10,7 @@ import { PDFComponent } from './pages/pdf/pdf.component';
 import { C2wComponent } from './pages/C2W/c2w/c2w.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
+import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
 
 export const routes: Routes =
     [
@@ -24,6 +25,10 @@ export const routes: Routes =
         {
             path: 'Login',
             component: LoginComponent
+        },
+        {
+            path: 'Whatsapp',
+            component: WhatsappComponent
         },
         {
             path: 'WhysApp',

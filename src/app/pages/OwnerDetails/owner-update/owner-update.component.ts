@@ -16,7 +16,7 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 })
 export class OwnerUpdateComponent implements OnInit {
   public villagenamelist: any;
-
+public typeOfVehicle;
   public show = false;
   public truckno: string;
   public oname: string;
@@ -30,6 +30,7 @@ export class OwnerUpdateComponent implements OnInit {
   public contactA;
   public preferenceArray = [];
   public pA;
+  public type;
   public villagedetailslist;
   public commonArray;
   public considerArray = [];
@@ -54,6 +55,7 @@ export class OwnerUpdateComponent implements OnInit {
       policyExpiry: [this.handledata.Data.policyExpiry],
       regCardExpiry: [this.handledata.Data.regCardExpiry],
       fitnessExpiry: [this.handledata.Data.fitnessExpiry],
+      typeOfVehicle: [this.handledata.Data.typeOfVehicle],
       aadhar: [this.handledata.Data.aadhar],
       dob: [this.handledata.Data.dob],
       engNo: [this.handledata.Data.engNo],
@@ -68,7 +70,7 @@ export class OwnerUpdateComponent implements OnInit {
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
     this.role = this.sec.role;
-
+    this.type=this.handledata.Data.typeOfVehicle;
     // SBH56
   }
 
@@ -102,6 +104,7 @@ export class OwnerUpdateComponent implements OnInit {
     formbody['policyExpiry'] = data.value.policyExpiry;
     formbody['regCardExpiry'] = data.value.regCardExpiry;
     formbody['fitnessExpiry'] = data.value.fitnessExpiry;
+    formbody['typeOfVehicle'] = data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
     formbody['dob'] = data.value.dob;
     formbody['engNo'] = data.value.engNo;
@@ -129,6 +132,7 @@ export class OwnerUpdateComponent implements OnInit {
               res['policyExpiry'] = data.value.policyExpiry;
               res['regCardExpiry'] = data.value.regCardExpiry;
               res['fitnessExpiry'] = data.value.fitnessExpiry;
+              res['typeOfVehicle'] = data.value.typeOfVehicle;
               res['aadhar'] = data.value.aadhar;
               res['dob'] = data.value.dob;
               res['engNo'] = data.value.engNo;
