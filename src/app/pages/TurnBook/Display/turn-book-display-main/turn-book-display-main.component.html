@@ -53,7 +53,7 @@
           <select id="nop" class="form-control" [(ngModel)]="truckVar" (change)="findtruck()">
             <option disabled selected>Select Truck No</option>
             <option *ngFor="let gst of trucks;let j = index;" value={{gst._id+j}}>
-              {{gst.truckno}}-{{gst.typeOfVehicle}}
+              {{gst.truckno}}-{{gst.typeOfVehiclefirst}}
             </option>
           </select>
         </div>
@@ -110,7 +110,7 @@
             <td>{{j+1}}</td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}
+            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}
 
               <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
@@ -235,7 +235,7 @@
               <td>{{j+1}}</td>
               <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
               <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-              <td>{{i.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
+              <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
               <td>{{i.villageDetails[0].village_name}}</td>
               <td>{{i.partyType}}</td>
               <td>{{i.lrno}}</td>
@@ -282,7 +282,7 @@
                 <tr *ngFor="let ii of k;let jj=index;">
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-                  <td>{{ii.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
                   <td><button mat-raised-button type="button" (click)="addToCheckArray2(kk,jj,0)"
                       class="btn-danger btn-sm btn-just-icon">
                       <i class="material-icons">remove</i>
@@ -316,7 +316,7 @@
                 <tr *ngFor="let ii of k;let jj=index;">
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-                  <td>{{ii.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
                   <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}">
                   </td>
                   <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">
@@ -380,7 +380,7 @@
                 <td>{{j+1}}</td>
                 <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
                 <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{i.ownerDetails[0].truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
+                <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
                 <td>{{i.villageDetails[0].village_name}}</td>
                 <td>{{i.partyType}}</td>
                 <td>{{i.lrno}}</td>
@@ -438,7 +438,7 @@
             <div class="col-xs-3">
               <select id="" class="form-control" formControlName="truckno" (change)="getOtherDetails2()">
                 <option>Blank</option>
-                <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}-{{i.ownerDetails[0].typeOfVehicle}}
+                <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}-{{i.typeOfVehiclefirst}}
                 </option>
               </select>
             </div>
@@ -584,7 +584,7 @@
             <td>{{j+1}}</td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.truckName.truckno}}-{{i.ownerDetails[0].typeOfVehicle}}</td>
+            <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}</td>
             <td>{{i.placeName.village_name}}</td>
             <td>{{i.partyName.name}}</td>
             <td>{{i.partyType}}</td>

@@ -38,6 +38,8 @@ export class OddispComponent implements OnInit {
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
     this.ownerdetailslist = this.commonArray.ownerdetails;
+    console.log(this.sec.commonArray);
+    
   };
 
   deleteOwnerDetails = function (id) {
@@ -54,8 +56,14 @@ export class OddispComponent implements OnInit {
           alert(response.Status)
           let bb;
           let j = 0;
+          this.sec.commonArray
+          
           this.ownerdetailslist.forEach((res) => {
-            if (res._id == id) { bb = j; this.sec.commonArray['hiddenlist'].push(res);}
+            if (res._id == id) { 
+              bb = j; 
+              console.log(this.sec.commonArray['hiddenownerdetails']);
+              this.sec.commonArray['hiddenownerdetails'].push(res);
+            }
             j = j + 1;
           })
           this.ownerdetailslist.splice(bb, 1);

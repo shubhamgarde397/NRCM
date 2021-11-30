@@ -202,7 +202,15 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["invoice"]=this.myFormGroup.value.invoice;
       tempObj["paymentid"] = this.paymentid;//Make changes in backend
       this.addtoTB===true?tempObj['addtotbids']=true:false
-
+      if(this.handledata.Data.locations.length===0){
+        tempObj["locationDate"]=[this.myFormGroup.value.loadingDate];
+        tempObj["locations"]=['5bcdecdab6b821389c8abde0'];
+      }else{
+        tempObj["locationDate"]=this.handledata.Data.locationDate;
+        tempObj["locations"]=this.handledata.Data.locations;
+      }
+      console.log(this.handledata.Data);
+      
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert(res.Status);

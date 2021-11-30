@@ -495,6 +495,10 @@ let tempObj1={};
     tempObj['index'] = j;
     tempObj['number'] = number;
     tempObj['invoice'] = data.invoice;
+    tempObj['locations'] = data.locations;
+    tempObj['locationDate'] = data.locationDate;
+
+
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
     this.handleData.saveData(tempObj);
   };
@@ -522,7 +526,8 @@ let tempObj1={};
       tempObj['_id'] = data._id;
       tempObj['loadingDate'] = newdate;
 
-
+      tempObj['locations'] = data.locations;
+      tempObj['locationDate'] = data.locationDate;
       tempObj['method'] = 'update';
       tempObj['tablename'] = 'turnbook';
       tempObj["turnbookDate"] = data.turnbookDate,
@@ -557,6 +562,8 @@ let tempObj1={};
           this.handleData.turnData[j]["pochPayment"] = '';
           this.handleData.turnData[j]["pgno"] = '';
           this.handleData.turnData[j]['index'] = j;
+          this.handleData.turnData[j]["locations"] = '';
+          this.handleData.turnData[j]['locationDate'] = j;
           let tempData = this.handleData.giveTurn();
           this.handleData.saveTurn([]);
           let tempArray = []
@@ -582,6 +589,7 @@ let tempObj1={};
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
         .subscribe((response: Response) => {
+          alert(response['Status'])
           this.turnbooklist.splice(j, 1);
         });
     }

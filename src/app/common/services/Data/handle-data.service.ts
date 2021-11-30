@@ -13,7 +13,7 @@ export class HandleDataService {
     "ownerdetails": [{}],
     "villagenames": [{}],
     "lrlist": [{}],
-    "hiddenlist": [{}],
+    "hiddenownerdetails": [{}],
     // "regularparty": [{}],
     // "RegularTruck": [{}],
     // "thoughts": [{}],

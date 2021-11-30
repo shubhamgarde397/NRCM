@@ -1,3 +1,98 @@
-<p>
-  turn-book-location-disp works!
-</p>
+<div class="well" *ngIf="!show">
+  <table class="table display nowrap" style="width:100%" align="center" id="example">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>LoadingDate</th>
+        <th>TruckNo</th>
+        <th>Destination</th>
+        <th>Contact</th>
+        <th>Locations</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of tbl;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+        <td>{{i.truckno}}</td>
+        <td>{{i.destination}}</td>
+        <td><ul *ngFor="let z of i.contact;">
+          <li>{{z}}</li>
+        </ul></td>
+        <td>
+          <table class="table table-bordered">
+            <tr>
+              <th>Location</th>
+              <th>Date</th>
+              <th>Delete</th>
+            </tr>
+            <tr *ngFor="let l of i.locationData;let p = index;">
+              <td>{{l.location}}</td>
+              <td>{{l.date|date:'dd-MM-yyyy'}}</td>
+              <td>
+                <span style="color: red;cursor: pointer;" (click)="delete(i._id,p,j)">X</span>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <button mat-raised-button type="button" (click)="showDatabyid(i,j)" class="btn-primary btn-sm btn-just-icon" data-toggle="modal" data-target="#myModal">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+
+<div class="container">
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Location and Date</h4>
+        </div>
+        <div class="modal-body">
+
+
+          <form [formGroup]="myFormGroup" (ngSubmit)="update(myFormGroup)" submitted=true
+          enctype="multipart/form data" action="/">
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="location" class="form-control" formControlName="location" (change)="setPlaceName()">
+          <option *ngFor="let own of villagenamelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
+        </select>
+      </div>
+    </div>
+
+          <div class="form-group row">
+            <div class="col-xs-3">
+              <input type="date" id="date" class="form-control" formControlName="date">
+            </div>
+          </div>
+
+          <div class="form-group row" class="col-xs-1">
+            <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+              <i class="material-icons">send</i>
+            </button>
+          </div>
+</form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </div>
+      </div>
+      
+    </div>
+  </div>

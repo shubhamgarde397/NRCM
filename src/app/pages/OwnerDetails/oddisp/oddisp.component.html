@@ -15,16 +15,14 @@
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
                 <th>Policy<br>Expiry<br>Fitness</th>
-                <!-- <th>Reference</th> -->
+                <th>Prefer</th>
                 <th *ngIf="role==1||role==2">Delete<br>Update</th>
             </tr>
         </thead>
-        <!-- [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'black' }" -->
-        <!-- [ngStyle]="{'color': i.ownerDetails[0]===undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }" -->
         <tbody>
             <tr *ngFor="let i of ownerdetailslist;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.truckno}}-{{i.typeOfVehicle}}</td>
+                <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}</td>
                 <td>
                     <ul>
                         <li>{{i.oname}}</li>
@@ -42,13 +40,13 @@
                 </td>
                 <td><ul>
                     <li>{{i.truckno}}</li>
-                    <li [ngStyle]="{'background-color': i.rE}">{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li [ngStyle]="{'background-color': i.rE}" style="color: black;">{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
                     </ul>
                 </td>
                 <td>
                     <ul>
                     <li>{{i.drivingLic}}</li>
-                    <li [ngStyle]="{'background-color': i.dE}">{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li [ngStyle]="{'background-color': i.dE}" style="color: black;">{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
                 </ul>
                 </td>
                 <td>
@@ -67,11 +65,15 @@
                 <td>
                    <ul>
                        <li>{{i.policy}}</li>
-                       <li [ngStyle]="{'background-color': i.pE}">{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
-                       <li [ngStyle]="{'background-color': i.fE}">{{i.fitnessExpiry|date:'dd-MM-yyyy'}}</li>
+                       <li [ngStyle]="{'background-color': i.pE}" style="color: black;">{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
+                       <li [ngStyle]="{'background-color': i.fE}" style="color: black;">{{i.fitnessExpiry|date:'dd-MM-yyyy'}}</li>
                    </ul>
                 </td>
-                <!-- <td>Work Under Progress</td> -->
+                <td>
+                    <ul *ngFor="let j of i.preferences;">
+                        <li>{{j}}</li>
+                    </ul>
+                </td>
                 <td *ngIf="role==1||role==2">
                     <button mat-raised-button (click)="deleteOwnerDetails(i._id)"
                         class="btn-danger btn-sm btn-just-icon">

@@ -12,7 +12,7 @@ export class SecurityCheckService {
     "ownerdetails": [{}],
     "villagenames": [{}],
     "lrlist": [{}],
-    "hiddenlist": [{}],
+    "hiddenownerdetails": [{}],
     // "regularparty": [{}],
     // "RegularTruck": [{}],
     // "thoughts": [{}],

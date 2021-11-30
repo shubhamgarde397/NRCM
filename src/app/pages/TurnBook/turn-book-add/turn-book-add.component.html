@@ -36,7 +36,7 @@
         <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
           (change)="findtruckdetails()" id="truckNoone" *ngIf="!manualTruck">
           <option value="Other+">Other</option>
-          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}-{{i.typeOfVehicle}}</option>
+          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}-{{i.typeOfVehicle[0]}}</option>
         </select>
 
         <input type="text" *ngIf="manualTruck" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM">

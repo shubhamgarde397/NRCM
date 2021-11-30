@@ -66,6 +66,7 @@ public typeOfVehicle;
       bankName: '',
       ifsc: ''
     });
+    
     this.contactArray = this.handledata.Data.contact;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
@@ -104,7 +105,7 @@ public typeOfVehicle;
     formbody['policyExpiry'] = data.value.policyExpiry;
     formbody['regCardExpiry'] = data.value.regCardExpiry;
     formbody['fitnessExpiry'] = data.value.fitnessExpiry;
-    formbody['typeOfVehicle'] = data.value.typeOfVehicle;
+    formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
     formbody['dob'] = data.value.dob;
     formbody['engNo'] = data.value.engNo;
@@ -132,7 +133,8 @@ public typeOfVehicle;
               res['policyExpiry'] = data.value.policyExpiry;
               res['regCardExpiry'] = data.value.regCardExpiry;
               res['fitnessExpiry'] = data.value.fitnessExpiry;
-              res['typeOfVehicle'] = data.value.typeOfVehicle;
+              res['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle;
+              res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
               res['aadhar'] = data.value.aadhar;
               res['dob'] = data.value.dob;
               res['engNo'] = data.value.engNo;

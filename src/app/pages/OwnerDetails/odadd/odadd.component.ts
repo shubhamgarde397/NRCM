@@ -65,7 +65,7 @@ export class OdaddComponent implements OnInit {
       policy:'',
       policyExpiry:'2021-11-20',
       fitnessExpiry:'2021-11-20',
-      typeOfVehicle:'',
+      typeOfVehicle:'None',
       accountName: '',
       accountNumber: '',
       bankName: '',

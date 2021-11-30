@@ -150,7 +150,6 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["hamt"]= 0;
     tempobj["pochDate"]= "";
     tempobj["invoice"]= "";
-    tempobj["locations"]= ["5bcdecdab6b821389c8abde0"];
     tempobj["pochPayment"]= false;
     tempobj["pgno"]= 999;
     tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";
@@ -191,6 +190,13 @@ let toAddData;
             .subscribe((res: any) => {
               alert(res.Status);
               this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
+              this.manualTruck = false;
+          this.myFormGroup.patchValue({ place: '' });
+          this.myFormGroup.patchValue({ trucknoM: '' })
+          this.villageData = "";
+          this.spinnerService.hide();
+          this.fetchBasic();
+          this.reset();
             })
             }
           } else if(!res.hidden){alert(res.Status)}

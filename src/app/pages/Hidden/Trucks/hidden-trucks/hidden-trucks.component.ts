@@ -36,7 +36,7 @@ export class HiddenTrucksComponent implements OnInit {
 
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
-    this.hiddendetailslist = this.commonArray.hiddenlist;
+    this.hiddendetailslist = this.commonArray.hiddenownerdetails;
   };
 
   showOwnerDetails = function (id) {
@@ -73,11 +73,11 @@ export class HiddenTrucksComponent implements OnInit {
   newData() {
     if (this.data === '' || this.data === null || this.data === undefined) {
       this.hiddendetailslist = [];
-      this.hiddendetailslist = this.commonArray.hiddenlist;
+      this.hiddendetailslist = this.commonArray.hiddenownerdetails;
     }
     else {
-      let tempList = this.commonArray.hiddenlist;
-      this.hiddendetailslist = this.commonArray.hiddenlist;
+      let tempList = this.commonArray.hiddenownerdetails;
+      this.hiddendetailslist = this.commonArray.hiddenownerdetails;
       this.hiddendetailslist = [];
       let tempData = [];
       tempList.filter((res, index) => {
@@ -107,7 +107,7 @@ export class HiddenTrucksComponent implements OnInit {
     let tempObj = { "method": "displaynew", "consider": this.considerArray };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.sec.commonArray['hiddenlist'] = Object.keys(res.hiddenownerdetails[0]).length > 0 ? res.hiddenownerdetails : this.sec.commonArray['hiddenlist'];;
+        this.sec.commonArray['hiddenownerdetails'] = Object.keys(res.hiddenownerdetails[0]).length > 0 ? res.hiddenownerdetails : this.sec.commonArray['hiddenownerdetails'];;
         this.fetchBasic();
         this.spinnerService.hide();
       });
@@ -118,7 +118,7 @@ export class HiddenTrucksComponent implements OnInit {
 
     this.hiddendetailslist = [];
 
-    this.hiddendetailslist = this.commonArray.hiddenlist;
+    this.hiddendetailslist = this.commonArray.hiddenownerdetails;
   }
 
 }
