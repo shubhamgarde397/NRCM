@@ -24,6 +24,7 @@ export class TurnBookLocationDispComponent implements OnInit {
   public data;
   public tempVNAME;
   public placeid;
+  public show=false;
 
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,
     public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { }
@@ -67,6 +68,7 @@ export class TurnBookLocationDispComponent implements OnInit {
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
     .subscribe((res: any) => {
       this.tbl=res.Data;
+      this.show=this.tbl.length>0?true:false;
       this.tbl.forEach(r=>{
         let temp=[]
         for(let i=0;i<r.locationsArray.length;i++){
