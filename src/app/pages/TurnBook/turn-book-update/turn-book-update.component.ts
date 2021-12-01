@@ -82,6 +82,7 @@ export class TurnBookUpdateComponent implements OnInit {
       balance: this.handledata.Data.balance,
       pochDate: this.handledata.Data.pochDate,
       pgno: this.handledata.Data.pgno,
+      complete: this.handledata.Data.complete,
       pochPayment: this.handledata.Data.pochPayment,
       partyPayment: this.handledata.Data.payment[0]['_id'],
       paymentName:this.handledata.Data.payment[0]['date']+'_'+this.handledata.Data.payment[0]['amount']
@@ -101,6 +102,7 @@ export class TurnBookUpdateComponent implements OnInit {
       pochDate: this.handledata.Data.pochDate,
       pochPayment: this.handledata.Data.pochPayment,
       pgno: this.handledata.Data.pgno,
+      complete: this.handledata.Data.complete,
       entryDate: this.handledata.Data.entryDate,
       truckNo: ['', Validators.required],
     });
@@ -200,6 +202,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
       tempObj["pgno"] = this.myFormGroup.value.pgno;
       tempObj["invoice"]=this.myFormGroup.value.invoice;
+      tempObj["complete"]=this.myFormGroup.value.complete;
       tempObj["paymentid"] = this.paymentid;//Make changes in backend
       this.addtoTB===true?tempObj['addtotbids']=true:false
       if(this.handledata.Data.locations.length===0){
@@ -209,8 +212,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
         tempObj["locationDate"]=this.handledata.Data.locationDate;
         tempObj["locations"]=this.handledata.Data.locations;
       }
-      console.log(this.handledata.Data);
-      
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert(res.Status);
@@ -237,6 +238,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
             tempData[this.handledata.Data.index]["paymentid"] = this.paymentid;
             tempData[this.handledata.Data.index]["invoice"] = this.invoice;
+            tempData[this.handledata.Data.index]["complete"] = this.complete;
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;

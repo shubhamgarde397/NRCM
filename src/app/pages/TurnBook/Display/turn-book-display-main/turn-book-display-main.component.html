@@ -107,7 +107,11 @@
         <tbody align="center">
           <tr *ngFor="let i of turnbooklist;let j = index"
             [ngStyle]="{'color': i.ownerDetails[0]===undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }">
-            <td>{{j+1}}</td>
+            <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+              done
+              </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                close
+                </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
             <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}
@@ -232,7 +236,11 @@
 
           <tbody align="center">
             <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'black' }">
-              <td>{{j+1}}</td>
+              <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+                done
+                </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                  close
+                  </i></td>
               <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
               <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
               <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
@@ -282,7 +290,7 @@
                 <tr *ngFor="let ii of k;let jj=index;">
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-                  <td>{{ii.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}</td>
                   <td><button mat-raised-button type="button" (click)="addToCheckArray2(kk,jj,0)"
                       class="btn-danger btn-sm btn-just-icon">
                       <i class="material-icons">remove</i>
@@ -316,7 +324,7 @@
                 <tr *ngFor="let ii of k;let jj=index;">
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-                  <td>{{ii.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
+                  <td>{{ii.ownerDetails[0].truckno}}</td>
                   <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}">
                   </td>
                   <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">
@@ -377,7 +385,11 @@
 
             <tbody align="center">
               <tr *ngFor="let i of turnbooklist;let j = index">
-                <td>{{j+1}}</td>
+                <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+                  done
+                  </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                    close
+                    </i></td>
                 <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
                 <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
                 <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
@@ -581,7 +593,11 @@
         </thead>
         <tbody align="center">
           <tr *ngFor="let i of turnbooklist;let j = index">
-            <td>{{j+1}}</td>
+            <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+              done
+              </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                close
+                </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}</td>

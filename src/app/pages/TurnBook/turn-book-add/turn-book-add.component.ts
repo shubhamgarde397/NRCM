@@ -176,7 +176,6 @@ let toAddData;
       this.submitted = true;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
         .subscribe((res: any) => {
-          console.log(res)
           if (res.hidden) {
             alert(res.Status);
             var question=confirm('Vehicle present but its hidden, do you want to unhide and add?');

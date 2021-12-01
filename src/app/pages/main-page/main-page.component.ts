@@ -163,15 +163,11 @@ export class MainPageComponent implements OnInit {
         }
         break;
         case 'txt':
-          console.log('here');
-          
         switch (type) {
           case 'nitin':
             window.open('sms:+919822288257&body=Hi','_blank');    
             break;
             case 'shubham':
-              console.log('here');
-              
             window.open('sms:+919766707061&body=Hi','_blank');    
             break;
         }

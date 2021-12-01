@@ -61,6 +61,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '11', 'viewvalue': 'Details By Truck' },
     { 'value': '12', 'viewvalue': 'Invoice' },
     { 'value': '13', 'viewvalue': 'LRNO' },
+    // { 'value': '14', 'viewvalue': 'LRNO' },present in turnbooklocation dont use 14 use 15 onwards
     // { 'value': '12', 'viewValue': 'Pending Payment'}
   ]
   public years = []
@@ -497,6 +498,7 @@ let tempObj1={};
     tempObj['invoice'] = data.invoice;
     tempObj['locations'] = data.locations;
     tempObj['locationDate'] = data.locationDate;
+    tempObj['complete'] = data.complete;
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
@@ -543,6 +545,7 @@ let tempObj1={};
       tempObj["pgno"] = 999;
       tempObj['index'] = j;
       tempObj['number'] = 2;
+      tempObj['complete'] = false;
       tempObj['paymentid'] = data.paymentDetails[0]._id;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
@@ -563,6 +566,7 @@ let tempObj1={};
           this.handleData.turnData[j]["pgno"] = '';
           this.handleData.turnData[j]['index'] = j;
           this.handleData.turnData[j]["locations"] = '';
+          this.handleData.turnData[j]["complete"] = false;
           this.handleData.turnData[j]['locationDate'] = j;
           let tempData = this.handleData.giveTurn();
           this.handleData.saveTurn([]);

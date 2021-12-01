@@ -75,7 +75,6 @@ export class DisplayComponent implements OnInit {
       .subscribe((res: any) => {
         this.sec.commonArray['lrlist'] = Object.keys(res.lrlist[0]).length > 0 ? res.lrlist : this.sec.commonArray['lrlist'];;
         this.fetchData();
-        console.log(this.sec.commonArray['lrlist']);
         
         this.spinnerService.hide();
       });

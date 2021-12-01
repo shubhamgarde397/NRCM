@@ -67,7 +67,6 @@ export class TurnBookLocationDispComponent implements OnInit {
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
     .subscribe((res: any) => {
       this.tbl=res.Data;
-      console.log(this.tbl)
       this.tbl.forEach(r=>{
         let temp=[]
         for(let i=0;i<r.locationsArray.length;i++){

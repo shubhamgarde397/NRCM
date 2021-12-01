@@ -64,7 +64,12 @@ public typeOfVehicle;
       accountName: '',
       accountNumber: '',
       bankName: '',
-      ifsc: ''
+      ifsc: '',
+      p: [this.handledata.Data.p],
+      r: [this.handledata.Data.r],
+      d: [this.handledata.Data.d],
+      f: [this.handledata.Data.f],
+      P: [this.handledata.Data.P]
     });
     
     this.contactArray = this.handledata.Data.contact;
@@ -117,6 +122,11 @@ public typeOfVehicle;
     formbody['reference'] = this.handledata.Data.reference;
     formbody['method'] = 'update';
     formbody['tablename'] = 'ownerdetails';
+    formbody['p'] = this.handledata.Data.p;
+    formbody['r'] = this.handledata.Data.r;
+    formbody['d'] = this.handledata.Data.d;
+    formbody['f'] = this.handledata.Data.f;
+    formbody['P'] = this.handledata.Data.P;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {

@@ -38,7 +38,6 @@ ngOnInit() {
 }
 
 setReason(){
-console.log(this.ReasonSelected);
 }
 
 update(){
@@ -55,7 +54,6 @@ Data['values'].push(v[i])
     
 }
 tempObj['Data']=Data;
-console.log(tempObj);
 
 }
 
