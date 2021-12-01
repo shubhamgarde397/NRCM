@@ -154,6 +154,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["pgno"]= 999;
     tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";
     tempobj["input"]= "manual";
+    tempobj["complete"]= false;
 let toAdd=true;
 let toAddData;
     let tempObj={};

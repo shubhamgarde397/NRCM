@@ -53,7 +53,7 @@ router.post('/advanced', urlencodedParser, (req, res) => {
             for (i = 0; i < num.length; i++) {
                 for (j = 0; j < msgArr.slice(counter, counter + num[i]).length; j++) {
                     if (i % 2 == 0) {
-                        arr.push({ 'Name': 'Anuja', 'Text': msgArr.slice(counter, counter + num[i])[j] })
+                        arr.push({ 'Name': 'OtherName', 'Text': msgArr.slice(counter, counter + num[i])[j] })
                     }
                     else {
                         arr.push({ 'Name': 'Shubham', 'Text': msgArr.slice(counter, counter + num[i])[j] })

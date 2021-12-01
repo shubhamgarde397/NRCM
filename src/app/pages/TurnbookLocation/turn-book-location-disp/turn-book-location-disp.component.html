@@ -1,4 +1,4 @@
-<div class="well" *ngIf="!show">
+<div class="well" *ngIf="show">
   <table class="table display nowrap" style="width:100%" align="center" id="example">
     <thead>
       <tr class="table-header">
@@ -9,6 +9,7 @@
         <th>Contact</th>
         <th>Locations</th>
         <th>Update</th>
+        <th>Details</th>
       </tr>
     </thead>
 
@@ -43,7 +44,18 @@
             <i class="material-icons">edit</i>
           </button>
         </td>
-
+        <td>
+          <div class="row">
+            <div class="col-sm-3" [ngStyle]="{'background-color': i.P}" style="color: black;">Pan</div>
+            <div class="col-sm-3" [ngStyle]="{'background-color': i.dE}" style="color: black;">Lic</div>
+            <div class="col-sm-3" [ngStyle]="{'background-color': i.pE}" style="color: black;">Policy</div>
+          </div>
+          <div class="row">
+            <div class="col-sm-3" [ngStyle]="{'background-color': i.A}" style="color: black;">Acc</div>
+            <div class="col-sm-3" [ngStyle]="{'background-color': i.rE}" style="color: black;">RC</div>
+            <div class="col-sm-3" [ngStyle]="{'background-color': i.fE}" style="color: black;">Fitness</div>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>

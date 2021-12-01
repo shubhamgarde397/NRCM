@@ -49,17 +49,13 @@ public typeOfVehicle;
       truckno: [this.handledata.Data.truckno],
       oname: [this.handledata.Data.oname],
       pan: [this.handledata.Data.pan],
-      drivingLic: [this.handledata.Data.drivingLic],
       drivingLicExpiry: [this.handledata.Data.drivingLicExpiry],
-      policy: [this.handledata.Data.policy],
       policyExpiry: [this.handledata.Data.policyExpiry],
       regCardExpiry: [this.handledata.Data.regCardExpiry],
       fitnessExpiry: [this.handledata.Data.fitnessExpiry],
       typeOfVehicle: [this.handledata.Data.typeOfVehicle],
       aadhar: [this.handledata.Data.aadhar],
       dob: [this.handledata.Data.dob],
-      engNo: [this.handledata.Data.engNo],
-      chasisNo: [this.handledata.Data.chasisNo],
       contact: [this.handledata.Data.contact],
       accountName: '',
       accountNumber: '',
@@ -104,17 +100,13 @@ public typeOfVehicle;
     formbody['truckno'] = data.value.truckno;
     formbody['oname'] = data.value.oname;
     formbody['pan'] = data.value.pan;
-    formbody['drivingLic'] = data.value.drivingLic;
     formbody['drivingLicExpiry'] = data.value.drivingLicExpiry;
-    formbody['policy'] = data.value.policy;
     formbody['policyExpiry'] = data.value.policyExpiry;
     formbody['regCardExpiry'] = data.value.regCardExpiry;
     formbody['fitnessExpiry'] = data.value.fitnessExpiry;
     formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
     formbody['dob'] = data.value.dob;
-    formbody['engNo'] = data.value.engNo;
-    formbody['chasisNo'] = data.value.chasisNo;
     formbody['contact'] = this.contactArray;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
@@ -122,11 +114,11 @@ public typeOfVehicle;
     formbody['reference'] = this.handledata.Data.reference;
     formbody['method'] = 'update';
     formbody['tablename'] = 'ownerdetails';
-    formbody['p'] = this.handledata.Data.p;
-    formbody['r'] = this.handledata.Data.r;
-    formbody['d'] = this.handledata.Data.d;
-    formbody['f'] = this.handledata.Data.f;
-    formbody['P'] = this.handledata.Data.P;
+    formbody['p'] = data.value.p;
+    formbody['r'] = data.value.r;
+    formbody['d'] = data.value.d;
+    formbody['f'] = data.value.f;
+    formbody['P'] = data.value.P;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
@@ -137,9 +129,7 @@ public typeOfVehicle;
               res['truckno'] = data.value.truckno;
               res['oname'] = data.value.oname;
               res['pan'] = data.value.pan;
-              res['drivingLic'] = data.value.drivingLic;
               res['drivingLicExpiry'] = data.value.drivingLicExpiry;
-              res['policy'] = data.value.policy;
               res['policyExpiry'] = data.value.policyExpiry;
               res['regCardExpiry'] = data.value.regCardExpiry;
               res['fitnessExpiry'] = data.value.fitnessExpiry;
@@ -147,12 +137,15 @@ public typeOfVehicle;
               res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
               res['aadhar'] = data.value.aadhar;
               res['dob'] = data.value.dob;
-              res['engNo'] = data.value.engNo;
-              res['chasisNo'] = data.value.chasisNo;
               res['contact'] = this.contactArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;
               res['reference'] = "";
+              res['p'] = data.value.p;
+              res['r'] = data.value.r;
+              res['d'] = data.value.d;
+              res['f'] = data.value.f;
+              res['P'] = data.value.P;
             }
           })
 

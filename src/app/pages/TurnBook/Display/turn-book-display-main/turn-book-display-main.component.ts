@@ -499,6 +499,7 @@ let tempObj1={};
     tempObj['locations'] = data.locations;
     tempObj['locationDate'] = data.locationDate;
     tempObj['complete'] = data.complete;
+    tempObj['typeOfLoad'] = data.typeOfLoad;
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);

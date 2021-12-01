@@ -98,7 +98,7 @@
           </tr>
           <tr *ngFor="let i of truckArray;let j = index;">
             <td>{{j+1}}</td>
-            <td>{{i.date}}</td>
+            <td>{{i.date|date:'dd-MM-yyyy'}}</td>
             <td>{{i.truckno}}</td>
             <td>{{i.pageno}}</td>
             <td>{{i.amount}}</td>

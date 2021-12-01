@@ -10,7 +10,7 @@
 
 
   <div class="row" *ngIf="buttonOption=='2'">
-    <span style="font-weight: bold;">{{createdDate}}</span>
+    <span style="font-weight: bold;">{{createdDate|date:'dd-MM-yyyy'}}</span>
     <div *ngIf="yeardiv">
       <div class="col-sm-2" *ngFor="let i of years">
         <button mat-raised-button class="btn btn-warning" style="margin:1vh;" (click)="find2(i,'year')">{{i}}</button>
@@ -61,7 +61,7 @@
     </div>
 
     <div style="text-align: center">
-      <h3>{{selectedDate}}</h3>
+      <h3>{{selectedDate|date:'dd-MM-yyyy'}}</h3>
       <table class="table" style="width:100%" align="center">
 
         <thead class="table-header">
@@ -86,10 +86,10 @@
           <tr *ngFor="let i of balanceDate;let j = index"
             [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'black' }">
             <td>{{j+1}}</td>
-            <td>{{i.todayDate}}</td>
+            <td>{{i.todayDate|date:'dd-MM-yyyy'}}</td>
             <td>
               <ul *ngFor="let k of i.truckData">
-                <li>{{k.date}}</li>
+                <li>{{k.date|date:'dd-MM-yyyy'}}</li>
               </ul>
             </td>
 

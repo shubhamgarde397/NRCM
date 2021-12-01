@@ -113,7 +113,7 @@
                 close
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
             <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}
 
               <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
@@ -242,7 +242,7 @@
                   close
                   </i></td>
               <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-              <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+              <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
               <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
               <td>{{i.villageDetails[0].village_name}}</td>
               <td>{{i.partyType}}</td>
@@ -391,7 +391,7 @@
                     close
                     </i></td>
                 <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
                 <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
                 <td>{{i.villageDetails[0].village_name}}</td>
                 <td>{{i.partyType}}</td>
@@ -599,7 +599,7 @@
                 close
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
             <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}</td>
             <td>{{i.placeName.village_name}}</td>
             <td>{{i.partyName.name}}</td>

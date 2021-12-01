@@ -83,6 +83,7 @@ export class TurnBookUpdateComponent implements OnInit {
       pochDate: this.handledata.Data.pochDate,
       pgno: this.handledata.Data.pgno,
       complete: this.handledata.Data.complete,
+      typeOfLoad: this.handledata.Data.typeOfLoad,
       pochPayment: this.handledata.Data.pochPayment,
       partyPayment: this.handledata.Data.payment[0]['_id'],
       paymentName:this.handledata.Data.payment[0]['date']+'_'+this.handledata.Data.payment[0]['amount']
@@ -203,10 +204,11 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["pgno"] = this.myFormGroup.value.pgno;
       tempObj["invoice"]=this.myFormGroup.value.invoice;
       tempObj["complete"]=this.myFormGroup.value.complete;
+      tempObj["typeOfLoad"]=this.myFormGroup.value.typeOfLoad;
       tempObj["paymentid"] = this.paymentid;//Make changes in backend
       this.addtoTB===true?tempObj['addtotbids']=true:false
       if(this.handledata.Data.locations.length===0){
-        tempObj["locationDate"]=[this.myFormGroup.value.loadingDate];
+        tempObj["locationDate"]=[this.myFormGroup.value.loadingDate===''?this.handlefunction.createDate(new Date()):this.myFormGroup.value.loadingDate];
         tempObj["locations"]=['5bcdecdab6b821389c8abde0'];
       }else{
         tempObj["locationDate"]=this.handledata.Data.locationDate;
@@ -237,8 +239,9 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
             tempData[this.handledata.Data.index]["paymentid"] = this.paymentid;
-            tempData[this.handledata.Data.index]["invoice"] = this.invoice;
-            tempData[this.handledata.Data.index]["complete"] = this.complete;
+            tempData[this.handledata.Data.index]["invoice"] = this.myFormGroup.value.invoice;
+            tempData[this.handledata.Data.index]["complete"] = this.myFormGroup.value.complete;
+            tempData[this.handledata.Data.index]["typeOfLoad"] = this.myFormGroup.value.typeOfLoad;
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
@@ -287,6 +290,8 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
             tempData[this.handledata.Data.index]["invoice"] = this.myFormGroup.value.invoice
+            tempData[this.handledata.Data.index]["complete"] = this.myFormGroup.value.complete
+            tempData[this.handledata.Data.index]["typeOfLoad"] = this.myFormGroup.value.typeOfLoad
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
