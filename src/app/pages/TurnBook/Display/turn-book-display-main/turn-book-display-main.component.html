@@ -50,12 +50,7 @@
           </select>
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='11'">
-          <select id="nop" class="form-control" [(ngModel)]="truckVar" (change)="findtruck()">
-            <option disabled selected>Select Truck No</option>
-            <option *ngFor="let gst of trucks;let j = index;" value={{gst._id+j}}>
-              {{gst.truckno}}-{{gst.typeOfVehiclefirst}}
-            </option>
-          </select>
+          <input type="text" class="form-control" [(ngModel)]='truckVar'>
         </div>
         <div class="col-sm-3">
           <select class="form-control" [(ngModel)]="selectpartyType" (change)="showDatabyParty()">
@@ -67,9 +62,6 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
-          <!-- <input type="text" [(ngModel)]="dataTruck" (input)="newData()"> -->
-        </div>
-        <div class="col-sm-4">
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;"
             [disabled]="buttonOption==='7'">
             {{buttonValue}}
@@ -80,7 +72,6 @@
       <!--DATE -->
 
       <h3>{{todaysDate}}</h3>
-
       <table class="table" style="width:100%" align="center"
         *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')&&(buttonOption!=='8')&&(buttonOption!=='11')">
         <thead align="center" style="font-weight: bold">
@@ -95,10 +86,6 @@
             <th>Amount</th>
             <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">PN</th>
             <th *ngIf="buttonOption!=='9'">Options</th>
-            <!-- <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">Delete</th>
-            <th *ngIf="buttonOption!=='9'">Cancel</th>
-            <th *ngIf="buttonOption!=='9'">Edit</th>
-            <th *ngIf="(adminAccess)&&(buttonOption!=='9')">TNO</th> -->
             <th *ngIf="buttonOption=='9'">Undo</th>
             <th  *ngIf="buttonOption=='1'">S</th>
           </tr>
@@ -158,33 +145,9 @@
                   local_shipping
                 </i>
               </button>
+              <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyidOD(i)">edit</i>
             </div>
           </td>
-            <!-- <td>
-              <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
-                class="btn-danger btn-sm btn-just-icon">
-                <i class="material-icons">delete_forever</i>
-              </button>
-            </td>
-            <td>
-              <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid2(i,j,'cancel')"
-                class="btn-warning btn-sm btn-just-icon">
-                <i class="material-icons">delete</i>
-              </button>
-            </td>
-            <td>
-              <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid(i,j,1)"
-                class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">edit</i>
-              </button>
-            </td>
-            <td *ngIf="(adminAccess)&&(buttonOption!=='9')">
-              <button mat-raised-button type="button" (click)="showDatabyid(i,j,3)"
-                class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">edit</i>
-              </button>
-            </td> -->
-
             <td *ngIf="buttonOption=='9'">
               <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
                 class="btn-primary btn-sm btn-just-icon">
@@ -455,6 +418,16 @@
               </select>
             </div>
 
+            <div class="col-xs-3">
+              <select class="form-control" formControlName="typeOfLoad">
+                <option value="Pipe">Pipe</option>
+                <option value="Fittings">Fittings</option>
+                <option value="Pipe-GRL">Pipe-GRL</option>
+                <option value="Bundle-GRL">Bundle-GRL</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
           </div>
           <!--Truckno-->
 
@@ -576,6 +549,15 @@
         </form>
       </div>
 <div class="row" *ngIf="buttonOption=='11'">
+
+    <div class="col-sm-12">
+      <select class="form-control" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+        <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
+      </select>
+    </div>
+    <div class="col-sm-12">
+
+
   <table class="table" style="width:100%" align="center" *ngIf="byTruckName">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
@@ -592,7 +574,7 @@
           </tr>
         </thead>
         <tbody align="center">
-          <tr *ngFor="let i of turnbooklist;let j = index">
+          <tr *ngFor="let i of turn11;let j = index">
             <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
               done
               </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
@@ -610,6 +592,7 @@
           </tr>
         </tbody>
       </table>
+</div>
 </div>
     </div>
   </div>

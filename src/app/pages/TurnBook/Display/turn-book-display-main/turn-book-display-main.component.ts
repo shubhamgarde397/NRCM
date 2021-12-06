@@ -64,6 +64,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     // { 'value': '14', 'viewvalue': 'LRNO' },present in turnbooklocation dont use 14 use 15 onwards
     // { 'value': '12', 'viewValue': 'Pending Payment'}
   ]
+  public trucknoid11;
   public years = []
   public buttons = []
   public balanceHireArrray = [];
@@ -100,7 +101,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public byTruckName=false;
   public byInvoice;
   public bylrno;
-
+  public turn11;
+  public truckSelected=false;
+public types={'None':0,'Open':0,'Container':0}
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -305,6 +308,15 @@ let buttons=[]
     this.buttonOption = this.trucknoid;
     this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
   }
+
+  showDatabyidOD = function (data) {
+
+    this.show = true;
+    this.found = data;
+    this.handleData.saveData(data.ownerDetails[0]);
+    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
+  };
+
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};
     this.byTruckName=false;
@@ -340,7 +352,8 @@ let buttons=[]
         case '11':
         if (this.truckVar === '') { alert('Select a Truck'); break; }
         else {
-          tempObj['id'] = this.truckid['_id'];
+          // tempObj['id'] = this.truckid['_id'];
+          tempObj['truckno'] = this.truckVar;
         }
         case '12':
           tempObj['invoice']=this.byInvoice;
@@ -364,6 +377,10 @@ if(this.buttonOption !== '11'){
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
+        if(this.buttonOption!=='8')
+        res.Data.forEach(r=>{
+          this.types[r.ownerDetails[0].typeOfVehicle]=this.types[r.ownerDetails[0].typeOfVehicle]+1
+          });
         if (this.buttonOption == '6') {
           this.turnbooklist = res.Data;
           this.handleData.saveBH(this.turnbooklist);
@@ -379,6 +396,7 @@ if(this.buttonOption !== '11'){
             this.turnbooklistnew = res.Data;
             this.myFormGroup = this.formBuilder.group({
               loadingDateDynamic: '',
+              typeOfLoad:'',
               turnbookDate: '',
               truckno: '',
               place: '',
@@ -404,16 +422,20 @@ let tempObj1={};
     tempObj1['tablename'] = 'turnbook'
     tempObj1['method'] = 'singleTruck'
     tempObj1['display'] = this.buttonOption;
-    tempObj1['id'] = this.truckid['_id'];
+    tempObj1['truckno'] = this.truckVar;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
       .subscribe((res: any) => {
         this.byTruckName=true;
         this.turnbooklist = res.Data;
+        this.unique11turnbooklist= res.Data.map(r=>r.truckName.truckno).filter(function(item, pos) {return res.Data.map(r=>r.truckName.truckno).indexOf(item) == pos;})
       });
     }
 
   };
 
+  find11UniqueTruck(){
+    this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
+  }
 
   getOtherDetails() {
     this.showbuttonOption82 = true;
@@ -436,6 +458,7 @@ let tempObj1={};
     tempData['partyid'] = this.partyid
     tempData['lrno'] = data.value.lrno
     tempData['hamt'] = data.value.hamt
+    tempData['typeOfLoad'] = data.value.typeOfLoad
     tempData['_id'] = this.toSendid;
     tempData['tablename'] = 'turnbook'
     tempData['method'] = 'update'
@@ -546,6 +569,7 @@ let tempObj1={};
       tempObj["pgno"] = 999;
       tempObj['index'] = j;
       tempObj['number'] = 2;
+      tempObj['typeOfLoad'] = '';
       tempObj['complete'] = false;
       tempObj['paymentid'] = data.paymentDetails[0]._id;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
@@ -938,5 +962,4 @@ doc.line(7, starty, 7, y-4);//srno
    }
 
 }
-
 

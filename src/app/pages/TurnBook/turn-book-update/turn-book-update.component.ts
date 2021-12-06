@@ -210,6 +210,8 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       if(this.handledata.Data.locations.length===0){
         tempObj["locationDate"]=[this.myFormGroup.value.loadingDate===''?this.handlefunction.createDate(new Date()):this.myFormGroup.value.loadingDate];
         tempObj["locations"]=['5bcdecdab6b821389c8abde0'];
+        tempObj['updateTruck']=true;
+        tempObj['show']=false;
       }else{
         tempObj["locationDate"]=this.handledata.Data.locationDate;
         tempObj["locations"]=this.handledata.Data.locations;

@@ -39,6 +39,14 @@ export class HiddenTrucksComponent implements OnInit {
     this.hiddendetailslist = this.commonArray.hiddenownerdetails;
   };
 
+  showDatabyid = function (data) {
+
+    this.show = true;
+    this.found = data;
+    this.handledata.saveData(data);
+    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
+  };
+
   showOwnerDetails = function (id) {
     if (confirm('Are you sure?')) {
       let formbody = {}

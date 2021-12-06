@@ -7,6 +7,7 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-turn-book-location-disp',
   templateUrl: './turn-book-location-disp.component.html',
@@ -27,7 +28,7 @@ export class TurnBookLocationDispComponent implements OnInit {
   public show=false;
 
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,
-    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { }
+    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,public router:Router) { }
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
@@ -45,7 +46,12 @@ export class TurnBookLocationDispComponent implements OnInit {
     this.villagenamelist = [];
     this.villagenamelist = this.commonArray.villagenames;
   }
-
+  showDatabyidoD = function (data) {
+    this.show = true;
+    this.found = data;
+    this.handledata.saveData(data);
+    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
+  };
   setPlaceName() {
     this.placeid = this.villagenamelist[this.myFormGroup.value.location.split('+')[1]]._id;
     this.tempVNAME = this.villagenamelist[this.myFormGroup.value.location.split('+')[1]].village_name;
@@ -81,6 +87,25 @@ export class TurnBookLocationDispComponent implements OnInit {
     })
       this.tblShow=this.tbl.length>0?true:false;
     });
+  }
+
+  updateTurnLocationTruck(i,index){
+    let tempObj={};
+    tempObj['part']=4;
+    tempObj['_id']=i._id;
+    tempObj['method'] = 'update';
+    tempObj['tablename'] = 'turnbook';
+    tempObj['updateTruck']=true;
+    tempObj['show']=true;
+    tempObj['ownerid']=i['oD']['_id'];
+    
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.tbl.splice(index,1)
+      
+    });
+    
   }
   showDatabyid(data,i){
     this.id=i;

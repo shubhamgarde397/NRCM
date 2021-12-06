@@ -199,7 +199,10 @@ let toAddData;
           this.reset();
             })
             }
-          } else if(!res.hidden){alert(res.Status)}
+          }else if(res.empty){
+            alert(res.Status);
+          }
+          else if(!res.hidden){alert(res.Status)}
           else{
             if (this.method === "insert.new") {
               let tempObj1 = {};

@@ -2,13 +2,21 @@
 
   <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
     action="/" name="myform" id="myform">
+    <!--Truckno-->
+    <div class="form-group row">
 
+      <div class="col-xs-3">
+        <input type="text" id="text" class="form-control" formControlName="truckno" disabled>
+      </div>
+
+    </div>
+    <!--Truckno-->
 
     <!-- turnbookDate-->
     <div class="form-group row">
 
       <div class="col-xs-2">
-        <label for="turnbookDate"> Turn Book Date</label>
+        <label for="turnbookDate"> TurnBook Date</label>
       </div>
 
       <div class="col-xs-3">
@@ -27,28 +35,17 @@
     <!-- loadingDate-->
     <div class="form-group row">
 
-      <div class="col-xs-2">
-        <label for="loadingDate"> Loading Date</label>
+      <div class="col-xs-3">
+        Loading Date - <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
       </div>
 
       <div class="col-xs-3">
-        <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.loadingDate.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-
-      <div class="col-xs-3">
+        Load Type : 
         <select class="form-control" formControlName="typeOfLoad">
           <option value="Pipe">Pipe</option>
           <option value="Fittings">Fittings</option>
-          <option value="Roll">Roll</option>
-          <option value="Bundle">Bundle</option>
+          <option value="Pipe-GRL">Pipe-GRL</option>
+          <option value="Bundle-GRL">Bundle-GRL</option>
           <option value="Other">Other</option>
         </select>
       </div>
@@ -56,23 +53,11 @@
     </div>
     <!--loadingDate -->
 
-    <!--Truckno-->
-    <div class="form-group row">
 
-      <div class="col-xs-2">
-        <label for="truckNo"> Truck No </label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="text" id="text" class="form-control" formControlName="truckno" disabled>
-      </div>
-
-    </div>
-    <!--Truckno-->
 
     <!--Place-->
     <div class="form-group row">
-      <div class="col-xs-2">
+      <div class="col-xs-1">
         <label for="place"> Place </label>
       </div>
       <div class="col-xs-6">
@@ -88,18 +73,7 @@
         </div>
       </div>
       </div>
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.place.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-    <!--place-->
 
-    <!--Place-->
-    <div class="form-group row">
       <div class="col-xs-2">
         <label for="partyType"> Party Type </label>
       </div>
@@ -111,10 +85,9 @@
         </select>
         
       </div>
+
     </div>
     <!--place-->
-
-
 
 
     <!--NOP-->
@@ -137,18 +110,6 @@
       </div>
       </div>
 
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.partyName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-    <!--NOP-->
-    <!--LRNO-->
-    <div class="form-group row">
-
       <div class="col-xs-2">
         <label for="lrno"> Lrno </label>
       </div>
@@ -157,29 +118,31 @@
         <input type="number" id="lrno" class="form-control" formControlName="lrno">
       </div>
 
-    </div>
-    <!--LRNO-->
 
+    </div>
+    <!--NOP-->
 
     <!--Hire Amount-->
     <div class="form-group row" *ngIf="role==1||role==2">
 
-      <div class="col-xs-2">
-        <label for="hamt"> Hire Amount </label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="number" class="form-control" formControlName="hamt" (change)="balance()" />
-
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.hamt.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>Hire Amount</th>
+            <th>Advance</th>
+            <th>Expenses</th>
+            <th>Comments</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td><input type="number" class="form-control" formControlName="hamt" (change)="balance()" /></td>
+          <td><input type="number" class="form-control" formControlName="advance" (change)="balance()" /></td>
+          <td><input type="text" class="form-control" placeholder="Expenses- UC" disabled /></td>
+          <td><input type="text" class="form-control" placeholder="Comments- UC" disabled /></td>
+          <td><input type="text" class="form-control" formControlName="balance" disabled /></td>
+        </tbody>
+      </table>
 
     </div>
     <!--HireAmount-->
@@ -196,90 +159,26 @@
     </div>
     <!--Invoice-->
 
-
-    <!--Advance-->
-    <div class="form-group row" *ngIf="role==1||role==2">
-
-      <div class="col-xs-2">
-        <label for="advance"> Advance </label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="number" class="form-control" formControlName="advance" (change)="balance()" />
-
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.advance.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-
-    </div>
-    <!--Advance-->
-
-    <!--Balance-->
-    <div class="form-group row" *ngIf="role==1||role==2">
-
-      <div class="col-xs-2">
-        <label for="balance"> Balance </label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="text" class="form-control" formControlName="balance" disabled />
-
-      </div>
-
-    </div>
-    <!--Balaance-->
-
     <!-- DATE-->
     <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="date"> Poch Date</label>
-      </div>
+<h4>Poch Details</h4>
 
       <div class="col-xs-3">
         <input type="text" id="pochDate" class="form-control" formControlName="pochDate" disabled>
       </div>
 
-    </div>
-    <!--DATE -->
-<!-- PGNO -->
-<div class="form-group row">
-
-  <div class="col-xs-2">
-    <label for="date"> Poch Page</label>
-  </div>
-
-  <div class="col-xs-3">
-    <input type="text" id="pgno" class="form-control" formControlName="pgno" disabled>
-  </div>
-
-</div>
-<!-- PGNO -->
-
-    <!-- Check -->
-
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="pochPayment"> Poch Payment </label>
+      <div class="col-xs-3">
+        <input type="text" id="pgno" class="form-control" formControlName="pgno" disabled>
       </div>
 
+      
       <div class="col-xs-3">
         <input type="checkbox" id="pochPayment" class="form-control" formControlName="pochPayment" style="zoom:1.5" disabled>
       </div>
 
     </div>
 
-    <!--  Check-->
-
-    <!-- partyPayment -->
-
+    
     <div class="form-group row">
 
       <div class="col-xs-2">
@@ -301,6 +200,10 @@
       </div>
 
     </div>
+    <!--DATE -->
+
+
+
 
     <!--  partyPayment-->
 
