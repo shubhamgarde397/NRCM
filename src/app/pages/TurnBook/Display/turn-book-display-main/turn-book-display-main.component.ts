@@ -102,6 +102,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public byInvoice;
   public bylrno;
   public turn11;
+  public oids=[];
+  public showprdfP=false;
   public truckSelected=false;
 public types={'None':0,'Open':0,'Container':0}
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
@@ -309,11 +311,10 @@ let buttons=[]
     this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
   }
 
-  showDatabyidOD = function (data) {
-
+  showDatabyidTurn = function (data) {
     this.show = true;
     this.found = data;
-    this.handleData.saveData(data.ownerDetails[0]);
+    this.handleData.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   };
 
@@ -434,7 +435,10 @@ let tempObj1={};
   };
 
   find11UniqueTruck(){
+    if(this.trucknoid11!=='Default'){
     this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
+    this.showprdfP=true;
+    }
   }
 
   getOtherDetails() {
@@ -523,6 +527,7 @@ let tempObj1={};
     tempObj['locationDate'] = data.locationDate;
     tempObj['complete'] = data.complete;
     tempObj['typeOfLoad'] = data.typeOfLoad;
+    tempObj['waitLocation'] = data.waitLocation;
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
@@ -687,6 +692,8 @@ let tempObj1={};
 
   setBalPage() {
     let breaker = false;
+    console.log(this.balanceHireArrray);
+    
     for (let i = 0; i < this.balanceHireArrray.length; i++) {
       let truckData = []
       if (breaker) { break; }
@@ -701,6 +708,7 @@ let tempObj1={};
         else {
           if (breaker) { break; }
           this.ids.push(this.balanceHireArrray[i][j]['_id']);//ObjectId to mongoform in lambda write a loop
+          this.oids.push(this.balanceHireArrray[i][j]['ownerDetails'][0]['_id']);//ObjectId to mongoform in lambda write a loop
           tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
           tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
           tempObj['pageno'] = parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value);
@@ -733,6 +741,7 @@ let tempObj1={};
     tempObj['method'] = 'insertmany.many';
     tempObj['tablename'] = 'BalanceHire';
     tempObj['ids'] = this.ids;
+    tempObj['oids'] = this.oids;
     tempObj['todayDate'] = this.todaysDate;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {

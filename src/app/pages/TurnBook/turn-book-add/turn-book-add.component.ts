@@ -73,8 +73,8 @@ export class TurnBookAddComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: ['', Validators.required],
       truckNo: ['', Validators.required],
-      trucknoM: ['', [Validators.required]]
-
+      trucknoM: ['', [Validators.required]],
+      waitLocation:['',[Validators.required]]
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -115,7 +115,6 @@ export class TurnBookAddComponent implements OnInit {
   }
 
   findtruckdetails() {
-
     let tf = this.trucknoid.split('+')[0] === 'Other' ? true : false;
     if (tf) {
       this.manualTruck = true;
@@ -130,6 +129,8 @@ export class TurnBookAddComponent implements OnInit {
   }
 
   storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
+    console.log(value);
+    
     this.submitted = true;
     let tempobj = {};
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
@@ -154,6 +155,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["pgno"]= 999;
     tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";
     tempobj["input"]= "manual";
+    tempobj["waitLocation"]= value['waitLocation'];
     tempobj["complete"]= false;
 let toAdd=true;
 let toAddData;

@@ -45,9 +45,8 @@
             <span class="glyphicon glyphicon-remove"></span>
           </font>
         </div>
-
-
       </div>
+
       <div class="col-xs-1">
         <div [hidden]="myFormGroup.controls.trucknoM.valid">
           <font color="red">
@@ -55,6 +54,16 @@
           </font>
         </div>
       </div>
+
+      <div class="col-xs-3">
+        <select class="form-control" formControlName="waitLocation">
+          <option value="Shivapur">Shivapur</option>
+          <option value="Dhaba">Dhaba</option>
+          <option value="None">None</option>
+        </select>
+      </div>  
+
+      
 
     </div>
     <!--Truckno-->

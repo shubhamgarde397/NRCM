@@ -101,7 +101,7 @@
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}
+            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.waitLocation}}
 
               <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
@@ -145,7 +145,7 @@
                   local_shipping
                 </i>
               </button>
-              <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyidOD(i)">edit</i>
+              <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyidTurn(i.ownerDetails[0])">edit</i>
             </div>
           </td>
             <td *ngIf="buttonOption=='9'">
@@ -237,6 +237,7 @@
           </button>
         </div>
       </div>
+
       <div *ngIf="!saveToCheckArrayBoolean">
         <div *ngIf="finalCheckDone">
           <div *ngFor="let k of balanceHireArrray;let kk=index;">
@@ -302,9 +303,9 @@
           <button mat-raised-button type="button" (click)="setBalPage()" class="btn-success btn-sm btn-just-icon">
             <i class="material-icons">arrow_forward</i>
           </button>
-
         </div>
       </div>
+      
 
       <div class="col-sm-12" *ngIf="buttonOption==='7'">
         <div class="row" *ngIf="pochDiv">
@@ -549,12 +550,27 @@
         </form>
       </div>
 <div class="row" *ngIf="buttonOption=='11'">
+<div class="col-sm-6" *ngIf="showprdfP">
+  <div class="row">
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].P}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Pan</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].dE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Lic</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].pE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Policy</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].A}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Acc</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].rE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">RC</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].fE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Fitness</div>
+  </div>
+</div>
+
 
     <div class="col-sm-12">
       <select class="form-control" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+        <option>Default</option>
         <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
       </select>
     </div>
+
     <div class="col-sm-12">
 
 

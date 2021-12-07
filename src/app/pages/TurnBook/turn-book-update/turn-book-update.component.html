@@ -2,32 +2,23 @@
 
   <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
     action="/" name="myform" id="myform">
-    <!--Truckno-->
-    <div class="form-group row">
-
-      <div class="col-xs-3">
-        <input type="text" id="text" class="form-control" formControlName="truckno" disabled>
-      </div>
-
-    </div>
-    <!--Truckno-->
-
     <!-- turnbookDate-->
     <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="turnbookDate"> TurnBook Date</label>
+      <div class="col-xs-3">
+        Truck No : <input type="text" id="text" class="form-control" formControlName="truckno" disabled>
       </div>
 
       <div class="col-xs-3">
-        <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate" disabled>
+       Turnbook Date :  <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate" disabled>
       </div>
 
+      <div class="col-xs-3">
+        Invoice : <input type="text" class="form-control" formControlName="invoice"/>
+       </div>
 
       <div class="col-xs-3">
        Complete :  <input type="checkbox" id="complete" class="form-control" formControlName="complete">
       </div>
-
 
     </div>
     <!--turnbookDate -->
@@ -50,6 +41,18 @@
         </select>
       </div>
 
+      <div class="col-sm-3">
+        Place : 
+        <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
+          <option disabled value="{{placeid}}" selected>{{place}}</option>
+          <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
+        </select>
+        </div>
+        <div class="col-sm-3">
+          Old Place : 
+        <input type="text" id="place" class="form-control" formControlName="place" disabled>
+        </div>
+
     </div>
     <!--loadingDate -->
 
@@ -57,74 +60,43 @@
 
     <!--Place-->
     <div class="form-group row">
-      <div class="col-xs-1">
-        <label for="place"> Place </label>
-      </div>
-      <div class="col-xs-6">
-<div class="row">
-  <div class="col-sm-6">
-        <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
-          <option disabled value="{{placeid}}" selected>{{place}}</option>
-          <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
-        </select>
-        </div>
-        <div class="col-sm-6">
-        <input type="text" id="place" class="form-control" formControlName="place" disabled>
-        </div>
-      </div>
-      </div>
-
-      <div class="col-xs-2">
-        <label for="partyType"> Party Type </label>
-      </div>
+   
       <div class="col-xs-3">
-
+        Party Type:
         <select id="partyType" class="form-control" formControlName="partyType">
           <option>NRCM</option>
           <option>NR</option>
         </select>
-        
       </div>
 
-    </div>
-    <!--place-->
 
 
-    <!--NOP-->
-    <div class="form-group row">
 
-      <div class="col-xs-2">
-        <label for="partyName"> Name of Party </label>
-      </div>
-      <div class="col-xs-6">
-        <div class="row">
-        <div class="col-sm-6">
+        <div class="col-sm-3">
+          Party : 
         <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
           <option selected disabled value={{partyid}}>{{party}}</option>
           <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
         </select>
       </div>
-      <div class="col-sm-6">
+      <div class="col-sm-3">
+        Old Party : 
         <input type="text" id="partyName" class="form-control" formControlName="partyName" disabled>
         </div>
-      </div>
-      </div>
 
-      <div class="col-xs-2">
-        <label for="lrno"> Lrno </label>
-      </div>
+        <div class="col-xs-3">
+          Lrno : <input type="number" id="lrno" class="form-control" formControlName="lrno">
+         </div>
 
-      <div class="col-xs-3">
-        <input type="number" id="lrno" class="form-control" formControlName="lrno">
-      </div>
+
 
 
     </div>
-    <!--NOP-->
+    <!--place-->
 
     <!--Hire Amount-->
     <div class="form-group row" *ngIf="role==1||role==2">
-
+<div class="col-sm-12">
       <table>
         <thead>
           <tr>
@@ -143,51 +115,45 @@
           <td><input type="text" class="form-control" formControlName="balance" disabled /></td>
         </tbody>
       </table>
-
+    </div>
     </div>
     <!--HireAmount-->
-
-    <!--Invoice-->
-    <div class="form-group row" *ngIf="role==1||role==2">
-
-      <div class="col-xs-2">
-        <label for="invoice"> Invoice </label>
-      </div>
-      <div class="col-xs-3">
-        <input type="text" class="form-control" formControlName="invoice"/>
-      </div>
-    </div>
-    <!--Invoice-->
 
     <!-- DATE-->
     <div class="form-group row">
 <h4>Poch Details</h4>
-
       <div class="col-xs-3">
+        Date : 
         <input type="text" id="pochDate" class="form-control" formControlName="pochDate" disabled>
       </div>
-
       <div class="col-xs-3">
+        Pgno : 
         <input type="text" id="pgno" class="form-control" formControlName="pgno" disabled>
       </div>
-
-      
       <div class="col-xs-3">
-        <input type="checkbox" id="pochPayment" class="form-control" formControlName="pochPayment" style="zoom:1.5" disabled>
+        Poch Payment :
+        <input type="checkbox" id="pochPayment" class="form-control" formControlName="pochPayment" disabled>
       </div>
+
+
+      <div class="col-xs-3">
+        Wait Location : 
+        <select class="form-control" formControlName="waitLocation">
+          <option value="Shivapur">Shivapur</option>
+          <option value="Dhaba">Dhaba</option>
+          <option value="None">None</option>
+        </select>
+      </div>
+
 
     </div>
 
     
     <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="partyPayment"> Party Payment </label>
-      </div>
-
       <div class="col-xs-6">
         <div class="row">
           <div class="col-sm-6">
+            Party Payment : 
             <select id="partyPayment" class="form-control" formControlName="partyPayment" [(ngModel)]="partyPayment" (change)="setPaymentName()">
               <option selected disabled>{{paymentName}}</option>
               <option *ngFor="let i of newPayment;let j = index;" value={{i._id}}+{{j}}>{{i.date}}_{{i.amount}}</option>
