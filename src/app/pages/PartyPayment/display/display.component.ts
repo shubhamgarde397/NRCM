@@ -39,11 +39,11 @@ export class DisplayComponent implements OnInit {
   public adminAccess = false;
   public tableData = false;
   public displayoptions = [
-    { 'value': '1', 'viewvalue': 'Party' },
-    { 'value': '2', 'viewvalue': 'Date' },
-    { 'value': '3', 'viewvalue': 'Both' },
-    { 'value': '4', 'viewvalue': 'Only Lorry Details' },
-    { 'value': '5', 'viewvalue': 'Payment And Lorry' },
+    { 'value': '1', 'viewvalue': 'Party', 'disabled':true},
+    { 'value': '2', 'viewvalue': 'Date', 'disabled':true},
+    { 'value': '3', 'viewvalue': 'Both', 'disabled':true},
+    { 'value': '4', 'viewvalue': 'Only Lorry Details', 'disabled':false},
+    { 'value': '5', 'viewvalue': 'Payment And Lorry', 'disabled':false},
   ]
   public buttonOptions=[
     { 'value': '1', 'viewvalue': 'This Month' },
@@ -430,6 +430,197 @@ tempObj['partyid']=this.partyids.map(r=>r._id);
   }
 
   downloadForParty(data) {//threshhold is 295
+    this.mailSendButton=true;
+    let pager=1;
+     let bigValueofY=0;
+     var doc = new jsPDF()
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text(this.partyids[0]['name'], 15, 15)//partyname
+     doc.setFontSize('10');
+    //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 24;
+     doc.text('Sr', 23, y)//partyname
+     doc.text('Date', 38, y)//partyname
+     doc.text('Truck No.', 60, y)//partyname
+     doc.text('LR No.', 86, y)//partyname
+     doc.text('Destination', 101, y)//partyname
+     doc.text('Lorry Bill', 128, y)//partyname
+      doc.text('Payment Rec', 148, y)//partyname
+     if(data=='party'){
+      doc.text('Notes', 172, y)//partyname
+      }else if(data=='self'){
+       doc.text('Balance', 172, y)//partyname
+      }
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+    //  //vertical lines
+    //  doc.line(30, 20, 30, 25);//srno
+    //  doc.line(55, 20, 55, 25);//date
+    //  doc.line(83, 20, 83, 25);//truckno
+    //  doc.line(100, 20, 100, 25);//lrno
+    //  doc.line(128, 20, 128, 25);//credit
+    //  doc.line(145, 20, 145, 25);//debit
+    //  doc.line(171, 20, 171, 25);//balance
+    //  //vertical lines
+     let startforI=0;
+     if (this.paymentData[0]['bf'] == true) {
+       y = y + 5;
+       starty = 31;
+       doc.text(this.paymentData[0].partyName, 30, y)//partyname
+       doc.text(String(this.paymentData[0].value), 155, y)//partyname
+       doc.line(20, 31, 210, 31);
+       doc.line(150, 25, 150, 31);
+       y = y + 6;
+       startforI=1;
+     }else{
+       y = y + 6;
+       startforI=0;
+     }
+ 
+     for (let i = startforI; i < this.paymentData.length; i++) {
+ 
+      
+       if(y>290){
+         
+         y=30;
+        //  doc.line(30, starty, 30, y - 4);//srno
+        //  doc.line(55, starty, 55, y - 4);//date
+        //  doc.line(83, starty, 83, y - 4);//truckno
+        //  doc.line(100, starty, 100, y - 4);//lrno
+        //  doc.line(125, starty, 125, y - 4);//credit
+        //  doc.line(145, starty, 145, y - 4);//debit
+        //  doc.line(171, 20, 171, y - 4);//balance
+
+        doc.line(30, 20, 30, 291);//srno
+        doc.line(55, 20, 55, 291);//date
+        doc.line(83, 20, 83, 291);//truckno
+        doc.line(100, 20, 100, 291);//lrno
+        doc.line(127, 20, 127, 291);//credit
+        doc.line(145, 20, 145, 291);//debit
+        doc.line(171, 20, 171, 291);//balance
+
+
+     starty = 20;
+         doc.addPage();
+         doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text(this.partyids[0]['name'], 15, 15)//partyname
+     doc.setFontSize('10');
+    //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 23, y-6)//partyname
+     doc.text('Date', 38, y-6)//partyname
+     doc.text('Truck No.', 60, y-6)//partyname
+     doc.text('LR No.', 86, y-6)//partyname
+     doc.text('Destination', 101, y-6)//partyname
+     doc.text('Lorry Bill', 128, y-6)//partyname
+      doc.text('Payment Rec', 148, y-6)//partyname
+      if(data=='party'){
+        doc.text('Notes', 172, y-6)//partyname
+        }else if(data=='self'){
+         doc.text('Balance', 172, y-6)//partyname
+        }
+
+     
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(30, 20, 30, 25);//srno
+     doc.line(55, 20, 55, 25);//date
+     doc.line(83, 20, 83, 25);//truckno
+     doc.line(100, 20, 100, 25);//lrno
+     doc.line(127, 20, 127, 25);//credit
+     doc.line(145, 20, 145, 25);//debit
+     doc.line(171, 20, 171, 20);//balance
+     //vertical lines
+     }
+     if(this.paymentData[0]['bf'] == true){
+      doc.text(String(i), 23, y)//partyname
+      }else {
+        doc.text(String(i+1), 23, y)//partyname
+      }
+       
+       doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
+       if (this.paymentData[i].type === 'buy') {
+         doc.text(String(this.paymentData[i].lrno), 88, y)//lrno
+         doc.text(this.paymentData[i].truckNo, 57, y)//truckno
+         doc.text(this.paymentData[i].placeName, 101, y)//truckno
+       } else {
+         doc.text(String('-'), 88, y)//lrno
+         doc.text(String('-'), 57, y)//truckno
+         doc.text('-', 101, y)//truckno
+       }
+       if (this.paymentData[i].type === 'buy') {
+         doc.text(String(this.paymentData[i].amount), 130, y)//partyname
+         doc.text(String('-'), 148, y)//partyname
+       } else {
+         doc.text(String(this.paymentData[i].amount), 148, y)//partyname
+         doc.text(String('-'), 130, y)//partyname
+       }
+ 
+       if(data=='self'){
+       doc.text(String(this.paymentData[i]['value']), 172, y)//partyname
+        }
+      
+       doc.line(20, y + 1, 210, y + 1);//line after header
+       y = y + 5;
+     bigValueofY=y;
+     }
+
+     let [amount,payment,balance]=this.returnAmountPaymentBalance()
+     doc.setFontSize('10');
+     doc.text(String(this.paymentData.length+1), 23, bigValueofY)//partyname
+     doc.text('Total', 104, bigValueofY)//partyname
+     doc.text(String(amount), 128, bigValueofY)//partyname
+     doc.text(String(payment), 148, bigValueofY)//partyname
+     if(data=='self'){
+     doc.text(String(balance), 172, bigValueofY)//partyname
+     }
+
+     doc.line(30, starty, 30, bigValueofY+1);//srno
+     doc.line(55, starty, 55, bigValueofY+1);//date
+     doc.line(83, starty, 83, bigValueofY+1);//truckno
+     doc.line(100, starty, 100, bigValueofY+1);//lrno
+     doc.line(127, starty, 127, bigValueofY+1);//credit
+     doc.line(145, starty, 145, bigValueofY+1);//debit
+     doc.line(171, 20, 171, bigValueofY+1);//balance
+     doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
+
+
+    //  doc.line(30, starty, 30, y - 4);//srno
+    //  doc.line(55, starty, 55, y - 4);//date
+    //  doc.line(83, starty, 83, y - 4);//truckno
+    //  doc.line(100, starty, 100, y - 4);//lrno
+    //  doc.line(127, starty, 127, y - 4);//credit
+    //  doc.line(145, starty, 145, y - 4);//debit
+    //  doc.line(171, 20, 171, y - 4);//balance
+     
+
+
+
+     doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.date1)+'_'+this.handleF.getDateddmmyy(this.date2)+ '.pdf')
+   }
+
+   downloadForPartySafe(data) {//threshhold is 295
     this.mailSendButton=true;
     let pager=1;
      let bigValueofY=0;

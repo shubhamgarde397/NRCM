@@ -15,7 +15,7 @@
       <div class="form-group row">
         <div class="col-sm-2">
           <select class="form-control" id="partyType" [(ngModel)]="trucknoid" (change)="findOption()" id="truckNoone">
-            <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
+            <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}} [disabled]="i.disabled">{{i.viewvalue}}</option>
           </select>
         </div>
         <div class="col-sm-10" *ngIf="buttonOption==='1'">
