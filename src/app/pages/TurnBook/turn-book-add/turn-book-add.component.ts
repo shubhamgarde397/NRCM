@@ -129,8 +129,6 @@ export class TurnBookAddComponent implements OnInit {
   }
 
   storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
-    console.log(value);
-    
     this.submitted = true;
     let tempobj = {};
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];

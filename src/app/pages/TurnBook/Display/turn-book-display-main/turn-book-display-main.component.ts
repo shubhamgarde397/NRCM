@@ -105,6 +105,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public oids=[];
   public showprdfP=false;
   public truckSelected=false;
+  public amountShow;
 public types={'None':0,'Open':0,'Container':0}
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
@@ -121,6 +122,7 @@ public types={'None':0,'Open':0,'Container':0}
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();    
     this.getTrucks()
+    // this.amountShow=this.securityCheck.getAmountShow()
   }
 
   showDatabyParty() {
@@ -687,13 +689,12 @@ let tempObj1={};
     this.finalObject = {};
     this.finalArray = [];
     this.ids=[];
+    this.oids=[];
     this.find()
   }
 
   setBalPage() {
     let breaker = false;
-    console.log(this.balanceHireArrray);
-    
     for (let i = 0; i < this.balanceHireArrray.length; i++) {
       let truckData = []
       if (breaker) { break; }
@@ -724,11 +725,10 @@ let tempObj1={};
       this.finalObject['comments'] = "";
       this.finalObject['print'] = false;
       
-      let aD = this.getADD(truckData);
-      this.finalObject['bankName'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['bankName'];
-      this.finalObject['ifsc'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['ifsc'];
-      this.finalObject['accountNumber'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['accountNumber'];
-      this.finalObject['accountName'] = (aD['accountDetails'].length > 1 || aD['accountDetails'].length == 0) ? '' : aD['accountDetails'][0]['accountName'];
+      this.finalObject['bankName'] = '';
+      this.finalObject['ifsc'] = '';
+      this.finalObject['accountNumber'] = '';
+      this.finalObject['accountName'] = '';
       this.finalArray.push(this.finalObject);
       this.finalObject = {};
     }
@@ -748,20 +748,10 @@ let tempObj1={};
         alert(res.Status);
         this.moveToFinalStepReset();
       });
-    //update the pochPayment = true for those trucks whose entry was done in BalanceHire
   }
 
   getTrucks() {
     this.trucklist = this.commonArray.ownerdetails;
-  }
-
-  getADD(array) {
-    array.forEach(res => {
-      let g = this.trucklist.find(r => r.truckno === res.truckno);
-      if (g['accountDetails'].length > 0) { this.gAD = g; }
-      else { this.gAD = { 'accountDetails': [] }; }
-    });
-    return this.gAD;
   }
 
   setPlaceName() {

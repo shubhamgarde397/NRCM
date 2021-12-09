@@ -9,6 +9,7 @@ import { ObsServiceService } from 'src/app/common/services/Data/obs-service.serv
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import * as  jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { FormBuilder, FormGroup } from '@angular/forms';
 // import * as moment from 'moment';
 
 @Component({
@@ -36,6 +37,8 @@ export class NavigationComponent implements OnInit {
   public URL = '';
   public showThisMsg = false
   public reportData=[];
+  public myFormGroup: FormGroup;
+  
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -45,7 +48,8 @@ export class NavigationComponent implements OnInit {
     public securityCheck: SecurityCheckService,
     public spin: Ng4LoadingSpinnerService,
     public obs: ObsServiceService,
-    public hF: handleFunction
+    public hF: handleFunction,
+    public formBuilder: FormBuilder,
   ) { }
 
   ngOnInit() {
@@ -59,6 +63,15 @@ export class NavigationComponent implements OnInit {
     this.year = this.date.getFullYear();
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
     this.showThisMsg = this.securityCheck.typeofuser !== 1 ? true : false;
+
+    this.myFormGroup = this.formBuilder.group({
+      amountShow: this.securityCheck.getAmountShow()
+    });
+  }
+
+  amount(data){
+    console.log(data);
+    
   }
 
   getInformationData() {

@@ -65,7 +65,9 @@ public typeOfVehicle;
       r: [this.handledata.Data.r],
       d: [this.handledata.Data.d],
       f: [this.handledata.Data.f],
-      P: [this.handledata.Data.P]
+      P: [this.handledata.Data.P],
+      hbl: [this.handledata.Data.hbl],
+      weight: [this.handledata.Data.weight]
     });
     
     this.contactArray = this.handledata.Data.contact;
@@ -119,6 +121,8 @@ public typeOfVehicle;
     formbody['d'] = data.value.d;
     formbody['f'] = data.value.f;
     formbody['P'] = data.value.P;
+    formbody['hbl'] = data.value.hbl;
+    formbody['weight'] = data.value.weight;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
@@ -146,6 +150,8 @@ public typeOfVehicle;
               res['d'] = data.value.d;
               res['f'] = data.value.f;
               res['P'] = data.value.P;
+              res['hbl'] = data.value.hbl;
+              res['weight'] = data.value.weight;
             }
           })
 

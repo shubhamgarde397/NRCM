@@ -84,6 +84,11 @@
           <li>
             <a routerLink="MISSING_LR">Missing LRNO</a>
           </li>
+          <li>
+            <form [formGroup]="myFormGroup">
+            <input type="checkbox" (change)="amount(myFormGroup)" id="amountShow" class="form-control" formControlName="amountShow">
+            </form>
+          </li>
         </ul>
       </li>
 

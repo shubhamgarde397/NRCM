@@ -20,11 +20,11 @@
         </div>
 
         <div class="col-sm-3" *ngIf="buttonOption==='12'">
-          <input type="text" class="form-control" [(ngModel)]="byInvoice">
+          <input type="text" class="form-control" [(ngModel)]="byInvoice" placeholder="Invoice">
         </div>
 
         <div class="col-sm-3" *ngIf="buttonOption==='13'">
-          <input type="number" class="form-control" [(ngModel)]="bylrno">
+          <input type="number" class="form-control" [(ngModel)]="bylrno" placeholder="Lrno">
         </div>
 
         <div class="col-sm-3" *ngIf="buttonOption==='8'">
@@ -50,7 +50,7 @@
           </select>
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='11'">
-          <input type="text" class="form-control" [(ngModel)]='truckVar'>
+          <input type="text" class="form-control" [(ngModel)]='truckVar' placeholder="Truck No">
         </div>
         <div class="col-sm-3">
           <select class="form-control" [(ngModel)]="selectpartyType" (change)="showDatabyParty()">
@@ -101,7 +101,7 @@
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.waitLocation}}
+            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.waitLocation}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}
 
               <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
@@ -160,27 +160,7 @@
           </tr>
         </tbody>
       </table>
-      <div class="row" *ngIf="buttonOption==='6'">
-
-        <div class="col-sm-3">
-          <input type="date" class="form-control" [(ngModel)]="dateFilter"
-            [disabled]="truckFilterB">
-            <button class="btn btn-warning" (click)="filter('date')">By Date</button>
-        </div>
-        <div class="col-sm-3">
-          <input type="text" class="form-control" [(ngModel)]="truckFilter" [disabled]="dateFilterB">
-        </div>
-        <div class="col-sm-2">
-          <button mat-raised-button type="button" (click)="filter('truck')">Filter</button>
-        </div>
-
-        <div class="col-sm-2">
-          <button mat-raised-button type="button" (click)="filter('skipDate')">Skip Date</button>
-        </div>
-        <div class="col-sm-2">
-          <button mat-raised-button type="button" (click)="filter('')">Erase Filters</button>
-        </div>
-      </div>
+<!-- Balance Hire -->
       <div *ngIf="saveToCheckArrayBoolean">
 
         <table class="table" style="width:100%" align="center" *ngIf="buttonOption==='6'">
@@ -206,7 +186,7 @@
                   </i></td>
               <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
               <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-              <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
+              <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}</td>
               <td>{{i.villageDetails[0].village_name}}</td>
               <td>{{i.partyType}}</td>
               <td>{{i.lrno}}</td>
@@ -305,7 +285,7 @@
           </button>
         </div>
       </div>
-      
+      <!-- Balance Hire -->
 
       <div class="col-sm-12" *ngIf="buttonOption==='7'">
         <div class="row" *ngIf="pochDiv">
@@ -315,24 +295,6 @@
           </div>
         </div>
         <div *ngIf="!pochDiv" class="row">
-          <div class="row">
-            <div class="col-sm-2">
-              <input type="text" class="form-control" [(ngModel)]="truckFilter2">
-            </div>
-            <div class="col-sm-2">
-              <button mat-raised-button type="button" class="btn btn-warning" (click)="filter2('truck')">
-                Filter</button>
-            </div>
-            <div class="col-sm-2">
-              <button mat-raised-button type="button" class="btn btn-warning" (click)="filter2('')">Erase
-                Filters</button>
-            </div>
-
-            <div class="col-sm-2">
-              <button mat-raised-button type="button" class="btn btn-danger" (click)="filter2('back')">Back</button>
-            </div>
-          </div>
-
           <table class="table" style="width:100%" align="center" *ngIf="buttonOption==='7'">
             <thead align="center" style="font-weight: bold">
               <tr class=table-header>
@@ -356,7 +318,7 @@
                     </i></td>
                 <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
                 <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-                <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}</td>
+                <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}</td>
                 <td>{{i.villageDetails[0].village_name}}</td>
                 <td>{{i.partyType}}</td>
                 <td>{{i.lrno}}</td>
@@ -598,7 +560,7 @@
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-            <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}</td>
+            <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.truckName.hbl}}={{i.truckName.weight}}</td>
             <td>{{i.placeName.village_name}}</td>
             <td>{{i.partyName.name}}</td>
             <td>{{i.partyType}}</td>

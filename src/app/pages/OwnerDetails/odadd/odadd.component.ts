@@ -69,6 +69,8 @@ export class OdaddComponent implements OnInit {
       bankName: '',
       ifsc: '',
       reference: '',
+      hbl: '',
+      weight: '',
       preferences: []
     });
     this.role = this.securityCheck.role;
@@ -109,6 +111,8 @@ export class OdaddComponent implements OnInit {
     formBody['show'] = true;
     formBody['accountDetails'] = this.accountArray;
     formBody['preferences'] = this.villageArray;
+    formBody['hbl'] = value['hbl'];
+    formBody['weight'] = value['weight'];
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
     if(formBody['oname'].length>25){alert('Name too long. Only 25 characters allowed.')}else{
     this.apiCallservice.handleData_New_python
@@ -127,6 +131,8 @@ export class OdaddComponent implements OnInit {
     formres['aadhar'] = value['aadhar'];
     formres['dob'] = value['dob'];
     formres['typeOfVehicle'] = value['typeOfVehicle'];
+    formres['hbl'] = value['hbl'];
+    formres['weight'] = value['weight'];
         formres['contact'] = this.contactArray;
         formres['accountDetails'] = this.accountArray;
         formres['preferences'] = this.villageArray;
@@ -202,5 +208,7 @@ export class OdaddComponent implements OnInit {
     this.myFormGroup.patchValue({ ifsc: '' });
     this.myFormGroup.patchValue({ reference: '' });
     this.myFormGroup.patchValue({ preferences: [] });
+    this.myFormGroup.patchValue({ hbl: [] });
+    this.myFormGroup.patchValue({ weight: [] });
   }
 }
