@@ -495,7 +495,9 @@ let tempObj1={};
     tempObj['_id'] = data['_id'];
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
+        alert('Moved to Balance Hire!')
         this.handleData.saveBH(this.turnbooklist.splice(j, 1));
+        this.turnbooklist=this.turnbooklist.splice(j, 1)
       });
   }
 
