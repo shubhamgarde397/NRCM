@@ -318,7 +318,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
       let K = 0
       doc.setFontSize('10');
-      doc.text(this.balanceDate[z].comments, 38.5, i);//comments
+      doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
@@ -503,7 +503,7 @@ export class BalancehiredisplayComponent implements OnInit {
       }
       let K = 0
       doc.setFontSize('10');
-      doc.text(this.balanceDate[z].comments, 38.5, i);//comments
+      doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
@@ -547,6 +547,8 @@ export class BalancehiredisplayComponent implements OnInit {
     data['editOption'] = 0;
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
+    console.log('here');
+    
   };
   back(type) {
     switch (type) {

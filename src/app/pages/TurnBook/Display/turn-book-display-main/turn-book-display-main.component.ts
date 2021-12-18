@@ -8,6 +8,7 @@ import { HandleDataService } from '../../../../common/services/Data/handle-data.
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ValueTransformer } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-turn-book-display-main',
@@ -17,6 +18,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class TurnBookDisplayMainComponent implements OnInit {
   public isAvailable=false;
+  public tp1='tp1';
   public loadingDateDynamic;
   public showbuttonOption8 = false;
   public showbuttonOption82 = false;
@@ -106,7 +108,11 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public showprdfP=false;
   public truckSelected=false;
   public amountShow;
+  public tempDate;
+  public comment;
 public types={'None':0,'Open':0,'Container':0}
+public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
+public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','hamt':''}
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -382,7 +388,9 @@ if(this.buttonOption !== '11'){
       .subscribe((res: any) => {
         if(this.buttonOption!=='8')
         res.Data.forEach(r=>{
-          this.types[r.ownerDetails[0].typeOfVehicle]=this.types[r.ownerDetails[0].typeOfVehicle]+1
+          this.types[r.ownerDetails[0].typeOfVehicle]=this.types[r.ownerDetails[0].typeOfVehicle]+1;
+          this.Locationtypes[r.waitLocation]=this.Locationtypes[r.waitLocation]+1;
+          r['typeOfVehiclefirst']=r.ownerDetails[0].typeOfVehicle.slice(0,1)
           });
         if (this.buttonOption == '6') {
           this.turnbooklist = res.Data;
@@ -448,27 +456,36 @@ let tempObj1={};
     this.turnbooklist_trucks = this.turnbooklistnew.filter(r => r.loadingDate == this.myFormGroup.value.loadingDateDynamic)
   }
   getOtherDetails2() {
-    let tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup.value.truckno);
-    this.toSendid = tempDate[0]._id;
+    this.tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup.value.truckno);
+    
+    this.monthlybyseriesData['hamt']=this.tempDate[0].hamt;
+    this.monthlybyseriesData['typeOfLoad']=this.tempDate[0].typeOfLoad;
+    this.monthlybyseriesData['lrno']=this.tempDate[0].lrno;
+    this.monthlybyseriesData['party']=this.tempDate[0].party['name'];
+    this.monthlybyseriesData['place']=this.tempDate[0].place['village_name'];
+
+    this.toSendid = this.tempDate[0]._id;
     this.showbuttonOption821 = true;
-    this.myFormGroup.patchValue({ turnbookDate: tempDate[0]['turnbookDate'] })
-    this.myFormGroup.patchValue({ place: tempDate[0][''] })
-    this.myFormGroup.patchValue({ partyName: tempDate[0][''] })
-    this.myFormGroup.patchValue({ lrno: tempDate[0]['lrno'] })
-    this.myFormGroup.patchValue({ hamt: tempDate[0]['hamt'] })
+    this.myFormGroup.patchValue({ turnbookDate: this.tempDate[0]['turnbookDate'] })
+    this.myFormGroup.patchValue({ place: this.tempDate[0][''] })
+    this.myFormGroup.patchValue({ partyName: this.tempDate[0][''] })
+    this.myFormGroup.patchValue({ lrno: this.tempDate[0]['lrno'] })
+    this.myFormGroup.patchValue({ hamt: this.tempDate[0]['hamt'] })
   }
 
   change(data) {
     let tempData = {}
-    tempData['placeid'] = this.placeid;
-    tempData['partyid'] = this.partyid
-    tempData['lrno'] = data.value.lrno
-    tempData['hamt'] = data.value.hamt
-    tempData['typeOfLoad'] = data.value.typeOfLoad
+    tempData['placeid'] = this.placeid===undefined?this.tempDate[0]['place']['_id']:data.value.placeid;
+    tempData['partyid'] = this.partyid===undefined?this.tempDate[0]['party']['_id']:data.value.partyid;
+    tempData['lrno'] = data.value.lrno===0?this.tempDate[0]['lrno']:data.value.lrno;
+    tempData['hamt'] = data.value.hamt===0?this.tempDate[0]['hamt']:data.value.hamt;
+    tempData['typeOfLoad'] = data.value.typeOfLoad===''?this.tempDate[0]['typeOfLoad']:data.value.typeOfLoad;
     tempData['_id'] = this.toSendid;
     tempData['tablename'] = 'turnbook'
     tempData['method'] = 'update'
     tempData['part'] = 2;
+    console.log(tempData);
+    
     this.apiCallservice.handleData_New_python('turnbook', 1, tempData, 1)
       .subscribe((res: any) => {
         alert(res.Status);
@@ -567,15 +584,15 @@ let tempObj1={};
       tempObj['tablename'] = 'turnbook';
       tempObj["turnbookDate"] = data.turnbookDate,
         tempObj["entryDate"] = data.entryDate,
-        tempObj["lrno"] = '';
+        tempObj["lrno"] = 0;
         tempObj["invoice"] = '';
       tempObj["partyType"] = newtype;
-      tempObj["hamt"] = '';
+      tempObj["hamt"] = 0;
       tempObj["advance"] = '';
       tempObj["balance"] = '';
-      tempObj["pochDate"] = '';
+      tempObj["pochDate"] = '2099-12-12';
       tempObj["pochPayment"] = false;
-      tempObj["pgno"] = 999;
+      tempObj["pgno"] = 997;
       tempObj['index'] = j;
       tempObj['number'] = 2;
       tempObj['typeOfLoad'] = '';
@@ -639,6 +656,43 @@ let tempObj1={};
     this.handleData.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   }
+
+  toPay(i,j,c){
+    this.turnbooklist[j]['checker'] = c;
+    if (c == 1) {
+      this.tempArray.push(i);
+    } else if (c == 0) {
+      this.tempArray.splice(j, 1);
+    }
+    this.balanceHireArrray.push(this.tempArray);
+    this.turnbooklist = this.reduceArray();
+    for (let i = 0; i < this.balanceHireArrray.length; i++) {
+      let truckData = []
+      for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
+        let tempObj = {};
+          this.ids.push(this.balanceHireArrray[i][j]['_id']);
+          this.oids.push(this.balanceHireArrray[i][j]['ownerDetails'][0]['_id']);
+          tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
+          tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
+          tempObj['pageno'] = 990;
+          tempObj['amount'] = 0;
+          truckData.push(tempObj);
+      }
+      this.finalObject['truckData'] = truckData
+      this.finalObject['todayDate'] = this.todaysDate;
+      this.finalObject['comments'] = "";
+      this.finalObject['print'] = false;
+      this.finalObject['bankName'] = '';
+      this.finalObject['ifsc'] = '';
+      this.finalObject['accountNumber'] = '';
+      this.finalObject['accountName'] = '';
+      this.finalObject['commentToTruck'] = 'To Pay'
+      this.finalArray.push(this.finalObject);
+      this.finalObject = {};
+    }
+    this.finalFunction('dont');
+  }
+
   addToCheckArray(i, j, c) {
     // i['index'] = j;
     if (i['loadingDate'] == "") {
@@ -663,8 +717,6 @@ let tempObj1={};
   saveToCheckArray() {
     this.balanceHireArrray.push(this.tempArray);
     this.tempArray = []
-
-
     this.turnbooklist = this.reduceArray();
   }
 
@@ -684,8 +736,8 @@ let tempObj1={};
   moveToFinalStep2() {
     this.finalCheckDone = !this.finalCheckDone;
   }
-  moveToFinalStepReset() {
-    this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
+  moveToFinalStepReset(action) {
+    action==='do'?this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean:null;
     this.balanceHireArrray = [];
     this.tempArray = [];
     this.finalObject = {};
@@ -695,6 +747,9 @@ let tempObj1={};
     this.find()
   }
 
+  comments(){
+    this.comment = prompt('Enter Comment'); 
+  }
   setBalPage() {
     let breaker = false;
     for (let i = 0; i < this.balanceHireArrray.length; i++) {
@@ -725,8 +780,8 @@ let tempObj1={};
       this.finalObject['truckData'] = truckData
       this.finalObject['todayDate'] = this.todaysDate;
       this.finalObject['comments'] = "";
+      this.finalObject['commentToTruck'] = this.comment;
       this.finalObject['print'] = false;
-      
       this.finalObject['bankName'] = '';
       this.finalObject['ifsc'] = '';
       this.finalObject['accountNumber'] = '';
@@ -734,10 +789,10 @@ let tempObj1={};
       this.finalArray.push(this.finalObject);
       this.finalObject = {};
     }
-    this.finalFunction();
+    this.finalFunction('do');
   }
 
-  finalFunction() {
+  finalFunction(action) {
     let tempObj = {}
     tempObj['bhData'] = this.finalArray;
     tempObj['method'] = 'insertmany.many';
@@ -748,7 +803,7 @@ let tempObj1={};
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert(res.Status);
-        this.moveToFinalStepReset();
+        this.moveToFinalStepReset(action);
       });
   }
 

@@ -316,6 +316,16 @@ public balanceFollowGlobal={};
       }else if(data=='self'){
        doc.text('Balance', 172, y)//partyname
       }
+
+      doc.line(30, 20, 30, 25);//srno
+      doc.line(55, 20, 55, 25);//date
+      doc.line(83, 20, 83, 25);//truckno
+      doc.line(100, 20, 100, 25);//lrno
+      doc.line(127, 20, 127, 25);//credit
+      doc.line(145, 20, 145, 25);//debit
+      doc.line(171, 20, 171, 25);//balance
+
+
      //headers
      doc.line(0, 25, 210, 25);//line after header
  
@@ -324,9 +334,9 @@ public balanceFollowGlobal={};
        y = y + 5;
        starty = 31;
        doc.text(this.paymentData[0].partyName, 30, y)//partyname
-       doc.text(String(this.paymentData[0].value), 155, y)//partyname
+       doc.text(String(this.paymentData[0].value), 130, y)//partyname
        doc.line(20, 31, 210, 31);
-       doc.line(150, 25, 150, 31);
+      //  doc.line(150, 25, 150, 31);
        y = y + 6;
        startforI=1;
      }else{
@@ -340,13 +350,13 @@ public balanceFollowGlobal={};
        if(y>290){
          
          y=30;
-        doc.line(30, 20, 30, 291);//srno
-        doc.line(55, 20, 55, 291);//date
-        doc.line(83, 20, 83, 291);//truckno
-        doc.line(100, 20, 100, 291);//lrno
-        doc.line(127, 20, 127, 291);//credit
-        doc.line(145, 20, 145, 291);//debit
-        doc.line(171, 20, 171, 291);//balance
+        doc.line(30, starty, 30, 291);//srno
+        doc.line(55, starty, 55, 291);//date
+        doc.line(83, starty, 83, 291);//truckno
+        doc.line(100, starty, 100, 291);//lrno
+        doc.line(127, starty, 127, 291);//credit
+        doc.line(145, starty, 145, 291);//debit
+        doc.line(171, starty, 171, 291);//balance
 
         starty = 20;
          doc.addPage();
@@ -391,7 +401,7 @@ public balanceFollowGlobal={};
      //vertical lines
      }
      if(this.paymentData[0]['bf'] == true){
-      doc.text(String(i), 23, y)//partyname
+      doc.text(String(i), 25, y)//partyname
       }else {
         doc.text(String(i+1), 23, y)//partyname
       }
@@ -425,21 +435,25 @@ public balanceFollowGlobal={};
 
      let [amount,payment,balance]=this.returnAmountPaymentBalance()
      doc.setFontSize('10');
-     doc.text(String(this.paymentData.length+1), 23, bigValueofY)//partyname
+    //  doc.text(String(this.paymentData.length+1), 23, bigValueofY)//partyname
      doc.text('Total', 104, bigValueofY)//partyname
      doc.text(String(amount), 128, bigValueofY)//partyname
      doc.text(String(payment), 148, bigValueofY)//partyname
      if(data=='self'){
      doc.text(String(balance), 172, bigValueofY)//partyname
      }
+     if(data=='party'){
+      doc.text('Balance', 172, bigValueofY-5)//partyname
+      doc.text(String(balance), 172, bigValueofY)//partyname
+     }
 
-     doc.line(30, 20, 30, bigValueofY+1);//srno
-     doc.line(55, 20, 55, bigValueofY+1);//date
-     doc.line(83, 20, 83, bigValueofY+1);//truckno
-     doc.line(100, 20, 100, bigValueofY+1);//lrno
-     doc.line(127, 20, 127, bigValueofY+1);//credit
-     doc.line(145, 20, 145, bigValueofY+1);//debit
-     doc.line(171, 20, 171, bigValueofY+1);//balance
+     doc.line(30, starty, 30, bigValueofY+1);//srno
+     doc.line(55, starty, 55, bigValueofY+1);//date
+     doc.line(83, starty, 83, bigValueofY+1);//truckno
+     doc.line(100, starty, 100, bigValueofY+1);//lrno
+     doc.line(127, starty, 127, bigValueofY+1);//credit
+     doc.line(145, starty, 145, bigValueofY+1);//debit
+     doc.line(171, starty, 171, bigValueofY+1);//balance
      doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
      doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.fromloading)+'_'+this.handleF.getDateddmmyy(this.toloading)+ '.pdf')
    }

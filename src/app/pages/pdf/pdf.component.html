@@ -13,17 +13,21 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
+        Date : 
         <input type="date" class="form-control" [(ngModel)]="dateFromUI">
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-xs-3">
+        Year : 
         <select [(ngModel)]="yearDrop" class="form-control">
           <option>2017-18</option>
           <option>2018-19</option>
           <option>2019-20</option>
           <option>2020-21</option>
+          <option>2021-22</option>
+          <option>2022-24</option>
         </select>
       </div>
     </div>
@@ -31,6 +35,39 @@
     <div class="form-group row">
 
       <div class="col-xs-3">
+        Name : 
+        <select [(ngModel)]="name" class="form-control">
+          <option>Nitin Garde</option>
+          <option>Jyoti Garde</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+
+      <div class="col-xs-3">
+        Pan : 
+        <select [(ngModel)]="pan" class="form-control">
+          <option>AFGPG3657L</option>
+          <option>AFGPG0575D</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Branch : 
+        <select [(ngModel)]="branch" class="form-control">
+          <option>nitin roadways and cargo movers</option>
+          <option>nitin roadways</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+
+      <div class="col-xs-3">
+        Party Name : 
         <input type="text" list="cars" class="form-control" [(ngModel)]="addr1" />
         <datalist id="cars">
           <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst.name}}>
@@ -38,15 +75,6 @@
           </option>
         </datalist>
       </div>
-      <!-- 
-      <div class="col-xs-3">
-        <select id="nop" class="form-control " [(ngModel)]="addr1">
-          <option disabled selected>Select Name of The Party</option>
-          <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst.name}}>
-            {{gst.name}}...{{gst.dest}}
-          </option>
-        </select>
-      </div> -->
     </div>
 
     <div class="form-group row">
@@ -138,20 +166,22 @@
       </div>
     </div>
     <div class="col-sm-3"><button class="btn btn-warning" (click)="downloadBank()">Bank</button></div>
+
+    <div class="col-xs-5">
+      <table>
+        <tr>
+          <th>Party</th>
+          <th>Amount</th>
+          <th>Delete</th>
+        </tr>
+        <tr *ngFor="let data of bankArray;let j=index;">
+          <td>{{data.Name}}</td>
+          <td>{{data.Amount}}</td>
+          <td><button class="btn btn-danger" (click)="delete(data,j)">D</button></td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div class="col-xs-5">
-    <table>
-      <tr>
-        <th>Party</th>
-        <th>Amount</th>
-        <th>Delete</th>
-      </tr>
-      <tr *ngFor="let data of bankArray;let j=index;">
-        <td>{{data.Name}}</td>
-        <td>{{data.Amount}}</td>
-        <td><button class="btn btn-danger" (click)="delete(data,j)">D</button></td>
-      </tr>
-    </table>
-  </div>
+  
   <!-- Bank -->
 </div>

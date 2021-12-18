@@ -67,7 +67,15 @@
             {{buttonValue}}
           </button>
         </div>
-        <div class="col-sm-4" *ngIf="role==1||role==2" (click)="getAdminAccess()">Admin Access</div>
+        <div class="col-sm-3">
+        Open : {{types.Open}}
+        Container : {{types.Container}}
+        None : {{types.None}}
+        <br>
+        Shivapur : {{Locationtypes.Shivapur}}
+        Dhaba : {{Locationtypes.Dhaba}}
+        None : {{Locationtypes.None}}
+      </div>
       </div>
       <!--DATE -->
 
@@ -154,7 +162,7 @@
                 <i class="material-icons">undo</i>
               </button>
             </td>
-            <td *ngIf="buttonOption=='1'">
+            <td *ngIf="buttonOption=='1'"> 
               <input type="checkbox">
             </td>
           </tr>
@@ -188,11 +196,15 @@
               <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
               <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}</td>
               <td>{{i.villageDetails[0].village_name}}</td>
-              <td>{{i.partyType}}</td>
+              <td>{{i.partyType}}<br>{{i.partyDetails[0].name}}</td>
               <td>{{i.lrno}}</td>
               <td *ngIf='i.checker===0'>
                 <button mat-raised-button type="button" (click)="addToCheckArray(i,j,1)"
                   class="btn-primary btn-sm btn-just-icon">
+                  <i class="material-icons">add</i>
+                </button><br>
+                <button *ngIf='i.partyType==="NR"' mat-raised-button type="button" (click)="toPay(i,j,1)"
+                  class="btn-warning btn-sm btn-just-icon">
                   <i class="material-icons">add</i>
                 </button>
               </td>
@@ -282,6 +294,9 @@
           </button>
           <button mat-raised-button type="button" (click)="setBalPage()" class="btn-success btn-sm btn-just-icon">
             <i class="material-icons">arrow_forward</i>
+          </button>
+          <button mat-raised-button type="button" (click)="comments()" class="btn-danger btn-sm btn-just-icon">
+            Comments
           </button>
         </div>
       </div>
@@ -381,18 +396,32 @@
               </select>
             </div>
 
+            
+
+          </div>
+          <!--Truckno-->
+
+          <!-- loadType-->
+          <div class="form-group row" *ngIf="showbuttonOption821">
+
+            <div class="col-xs-2">
+              <label for="typeOfLoad"> Load Type</label>
+            </div>
+
             <div class="col-xs-3">
               <select class="form-control" formControlName="typeOfLoad">
                 <option value="Pipe">Pipe</option>
                 <option value="Fittings">Fittings</option>
-                <option value="Pipe-GRL">Pipe-GRL</option>
-                <option value="Bundle-GRL">Bundle-GRL</option>
-                <option value="Other">Other</option>
               </select>
             </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.typeOfLoad}} class="form-control" disabled>
+            </div>
+
 
           </div>
-          <!--Truckno-->
+          <!--loadType -->
 
           <!-- turnbookDate-->
           <div class="form-group row" *ngIf="showbuttonOption821">
@@ -417,7 +446,7 @@
             <div class="col-xs-3">
 
               <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
-                <option disabled value="{{placeid}}" selected>{{place}}</option>
+                <option disabled value="{{placeid}}" selected>{{monthlybyseriesData.place}}</option>
                 <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}
                 </option>
               </select>
@@ -428,6 +457,10 @@
                   <span class="glyphicon glyphicon-remove"></span>
                 </font>
               </div>
+            </div>
+
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.place}} class="form-control" disabled>
             </div>
           </div>
           <!--place-->
@@ -440,7 +473,7 @@
             </div>
             <div class="col-xs-3">
               <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
-                <option selected disabled value={{partyid}}>{{party}}</option>
+                <option selected disabled value={{partyid}}>{{monthlybyseriesData.party}}</option>
                 <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
               </select>
             </div>
@@ -451,6 +484,9 @@
                   <span class="glyphicon glyphicon-remove"></span>
                 </font>
               </div>
+            </div>
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.party}} class="form-control" disabled>
             </div>
           </div>
           <!--NOP-->
@@ -472,7 +508,9 @@
                 </font>
               </div>
             </div>
-
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.lrno}} class="form-control" disabled>
+            </div>
           </div>
           <!--LRNO-->
 
@@ -496,7 +534,9 @@
                 </font>
               </div>
             </div>
-
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.hamt}} class="form-control" disabled>
+            </div>
           </div>
           <!--HireAmount-->
 

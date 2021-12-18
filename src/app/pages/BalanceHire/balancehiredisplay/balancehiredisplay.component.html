@@ -1,4 +1,4 @@
-<div class="well container" style="width:100%;">
+<div class="well container" style="width:100%;" *ngIf="!show">
 
   <div class="form-group row">
     <div class="col-sm-5">
@@ -148,4 +148,8 @@
       <button class="btn btn-danger" style="width:100%" (click)="back('day')">Back</button>
     </div>
   </div>
+</div>
+
+<div *ngIf="show">
+  <router-outlet></router-outlet>
 </div>
