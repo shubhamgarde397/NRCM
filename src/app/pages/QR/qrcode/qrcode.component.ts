@@ -31,6 +31,7 @@ export class QRCodeComponent implements OnInit {
   public qrlist;
   public partyid;
   public tempPNAME;
+  public show;
   public placeid;
   public tempVNAME;
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,public handlefunction:handleFunction,
