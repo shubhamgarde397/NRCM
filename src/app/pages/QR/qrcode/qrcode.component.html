@@ -1,0 +1,95 @@
+
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>
+
+<div class="well">
+  <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="number" id="name" class="form-control" formControlName="qr" placeholder="Qr Code">
+      </div>
+    </div>
+
+  
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="dest" class="form-control " formControlName="dest" (change)="setdest()">
+          <option selected disabled>Select</option>
+          <option *ngFor="let i of villagenamelist;let j = index;" value={{i._id}}+{{j}}>{{i.village_name}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
+          <option selected disabled>Select</option>
+          <option *ngFor="let i of gstdetailslist;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-1">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-1">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+
+
+</div>
+
+<div class="well" *ngIf="!show">
+  <button class="btn btn-danger" (click)="refresh()"><i class="material-icons">undo</i></button>
+  <table class="table" style="width:100%" align="center">
+
+      <thead class="table-header">
+          <tr>
+              <th>Srno</th>
+              <th>QR</th>
+              <th>Party</th>
+              <th>Destination</th>
+              <th>Entry Date</th>
+              <th>Delete</th>
+          </tr>
+      </thead>
+
+
+      <tbody>
+          <tr *ngFor="let i of qrlist;let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i.qr}}</td>
+              <td>{{i.party}}</td>
+              <td>{{i.place}}</td>
+              <td>{{i.entryDate}}</td>
+              <td>
+                  <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
+                      <i class="material-icons">delete_forever</i>
+                  </button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>

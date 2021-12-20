@@ -131,9 +131,9 @@
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
-            <td>{{i.hamt}}</td>
-            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')">{{i.partyDetails[0].name}}</td>
-<td>
+            <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')">{{i.partyDetails[0].name}}<br>{{i.qr}}</td>
+            <td>
             <div class="btn-group-vertical">
               <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
               class="btn-danger btn-sm btn-just-icon">
@@ -281,7 +281,7 @@
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
                   <td>{{ii.ownerDetails[0].truckno}}</td>
-                  <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}">
+                  <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.balance}}>
                   </td>
                   <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">
                   </td>
@@ -605,7 +605,7 @@
             <td>{{i.partyName.name}}</td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
-            <td>{{i.hamt}}</td>
+            <td>{{i.hamt}}<br>{{i.ohamt}}</td>
             <td>{{i.pochDate}} : {{i.pgno}}</td>
           </tr>
         </tbody>

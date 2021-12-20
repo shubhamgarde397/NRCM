@@ -36,7 +36,7 @@ export class GstdisplayComponent implements OnInit {
     this.gstdetailslist = this.commonArray.gstdetails;
   }
   refresh(){
-    this.considerArray=[0,1,0,0,0,0]
+    this.considerArray=[0,1,0,0,0,0,0]
     this.getInformationData()
   }
   deleteGSTDetails = function (id) {

@@ -154,7 +154,8 @@ public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','ham
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
-        this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
+        this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
+        this.securityCheck.commonArray['qr'] = Object.keys(res.qr[0]).length > 0 ? res.qr : this.securityCheck.commonArray['qr'];
         this.fetchBasic();
       });
   }
@@ -387,6 +388,8 @@ if(this.buttonOption !== '11'){
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
         if(this.buttonOption!=='8')
+        this.types={'None':0,'Open':0,'Container':0}
+        this.Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
         res.Data.forEach(r=>{
           this.types[r.ownerDetails[0].typeOfVehicle]=this.types[r.ownerDetails[0].typeOfVehicle]+1;
           this.Locationtypes[r.waitLocation]=this.Locationtypes[r.waitLocation]+1;
@@ -535,6 +538,7 @@ let tempObj1={};
     tempObj['loadingDate'] = data.loadingDate;
     tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
     tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
+    tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
     tempObj['advance'] = data.advance === undefined ? 0 : data.advance;
     tempObj['balance'] = data.balance === undefined ? 0 : data.balance;
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
@@ -549,6 +553,8 @@ let tempObj1={};
     tempObj['complete'] = data.complete;
     tempObj['typeOfLoad'] = data.typeOfLoad;
     tempObj['waitLocation'] = data.waitLocation;
+    tempObj['advanceArray'] = data.advanceArray;
+    tempObj['qr'] = data.qr;
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);

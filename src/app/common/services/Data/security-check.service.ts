@@ -13,6 +13,7 @@ export class SecurityCheckService {
     "villagenames": [{}],
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
+    "qr": [{}],
     // "regularparty": [{}],
     // "RegularTruck": [{}],
     // "thoughts": [{}],

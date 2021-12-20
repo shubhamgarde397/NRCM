@@ -14,6 +14,7 @@ export class HandleDataService {
     "villagenames": [{}],
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
+    "qr": [{}],
     // "regularparty": [{}],
     // "RegularTruck": [{}],
     // "thoughts": [{}],
@@ -102,11 +103,13 @@ public PPData=[];
       case 'turnbook':
         return [Consts.VILLAGE_INDEX, Consts.OWNER_INDEX];
       case 'turnbookadd':
-        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
       case 'infolrlist':
         return [Consts.LRLIST_INDEX]
-        case 'infohiddenlist':
-          return [Consts.HIDDEN_TRUCK_INDEX]
+      case 'infohiddenlist':
+        return [Consts.HIDDEN_TRUCK_INDEX]
+      case 'infoqr':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
 
     }
   }

@@ -32,7 +32,7 @@ export class VillagedispComponent implements OnInit {
   };
 
   refresh(){
-    this.considerArray=[0,0,0,1,0,0]
+    this.considerArray=[0,0,0,1,0,0,0]
     this.getInformationData()
   }
   deleteVillageDetails = function (id) {

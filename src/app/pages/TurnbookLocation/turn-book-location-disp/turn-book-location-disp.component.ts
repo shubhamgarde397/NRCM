@@ -129,6 +129,7 @@ export class TurnBookLocationDispComponent implements OnInit {
   }
 
   delete(i,p,j){
+    if(confirm('Are you sure?')){
     
     let tempObj={}
     tempObj['tablename'] = 'turnbook';
@@ -141,5 +142,7 @@ export class TurnBookLocationDispComponent implements OnInit {
       alert(res.Status);
       this.tbl[j]['locationData'].splice(p, 1);
     });
+    }else{}
   }
+  
 }

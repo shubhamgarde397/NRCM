@@ -10,6 +10,7 @@ export class Consts {
     public static VILLAGE_INDEX = [{ 'index': 3, 'name': 'villagenames' }];
     public static LRLIST_INDEX = [{ 'index': 4, 'name': 'missingLRReason' }];
     public static HIDDEN_TRUCK_INDEX = [{ 'index': 5, 'name': 'ownerdetails' }];
+    public static QR_INDEX = [{ 'index': 6, 'name': 'qrCode' }];
     // public static REGULARPARTY_INDEX = [{ 'index': 4, 'name': 'regularparty' }];
     // public static REGULARTRUCK_INDEX = [{ 'index': 5, 'name': 'regulartruck' }];
     // public static THOUGHT_INDEX = [{ 'index': 6, 'name': 'thought' }];

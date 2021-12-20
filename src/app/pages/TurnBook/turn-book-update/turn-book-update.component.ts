@@ -55,6 +55,10 @@ export class TurnBookUpdateComponent implements OnInit {
   public paymentName;
   public tempPaymentNAME;
   public addtoTB=false;
+  public advanceArray=[]
+  public qrArray;
+  public sum=0;
+  public qr;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -77,6 +81,7 @@ export class TurnBookUpdateComponent implements OnInit {
       lrno: this.handledata.Data.lrno,
       partyType: this.handledata.Data.partyType,
       hamt: this.handledata.Data.hamt,
+      ohamt: this.handledata.Data.ohamt,
       invoice:this.handledata.Data.invoice,
       advance: this.handledata.Data.advance,
       balance: this.handledata.Data.balance,
@@ -87,7 +92,12 @@ export class TurnBookUpdateComponent implements OnInit {
       pochPayment: this.handledata.Data.pochPayment,
       waitLocation:this.handledata.Data.waitLocation,
       partyPayment: this.handledata.Data.payment[0]['_id'],
-      paymentName:this.handledata.Data.payment[0]['date']+'_'+this.handledata.Data.payment[0]['amount']
+      paymentName:this.handledata.Data.payment[0]['date']+'_'+this.handledata.Data.payment[0]['amount'],
+      advanceAmt:'',
+      advanceDate:'',
+      reason:'Advance',
+      typeOfTransfer:'',
+      qr:this.handledata.Data.qr
     });
     this.myFormGroup1 = this.formBuilder.group({
       turnbookDate: this.handledata.Data.turnbookDate,
@@ -98,6 +108,7 @@ export class TurnBookUpdateComponent implements OnInit {
       lrno: this.handledata.Data.lrno,
       partyType: this.handledata.Data.partyType,
       hamt: this.handledata.Data.hamt,
+      ohamt: this.handledata.Data.ohamt,
       advance: this.handledata.Data.advance,
       balance: this.handledata.Data.balance,
       invoice:this.handledata.Data.invoice,
@@ -108,6 +119,7 @@ export class TurnBookUpdateComponent implements OnInit {
       entryDate: this.handledata.Data.entryDate,
       waitLocation:this.handledata.Data.waitLocation,
       truckNo: ['', Validators.required],
+      qr:this.handledata.Data.qr
     });
     this.place = this.handledata.Data.place;
     this.placeid = this.handledata.Data.placeid;
@@ -119,9 +131,27 @@ export class TurnBookUpdateComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.updateOption = this.handledata.Data.number;
     this.oldTruckNo = this.handledata.Data.truckno;
-
+    this.advanceArray = this.handledata.Data.advanceArray;
+    this.qr=this.handledata.Data.qr;
     this.paymentid==='617114b7baa1bf3b9386a6a9'?this.fetchPaymentData(this.handledata.Data.loadingDate,this.handledata.Data.partyid):this.myFormGroup.controls.partyPayment.disable();
   }
+
+  addPaymentDetails(){
+    let tempObj={}
+    tempObj['advanceAmt']=this.myFormGroup.value.advanceAmt;
+    tempObj['advanceDate']=this.myFormGroup.value.advanceDate;
+    tempObj['reason']=this.myFormGroup.value.reason;
+    tempObj['typeOfTransfer']=this.myFormGroup.value.typeOfTransfer;
+    this.advanceArray.push(tempObj);
+    this.balance()
+  }
+
+  deleteOneA(i, j) {
+    if (confirm('Are you sure?')) {
+      this.advanceArray.splice(j, 1);
+    }
+  }
+
   fetchPaymentData(loadingDate,partyid){
 let tempObj={}
 tempObj['from']=loadingDate;
@@ -153,11 +183,15 @@ tempObj['to']=this.handlefunction.createDate(this.date);
     this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
     this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
     this.myFormGroup.value.partyName = this.tempPNAME;
+    
+    
   }
   setPlaceName() {
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
     this.myFormGroup.value.place = this.tempVNAME;
+    
+    
   }
 
   getInformationData() {
@@ -166,24 +200,45 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
+        this.securityCheck.commonArray['qr'] = Object.keys(res.qr[0]).length > 0 ? res.qr : this.securityCheck.commonArray['qr'];;
         this.fetchBasic();
       });
   }
 
   fetchBasic() {
+    console.log(this.securityCheck.commonArray);
+    
     this.commonArray = this.securityCheck.commonArray;
     this.parties = [];
     this.villagelist = [];
+    this.qrArray = [];
     this.truckdetailslist = [];
     this.parties = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
+    this.qrArray = this.commonArray.qr;
     this.truckdetailslist = this.commonArray.ownerdetails;
+    console.log(this.qrArray);
+    
   }
 
 
   balance() {
-    this.myFormGroup.patchValue({ balance: this.myFormGroup.value.hamt - this.myFormGroup.value.advance })
+    // this.myFormGroup.patchValue({ balance: this.myFormGroup.value.hamt - this.myFormGroup.value.advance })
+    this.myFormGroup.patchValue({
+       balance:
+        this.myFormGroup.value.ohamt -
+         this.getAdvances() -
+          ((this.myFormGroup.value.hamt*35)/1000)
+          -50
+        })
   }
+
+  getAdvances(){
+    this.sum=0;
+    this.advanceArray.forEach(r=>this.sum = r.advanceAmt + this.sum)
+    return this.sum===(NaN||undefined)?0:this.sum;
+  }
+
 
   change = function (data) {
     let tempObj = {};
@@ -199,6 +254,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["lrno"] = this.myFormGroup.value.lrno,
       tempObj["partyType"] = this.myFormGroup.value.partyType,
       tempObj["hamt"] = this.myFormGroup.value.hamt,
+      tempObj["ohamt"] = this.myFormGroup.value.ohamt,
       tempObj["advance"] = this.myFormGroup.value.advance,
       tempObj["balance"] = this.myFormGroup.value.balance,
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
@@ -209,6 +265,9 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["typeOfLoad"]=this.myFormGroup.value.typeOfLoad;
       tempObj["paymentid"] = this.paymentid;//Make changes in backend
       tempObj["waitLocation"]=this.myFormGroup.value.waitLocation;
+      tempObj["advanceArray"]=this.advanceArray;
+      tempObj["qr"]=parseInt(this.myFormGroup.value.qr);
+      tempObj["qrid"]=this.myFormGroup.value.qr===0?'61c082b87dcfd6ecb7f02b90':this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0]._id;
       this.addtoTB===true?tempObj['addtotbids']=true:false
       if(this.handledata.Data.locations.length===0){
         tempObj["locationDate"]=[this.myFormGroup.value.loadingDate===''?this.handlefunction.createDate(new Date()):this.myFormGroup.value.loadingDate];
@@ -238,6 +297,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
             tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
             tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
+            tempData[this.handledata.Data.index]["ohamt"] = this.myFormGroup.value.ohamt,
             tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
             tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
@@ -248,11 +308,16 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["complete"] = this.myFormGroup.value.complete;
             tempData[this.handledata.Data.index]["typeOfLoad"] = this.myFormGroup.value.typeOfLoad;
             tempData[this.handledata.Data.index]["waitLocation"] = this.myFormGroup.value.waitLocation;
+            tempData[this.handledata.Data.index]["advanceArray"] = this.advanceArray;
+            tempData[this.handledata.Data.index]["qr"] = this.myFormGroup.value.qr;
+            console.log(tempData);
+            
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
           // tempArray.splice(this.handledata.Data.index, 1)
           this.handledata.saveTurn(tempArray);
+          this.securityCheck.commonArray['qr']=this.myFormGroup.value.qr===0?this.securityCheck.commonArray['qr']:this.qrArray.filter(r=>r.qr!=parseInt(this.myFormGroup.value.qr))[0]._id
         }
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });
@@ -290,6 +355,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
             tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
             tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
+            tempData[this.handledata.Data.index]["ohamt"] = this.myFormGroup.value.ohamt,
             tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
             tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,

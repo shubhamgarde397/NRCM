@@ -11,6 +11,7 @@ import { C2wComponent } from './pages/C2W/c2w/c2w.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
+import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
 
 export const routes: Routes =
     [
@@ -106,8 +107,10 @@ export const routes: Routes =
                         path: 'PARTY_PAYMENT_HANDLER',
                         loadChildren: './pages/PartyPayment/app.module#AppModule'
                     },
-
-
+                    {
+                        path: 'QR_HANDLER',
+                        component:QRCodeComponent
+                    },
                     {
                         path: 'Email_Handler',
                         loadChildren: './pages/Email/app.module#AppModule'
