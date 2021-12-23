@@ -49,6 +49,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public dateFilterB = true;
   public truckFilterB = false;
   public turnbooklistnew = [];
+  public tableSelected=false; 
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
     { 'value': '2', 'viewvalue': 'Truck Arrival' },
@@ -109,7 +110,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public truckSelected=false;
   public amountShow;
   public tempDate;
-  public comment;
+  public comment='';
 public types={'None':0,'Open':0,'Container':0}
 public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
 public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','hamt':''}
@@ -318,6 +319,7 @@ let buttons=[]
     this.pochDiv = true;
     this.buttonOption = this.trucknoid;
     this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
+    this.tableSelected=false;
   }
 
   showDatabyidTurn = function (data) {
@@ -387,7 +389,7 @@ if(this.buttonOption !== '11'){
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-        if(this.buttonOption!=='8')
+        if(this.buttonOption!=='8'){
         this.types={'None':0,'Open':0,'Container':0}
         this.Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
         res.Data.forEach(r=>{
@@ -395,14 +397,17 @@ if(this.buttonOption !== '11'){
           this.Locationtypes[r.waitLocation]=this.Locationtypes[r.waitLocation]+1;
           r['typeOfVehiclefirst']=r.ownerDetails[0].typeOfVehicle.slice(0,1)
           });
+        }
         if (this.buttonOption == '6') {
           this.turnbooklist = res.Data;
           this.handleData.saveBH(this.turnbooklist);
+          this.tableSelected=true;
         }
         else if (this.buttonOption == '7') {
           this.pochDiv = false;
           this.turnbooklist = res.Data;
           this.handleData.saveBH(this.turnbooklist);
+          this.tableSelected=true;
         }
         else if (this.buttonOption == '8') {
           if (res.Data.length > 0) {
@@ -428,8 +433,10 @@ if(this.buttonOption !== '11'){
           this.turnbooklist = res.Data;
           this.isAvailable=true;
           this.handleData.saveTurn(this.turnbooklist);
+          this.tableSelected=true;
         }
       });
+      
     }
     else if(this.buttonOption==='11'){
 let tempObj1={};
@@ -442,7 +449,9 @@ let tempObj1={};
         this.byTruckName=true;
         this.turnbooklist = res.Data;
         this.unique11turnbooklist= res.Data.map(r=>r.truckName.truckno).filter(function(item, pos) {return res.Data.map(r=>r.truckName.truckno).indexOf(item) == pos;})
+        this.tableSelected=true;
       });
+      
     }
 
   };
@@ -664,6 +673,7 @@ let tempObj1={};
   }
 
   toPay(i,j,c){
+    if(confirm('Is it To Pay Vehicle?')){
     this.turnbooklist[j]['checker'] = c;
     if (c == 1) {
       this.tempArray.push(i);
@@ -697,6 +707,7 @@ let tempObj1={};
       this.finalObject = {};
     }
     this.finalFunction('dont');
+  }
   }
 
   addToCheckArray(i, j, c) {

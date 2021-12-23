@@ -503,6 +503,8 @@ export class BalancehiredisplayComponent implements OnInit {
       }
       let K = 0
       doc.setFontSize('10');
+      console.log(this.balanceDate[z].commentToTruck);
+      
       doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');

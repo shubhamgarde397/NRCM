@@ -1,5 +1,5 @@
 <div class="well">
-  <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true
     enctype="multipart/form data" action="/">
 
     <div class="form-group row">
@@ -17,21 +17,26 @@
   
     <div class="form-group row">
       <div class="col-xs-3">
-        <select id="dest" class="form-control " formControlName="dest" (change)="setdest()">
-          <option selected disabled>Select</option>
+        <select id="dest" class="form-control " formControlName="dest" (change)="setPlaceName()">
+          <option selected disabled value={{placeid}}>{{place}}</option>
           <option *ngFor="let i of villagenamelist;let j = index;" value={{i._id}}+{{j}}>{{i.village_name}}</option>
         </select>
       </div>
     </div>
-
+  
     <div class="form-group row">
       <div class="col-xs-3">
+
         <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
-          <option selected disabled>Select</option>
-          <option *ngFor="let i of gstdetailslist;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
+          <option selected disabled value={{partyid}}>{{party}}</option>
+          <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
         </select>
+
+
       </div>
     </div>
+
+
     <div class="form-group row">
       <div class="col-xs-3">
         <select id="type" class="form-control" formControlName="type">
@@ -69,42 +74,4 @@
 
 
 
-</div>
-
-<div class="well">
-  <button class="btn btn-danger" (click)="refresh()"><i class="material-icons">undo</i></button>
-  <table class="table" style="width:100%">
-
-      <thead class="table-header">
-          <tr>
-              <th>Srno</th>
-              <th>QR</th>
-              <th>Party</th>
-              <th>Destination</th>
-              <th>Type</th>
-              <th>Entry Date</th>
-              <th>Delete<br>Update</th>
-          </tr>
-      </thead>
-
-
-      <tbody>
-          <tr *ngFor="let i of qrlist;let j = index">
-              <td>{{j+1}}</td>
-              <td>{{i.qr}}</td>
-              <td>{{i.party}}</td>
-              <td>{{i.place}}</td>
-              <td>{{i.type}}</td>
-              <td>{{i.entryDate|date:'dd-MM-yyyy'}}</td>
-              <td>
-                  <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
-                      <i class="material-icons">delete_forever</i>
-                  </button><br>
-                  <button mat-raised-button (click)="edit(i)" class="btn-warning btn-sm btn-just-icon">
-                    <i class="material-icons">edit</i>
-                </button>
-              </td>
-          </tr>
-      </tbody>
-  </table>
 </div>

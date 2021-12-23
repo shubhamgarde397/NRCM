@@ -30,16 +30,6 @@
         Loading Date - <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
       </div>
 
-      <div class="col-xs-3">
-        Load Type : 
-        <select class="form-control" formControlName="typeOfLoad">
-          <option value="Pipe">Pipe</option>
-          <option value="Fittings">Fittings</option>
-          <option value="Pipe-GRL">Pipe-GRL</option>
-          <option value="Bundle-GRL">Bundle-GRL</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
 
       <div class="col-sm-3">
         Place : 
@@ -52,6 +42,27 @@
           Old Place : 
         <input type="text" id="place" class="form-control" formControlName="place" disabled>
         </div>
+
+        <div class="col-sm-2">
+          QR : 
+          <select id="qr" class="form-control " formControlName="qr" (change)="QRDetails()">
+            <option selected disabled value={{qr}}>{{qr}}</option>
+            <option *ngFor="let i of qrArray;let j = index;" value={{i.qr}}>{{i.qr}}</option>
+          </select>
+        </div>
+
+      <div class="col-xs-1">
+        Load Type : {{typeToUI}}
+        <select class="form-control" formControlName="typeOfLoad">
+          <option value="Pipe">Pipe</option>
+          <option value="Fittings">Fittings</option>
+          <option value="Pipe-GRL">Pipe-GRL</option>
+          <option value="Bundle-GRL">Bundle-GRL</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      
 
     </div>
     <!--loadingDate -->
@@ -73,7 +84,7 @@
 
 
         <div class="col-sm-3">
-          Party : 
+          Party : {{partyToUI}}
         <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
           <option selected disabled value={{partyid}}>{{party}}</option>
           <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
@@ -109,13 +120,7 @@
             Balance : 
             <input type="number" class="form-control" formControlName="balance" disabled/>
           </div>
-          <div class="col-sm-3">
-            QR : 
-            <select id="qr" class="form-control " formControlName="qr">
-              <option selected disabled value={{qr}}>{{qr}}</option>
-              <option *ngFor="let i of qrArray;let j = index;" value={{i.qr}}>{{i.qr}}</option>
-            </select>
-          </div>
+          
       </div>
 <div class="well">
   
@@ -241,7 +246,7 @@
 
 </div>
 
-<div class="well container" *ngIf="updateOption==3">
+<div class="well" *ngIf="updateOption==3">
 
   <form [formGroup]="myFormGroup1" (ngSubmit)="change2(myFormGroup1)" submitted=true enctype="multipart/form data"
     action="/" name="myform" id="myform">

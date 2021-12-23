@@ -12,6 +12,7 @@ import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-boo
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
 import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
+import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
 
 export const routes: Routes =
     [
@@ -110,6 +111,10 @@ export const routes: Routes =
                     {
                         path: 'QR_HANDLER',
                         component:QRCodeComponent
+                    },
+                    {
+                        path: 'QRUpdate',
+                        component:QRUpdateComponent
                     },
                     {
                         path: 'Email_Handler',

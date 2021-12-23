@@ -1,4 +1,4 @@
-<div class="well container">
+<div class="well">
 
   <br />
   <div class="row">
@@ -81,7 +81,7 @@
 
       <h3>{{todaysDate}}</h3>
       <table class="table" style="width:100%" align="center"
-        *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')&&(buttonOption!=='8')&&(buttonOption!=='11')">
+        *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')&&(buttonOption!=='8')&&(buttonOption!=='11')&&(tableSelected)">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
@@ -92,9 +92,10 @@
             <th>Party</th>
             <th>LRNO</th>
             <th>Amount</th>
-            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">PN</th>
-            <th *ngIf="buttonOption!=='9'">Options</th>
-            <th *ngIf="buttonOption=='9'">Undo</th>
+            <th *ngIf="buttonOption=='10'">Poch</th>
+            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">PN</th>
+            <th *ngIf="(buttonOption!=='9')&&(buttonOption!=='10')">Options</th>
+            <th *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">Undo</th>
             <th  *ngIf="buttonOption=='1'">S</th>
           </tr>
         </thead>
@@ -132,8 +133,9 @@
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
             <td>{{i.hamt}}<br>{{i.ohamt}}</td>
-            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')">{{i.partyDetails[0].name}}<br>{{i.qr}}</td>
-            <td>
+            <td  *ngIf="buttonOption=='10'">{{i.pochDate}} : {{i.pgno}}</td>
+            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">{{i.partyDetails[0].name}}<br>{{i.qr}}</td>
+            <td *ngIf="buttonOption!=='10'">
             <div class="btn-group-vertical">
               <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
               class="btn-danger btn-sm btn-just-icon">
@@ -156,7 +158,7 @@
               <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyidTurn(i.ownerDetails[0])">edit</i>
             </div>
           </td>
-            <td *ngIf="buttonOption=='9'">
+            <td *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">
               <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">undo</i>

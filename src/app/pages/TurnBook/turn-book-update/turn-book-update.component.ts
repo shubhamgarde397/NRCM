@@ -59,6 +59,8 @@ export class TurnBookUpdateComponent implements OnInit {
   public qrArray;
   public sum=0;
   public qr;
+  public typeToUI='';
+  public partyToUI='';
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -190,8 +192,15 @@ tempObj['to']=this.handlefunction.createDate(this.date);
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
     this.myFormGroup.value.place = this.tempVNAME;
+ 
     
+    this.qrArray=this.qrArray.filter(r=>r.place===this.tempVNAME);
     
+  }
+
+  QRDetails(){
+    this.typeToUI=this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0].type;
+    this.partyToUI=this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0].party;
   }
 
   getInformationData() {
@@ -217,7 +226,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
     this.villagelist = this.commonArray.villagenames;
     this.qrArray = this.commonArray.qr;
     this.truckdetailslist = this.commonArray.ownerdetails;
-    console.log(this.qrArray);
     
   }
 

@@ -8,6 +8,7 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Location } from '@angular/common';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-qrcode',
@@ -35,7 +36,8 @@ export class QRCodeComponent implements OnInit {
   public placeid;
   public tempVNAME;
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,public handlefunction:handleFunction,
-    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { }
+    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,
+    public router:Router) { }
 
 
 
@@ -44,9 +46,11 @@ export class QRCodeComponent implements OnInit {
     this.considerArray = this.handledata.createConsiderArray('infoqr')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.myFormGroup = this.formBuilder.group({
+      date:'',
       qr:'',
       dest:'',
       partyName:'',
+      type:'Pipe',
       consider: true
     });
   }
@@ -65,8 +69,6 @@ export class QRCodeComponent implements OnInit {
   
   store({ value, valid }: { value: [{}], valid: boolean }) {
     this.submitted = true;
-    console.log(this.myFormGroup.value);
-    
     value['partyid']=this.partyid;
     value['placeid']=this.placeid;
     value['method'] = 'insert';
@@ -77,10 +79,11 @@ export class QRCodeComponent implements OnInit {
         alert(res['Status']);
         let tempObj={}
         tempObj['qr']=value['qr']
+        tempObj['type']=value['type']
         tempObj['_id']=res['_id'];
         tempObj['party']=this.gstdetailslist[this.myFormGroup.value.partyName.split('+')[1]].name;
         tempObj['place']=this.villagenamelist[this.myFormGroup.value.dest.split('+')[1]].village_name;
-        tempObj['entryDate']=this.handlefunction.createDate(new Date());
+        tempObj['entryDate']=value['date'];
         this.securityCheck.commonArray['qr'].push(tempObj);
 
       });
@@ -105,6 +108,14 @@ export class QRCodeComponent implements OnInit {
           this.qrlist.splice(bb, 1);
         });
     }
+  };
+
+ 
+  edit = function (data) {
+    this.handledata.saveData(data);
+    this.show = true;
+    this.found = data;
+    this.router.navigate(['Navigation/QRUpdate']);
   };
 
   getInformationData() {
