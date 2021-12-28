@@ -128,6 +128,7 @@ public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','ham
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn();    
+    this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
     // this.amountShow=this.securityCheck.getAmountShow()
   }
@@ -603,12 +604,16 @@ let tempObj1={};
         tempObj["invoice"] = '';
       tempObj["partyType"] = newtype;
       tempObj["hamt"] = 0;
+      tempObj["ohamt"] = data.ohamt;
       tempObj["advance"] = '';
       tempObj["balance"] = '';
       tempObj["pochDate"] = '2099-12-12';
       tempObj["pochPayment"] = false;
       tempObj["pgno"] = 997;
       tempObj['index'] = j;
+      tempObj['qr'] = 0;
+      tempObj['qrid'] = '61c082b87dcfd6ecb7f02b90';
+      tempObj['advanceArray'] = data.advanceArray;
       tempObj['number'] = 2;
       tempObj['typeOfLoad'] = '';
       tempObj['complete'] = false;
@@ -761,6 +766,7 @@ let tempObj1={};
     this.finalArray = [];
     this.ids=[];
     this.oids=[];
+    this.comment='';
     this.find()
   }
 

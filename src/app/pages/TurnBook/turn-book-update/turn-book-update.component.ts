@@ -192,7 +192,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
     this.myFormGroup.value.place = this.tempVNAME;
- 
     
     this.qrArray=this.qrArray.filter(r=>r.place===this.tempVNAME);
     
@@ -215,8 +214,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
   }
 
   fetchBasic() {
-    console.log(this.securityCheck.commonArray);
-    
     this.commonArray = this.securityCheck.commonArray;
     this.parties = [];
     this.villagelist = [];
@@ -226,7 +223,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
     this.villagelist = this.commonArray.villagenames;
     this.qrArray = this.commonArray.qr;
     this.truckdetailslist = this.commonArray.ownerdetails;
-    
   }
 
 
@@ -236,7 +232,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
        balance:
         this.myFormGroup.value.ohamt -
          this.getAdvances() -
-          ((this.myFormGroup.value.hamt*35)/1000)
+          ((this.myFormGroup.value.ohamt*35)/1000)
           -50
         })
   }
@@ -318,14 +314,14 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["waitLocation"] = this.myFormGroup.value.waitLocation;
             tempData[this.handledata.Data.index]["advanceArray"] = this.advanceArray;
             tempData[this.handledata.Data.index]["qr"] = this.myFormGroup.value.qr;
-            console.log(tempData);
-            
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
           // tempArray.splice(this.handledata.Data.index, 1)
           this.handledata.saveTurn(tempArray);
-          this.securityCheck.commonArray['qr']=this.myFormGroup.value.qr===0?this.securityCheck.commonArray['qr']:this.qrArray.filter(r=>r.qr!=parseInt(this.myFormGroup.value.qr))[0]._id
+          if(parseInt(this.myFormGroup.value.qr)!==0){
+            this.securityCheck.commonArray['qr']=this.securityCheck.commonArray['qr'].filter(r=>{return r.qr!=parseInt(this.myFormGroup.value.qr)});
+          }
         }
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });

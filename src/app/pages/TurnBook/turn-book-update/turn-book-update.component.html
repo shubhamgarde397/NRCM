@@ -33,7 +33,7 @@
 
       <div class="col-sm-3">
         Place : 
-        <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
+        <select id="place" class="form-control" formControlName="place" (blur)="setPlaceName()">
           <option disabled value="{{placeid}}" selected>{{place}}</option>
           <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
         </select>

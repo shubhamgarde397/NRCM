@@ -47,7 +47,7 @@ export class QRCodeComponent implements OnInit {
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.myFormGroup = this.formBuilder.group({
       date:'',
-      qr:'',
+      qr:1217,
       dest:'',
       partyName:'',
       type:'Pipe',
@@ -71,12 +71,14 @@ export class QRCodeComponent implements OnInit {
     this.submitted = true;
     value['partyid']=this.partyid;
     value['placeid']=this.placeid;
+    value['consider']=true;
     value['method'] = 'insert';
     value['tablename'] = 'qrCode';
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {
         alert(res['Status']);
+        if(res['Status']=='Inserted Successfully'){
         let tempObj={}
         tempObj['qr']=value['qr']
         tempObj['type']=value['type']
@@ -85,8 +87,9 @@ export class QRCodeComponent implements OnInit {
         tempObj['place']=this.villagenamelist[this.myFormGroup.value.dest.split('+')[1]].village_name;
         tempObj['entryDate']=value['date'];
         this.securityCheck.commonArray['qr'].push(tempObj);
-
+        }
       });
+    
   }
 
   delete = function (id) {
