@@ -61,6 +61,7 @@ export class TurnBookUpdateComponent implements OnInit {
   public qr;
   public typeToUI='';
   public partyToUI='';
+  public qrHit=false;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -210,6 +211,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
   QRDetails(){
     this.typeToUI=this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0].type;
     this.partyToUI=this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0].party;
+    this.qrHit=true;
   }
 
   getInformationData() {
@@ -287,7 +289,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["waitLocation"]=this.myFormGroup.value.waitLocation;
       tempObj["advanceArray"]=this.advanceArray;
       tempObj["qr"]=parseInt(this.myFormGroup.value.qr);
-      tempObj["qrid"]=this.myFormGroup.value.qr===0?'61c082b87dcfd6ecb7f02b90':this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0]._id;
+      tempObj["qrid"]=this.qrHit?(this.myFormGroup.value.qr===0?'61c082b87dcfd6ecb7f02b90':this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0]._id):'61c082b87dcfd6ecb7f02b90';
       this.addtoTB===true?tempObj['addtotbids']=true:false
       if(this.handledata.Data.locations.length===0){
         tempObj["locationDate"]=[this.myFormGroup.value.loadingDate===''?this.handlefunction.createDate(new Date()):this.myFormGroup.value.loadingDate];

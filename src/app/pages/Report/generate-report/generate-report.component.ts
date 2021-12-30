@@ -205,7 +205,7 @@ public toFillData=[];
          var doc = new jsPDF()
          doc.setFontSize('25');
          doc.setFontType('bold');
-         doc.text('Account DETAILS : ', 15, 15)//partyname
+         doc.text('Account Details : ', 15, 15)//partyname
          doc.setFontSize('10');
         //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
          doc.text(String(pager), 180, 5)//pageno
@@ -243,7 +243,7 @@ public toFillData=[];
              doc.addPage();
              doc.setFontSize('25');
          doc.setFontType('bold');
-         doc.text('Account DETAILS : ', 15, 15)//partyname
+         doc.text('Account Details : ', 15, 15)//partyname
          doc.setFontSize('10');
         //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
          doc.text(String(pager), 180, 5)//pageno

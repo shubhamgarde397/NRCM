@@ -489,8 +489,19 @@ let tempObj1={};
 
   change(data) {
     let tempData = {}
+    console.log(this.placeid);
+    console.log(this.partyid);
+    console.log('***');
+    console.log(this.tempDate[0]);
+    console.log('***');
+    console.log(data.value);
+    
+    
+    
+    
+    
     tempData['placeid'] = this.placeid===undefined?this.tempDate[0]['place']['_id']:data.value.placeid;
-    tempData['partyid'] = this.partyid===undefined?this.tempDate[0]['party']['_id']:data.value.partyid;
+    tempData['partyid'] = this.partyid==='5fff37a31f4443d6ec77e078'?this.tempDate[0]['party']['_id']:this.partyid;
     tempData['lrno'] = data.value.lrno===0?this.tempDate[0]['lrno']:data.value.lrno;
     tempData['hamt'] = data.value.hamt===0?this.tempDate[0]['hamt']:data.value.hamt;
     tempData['typeOfLoad'] = data.value.typeOfLoad===''?this.tempDate[0]['typeOfLoad']:data.value.typeOfLoad;
@@ -846,12 +857,16 @@ let tempObj1={};
   }
 
   setPlaceName() {
+    console.log(this.myFormGroup.value.place);
+    
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
     this.myFormGroup.value.place = this.tempVNAME;
   }
 
   setPartyName() {
+    console.log(this.myFormGroup.value.partyName);
+    
     this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
     this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
     this.myFormGroup.value.partyName = this.tempPNAME;

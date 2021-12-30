@@ -476,7 +476,7 @@
             <div class="col-xs-3">
               <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
                 <option selected disabled value={{partyid}}>{{monthlybyseriesData.party}}</option>
-                <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
+                <option *ngFor="let i of parties;let k = index;" value={{i._id}}+{{k}}>{{i.name}}</option>
               </select>
             </div>
 
