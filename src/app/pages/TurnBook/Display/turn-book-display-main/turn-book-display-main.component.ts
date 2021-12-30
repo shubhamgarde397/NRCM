@@ -50,6 +50,8 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public truckFilterB = false;
   public turnbooklistnew = [];
   public tableSelected=false; 
+  public sum=0;
+  public advanceArray=[];
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
     { 'value': '2', 'viewvalue': 'Truck Arrival' },
@@ -77,7 +79,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public tempObj = {};
   public saveToCheckArrayBoolean = true;
   public finalCheckDone = true;
-  public balance;
   public pageno;
   public gAD;
   public trucks=[];
@@ -538,7 +539,8 @@ let tempObj1={};
     tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
     tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
     tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
-    tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
+    tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
+    tempObj['accountDetails'] = data.ownerDetails[0]['accountDetails'];
     tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
     tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
     tempObj['entryDate'] = data.entryDate;
@@ -549,8 +551,6 @@ let tempObj1={};
     tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
     tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
     tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
-    tempObj['advance'] = data.advance === undefined ? 0 : data.advance;
-    tempObj['balance'] = data.balance === undefined ? 0 : data.balance;
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
     tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
@@ -605,8 +605,6 @@ let tempObj1={};
       tempObj["partyType"] = newtype;
       tempObj["hamt"] = 0;
       tempObj["ohamt"] = data.ohamt;
-      tempObj["advance"] = '';
-      tempObj["balance"] = '';
       tempObj["pochDate"] = '2099-12-12';
       tempObj["pochPayment"] = false;
       tempObj["pgno"] = 997;
@@ -630,8 +628,6 @@ let tempObj1={};
             this.handleData.turnData[j]["lrno"] = '';
           this.handleData.turnData[j]["partyType"] = newtype;
           this.handleData.turnData[j]["hamt"] = '';
-          this.handleData.turnData[j]["advance"] = '';
-          this.handleData.turnData[j]["balance"] = '';
           this.handleData.turnData[j]["pochDate"] = '';
           this.handleData.turnData[j]["pochPayment"] = '';
           this.handleData.turnData[j]["pgno"] = '';
@@ -717,6 +713,7 @@ let tempObj1={};
 
   addToCheckArray(i, j, c) {
     // i['index'] = j;
+    i['balance']=this.balance(i);
     if (i['loadingDate'] == "") {
       alert('Loading Date cant be empty.')
     }
@@ -740,6 +737,20 @@ let tempObj1={};
     this.balanceHireArrray.push(this.tempArray);
     this.tempArray = []
     this.turnbooklist = this.reduceArray();
+  }
+
+  balance(i) {
+    return i.hamt -this.getAdvances(i)
+  }
+
+  getAdvances(i){
+    this.sum=0;
+    i.advanceArray.forEach(r=>{
+      if(r.consider){
+      this.sum = r.advanceAmt + this.sum
+      }
+    })
+    return this.sum===(NaN||undefined)?0:this.sum;
   }
 
   reduceArray() {

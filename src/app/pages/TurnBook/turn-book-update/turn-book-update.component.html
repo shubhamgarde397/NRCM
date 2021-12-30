@@ -128,27 +128,38 @@
       <div class="row">
         
 
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <input type="number" class="form-control" formControlName="advanceAmt"/>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-2">
           <input type="date" class="form-control" formControlName="advanceDate"/>
         </div>
-        <div class="col-sm-3">
-          <input type="text" class="form-control" formControlName="reason"/>
-        </div>
-        <div class="col-sm-3">
-          <select class="form-control" formControlName="typeOfTransfer">
-            <option value="NEFT-12">NEFT-12</option>
-            <option value="NEFT-91">NEFT-91</option>
-            <option value="NEFT-363">NEFT-363</option>
-            <option value="IMPS">IMPS</option>
-            <option value="Cash">Cash</option>
+        <div class="col-sm-2">
+          <select class="form-control" formControlName="reason">
+            <option value="Advance">Advance</option>
+            <option value="Diesel">Diesel</option>
+            <option value="Balance">Balance</option>
             <option value="Other">Other</option>
           </select>
         </div>
+        <div class="col-sm-2">
+          <select class="form-control" formControlName="typeOfTransfer">
+            <option value="NEFT-12">NEFT-12</option>
+            <option value="NEFT-363">NEFT-363</option>
+            <option value="IMPS">IMPS</option>
+            <option value="Cash">Cash</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <div class="row">
+            <div class="col-sm-12"><button class="btn btn-warning" style="width: 100%;" type="button" (click)="addAccountDetails()">Get Account Details</button></div>
+            <div class="col-sm-12"><input type="number" class="form-control" formControlName="BHAccNo"/></div>
+            <div class="col-sm-12"><input type="text" class="form-control" formControlName="BHAccname"/></div>
+            <div class="col-sm-12"><input type="text" class="form-control" formControlName="BHIFSC"/></div>
+          </div>
+        </div>
           <div class="col-sm-3">
-            <button type="button" class="btn btn-warning" (click)="addPaymentDetails()">Add Payment</button>
+            <button type="button" style="width: 100%;" class="btn btn-warning" (click)="addPaymentDetails()">Add Payment</button>
           </div>
 
         <div class="row">
@@ -160,6 +171,7 @@
               <th>Amount</th>
               <th>Reason</th>
               <th>Type</th>
+              <th>Account</th>
               <th>Delete</th>
             </tr>
             <tr *ngFor="let i of advanceArray;let j = index;">
@@ -168,7 +180,14 @@
               <td>{{i.advanceAmt}}</td>
               <td>{{i.reason}}</td>
               <td>{{i.typeOfTransfer}}</td>
-              <td (click)="deleteOneA(i,j)">Delete</td>
+              <td>
+                <ul>
+                  <li>{{i.BHAccname}}</li>
+                  <li>{{i.BHAccNo}}</li>
+                  <li>{{i.BHIFSC}}</li>
+                </ul>
+              </td>
+              <td><button style="width: 100%;" type="button" class="btn btn-danger" (click)="deleteOneA(i,j)">Delete</button></td>
             </tr>
           </table>
         </div>

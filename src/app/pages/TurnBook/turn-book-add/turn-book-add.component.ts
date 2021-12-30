@@ -144,8 +144,6 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["user"]= "shubham";
     tempobj["typeofuser"]= 1;
     tempobj["lrno"]= 0;
-    tempobj["advance"]= 0;
-    tempobj["balance"]= 0;
     tempobj["hamt"]= 0;
     tempobj["pochDate"]= "";
     tempobj["invoice"]= "";

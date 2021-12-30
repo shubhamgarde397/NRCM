@@ -85,8 +85,7 @@ export class TurnBookUpdateComponent implements OnInit {
       hamt: this.handledata.Data.hamt,
       ohamt: this.handledata.Data.ohamt,
       invoice:this.handledata.Data.invoice,
-      advance: this.handledata.Data.advance,
-      balance: this.handledata.Data.balance,
+      balance: 0,
       pochDate: this.handledata.Data.pochDate,
       pgno: this.handledata.Data.pgno,
       complete: this.handledata.Data.complete,
@@ -99,6 +98,9 @@ export class TurnBookUpdateComponent implements OnInit {
       advanceDate:'',
       reason:'Advance',
       typeOfTransfer:'',
+      BHAccname:'',
+      BHAccNo:'',
+      BHIFSC:'',
       qr:this.handledata.Data.qr
     });
     this.myFormGroup1 = this.formBuilder.group({
@@ -111,8 +113,7 @@ export class TurnBookUpdateComponent implements OnInit {
       partyType: this.handledata.Data.partyType,
       hamt: this.handledata.Data.hamt,
       ohamt: this.handledata.Data.ohamt,
-      advance: this.handledata.Data.advance,
-      balance: this.handledata.Data.balance,
+      balance: 0,
       invoice:this.handledata.Data.invoice,
       pochDate: this.handledata.Data.pochDate,
       pochPayment: this.handledata.Data.pochPayment,
@@ -135,6 +136,7 @@ export class TurnBookUpdateComponent implements OnInit {
     this.oldTruckNo = this.handledata.Data.truckno;
     this.advanceArray = this.handledata.Data.advanceArray;
     this.qr=this.handledata.Data.qr;
+    this.balance();
     this.paymentid==='617114b7baa1bf3b9386a6a9'?this.fetchPaymentData(this.handledata.Data.loadingDate,this.handledata.Data.partyid):this.myFormGroup.controls.partyPayment.disable();
   }
 
@@ -144,10 +146,18 @@ export class TurnBookUpdateComponent implements OnInit {
     tempObj['advanceDate']=this.myFormGroup.value.advanceDate;
     tempObj['reason']=this.myFormGroup.value.reason;
     tempObj['typeOfTransfer']=this.myFormGroup.value.typeOfTransfer;
+    tempObj['consider']=true;
+    tempObj['BHAccname']=this.myFormGroup.value.BHAccname;
+    tempObj['BHAccNo']=this.myFormGroup.value.BHAccNo;
+    tempObj['BHIFSC']=this.myFormGroup.value.BHIFSC;
     this.advanceArray.push(tempObj);
     this.balance()
+    this.myFormGroup.patchValue({
+      BHAccNo:'',
+      BHAccname:'',
+      BHIFSC:''
+       })
   }
-
   deleteOneA(i, j) {
     if (confirm('Are you sure?')) {
       this.advanceArray.splice(j, 1);
@@ -227,22 +237,30 @@ tempObj['to']=this.handlefunction.createDate(this.date);
 
 
   balance() {
-    // this.myFormGroup.patchValue({ balance: this.myFormGroup.value.hamt - this.myFormGroup.value.advance })
     this.myFormGroup.patchValue({
        balance:
-        this.myFormGroup.value.ohamt -
-         this.getAdvances() -
-          ((this.myFormGroup.value.ohamt*35)/1000)
-          -50
+       this.myFormGroup.value.hamt -
+         this.getAdvances()
         })
   }
 
   getAdvances(){
     this.sum=0;
-    this.advanceArray.forEach(r=>this.sum = r.advanceAmt + this.sum)
+    this.advanceArray.forEach(r=>{
+      if(r.consider){
+      this.sum = r.advanceAmt + this.sum
+      }
+    })
     return this.sum===(NaN||undefined)?0:this.sum;
   }
 
+  addAccountDetails(){
+    this.myFormGroup.patchValue({
+      BHAccNo:this.handledata.Data.accountDetails[0].accountNumber?this.handledata.Data.accountDetails[0].accountNumber:'',
+      BHAccname:this.handledata.Data.accountDetails[0].accountName?this.handledata.Data.accountDetails[0].accountName:'',
+      BHIFSC:this.handledata.Data.accountDetails[0].ifsc?this.handledata.Data.accountDetails[0].ifsc:''
+       })
+  }
 
   change = function (data) {
     let tempObj = {};
@@ -259,8 +277,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["partyType"] = this.myFormGroup.value.partyType,
       tempObj["hamt"] = this.myFormGroup.value.hamt,
       tempObj["ohamt"] = this.myFormGroup.value.ohamt,
-      tempObj["advance"] = this.myFormGroup.value.advance,
-      tempObj["balance"] = this.myFormGroup.value.balance,
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
       tempObj["pgno"] = this.myFormGroup.value.pgno;
@@ -302,8 +318,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
             tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
             tempData[this.handledata.Data.index]["ohamt"] = this.myFormGroup.value.ohamt,
-            tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
-            tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
@@ -360,8 +374,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
             tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
             tempData[this.handledata.Data.index]["ohamt"] = this.myFormGroup.value.ohamt,
-            tempData[this.handledata.Data.index]["advance"] = this.myFormGroup.value.advance,
-            tempData[this.handledata.Data.index]["balance"] = this.myFormGroup.value.balance,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
