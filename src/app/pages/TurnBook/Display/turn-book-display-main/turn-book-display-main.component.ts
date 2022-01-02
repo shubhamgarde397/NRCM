@@ -112,6 +112,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public amountShow;
   public tempDate;
   public comment='';
+  public buttonOptionPartyType;
 public types={'None':0,'Open':0,'Container':0}
 public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
 public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','hamt':''}
@@ -350,12 +351,14 @@ let buttons=[]
         break;
       case '5':
         tempObj['turnbookDate'] = this.dynDate.slice(0, 7);
+        tempObj['partyType']=this.buttonOptionPartyType;
         break;
       case '7':
         tempObj['date'] = data;
         break;
       case '8':
         tempObj['date'] = this.selectedmy;
+        tempObj['partyType']=this.buttonOptionPartyType;
         break;
         case '10':
         if (this.partyVar === '') { alert('Select a Party Name'); break; }
@@ -489,17 +492,6 @@ let tempObj1={};
 
   change(data) {
     let tempData = {}
-    console.log(this.placeid);
-    console.log(this.partyid);
-    console.log('***');
-    console.log(this.tempDate[0]);
-    console.log('***');
-    console.log(data.value);
-    
-    
-    
-    
-    
     tempData['placeid'] = this.placeid===undefined?this.tempDate[0]['place']['_id']:data.value.placeid;
     tempData['partyid'] = this.partyid==='5fff37a31f4443d6ec77e078'?this.tempDate[0]['party']['_id']:this.partyid;
     tempData['lrno'] = data.value.lrno===0?this.tempDate[0]['lrno']:data.value.lrno;
@@ -509,7 +501,6 @@ let tempObj1={};
     tempData['tablename'] = 'turnbook'
     tempData['method'] = 'update'
     tempData['part'] = 2;
-    console.log(tempData);
     
     this.apiCallservice.handleData_New_python('turnbook', 1, tempData, 1)
       .subscribe((res: any) => {
@@ -525,9 +516,7 @@ let tempObj1={};
         this.myFormGroup.patchValue({ hamt: '' })
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;
-
       });
-
   }
 
   uncheckPoch(data, j) {
