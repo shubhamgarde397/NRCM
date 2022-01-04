@@ -786,6 +786,7 @@ let tempObj1={};
   }
   setBalPage() {
     let breaker = false;
+    
     for (let i = 0; i < this.balanceHireArrray.length; i++) {
       let truckData = []
       if (breaker) { break; }
@@ -811,10 +812,16 @@ let tempObj1={};
 
       }
       if (breaker) { break; }
+      let commentToTruck=''
       this.finalObject['truckData'] = truckData
       this.finalObject['todayDate'] = this.todaysDate;
       this.finalObject['comments'] = "";
-      this.finalObject['commentToTruck'] = this.comment;
+      console.log(this.balanceHireArrray);
+      
+      console.log(this.balanceHireArrray);
+      
+      commentToTruck= this.balanceHireArrray[0][0].partyType==='NRCM'?'12':(this.balanceHireArrray[0][0].partyType==='NR'?'363':this.comment);
+      this.finalObject['commentToTruck']=this.comment===''?commentToTruck:commentToTruck+'\n'+this.comment;
       this.finalObject['print'] = false;
       this.finalObject['bankName'] = '';
       this.finalObject['ifsc'] = '';
