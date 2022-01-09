@@ -81,7 +81,8 @@ export class PDFComponent implements OnInit {
     doc.setFontSize('30');
     doc.setFontType('bold');
     doc.setTextColor(parseInt(colorfromUI[1], 16), parseInt(colorfromUI[2], 16), parseInt(colorfromUI[3], 16));
-    doc.text(this.branch.split(' ').map(r=>{return r[0].toUpperCase()+r.substr(1)}).join(' '), this.branch==='nitin roadways'?65:15, 25)
+    // doc.text(this.branch.split(' ').map(r=>{return r[0].toUpperCase()+r.substr(1)}).join(' '), this.branch==='nitin roadways'?65:15, 25)
+    doc.text('Nitin Roadways And Cargo Movers',15, 25)
 
     doc.setFontSize('16');
     doc.setFontType('bold');

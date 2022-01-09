@@ -255,13 +255,13 @@ let toAddData;
     switch (LR) {
       case 'back':
         tempArray=this.turnbookDate.split('-');
-        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'subtract')
-        this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])-1)
+        this.turnbookDate = this.handlefunction.createDate(date);
         break;
       case 'ahead':
         tempArray=this.turnbookDate.split('-');
-        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'add')
-        this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])+1)
+        this.turnbookDate = this.handlefunction.createDate(date);
         break;
     }
   }
