@@ -62,6 +62,7 @@ export class TurnBookUpdateComponent implements OnInit {
   public typeToUI='';
   public partyToUI='';
   public qrHit=false;
+  public paymentDisabled=true;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -71,6 +72,9 @@ export class TurnBookUpdateComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.paymentDisabled=this.handledata.Data.paymentDisabled;
+    console.log(this.paymentDisabled)
+    console.log(this.handledata.Data.paymentDisabled)
     this.commonArray = this.securityCheck.commonArray;
     this.considerArray = this.handledata.createConsiderArray('turnbookadd')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -93,6 +97,7 @@ export class TurnBookUpdateComponent implements OnInit {
       typeOfLoad: this.handledata.Data.typeOfLoad,
       pochPayment: this.handledata.Data.pochPayment,
       waitLocation:this.handledata.Data.waitLocation,
+      givenDate:this.handledata.Data.givenDate,
       partyPayment: this.handledata.Data.payment[0]['_id'],
       paymentName:this.handledata.Data.payment[0]['date']+'_'+this.handledata.Data.payment[0]['amount'],
       advanceAmt:'',
@@ -118,6 +123,7 @@ export class TurnBookUpdateComponent implements OnInit {
       invoice:this.handledata.Data.invoice,
       pochDate: this.handledata.Data.pochDate,
       pochPayment: this.handledata.Data.pochPayment,
+      givenDate:this.handledata.Data.givenDate,
       pgno: this.handledata.Data.pgno,
       complete: this.handledata.Data.complete,
       entryDate: this.handledata.Data.entryDate,
@@ -280,6 +286,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["hamt"] = this.myFormGroup.value.hamt,
       tempObj["ohamt"] = this.myFormGroup.value.ohamt,
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
+      tempObj["givenDate"] = this.myFormGroup.value.givenDate,
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
       tempObj["pgno"] = this.myFormGroup.value.pgno;
       tempObj["invoice"]=this.myFormGroup.value.invoice;
@@ -321,6 +328,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
             tempData[this.handledata.Data.index]["ohamt"] = this.myFormGroup.value.ohamt,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
+            tempData[this.handledata.Data.index]["givenDate"] = this.myFormGroup.value.givenDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
             tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
             tempData[this.handledata.Data.index]["paymentid"] = this.paymentid;

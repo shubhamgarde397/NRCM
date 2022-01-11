@@ -585,6 +585,7 @@ this.partyid=this.tempDate[0]['party']['_id']
     tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
     tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
+    tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
     tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
     tempObj['payment'] = data.paymentDetails;
@@ -598,6 +599,7 @@ this.partyid=this.tempDate[0]['party']['_id']
     tempObj['waitLocation'] = data.waitLocation;
     tempObj['advanceArray'] = data.advanceArray;
     tempObj['qr'] = data.qr;
+    tempObj['paymentDisabled']=true;
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
@@ -639,6 +641,7 @@ this.partyid=this.tempDate[0]['party']['_id']
       tempObj["hamt"] = 0;
       tempObj["ohamt"] = data.ohamt;
       tempObj["pochDate"] = '2099-12-12';
+      tempObj["givenDate"] = '2099-12-12';
       tempObj["pochPayment"] = false;
       tempObj["pgno"] = 997;
       tempObj['index'] = j;
@@ -837,6 +840,7 @@ this.partyid=this.tempDate[0]['party']['_id']
           this.oids.push(this.balanceHireArrray[i][j]['ownerDetails'][0]['_id']);//ObjectId to mongoform in lambda write a loop
           tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
           tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
+          tempObj['shortDetails']=this.balanceHireArrray[i][j].partyType+'-'+this.balanceHireArrray[i][j].partyDetails[0].shortName+'-'+this.balanceHireArrray[i][j].villageDetails[0].shortName;
           tempObj['pageno'] = parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value);
           tempObj['amount'] = parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
           truckData.push(tempObj);
@@ -849,10 +853,7 @@ this.partyid=this.tempDate[0]['party']['_id']
       this.finalObject['truckData'] = truckData
       this.finalObject['todayDate'] = this.todaysDate;
       this.finalObject['comments'] = "";
-      console.log(this.balanceHireArrray);
-      
-      console.log(this.balanceHireArrray);
-      
+
       commentToTruck= this.balanceHireArrray[0][0].partyType==='NRCM'?'12':(this.balanceHireArrray[0][0].partyType==='NR'?'363':this.comment);
       this.finalObject['commentToTruck']=this.comment===''?commentToTruck:commentToTruck+'\n'+this.comment;
       this.finalObject['print'] = false;

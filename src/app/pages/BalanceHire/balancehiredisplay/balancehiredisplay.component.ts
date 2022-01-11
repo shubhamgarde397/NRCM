@@ -28,7 +28,9 @@ export class BalancehiredisplayComponent implements OnInit {
   public createdDate = '';
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Balance Hire' },
-    { 'value': '2', 'viewvalue': 'Check Prints' }
+    { 'value': '2', 'viewvalue': 'Check Prints' },
+    { 'value': '3', 'viewvalue': 'Given Date' },
+    { 'value': '4', 'viewvalue': 'Given Payment Pending' }
   ]
   public months = [
     { '1': 'Jan' },
@@ -54,6 +56,10 @@ export class BalancehiredisplayComponent implements OnInit {
   public displayType;
   public data;
   public dayData;
+  public givenTrucks;
+  public givenTrucksPayment;
+  public givenPaymentTable=true;
+  public givenDate;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -68,6 +74,7 @@ export class BalancehiredisplayComponent implements OnInit {
     for (let i = 0; i < new Date().getFullYear() - 2020; i++) {
       this.years.push(i + 2021)
     }
+    this.givenDate=this.handleF.createDate(new Date());
   }
 
   adminAccess() {
@@ -82,8 +89,100 @@ export class BalancehiredisplayComponent implements OnInit {
     this.daydiv = false;
     this.printInfo = this.buttonOption == '1' ? true : false;
     this.createdDate = '';
-
+    this.buttonOption == '3'?this.getGivenDateTrucks():undefined;
+    this.buttonOption == '4'?this.getGivenTrucksPayment():undefined;
+    
   }
+  refresh(){
+    this.getGivenDateTrucks();
+  }
+  getGivenDateTrucks(){
+    let formbody = {}
+    formbody['method'] = 'givenEmpty';
+    formbody['tablename'] = 't';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, formbody, 0)
+      .subscribe((res: any) => {
+        this.givenTrucks=res.Data;
+      });
+  
+  }
+
+  addtoGiven(id){
+    if (confirm('Add to Given Date?')) {
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['givenDate']=this.givenDate;
+      formbody['method'] = 'addGivenEmpty';
+      formbody['tablename'] = 't';
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, formbody, 0)
+        .subscribe((res: any) => {
+          alert(res.Status)
+        });
+    }
+  }
+
+  showDatabyidTBEdit(data,j){
+   
+  // showDatabyid = function (data, j, number) {
+    this.show = true;
+    let tempObj = {};
+
+    tempObj['place'] = data.places[0] === undefined ? '' : data.places[0].village_name;
+    tempObj['truckno'] = data.trucks[0] === undefined ? '' : data.trucks[0].truckno;
+    tempObj['partyName'] = data.parties[0] === undefined ? '' : data.parties[0].name;
+    tempObj['ownerid'] = data.trucks[0] === undefined ? '' : data.trucks[0]._id;
+    tempObj['accountDetails'] = data.trucks[0]['accountDetails'];
+    tempObj['placeid'] = data.places[0] === undefined ? '' : data.places[0]._id;
+    tempObj['partyid'] = data.parties[0] === undefined ? '' : data.parties[0]._id;
+    tempObj['entryDate'] = data.entryDate;
+    tempObj['_id'] = data._id;
+    tempObj['partyType'] = data.partyType;
+    tempObj['turnbookDate'] = data.turnbookDate;
+    tempObj['loadingDate'] = data.loadingDate;
+    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
+    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
+    tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
+    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
+    tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
+    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
+    tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
+    tempObj['payment'] = data.paymentDetails;
+    tempObj['paymentDisabled']=false;
+    tempObj['index'] = j;
+    tempObj['number'] = '1';
+    tempObj['invoice'] = data.invoice;
+    tempObj['locations'] = data.locations;
+    tempObj['locationDate'] = data.locationDate;
+    tempObj['complete'] = data.complete;
+    tempObj['typeOfLoad'] = data.typeOfLoad;
+    tempObj['waitLocation'] = data.waitLocation;
+    tempObj['advanceArray'] = data.advanceArray;
+    tempObj['qr'] = data.qr;
+
+
+    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
+    this.handledata.saveData(tempObj);
+  };
+
+  
+  getGivenTrucksPayment(){
+    let formbody = {}
+    formbody['method'] = 'givenPaymentPending';
+    formbody['tablename'] = 't';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, formbody, 0)
+      .subscribe((res: any) => {
+        this.givenTrucksPayment=res.Data;
+        this.givenPaymentTable=res.Data.length>0?true:false;
+      });
+  }
+
+  downloadPendingPayment(){
+    // pdf to see pendingpayment
+  }
+
   find = function () {
     let tempObj = {};
     if (this.selectedDate === undefined) {
@@ -329,6 +428,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].shortDetails, 120, i);//truckno
         K = k;
         i = i + 6;
       }
@@ -421,7 +521,7 @@ export class BalancehiredisplayComponent implements OnInit {
     doc.line(61, i + 6 - 16, 61, i + 12 - 16);
     doc.line(72, i + 6 - 16, 72, i + 12 - 16);
     doc.line(92, i + 6 - 16, 92, i + 12 - 16);
-    doc.line(135, i + 6 - 16, 135, i + 12 - 16);
+    doc.line(155, i + 6 - 16, 155, i + 12 - 16);
 
 
     //vertical line after date till headers
@@ -434,7 +534,7 @@ export class BalancehiredisplayComponent implements OnInit {
     doc.text('Pg', 63, i + 10 - 16)
     doc.text('Date', 72.5, i + 10 - 16)
     doc.text('TruckNo', 92.5, i + 10 - 16)
-    doc.text('Account Details', 135.5, i + 10 - 16)
+    doc.text('Account Details', 155.5, i + 10 - 16)
     //Headers End
     //Line after headers
     doc.setDrawColor(0, 0, 0);
@@ -476,7 +576,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.line(61, 6, 61, 12);
         doc.line(72, 6, 72, 12);
         doc.line(92, 6, 92, 12);
-        doc.line(135, 6, 135, 12);
+        doc.line(155, 6, 155, 12);
         //vertical line after date
         //Headers
         doc.setFontSize('10');
@@ -487,7 +587,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.text('Pg', 63, 10)
         doc.text('Date', 72.5, 10)
         doc.text('TruckNo', 92.5, 10)
-        doc.text('Account Details', 135.5, 10)
+        doc.text('Account Details', 155.5, 10)
         //Headers End
         //Line after headers
         doc.setDrawColor(0, 0, 0);
@@ -516,6 +616,9 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
+        doc.setFontSize('8');
+        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
+        doc.setFontSize('10');
         K = k;
         i = i + 6;
         totalAmount=totalAmount+this.balanceDate[z].truckData[k].amount;
@@ -529,12 +632,12 @@ export class BalancehiredisplayComponent implements OnInit {
       doc.line(61, i - (data.length * 6) - 5, 61, i + 7);
       doc.line(72, i - (data.length * 6) - 5, 72, i + 7);
       doc.line(92, i - (data.length * 6) - 5, 92, i + 7);
-      doc.line(135, i - (data.length * 6) - 5, 135, i + 7);
+      doc.line(155, i - (data.length * 6) - 5, 155, i + 7);
 
       doc.setFontSize('10');
-      doc.text(this.balanceDate[z].accountName, 136.5, i - (data.length * 6));//accno
-      doc.text(String(this.balanceDate[z].accountNumber), 136.5, i + 6 - (data.length * 6));//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 136.5, i + 12 - (data.length * 6));//ifsc-bankname
+      doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
+      doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
 
       i = i + 12;
     }
