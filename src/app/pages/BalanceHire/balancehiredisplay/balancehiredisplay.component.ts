@@ -58,8 +58,9 @@ export class BalancehiredisplayComponent implements OnInit {
   public dayData;
   public givenTrucks;
   public givenTrucksPayment;
-  public givenPaymentTable=true;
+  public givenPaymentTable=false;
   public givenDate;
+  public GPPMsg='Loading... Please Wait!'
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -93,8 +94,17 @@ export class BalancehiredisplayComponent implements OnInit {
     this.buttonOption == '4'?this.getGivenTrucksPayment():undefined;
     
   }
-  refresh(){
-    this.getGivenDateTrucks();
+  refresh(data){
+    switch (data) {
+      case '3':
+        this.getGivenDateTrucks();    
+        break;
+    case '4':
+      this.getGivenTrucksPayment();
+      break;
+      
+    }
+    
   }
   getGivenDateTrucks(){
     let formbody = {}
@@ -176,6 +186,7 @@ export class BalancehiredisplayComponent implements OnInit {
       .subscribe((res: any) => {
         this.givenTrucksPayment=res.Data;
         this.givenPaymentTable=res.Data.length>0?true:false;
+        this.GPPMsg=res.Data.length>0?'':'No Pending Payments'
       });
   }
 
@@ -467,6 +478,110 @@ export class BalancehiredisplayComponent implements OnInit {
 
     return I;
   }
+
+  downloadGPP()
+  {//threshhold is 295
+ 
+    
+    
+    let data=this.givenTrucksPayment;
+ 
+    let pager=1;
+     let bigValueofY=0;
+     var doc = new jsPDF()
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Payment Pending', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 25;
+     doc.text('Sr', 2, y)//partyname
+     doc.text('TruckNo', 8, y)//partyname
+     doc.text('Date', 34, y)//partyname
+     doc.text('Party', 56, y)//partyname
+     doc.text('Place', 95, y)//partyname
+     doc.text('Notes', 145, y)//partyname
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(7, 20, 7, 25);//srno
+     doc.line(33, 20, 33, 25);//truck
+     doc.line(55, 20, 55, 25);//date
+     doc.line(94, 20, 94, 25);//village
+     doc.line(144, 20, 144, 25);//village
+     //vertical lines
+     let startforI=0;
+     y = y + 6;
+     startforI=0;
+     for (let i = startforI; i < data.length; i++) {
+ 
+       if(y>290){
+        
+         y=30;
+     starty = 25;
+     doc.line(7, starty, 7, 292);//date
+        doc.line(33, starty,33, 292);//truckno
+        doc.line(55, starty, 55, 292);//credit
+        doc.line(94, starty, 94, 292);//village
+        doc.line(144, starty, 144, 292);//village
+         doc.addPage();
+         doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Payment Pending', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 2, y-6)//partyname
+     doc.text('TruckNo', 8, y-6)//partyname
+     doc.text('Date', 34, y-6)//partyname
+     doc.text('Party', 56, y-6)//partyname
+     doc.text('Place', 95, y-6)//partyname
+     doc.text('Notes', 145, y-6)//partyname
+     //headers
+     //vertical lines
+     doc.line(7, 20, 7, 25);//srno
+     doc.line(33, 20, 33, 25);//truck
+     doc.line(55, 20, 55, 25);//date
+     doc.line(94, 20, 94, 25);//village
+     doc.line(144, 20, 144, 25);//village
+     //vertical lines
+     doc.line(0, 25, 210, 25);//line after header
+     }
+     
+    doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
+    doc.text(data[i].trucks[0].truckno, 8, y-1)//partyname
+    doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 34, y-1)//Date  
+    doc.text(this.handleF.getDateddmmyy(data[i].givenDate), 34, y+2)//Date              
+    doc.text(data[i].parties[0].name.slice(0,16), 56, y-1)//Destination
+    doc.text(data[i].places[0].village_name.slice(0,16), 95, y-1)//Destination
+    doc.line(0, y +4, 210, y +4);//line after header
+       y = y + 8;
+       
+     }
+        //vertical lines//getting applied for every loop, make it happen once only
+        doc.line(7, starty, 7, y-4);//date
+        doc.line(33, starty,33, y-4);//truckno
+        doc.line(55, starty, 55, y-4);//credit
+        doc.line(94, starty, 94, y-4);//village
+        doc.line(144, starty, 144, y-4);//village
+        //vertical lines
+
+    //  doc.save('Available-Data.pdf')
+     doc.save('GPP.pdf')//partyname
+   }
   download() {//threshhold is 295
     let i;
     if (confirm('Fresh Page?')) {

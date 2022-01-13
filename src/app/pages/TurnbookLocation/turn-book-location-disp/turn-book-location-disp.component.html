@@ -46,7 +46,9 @@
           <button mat-raised-button type="button" (click)="showDatabyid(i,j)" class="btn-primary btn-sm btn-just-icon" data-toggle="modal" data-target="#myModal">
             <i class="material-icons">edit</i>
           </button>
-          <button mat-raised-button type="button" (click)="updateTurnLocationTruck(i,j)" class="btn-primary btn-sm btn-just-icon" [disabled]='!i.updateTBL'>
+          <button mat-raised-button type="button" (click)="updateTurnLocationTruck(i,j)" class="btn-warning btn-sm btn-just-icon" *ngIf='i.updateTBL'>
+
+          <!-- [disabled]='!i.updateTBL'> -->
             <i class="material-icons">add</i>
           </button>
         </td>

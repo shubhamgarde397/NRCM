@@ -198,13 +198,14 @@
 <div class="well" *ngIf="buttonOption=='4'">  
   <div class="row">
     <h3>NR Trucks</h3>
-    <button mat-raised-button (click)="refresh('4')" class="btn-warning btn-sm btn-just-icon">
-      <i class="material-icons">reset</i>
-    </button>
-    <button mat-raised-button (click)="downloadPendingPayment()" class="btn-warning btn-sm btn-just-icon">
-      <i class="material-icons">download</i>
-    </button>
-    <div class="well"  *ngIf="givenPaymentTable">
+   
+      <div class="well"  *ngIf="givenPaymentTable">
+      <button mat-raised-button (click)="downloadGPP()" class="btn-warning btn-sm btn-just-icon">
+        <i class="material-icons">download</i>
+      </button>
+      <button mat-raised-button (click)="refresh('4')" class="btn-warning btn-sm btn-just-icon">
+        <i class="material-icons">autorenew</i>
+      </button>
     <table class="table" style="width:100%" align="center">
       <thead class="table-header">
         <tr>
@@ -236,7 +237,7 @@
       </tbody>
     </table>
   </div>
-    <div class="well" *ngIf="!givenPaymentTable"><h1>All Payments Done</h1></div>
+    <div class="well" *ngIf="!givenPaymentTable"><h1>{{GPPMsg}}</h1></div>
   </div>
   </div>
 

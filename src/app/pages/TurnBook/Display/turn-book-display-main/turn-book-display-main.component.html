@@ -245,12 +245,15 @@
       <div *ngIf="!saveToCheckArrayBoolean">
         <div *ngIf="finalCheckDone">
           <div *ngFor="let k of balanceHireArrray;let kk=index;">
-            <table>
+            <table class="table">
               <thead>
                 <tr>
                   <th>Srno</th>
                   <th>Loading Date</th>
-                  <th>Truck No-Type</th>
+                  <th>Truck No</th>
+                  <th>Party Name</th>
+                  <th>Party Type</th>
+                  <th>Place</th>
                   <th>Cancel</th>
                 </tr>
               </thead>
@@ -259,6 +262,9 @@
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
                   <td>{{ii.ownerDetails[0].truckno}}</td>
+                  <td>{{ii.partyDetails[0].shortName}}</td>
+                  <td>{{ii.partyType}}</td>
+                  <td>{{ii.villageDetails[0].village_name}}</td>
                   <td><button mat-raised-button type="button" (click)="addToCheckArray2(kk,jj,0)"
                       class="btn-danger btn-sm btn-just-icon">
                       <i class="material-icons">remove</i>
@@ -278,12 +284,15 @@
 
         <div *ngIf="!finalCheckDone">
           <div *ngFor="let k of balanceHireArrray;let kk=index;">
-            <table>
+            <table class="table">
               <thead>
                 <tr>
                   <th>Srno</th>
                   <th>Loading Date</th>
-                  <th>Truck No-Type</th>
+                  <th>Truck No</th>
+                  <th>Party Name</th>
+                  <th>Party Type</th>
+                  <th>Place</th>
                   <th>Balance</th>
                   <th>Pageno</th>
                 </tr>
@@ -293,6 +302,9 @@
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
                   <td>{{ii.ownerDetails[0].truckno}}</td>
+                  <td>{{ii.partyDetails[0].shortName}}</td>
+                  <td>{{ii.partyType}}</td>
+                  <td>{{ii.villageDetails[0].village_name}}</td>
                   <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.balance}}>
                   </td>
                   <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">

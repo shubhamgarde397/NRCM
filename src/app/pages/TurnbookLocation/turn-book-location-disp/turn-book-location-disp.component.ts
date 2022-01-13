@@ -101,9 +101,9 @@ export class TurnBookLocationDispComponent implements OnInit {
     
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
     .subscribe((res: any) => {
-      alert(res.Status);
-      this.tbl.splice(index,1)
-      
+      alert('Updated');
+      this.tbl.splice(index,1);
+      this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
     });
     
   }
@@ -125,12 +125,13 @@ export class TurnBookLocationDispComponent implements OnInit {
     .subscribe((res: any) => {
       alert(res.Status);
       this.tbl[this.id]['locationData'].push({'location':this.tempVNAME,'date':data.value.date})
+      let a = this.tbl.filter(r=>{return r._id==this.data._id})[0]
+      a['updateTBL']=a.locationData.at(-1).location===a.destination?true:false
     });
   }
 
   delete(i,p,j){
     if(confirm('Are you sure?')){
-    
     let tempObj={}
     tempObj['tablename'] = 'turnbook';
     tempObj['index'] = p;
@@ -141,6 +142,8 @@ export class TurnBookLocationDispComponent implements OnInit {
     .subscribe((res: any) => {
       alert(res.Status);
       this.tbl[j]['locationData'].splice(p, 1);
+      let a = this.tbl.filter(r=>{return r._id==i})[0]
+      a['updateTBL']=a.locationData.at(-1).location===a.destination?true:false
     });
     }else{}
   }
