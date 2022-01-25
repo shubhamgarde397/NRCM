@@ -51,14 +51,23 @@
       </div>
       <div class="row">
         <div class="col-sm-4">
+          <button mat-raised-button (click)="deepDetails()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            Deep Details
+          </button>
         </div>
         <div class="col-sm-4">
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
             {{buttonValue}}
           </button>
         </div>
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="find2()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            {{buttonValue}}-Poch
+          </button>
+        </div>
         <div class="col-sm-4" *ngIf="role==1||role==2"><button class="btn btn-info"
             (click)="getAdminAccess()">Admin</button></div>
+            
       </div>
 
 
@@ -74,6 +83,11 @@
       <div class="col-sm-3">
       <button mat-raised-button type="button" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
         PDF : Self
+      </button>
+    </div>
+    <div class="col-sm-3">
+      <button mat-raised-button (click)="pochDetails()" class="btn btn-warning" style="width: 100%;margin-top: 10px;">
+       Poch Details
       </button>
     </div>
       
@@ -147,6 +161,11 @@
       <div class="col-sm-3">
       <button mat-raised-button type="button" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
         PDF: Self
+      </button>
+    </div>
+    <div class="col-sm-3">
+      <button mat-raised-button (click)="pochDetails()" class="btn btn-warning" style="width: 100%;margin-top: 10px;">
+       Poch Details
       </button>
     </div>
       

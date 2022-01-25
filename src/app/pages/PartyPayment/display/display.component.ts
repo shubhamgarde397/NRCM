@@ -154,6 +154,44 @@ public balanceFollowGlobal={};
     }
   };
 
+  find2 = function () {
+    this.mailSendButton=false;
+    this.paymentData=[];
+    let flag = false;
+    let tempObj = {};
+    tempObj['from'] = this.date1;
+    tempObj['to'] = this.date2;
+    this.date1=tempObj['from'];
+    this.date2=tempObj['to'];
+    if ( (this.fromloading === undefined)  || (this.toloading === undefined) || (this.partyid === '')) { 
+      alert('Select a Date and Party'); 
+    }
+    else {
+      tempObj['fromloading'] = this.fromloading;
+      tempObj['toloading'] = this.toloading;
+      tempObj['method'] = 'UCGetData';
+      this.fromloading=tempObj['fromloading'];
+      this.toloading=tempObj['toloading'];
+
+      flag = true;
+      }
+    if (flag) {
+      tempObj['tablename'] = ''
+      tempObj['partyid']=this.partyids;
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+        .subscribe((res: any) => {
+          this.paymentData = res.Data;
+          if (this.paymentData.length > 0) {
+            this.tableData = true;
+            this.handledata.savePaymentData(this.paymentData);
+          } else {
+            alert('No Data Available.');
+            this.tableData = false;
+          }
+        });
+    }
+  };
+
   deletePartyIds(i,j){
     this.partyids.splice(j,1);
   }
@@ -457,6 +495,287 @@ public balanceFollowGlobal={};
      doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
      doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.fromloading)+'_'+this.handleF.getDateddmmyy(this.toloading)+ '.pdf')
    }
+
+
+
+   pochDetails(){//threshhold is 295
+
+
+
+    this.mailSendButton=true;
+    let pager=1;
+     let bigValueofY=0;
+     var doc = new jsPDF()
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('United Cargo', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 24;
+     doc.text('Sr', 23, y)//partyname
+     doc.text('Date', 38, y)//partyname
+     doc.text('Truck No.', 60, y)//partyname
+     doc.text('Destination', 86, y)//partyname
+     doc.text('Amount', 113, y)//partyname
+     doc.text('Notes', 157, y)
+
+      doc.line(30, 20, 30, 25);//srno
+      doc.line(55, 20, 55, 25);//date
+      doc.line(83, 20, 83, 25);//truckno
+      doc.line(110, 20, 110, 25);//lrno
+      doc.line(130, 20, 130, 25);//debit
+
+
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     let startforI=0;
+     if (this.paymentData[0]['bf'] == true) {
+       y = y + 5;
+       starty = 31;
+       doc.text(this.paymentData[0].partyName, 30, y)//partyname
+       doc.text(String(this.paymentData[0].value), 130, y)//partyname
+       doc.line(20, 31, 210, 31);
+      //  doc.line(150, 25, 150, 31);
+       y = y + 6;
+       startforI=1;
+     }else{
+       y = y + 6;
+       startforI=0;
+     }
+ 
+     for (let i = startforI; i < this.paymentData.length; i++) {
+ 
+      
+       if(y>290){
+         
+         y=30;
+        doc.line(30, starty, 30, 291);//srno
+        doc.line(55, starty, 55, 291);//date
+        doc.line(83, starty, 83, 291);//truckno
+        doc.line(110, starty, 110, 291);//lrno
+        doc.line(130, starty, 130, 291);//debit
+
+        starty = 20;
+         doc.addPage();
+         doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('United Cargo', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 23, y-6)//partyname
+     doc.text('Date', 38, y-6)//partyname
+     doc.text('Truck No.', 60, y-6)//partyname
+     doc.text('Destination', 86, y-6)//partyname
+     doc.text('Amount', 113, y-6)//partyname
+     doc.text('Notes', 157, y-6)
+
+     
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(30, 20, 30, 25);//srno
+     doc.line(55, 20, 55, 25);//date
+     doc.line(83, 20, 83, 25);//truckno
+     doc.line(110, 20, 110, 25);//lrno
+     doc.line(130, 20, 130, 25);//debit
+
+     //vertical lines
+     }
+
+
+
+
+        doc.text(String(i+1), 23, y)//partyname
+       doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
+         doc.text(this.paymentData[i].truckno, 57, y)//truckno
+         doc.text(this.paymentData[i].places, 84, y)//truckno
+         doc.text(String(this.paymentData[i].amount), 113, y)//partyname
+ 
+       doc.line(20, y + 1, 210, y + 1);//line after header
+       y = y + 5;
+     bigValueofY=y;
+     }
+
+
+     doc.line(30, starty, 30, y-4);//srno
+     doc.line(55, starty, 55, y-4);//date
+     doc.line(83, starty, 83, y-4);//truckno
+     doc.line(110, starty, 110, y-4);//lrno
+     doc.line(130, starty, 130, y-4);//debit
+
+    //  doc.line(20, y-4, 210, y-4);//line after header
+     doc.save('United_Cargo.pdf')
+   }
+
+   deepDetails(){//threshhold is 295
+
+
+
+    this.mailSendButton=true;
+    let pager=1;
+     let bigValueofY=0;
+     var doc = new jsPDF()
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Details', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 24;
+     doc.text('Sr', 23, y)//partyname
+     doc.text('Date', 38, y)//partyname
+     doc.text('Truck No.', 60, y)//partyname
+     doc.text('Destination', 86, y)//partyname
+     doc.text('Amount', 113, y)//partyname
+     doc.text('Dates', 132, y)
+     doc.text('Payment Amount', 157, y)
+
+      doc.line(30, 20, 30, 25);//srno
+      doc.line(55, 20, 55, 25);//date
+      doc.line(83, 20, 83, 25);//truckno
+      doc.line(110, 20, 110, 25);//lrno
+      doc.line(130, 20, 130, 25);//debit
+      doc.line(155, 20, 155, 25);//debit
+
+
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     let startforI=0;
+    
+       y = y + 6;
+       startforI=0;
+   
+ 
+     for (let i = startforI; i < this.paymentData.length; i++) {
+ 
+      
+       if(y>290){
+         
+         y=30;
+        doc.line(30, starty, 30, 296);//srno
+        doc.line(55, starty, 55, 296);//date
+        doc.line(83, starty, 83, 296);//truckno
+        doc.line(110, starty, 110, 296);//lrno
+        doc.line(130, starty, 130, 296);//debit
+        doc.line(155, starty, 155, 296);//debit
+
+
+
+        starty = 20;
+         doc.addPage();
+         doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('United Cargo', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 23, y-6)//partyname
+     doc.text('Date', 38, y-6)//partyname
+     doc.text('Truck No.', 60, y-6)//partyname
+     doc.text('Destination', 86, y-6)//partyname
+     doc.text('Amount', 113, y-6)//partyname
+     doc.text('Dates', 132, y-6)
+     doc.text('Payment Amount', 157, y-6)
+
+     
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(30, 20, 30, 25);//srno
+     doc.line(55, 20, 55, 25);//date
+     doc.line(83, 20, 83, 25);//truckno
+     doc.line(110, 20, 110, 25);//lrno
+     doc.line(130, 20, 130, 25);//debit
+     doc.line(155, 20, 155, 25);//debit
+
+
+     //vertical lines
+     }
+
+
+
+
+        doc.text(String(i+1), 23, y)//partyname
+       doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
+         doc.text(this.paymentData[i].truckno, 57, y)//truckno
+         doc.text(this.paymentData[i].places, 84, y)//truckno
+         doc.text(String(this.paymentData[i].hamt), 113, y)//partyname
+         doc.text(String(this.getAdvances(this.paymentData[i].advanceArray)), 113, y+5)//partyname
+         doc.text(String(this.balance(this.paymentData[i])), 113, y+10)//partyname
+
+         doc.text(String(this.handleF.getDateddmmyy(this.paymentData[i].pochDate)), 132, y)//partyname
+         doc.text(String(this.handleF.getDateddmmyy(this.paymentData[i].givenDate)), 132, y+5)//partyname
+         doc.text(String(this.handleF.getDateddmmyy(this.paymentData[i].payment[0]['date'])), 132, y+10)//partyname
+
+         doc.text(String(this.paymentData[i].payment[0]['amount']), 160, y)//partyname
+ 
+       doc.line(20, y + 11, 210, y + 11);//line after header
+       y = y + 15;
+     bigValueofY=y;
+     }
+
+
+     doc.line(30, starty, 30, y-4);//srno
+     doc.line(55, starty, 55, y-4);//date
+     doc.line(83, starty, 83, y-4);//truckno
+     doc.line(110, starty, 110, y-4);//lrno
+     doc.line(130, starty, 130, y-4);//debit
+     doc.line(155, starty, 155, y-4);//debit
+
+    //  doc.line(20, y-4, 210, y-4);//line after header
+     doc.save('Details.pdf')
+   }
+
+   balance(data) {
+  return  data.ohamt - this.getAdvances(data.advanceArray);
+  }
+
+  getAdvances(data){
+    let sum =0 
+    
+    data.forEach(r=>{
+      if(r.consider){
+      sum = r.advanceAmt + sum
+      }
+    })
+    return sum===(NaN||undefined)?0:sum;
+  }
 
      returnAmountPaymentBalance(){
      let amount=0;

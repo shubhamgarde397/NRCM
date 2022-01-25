@@ -118,19 +118,36 @@ export class AddComponent implements OnInit {
   back() {
     this.submitted = false;
   }
+  // leftRight(LR) {
+  //   let tempArray;
+  //   let date;
+  //   switch (LR) {
+  //     case 'back':
+  //       tempArray=this.paymentDate.split('-');
+  //       date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'subtract')
+  //       this.paymentDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+  //       break;
+  //     case 'ahead':
+  //       tempArray=this.paymentDate.split('-');
+  //       date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'add')
+  //       this.paymentDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+  //       break;
+  //   }
+  // }
+
   leftRight(LR) {
     let tempArray;
     let date;
     switch (LR) {
       case 'back':
         tempArray=this.paymentDate.split('-');
-        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'subtract')
-        this.paymentDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])-1)
+        this.paymentDate = this.handlefunction.createDate(date);
         break;
       case 'ahead':
         tempArray=this.paymentDate.split('-');
-        date=this.handlefunction.subtractDay(tempArray[2],tempArray[1],tempArray[0],'add')
-        this.paymentDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(date[0]), date[1], date[2]);
+        date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])+1)
+        this.paymentDate = this.handlefunction.createDate(date);
         break;
     }
   }

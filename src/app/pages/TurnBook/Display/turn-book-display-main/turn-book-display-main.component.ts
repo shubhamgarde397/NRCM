@@ -66,8 +66,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '11', 'viewvalue': 'Details By Truck' },
     { 'value': '12', 'viewvalue': 'Invoice' },
     { 'value': '13', 'viewvalue': 'LRNO' },
-    // { 'value': '14', 'viewvalue': 'LRNO' },present in turnbooklocation dont use 14 use 15 onwards
-    // { 'value': '12', 'viewValue': 'Pending Payment'}
+    { 'value': '14', 'viewvalue': 'LRNO' },//present in turnbooklocation dont use 14 use 15 onwards dont use
+    { 'value': '15', 'viewValue': 'Pending Payment'},//present in turnbooklocation dont use 14 use 15 onwards dont use
+    { 'value': '16', 'viewvalue': 'Poch Update Series' },
   ]
   public trucknoid11;
   public years = []
@@ -116,6 +117,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
 public types={'None':0,'Open':0,'Container':0}
 public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
 public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','hamt':''}
+public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -360,6 +362,10 @@ let buttons=[]
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
         break;
+        case '16':
+        tempObj['date'] = this.selectedmy;
+        tempObj['partyType']=this.buttonOptionPartyType;
+        break;
         case '10':
         if (this.partyVar === '') { alert('Select a Party Name'); break; }
         else {
@@ -384,6 +390,9 @@ let buttons=[]
     if (this.buttonOption !== '8') {
       this.showbuttonOption8 = false;
     }
+    if (this.buttonOption !== '16') {
+      this.showbuttonOption8 = false;
+    }
 
 
     tempObj['tablename'] = 'turnbook'
@@ -394,7 +403,7 @@ if(this.buttonOption !== '11'){
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-        if(this.buttonOption!=='8'){
+        if(this.buttonOption!=='8'&&this.buttonOption!=='16'){
         this.types={'None':0,'Open':0,'Container':0}
         this.Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
         res.Data.forEach(r=>{
@@ -428,6 +437,24 @@ if(this.buttonOption !== '11'){
               loadingDate: '',
               lrno: '',
               hamt: '',
+            });
+          } else {
+            this.showbuttonOption8 = false;
+            this.show8Msg = "All set for this month.";
+          }
+        }
+        else if (this.buttonOption == '16') {
+          if (res.Data.length > 0) {
+            this.showbuttonOption8 = true;
+            this.turnbooklistnew = res.Data;
+            this.myFormGroup = this.formBuilder.group({
+              loadingDateDynamic: '',
+              turnbookDate: '',
+              truckno: '',
+              place: '',
+              partyName: '',
+              loadingDate: '',
+              pochAmount:''
             });
           } else {
             this.showbuttonOption8 = false;
@@ -494,10 +521,25 @@ this.partyid=this.tempDate[0]['party']['_id']
   }
 
 
+  getOtherDetailsU() {
+    this.showbuttonOption82 = true;
+    this.turnbooklist_trucks = this.turnbooklistnew.filter(r => r.loadingDate == this.myFormGroup.value.loadingDateDynamic)
+  }
+  getOtherDetails2U() {
+    this.tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup.value.truckno);
+    this.monthlybyseriesDataU['party']='United Cargo';
+    this.monthlybyseriesDataU['place']=this.tempDate[0].place['village_name'];
+
+this.placeid=this.tempDate[0]['place']['_id']
+
+    this.toSendid = this.tempDate[0]._id;
+    this.showbuttonOption821 = true;
+    this.myFormGroup.patchValue({ turnbookDate: this.tempDate[0]['turnbookDate'] })
+    this.myFormGroup.patchValue({ place: this.tempDate[0][''] })
+  }
+
+
   setPlaceName() {
-    // this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
-    // this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
-    // this.myFormGroup.value.place = this.tempVNAME;
     let filteredList=this.villagelist.filter(r=>{return r.village_name==this.myFormGroup.value.place})
     this.placeid= filteredList[0]['_id']
     this.tempVNAME = filteredList[0]['village_name']
@@ -506,9 +548,6 @@ this.partyid=this.tempDate[0]['party']['_id']
   }
 
   setPartyName() {
-    // this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
-    // this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
-    // this.myFormGroup.value.partyName = this.tempPNAME;
     let filteredList=this.parties.filter(r=>{return r.name==this.myFormGroup.value.partyName})
     this.partyid=filteredList[0]['_id']
     this.tempPNAME=filteredList[0]['name']
@@ -517,13 +556,6 @@ this.partyid=this.tempDate[0]['party']['_id']
 
 
   change(data) {
-    console.log('tempDate : ',this.tempDate);
-    console.log('change data : ',data);
-    console.log(this.partyid);
-    console.log(this.placeid);
-
-    // ===undefined?this.tempDate[0]['place']['_id']:data.value.placeid
-    // ==='5fff37a31f4443d6ec77e078'?this.tempDate[0]['party']['_id']:this.partyid
     let tempData = {}
     tempData['placeid'] = this.placeid;
     tempData['partyid'] = this.partyid;
@@ -547,6 +579,26 @@ this.partyid=this.tempDate[0]['party']['_id']
         this.myFormGroup.patchValue({ partyName: '' })
         this.myFormGroup.patchValue({ lrno: '' })
         this.myFormGroup.patchValue({ hamt: '' })
+        this.showbuttonOption82 = false;
+        this.showbuttonOption821 = false;
+      });
+  }
+  changeU(data) {
+    let tempData = {}
+    tempData['pochAmount'] = data.value.pochAmount===0?this.tempDate[0]['pochAmount']:data.value.pochAmount;
+    tempData['_id'] = this.toSendid;
+    tempData['tablename'] = 'turnbook'
+    tempData['method'] = 'update'
+    tempData['part'] = 5;
+    
+    this.apiCallservice.handleData_New_python('turnbook1', 1, tempData, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        let newData = this.turnbooklistnew.filter(r => r._id !== this.toSendid);
+        this.handleData.saveTurn([]);
+        this.handleData.saveTurn(newData);
+        this.turnbooklistnew = newData;
+        this.myFormGroup.patchValue({ pochAmount: '' })
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;
       });
@@ -600,6 +652,7 @@ this.partyid=this.tempDate[0]['party']['_id']
     tempObj['advanceArray'] = data.advanceArray;
     tempObj['qr'] = data.qr;
     tempObj['paymentDisabled']=true;
+    tempObj['pochAmount']=data.pochAmount;
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);

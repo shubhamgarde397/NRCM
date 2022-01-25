@@ -107,7 +107,8 @@ export class TurnBookUpdateComponent implements OnInit {
       BHAccname:'',
       BHAccNo:'',
       BHIFSC:'',
-      qr:this.handledata.Data.qr
+      qr:this.handledata.Data.qr,
+      pochAmount:this.handledata.Data.pochAmount
     });
     this.myFormGroup1 = this.formBuilder.group({
       turnbookDate: this.handledata.Data.turnbookDate,
@@ -129,7 +130,8 @@ export class TurnBookUpdateComponent implements OnInit {
       entryDate: this.handledata.Data.entryDate,
       waitLocation:this.handledata.Data.waitLocation,
       truckNo: ['', Validators.required],
-      qr:this.handledata.Data.qr
+      qr:this.handledata.Data.qr,
+      pochAmount:this.handledata.Data.pochAmount
     });
     this.place = this.handledata.Data.place;
     this.placeid = this.handledata.Data.placeid;
@@ -296,6 +298,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["waitLocation"]=this.myFormGroup.value.waitLocation;
       tempObj["advanceArray"]=this.advanceArray;
       tempObj["qr"]=parseInt(this.myFormGroup.value.qr);
+      tempObj["pochAmount"]=parseInt(this.myFormGroup.value.pochAmount);
       tempObj["qrid"]=this.qrHit?(this.myFormGroup.value.qr===0?'61c082b87dcfd6ecb7f02b90':this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0]._id):'61c082b87dcfd6ecb7f02b90';
       this.addtoTB===true?tempObj['addtotbids']=true:false
       if(this.handledata.Data.locations.length===0){
@@ -338,6 +341,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["waitLocation"] = this.myFormGroup.value.waitLocation;
             tempData[this.handledata.Data.index]["advanceArray"] = this.advanceArray;
             tempData[this.handledata.Data.index]["qr"] = this.myFormGroup.value.qr;
+            tempData[this.handledata.Data.index]["pochAmount"] = this.myFormGroup.value.pochAmount;
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
@@ -391,6 +395,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["complete"] = this.myFormGroup.value.complete
             tempData[this.handledata.Data.index]["typeOfLoad"] = this.myFormGroup.value.typeOfLoad
             tempData[this.handledata.Data.index]["waitLocation"] = this.myFormGroup.value.waitLocation
+            tempData[this.handledata.Data.index]["pochAmount"] = this.myFormGroup.value.pochAmount
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
