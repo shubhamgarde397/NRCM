@@ -84,6 +84,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public gAD;
   public trucks=[];
   public ids = [];
+  public partyTypes=[];
   public pochDiv = true;
   public selectedMonth;
   public selectedYear;
@@ -770,6 +771,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
         let tempObj = {};
           this.ids.push(this.balanceHireArrray[i][j]['_id']);
+          this.partyTypes.push(this.balanceHireArrray[i][j]['partyType']);
           this.oids.push(this.balanceHireArrray[i][j]['ownerDetails'][0]['_id']);
           tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
           tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
@@ -858,6 +860,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     this.finalObject = {};
     this.finalArray = [];
     this.ids=[];
+    this.partyTypes=[];
     this.oids=[];
     this.comment='';
     this.find()
@@ -883,12 +886,14 @@ this.placeid=this.tempDate[0]['place']['_id']
         else {
           if (breaker) { break; }
           this.ids.push(this.balanceHireArrray[i][j]['_id']);//ObjectId to mongoform in lambda write a loop
+          this.partyTypes.push(this.balanceHireArrray[i][j]['partyType']);
           this.oids.push(this.balanceHireArrray[i][j]['ownerDetails'][0]['_id']);//ObjectId to mongoform in lambda write a loop
           tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
           tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
           tempObj['shortDetails']=this.balanceHireArrray[i][j].partyType+'-'+this.balanceHireArrray[i][j].partyDetails[0].shortName+'-'+this.balanceHireArrray[i][j].villageDetails[0].shortName;
           tempObj['pageno'] = parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value);
           tempObj['amount'] = parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
+          tempObj['partyType'] = this.balanceHireArrray[i][j].partyType;
           truckData.push(tempObj);
           //write logic to update the TurnBook_2020_2021 and change pochPayment to true when sent to lambda
         }
@@ -920,6 +925,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempObj['tablename'] = 'BalanceHire';
     tempObj['ids'] = this.ids;
     tempObj['oids'] = this.oids;
+    tempObj['partyTypes'] = this.partyTypes;
     tempObj['todayDate'] = this.todaysDate;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
