@@ -26,13 +26,16 @@
     </div>
   </div>
 
+  <div class="form-group row">
+    <div class="col-sm-3">
+      Loading Date : 
+        <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
+    </div>
+  </div>
+
     <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="truckNo"> Truckno </label>
-      </div>
-
       <div class="col-xs-3">
+        TruckNo : 
         <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
           (change)="findtruckdetails()" id="truckNoone" *ngIf="!manualTruck">
           <option value="Other+">Other</option>
@@ -56,18 +59,48 @@
       </div>
 
       <div class="col-xs-3">
+        Location : 
         <select class="form-control" formControlName="waitLocation">
           <option value="Shivapur">Shivapur</option>
           <option value="Dhaba">Dhaba</option>
           <option value="None">None</option>
         </select>
       </div>  
-
-      
-
     </div>
     <!--Truckno-->
 
+    <!--Type  -->
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Party Type : 
+        <select class="form-control" formControlName="partyType">
+          <option value="" selected>None</option>
+          <option value="NRCM">NRCM</option>
+          <option value="NR">NR</option>
+        </select>
+      </div>  
+
+      <!-- Party -->
+    <div class="col-sm-3">
+      Party :
+    <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
+      <option selected  value=''>None</option>
+      <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
+    </select>
+  </div>
+  <!-- Party -->
+<!-- Place -->
+  <div class="col-sm-3">
+    Place : 
+    <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
+      <option value="" selected>None</option>
+      <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
+    </select>
+    </div>
+<!-- Place -->
+
+    </div>
+    <!-- Type -->
 
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>

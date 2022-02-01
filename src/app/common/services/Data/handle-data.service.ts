@@ -101,7 +101,7 @@ public PPData=[];
       case 'infovillage':
         return [Consts.VILLAGE_INDEX];
       case 'turnbook':
-        return [Consts.VILLAGE_INDEX, Consts.OWNER_INDEX];
+        return [Consts.VILLAGE_INDEX, Consts.GST_INDEX,Consts.OWNER_INDEX];
       case 'turnbookadd':
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
       case 'infolrlist':

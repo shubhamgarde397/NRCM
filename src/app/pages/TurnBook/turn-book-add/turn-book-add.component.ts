@@ -35,14 +35,12 @@ export class TurnBookAddComponent implements OnInit {
   public role;
   public ownerdetailslist;
   public ownerid;
-  public partyid;
-  public placeid;
+  public partyid='5fff37a31f4443d6ec77e078';
+  public placeid='5bcdecdab6b821389c8abde0';
   public partyType;
   public method;
   public turnArray = [];
   public truckdetailslist = [];
-  public gstdetailslist;
-  public gstdetailslistid;
   public villagelist;
   public trucknoid;
   public villageData = "";
@@ -50,6 +48,7 @@ export class TurnBookAddComponent implements OnInit {
   public manualTruck = false;
   public trucknoM;
   public turnbookDate;
+  public parties;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
@@ -74,7 +73,11 @@ export class TurnBookAddComponent implements OnInit {
       turnbookDate: ['', Validators.required],
       truckNo: ['', Validators.required],
       trucknoM: ['', [Validators.required]],
-      waitLocation:['',[Validators.required]]
+      waitLocation:['',[Validators.required]],
+      partyName :'',
+      place:'',
+      partyType:'',
+      loadingDate:''
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -91,6 +94,8 @@ export class TurnBookAddComponent implements OnInit {
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
         this.securityCheck.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.securityCheck.commonArray['ownerdetails'];;
         this.truckdetailslist = this.commonArray.ownerdetails;
+        this.villagelist = this.commonArray.villagenames;
+        this.parties = this.commonArray.gstdetails;
         this.fetchBasic();
         this.spinnerService.hide();
       });
@@ -98,10 +103,10 @@ export class TurnBookAddComponent implements OnInit {
 
   fetchBasic() {
     this.commonArray = this.securityCheck.commonArray;
-    this.gstdetailslist = [];
+    this.parties = [];
     this.villagelist = [];
     this.truckdetailslist = [];
-    this.gstdetailslist = this.commonArray.gstdetails;
+    this.parties = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
     this.truckdetailslist = this.commonArray.ownerdetails;
 
@@ -133,10 +138,13 @@ export class TurnBookAddComponent implements OnInit {
     let tempobj = {};
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
-    tempobj['placeid'] = '5bcdecdab6b821389c8abde0';
-    tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
-    tempobj['partyType'] = '';
-    tempobj['loadingDate'] = '';
+    // tempobj['placeid'] = '5bcdecdab6b821389c8abde0';
+    // tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
+    // tempobj['partyType'] = '';
+    tempobj['placeid'] = this.placeid;
+    tempobj['partyid'] = this.partyid;
+    tempobj['partyType'] = value['partyType'];
+    tempobj['loadingDate'] = value['loadingDate'];
     tempobj['turnbookDate'] = this.turnbookDate;//value['turnbookDate'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
@@ -153,6 +161,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["input"]= "manual";
     tempobj["waitLocation"]= value['waitLocation'];
     tempobj["complete"]= false;
+    tempobj["typeOfLoad"]= value['partyType']==='NR'?'Others':'';
 let toAdd=true;
 let toAddData;
     let tempObj={};
@@ -231,6 +240,16 @@ let toAddData;
  
     
   }
+
+  setPartyName() {
+    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
+    this.myFormGroup.value.partyName = this.partyid;
+  }
+  setPlaceName() {
+    this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
+    this.myFormGroup.value.place = this.placeid;
+  }
+
   reset() {
     this.manualTruck = false;
     this.submitted = false;

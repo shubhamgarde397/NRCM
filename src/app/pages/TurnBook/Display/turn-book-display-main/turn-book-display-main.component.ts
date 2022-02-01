@@ -53,22 +53,22 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public sum=0;
   public advanceArray=[];
   public displayoptions = [
-    { 'value': '1', 'viewvalue': 'Avaliable Trucks' },
-    { 'value': '2', 'viewvalue': 'Truck Arrival' },
-    { 'value': '3', 'viewvalue': 'Truck Dispatched' },
-    { 'value': '4', 'viewvalue': 'To From' },
-    { 'value': '5', 'viewvalue': 'Monthly Data' },
-    { 'value': '6', 'viewvalue': 'Balance Hire' },
-    { 'value': '7', 'viewvalue': 'Update Poch Check' },
-    { 'value': '8', 'viewvalue': 'Monthly By Series' },
-    { 'value': '9', 'viewvalue': 'Cancelled Vehicles' },
-    { 'value': '10', 'viewvalue': 'By Party' },
-    { 'value': '11', 'viewvalue': 'Details By Truck' },
-    { 'value': '12', 'viewvalue': 'Invoice' },
-    { 'value': '13', 'viewvalue': 'LRNO' },
-    { 'value': '14', 'viewvalue': 'LRNO' },//present in turnbooklocation dont use 14 use 15 onwards dont use
-    { 'value': '15', 'viewValue': 'Pending Payment'},//present in turnbooklocation dont use 14 use 15 onwards dont use
-    { 'value': '16', 'viewvalue': 'Poch Update Series' },
+    { 'value': '1', 'viewvalue': 'Avaliable Trucks' ,'disabled':false},
+    { 'value': '2', 'viewvalue': 'Truck Arrival' ,'disabled':false},
+    { 'value': '3', 'viewvalue': 'Truck Dispatched' ,'disabled':false},
+    { 'value': '4', 'viewvalue': 'To From' ,'disabled':false},
+    { 'value': '5', 'viewvalue': 'Monthly Data' ,'disabled':false},
+    { 'value': '6', 'viewvalue': 'Balance Hire' ,'disabled':false},
+    { 'value': '7', 'viewvalue': 'Update Poch Check' ,'disabled':false},
+    { 'value': '8', 'viewvalue': 'Monthly By Series' ,'disabled':false},
+    { 'value': '9', 'viewvalue': 'Cancelled Vehicles' ,'disabled':false},
+    { 'value': '10', 'viewvalue': 'By Party' ,'disabled':false},
+    { 'value': '11', 'viewvalue': 'Details By Truck' ,'disabled':false},
+    { 'value': '12', 'viewvalue': 'Invoice' ,'disabled':false},
+    { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
+    { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
+    { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
+    { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
   ]
   public trucknoid11;
   public years = []
@@ -194,14 +194,6 @@ let buttons=[]
       }
     }
     return buttons.reverse();
-
-    // for(i=0;i<years.length;i++){
-    //   months=new Date().getFullYear()-years[i]==0?new Date().getMonth()+1:12;
-    //   for(j=0;j<months;j++){
-    //      date = new Date(String(i+2020)+'-'+generate2DigitNumber(String(j+1))+'-01');
-    // month = date.toLocaleString('default', { month: 'short' });
-    //   }
-    // }this works
   }
   filter(sh) {
     switch (sh) {
@@ -704,6 +696,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       tempObj['number'] = 2;
       tempObj['typeOfLoad'] = '';
       tempObj['complete'] = false;
+      tempObj['pochAmount'] = 0;
       tempObj['paymentid'] = data.paymentDetails[0]._id;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
