@@ -327,9 +327,11 @@ export class BalancehiredisplayComponent implements OnInit {
     let pageno = 1;
     let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
     var doc = new jsPDF();
+    doc.line(0, 148.2, 5, 148.2);//punching line helper
     //Static Part Start
     //Date
     doc.setFontSize('10');
+    doc.line(0, 148.2, 5, 148.2);//punching line helper
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
     doc.text(dateFormat, 90, 5)
@@ -378,6 +380,7 @@ export class BalancehiredisplayComponent implements OnInit {
       let data = this.balanceDate[z].truckData;
       if (((data.length * 6) + 15 + i) > 295) {
         doc.addPage();
+        doc.line(0, 148.2, 5, 148.2);//punching line helper
         //Static Part Start
         //Date
         doc.setFontSize('10');
@@ -489,6 +492,7 @@ export class BalancehiredisplayComponent implements OnInit {
     let pager=1;
      let bigValueofY=0;
      var doc = new jsPDF()
+     doc.line(0, 148.2, 5, 148.2);//punching line helper
      doc.setFontSize('25');
      doc.setFontType('bold');
      doc.text('Payment Pending', 15, 15)//partyname
@@ -533,6 +537,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.line(94, starty, 94, 292);//village
         doc.line(144, starty, 144, 292);//village
          doc.addPage();
+         doc.line(0, 148.2, 5, 148.2);//punching line helper
          doc.setFontSize('25');
      doc.setFontType('bold');
      doc.text('Payment Pending', 15, 15)//partyname
@@ -614,6 +619,7 @@ export class BalancehiredisplayComponent implements OnInit {
     let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
     let totalAmount=0;
     var doc = new jsPDF();
+    doc.line(0, 148.2, 5, 148.2);//punching line helper
     //Static Part Start
     //Date
     doc.setFontSize('10');
@@ -669,6 +675,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
       if (((data.length * 6) + 15 + i) > 295) {
         doc.addPage();
+        doc.line(0, 148.2, 5, 148.2);//punching line helper
         //Static Part Start
         //Date
         doc.setFontSize('10');

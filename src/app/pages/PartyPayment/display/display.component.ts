@@ -342,6 +342,7 @@ public balanceFollowGlobal={};
      doc.setFontSize('10');
      let y = 24;
      let starty = 24;
+     doc.line(0, 148.2, 5, 148.2);//punching line helper
      doc.text('Sr', 23, y)//partyname
      doc.text('Date', 38, y)//partyname
      doc.text('Truck No.', 60, y)//partyname

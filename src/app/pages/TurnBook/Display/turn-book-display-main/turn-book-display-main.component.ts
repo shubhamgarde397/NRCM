@@ -942,12 +942,13 @@ this.placeid=this.tempDate[0]['place']['_id']
 
   downloadAvailableData(){//threshhold is 295
  
-    
+ 
     let data=this.turnbooklist;
     let pager=1;
      let bigValueofY=0;
      var doc = new jsPDF()
      doc.setFontSize('25');
+     doc.line(0, 148.2, 5, 148.2);//punching line helper
      doc.setFontType('bold');
      doc.text(data[0]['partyDetails'][0]['name'], 15, 15)//partyname
      doc.setFontSize('10');
@@ -1045,9 +1046,11 @@ this.placeid=this.tempDate[0]['place']['_id']
   }
  downloadAvailable(){//threshhold is 295
   let data=this.turnbooklist;
+
     let pager=1;
      var doc = new jsPDF()
      doc.setFontSize('25');
+     doc.line(0, 148.2, 5, 148.2);//punching line helper
      doc.setFontType('bold');
      doc.text('Available Trucks : '+this.todaysDate, 15, 15)//partyname
      doc.setFontSize('10');
