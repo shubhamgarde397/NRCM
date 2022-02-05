@@ -286,7 +286,7 @@ export class BalancehiredisplayComponent implements OnInit {
     if (confirm('Document printed?')) {
       data['method'] = 'update';
       data['tablename'] = 'BalanceHire';
-      data['todayDate'] = this.selectedDate;
+      data['todayDateToPrint'] = this.selectedDate;
       data['print'] = true;
       data['part'] = 0;
       this.apiCallservice.handleData_New_python
