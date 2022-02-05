@@ -31,7 +31,10 @@ export class VillagedispComponent implements OnInit {
     this.villageslist = this.commonArray.villagenames;
   };
 
-
+  refresh(){
+    this.considerArray=[0,0,0,1,0,0,0]
+    this.getInformationData()
+  }
   deleteVillageDetails = function (id) {
     if (confirm('Are you sure?')) {
       let formbody = {}
@@ -40,7 +43,8 @@ export class VillagedispComponent implements OnInit {
       formbody['tablename'] = 'villagenames';
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
-        .subscribe((response: Response) => {
+        .subscribe((response: any) => {
+          alert(response.Status)
           let bb;
           let j = 0;
           this.villageslist.forEach((res) => {
@@ -55,7 +59,7 @@ export class VillagedispComponent implements OnInit {
   showDatabyid(yo) {
     this.handledata.saveData(yo);
     this.show = true;
-    this.router.navigate(['Navigation/Information/VILLAGE_HANDLER/VillageUpdate']);
+    this.router.navigate(['Navigation/VILLAGE_HANDLER/VillageUpdate']);
   }
 
   ngOnInit() {

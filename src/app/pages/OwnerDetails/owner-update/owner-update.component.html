@@ -7,64 +7,74 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="truckno" class="form-control" formControlName="truckno" disabled>
+        Truck No - <input type="text" id="truckno" class="form-control" formControlName="truckno" disabled>
       </div>
-    </div>
-
-    <div class="form-group row">
+      <div class="col-xs-1">
+        Type - <select [(ngModel)]='typeOfVehicle' class="form-control" formControlName="typeOfVehicle" >
+          <option selected disabled>{{type}}</option>
+          <option>Open</option>
+          <option>Container</option>
+          <option>Taurus</option>
+        </select>
+      </div>
       <div class="col-xs-3">
-        <input type="text" id="oname" class="form-control" formControlName="oname" placeholder="Name">
+        Name - <input type="text" id="oname" class="form-control" formControlName="oname" placeholder="Name">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.oname.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A">
-      </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.pan.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+        Pan - <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A">
       </div>
     </div>
 
 
     <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="text" id="regCard" class="form-control" formControlName="regCard" placeholder="Registration Card">
+      
+
+      <div class="col-xs-1">
+        Policy - <input type="checkbox" id="p" class="form-control" formControlName="p">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.regCard.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+      <div class="col-xs-1">
+        RC - <input type="checkbox" id="r" class="form-control" formControlName="r">
+      </div>
+      <div class="col-xs-1">
+        DL - <input type="checkbox" id="d" class="form-control" formControlName="d">
+      </div>
+      <div class="col-xs-1">
+        Fitness - <input type="checkbox" id="f" class="form-control" formControlName="f">
+      </div>
+      <div class="col-xs-1">
+        Pan - <input type="checkbox" id="P" class="form-control" formControlName="P">
       </div>
     </div>
 
+    <div class="form-group row">
+      <div class="col-xs-2">
+        RC Expiry- <input type="date" id="regCardExpiry" class="form-control" formControlName="regCardExpiry">
+      </div>
+      <div class="col-xs-2">
+        Lic Expiry - <input type="date" id="drivingLicExpiry" class="form-control" formControlName="drivingLicExpiry">
+      </div>
+      <div class="col-xs-2">
+        Policy Expiry -  <input type="date" id="policyExpiry" class="form-control" formControlName="policyExpiry">
+      </div>
+      <div class="col-xs-2">
+        Fitness Expiry - <input type="date" id="fitnessExpiry" class="form-control" formControlName="fitnessExpiry">
+      </div>
+      <div class="col-xs-2">
+        Height Breadth Length - <input type="text" id="hbl" class="form-control" formControlName="hbl" placeholder="20*8*8">
+      </div>
+      <div class="col-xs-2">
+        (Max) Weight in Ton - <input type="number" id="weight" class="form-control" formControlName="weight" placeholder="Name">
+      </div>
+    </div>
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="drivingLic" class="form-control" formControlName="drivingLic" placeholder="DL Number">
+        DoB - <input type="date" id="dob" class="form-control" formControlName="dob">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.drivingLic.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+      <div class="col-xs-3">
+       Aadhar No -  <input type="number" id="aadhar" class="form-control" formControlName="aadhar">
       </div>
     </div>
-
 
     <div class="form-group row">
       <div class="col-xs-3">
@@ -85,91 +95,50 @@
 
 
     <!-- Account details -->
+    <div class="well">
     <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="ABC">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.accountName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="number" id="accountNumber" class="form-control" formControlName="accountNumber"
           placeholder="325689741">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.accountNumber.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-
-
-
-
-
-    <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="text" id="bankName" class="form-control" formControlName="bankName" placeholder="Bank Name">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.bankName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.ifsc.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
+
+      <div class="form-group row" *ngIf='role==1||role==2'>
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-danger" style="width: 100%;" (click)="addaccount()">Add</button>
+        </div>
+        <div class="col-sm-6">
+          <table class="table table-bordered">
+            <tr>
+              <th>Srno</th>
+              <th>Name</th>
+              <th>Number</th>
+              <th>Bank</th>
+              <th>IFSC</th>
+              <th>Delete</th>
+            </tr>
+            <tr *ngFor="let i of accountArray;let j = index;">
+              <td>{{j+1}}</td>
+              <td>{{i.accountName}}</td>
+              <td>{{i.accountNumber}}</td>
+              <td>{{i.bankName}}</td>
+              <td>{{i.ifsc}}</td>
+              <td (click)="deleteOneA(i,j)">Delete</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
-    <!-- keep adding these data here -->
 
-    <!-- TruckDate -->
-    <div class="form-group row" *ngIf='role==1||role==2'>
-      <div class="col-sm-1">
-        <button type="button" (click)="addaccount()">Add</button>
-      </div>
-      <div class="col-sm-6">
-        <table class="table table-bordered">
-          <tr>
-            <th>Srno</th>
-            <th>Name</th>
-            <th>Number</th>
-            <th>Bank</th>
-            <th>IFSC</th>
-            <th>Delete</th>
-          </tr>
-          <tr *ngFor="let i of accountArray;let j = index;">
-            <td>{{j+1}}</td>
-            <td>{{i.accountName}}</td>
-            <td>{{i.accountNumber}}</td>
-            <td>{{i.bankName}}</td>
-            <td>{{i.ifsc}}</td>
-            <td (click)="deleteOneA(i,j)">Delete</td>
-          </tr>
-        </table>
-      </div>
-
-    </div>
+  </div>
     <hr *ngIf='role==1||role==2'>
     <!-- Account Details -->
     <!-- Preference -->
@@ -200,12 +169,6 @@
           <i class="material-icons">send</i>
         </button>
       </div>
-
     </div>
   </form>
-
-
-
-
-
 </div>

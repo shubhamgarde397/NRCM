@@ -2,40 +2,44 @@
   <form [formGroup]="myFormGroup" (ngSubmit)="storeTurnBookData(myFormGroup)" submitted=true
     enctype="multipart/form data" action="/">
 
-    <!-- DATE-->
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="date">Turnbook Date</label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate">
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.turnbookDate.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-
+    <div class="row">
+      <div class="col-lg-1"><label for="date">Turnbook</label></div>
+    <div class="col-lg-9">
+      <div class="row">
+        <div class="col-sm-2">
+      <button mat-raised-button type="button" (click)="leftRight('back')"
+        class="btn btn-danger btn-sm btn-just-icon delete">
+        Back
+      </button>
     </div>
-    <!--DATE -->
+      <div class="col-sm-3">
+        <input type="date" id="turnbookDate" class="form-control" [(ngModel)]="turnbookDate" formControlName="turnbookDate" style="display: none;">
+      <h3>{{turnbookDate|date:'dd-MM-yyyy'}}</h3>
+    </div>
+      <div class="col-sm-2">
+      <button mat-raised-button type="button" (click)="leftRight('ahead')"
+        class="btn btn-primary btn-sm btn-just-icon delete">
+        Ahead
+      </button>
+    </div>
+    </div>
+    </div>
+  </div>
 
-    <!--Truckno-->
+  <div class="form-group row">
+    <div class="col-sm-3">
+      Loading Date : 
+        <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
+    </div>
+  </div>
+
     <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="truckNo"> Truckno </label>
-      </div>
-
       <div class="col-xs-3">
+        TruckNo : 
         <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
           (change)="findtruckdetails()" id="truckNoone" *ngIf="!manualTruck">
           <option value="Other+">Other</option>
-          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}</option>
+          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}-{{i.typeOfVehicle[0]}}</option>
         </select>
 
         <input type="text" *ngIf="manualTruck" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM">
@@ -44,9 +48,8 @@
             <span class="glyphicon glyphicon-remove"></span>
           </font>
         </div>
-
-
       </div>
+
       <div class="col-xs-1">
         <div [hidden]="myFormGroup.controls.trucknoM.valid">
           <font color="red">
@@ -55,53 +58,49 @@
         </div>
       </div>
 
+      <div class="col-xs-3">
+        Location : 
+        <select class="form-control" formControlName="waitLocation">
+          <option value="Shivapur">Shivapur</option>
+          <option value="Dhaba">Dhaba</option>
+          <option value="None">None</option>
+        </select>
+      </div>  
     </div>
     <!--Truckno-->
-    <!-- partyType-->
+
+    <!--Type  -->
     <div class="form-group row">
-
-      <div class="col-sm-2">
-        <label for="partyType"> From </label>
-      </div>
-
       <div class="col-xs-3">
-        <select class="form-control" id="partyType" formControlName="partyType">
-          <option>NRCM</option>
-          <option>NR</option>
+        Party Type : 
+        <select class="form-control" formControlName="partyType">
+          <option value="" selected>None</option>
+          <option value="NRCM">NRCM</option>
+          <option value="NR">NR</option>
         </select>
-      </div>
+      </div>  
 
-
-      <div [hidden]="myFormGroup.controls.partyType.valid" class="col-xs-1">
-        <font color="red">
-          <span class="glyphicon glyphicon-remove"></span>
-        </font>
-      </div>
+      <!-- Party -->
+    <div class="col-sm-3">
+      Party :
+    <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
+      <option selected  value=''>None</option>
+      <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
+    </select>
+  </div>
+  <!-- Party -->
+<!-- Place -->
+  <div class="col-sm-3">
+    Place : 
+    <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
+      <option value="" selected>None</option>
+      <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
+    </select>
     </div>
-    <!--From -->
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="place"> Place </label>
-      </div>
-
-      <div class="col-xs-3">
-        <select id="palce" class="form-control" formControlName="place" [(ngModel)]="villageData">
-          <option disabled selected>Select Place</option>
-          <option *ngFor="let own of villagelist" value="{{own._id}}">{{own.village_name}}</option>
-        </select>
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.place.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
+<!-- Place -->
 
     </div>
-
+    <!-- Type -->
 
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>

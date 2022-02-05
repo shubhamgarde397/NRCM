@@ -35,20 +35,20 @@ export class TurnBookAddComponent implements OnInit {
   public role;
   public ownerdetailslist;
   public ownerid;
-  public partyid;
-  public placeid;
+  public partyid='5fff37a31f4443d6ec77e078';
+  public placeid='5bcdecdab6b821389c8abde0';
   public partyType;
   public method;
   public turnArray = [];
   public truckdetailslist = [];
-  public gstdetailslist;
-  public gstdetailslistid;
   public villagelist;
   public trucknoid;
   public villageData = "";
   public trucknoidno;
   public manualTruck = false;
   public trucknoM;
+  public turnbookDate;
+  public parties;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
@@ -59,7 +59,7 @@ export class TurnBookAddComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.obs.dateService.subscribe((res: any) => {
       let arr = res.split('_');
       this.m = this.handlefunction.generateMonthName(arr[0]);
@@ -72,10 +72,12 @@ export class TurnBookAddComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: ['', Validators.required],
       truckNo: ['', Validators.required],
-      partyType: '',
-      place: '',
-      trucknoM: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]]
-
+      trucknoM: ['', [Validators.required]],
+      waitLocation:['',[Validators.required]],
+      partyName :'',
+      place:'',
+      partyType:'',
+      loadingDate:''
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -92,6 +94,8 @@ export class TurnBookAddComponent implements OnInit {
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
         this.securityCheck.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.securityCheck.commonArray['ownerdetails'];;
         this.truckdetailslist = this.commonArray.ownerdetails;
+        this.villagelist = this.commonArray.villagenames;
+        this.parties = this.commonArray.gstdetails;
         this.fetchBasic();
         this.spinnerService.hide();
       });
@@ -99,10 +103,10 @@ export class TurnBookAddComponent implements OnInit {
 
   fetchBasic() {
     this.commonArray = this.securityCheck.commonArray;
-    this.gstdetailslist = [];
+    this.parties = [];
     this.villagelist = [];
     this.truckdetailslist = [];
-    this.gstdetailslist = this.commonArray.gstdetails;
+    this.parties = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
     this.truckdetailslist = this.commonArray.ownerdetails;
 
@@ -116,7 +120,6 @@ export class TurnBookAddComponent implements OnInit {
   }
 
   findtruckdetails() {
-
     let tf = this.trucknoid.split('+')[0] === 'Other' ? true : false;
     if (tf) {
       this.manualTruck = true;
@@ -135,24 +138,30 @@ export class TurnBookAddComponent implements OnInit {
     let tempobj = {};
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
-    tempobj['placeid'] = this.villageData === "" ? '5bcdecdab6b821389c8abde0' : this.villageData;
-    tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
+    // tempobj['placeid'] = '5bcdecdab6b821389c8abde0';
+    // tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
+    // tempobj['partyType'] = '';
+    tempobj['placeid'] = this.placeid;
+    tempobj['partyid'] = this.partyid;
     tempobj['partyType'] = value['partyType'];
-    tempobj['loadingDate'] = '';
-    tempobj['turnbookDate'] = value['turnbookDate'];
+    tempobj['loadingDate'] = value['loadingDate'];
+    tempobj['turnbookDate'] = this.turnbookDate;//value['turnbookDate'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = this.method;
     tempobj["user"]= "shubham";
     tempobj["typeofuser"]= 1;
     tempobj["lrno"]= 0;
-    tempobj["advance"]= 0;
-    tempobj["balance"]= 0;
     tempobj["hamt"]= 0;
     tempobj["pochDate"]= "";
+    tempobj["invoice"]= "";
     tempobj["pochPayment"]= false;
     tempobj["pgno"]= 999;
+    tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";
     tempobj["input"]= "manual";
+    tempobj["waitLocation"]= value['waitLocation'];
+    tempobj["complete"]= false;
+    tempobj["typeOfLoad"]= value['partyType']==='NR'?'Others':'';
 let toAdd=true;
 let toAddData;
     let tempObj={};
@@ -165,19 +174,43 @@ let toAddData;
     tempObj['turnbookDateS14']=last14Days.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getDate()));
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-      toAddData=res.Data.filter(r=>r.ownerDetails[0]._id===this.ownerid);
+      toAddData=res.Data.filter(r=>r.truckid===this.ownerid);
       toAdd=toAddData.length>0?true:false;
       if(toAdd){
-        alert('Entry Already Present.\nTurnbook Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].turnbookDate))+'.\nTruck No : '+toAddData[0].ownerDetails[0].truckno);
+        alert('Entry Already Present.\nTurnbook Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].turnbookDate))+'.\nTruck No : '+toAddData[0].truckno+'.\nLoading Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].loadingDate))+'.\nParty Name : ' +toAddData[0].partyName);
         toAdd=!confirm('Do you still Want to add?');
        }
        if(!toAdd){
       this.submitted = true;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
         .subscribe((res: any) => {
-          if (res.status === "Duplicate Entry Found.") {
-            alert(res.status);
-          } else {
+          if (res.hidden) {
+            alert(res.Status);
+            var question=confirm('Vehicle present but its hidden, do you want to unhide and add?');
+            if(question){
+            tempobj['truckno'] = this.trucknoM;
+            tempobj['method'] = 'showAndAdd';
+            tempobj['show']=true;
+            tempobj['find']=true;
+            tempobj['tablename'] = 'ownerdetails';
+            this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
+            .subscribe((res: any) => {
+              alert(res.Status);
+              this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
+              this.manualTruck = false;
+          this.myFormGroup.patchValue({ place: '' });
+          this.myFormGroup.patchValue({ trucknoM: '' })
+          this.villageData = "";
+          this.spinnerService.hide();
+          this.fetchBasic();
+          this.reset();
+            })
+            }
+          }else if(res.empty){
+            alert(res.Status);
+          }
+          else if(!res.hidden){alert(res.Status)}
+          else{
             if (this.method === "insert.new") {
               let tempObj1 = {};
               tempObj1['oname'] = "";
@@ -207,6 +240,16 @@ let toAddData;
  
     
   }
+
+  setPartyName() {
+    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
+    this.myFormGroup.value.partyName = this.partyid;
+  }
+  setPlaceName() {
+    this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
+    this.myFormGroup.value.place = this.placeid;
+  }
+
   reset() {
     this.manualTruck = false;
     this.submitted = false;
@@ -223,5 +266,22 @@ let toAddData;
 
   back() {
     this.submitted = false;
+  }
+
+  leftRight(LR) {
+    let tempArray;
+    let date;
+    switch (LR) {
+      case 'back':
+        tempArray=this.turnbookDate.split('-');
+        date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])-1)
+        this.turnbookDate = this.handlefunction.createDate(date);
+        break;
+      case 'ahead':
+        tempArray=this.turnbookDate.split('-');
+        date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])+1)
+        this.turnbookDate = this.handlefunction.createDate(date);
+        break;
+    }
   }
 }

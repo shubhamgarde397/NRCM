@@ -55,7 +55,7 @@ export class WelcomePageComponent implements OnInit {
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler'])
         break;
       case 'truckdetails':
-        this.router.navigate(['Navigation/Information/OWNER_HANDLER'])
+        this.router.navigate(['Navigation/OWNER_HANDLER'])
         break;
     }
 

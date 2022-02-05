@@ -28,7 +28,9 @@ export class BalancehiredisplayComponent implements OnInit {
   public createdDate = '';
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Balance Hire' },
-    { 'value': '2', 'viewvalue': 'Check Prints' }
+    { 'value': '2', 'viewvalue': 'Check Prints' },
+    { 'value': '3', 'viewvalue': 'Given Date' },
+    { 'value': '4', 'viewvalue': 'Given Payment Pending' }
   ]
   public months = [
     { '1': 'Jan' },
@@ -54,6 +56,11 @@ export class BalancehiredisplayComponent implements OnInit {
   public displayType;
   public data;
   public dayData;
+  public givenTrucks;
+  public givenTrucksPayment;
+  public givenPaymentTable=false;
+  public givenDate;
+  public GPPMsg='Loading... Please Wait!'
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -68,6 +75,7 @@ export class BalancehiredisplayComponent implements OnInit {
     for (let i = 0; i < new Date().getFullYear() - 2020; i++) {
       this.years.push(i + 2021)
     }
+    this.givenDate=this.handleF.createDate(new Date());
   }
 
   adminAccess() {
@@ -82,8 +90,110 @@ export class BalancehiredisplayComponent implements OnInit {
     this.daydiv = false;
     this.printInfo = this.buttonOption == '1' ? true : false;
     this.createdDate = '';
-
+    this.buttonOption == '3'?this.getGivenDateTrucks():undefined;
+    this.buttonOption == '4'?this.getGivenTrucksPayment():undefined;
+    
   }
+  refresh(data){
+    switch (data) {
+      case '3':
+        this.getGivenDateTrucks();    
+        break;
+    case '4':
+      this.getGivenTrucksPayment();
+      break;
+      
+    }
+    
+  }
+  getGivenDateTrucks(){
+    let formbody = {}
+    formbody['method'] = 'givenEmpty';
+    formbody['tablename'] = 't';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, formbody, 0)
+      .subscribe((res: any) => {
+        this.givenTrucks=res.Data;
+      });
+  
+  }
+
+  addtoGiven(id){
+    if (confirm('Add to Given Date?')) {
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['givenDate']=this.givenDate;
+      formbody['method'] = 'addGivenEmpty';
+      formbody['tablename'] = 't';
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, formbody, 0)
+        .subscribe((res: any) => {
+          alert(res.Status)
+        });
+    }
+  }
+
+  showDatabyidTBEdit(data,j){
+   
+  // showDatabyid = function (data, j, number) {
+    this.show = true;
+    let tempObj = {};
+
+    tempObj['place'] = data.places[0] === undefined ? '' : data.places[0].village_name;
+    tempObj['truckno'] = data.trucks[0] === undefined ? '' : data.trucks[0].truckno;
+    tempObj['partyName'] = data.parties[0] === undefined ? '' : data.parties[0].name;
+    tempObj['ownerid'] = data.trucks[0] === undefined ? '' : data.trucks[0]._id;
+    tempObj['accountDetails'] = data.trucks[0]['accountDetails'];
+    tempObj['placeid'] = data.places[0] === undefined ? '' : data.places[0]._id;
+    tempObj['partyid'] = data.parties[0] === undefined ? '' : data.parties[0]._id;
+    tempObj['entryDate'] = data.entryDate;
+    tempObj['_id'] = data._id;
+    tempObj['partyType'] = data.partyType;
+    tempObj['turnbookDate'] = data.turnbookDate;
+    tempObj['loadingDate'] = data.loadingDate;
+    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
+    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
+    tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
+    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
+    tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
+    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
+    tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
+    tempObj['payment'] = data.paymentDetails;
+    tempObj['paymentDisabled']=false;
+    tempObj['index'] = j;
+    tempObj['number'] = '1';
+    tempObj['invoice'] = data.invoice;
+    tempObj['locations'] = data.locations;
+    tempObj['locationDate'] = data.locationDate;
+    tempObj['complete'] = data.complete;
+    tempObj['typeOfLoad'] = data.typeOfLoad;
+    tempObj['waitLocation'] = data.waitLocation;
+    tempObj['advanceArray'] = data.advanceArray;
+    tempObj['qr'] = data.qr;
+
+
+    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
+    this.handledata.saveData(tempObj);
+  };
+
+  
+  getGivenTrucksPayment(){
+    let formbody = {}
+    formbody['method'] = 'givenPaymentPending';
+    formbody['tablename'] = 't';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, formbody, 0)
+      .subscribe((res: any) => {
+        this.givenTrucksPayment=res.Data;
+        this.givenPaymentTable=res.Data.length>0?true:false;
+        this.GPPMsg=res.Data.length>0?'':'No Pending Payments'
+      });
+  }
+
+  downloadPendingPayment(){
+    // pdf to see pendingpayment
+  }
+
   find = function () {
     let tempObj = {};
     if (this.selectedDate === undefined) {
@@ -176,7 +286,7 @@ export class BalancehiredisplayComponent implements OnInit {
     if (confirm('Document printed?')) {
       data['method'] = 'update';
       data['tablename'] = 'BalanceHire';
-      data['todayDate'] = this.selectedDate;
+      data['todayDateToPrint'] = this.selectedDate;
       data['print'] = true;
       data['part'] = 0;
       this.apiCallservice.handleData_New_python
@@ -217,9 +327,11 @@ export class BalancehiredisplayComponent implements OnInit {
     let pageno = 1;
     let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
     var doc = new jsPDF();
+    doc.line(0, 148.2, 5, 148.2);//punching line helper
     //Static Part Start
     //Date
     doc.setFontSize('10');
+    doc.line(0, 148.2, 5, 148.2);//punching line helper
     doc.setFontType('bold');
     doc.setTextColor(0, 0, 0);
     doc.text(dateFormat, 90, 5)
@@ -268,6 +380,7 @@ export class BalancehiredisplayComponent implements OnInit {
       let data = this.balanceDate[z].truckData;
       if (((data.length * 6) + 15 + i) > 295) {
         doc.addPage();
+        doc.line(0, 148.2, 5, 148.2);//punching line helper
         //Static Part Start
         //Date
         doc.setFontSize('10');
@@ -318,7 +431,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
       let K = 0
       doc.setFontSize('10');
-      doc.text(this.balanceDate[z].comments, 38.5, i);//comments
+      doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
@@ -329,6 +442,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].shortDetails, 120, i);//truckno
         K = k;
         i = i + 6;
       }
@@ -367,6 +481,112 @@ export class BalancehiredisplayComponent implements OnInit {
 
     return I;
   }
+
+  downloadGPP()
+  {//threshhold is 295
+ 
+    
+    
+    let data=this.givenTrucksPayment;
+ 
+    let pager=1;
+     let bigValueofY=0;
+     var doc = new jsPDF()
+     doc.line(0, 148.2, 5, 148.2);//punching line helper
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Payment Pending', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 25;
+     doc.text('Sr', 2, y)//partyname
+     doc.text('TruckNo', 8, y)//partyname
+     doc.text('Date', 34, y)//partyname
+     doc.text('Party', 56, y)//partyname
+     doc.text('Place', 95, y)//partyname
+     doc.text('Notes', 145, y)//partyname
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(7, 20, 7, 25);//srno
+     doc.line(33, 20, 33, 25);//truck
+     doc.line(55, 20, 55, 25);//date
+     doc.line(94, 20, 94, 25);//village
+     doc.line(144, 20, 144, 25);//village
+     //vertical lines
+     let startforI=0;
+     y = y + 6;
+     startforI=0;
+     for (let i = startforI; i < data.length; i++) {
+ 
+       if(y>290){
+        
+         y=30;
+     starty = 25;
+     doc.line(7, starty, 7, 292);//date
+        doc.line(33, starty,33, 292);//truckno
+        doc.line(55, starty, 55, 292);//credit
+        doc.line(94, starty, 94, 292);//village
+        doc.line(144, starty, 144, 292);//village
+         doc.addPage();
+         doc.line(0, 148.2, 5, 148.2);//punching line helper
+         doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('Payment Pending', 15, 15)//partyname
+     doc.setFontSize('10');
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 2, y-6)//partyname
+     doc.text('TruckNo', 8, y-6)//partyname
+     doc.text('Date', 34, y-6)//partyname
+     doc.text('Party', 56, y-6)//partyname
+     doc.text('Place', 95, y-6)//partyname
+     doc.text('Notes', 145, y-6)//partyname
+     //headers
+     //vertical lines
+     doc.line(7, 20, 7, 25);//srno
+     doc.line(33, 20, 33, 25);//truck
+     doc.line(55, 20, 55, 25);//date
+     doc.line(94, 20, 94, 25);//village
+     doc.line(144, 20, 144, 25);//village
+     //vertical lines
+     doc.line(0, 25, 210, 25);//line after header
+     }
+     
+    doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
+    doc.text(data[i].trucks[0].truckno, 8, y-1)//partyname
+    doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 34, y-1)//Date  
+    doc.text(this.handleF.getDateddmmyy(data[i].givenDate), 34, y+2)//Date              
+    doc.text(data[i].parties[0].name.slice(0,16), 56, y-1)//Destination
+    doc.text(data[i].places[0].village_name.slice(0,16), 95, y-1)//Destination
+    doc.line(0, y +4, 210, y +4);//line after header
+       y = y + 8;
+       
+     }
+        //vertical lines//getting applied for every loop, make it happen once only
+        doc.line(7, starty, 7, y-4);//date
+        doc.line(33, starty,33, y-4);//truckno
+        doc.line(55, starty, 55, y-4);//credit
+        doc.line(94, starty, 94, y-4);//village
+        doc.line(144, starty, 144, y-4);//village
+        //vertical lines
+
+    //  doc.save('Available-Data.pdf')
+     doc.save('GPP.pdf')//partyname
+   }
   download() {//threshhold is 295
     let i;
     if (confirm('Fresh Page?')) {
@@ -399,6 +619,7 @@ export class BalancehiredisplayComponent implements OnInit {
     let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
     let totalAmount=0;
     var doc = new jsPDF();
+    doc.line(0, 148.2, 5, 148.2);//punching line helper
     //Static Part Start
     //Date
     doc.setFontSize('10');
@@ -421,7 +642,7 @@ export class BalancehiredisplayComponent implements OnInit {
     doc.line(61, i + 6 - 16, 61, i + 12 - 16);
     doc.line(72, i + 6 - 16, 72, i + 12 - 16);
     doc.line(92, i + 6 - 16, 92, i + 12 - 16);
-    doc.line(135, i + 6 - 16, 135, i + 12 - 16);
+    doc.line(155, i + 6 - 16, 155, i + 12 - 16);
 
 
     //vertical line after date till headers
@@ -434,7 +655,7 @@ export class BalancehiredisplayComponent implements OnInit {
     doc.text('Pg', 63, i + 10 - 16)
     doc.text('Date', 72.5, i + 10 - 16)
     doc.text('TruckNo', 92.5, i + 10 - 16)
-    doc.text('Account Details', 135.5, i + 10 - 16)
+    doc.text('Account Details', 155.5, i + 10 - 16)
     //Headers End
     //Line after headers
     doc.setDrawColor(0, 0, 0);
@@ -454,6 +675,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
       if (((data.length * 6) + 15 + i) > 295) {
         doc.addPage();
+        doc.line(0, 148.2, 5, 148.2);//punching line helper
         //Static Part Start
         //Date
         doc.setFontSize('10');
@@ -476,7 +698,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.line(61, 6, 61, 12);
         doc.line(72, 6, 72, 12);
         doc.line(92, 6, 92, 12);
-        doc.line(135, 6, 135, 12);
+        doc.line(155, 6, 155, 12);
         //vertical line after date
         //Headers
         doc.setFontSize('10');
@@ -487,7 +709,7 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.text('Pg', 63, 10)
         doc.text('Date', 72.5, 10)
         doc.text('TruckNo', 92.5, 10)
-        doc.text('Account Details', 135.5, 10)
+        doc.text('Account Details', 155.5, 10)
         //Headers End
         //Line after headers
         doc.setDrawColor(0, 0, 0);
@@ -503,7 +725,9 @@ export class BalancehiredisplayComponent implements OnInit {
       }
       let K = 0
       doc.setFontSize('10');
-      doc.text(this.balanceDate[z].comments, 38.5, i);//comments
+      console.log(this.balanceDate[z].commentToTruck);
+      
+      doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
@@ -514,6 +738,9 @@ export class BalancehiredisplayComponent implements OnInit {
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
+        doc.setFontSize('8');
+        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
+        doc.setFontSize('10');
         K = k;
         i = i + 6;
         totalAmount=totalAmount+this.balanceDate[z].truckData[k].amount;
@@ -527,12 +754,12 @@ export class BalancehiredisplayComponent implements OnInit {
       doc.line(61, i - (data.length * 6) - 5, 61, i + 7);
       doc.line(72, i - (data.length * 6) - 5, 72, i + 7);
       doc.line(92, i - (data.length * 6) - 5, 92, i + 7);
-      doc.line(135, i - (data.length * 6) - 5, 135, i + 7);
+      doc.line(155, i - (data.length * 6) - 5, 155, i + 7);
 
       doc.setFontSize('10');
-      doc.text(this.balanceDate[z].accountName, 136.5, i - (data.length * 6));//accno
-      doc.text(String(this.balanceDate[z].accountNumber), 136.5, i + 6 - (data.length * 6));//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 136.5, i + 12 - (data.length * 6));//ifsc-bankname
+      doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
+      doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
 
       i = i + 12;
     }
@@ -547,6 +774,8 @@ export class BalancehiredisplayComponent implements OnInit {
     data['editOption'] = 0;
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
+    console.log('here');
+    
   };
   back(type) {
     switch (type) {

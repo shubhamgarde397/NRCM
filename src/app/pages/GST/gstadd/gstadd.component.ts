@@ -7,6 +7,7 @@ import { Validators } from '@angular/forms';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-gstadd',
@@ -30,7 +31,7 @@ export class GstaddComponent implements OnInit {
   public dbName = 'NRCM_Information';
   public commonArray;
   public considerArray;
-  constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
+  constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,
     public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { }
 
 
@@ -56,6 +57,7 @@ export class GstaddComponent implements OnInit {
       .subscribe((res: any) => {
         alert(res['Status']);
         this.securityCheck.commonArray['gstdetails'].push(res);
+        this.location.back()
       });
   }
 

@@ -88,8 +88,6 @@ public paymentData;
   }
 
   download(i){
-    console.log(i);
-    
     let tempObj={};
     tempObj['tablename'] = 'partyPayment'
 tempObj['partyid']=[i.partyid];

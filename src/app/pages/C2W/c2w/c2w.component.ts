@@ -221,7 +221,7 @@ export class C2wComponent implements OnInit {
       this.myFormGroup.patchValue({ MessageS: '' });
     } else {
       if (value.MessageA) {
-        this.oldData.unshift({ "Name": "Anuja", "Text": value.MessageA });
+        this.oldData.unshift({ "Name": "OtherName", "Text": value.MessageA });
         this.myFormGroup.patchValue({ MessageA: '' });
         this.myFormGroup.patchValue({ MessageS: '' });
       } else if (value.MessageS) {

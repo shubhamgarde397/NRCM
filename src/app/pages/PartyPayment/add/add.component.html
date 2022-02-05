@@ -3,7 +3,7 @@
     enctype="multipart/form data" action="/">
 
     <!-- DATE-->
-    <div class="form-group row">
+    <!-- <div class="form-group row">
 
       <div class="col-xs-1">
         <label for="date"> Date</label>
@@ -21,7 +21,31 @@
         </div>
       </div>
 
+    </div> -->
+
+    <div class="row">
+      <div class="col-lg-1"><label for="paymentDate">Date</label></div>
+    <div class="col-lg-9">
+      <div class="row">
+        <div class="col-sm-2">
+      <button mat-raised-button type="button" (click)="leftRight('back')"
+        class="btn btn-danger btn-sm btn-just-icon delete">
+        Back
+      </button>
     </div>
+      <div class="col-sm-3">
+        <input type="date" id="paymentDate" class="form-control" [(ngModel)]="paymentDate" formControlName="paymentDate" style="display: none;">
+      <h3>{{paymentDate|date:'dd-MM-yyyy'}}</h3>
+    </div>
+      <div class="col-sm-2">
+      <button mat-raised-button type="button" (click)="leftRight('ahead')"
+        class="btn btn-primary btn-sm btn-just-icon delete">
+        Ahead
+      </button>
+    </div>
+    </div>
+    </div>
+  </div>
     <!--DATE -->
 
     <!--partyName-->
@@ -54,7 +78,7 @@
     <div class="form-group row">
 
       <div class="col-xs-1">
-        <label for="amount"> amount </label>
+        <label for="amount"> Amount </label>
       </div>
 
       <div class="col-xs-3">

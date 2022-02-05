@@ -8,6 +8,7 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-odadd',
@@ -16,6 +17,7 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
   providers: [ApiCallsService]
 })
 export class OdaddComponent implements OnInit {
+  public typeOfVehicle='';
   public myFormGroup: FormGroup;
   public model: odata; // mapped it to a variable
   public modelSubmitted: odata;
@@ -38,10 +40,12 @@ export class OdaddComponent implements OnInit {
   public villagedetailslist;
   public tdid;
   public vid;
-  public regCard;
   public drivingLic;
   public role = 6;
-  constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, public securityCheck: SecurityCheckService) { }
+  constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, 
+    public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, 
+    public securityCheck: SecurityCheckService,
+    public _location:Location) { }
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
@@ -53,13 +57,20 @@ export class OdaddComponent implements OnInit {
       oname: '',
       pan: '',
       contact: [],
-      regCard:'',
-      drivingLic:'',
+      regCardExpiry:'',
+      aadhar:"",
+      dob:"",
+      drivingLicExpiry:'2021-11-20',
+      policyExpiry:'2021-11-20',
+      fitnessExpiry:'2021-11-20',
+      typeOfVehicle:'None',
       accountName: '',
       accountNumber: '',
       bankName: '',
       ifsc: '',
       reference: '',
+      hbl: '',
+      weight: '',
       preferences: []
     });
     this.role = this.securityCheck.role;
@@ -90,11 +101,20 @@ export class OdaddComponent implements OnInit {
     formBody['oname'] = value['oname'];
     formBody['pan'] = value['pan'];
     formBody['contact'] = this.contactArray;
-    formBody['regCard'] = value['regCard'];
-    formBody['drivingLic'] = value['drivingLic'];
+    formBody['drivingLicExpiry'] = value['drivingLicExpiry'];
+    formBody['policyExpiry'] = value['policyExpiry'];
+    formBody['regCardExpiry'] = value['regCardExpiry'];
+    formBody['fitnessExpiry'] = value['fitnessExpiry'];
+    formBody['aadhar'] = value['aadhar'];
+    formBody['dob'] = value['dob'];
+    formBody['typeOfVehicle']=value['typeOfVehicle'];
+    formBody['show'] = true;
     formBody['accountDetails'] = this.accountArray;
     formBody['preferences'] = this.villageArray;
+    formBody['hbl'] = value['hbl'];
+    formBody['weight'] = value['weight'];
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
+    if(formBody['oname'].length>25){alert('Name too long. Only 25 characters allowed.')}else{
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, formBody, 0)
       .subscribe((res: any) => {
@@ -104,16 +124,26 @@ export class OdaddComponent implements OnInit {
         formres['truckno'] = value['truckno'];
         formres['oname'] = value['oname'];
         formres['pan'] = value['pan'];
-        formres['regCard'] = value['regCard'];
-        formres['drivingLic'] = value['drivingLic'];
+        formres['drivingLicExpiry'] = value['drivingLicExpiry'];
+    formres['policyExpiry'] = value['policyExpiry'];
+    formres['regCardExpiry'] = value['regCardExpiry'];
+    formres['fitnessExpiry'] = value['fitnessExpiry'];
+    formres['aadhar'] = value['aadhar'];
+    formres['dob'] = value['dob'];
+    formres['typeOfVehicle'] = value['typeOfVehicle'];
+    formres['hbl'] = value['hbl'];
+    formres['weight'] = value['weight'];
         formres['contact'] = this.contactArray;
         formres['accountDetails'] = this.accountArray;
         formres['preferences'] = this.villageArray;
+        formres['show'] = true;
         formres['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
         this.securityCheck.commonArray['ownerdetails'].push(formres);
         this.reset();
+        this._location.back();
       });
   }
+}
 
   back() {
     this.submitted = false;
@@ -178,5 +208,7 @@ export class OdaddComponent implements OnInit {
     this.myFormGroup.patchValue({ ifsc: '' });
     this.myFormGroup.patchValue({ reference: '' });
     this.myFormGroup.patchValue({ preferences: [] });
+    this.myFormGroup.patchValue({ hbl: [] });
+    this.myFormGroup.patchValue({ weight: [] });
   }
 }

@@ -12,6 +12,9 @@ export class HandleDataService {
     "gstdetails": [{}],
     "ownerdetails": [{}],
     "villagenames": [{}],
+    "lrlist": [{}],
+    "hiddenownerdetails": [{}],
+    "qr": [{}],
     // "regularparty": [{}],
     // "RegularTruck": [{}],
     // "thoughts": [{}],
@@ -20,9 +23,24 @@ export class HandleDataService {
   public IP = [];
   public turnData = [];
   public BHData = [];
+public PPData=[];
+  public PaymentData=[]
 
   constructor(public securityCheck: SecurityCheckService) { }
 
+  savePaymentData(data){
+    this.PaymentData=data;
+  }
+  givePaymentData(){
+    return this.PaymentData;
+  }
+  savePPData(data){
+    this.PPData=data;
+  }
+  givePPData(){
+    return this.PPData;
+  }
+  
   notification(value) {
     this.flag = value;
   }
@@ -53,6 +71,7 @@ export class HandleDataService {
     let tempCArr = [];
     let tempArrofAPI = [];
     tempArrofAPI = this.getIndexes(data);
+    
     for (let i = 0; i < tempArrofAPI.length; i++) {
       tempCArr[tempArrofAPI[i][0].index] = 1;//use here tempArrOfAPI[0].index
     }
@@ -82,9 +101,15 @@ export class HandleDataService {
       case 'infovillage':
         return [Consts.VILLAGE_INDEX];
       case 'turnbook':
-        return [Consts.VILLAGE_INDEX, Consts.OWNER_INDEX];
+        return [Consts.VILLAGE_INDEX, Consts.GST_INDEX,Consts.OWNER_INDEX];
       case 'turnbookadd':
-        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
+      case 'infolrlist':
+        return [Consts.LRLIST_INDEX]
+      case 'infohiddenlist':
+        return [Consts.HIDDEN_TRUCK_INDEX]
+      case 'infoqr':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
 
     }
   }

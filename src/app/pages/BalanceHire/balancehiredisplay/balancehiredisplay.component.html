@@ -1,4 +1,4 @@
-<div class="well container" style="width:100%;">
+<div class="well" style="width:100%;" *ngIf="!show">
 
   <div class="form-group row">
     <div class="col-sm-5">
@@ -10,7 +10,7 @@
 
 
   <div class="row" *ngIf="buttonOption=='2'">
-    <span style="font-weight: bold;">{{createdDate}}</span>
+    <span style="font-weight: bold;">{{createdDate|date:'dd-MM-yyyy'}}</span>
     <div *ngIf="yeardiv">
       <div class="col-sm-2" *ngFor="let i of years">
         <button mat-raised-button class="btn btn-warning" style="margin:1vh;" (click)="find2(i,'year')">{{i}}</button>
@@ -61,7 +61,7 @@
     </div>
 
     <div style="text-align: center">
-      <h3>{{selectedDate}}</h3>
+      <h3>{{selectedDate|date:'dd-MM-yyyy'}}</h3>
       <table class="table" style="width:100%" align="center">
 
         <thead class="table-header">
@@ -86,10 +86,10 @@
           <tr *ngFor="let i of balanceDate;let j = index"
             [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'black' }">
             <td>{{j+1}}</td>
-            <td>{{i.todayDate}}</td>
+            <td>{{i.todayDate|date:'dd-MM-yyyy'}}</td>
             <td>
               <ul *ngFor="let k of i.truckData">
-                <li>{{k.date}}</li>
+                <li>{{k.date|date:'dd-MM-yyyy'}}</li>
               </ul>
             </td>
 
@@ -148,4 +148,99 @@
       <button class="btn btn-danger" style="width:100%" (click)="back('day')">Back</button>
     </div>
   </div>
+</div>
+
+<div class="well" *ngIf="buttonOption=='3'">  
+<div class="row">
+  <h3>NR Trucks</h3>
+  <button mat-raised-button (click)="refresh('3')" class="btn-warning btn-sm btn-just-icon">
+    <i class="material-icons">reset</i>
+  </button>
+  <div class="row">
+    <div class="col-sm-4">
+      Given Date : 
+      <input type="date" [(ngModel)]='givenDate'>
+    </div>
+  </div>
+  <table class="table" style="width:100%" align="center">
+    <thead class="table-header">
+      <tr>
+        <th>Srno</th>
+        <th>LDate</th>
+        <th>TDate</th>
+        <th>Truckno</th>
+        <th>Party</th>
+        <th>Add to Given</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of givenTrucks;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+        <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
+        <td>{{i.truckno}}</td>
+        <td>{{i.parties}}</td>
+        <td>
+          <button mat-raised-button (click)="addtoGiven(i._id)" class="btn-warning btn-sm btn-just-icon">
+            <i class="material-icons">add</i>
+          </button>
+        </td>
+        
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption=='4'">  
+  <div class="row">
+    <h3>NR Trucks</h3>
+   
+      <div class="well"  *ngIf="givenPaymentTable">
+      <button mat-raised-button (click)="downloadGPP()" class="btn-warning btn-sm btn-just-icon">
+        <i class="material-icons">download</i>
+      </button>
+      <button mat-raised-button (click)="refresh('4')" class="btn-warning btn-sm btn-just-icon">
+        <i class="material-icons">autorenew</i>
+      </button>
+    <table class="table" style="width:100%" align="center">
+      <thead class="table-header">
+        <tr>
+          <th>Srno</th>
+          <th>Loading Date</th>
+          <th>Given Date</th>
+          <th>Truckno</th>
+          <th>Party</th>
+          <th>Place</th>
+          <th>Edit</th>
+        </tr>
+      </thead>
+  
+  
+      <tbody>
+        <tr *ngFor="let i of givenTrucksPayment;let j = index">
+          <td>{{j+1}}</td>
+          <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+          <td>{{i.givenDate|date:'dd-MM-yyyy'}}</td>
+          <td>{{i.trucks[0].truckno}}</td>
+          <td>{{i.parties[0].name}}</td>  
+          <td>{{i.places[0].village_name}}</td>    
+          <td>
+            <button mat-raised-button (click)="showDatabyidTBEdit(i,j)" class="btn-warning btn-sm btn-just-icon">
+              <i class="material-icons">edit</i>
+            </button>
+          </td>    
+        </tr>
+      </tbody>
+    </table>
+  </div>
+    <div class="well" *ngIf="!givenPaymentTable"><h1>{{GPPMsg}}</h1></div>
+  </div>
+  </div>
+
+<div *ngIf="show">
+  <router-outlet></router-outlet>
 </div>

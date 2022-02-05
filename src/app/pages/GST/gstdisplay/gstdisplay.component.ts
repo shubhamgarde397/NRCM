@@ -35,7 +35,10 @@ export class GstdisplayComponent implements OnInit {
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.gstdetailslist = this.commonArray.gstdetails;
   }
-
+  refresh(){
+    this.considerArray=[0,1,0,0,0,0,0]
+    this.getInformationData()
+  }
   deleteGSTDetails = function (id) {
     if (confirm('Are you sure?')) {
       let formbody = {}
@@ -44,7 +47,8 @@ export class GstdisplayComponent implements OnInit {
       formbody['tablename'] = 'gstdetails';
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
-        .subscribe((response: Response) => {
+        .subscribe((response: any) => {
+          alert(response.Status)
           let bb;
           let j = 0;
           this.gstdetailslist.forEach((res) => {
@@ -60,7 +64,7 @@ export class GstdisplayComponent implements OnInit {
     this.handledata.saveData(data);
     this.show = true;
     this.found = data;
-    this.router.navigate(['Navigation/Information/GST_HANDLER/GSTUpdate']);
+    this.router.navigate(['Navigation/GST_HANDLER/GSTUpdate']);
   };
   getInformationData() {
     this.spinnerService.show();

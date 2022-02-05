@@ -1,4 +1,4 @@
-<div class="well container">
+<div class="well">
 
   <br />
   <div class="row">
@@ -9,20 +9,49 @@
           <select class="form-control" id="partyType" [(ngModel)]="trucknoid" (change)="findOption()" id="truckNoone">
             <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
           </select>
+          Party Type : 
+          <select class="form-control" [(ngModel)]="buttonOptionPartyType">
+            <option value="NRCM">NRCM</option>
+          <option value="NR">NR</option>
+          <option value="SNL">SNL</option>
+          <option value="SGL">SGL</option>
+          </select>
         </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )">
+          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&& (buttonOption!=='16')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )&&(buttonOption!=='12' )&&(buttonOption!=='13')">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='4'">
           <input type="date" class="form-control" [(ngModel)]="dynDate2">
         </div>
 
+        <div class="col-sm-3" *ngIf="buttonOption==='12'">
+          <input type="text" class="form-control" [(ngModel)]="byInvoice" placeholder="Invoice">
+        </div>
+
+        <div class="col-sm-3" *ngIf="buttonOption==='13'">
+          <input type="number" class="form-control" [(ngModel)]="bylrno" placeholder="Lrno">
+        </div>
+
         <div class="col-sm-3" *ngIf="buttonOption==='8'">
           <select class="form-control" [(ngModel)]="selectedmy">
             <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
           </select>
+        </div>
+        <div class="col-sm-3" *ngIf="buttonOption==='16'">
+          <select class="form-control" [(ngModel)]="selectedmy">
+            <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
+          </select>
+        </div>
+        <div class="col-sm-3" *ngIf="buttonOption==='10'">
+          <button class="btn btn-warning" (click)="downloadAvailableData()" style="width: 100%;">Party Details</button>
+        </div>
+        <div class="col-sm-3" *ngIf="isAvailable">
+          <button class="btn btn-warning" (click)="downloadAvailable()" style="width: 100%;">Available Details</button>
+        </div>
+        <div class="col-sm-3" *ngIf="buttonOption==='11'">
+          <button class="btn btn-warning" (click)="downloadDeepData()" style="width: 100%;">PDF Deep Detail</button>
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='10'">
           <select id="nop" class="form-control" [(ngModel)]="partyVar" (change)="findgst()">
@@ -33,73 +62,83 @@
           </select>
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='11'">
-          <select id="nop" class="form-control" [(ngModel)]="truckVar" (change)="findtruck()">
-            <option disabled selected>Select Truck No</option>
-            <option *ngFor="let gst of trucks;let j = index;" value={{gst._id+j}}>
-              {{gst.truckno}}
-            </option>
-          </select>
+          <input type="text" class="form-control" [(ngModel)]='truckVar' placeholder="Truck No">
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3" *ngIf="tableSelected">
+          PartyWise Filter : 
           <select class="form-control" [(ngModel)]="selectpartyType" (change)="showDatabyParty()">
             <option>All</option>
             <option>NR</option>
             <option>NRCM</option>
+            <option>SNL</option>
+          <option>SGL</option>
           </select>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-4">
-          <!-- <input type="text" [(ngModel)]="dataTruck" (input)="newData()"> -->
-        </div>
         <div class="col-sm-4">
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;"
             [disabled]="buttonOption==='7'">
             {{buttonValue}}
           </button>
         </div>
-        <div class="col-sm-4" *ngIf="role==1||role==2" (click)="getAdminAccess()">Admin Access</div>
+        <div class="col-sm-3">
+        Open : {{types.Open}}
+        Container : {{types.Container}}
+        None : {{types.None}}
+        <br>
+        Shivapur : {{Locationtypes.Shivapur}}
+        Dhaba : {{Locationtypes.Dhaba}}
+        None : {{Locationtypes.None}}
+      </div>
       </div>
       <!--DATE -->
 
       <h3>{{todaysDate}}</h3>
-
       <table class="table" style="width:100%" align="center"
-        *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')&&(buttonOption!=='8')&&(buttonOption!=='11')">
+        *ngIf="(buttonOption!=='6')&&(buttonOption!=='7')&&(buttonOption!=='8')&&(buttonOption!=='11')&&(tableSelected)&& (buttonOption!=='16')">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
             <th>Date</th>
             <th>Loading Date</th>
-            <th>Truck No</th>
+            <th>Truck No-Type</th>
             <th>Place</th>
             <th>Party</th>
             <th>LRNO</th>
-            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">PN</th>
-            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')">Delete</th>
-            <th *ngIf="buttonOption!=='9'">Cancel</th>
-            <th *ngIf="buttonOption!=='9'">Edit</th>
-            <th *ngIf="(adminAccess)&&(buttonOption!=='9')">TNO</th>
-            <th *ngIf="buttonOption=='9'">Undo</th>
+            <th>Amount</th>
+            <th *ngIf="buttonOption=='10'">Poch</th>
+            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">PN</th>
+            <th *ngIf="(buttonOption!=='9')&&(buttonOption!=='10')">Options</th>
+            <th *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">Undo</th>
+            <th  *ngIf="buttonOption=='1'">S</th>
           </tr>
         </thead>
 
         <tbody align="center">
           <tr *ngFor="let i of turnbooklist;let j = index"
             [ngStyle]="{'color': i.ownerDetails[0]===undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }">
-            <td>{{j+1}}</td>
+            <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+              done
+              </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                close
+                </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.waitLocation}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}
 
               <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
-                PAN
+                <i class="material-icons">
+                  local_parking
+                  </i>
               </button>
 
               <button class="btn btn-warning" type="button" (click)="edit(i.ownerDetails[0])"
                 style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].accountDetails.length===0">
-                Account
+                <i class="material-icons">
+                  account_balance
+                  </i>
               </button>
 
             </td>
@@ -108,61 +147,45 @@
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
-            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')">{{i.partyDetails[0].name}}</td>
-            <td>
+            <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+            <td  *ngIf="buttonOption=='10'">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
+            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">{{i.partyDetails[0].name}}<br>{{i.qr}}</td>
+            <td *ngIf="buttonOption!=='10'">
+            <div class="btn-group-vertical">
               <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
-                class="btn-danger btn-sm btn-just-icon">
-                <i class="material-icons">delete_forever</i>
-              </button>
-            </td>
-            <td>
-              <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid2(i,j,'cancel')"
-                class="btn-warning btn-sm btn-just-icon">
-                <i class="material-icons">delete</i>
-              </button>
-            </td>
-            <td>
-              <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid(i,j,1)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button>
+            <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid2(i,j,'cancel')"
+            class="btn-warning btn-sm btn-just-icon">
+            <i class="material-icons">delete</i>
+          </button>
+          <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid(i,j,1)"
+          class="btn-primary btn-sm btn-just-icon">
+          <i class="material-icons">edit</i>
+        </button>
+        <button mat-raised-button type="button" (click)="showDatabyid(i,j,3)"
                 class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">edit</i>
+                <i class="material-icons">
+                  local_shipping
+                </i>
               </button>
-            </td>
-            <td *ngIf="(adminAccess)&&(buttonOption!=='9')">
-              <button mat-raised-button type="button" (click)="showDatabyid(i,j,3)"
-                class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">edit</i>
-              </button>
-            </td>
-            <td *ngIf="buttonOption=='9'">
+              <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyidTurn(i.ownerDetails[0])">edit</i>
+            </div>
+          </td>
+            <td *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">
               <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
                 class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">edit</i>
+                <i class="material-icons">undo</i>
               </button>
+            </td>
+            <td *ngIf="buttonOption=='1'"> 
+              <input type="checkbox">
             </td>
           </tr>
         </tbody>
       </table>
-      <div class="row" *ngIf="buttonOption==='6'">
-
-        <div class="col-sm-3">
-          <input type="date" class="form-control" [(ngModel)]="dateFilter"
-            [disabled]="truckFilterB">
-            <button class="btn btn-warning" (click)="filter('date')">By Date</button>
-        </div>
-        <div class="col-sm-3">
-          <input type="text" class="form-control" [(ngModel)]="truckFilter" [disabled]="dateFilterB">
-        </div>
-        <div class="col-sm-2">
-          <button mat-raised-button type="button" (click)="filter('truck')">Filter</button>
-        </div>
-
-        <div class="col-sm-2">
-          <button mat-raised-button type="button" (click)="filter('skipDate')">Skip Date</button>
-        </div>
-        <div class="col-sm-2">
-          <button mat-raised-button type="button" (click)="filter('')">Erase Filters</button>
-        </div>
-      </div>
+<!-- Balance Hire -->
       <div *ngIf="saveToCheckArrayBoolean">
 
         <table class="table" style="width:100%" align="center" *ngIf="buttonOption==='6'">
@@ -171,7 +194,7 @@
               <th>Srno</th>
               <th>Date</th>
               <th>Loading Date</th>
-              <th>Truck No</th>
+              <th>Truck No-Type</th>
               <th>Place</th>
               <th>Party</th>
               <th>LRNO</th>
@@ -181,16 +204,24 @@
 
           <tbody align="center">
             <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'black' }">
-              <td>{{j+1}}</td>
+              <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+                done
+                </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                  close
+                  </i></td>
               <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-              <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-              <td>{{i.ownerDetails[0].truckno}}</td>
+              <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+              <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}</td>
               <td>{{i.villageDetails[0].village_name}}</td>
-              <td>{{i.partyType}}</td>
+              <td>{{i.partyType}}<br>{{i.partyDetails[0].name}}</td>
               <td>{{i.lrno}}</td>
               <td *ngIf='i.checker===0'>
                 <button mat-raised-button type="button" (click)="addToCheckArray(i,j,1)"
                   class="btn-primary btn-sm btn-just-icon">
+                  <i class="material-icons">add</i>
+                </button><br>
+                <button *ngIf='i.partyType==="NR"' mat-raised-button type="button" (click)="toPay(i,j,1)"
+                  class="btn-warning btn-sm btn-just-icon">
                   <i class="material-icons">add</i>
                 </button>
               </td>
@@ -215,15 +246,19 @@
           </button>
         </div>
       </div>
+
       <div *ngIf="!saveToCheckArrayBoolean">
         <div *ngIf="finalCheckDone">
           <div *ngFor="let k of balanceHireArrray;let kk=index;">
-            <table>
+            <table class="table">
               <thead>
                 <tr>
                   <th>Srno</th>
                   <th>Loading Date</th>
                   <th>Truck No</th>
+                  <th>Party Name</th>
+                  <th>Party Type</th>
+                  <th>Place</th>
                   <th>Cancel</th>
                 </tr>
               </thead>
@@ -232,6 +267,9 @@
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
                   <td>{{ii.ownerDetails[0].truckno}}</td>
+                  <td>{{ii.partyDetails[0].shortName}}</td>
+                  <td>{{ii.partyType}}</td>
+                  <td>{{ii.villageDetails[0].village_name}}</td>
                   <td><button mat-raised-button type="button" (click)="addToCheckArray2(kk,jj,0)"
                       class="btn-danger btn-sm btn-just-icon">
                       <i class="material-icons">remove</i>
@@ -251,12 +289,15 @@
 
         <div *ngIf="!finalCheckDone">
           <div *ngFor="let k of balanceHireArrray;let kk=index;">
-            <table>
+            <table class="table">
               <thead>
                 <tr>
                   <th>Srno</th>
                   <th>Loading Date</th>
                   <th>Truck No</th>
+                  <th>Party Name</th>
+                  <th>Party Type</th>
+                  <th>Place</th>
                   <th>Balance</th>
                   <th>Pageno</th>
                 </tr>
@@ -266,7 +307,10 @@
                   <td>{{jj+1}}</td>
                   <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
                   <td>{{ii.ownerDetails[0].truckno}}</td>
-                  <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}">
+                  <td>{{ii.partyDetails[0].shortName}}</td>
+                  <td>{{ii.partyType}}</td>
+                  <td>{{ii.villageDetails[0].village_name}}</td>
+                  <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.balance}}>
                   </td>
                   <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">
                   </td>
@@ -280,9 +324,12 @@
           <button mat-raised-button type="button" (click)="setBalPage()" class="btn-success btn-sm btn-just-icon">
             <i class="material-icons">arrow_forward</i>
           </button>
-
+          <button mat-raised-button type="button" (click)="comments()" class="btn-danger btn-sm btn-just-icon">
+            Comments
+          </button>
         </div>
       </div>
+      <!-- Balance Hire -->
 
       <div class="col-sm-12" *ngIf="buttonOption==='7'">
         <div class="row" *ngIf="pochDiv">
@@ -292,31 +339,13 @@
           </div>
         </div>
         <div *ngIf="!pochDiv" class="row">
-          <div class="row">
-            <div class="col-sm-2">
-              <input type="text" class="form-control" [(ngModel)]="truckFilter2">
-            </div>
-            <div class="col-sm-2">
-              <button mat-raised-button type="button" class="btn btn-warning" (click)="filter2('truck')">
-                Filter</button>
-            </div>
-            <div class="col-sm-2">
-              <button mat-raised-button type="button" class="btn btn-warning" (click)="filter2('')">Erase
-                Filters</button>
-            </div>
-
-            <div class="col-sm-2">
-              <button mat-raised-button type="button" class="btn btn-danger" (click)="filter2('back')">Back</button>
-            </div>
-          </div>
-
           <table class="table" style="width:100%" align="center" *ngIf="buttonOption==='7'">
             <thead align="center" style="font-weight: bold">
               <tr class=table-header>
                 <th>Srno</th>
                 <th>Date</th>
                 <th>Loading Date</th>
-                <th>Truck No</th>
+                <th>Truck No-Type</th>
                 <th>Place</th>
                 <th>Party</th>
                 <th>LRNO</th>
@@ -326,10 +355,14 @@
 
             <tbody align="center">
               <tr *ngFor="let i of turnbooklist;let j = index">
-                <td>{{j+1}}</td>
+                <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+                  done
+                  </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                    close
+                    </i></td>
                 <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{i.ownerDetails[0].truckno}}</td>
+                <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+                <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}</td>
                 <td>{{i.villageDetails[0].village_name}}</td>
                 <td>{{i.partyType}}</td>
                 <td>{{i.lrno}}</td>
@@ -350,6 +383,7 @@
           </table>
         </div>
       </div>
+      <div *ngIf="buttonOption=='8'">
       <div class="col-sm-12" *ngIf="!showbuttonOption8" style="font-weight: bold;font-size: 8vh;">
         {{show8Msg}}
       </div>
@@ -381,16 +415,218 @@
           <div class="form-group row" *ngIf="showbuttonOption82">
 
             <div class="col-xs-2">
-              <label for="truckNo"> Truckno </label>
+              <label for="truckNo"> Truckno-Type </label>
             </div>
 
             <div class="col-xs-3">
               <select id="" class="form-control" formControlName="truckno" (change)="getOtherDetails2()">
                 <option>Blank</option>
-                <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}
+                <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}-{{i.typeOfVehiclefirst}}
                 </option>
               </select>
             </div>
+
+            
+
+          </div>
+          <!--Truckno-->
+
+          <!-- loadType-->
+          <div class="form-group row" *ngIf="showbuttonOption821">
+
+            <div class="col-xs-2">
+              <label for="typeOfLoad"> Load Type</label>
+            </div>
+
+            <div class="col-xs-3">
+              <select class="form-control" formControlName="typeOfLoad">
+                <option value="Pipe">Pipe</option>
+                <option value="Fittings">Fittings</option>
+              </select>
+            </div>
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.typeOfLoad}} class="form-control" disabled>
+            </div>
+
+
+          </div>
+          <!--loadType -->
+
+          <!-- turnbookDate-->
+          <div class="form-group row" *ngIf="showbuttonOption821">
+
+            <div class="col-xs-2">
+              <label for="turnbookDate"> Turn Book Date</label>
+            </div>
+
+            <div class="col-xs-3">
+              <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate" disabled>
+            </div>
+
+
+          </div>
+          <!--turnbookDate -->
+
+          <!--Place-->
+          <div class="form-group row" *ngIf="showbuttonOption821">
+            <div class="col-xs-2">
+              <label for="place"> Place </label>
+            </div>
+            <div class="col-xs-3">
+
+              <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
+                <option disabled value="{{placeid}}" selected>{{monthlybyseriesData.place}}</option>
+                <option *ngFor="let own of villagelist;let j = index;" value="{{own.village_name}}">{{own.village_name}}
+                </option>
+              </select>
+            </div>
+            <div class="col-xs-1">
+              <div [hidden]="myFormGroup.controls.place.valid">
+                <font color="red">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </font>
+              </div>
+            </div>
+
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.place}} class="form-control" disabled>
+            </div>
+          </div>
+          <!--place-->
+
+          <!--NOP-->
+          <div class="form-group row" *ngIf="showbuttonOption821">
+
+            <div class="col-xs-2">
+              <label for="partyName"> Name of Party </label>
+            </div>
+            <div class="col-xs-3">
+              <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
+                <option selected disabled value={{partyid}}>{{monthlybyseriesData.party}}</option>
+                <option *ngFor="let i of parties;let k = index;" value={{i.name}}>{{i.name}}</option>
+              </select>
+            </div>
+
+            <div class="col-xs-1">
+              <div [hidden]="myFormGroup.controls.partyName.valid">
+                <font color="red">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </font>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.party}} class="form-control" disabled>
+            </div>
+          </div>
+          <!--NOP-->
+          <!--LRNO-->
+          <div class="form-group row" *ngIf="showbuttonOption821">
+
+            <div class="col-xs-2">
+              <label for="lrno"> Lrno </label>
+            </div>
+
+            <div class="col-xs-3">
+              <input type="number" id="lrno" class="form-control" formControlName="lrno">
+            </div>
+
+            <div class="col-xs-1">
+              <div [hidden]="myFormGroup.controls.lrno.valid">
+                <font color="red">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </font>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.lrno}} class="form-control" disabled>
+            </div>
+          </div>
+          <!--LRNO-->
+
+
+          <!--Hire Amount-->
+          <div class="form-group row" *ngIf="showbuttonOption821">
+
+            <div class="col-xs-2">
+              <label for="hamt"> Hire Amount </label>
+            </div>
+
+            <div class="col-xs-3">
+              <input type="number" class="form-control" formControlName="hamt" />
+
+            </div>
+
+            <div class="col-xs-1">
+              <div [hidden]="myFormGroup.controls.hamt.valid">
+                <font color="red">
+                  <span class="glyphicon glyphicon-remove"></span>
+                </font>
+              </div>
+            </div>
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesData.hamt}} class="form-control" disabled>
+            </div>
+          </div>
+          <!--HireAmount-->
+
+          <div class="row" *ngIf="showbuttonOption82">
+            <div class="form-group" class="col-xs-2"></div>
+            <div class="form-group" class="col-xs-1">
+              <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+                <i class="material-icons">send</i>
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+      <div *ngIf="buttonOption=='16'">
+      <div class="col-sm-12" *ngIf="!showbuttonOption8" style="font-weight: bold;font-size: 8vh;">
+        {{show8Msg}}
+      </div>
+      <div class="col-sm-12" *ngIf="showbuttonOption8">
+        <form [formGroup]="myFormGroup" (ngSubmit)="changeU(myFormGroup)">
+          <!-- loadingDate-->
+          <div class="form-group row">
+
+            <div class="col-xs-2">
+              <label for="loadingDate"> Loading Date</label>
+            </div>
+
+            <div class="col-xs-3">
+              <select id="loadingDateDynamic" class="form-control " formControlName="loadingDateDynamic"
+                (change)="getOtherDetailsU()">
+                <option>Blank</option>
+                <option *ngFor="let i of turnbooklistnew;let j = index;" value={{i.loadingDate}}>{{i.loadingDate}}
+                </option>
+              </select>
+            </div>
+
+
+          </div>
+          <!--loadingDate -->
+
+
+
+          <!--Truckno-->
+          <div class="form-group row" *ngIf="showbuttonOption82">
+
+            <div class="col-xs-2">
+              <label for="truckNo"> Truckno-Type </label>
+            </div>
+
+            <div class="col-xs-3">
+              <select id="" class="form-control" formControlName="truckno" (change)="getOtherDetails2U()">
+                <option>Blank</option>
+                <option *ngFor="let i of turnbooklist_trucks;let j = index;" value={{i.truckno}}>{{i.truckno}}-{{i.typeOfVehiclefirst}}
+                </option>
+              </select>
+            </div>
+
+            
 
           </div>
           <!--Truckno-->
@@ -416,19 +652,7 @@
               <label for="place"> Place </label>
             </div>
             <div class="col-xs-3">
-
-              <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
-                <option disabled value="{{placeid}}" selected>{{place}}</option>
-                <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}
-                </option>
-              </select>
-            </div>
-            <div class="col-xs-1">
-              <div [hidden]="myFormGroup.controls.place.valid">
-                <font color="red">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </font>
-              </div>
+              <input type="text" value={{monthlybyseriesDataU.place}} class="form-control" disabled>
             </div>
           </div>
           <!--place-->
@@ -439,67 +663,38 @@
             <div class="col-xs-2">
               <label for="partyName"> Name of Party </label>
             </div>
-            <div class="col-xs-3">
-              <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
-                <option selected disabled value={{partyid}}>{{party}}</option>
-                <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
-              </select>
-            </div>
-
-            <div class="col-xs-1">
-              <div [hidden]="myFormGroup.controls.partyName.valid">
-                <font color="red">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </font>
-              </div>
+            <div class="col-sm-3">
+              <input type="text" value='United' class="form-control" disabled>
             </div>
           </div>
           <!--NOP-->
-          <!--LRNO-->
-          <div class="form-group row" *ngIf="showbuttonOption821">
+
+
+           <!--Poch Amount-->
+           <div class="form-group row" *ngIf="showbuttonOption821">
 
             <div class="col-xs-2">
-              <label for="lrno"> LRNO </label>
+              <label for="pochAmount"> Poch Amount </label>
             </div>
 
             <div class="col-xs-3">
-              <input type="number" id="lrno" class="form-control" formControlName="lrno">
+              <input type="number" class="form-control" formControlName="pochAmount" />
+
             </div>
 
             <div class="col-xs-1">
-              <div [hidden]="myFormGroup.controls.lrno.valid">
+              <div [hidden]="myFormGroup.controls.pochAmount.valid">
                 <font color="red">
                   <span class="glyphicon glyphicon-remove"></span>
                 </font>
               </div>
             </div>
-
+            <div class="col-sm-3">
+              <input type="text" value={{monthlybyseriesDataU.pochAmount}} class="form-control" disabled>
+            </div>
           </div>
-          <!--LRNO-->
+          <!--PochAmount-->
 
-
-          <!--Hire Amount-->
-          <div class="form-group row" *ngIf="showbuttonOption821">
-
-            <div class="col-xs-2">
-              <label for="hamt"> Hire Amount </label>
-            </div>
-
-            <div class="col-xs-3">
-              <input type="number" class="form-control" formControlName="hamt" />
-
-            </div>
-
-            <div class="col-xs-1">
-              <div [hidden]="myFormGroup.controls.hamt.valid">
-                <font color="red">
-                  <span class="glyphicon glyphicon-remove"></span>
-                </font>
-              </div>
-            </div>
-
-          </div>
-          <!--HireAmount-->
 
           <div class="row" *ngIf="showbuttonOption82">
             <div class="form-group" class="col-xs-2"></div>
@@ -512,14 +707,41 @@
 
         </form>
       </div>
+    </div>
+
+
 <div class="row" *ngIf="buttonOption=='11'">
+<div class="col-sm-6" *ngIf="showprdfP">
+  <div class="row">
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].P}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Pan</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].dE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Lic</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].pE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Policy</div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].A}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Acc</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].rE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">RC</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].fE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Fitness</div>
+  </div>
+</div>
+
+
+    <div class="col-sm-12">
+      <select class="form-control" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+        <option>Default</option>
+        <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
+      </select>
+    </div>
+
+    <div class="col-sm-12">
+
+
   <table class="table" style="width:100%" align="center" *ngIf="byTruckName">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
             <th>Entry Date</th>
             <th>Loading Date</th>
-            <th>Truck No</th>
+            <th>Truck No-Type</th>
             <th>Place</th>
             <th>Party</th>
             <th>Type</th>
@@ -529,20 +751,25 @@
           </tr>
         </thead>
         <tbody align="center">
-          <tr *ngFor="let i of turnbooklist;let j = index">
-            <td>{{j+1}}</td>
+          <tr *ngFor="let i of turn11;let j = index">
+            <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+              done
+              </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                close
+                </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.truckName.truckno}}</td>
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+            <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.truckName.hbl}}={{i.truckName.weight}}</td>
             <td>{{i.placeName.village_name}}</td>
             <td>{{i.partyName.name}}</td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
-            <td>{{i.hamt}}</td>
-            <td>{{i.pochDate}} : {{i.pgno}}</td>
+            <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+            <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
           </tr>
         </tbody>
       </table>
+</div>
 </div>
     </div>
   </div>

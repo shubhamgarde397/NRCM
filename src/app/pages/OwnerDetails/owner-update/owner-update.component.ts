@@ -16,7 +16,7 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 })
 export class OwnerUpdateComponent implements OnInit {
   public villagenamelist: any;
-
+public typeOfVehicle;
   public show = false;
   public truckno: string;
   public oname: string;
@@ -30,6 +30,7 @@ export class OwnerUpdateComponent implements OnInit {
   public contactA;
   public preferenceArray = [];
   public pA;
+  public type;
   public villagedetailslist;
   public commonArray;
   public considerArray = [];
@@ -48,19 +49,32 @@ export class OwnerUpdateComponent implements OnInit {
       truckno: [this.handledata.Data.truckno],
       oname: [this.handledata.Data.oname],
       pan: [this.handledata.Data.pan],
-      regCard: [this.handledata.Data.regCard],
-      drivingLic: [this.handledata.Data.drivingLic],
+      drivingLicExpiry: [this.handledata.Data.drivingLicExpiry],
+      policyExpiry: [this.handledata.Data.policyExpiry],
+      regCardExpiry: [this.handledata.Data.regCardExpiry],
+      fitnessExpiry: [this.handledata.Data.fitnessExpiry],
+      typeOfVehicle: [this.handledata.Data.typeOfVehicle],
+      aadhar: [this.handledata.Data.aadhar],
+      dob: [this.handledata.Data.dob],
       contact: [this.handledata.Data.contact],
       accountName: '',
       accountNumber: '',
       bankName: '',
-      ifsc: ''
+      ifsc: '',
+      p: [this.handledata.Data.p],
+      r: [this.handledata.Data.r],
+      d: [this.handledata.Data.d],
+      f: [this.handledata.Data.f],
+      P: [this.handledata.Data.P],
+      hbl: [this.handledata.Data.hbl],
+      weight: [this.handledata.Data.weight]
     });
+    
     this.contactArray = this.handledata.Data.contact;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
     this.role = this.sec.role;
-
+    this.type=this.handledata.Data.typeOfVehicle;
     // SBH56
   }
 
@@ -88,8 +102,13 @@ export class OwnerUpdateComponent implements OnInit {
     formbody['truckno'] = data.value.truckno;
     formbody['oname'] = data.value.oname;
     formbody['pan'] = data.value.pan;
-    formbody['regCard'] = data.value.regCard;
-    formbody['drivingLic'] = data.value.drivingLic;
+    formbody['drivingLicExpiry'] = data.value.drivingLicExpiry;
+    formbody['policyExpiry'] = data.value.policyExpiry;
+    formbody['regCardExpiry'] = data.value.regCardExpiry;
+    formbody['fitnessExpiry'] = data.value.fitnessExpiry;
+    formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
+    formbody['aadhar'] = data.value.aadhar;
+    formbody['dob'] = data.value.dob;
     formbody['contact'] = this.contactArray;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
@@ -97,6 +116,13 @@ export class OwnerUpdateComponent implements OnInit {
     formbody['reference'] = this.handledata.Data.reference;
     formbody['method'] = 'update';
     formbody['tablename'] = 'ownerdetails';
+    formbody['p'] = data.value.p;
+    formbody['r'] = data.value.r;
+    formbody['d'] = data.value.d;
+    formbody['f'] = data.value.f;
+    formbody['P'] = data.value.P;
+    formbody['hbl'] = data.value.hbl;
+    formbody['weight'] = data.value.weight;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
@@ -107,12 +133,25 @@ export class OwnerUpdateComponent implements OnInit {
               res['truckno'] = data.value.truckno;
               res['oname'] = data.value.oname;
               res['pan'] = data.value.pan;
-              res['regCard'] = data.value.regCard;
-              res['drivingLic'] = data.value.drivingLic;
+              res['drivingLicExpiry'] = data.value.drivingLicExpiry;
+              res['policyExpiry'] = data.value.policyExpiry;
+              res['regCardExpiry'] = data.value.regCardExpiry;
+              res['fitnessExpiry'] = data.value.fitnessExpiry;
+              res['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle;
+              res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
+              res['aadhar'] = data.value.aadhar;
+              res['dob'] = data.value.dob;
               res['contact'] = this.contactArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;
               res['reference'] = "";
+              res['p'] = data.value.p;
+              res['r'] = data.value.r;
+              res['d'] = data.value.d;
+              res['f'] = data.value.f;
+              res['P'] = data.value.P;
+              res['hbl'] = data.value.hbl;
+              res['weight'] = data.value.weight;
             }
           })
 

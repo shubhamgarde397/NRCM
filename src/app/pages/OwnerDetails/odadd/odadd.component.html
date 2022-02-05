@@ -2,90 +2,69 @@
 
   <form [formGroup]="myFormGroup" (ngSubmit)="storeOwnerDetailsData(myFormGroup)" submitted=true
     enctype="multipart/form data" action="/">
-
-
-
+<h4>Personal Details </h4>
     <div class="form-group row">
       <div class="col-xs-3">
-
-
-        <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN02 AB 2045">
+        Truck No - <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN02 AB 2045">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.truckno.valid">
+      <div class="col-xs-1" [hidden]="myFormGroup.controls.truckno.valid">
+        <div>
           <font color="red">
             <span class="glyphicon glyphicon-remove"></span>
           </font>
         </div>
       </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="text" id="oname" class="form-control" formControlName="oname" placeholder="Name">
+      <div class="col-xs-1">
+        Type - <select [(ngModel)]='typeOfVehicle' formControlName="typeOfVehicle" class="form-control">
+          <option>Open</option>
+          <option>Container</option>
+          <option>Taurus</option>
+        </select>
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.oname.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-
-
-
-
-    <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A"
+        Name - <input type="text" id="oname" class="form-control" formControlName="oname" placeholder="Name">
+      </div>
+      <div class="col-xs-3">
+        PAN - <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A"
           pattern="^[A-Z]{5}[0-9]{4}[A-Z]{1}">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.pan.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
     </div>
-
-
 
     <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="text" id="regCard" class="form-control" formControlName="regCard" placeholder="Registration Number"
-          >
+         <div class="col-xs-2">
+        RC Expiry - <input type="date" id="regCardExpiry" class="form-control" formControlName="regCardExpiry">
       </div>
       <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.regCard.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+        Lic Expiry - <input type="date" id="drivingLicExpiry" class="form-control" formControlName="drivingLicExpiry">
+      </div>
+      <div class="col-xs-2">
+        Policy Expiry - <input type="date" id="policyExpiry" class="form-control" formControlName="policyExpiry">
+      </div>
+      <div class="col-xs-2">
+        Fitness Expiry - <input type="date" id="fitnessExpiry" class="form-control" formControlName="fitnessExpiry">
+      </div>
+      <div class="col-xs-2">
+        Height Breadth Length - <input type="text" id="hbl" class="form-control" formControlName="hbl" placeholder="20*8*8">
+      </div>
+      <div class="col-xs-2">
+        (Max) Weight in Ton - <input type="number" id="weight" class="form-control" formControlName="weight" placeholder="Name">
       </div>
     </div>
-
-
 
     <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="text" id="drivingLic" class="form-control" formControlName="drivingLic" placeholder="DL Number"
-          >
-      </div>
       <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.drivingLic.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+        DoB - <input type="date" id="dob" class="form-control" formControlName="dob">
+      </div>
+      <div class="col-xs-3">
+        Aadhar No - <input type="number" id="aadhar" class="form-control" formControlName="aadhar">
       </div>
     </div>
+
 
     <!--  -->
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
+        Contact - <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
           [(ngModel)]="contactA">
       </div>
       <div class="col-xs-2">
@@ -110,69 +89,33 @@
     <!--  -->
 
     <!-- Account details -->
+    <div class="well">
+      <h4>Account Details</h4>
     <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="ABC">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.accountName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
 
-    <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="number" id="accountNumber" class="form-control" formControlName="accountNumber"
           placeholder="325689741">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.accountNumber.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
 
-
-
-
-
-    <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="text" id="bankName" class="form-control" formControlName="bankName" placeholder="Bank Name">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.bankName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
 
-    <div class="form-group row" *ngIf='role==1||role==2'>
       <div class="col-xs-3">
         <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.ifsc.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-    <!-- keep adding these data here -->
 
-    <!-- TruckDate -->
-    <div class="form-group row" *ngIf='role==1||role==2'>
+    </div>
+    <div class="row">
       <div class="col-sm-1">
-        <button type="button" (click)="addaccount()">Add</button>
+        <button type="button" class="btn btn-danger" (click)="addaccount()" style="width: 100%;">Add</button>
       </div>
+
+
       <div class="col-sm-6">
         <table class="table table-bordered">
           <tr>
@@ -193,18 +136,18 @@
           </tr>
         </table>
       </div>
-
     </div>
+  </div>
     <!-- Account Details -->
 
-    <!--  -->
+
     <div class="form-group row">
 
       <div class="col-xs-1">
         <label for="name"> Reference</label>
       </div>
 
-      <div class="col-xs-6">
+      <div class="col-xs-2">
         <select id="name" class="form-control " formControlName="reference" [(ngModel)]="tdid" (change)="findtd()">
           <option disabled selected>Select Truck</option>
           <option *ngFor="let i of ownerdetailslist;let j=index;" value={{i._id+j}}>{{i.truckno}}</option>
@@ -212,9 +155,9 @@
       </div>
 
     </div>
-    <!--  -->
+ 
 
-    <!-- Village -->
+ 
     <div class="form-group row" *ngIf='role==1||role==2'>
 
       <div class="col-xs-1">

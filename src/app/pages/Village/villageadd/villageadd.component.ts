@@ -6,6 +6,7 @@ import { Validators, FormsModule } from '@angular/forms';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
 import { village } from './village';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-villageadd',
@@ -23,7 +24,7 @@ export class VillageaddComponent implements OnInit {
   public name: string;
   public dbName = 'NRCM_Information';
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
-    public securityCheck: SecurityCheckService) { }
+    public securityCheck: SecurityCheckService,public location:Location) { }
 
   ngOnInit() {
     this.model = new village(this.name);
@@ -41,6 +42,7 @@ export class VillageaddComponent implements OnInit {
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['villagenames'].push(res);
+        this.location.back();
       });
   }
 

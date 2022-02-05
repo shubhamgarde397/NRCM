@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 
 @Component({
   selector: 'app-oddisp',
@@ -13,6 +14,8 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 })
 export class OddispComponent implements OnInit {
   public ownerdetailslist = [];
+  public date3month;
+  public todayDate;
   public show = false;
   public found;
   public arr;
@@ -27,7 +30,8 @@ export class OddispComponent implements OnInit {
     public router: Router,
     public handledata: HandleDataService,
     public sec: SecurityCheckService,
-    public spinnerService: Ng4LoadingSpinnerService
+    public spinnerService: Ng4LoadingSpinnerService,
+    public handleF:handleFunction
 
   ) { }
 
@@ -40,15 +44,23 @@ export class OddispComponent implements OnInit {
     if (confirm('Are you sure?')) {
       let formbody = {}
       formbody['_id'] = id;
-      formbody['method'] = 'delete';
+      formbody['method'] = 'show';
+      formbody['show']=false;
+      formbody['find']=false;
       formbody['tablename'] = 'ownerdetails';
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
-        .subscribe((response: Response) => {
+        .subscribe((response:any) => {
+          alert(response.Status)
           let bb;
           let j = 0;
+          this.sec.commonArray
+          
           this.ownerdetailslist.forEach((res) => {
-            if (res._id == id) { bb = j; }
+            if (res._id == id) { 
+              bb = j; 
+              this.sec.commonArray['hiddenownerdetails'].push(res);
+            }
             j = j + 1;
           })
           this.ownerdetailslist.splice(bb, 1);
@@ -80,15 +92,20 @@ export class OddispComponent implements OnInit {
     this.show = true;
     this.found = data;
     this.handledata.saveData(data);
-    this.router.navigate(['Navigation/Information/OWNER_HANDLER/OwnerUpdate']);
+    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   };
 
   ngOnInit() {
+    this.todayDate=this.handleF.createDate(new Date());
     this.role = this.sec.role;
     this.commonArray = this.sec.commonArray;
     this.considerArray = this.handledata.createConsiderArray('infoowner')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.fetchData();
+  }
+  refresh(){
+    this.considerArray=[0,0,1,0,0,0,0]
+    this.getInformationData()
   }
 
   getInformationData() {

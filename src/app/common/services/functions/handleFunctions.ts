@@ -122,11 +122,23 @@ export class handleFunction {
         }
     }
 
+    createDate(date){
+        return this.getDate(date.getDate(),date.getMonth()+1,date.getFullYear())
+    }
+
     getDateddmmyy(date) {
+        if(date===undefined){
+            return ''
+        }else if(date===''){
+            return ''
+        }else{
+            if(date==='9999-12-31'){return 'NA'}else{
         let day=date.slice(8);
         let monthno=date.slice(5,7);
         let year=date.slice(0,4);
        return day+'-'+monthno+'-'+year;
+        }
+    }
     }
 
     getMoney() {
@@ -156,6 +168,24 @@ export class handleFunction {
                     return gstArray[data.slice(-3)];
                 case 28:
                     return gstArray[data.slice(-4)];
+            }
+        }
+    }
+
+    findpayment(nopid) {
+        if (nopid !== 'Select Trucks') {
+            const data = nopid;
+            switch (data.length) {
+                case 25:
+                    return data.slice(-1);
+                case 26:
+                    return data.slice(-2);
+                case 27:
+                    return data.slice(-3);
+                case 28:
+                    return data.slice(-4);
+                case 29:
+                    return data.slice(-5);
             }
         }
     }

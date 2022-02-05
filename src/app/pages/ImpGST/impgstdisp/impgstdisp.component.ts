@@ -45,7 +45,7 @@ export class ImpgstdispComponent implements OnInit {
     this.show = true;
     this.found = data;
     this.handledata.saveData(data);
-    this.router.navigate(['Navigation/Information/IMP_GST_HANDLER/ImpGSTUpdate']);
+    this.router.navigate(['Navigation/IMP_GST_HANDLER/ImpGSTUpdate']);
   };
 
   ngOnInit() {

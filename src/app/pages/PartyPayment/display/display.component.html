@@ -1,97 +1,16 @@
 <div class="well container">
 
-  <br />
+  <div class="row">
+    <div class="col-sm-4" *ngIf="partyids.length>0">
+      <table>
+        <tr><th>Name</th><th>Delete</th></tr>
+        <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
+      </table>
+    </div>
+  </div>
   <div class="row">
     <div class="col-lg-12">
-      <!-- DATE-->
-      <div class="form-group row">
-        <div class="col-sm-2">
-          <select class="form-control" id="partyType" [(ngModel)]="trucknoid" (change)="findOption()" id="truckNoone">
-            <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
-          </select>
-        </div>
-        <div class="col-sm-10" *ngIf="buttonOption==='1'">
-          <!--NOP-->
-          <div class="form-group row">
-
-            <div class="col-sm-4">
-              <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
-                <option disabled selected>Select Name of The Party</option>
-                <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
-                  {{gst.name}}
-                </option>
-              </select>
-            </div>
-
-          </div>
-          <!--NOP-->
-        </div>
-        <!-- Date -->
-        <div class="col-sm-10" *ngIf="buttonOption==='2'">
-          <div class="row">
-            <div class="col-sm-4">
-              <input type="date" class="form-control col-sm-2" [(ngModel)]="date1">
-            </div>
-            <div class="col-sm-4">
-              <input type="date" class="form-control col-sm-2" [(ngModel)]="date2">
-            </div>
-          </div>
-        </div>
-        <!-- Date -->
-
-
-        <!-- Both-->
-        <div class="col-sm-10" *ngIf="(buttonOption==='3')||(buttonOption==='4')">
-          <div class="form-group row">
-
-            <div class="col-sm-4">
-              <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
-                <option disabled selected>Select Name of The Party</option>
-                <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
-                  {{gst.name}}
-                </option>
-              </select>
-            </div>
-            <div class="col-sm-4">
-              <table>
-                <tr><th>Name</th><th>Delete</th></tr>
-                <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
-              </table>
-            </div>
-          </div>
-<div class="row">
-          <div class="col-sm-4" *ngIf="buttonOption==='4'">
-            <select class="form-control" [(ngModel)]="displayType" (change)="findDisplayOption()">
-              <option *ngFor="let i of buttonOptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
-            </select>
-          </div>
-          <div class="col-sm-2" *ngIf="buttonOption==='4'">
-          <button mat-raised-button class="btn btn-primary" style="width: 100%;margin-top: 10px;" disabled>
-            {{displayValue}}
-          </button>
-        </div>
-      </div>
-          <div class="row" *ngIf="(displayOption==='5')||(displayOption==='0')">
-            <div class="col-sm-4">
-              <input type="date" class="form-control col-sm-2" [(ngModel)]="date1">
-            </div>
-            <div class="col-sm-4">
-              <input type="date" class="form-control col-sm-2" [(ngModel)]="date2">
-            </div>
-          </div>
-
-          <div class="row" *ngIf="displayOption==='4'">
-            <div class="col-sm-4">
-             <select class="form-control" [(ngModel)]="monthName" (change)="setDateMonth()">
-              <option *ngFor="let i of monthNames;let j = index;" value={{i}}>{{i}}</option>
-            </select>
-          </div>
-          </div>
-
-        </div>
-        <!-- Both -->
-<!-- PDF Party -->
-<div class="col-sm-10" *ngIf="buttonOption==='5'">
+<div class="col-sm-10" >
   <div class="form-group row">
 
     <div class="col-sm-4">
@@ -102,25 +21,9 @@
         </option>
       </select>
     </div>
-    <div class="col-sm-4">
-      <table>
-        <tr><th>Name</th><th>Delete</th></tr>
-        <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
-      </table>
-    </div>
+   
   </div>
-<div class="row">
-  <div class="col-sm-4" *ngIf="buttonOption==='4'">
-    <select class="form-control" [(ngModel)]="displayType" (change)="findDisplayOption()">
-      <option *ngFor="let i of buttonOptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
-    </select>
-  </div>
-  <div class="col-sm-2" *ngIf="buttonOption==='4'">
-  <button mat-raised-button class="btn btn-primary" style="width: 100%;margin-top: 10px;" disabled>
-    {{displayValue}}
-  </button>
-</div>
-</div>
+
   <div class="row">
     <h4>Truck Loading Dates : </h4>
     <div class="col-sm-4">
@@ -144,38 +47,47 @@
     </div>
   </div>
 
-</div>
-<!-- PDF Party -->
+
       </div>
       <div class="row">
         <div class="col-sm-4">
+          <button mat-raised-button (click)="deepDetails()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            Deep Details
+          </button>
         </div>
         <div class="col-sm-4">
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
             {{buttonValue}}
           </button>
         </div>
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="find2()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            {{buttonValue}}-Poch
+          </button>
+        </div>
         <div class="col-sm-4" *ngIf="role==1||role==2"><button class="btn btn-info"
             (click)="getAdminAccess()">Admin</button></div>
+            
       </div>
-      <!--DATE -->
+
 
       <h3>{{todaysDate}}</h3>
       <div class="row" *ngIf="tableData">
-        <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
-        Download Only Lorry
-      </button>
-    </div>
+       
       <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
+      <button mat-raised-button type="button" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
         PDF : Party
       </button>
     </div>
 
       <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
+      <button mat-raised-button type="button" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
         PDF : Self
+      </button>
+    </div>
+    <div class="col-sm-3">
+      <button mat-raised-button (click)="pochDetails()" class="btn btn-warning" style="width: 100%;margin-top: 10px;">
+       Poch Details
       </button>
     </div>
       
@@ -194,9 +106,11 @@
             <th>Party</th>
             <th>Amount</th>
             <th>Value</th>
+            <th>Trucks</th>
             <th *ngIf="adminAccess">Delete</th>
             <th *ngIf="adminAccess">Edit</th>
             <th *ngIf="!adminAccess">Temp Delete</th>
+            <th *ngIf="!adminAccess">Edit Trucks</th>
           </tr>
         </thead>
 
@@ -208,6 +122,11 @@
             <td>{{i.partyName}}</td>
             <td>{{i.amount}}</td>
             <td>{{i.value}}</td>
+            <td>
+              <ul *ngFor="let k of i['loadingDate'];let l = index;">
+                <li>{{k.split('_')[1]}}:{{k.split('_')[3]}}</li>
+              </ul>
+          </td>
             <td *ngIf="adminAccess">
               <button mat-raised-button type="button" (click)="delete(i,j)" class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
@@ -223,24 +142,30 @@
                 <i class="material-icons">delete</i>
               </button>
             </td>
+            <td *ngIf="!adminAccess">
+              <button mat-raised-button type="button" (click)="deleteTrucks(i,j)" class="btn-warning btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
           </tr>
         </tbody>
       </table>
       <div class="row" *ngIf="tableData">
-        <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption!=='5'" (click)="download()" class="btn-danger btn-sm btn-just-icon">
-        Download Only Lorry
-      </button>
-    </div>
+        
       <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
+      <button mat-raised-button type="button" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
         PDF : Party
       </button>
     </div>
 
       <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="buttonOption==='5'" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
+      <button mat-raised-button type="button" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
         PDF: Self
+      </button>
+    </div>
+    <div class="col-sm-3">
+      <button mat-raised-button (click)="pochDetails()" class="btn btn-warning" style="width: 100%;margin-top: 10px;">
+       Poch Details
       </button>
     </div>
       

@@ -1,35 +1,58 @@
 <div class="well" *ngIf="!show">
 
     <input type="text" [(ngModel)]="data" (input)="newData()">
-
+    <button class="btn btn-danger" (click)="refresh()"><i class="material-icons">undo</i></button>
     <table class="table" style="width:100%" align="center">
 
         <thead>
             <tr class="table-header">
                 <th>Srno</th>
-                <th>TruckNumber</th>
-                <th>Owner Name</th>
-                <th>PAN</th>
-                <th>RC</th>
-                <th>DL</th>
+                <th>TruckNumber-Type</th>
+                <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
+                <th>License</th>
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
-                <th>Preferences</th>
-                <!-- <th>Reference</th> -->
-                <th *ngIf="role==1||role==2">Delete</th>
-                <th>Update</th>
+                <th>Prefer</th>
+                <th *ngIf="role==1||role==2">Delete<br>Update</th>
             </tr>
         </thead>
-
-
         <tbody>
             <tr *ngFor="let i of ownerdetailslist;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.truckno}}</td>
-                <td>{{i.oname}}</td>
-                <td>{{i.pan}}</td>
-                <td>{{i.regCard}}</td>
-                <td>{{i.drivingLic}}</td>
+                <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}<br>
+                    <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
+                    <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
+
+                    <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
+                    <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
+
+                    <i class="material-icons" *ngIf="i.p" style="color: green;">done</i>
+                    <i class="material-icons" *ngIf="!i.p" style="color: red;">close</i>
+
+                    <i class="material-icons" *ngIf="i.f" style="color: green;">done</i>
+                    <i class="material-icons" *ngIf="!i.f" style="color: red;">close</i>
+
+                    <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
+                    <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
+                    <br>{{i.hbl}}-{{i.weight}}
+                
+                </td>
+                <td>
+                    <ul>
+                        <li>{{i.oname}}</li>
+                        <li>{{i.pan}}</li>
+                        <li>{{i.aadhar}}</li>
+                        <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
+                        </ul>
+                    </td>
+                <td>
+                    <ul>
+                    <li [ngStyle]="{'background-color': i.rE}" style="color: black;">RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li [ngStyle]="{'background-color': i.dE}" style="color: black;">DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li [ngStyle]="{'background-color': i.pE}" style="color: black;">Policy-{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li [ngStyle]="{'background-color': i.fE}" style="color: black;">Fitness-{{i.fitnessExpiry|date:'dd-MM-yyyy'}}</li>
+                    </ul>
+                </td>
                 <td>
                     <ul *ngFor="let k of i.contact">
                         <li>{{k}}</li>
@@ -44,22 +67,16 @@
                     </ul>
                 </td>
                 <td>
-                    <ul *ngFor="let k of i.preferences">
-                        <li>{{k}}</li>
+                    <ul *ngFor="let j of i.preferences;">
+                        <li>{{j}}</li>
                     </ul>
                 </td>
-                <!-- <td>Work Under Progress</td> -->
-                <td *ngIf="role==1||role==2">
-                    <button mat-raised-button (click)="deleteOwnerDetails(i._id)"
-                        class="btn-danger btn-sm btn-just-icon">
-                        <i class="material-icons">delete_forever</i>
-                    </button>
-                </td>
-                <td>
-                    <button mat-raised-button type="button" (click)="showDatabyid(i)"
-                        class="btn-primary btn-sm btn-just-icon">
-                        <i class="material-icons">edit</i>
-                    </button>
+                <td  *ngIf="role==1||role==2">
+                    <div class="btn-group-xs">                        
+                        <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
+                        <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i)">edit</i>
+                        <!-- <i class="material-icons" style="color: green;cursor: pointer;" (click)="details(i._id)">info</i> -->
+                      </div>
                 </td>
             </tr>
         </tbody>

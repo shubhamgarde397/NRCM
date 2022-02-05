@@ -11,11 +11,12 @@ export class SecurityCheckService {
     "gstdetails": [{}],
     "ownerdetails": [{}],
     "villagenames": [{}],
-    "regularparty": [{}],
-    "RegularTruck": [{}],
-    "thoughts": [{}],
-    "personaldetails": [{}],
-    "truckdetails": [{}],
+    "lrlist": [{}],
+    "hiddenownerdetails": [{}],
+    "qr": [{}],
+    // "regularparty": [{}],
+    // "RegularTruck": [{}],
+    // "thoughts": [{}],
     "Role": 6
   }
   public commonBalanceHire = [];
@@ -24,9 +25,18 @@ export class SecurityCheckService {
   public username;
   public role = 6;
   public typeofuser = 3;
+  public amountShow=false;
   constructor() {
     this.yearNames = this.generateYears();
   }
+
+  setAmountShow(data){
+this.amountShow=data;
+  }
+  getAmountShow(){
+    return this.amountShow;
+  }
+
 
   authenticate(a) {
     if (a === 'hi') {
