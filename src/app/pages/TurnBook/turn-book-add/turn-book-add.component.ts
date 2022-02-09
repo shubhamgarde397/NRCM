@@ -256,6 +256,9 @@ let toAddData;
     this.myFormGroup.patchValue({ truckNo: '' });
     this.myFormGroup.patchValue({ partyType: '' });
     this.myFormGroup.patchValue({ place: '' });
+    this.placeid='5bcdecdab6b821389c8abde0';
+    this.partyid='5fff37a31f4443d6ec77e078';
+    this.ownerid='';
 
   }
   delete(data) {

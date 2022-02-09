@@ -35,11 +35,14 @@ export class TurnBookUpdateComponent implements OnInit {
   public truckno;
   public party;
   public place;
+  public place2;
   public considerArray = [];
   public role = 6;
   public placeid;
+  public placeid2;
   public partyid;
   public tempVNAME;
+  public tempVNAME2;
   public tempPNAME;
   public trucknoid;
   public trucknoM;
@@ -83,6 +86,7 @@ export class TurnBookUpdateComponent implements OnInit {
       turnbookDate: this.handledata.Data.turnbookDate,
       truckno: this.handledata.Data.truckno,
       place: this.handledata.Data.place,
+      place2: this.handledata.Data.place2,
       partyName: this.handledata.Data.partyName,
       loadingDate: this.handledata.Data.loadingDate,
       lrno: this.handledata.Data.lrno,
@@ -114,6 +118,7 @@ export class TurnBookUpdateComponent implements OnInit {
       turnbookDate: this.handledata.Data.turnbookDate,
       truckno: this.handledata.Data.truckno,
       place: this.handledata.Data.place,
+      place2: this.handledata.Data.place2,
       partyName: this.handledata.Data.partyName,
       loadingDate: this.handledata.Data.loadingDate,
       lrno: this.handledata.Data.lrno,
@@ -134,7 +139,9 @@ export class TurnBookUpdateComponent implements OnInit {
       pochAmount:this.handledata.Data.pochAmount
     });
     this.place = this.handledata.Data.place;
+    this.place2 = this.handledata.Data.place2;
     this.placeid = this.handledata.Data.placeid;
+    this.placeid2 = this.handledata.Data.placeid2;
     this.party = this.handledata.Data.partyName;
     this.partyid = this.handledata.Data.partyid;
     this.paymentid = this.handledata.Data.payment[0]._id;
@@ -211,9 +218,13 @@ tempObj['to']=this.handlefunction.createDate(this.date);
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
     this.myFormGroup.value.place = this.tempVNAME;
-    
     this.qrArray=this.qrArray.filter(r=>r.place===this.tempVNAME);
-    
+  }
+
+  setPlaceName2() {
+    this.placeid2 = this.villagelist[this.myFormGroup.value.place2.split('+')[1]]._id;
+    this.tempVNAME2 = this.villagelist[this.myFormGroup.value.place2.split('+')[1]].village_name;
+    this.myFormGroup.value.place2 = this.tempVNAME2;
   }
 
   QRDetails(){
@@ -279,6 +290,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj['method'] = 'update';
     tempObj['tablename'] = 'turnbook';
     tempObj["placeid"] = this.placeid,//what if we already have entry of thios
+    tempObj["placeid2"] = this.placeid2,//what if we already have entry of thios
       tempObj["partyid"] = this.partyid,//what if we already have entry of thios
       tempObj["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
       tempObj['_id'] = this.handledata.Data._id;
@@ -315,15 +327,17 @@ tempObj['to']=this.handlefunction.createDate(this.date);
         alert(res.Status);
         if (res.Status === 'Updated') {
           let tempData = this.handledata.giveTurn();
+          let tempPlace2Object;
           tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
             tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
-            // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
             tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
-            tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.handledata.Data.place,
-            // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
+            tempPlace2Object=tempData[this.handledata.Data.index]['villageDetails2'].length===0?this.giveVillage2Object():tempData[this.handledata.Data.index]['villageDetails2'];
+            tempPlace2Object[0]['_id'] = this.placeid2,
+            tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
+            tempPlace2Object[0]['village_name'] = this.tempVNAME2,
+            tempData[this.handledata.Data.index]['villageDetails2']=tempPlace2Object;
             tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
             tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
-            // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
             tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = this.handledata.Data.ownerid,
             tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
             tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
@@ -342,9 +356,15 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["advanceArray"] = this.advanceArray;
             tempData[this.handledata.Data.index]["qr"] = this.myFormGroup.value.qr;
             tempData[this.handledata.Data.index]["pochAmount"] = this.myFormGroup.value.pochAmount;
+            console.log(tempPlace2Object);
+            
+            console.log(tempData);
+            
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
+          console.log(tempArray);
+          
           // tempArray.splice(this.handledata.Data.index, 1)
           this.handledata.saveTurn(tempArray);
           if(parseInt(this.myFormGroup.value.qr)!==0){
@@ -355,6 +375,13 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       });
 
   };
+
+  giveVillage2Object(){
+    return [{
+      village_name:'',
+      _id:'',
+    }]
+  }
 
   change2 = function (data) {
     let tempObj = {};
@@ -378,6 +405,8 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
             tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
             tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
+            tempData[this.handledata.Data.index]['villageDetails2'][0]['_id'] = this.placeid2,
+            tempData[this.handledata.Data.index]['villageDetails2'][0]['village_name'] = this.tempVNAME2,
             // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
             tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
             tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,

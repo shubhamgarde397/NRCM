@@ -143,7 +143,7 @@
 
             </td>
             <td *ngIf="i.ownerDetails[0]===undefined"></td>
-            <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}</td>
+            <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}---<br><span *ngIf="i.villageDetails2[0]!==undefined">{{i.villageDetails2[0].village_name}}</span></td>
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
@@ -760,7 +760,7 @@
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
             <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.truckName.hbl}}={{i.truckName.weight}}</td>
-            <td>{{i.placeName.village_name}}</td>
+            <td>{{i.placeName.village_name}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.village_name}}</span></td>
             <td>{{i.partyName.name}}</td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>

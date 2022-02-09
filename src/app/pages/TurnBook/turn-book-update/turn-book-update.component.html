@@ -101,10 +101,19 @@
         <div class="col-xs-3">
           Lrno : <input type="number" id="lrno" class="form-control" formControlName="lrno">
          </div>
-
-
-
-
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-3">
+        Place 2 : 
+        <select id="place2" class="form-control" formControlName="place2" (blur)="setPlaceName2()">
+          <option disabled value="{{placeid2}}" selected>{{place2}}</option>
+          <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
+        </select>
+        </div>
+        <div class="col-sm-3">
+          Old Place 2 : 
+        <input type="text" id="place" class="form-control" formControlName="place2" disabled>
+        </div>
     </div>
     <!--place-->
 

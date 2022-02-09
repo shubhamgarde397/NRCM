@@ -66,9 +66,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '11', 'viewvalue': 'Details By Truck' ,'disabled':false},
     { 'value': '12', 'viewvalue': 'Invoice' ,'disabled':false},
     { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
-    { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
-    { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
-    { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
+    // { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
+    // { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
+    // { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
   ]
   public trucknoid11;
   public years = []
@@ -132,7 +132,9 @@ public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
     this.commonArray = this.securityCheck.commonArray;
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
     this.turnbooklist = [];
-    this.turnbooklist = this.handleData.giveTurn();    
+    this.turnbooklist = this.handleData.giveTurn(); 
+    console.log(this.turnbooklist);
+       
     this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
     // this.amountShow=this.securityCheck.getAmountShow()
@@ -615,6 +617,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     let tempObj = {};
 
     tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
+    tempObj['place2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0].village_name;
     tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
     tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
     tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
@@ -671,6 +674,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       let tempObj = {};
       tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
       tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
+      tempObj['placeid2'] = '';
       tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
       tempObj['_id'] = data._id;
       tempObj['loadingDate'] = newdate;
@@ -704,6 +708,7 @@ this.placeid=this.tempDate[0]['place']['_id']
           alert(res.Status);
           this.handleData.turnData[j]['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
           this.handleData.turnData[j]['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
+          this.handleData.turnData[j]['placeid2'] = '';
           this.handleData.turnData[j]['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
           this.handleData.turnData[j]['loadingDate'] = newdate;
           this.handleData.turnData[j]["turnbookDate"] = data.turnbookDate,
