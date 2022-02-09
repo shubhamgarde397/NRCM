@@ -450,6 +450,9 @@ public balanceFollowGlobal={};
          doc.text(String(this.paymentData[i].lrno), 88, y)//lrno
          doc.text(this.paymentData[i].truckNo, 57, y)//truckno
          doc.text(this.paymentData[i].placeName, 101, y)//truckno
+         if(this.paymentData[i].placeName2!==undefined){
+          doc.text(this.paymentData[i].placeName2, 101, y+5)//truckno
+         }
        } else {
          doc.text(String('-'), 88, y)//lrno
          doc.text(String('-'), 57, y)//truckno
@@ -467,8 +470,12 @@ public balanceFollowGlobal={};
        doc.text(String(this.paymentData[i]['value']), 172, y)//partyname
         }
       
-       doc.line(20, y + 1, 210, y + 1);//line after header
-       y = y + 5;
+        if(this.paymentData[i].placeName2===undefined){
+          y = y + 5;
+          }else{
+           y = y + 10;
+          }
+          doc.line(20, y -4, 210, y -4);//line after header
      bigValueofY=y;
      }
 

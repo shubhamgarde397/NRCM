@@ -17,21 +17,271 @@ export class MainPageComponent implements OnInit {
   public contact;
   temp = [
     {
-      "bf": true,
-      "type": "buy",
-      "partyName": "Balance Follow",
-      "amount": 0,
-      "value": 0
+        "lrno": 8248,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN15 D 7922",
+        "placeName": "Thanjavur",
+        "date": "2022-01-01",
+        "amount": 50000
     },
     {
-      "lrno": 6909,
-      "type": "buy",
-      "partyName": "Universal Marketing",
-      "truckNo": "KA01 AH 7778",
-      "date": "2021-01-06",
-      "amount": 44000
+        "lrno": 8267,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN54 S 7843",
+        "placeName": "Mayavaram",
+        "date": "2022-01-01",
+        "amount": 48500
+    },
+    {
+        "date": "2022-01-01",
+        "amount": 97500,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
+    },
+    {
+        "lrno": 8268,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN37 DY 0703",
+        "placeName": "Erode",
+        "date": "2022-01-03",
+        "amount": 42500
+    },
+    {
+        "lrno": 8250,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN37 DX 0696",
+        "placeName": "Erode",
+        "date": "2022-01-03",
+        "amount": 46000
+    },
+    {
+        "date": "2022-01-03",
+        "amount": 241000,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
+    },
+    {
+        "lrno": 8303,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN16 C 3771",
+        "placeName": "Pudukottai",
+        "date": "2022-01-04",
+        "amount": 51000
+    },
+    {
+        "lrno": 8301,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN29 BZ 2794",
+        "placeName": "Coimbatore",
+        "date": "2022-01-04",
+        "amount": 47000
+    },
+    {
+        "lrno": 8270,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN38 CC 9311",
+        "placeName": "Coimbatore",
+        "date": "2022-01-04",
+        "amount": 43500
+    },
+    {
+        "date": "2022-01-04",
+        "amount": 99500,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
+    },
+    {
+        "lrno": 8305,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN32 BB 2287",
+        "placeName": "Thanjavur",
+        "date": "2022-01-05",
+        "amount": 50000
+    },
+    {
+        "lrno": 8275,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN16 E 5035",
+        "placeName": "Ariyalur",
+        "date": "2022-01-05",
+        "amount": 44500
+    },
+    {
+        "lrno": 8273,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN18 BB 0245",
+        "placeName": "Erode",
+        "date": "2022-01-05",
+        "amount": 42500
+    },
+    {
+        "date": "2022-01-05",
+        "amount": 147000,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
+    },
+    {
+        "lrno": 8307,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN25 BK 5951",
+        "placeName": "Thanjavur",
+        "date": "2022-01-06",
+        "amount": 50000
+    },
+    {
+        "lrno": 8308,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN15 D 7270",
+        "placeName": "Mayavaram",
+        "date": "2022-01-06",
+        "amount": 53000
+    },
+    {
+        "date": "2022-01-06",
+        "amount": 46000,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
+    },
+    {
+        "lrno": 8311,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN99 V 1144",
+        "placeName": "Coimbatore",
+        "date": "2022-01-07",
+        "amount": 47000
+    },
+    {
+        "lrno": 8312,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN32 AQ 0392",
+        "placeName": "Kumbhakonam",
+        "date": "2022-01-07",
+        "amount": 53000
+    },
+    {
+        "lrno": 8313,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN90 E 5035",
+        "placeName": "Thanjavur",
+        "date": "2022-01-07",
+        "amount": 50000
+    },
+    {
+        "lrno": 8283,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN65 AQ 0923",
+        "placeName": "Trichy",
+        "date": "2022-01-07",
+        "amount": 44500
+    },
+    {
+        "lrno": 8280,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN54 T 5648",
+        "placeName": "Trichy",
+        "date": "2022-01-07",
+        "amount": 44500
+    },
+    {
+        "lrno": 8282,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN18 AM 1297",
+        "placeName": "Mayavaram",
+        "date": "2022-01-07",
+        "amount": 48500
+    },
+    {
+        "lrno": 8281,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN29 BR 2937",
+        "placeName": "Trichy",
+        "date": "2022-01-07",
+        "amount": 44500
+    },
+    {
+        "date": "2022-01-07",
+        "amount": 48500,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
+    },
+    {
+        "lrno": 8284,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN93 D 9887",
+        "placeName": "Trichy",
+        "date": "2022-01-08",
+        "amount": 44500
+    },
+    {
+        "lrno": 8285,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN56 Q 6266",
+        "placeName": "Thanjavur",
+        "date": "2022-01-08",
+        "amount": 46500
+    },
+    {
+        "date": "2022-01-08",
+        "amount": 139500,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
+    },
+    {
+        "lrno": 8318,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN32 AF 0434",
+        "placeName": "Pattukottai",
+        "date": "2022-01-09",
+        "amount": 53000
+    },
+    {
+        "lrno": 8322,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN48 BB 5230",
+        "placeName": "Thanjavur",
+        "placeName2": "Thanjavur",
+        "date": "2022-01-10",
+        "amount": 50000
+    },
+    {
+        "lrno": 8321,
+        "type": "buy",
+        "partyName": "Shri Vijay PVC Distributors",
+        "truckNo": "TN99 Z 1144",
+        "placeName": "Kumbhakonam",
+        "date": "2022-01-10",
+        "amount": 53000
+    },
+    {
+        "date": "2022-01-10",
+        "amount": 142500,
+        "type": "payment",
+        "partyName": "Shri Vijay PVC Distributors"
     }
-  ]
+]
 
 
 
@@ -47,6 +297,7 @@ export class MainPageComponent implements OnInit {
   public fileFormData = new FormData();
   public fileFormDataPython = new FormData();
   public newAuthor: any;
+  public paymentData;
   // 
   selectedFile = null;
   imageFolder = ''
@@ -59,91 +310,11 @@ export class MainPageComponent implements OnInit {
   public document = new jsPDF();
   // 
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
-    public router: Router, public handlefunction: handleFunction) {
+    public router: Router, public handleF: handleFunction) {
     localStorage.clear();
+
   }
-  download() {//threshhold is 295
-    var doc = new jsPDF()
-    doc.setFontSize('25');
-    doc.setFontType('bold');
-    doc.text('Nitin', 15, 15)//partyname
-    doc.setFontSize('10');
-    doc.text('08-01-2020 to 08-08-2021', 165, 19)//date
-    doc.setFontSize('25');
-    doc.setLineWidth(0.5);
-    doc.line(0, 20, 210, 20);//line after main header
-    doc.line(20, 20, 20, 300);//punching area line
-    //headers
-    doc.setFontSize('10');
-    let y = 24;
-    let starty = 24;
-    doc.text('Sr', 23, y)//partyname
-    doc.text('Date', 38, y)//partyname
-    doc.text('TruckNo', 57, y)//partyname
-    doc.text('Lrno', 88, y)//partyname
-    doc.text('Credit', 108, y)//partyname
-    doc.text('Debit', 133, y)//partyname
-    doc.text('Balance', 155, y)//partyname
-    doc.text('Notes', 182, y)//partyname
-    //headers
-    doc.line(0, 25, 210, 25);//line after header
 
-    //vertical lines
-    doc.line(30, 20, 30, 25);//srno
-    doc.line(55, 20, 55, 25);//date
-    doc.line(83, 20, 83, 25);//truckno
-    doc.line(100, 20, 100, 25);//lrno
-    doc.line(125, 20, 125, 25);//credit
-    doc.line(150, 20, 150, 25);//debit
-    doc.line(180, 20, 180, 20);//balance
-    //vertical lines
-    if (this.temp[0]['bf'] == true) {
-      y = y + 5;
-      starty = 31;
-      doc.text(this.temp[0].partyName, 30, y)//partyname
-      doc.text(String(this.temp[0].value), 155, y)//partyname
-      doc.line(20, 31, 210, 31);
-      doc.line(150, 25, 150, 31);
-      y = y + 6;
-    }
-
-    for (let i = 1; i < this.temp.length; i++) {
-      doc.text(String(i), 23, y)//partyname
-      doc.text(this.temp[i].date, 32, y)//partyname
-
-      if (this.temp[i].type === 'buy') {
-        doc.text(String(this.temp[i].lrno), 88, y)//lrno
-        doc.text(this.temp[i].truckNo, 57, y)//truckno
-      } else {
-        doc.text(String('-'), 88, y)//lrno
-        doc.text(String('-'), 57, y)//truckno
-      }
-      if (this.temp[i].type === 'buy') {
-        doc.text(String(this.temp[i].amount), 108, y)//partyname
-        doc.text(String('-'), 133, y)//partyname
-      } else {
-        doc.text(String(this.temp[i].amount), 133, y)//partyname
-        doc.text(String('-'), 108, y)//partyname
-      }
-
-      doc.text(String(this.temp[i].value), 155, y)//partyname
-      doc.line(20, y + 1, 210, y + 1);//line after header
-      y = y + 5;
-    }
-
-    //vertical lines
-    doc.line(30, starty, 30, y - 4);//srno
-    doc.line(55, starty, 55, y - 4);//date
-    doc.line(83, starty, 83, y - 4);//truckno
-    doc.line(100, starty, 100, y - 4);//lrno
-    doc.line(125, starty, 125, y - 4);//credit
-    doc.line(150, starty, 150, y - 4);//debit
-    doc.line(180, 20, 180, y - 4);//balance
-    //vertical lines
-
-
-    doc.save('tp2' + '.pdf')
-  }
 
   login() {
     this.router.navigate(['Login']);
@@ -177,6 +348,20 @@ export class MainPageComponent implements OnInit {
     }
     
     
+      }
+      returnAmountPaymentBalance(){
+        let amount=0;
+        let payment=0;
+        this.paymentData.forEach(r=>{
+         if(r.type=='buy'){
+         amount=amount+r.amount;
+     }
+     else if(r.type=='payment'){
+         payment=payment+r.amount;
+     }
+     
+     })
+        return [amount,payment,amount-payment];
       }
   whatsapp() {
     this.router.navigate(['Whatsapp']);
@@ -252,7 +437,7 @@ export class MainPageComponent implements OnInit {
   }
 
   getMorse(data) {
-    this.morseIS = this.handlefunction.normalMorseCode(data);
+    this.morseIS = this.handleF.normalMorseCode(data);
   }
 
   clueCall() {
