@@ -70,8 +70,6 @@ export class NavigationComponent implements OnInit {
   }
 
   amount(data){
-    console.log(data);
-    
   }
 
   getInformationData() {

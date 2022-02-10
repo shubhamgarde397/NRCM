@@ -19,8 +19,6 @@ export class PDFComponent implements OnInit {
   public branch = '';
   public name = '';
   public addr1 = '';
-  public addr2 = '';
-  public addr3 = '';
   public yearDrop;
   bankArray = [];
   public imgData2;
@@ -198,6 +196,7 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
       this.addr1 = this.addr1;
     }
 
+    let [addr2,addr3]=this.getAddresses()
 
     var doc = new jsPDF()
 
@@ -264,8 +263,8 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('normal');
     doc.text('To,', 25, 101)
     doc.text(this.addr1 + ',', 40, 106)
-    doc.text(this.addr2 + ',', 40, 111)
-    doc.text(this.addr3 + '.', 40, 116)
+    doc.text(addr2 , 40, 111)
+    doc.text(addr3 , 40, 116)
 
     doc.setFontSize('11');
     doc.setFontType('bold')
@@ -320,5 +319,10 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.text('Declarant', 150, 268)
     doc.text('Date :- ' + this.dateSetter(), 25, 258)
     doc.save('Declaration_' + this.addr1 + '.pdf')
+  }
+
+  getAddresses(){
+    let data=this.gstdetailslist.filter(r=>{return r.name===this.addr1})[0]
+    return [data['addr1'],data['addr2']]
   }
 }

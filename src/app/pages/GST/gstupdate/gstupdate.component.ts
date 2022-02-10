@@ -35,7 +35,9 @@ export class GstupdateComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       name: this.handledata.Data.name,
       gst: this.handledata.Data.gst,
-      dest: this.handledata.Data.dest
+      dest: this.handledata.Data.dest,
+      addr2: this.handledata.Data.addr2,
+      addr3: this.handledata.Data.addr3
     });
     this.dest = this.handledata.Data.dest;
     this.commonArray = this.sec.commonArray;
@@ -49,6 +51,8 @@ export class GstupdateComponent implements OnInit {
     formbody['name'] = data.value.name;
     formbody['gst'] = data.value.gst;
     formbody['dest'] = data.value.dest;
+    formbody['addr2'] = data.value.addr2;
+    formbody['addr3'] = data.value.addr3;
     formbody['_id'] = this.handledata.Data._id;
     formbody['method'] = 'update';
     formbody['tablename'] = 'gstdetails';

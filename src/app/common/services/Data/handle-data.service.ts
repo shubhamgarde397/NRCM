@@ -25,9 +25,16 @@ export class HandleDataService {
   public BHData = [];
 public PPData=[];
   public PaymentData=[]
+  public updateTurnData=false;
 
   constructor(public securityCheck: SecurityCheckService) { }
 
+  updateTurn(){
+    return this.updateTurnData;
+  }
+  saveupdateTurn(data){
+this.updateTurnData=data;
+  }
   savePaymentData(data){
     this.PaymentData=data;
   }

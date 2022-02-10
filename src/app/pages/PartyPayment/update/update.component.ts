@@ -32,7 +32,6 @@ export class UpdateComponent implements OnInit {
 
   getAllTBPendingTrucks(){
     let tempobj={}
-    
       tempobj['partyid']=this.allData[0]['partyid'];
       tempobj["method"]= "pendingPayment",
       tempobj["tablename"]= "partyPayment",

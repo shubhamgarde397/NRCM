@@ -47,6 +47,32 @@
       </div>
     </div>
 
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="addr2" class="form-control" formControlName="addr2" placeholder="Address 1">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.addr2.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="addr3" class="form-control" formControlName="addr3" placeholder="Address 2">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.addr3.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
 
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>

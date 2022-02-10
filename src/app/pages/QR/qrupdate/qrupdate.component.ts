@@ -53,9 +53,6 @@ export class QRUpdateComponent implements OnInit {
 
     this.party=this.handledata.Data.party;
     this.place=this.handledata.Data.place
-console.log(this.parties.filter(r=>r.name===this.party));
-console.log(this.villagenamelist.filter(r=>r.village_name===this.place));
-
     this.partyid=this.parties.filter(r=>r.name===this.party)[0]['_id']
     this.placeid=this.villagenamelist.filter(r=>r.village_name===this.place)[0]['_id']
   }
@@ -71,8 +68,6 @@ console.log(this.villagenamelist.filter(r=>r.village_name===this.place));
   }
 
   fetchBasic() {
-    console.log(this.sec.commonArray);
-    
     this.commonArray = this.sec.commonArray;
     this.parties = [];
     this.villagenamelist = [];

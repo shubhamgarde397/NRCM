@@ -133,8 +133,7 @@ public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn(); 
-    console.log(this.turnbooklist);
-       
+ 
     this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
     // this.amountShow=this.securityCheck.getAmountShow()
@@ -607,8 +606,9 @@ this.placeid=this.tempDate[0]['place']['_id']
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert('Moved to Balance Hire!')
-        this.handleData.saveBH(this.turnbooklist.splice(j, 1));
-        this.turnbooklist=this.turnbooklist.splice(j, 1)
+        // this.handleData.saveBH(this.turnbooklist.splice(j, 1));
+        // this.turnbooklist=this.turnbooklist.splice(j, 1)
+        this.turnbooklist.splice(j, 1);
       });
   }
 
@@ -623,6 +623,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
     tempObj['accountDetails'] = data.ownerDetails[0]['accountDetails'];
     tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
+    tempObj['placeid2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0]._id;
     tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
     tempObj['entryDate'] = data.entryDate;
     tempObj['_id'] = data._id;
@@ -649,6 +650,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempObj['qr'] = data.qr;
     tempObj['paymentDisabled']=true;
     tempObj['pochAmount']=data.pochAmount;
+    this.handleData.saveupdateTurn(true);
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);

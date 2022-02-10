@@ -136,8 +136,6 @@ export class QRCodeComponent implements OnInit {
 
   fetchBasic() {
     this.commonArray = this.securityCheck.commonArray;
-    console.log(this.commonArray);
-    
     this.gstdetailslist = [];
     this.villagenamelist = [];
     this.qrlist = [];

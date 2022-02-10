@@ -76,8 +76,6 @@ export class TurnBookUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.paymentDisabled=this.handledata.Data.paymentDisabled;
-    console.log(this.paymentDisabled)
-    console.log(this.handledata.Data.paymentDisabled)
     this.commonArray = this.securityCheck.commonArray;
     this.considerArray = this.handledata.createConsiderArray('turnbookadd')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -327,6 +325,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
         alert(res.Status);
         if (res.Status === 'Updated') {
           let tempData = this.handledata.giveTurn();
+          if(this.handledata.updateTurn()){
           let tempPlace2Object;
           tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
             tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
@@ -356,20 +355,16 @@ tempObj['to']=this.handlefunction.createDate(this.date);
             tempData[this.handledata.Data.index]["advanceArray"] = this.advanceArray;
             tempData[this.handledata.Data.index]["qr"] = this.myFormGroup.value.qr;
             tempData[this.handledata.Data.index]["pochAmount"] = this.myFormGroup.value.pochAmount;
-            console.log(tempPlace2Object);
-            
-            console.log(tempData);
-            
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
-          console.log(tempArray);
-          
-          // tempArray.splice(this.handledata.Data.index, 1)
           this.handledata.saveTurn(tempArray);
           if(parseInt(this.myFormGroup.value.qr)!==0){
             this.securityCheck.commonArray['qr']=this.securityCheck.commonArray['qr'].filter(r=>{return r.qr!=parseInt(this.myFormGroup.value.qr)});
           }
+        }
+
+
         }
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
       });

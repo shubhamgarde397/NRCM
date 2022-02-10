@@ -140,11 +140,13 @@ export class BalancehiredisplayComponent implements OnInit {
     let tempObj = {};
 
     tempObj['place'] = data.places[0] === undefined ? '' : data.places[0].village_name;
+    tempObj['place2'] = data.places2[0] === undefined ? '' : data.places2[0].village_name;
     tempObj['truckno'] = data.trucks[0] === undefined ? '' : data.trucks[0].truckno;
     tempObj['partyName'] = data.parties[0] === undefined ? '' : data.parties[0].name;
     tempObj['ownerid'] = data.trucks[0] === undefined ? '' : data.trucks[0]._id;
     tempObj['accountDetails'] = data.trucks[0]['accountDetails'];
     tempObj['placeid'] = data.places[0] === undefined ? '' : data.places[0]._id;
+    tempObj['placeid2'] = data.places2[0] === undefined ? '' : data.places2[0]._id;
     tempObj['partyid'] = data.parties[0] === undefined ? '' : data.parties[0]._id;
     tempObj['entryDate'] = data.entryDate;
     tempObj['_id'] = data._id;
@@ -170,6 +172,7 @@ export class BalancehiredisplayComponent implements OnInit {
     tempObj['waitLocation'] = data.waitLocation;
     tempObj['advanceArray'] = data.advanceArray;
     tempObj['qr'] = data.qr;
+    this.handledata.saveupdateTurn(false)
 
 
     this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
@@ -725,8 +728,6 @@ export class BalancehiredisplayComponent implements OnInit {
       }
       let K = 0
       doc.setFontSize('10');
-      console.log(this.balanceDate[z].commentToTruck);
-      
       doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
@@ -774,8 +775,6 @@ export class BalancehiredisplayComponent implements OnInit {
     data['editOption'] = 0;
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
-    console.log('here');
-    
   };
   back(type) {
     switch (type) {

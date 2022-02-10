@@ -30,8 +30,6 @@ export class UpdateSingleComponent implements OnInit {
     public router: Router) { }
 
   ngOnInit() {
-    console.log('here');
-    
     this.myFormGroup = this.formBuilder.group({
       date: ['',[Validators.required]],
       truckno: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]],
