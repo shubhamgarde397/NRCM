@@ -622,6 +622,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
     tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
     tempObj['accountDetails'] = data.ownerDetails[0]['accountDetails'];
+    tempObj['parentAccNo'] = data.parentAccNo;
     tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
     tempObj['placeid2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0]._id;
     tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
@@ -911,8 +912,8 @@ this.placeid=this.tempDate[0]['place']['_id']
       this.finalObject['truckData'] = truckData
       this.finalObject['todayDate'] = this.todaysDate;
       this.finalObject['comments'] = "";
-
-      commentToTruck= this.balanceHireArrray[0][0].partyType==='NRCM'?'12':(this.balanceHireArrray[0][0].partyType==='NR'?'363':this.comment);
+      commentToTruck= String(this.balanceHireArrray[0][0].parentAccNo);
+      // commentToTruck= this.balanceHireArrray[0][0].partyType==='NRCM'?'12':(this.balanceHireArrray[0][0].partyType==='NR'?'363':this.comment);
       this.finalObject['commentToTruck']=this.comment===''?commentToTruck:commentToTruck+'\n'+this.comment;
       this.finalObject['print'] = false;
       this.finalObject['bankName'] = '';

@@ -75,7 +75,7 @@
    
       <div class="col-xs-3">
         Party Type:
-        <select id="partyType" class="form-control" formControlName="partyType">
+        <select id="partyType" class="form-control" formControlName="partyType" (change)="findParentAccNo()">
           <option>NRCM</option>
           <option>NR</option>
           <option>SNL</option>
@@ -113,6 +113,10 @@
         <div class="col-sm-3">
           Old Place 2 : 
         <input type="text" id="place" class="form-control" formControlName="place2" disabled>
+        </div>
+        <div class="col-sm-3">
+          Parent Acc No : 
+        <input type="number" id="parentAccNo" class="form-control" formControlName="parentAccNo">
         </div>
     </div>
     <!--place-->

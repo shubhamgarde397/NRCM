@@ -106,7 +106,7 @@
             <th>Place</th>
             <th>Party</th>
             <th>LRNO</th>
-            <th>Amount</th>
+            <th>Amount-AccNo</th>
             <th *ngIf="buttonOption=='10'">Poch</th>
             <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">PN</th>
             <th *ngIf="(buttonOption!=='9')&&(buttonOption!=='10')">Options</th>
@@ -147,7 +147,7 @@
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
             <td>{{i.lrno}}</td>
-            <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+            <td>{{i.hamt}}<br>{{i.ohamt}}<br>{{i.parentAccNo}}</td>
             <td  *ngIf="buttonOption=='10'">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
             <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">{{i.partyDetails[0].name}}<br>{{i.qr}}</td>
             <td *ngIf="buttonOption!=='10'">

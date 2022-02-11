@@ -77,7 +77,8 @@ export class TurnBookAddComponent implements OnInit {
       partyName :'',
       place:'',
       partyType:'',
-      loadingDate:''
+      loadingDate:'',
+      parentAccNo:0
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -144,6 +145,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['placeid'] = this.placeid;
     tempobj['partyid'] = this.partyid;
     tempobj['partyType'] = value['partyType'];
+    tempobj['parentAccNo'] = value['parentAccNo'];
     tempobj['loadingDate'] = value['loadingDate'];
     tempobj['turnbookDate'] = this.turnbookDate;//value['turnbookDate'];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
@@ -244,10 +246,36 @@ let toAddData;
   setPartyName() {
     this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
     this.myFormGroup.value.partyName = this.partyid;
+    if(this.partyid=='6023eb9cfb76858c10ee9435'){
+      this.myFormGroup.patchValue({
+        parentAccNo:12,
+      })
+    }
   }
   setPlaceName() {
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.myFormGroup.value.place = this.placeid;
+  }
+
+  findParentAccNo(){
+    if(this.myFormGroup.value.partyType==='NRCM'){
+      this.myFormGroup.patchValue({
+        parentAccNo:12,
+      })
+    }
+    else if(this.myFormGroup.value.partyType==='NR'){
+   
+        this.myFormGroup.patchValue({
+          parentAccNo:363,
+        })
+   
+      
+    }
+    else{
+      this.myFormGroup.patchValue({
+        parentAccNo:0,
+      })
+    }
   }
 
   reset() {

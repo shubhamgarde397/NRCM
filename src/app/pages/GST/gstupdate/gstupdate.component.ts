@@ -24,6 +24,8 @@ export class GstupdateComponent implements OnInit {
   public myFormGroup: FormGroup;
   public submitted = false;
   public commonArray;
+  public cities;
+  public city;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -36,12 +38,18 @@ export class GstupdateComponent implements OnInit {
       name: this.handledata.Data.name,
       gst: this.handledata.Data.gst,
       dest: this.handledata.Data.dest,
+      addr1: this.handledata.Data.addr1,
       addr2: this.handledata.Data.addr2,
-      addr3: this.handledata.Data.addr3
+      cities:[]
     });
     this.dest = this.handledata.Data.dest;
     this.commonArray = this.sec.commonArray;
     this.villagenamelist = this.commonArray.villagenames;
+    this.cities=this.handledata.Data.cities;
+  }
+
+  addCity(){
+    this.cities.push(this.city);
   }
 
   change = function (data) {
@@ -51,8 +59,9 @@ export class GstupdateComponent implements OnInit {
     formbody['name'] = data.value.name;
     formbody['gst'] = data.value.gst;
     formbody['dest'] = data.value.dest;
-    formbody['addr2'] = data.value.addr2;
-    formbody['addr3'] = data.value.addr3;
+    formbody['addr2'] = data.value.addr1;
+    formbody['addr3'] = data.value.addr2;
+    formbody['cities'] = this.cities;
     formbody['_id'] = this.handledata.Data._id;
     formbody['method'] = 'update';
     formbody['tablename'] = 'gstdetails';
@@ -72,6 +81,9 @@ export class GstupdateComponent implements OnInit {
         this._location.back();
       });
   };
+  deletecity(i,j){
+    this.cities.splice(j,1);
+  }
   back() {
     this.show = !this.show;
     this._location.back();

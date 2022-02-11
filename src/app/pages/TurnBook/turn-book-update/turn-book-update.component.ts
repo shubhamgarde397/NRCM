@@ -104,6 +104,7 @@ export class TurnBookUpdateComponent implements OnInit {
       paymentName:this.handledata.Data.payment[0]['date']+'_'+this.handledata.Data.payment[0]['amount'],
       advanceAmt:'',
       advanceDate:'',
+      parentAccNo:this.handledata.Data.parentAccNo,
       reason:'Advance',
       typeOfTransfer:'',
       BHAccname:'',
@@ -124,6 +125,7 @@ export class TurnBookUpdateComponent implements OnInit {
       hamt: this.handledata.Data.hamt,
       ohamt: this.handledata.Data.ohamt,
       balance: 0,
+      parentAccNo:this.handledata.Data.parentAccNo,
       invoice:this.handledata.Data.invoice,
       pochDate: this.handledata.Data.pochDate,
       pochPayment: this.handledata.Data.pochPayment,
@@ -209,8 +211,11 @@ tempObj['to']=this.handlefunction.createDate(this.date);
     this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
     this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
     this.myFormGroup.value.partyName = this.tempPNAME;
-    
-    
+    if(this.partyid=='6023eb9cfb76858c10ee9435'){
+      this.myFormGroup.patchValue({
+        parentAccNo:12,
+      })
+    }
   }
   setPlaceName() {
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
@@ -281,6 +286,27 @@ tempObj['to']=this.handlefunction.createDate(this.date);
        })
   }
 
+  findParentAccNo(){
+    if(this.myFormGroup.value.partyType==='NRCM'){
+      this.myFormGroup.patchValue({
+        parentAccNo:12,
+      })
+    }
+    else if(this.myFormGroup.value.partyType==='NR'){
+   
+        this.myFormGroup.patchValue({
+          parentAccNo:363,
+        })
+   
+      
+    }
+    else{
+      this.myFormGroup.patchValue({
+        parentAccNo:0,
+      })
+    }
+  }
+
   change = function (data) {
     let tempObj = {};
     tempObj["turnbookDate"] = this.handledata.Data.turnbookDate,
@@ -296,6 +322,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["lrno"] = this.myFormGroup.value.lrno,
       tempObj["partyType"] = this.myFormGroup.value.partyType,
       tempObj["hamt"] = this.myFormGroup.value.hamt,
+      tempObj["parentAccNo"] = this.myFormGroup.value.parentAccNo,
       tempObj["ohamt"] = this.myFormGroup.value.ohamt,
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
       tempObj["givenDate"] = this.myFormGroup.value.givenDate,
