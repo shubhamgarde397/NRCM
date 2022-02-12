@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
@@ -28,11 +29,17 @@ public bhTrucks=[];
 public pgnos=[];
 public amounts=[];
 
-  constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService) { }
+  constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router) { }
 
   ngOnInit() {
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
     this.find();
+  }
+
+  edit(data) {
+    data['index'] = 0;
+    this.handleData.saveData(data);
+    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   }
 
   find = function () {
