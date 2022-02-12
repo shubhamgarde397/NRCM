@@ -615,7 +615,7 @@ this.placeid=this.tempDate[0]['place']['_id']
   showDatabyid = function (data, j, number) {
     this.show = true;
     let tempObj = {};
-
+console.log(data)
     tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
     tempObj['place2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0].village_name;
     tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;

@@ -316,13 +316,34 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   showDatabyidEditForm(data, j) {
+    console.log(data);
+    
     this.show = true;
     this.found = data;
     data['index'] = j;
     data['editOption'] = 1;
     data['truckData'].map(r=>{r.field=true;})
+    data['commentToTruck']=data['commentToTruck']
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/UpdateSingle']);
+  }
+
+  updateComments(i,j){
+    console.log(i);
+    let a = prompt('Your Comment was : '+String(i['commentToTruck'])+'.\nDo you want to add more to it?');
+    a=a===null?'':' '+a;
+    a=String(i['commentToTruck'])+String(a);
+    let formbody = {}
+    formbody['_id'] = i._id;
+    formbody['method'] = 'BalanceHireCommentUpdate';
+    formbody['tablename'] = 'BalanceHire';
+    formbody['commentToTruck']=a;
+
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, 0)
+    .subscribe((res: any) => {
+      alert(res.Status)
+    });
   }
 
 
@@ -728,7 +749,7 @@ export class BalancehiredisplayComponent implements OnInit {
       }
       let K = 0
       doc.setFontSize('10');
-      doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
+      doc.text(String(this.balanceDate[z].commentToTruck), 38.5, i);//comments
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount

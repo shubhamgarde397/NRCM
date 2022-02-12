@@ -108,6 +108,8 @@
               <ul *ngFor="let k of i.truckData">
                 <li>{{k.pageno}}</li>
               </ul>
+              <br>
+              <button class="btn btn-warning" (click)="updateComments(i)">Comments</button>
             </td>
             <td *ngIf="role==1||role==2">{{i.accountNumber}}-{{i.ifsc}}</td>
             <td *ngIf="role==1||role==2">{{i.accountName}}</td>

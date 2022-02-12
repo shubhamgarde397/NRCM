@@ -41,7 +41,8 @@ export class UpdateSingleComponent implements OnInit {
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
     this.truckdetailslist = this.commonArray.ownerdetails;
-    this.truckArray = this.handledata.Data.truckData;   
+    this.truckArray = this.handledata.Data.truckData;  
+    this.truckArray2=this.handledata.giveBHData()
   };
 
   submit(){

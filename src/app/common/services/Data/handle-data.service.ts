@@ -59,6 +59,9 @@ this.updateTurnData=data;
   saveData(data) {
     this.Data = data;
   }
+  giveBHData(){
+    return this.Data;
+  }
   saveTurn(data) {
     this.turnData = data;
   }

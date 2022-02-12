@@ -3,6 +3,8 @@ import { Routes } from '@angular/router';
 import { BalancehiredisplayComponent } from './balancehiredisplay/balancehiredisplay.component';
 import { UpdateComponent } from './update/update.component';
 import { UpdateSingleComponent } from './update-single/update-single.component';
+import { BalanceHireAddComponent } from './balance-hire-add/balance-hire-add.component';
+import { BalanceHireHandlerComponent } from './balance-hire-handler/balance-hire-handler.component';
 
 export const BalanceHireRouting: Routes =
     [
@@ -12,7 +14,7 @@ export const BalanceHireRouting: Routes =
         },
         {
             path: 'BALANCE_HIRE_HANDLER',
-            component: BalancehiredisplayComponent,
+            component: BalanceHireHandlerComponent,
             children:
                 [
                     {
@@ -22,6 +24,10 @@ export const BalanceHireRouting: Routes =
                     {
                         path: 'BalanceHireDisp',
                         component: BalancehiredisplayComponent
+                    },
+                    {
+                        path: 'BALANCE_HIRE_ADD',
+                        component: BalanceHireAddComponent
                     },
                     {
                         path: 'Update',
