@@ -216,6 +216,13 @@ tempObj['to']=this.handlefunction.createDate(this.date);
         parentAccNo:12,
       })
     }
+    else{
+      {
+        this.myFormGroup.patchValue({
+          parentAccNo:363,
+        })
+      }
+    }
   }
   setPlaceName() {
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
@@ -242,6 +249,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
+        this.securityCheck.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.securityCheck.commonArray['ownerdetails'];
         this.securityCheck.commonArray['qr'] = Object.keys(res.qr[0]).length > 0 ? res.qr : this.securityCheck.commonArray['qr'];;
         this.fetchBasic();
       });

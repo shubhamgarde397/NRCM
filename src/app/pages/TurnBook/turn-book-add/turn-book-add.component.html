@@ -73,12 +73,22 @@
     <div class="form-group row">
       <div class="col-xs-3">
         Party Type : 
-        <select class="form-control" formControlName="partyType">
+        <select class="form-control" formControlName="partyType" (change)="findParentAccNo()">
           <option value="" selected>None</option>
           <option value="NRCM">NRCM</option>
           <option value="NR">NR</option>
         </select>
       </div>  
+
+      <!-- Place -->
+  <div class="col-sm-3">
+    Place : 
+    <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
+      <option value="" selected>None</option>
+      <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
+    </select>
+    </div>
+<!-- Place -->
 
       <!-- Party -->
     <div class="col-sm-3">
@@ -89,15 +99,12 @@
     </select>
   </div>
   <!-- Party -->
-<!-- Place -->
+
   <div class="col-sm-3">
-    Place : 
-    <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
-      <option value="" selected>None</option>
-      <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
-    </select>
-    </div>
-<!-- Place -->
+    Parent Acc No : 
+  <input type="number" id="parentAccNo" class="form-control" formControlName="parentAccNo">
+  </div>
+
 
     </div>
     <!-- Type -->

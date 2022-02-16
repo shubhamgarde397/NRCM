@@ -113,7 +113,7 @@ this.updateTurnData=data;
       case 'turnbook':
         return [Consts.VILLAGE_INDEX, Consts.GST_INDEX,Consts.OWNER_INDEX];
       case 'turnbookadd':
-        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX,Consts.OWNER_INDEX]
       case 'infolrlist':
         return [Consts.LRLIST_INDEX]
       case 'infohiddenlist':

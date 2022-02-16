@@ -250,6 +250,10 @@ let toAddData;
       this.myFormGroup.patchValue({
         parentAccNo:12,
       })
+    }else{
+      this.myFormGroup.patchValue({
+        parentAccNo:363,
+      })
     }
   }
   setPlaceName() {
