@@ -11,6 +11,7 @@
         <th>Place</th>
         <th>Party</th>
         <th>LRNO</th>
+        <th>Account</th>
         <th>Select</th>
       </tr>
     </thead>
@@ -35,6 +36,14 @@
         <td>{{i.villageDetails[0].village_name}}</td>
         <td>{{i.partyType}}<br>{{i.partyDetails[0].name}}</td>
         <td>{{i.lrno}}</td>
+        <td>
+          <span *ngIf="i.ownerDetails[0].accountDetails.length!==0">
+          {{i.ownerDetails[0].accountDetails[0].accountName}}<br>
+          {{i.ownerDetails[0].accountDetails[0].accountNumber}}<br>
+          {{i.ownerDetails[0].accountDetails[0].ifsc}}
+        </span>
+        <span *ngIf="i.ownerDetails[0].accountDetails.length===0"></span>
+        </td>
         <td *ngIf='i.checker===0'>
           <button mat-raised-button type="button" (click)="addToCheckArray(i,j,1)"
             class="btn-primary btn-sm btn-just-icon">

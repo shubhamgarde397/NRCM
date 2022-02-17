@@ -75,7 +75,6 @@ public typeOfVehicle;
     this.preferenceArray = this.handledata.Data.preferences;
     this.role = this.sec.role;
     this.type=this.handledata.Data.typeOfVehicle;
-    // SBH56
   }
 
   getInformationData() {

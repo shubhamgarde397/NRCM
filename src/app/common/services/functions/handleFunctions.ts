@@ -246,7 +246,6 @@ export class handleFunction {
 
     limitData2(dataArray) {
         var temp = [];
-        // dataArray.forEach(element => {
         for (var i = 0; i < dataArray.length; i++) {
 
             if (temp[0] == undefined) {
@@ -267,7 +266,6 @@ export class handleFunction {
 
     limitData(dataArray) {
         var temp = [];
-        // dataArray.forEach(element => {
         for (var i = 0; i < dataArray.length; i++) {
 
             if (temp[0] == undefined) {
@@ -296,9 +294,6 @@ export class handleFunction {
             forCounter++;
         }
         return this.MorseCryptedFinalCode;
-        // if (forCounter === data.length) {
-        //     this.complexIt(this.MorseCryptedFinalCode.split('2'))
-        // }
     }
     inverseMorseCode(data) {
 

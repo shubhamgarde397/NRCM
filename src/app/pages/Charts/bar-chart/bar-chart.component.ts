@@ -12,7 +12,6 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
   styleUrls: ['./bar-chart.component.css']
 })
 export class BarChartComponent implements OnInit {
-//create another dropdown for NR and NRCM not for All
     public data=[];
     public backGroundColor=[];
     public borderColor=[];
@@ -123,7 +122,6 @@ this.gstdetailslistidList.splice(j,1)
     tempObj['type']=this.selectedType;
     tempObj['from']=this.selectedType==='byMonth'?this.selectedYear+'-'+this.handleFunction.generate2DigitNumber(String(this.handleFunction.getMonthNumber(this.selectedMonth)))+'-01':this.selectedYear+'-01-01';
     tempObj['to']=this.selectedType==='byMonth'?this.selectedYear+'-'+this.handleFunction.generate2DigitNumber(String(this.handleFunction.getMonthNumber(this.selectedMonth)))+'-31':this.selectedYear+'-12-31';
-    // tempObj['id']=this.nopid===''?null:this.gstdetailslistid['_id'];//pass different parties ID
     if(this.selectedType==='bySelectedPartyYearwise')
     {
         tempObj['id']=this.gstdetailslistidList.map(r=>r.id)

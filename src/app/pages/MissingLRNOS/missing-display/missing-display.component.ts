@@ -11,7 +11,6 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
   styleUrls: ['./missing-display.component.css']
 })
 export class MissingDisplayComponent implements OnInit {
-// tablename=missingLRNOS
 public lrlist;
 public show = false;
 public dbName = 'NRCM_Information';

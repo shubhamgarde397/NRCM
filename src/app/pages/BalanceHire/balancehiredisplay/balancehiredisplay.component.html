@@ -73,8 +73,8 @@
             <th>Amount</th>
             <th>PgNo</th>
             <th>Comments</th>
-            <th *ngIf="role==1||role==2">AccountNo-IFSC</th>
-            <th *ngIf="role==1||role==2">Account Name</th>
+            <th>AccountNo-IFSC</th>
+            <th>Account Name</th>
             <th *ngIf="!admin">Delete</th>
             <th *ngIf="(role==1||role==2)&&(!admin)">Edit</th>
             <th *ngIf="admin">Delete Admin</th>
@@ -115,8 +115,8 @@
               <button class="btn btn-warning" (click)="updateComments(i)">Comments</button>
               <button class="btn btn-warning" (click)="clearComments(i)">Clear Comments</button>
             </td>
-            <td *ngIf="role==1||role==2">{{i.accountNumber}}-{{i.ifsc}}</td>
-            <td *ngIf="role==1||role==2">{{i.accountName}}</td>
+            <td>{{i.accountNumber}}-{{i.ifsc}}</td>
+            <td>{{i.accountName}}</td>
             <td *ngIf="(i.comments==='')&&(!admin)">
               <button mat-raised-button (click)="deleteBH(i)" class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete_forever</i>

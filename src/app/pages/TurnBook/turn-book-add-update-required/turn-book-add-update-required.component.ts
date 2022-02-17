@@ -20,7 +20,7 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
   styleUrls: ['./turn-book-add-update-required.component.css']
 })
 export class TurnBookAddUpdateRequiredComponent implements OnInit {
-  public modelO: odata; // mapped it to a variable
+  public modelO: odata;
   public modelSubmittedO: odata;
 
 
@@ -44,7 +44,6 @@ export class TurnBookAddUpdateRequiredComponent implements OnInit {
   public current_count = '0';
   public now = new Date();
   public d = this.days[this.now.getDate()];
-  // public m = this.monthNames[this.now.getMonth()];
   public m;
   public y = '2020';
   public monthDay: number;
@@ -76,7 +75,7 @@ export class TurnBookAddUpdateRequiredComponent implements OnInit {
   public gstID = false;
   public ownerID = false;
 
-  public TruckNo: string; // declared 3 variables
+  public TruckNo: string;  
   public Name: string;
   public Pan: string;
   public MobileNo: string;
@@ -144,7 +143,6 @@ export class TurnBookAddUpdateRequiredComponent implements OnInit {
     formBody['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     formBody['turnbookDate'] = value['loadingDate'];
     formBody['truckno'] = this.ownerdetailslistid.truckno;
-    // formBody['datetruck'] = value['loadingDate'] + '_' + this.ownerdetailslistid.truckno;
     formBody['advance'] = '';
     formBody['balance'] = '';
     formBody['pochDate'] = '';

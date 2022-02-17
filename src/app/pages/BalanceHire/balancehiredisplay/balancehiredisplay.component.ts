@@ -68,7 +68,6 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   ngOnInit() {
-// NgOninit is being called automatically when clicked on edit by admin in balance follow, chk how very important
     this.printInfo = false;
     this.role = this.securityCheck.role;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
@@ -134,8 +133,7 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   showDatabyidTBEdit(data,j){
-   
-  // showDatabyid = function (data, j, number) {
+  
     this.show = true;
     let tempObj = {};
 
@@ -193,10 +191,6 @@ export class BalancehiredisplayComponent implements OnInit {
       });
   }
 
-  downloadPendingPayment(){
-    // pdf to see pendingpayment
-  }
-
   find = function () {
     let tempObj = {};
     if (this.selectedDate === undefined) {
@@ -217,7 +211,7 @@ export class BalancehiredisplayComponent implements OnInit {
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
       });
   };
-  find2(data, type, set = true) {//set the  data['todayDate'] = this.selectedDate; to the data['todayDate']
+  find2(data, type, set = true) {
     if (set) {
       switch (type) {
         case 'year':
@@ -268,10 +262,6 @@ export class BalancehiredisplayComponent implements OnInit {
       })
   }
 
-  // {"method":"update","tablename":"BalanceHire","todayDate":"2021-09-04","print":true,"part":0,"user":"shubham"}
-  //{"method":"update","tablename":"BalanceHire","print":true,"part":0,"user":"shubham"}
-
-
   deleteBH(data) {
     if (confirm('Are you sure?')) {
       data['comments'] = data['comments'] === 'cancel' ? '' : 'cancel';
@@ -316,8 +306,6 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   showDatabyidEditForm(data, j) {
-    console.log(data);
-    
     this.show = true;
     this.found = data;
     data['index'] = j;
@@ -329,7 +317,6 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   updateComments(i,j){
-    console.log(i);
     let a = prompt('Your Comment was : '+String(i['commentToTruck'])+'.\nDo you want to add more to it?');
     a=a===null?'':' '+a;
     a=String(i['commentToTruck'])+String(a);
@@ -347,7 +334,6 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   clearComments(i){
-    console.log(i)
     let formbody = {}
     formbody['_id'] = i._id;
     formbody['method'] = 'BalanceHireCommentUpdate';
@@ -498,10 +484,6 @@ export class BalancehiredisplayComponent implements OnInit {
     //Dynamic Part End
     doc.save(dateFormat + '.pdf')
   }
-  // a will be the array to pass for eg: 412212111
-  //4 trucks wale in bulk are a digit number which is 2
-  //2 trucks wale in bulk are a digit number which is 2
-  //1 trucks wale in bulk are a digit number which is 1
   getValueofI(a) {
     let I = 16;
     let l;

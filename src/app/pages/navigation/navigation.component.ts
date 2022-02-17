@@ -10,7 +10,6 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 import * as  jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import { FormBuilder, FormGroup } from '@angular/forms';
-// import * as moment from 'moment';
 
 @Component({
   selector: 'app-navigation',
@@ -20,10 +19,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 @Input()
 export class NavigationComponent implements OnInit {
-  data;
-  notRecievedCount;
-
-  // public now = moment();
+  public data;
+  public notRecievedCount;
   public now = new Date();
   public day = this.now.getDate();
   public month = this.now.getMonth();
@@ -56,8 +53,7 @@ export class NavigationComponent implements OnInit {
     this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.username;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
-    // this.role = 1;//comment
-    this.getInformationData();//uncomment
+    this.getInformationData();
     this.AUTH = this.securit.AUTH;
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();

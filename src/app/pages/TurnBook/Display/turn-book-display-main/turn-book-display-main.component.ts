@@ -124,38 +124,19 @@ public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
   }
 
-  ngOnInit() {//"^2021-04.*"
+  ngOnInit() {
     this.considerArray = this.handleData.createConsiderArray('turnbookadd')
     this.handleData.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.buttons=this.getButtons()
     this.role = this.securityCheck.role;
     this.commonArray = this.securityCheck.commonArray;
-    this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
+    this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn(); 
  
     this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
-    // this.amountShow=this.securityCheck.getAmountShow()
   }
-
-  // showDatabyParty() {
-  //   this.turnbooklist = this.handleData.giveTurn();
-  //   let tempData = [];
-  //   switch (this.selectpartyType) {
-  //     case 'NRCM':
-  //       tempData = this.turnbooklist.filter(r => r.partyType === 'NRCM')
-  //       break;
-  //     case 'NR':
-  //       tempData = this.turnbooklist.filter(r => r.partyType === 'NR')
-  //       break;
-  //     case 'All':
-  //       tempData = this.turnbooklist.filter(r => r.partyType)
-  //       break;
-
-  //   }
-  //   this.turnbooklist = tempData;
-  // }
 
   getInformationData() {
     let tempObj = { "method": "displaynew", "consider": this.considerArray };
@@ -369,7 +350,6 @@ let buttons=[]
         case '11':
         if (this.truckVar === '') { alert('Select a Truck'); break; }
         else {
-          // tempObj['id'] = this.truckid['_id'];
           tempObj['truckno'] = this.truckVar;
         }
         case '12':
@@ -606,8 +586,6 @@ this.placeid=this.tempDate[0]['place']['_id']
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert('Moved to Balance Hire!')
-        // this.handleData.saveBH(this.turnbooklist.splice(j, 1));
-        // this.turnbooklist=this.turnbooklist.splice(j, 1)
         this.turnbooklist.splice(j, 1);
       });
   }
@@ -615,7 +593,6 @@ this.placeid=this.tempDate[0]['place']['_id']
   showDatabyid = function (data, j, number) {
     this.show = true;
     let tempObj = {};
-console.log(data)
     tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
     tempObj['place2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0].village_name;
     tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
@@ -804,7 +781,6 @@ console.log(data)
   }
 
   addToCheckArray(i, j, c) {
-    // i['index'] = j;
     i['balance']=this.balance(i);
     if (i['loadingDate'] == "") {
       alert('Loading Date cant be empty.')
@@ -822,7 +798,6 @@ console.log(data)
   addToCheckArray2(i, j, c) {
     this.balanceHireArrray[i][j]['checker'] = c;
     this.balanceHireArrray[i].splice(j, 1)
-    // this.turnbooklist.push(this.balanceHireArrray[i][j])
   }
 
   saveToCheckArray() {
@@ -903,7 +878,6 @@ console.log(data)
           tempObj['amount'] = parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
           tempObj['partyType'] = this.balanceHireArrray[i][j].partyType;
           truckData.push(tempObj);
-          //write logic to update the TurnBook_2020_2021 and change pochPayment to true when sent to lambda
         }
 
       }
@@ -913,8 +887,7 @@ console.log(data)
       this.finalObject['todayDate'] = this.todaysDate;
       this.finalObject['comments'] = "";
       commentToTruck= String(this.balanceHireArrray[0][0].parentAccNo);
-      // commentToTruck= this.balanceHireArrray[0][0].partyType==='NRCM'?'12':(this.balanceHireArrray[0][0].partyType==='NR'?'363':this.comment);
-      this.finalObject['commentToTruck']=this.comment===''?commentToTruck:commentToTruck+'\n'+this.comment;
+     this.finalObject['commentToTruck']=this.comment===''?commentToTruck:commentToTruck+'\n'+this.comment;
       this.finalObject['print'] = false;
       this.finalObject['bankName'] = '';
       this.finalObject['ifsc'] = '';

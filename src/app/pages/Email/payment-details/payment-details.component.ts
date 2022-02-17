@@ -162,28 +162,4 @@ export class PaymentDetailsComponent implements OnInit {
     this.BalanceModeDelete = bd;
     this.BalanceModeUpdate = bu;
   }
-  // send json to server and create an excel saev it in a directory and download the file to client
-  downloadExcel() {
-    this.apiCallservice.handleData_New(this.dbName, 'EmailEveryMonth/download', 1, 0, { 'toReceive': this.myFormGroupE.value.toReceive })
-      .subscribe((res) => {
-        alert('Done');
-      })
-    // this.excelService.exportAsExcelFile(this.mainArray, 'AccountDetails');
-  }
-
-  sendMail({ value, valid }: { value: EmailModel, valid: boolean }) {
-    this.spinner.show();
-    this.mainArray[3] = { 'toReceive': value.toReceive };
-    this.mainArray[4] = { 'Password': value.password };
-    this.apiCallservice.handleData_New(this.dbName, 'EmailEveryMonth/dowloadExcel', 4, 0,
-      this.mainArray
-    ).subscribe((res: Response) => {
-      this.apiCallservice.handleData_New(this.dbName, 'EmailEveryMonth/sendFile', 1, 0,
-        this.mainArray
-      ).subscribe((res: Response) => {
-        alert('Mail has been sent successfully');
-        this.spinner.hide();
-      });
-    });
-  }
 }

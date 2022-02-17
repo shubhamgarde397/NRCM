@@ -9,7 +9,6 @@ import { ObsServiceService } from 'src/app/common/services/Data/obs-service.serv
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import * as  jsPDF from 'jspdf';
 import 'jspdf-autotable';
-// import * as moment from 'moment';
 
 @Component({
   selector: 'app-mail-display',

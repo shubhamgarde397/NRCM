@@ -32,7 +32,7 @@ public amounts=[];
   constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router) { }
 
   ngOnInit() {
-    this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());//
+    this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.find();
   }
 
@@ -117,7 +117,6 @@ public amounts=[];
   }
 
   addToCheckArray(i, j, c) {
-    // i['index'] = j;
     i['balance']=this.balance(i);
     if (i['loadingDate'] == "") {
       alert('Loading Date cant be empty.')
@@ -146,7 +145,6 @@ public amounts=[];
   addToCheckArray2(i, j, c) {
     this.balanceHireArrray[i][j]['checker'] = c;
     this.balanceHireArrray[i].splice(j, 1)
-    // this.turnbooklist.push(this.balanceHireArrray[i][j])
   }
 
   saveToCheckArray() {
@@ -241,7 +239,6 @@ public amounts=[];
       this.finalObject['todayDate'] = this.todaysDate;
       this.finalObject['comments'] = "";
       commentToTruck= String(this.balanceHireArrray[0][0].parentAccNo);
-      // commentToTruck= this.balanceHireArrray[0][0].partyType==='NRCM'?'12':(this.balanceHireArrray[0][0].partyType==='NR'?'363':this.comment);
       this.finalObject['commentToTruck']=this.comment===''?commentToTruck:commentToTruck+'\n'+this.comment;
       this.finalObject['print'] = false;
       this.finalObject['bankName'] = '';

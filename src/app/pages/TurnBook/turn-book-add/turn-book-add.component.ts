@@ -139,15 +139,12 @@ export class TurnBookAddComponent implements OnInit {
     let tempobj = {};
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
-    // tempobj['placeid'] = '5bcdecdab6b821389c8abde0';
-    // tempobj['partyid'] = '5fff37a31f4443d6ec77e078';
-    // tempobj['partyType'] = '';
     tempobj['placeid'] = this.placeid;
     tempobj['partyid'] = this.partyid;
     tempobj['partyType'] = value['partyType'];
     tempobj['parentAccNo'] = value['parentAccNo'];
     tempobj['loadingDate'] = value['loadingDate'];
-    tempobj['turnbookDate'] = this.turnbookDate;//value['turnbookDate'];
+    tempobj['turnbookDate'] = this.turnbookDate;
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = this.method;

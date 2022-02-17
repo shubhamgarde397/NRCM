@@ -42,11 +42,6 @@ export const routes: Routes =
 
             children:
                 [
-
-                    // {
-                    //     path: '',
-                    //     component: WelcomePageComponent
-                    // },
                     {
                         path: 'NRCM_HOME',
                         component: WelcomePageComponent

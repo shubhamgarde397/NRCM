@@ -79,7 +79,6 @@ export class PDFComponent implements OnInit {
     doc.setFontSize('30');
     doc.setFontType('bold');
     doc.setTextColor(parseInt(colorfromUI[1], 16), parseInt(colorfromUI[2], 16), parseInt(colorfromUI[3], 16));
-    // doc.text(this.branch.split(' ').map(r=>{return r[0].toUpperCase()+r.substr(1)}).join(' '), this.branch==='nitin roadways'?65:15, 25)
     doc.text('Nitin Roadways And Cargo Movers',15, 25)
 
     doc.setFontSize('16');
@@ -156,8 +155,6 @@ export class PDFComponent implements OnInit {
       doc.text('Total', 70, (110 + ((this.bankArray.length + 1) * 6)))
       doc.text(totalAmt.toString(), 170 - this.spaceToLeave(totalAmt, this.max), (110 + ((this.bankArray.length + 1) * 6)))//one digit is 2.5
     }
-
-    // doc.text('Declarant', 150, 268)
     doc.save(this.timeLog.toString() + '.pdf')
   }
 
@@ -252,7 +249,6 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('normal');
     doc.setTextColor(0, 0, 0);
     doc.text('Date :- ' + this.dateSetter(), 141, 73)
-    // doc.text('Date :- ', 141, 73)
 
     doc.setFontSize('10');
     doc.setTextColor(0, 0, 0);

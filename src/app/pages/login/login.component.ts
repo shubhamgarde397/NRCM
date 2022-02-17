@@ -46,7 +46,6 @@ export class LoginComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       username: [this.model.username, Validators.required],
       password: [this.model.password, Validators.required],
-      // type: [this.model.type, Validators.required]
     });
     this.apiCallservice.authSuccess.subscribe(
       (res: any) => { this.isLoginSuccess = res; }
@@ -55,36 +54,13 @@ export class LoginComponent implements OnInit {
   }
   setUser() {
     this.userTypeTS = this.userTypeHTML;
-    // if (this.userTypeHTML !== '1') {
-    //   this.myFormGroup.patchValue({ username: 'test123' });
-    //   this.myFormGroup.patchValue({ password: 'test123' });
-    //   this.loginButton = true;
-    //   this.myFormGroup.controls['username'].disable();
-    //   this.myFormGroup.controls['password'].disable();
-    // } else {
       this.loginButton = false;
       this.myFormGroup.controls['username'].enable();
       this.myFormGroup.controls['password'].enable();
-    // }
   }
 
   login({ value, valid }: { value: login, valid: boolean }, check) {
     value = value === undefined ? {} : value;
-
-    // if (check) {
-
-    //   if (this.userTypeHTML !== '1') {
-    //     value['username'] = 'test123';
-    //     value['password'] = 'test123';
-    //     value['type'] = '2';
-    //     this.security.setTypeOfUser(2);
-    //   }
-
-    //   this.spinnerService.show();
-    //   let type = value['username'] === 'test123' ? 2 : parseInt(value['type'])
-    //   this.security.setUsername(value['username']);
-    //   this.apiCallservice.signIn(value['username'], value['password'], type);
-    // }
     this.spinnerService.show();
       this.security.setUsername(value['username']);
       this.apiCallservice.signIn(value['username'], value['password'], 1);//type);
@@ -96,5 +72,3 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['Register']);
   }
 }
-
-// C: \Users\Admin\AppData\Local\Programs\Python\Python37 - 32\; C: \Users\Admin\AppData\Local\Programs\Microsoft VS Code\bin;

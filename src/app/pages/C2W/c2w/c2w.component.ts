@@ -34,7 +34,6 @@ export class C2wComponent implements OnInit {
 
   ngOnInit() {
     const passowrd = "a";
-    // prompt('Password?');
     if (passowrd !== 'a') { this.router.navigate(['']) }
     this.myFormGroup = this.formBuilder.group({
       MessageS: [''],
@@ -197,21 +196,6 @@ export class C2wComponent implements OnInit {
 
   }
 
-  async get() {
-    this.apiCallservice.handleData_New('', 'chats/getChat', 4, 0)
-      .subscribe((res: any) => {
-
-
-        const dataaa = JSON.parse(res);
-        dataaa.forEach(element => {
-          this.oldData.push(element);
-        });
-
-      })
-
-
-  }
-
   submit({ value, valid }: { value: { MessageA: '', MessageS: '' }, valid: boolean }) {
 
     this.submitted = true;
@@ -233,16 +217,6 @@ export class C2wComponent implements OnInit {
       }
 
     }
-  }
-  save() {
-    // this.apiCallservice.handleData_New('', 'chats/writeChat', 1, 0, { data: this.oldData })
-    //   .subscribe((res) => {
-
-    //   })
-    this.apiCallservice.handleData_New('', 'chats/advanced', 1, 0, { numbers: this.arrayOfNumbers })
-      .subscribe((res) => {
-
-      })
   }
   numbers() {
     this.arrayOfNumbers.push(parseInt(this.numberr));

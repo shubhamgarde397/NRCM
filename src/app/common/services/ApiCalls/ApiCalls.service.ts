@@ -34,64 +34,6 @@ export class ApiCallsService {
     this.username = this.securityCheck.username
     this.typeofuser=this.securityCheck.typeofuser;
   }
-  handleAWS(api, formBody = {}) {
-    this.getAuthenticatedUser().getSession((err, session) => {
-      let headers = new Headers({ 'Authorization': session.getIdToken().getJwtToken() })
-      if (err) { alert(err); return err; }
-      else {
-        return this.http.post(this.getfullapi.getFullAPI(api), formBody, { headers: headers })
-          .subscribe((res: any) => {
-            if (JSON.parse(res._body.replace(/ /g, '').replace(/\n/g, '')).Status === 'Done') {
-              alert('Added!');
-            } else {
-              alert('Error')
-            }
-          }, (err) => { alert(err) });
-      }
-    })
-
-  }
-  handleData_New(code, api, apiCall, noOfIDs: number, formBody = {}, id1?, id2?, id3?) {
-    this.headerPost = new HttpHeaders();
-    this.headerPost.append('Content-Type', 'application/json');
-    formBody['code'] = code;
-    switch (noOfIDs) {
-      case 0: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs); break;
-      case 1: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1); break;
-      case 2: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1, id2); break;
-      case 3: this.URL = this.getfullapi.appendAPIwithIDS(api, noOfIDs, id1, id2, id3); break;
-    }
-
-    switch (apiCall) {
-      case 0: return this.http.get(this.URL).pipe(map((res) => res));
-      case 1: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
-      case 2: return this.http.delete(this.URL).pipe(map((res) => res));
-      case 3: return this.httpClient.put(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
-      case 4: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost, responseType: 'text' }).pipe(map((res) => res));
-    }
-  }
-
-  handleData_New_Temp(api, apiCall, formBody = {}, code) {
-    formBody['code'] = code;
-    this.getAuthenticatedUser().getSession((err, session) => {
-      const headers = {
-        headers: new Headers({ 'Authorization': session.getIdToken().getJwtToken() })
-      }
-      if (err) { console.log(err); return err }
-      else {
-        this.URL = this.getfullapi.getFullAPI(api);
-        switch (apiCall) {
-          case 0: this.http.get(this.URL).pipe(map((res) => res));
-          case 1: this.http.post(this.URL, formBody, headers).subscribe((res) => { alert('Done') }, (err) => { console.log(err) });
-          case 2: this.http.delete(this.URL).pipe(map((res) => res));
-          case 3: this.httpClient.put(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
-          case 4: this.httpClient.post(this.URL, formBody, { headers: this.headerPost, responseType: 'text' }).pipe(map((res) => res));
-          case 5: this.http.post(this.URL, formBody, headers).subscribe((res) => { this.obs.savePipe(res.json()) }, (err) => { console.log(err) });
-        }
-      }
-    })
-
-  }
 
   handleData_New_python(api, apiCall, formBody = {}, code) {
     formBody['user'] = this.username;
@@ -109,22 +51,6 @@ export class ApiCallsService {
     }
   }
 
-
-  handleImage(formBody, api) {
-    // this.handlefunction.createHeader();
-    this.URL = this.getfullapi.appendAPIwithIDS(api, 0);
-    return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
-  }
-
-  handleData_Pyhon(api, apiCall, formBody) {
-    // this.handlefunction.createHeader();
-    this.URL = this.getfullapi.appendAPIwithIDS(api, 0);
-    switch (apiCall) {
-
-      case 0: return this.http.post(`${'http://localhost:5000/' + api}`, formBody).pipe(map((res: any) => res));
-      // case 0: return this.http.post(`${'http://18.219.49.104:5000/' + api}`, formBody).pipe(map((res: any) => res));
-    }
-  }
   signIn(username: string, password: string,user:number): void {
     this.securityCheck.setTypeOfUser(user);
     const authData = {

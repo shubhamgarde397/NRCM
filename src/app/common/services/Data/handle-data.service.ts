@@ -15,9 +15,6 @@ export class HandleDataService {
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
     "qr": [{}],
-    // "regularparty": [{}],
-    // "RegularTruck": [{}],
-    // "thoughts": [{}],
     "Role": 6
   }
   public IP = [];
@@ -88,9 +85,7 @@ this.updateTurnData=data;
     for (let i = 0; i < Object.keys(this.commonArray).length; i++) {
       if (tempCArr[i] == undefined) { tempCArr[i] = 0; }
     }
-    // return this.checkForData(tempCArr, tempArrofAPI);
     return this.checkForData(tempCArr);
-    // return tempCArr;
   }
   getIndexes(data) {
     switch (data) {
@@ -126,8 +121,6 @@ this.updateTurnData=data;
 
   resetArray(data) {
     switch (data) {
-      // case 'turnbook':
-      //   this.securityCheck.IP[Consts.TRUCKDETAILS_INDEX[0].index] = 0;
       case 'full':
         this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
     }

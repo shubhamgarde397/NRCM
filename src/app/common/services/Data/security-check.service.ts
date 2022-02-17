@@ -14,9 +14,6 @@ export class SecurityCheckService {
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
     "qr": [{}],
-    // "regularparty": [{}],
-    // "RegularTruck": [{}],
-    // "thoughts": [{}],
     "Role": 6
   }
   public commonBalanceHire = [];

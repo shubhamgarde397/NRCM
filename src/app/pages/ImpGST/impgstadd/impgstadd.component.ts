@@ -35,12 +35,6 @@ export class ImpgstaddComponent implements OnInit {
 
   storeImpGstDetailsData({ value, valid }: { value: impgst, valid: boolean }) {
     this.submitted = true;
-    this.apiCallservice.handleData_New(this.dbName, 'impGstDetails/addimpgstdetailsdata', 1, 0, value)
-      .subscribe((res: any) => {
-        alert('Added Successfully');
-        this.securityCheck.commonArray['impgstdetails'] = [];
-        this.securityCheck.commonArray['impgstdetails'] = res;
-      });
   }
 
   back() {

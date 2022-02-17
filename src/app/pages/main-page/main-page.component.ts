@@ -286,11 +286,11 @@ export class MainPageComponent implements OnInit {
 
 
 
-  modalData;
+  public modalData;
   public loginV = false;
   public hoverThis = false;
   public now = new Date();
-  changed = false;
+  public changed = false;
   public hehe;
   public morseIS = '';
   public clue = false;
@@ -298,17 +298,15 @@ export class MainPageComponent implements OnInit {
   public fileFormDataPython = new FormData();
   public newAuthor: any;
   public paymentData;
-  // 
-  selectedFile = null;
-  imageFolder = ''
-  panCardFile: any;
-  //base64s
-  panCardString: string;
-  //json
-  finalJson = {};
+
+  public selectedFile = null;
+  public imageFolder = ''
+  public panCardFile: any;
+  public panCardString: string;
+  public finalJson = {};
   public pythonVar = '';
   public document = new jsPDF();
-  // 
+
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction) {
     localStorage.clear();
@@ -385,15 +383,7 @@ export class MainPageComponent implements OnInit {
     }
   }
 
-  upload() {
-    this.fileFormData.append('name', this.imageFolder);
-    this.apiCallservice.handleImage(this.fileFormData, 'http://localhost:3000/image/addImage')
-      .subscribe((res) => {
-        this.fileFormData = new FormData();
-      }, err => {
 
-      })
-  }
   ngOnInit() {
     setInterval(() => {
       this.now = new Date();
@@ -406,35 +396,7 @@ export class MainPageComponent implements OnInit {
     
   }
 
-  sendData() {
-    this.fileFormDataPython.append('input', this.pythonVar);
-    this.apiCallservice.handleData_Pyhon('rohit', 0, this.fileFormDataPython)
-      .subscribe((res: any) => {
-        this.pythonVar = '';
-      })
 
-  }
-
-  showAlert() {
-    this.pythonVar = prompt('Enter your question');
-    if (this.pythonVar != '') {
-      this.fileFormDataPython.append('input', this.pythonVar);
-      this.apiCallservice.handleData_Pyhon('rohit', 0, this.fileFormDataPython)
-        .subscribe((res: any) => {
-          alert(JSON.parse(res['_body']).Status);
-          this.fileFormDataPython = new FormData();
-        })
-    } else {
-      this.pythonVar = prompt('Enter your question');
-
-      this.fileFormDataPython.append('input', this.pythonVar);
-      this.apiCallservice.handleData_Pyhon('rohit', 0, this.fileFormDataPython)
-        .subscribe((res: any) => {
-          alert(JSON.parse(res['_body']).Status);
-          this.fileFormDataPython = new FormData();
-        })
-    }
-  }
 
   getMorse(data) {
     this.morseIS = this.handleF.normalMorseCode(data);
@@ -443,10 +405,6 @@ export class MainPageComponent implements OnInit {
   clueCall() {
     this.clue = true;
   }
-  // a will be the array to pass for eg: 412212111
-  //4 trucks wale in bulk are a digit number which is 2
-  //2 trucks wale in bulk are a digit number which is 2
-  //1 trucks wale in bulk are a digit number which is 1
   getValueofI(a) {
     let I = 16;
     for (let i = 0; i < a.length; i) {
@@ -460,17 +418,3 @@ export class MainPageComponent implements OnInit {
   }
 }
 
-
-
-// for(let i=0;i<a.length;i=i+l+2){
-
-//   let x=parseInt(a[i]);
-
-//   let l=parseInt(a[i+1]);
-
-//   let X=parseInt(a.slice(i+2,i+2+l));
-
-
-//   I=I+((6*parseInt(X))*(x+2))
-
-// }
