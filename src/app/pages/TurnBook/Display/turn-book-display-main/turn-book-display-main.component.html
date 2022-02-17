@@ -5,11 +5,12 @@
     <div class="col-lg-12">
       <!-- DATE-->
       <div class="form-group row">
-        <div class="col-sm-5">
+        <div class="col-sm-3">
           <select class="form-control" id="partyType" [(ngModel)]="trucknoid" (change)="findOption()" id="truckNoone">
             <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
           </select>
-          Party Type : 
+          </div>
+          <div class="col-sm-3">
           <select class="form-control" [(ngModel)]="buttonOptionPartyType">
             <option value="NRCM">NRCM</option>
           <option value="NR">NR</option>
@@ -63,16 +64,6 @@
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='11'">
           <input type="text" class="form-control" [(ngModel)]='truckVar' placeholder="Truck No">
-        </div>
-        <div class="col-sm-3" *ngIf="tableSelected">
-          PartyWise Filter : 
-          <select class="form-control" [(ngModel)]="selectpartyType" (change)="showDatabyParty()">
-            <option>All</option>
-            <option>NR</option>
-            <option>NRCM</option>
-            <option>SNL</option>
-          <option>SGL</option>
-          </select>
         </div>
       </div>
       <div class="row">

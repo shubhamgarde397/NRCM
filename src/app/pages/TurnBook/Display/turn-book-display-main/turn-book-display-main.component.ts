@@ -139,23 +139,23 @@ public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
     // this.amountShow=this.securityCheck.getAmountShow()
   }
 
-  showDatabyParty() {
-    this.turnbooklist = this.handleData.giveTurn();
-    let tempData = [];
-    switch (this.selectpartyType) {
-      case 'NRCM':
-        tempData = this.turnbooklist.filter(r => r.partyType === 'NRCM')
-        break;
-      case 'NR':
-        tempData = this.turnbooklist.filter(r => r.partyType === 'NR')
-        break;
-      case 'All':
-        tempData = this.turnbooklist.filter(r => r.partyType)
-        break;
+  // showDatabyParty() {
+  //   this.turnbooklist = this.handleData.giveTurn();
+  //   let tempData = [];
+  //   switch (this.selectpartyType) {
+  //     case 'NRCM':
+  //       tempData = this.turnbooklist.filter(r => r.partyType === 'NRCM')
+  //       break;
+  //     case 'NR':
+  //       tempData = this.turnbooklist.filter(r => r.partyType === 'NR')
+  //       break;
+  //     case 'All':
+  //       tempData = this.turnbooklist.filter(r => r.partyType)
+  //       break;
 
-    }
-    this.turnbooklist = tempData;
-  }
+  //   }
+  //   this.turnbooklist = tempData;
+  // }
 
   getInformationData() {
     let tempObj = { "method": "displaynew", "consider": this.considerArray };

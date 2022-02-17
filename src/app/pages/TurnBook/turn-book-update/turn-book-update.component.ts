@@ -432,33 +432,11 @@ tempObj['to']=this.handlefunction.createDate(this.date);
           let tempData = this.handledata.giveTurn();
           tempData[this.handledata.Data.index]["turnbookDate"] = this.handledata.Data.turnbookDate,
             tempData[this.handledata.Data.index]["entryDate"] = this.handledata.Data.entryDate,
-            // tempData[this.handledata.Data.index]["placeid"] = this.placeid,//what if we already have entry of thios
-            tempData[this.handledata.Data.index]['villageDetails'][0]['_id'] = this.placeid,
-            tempData[this.handledata.Data.index]['villageDetails'][0]['village_name'] = this.tempVNAME,
-            tempData[this.handledata.Data.index]['villageDetails2'][0]['_id'] = this.placeid2,
-            tempData[this.handledata.Data.index]['villageDetails2'][0]['village_name'] = this.tempVNAME2,
-            // tempData[this.handledata.Data.index]["partyid"] = this.partyid,//what if we already have entry of thios
-            tempData[this.handledata.Data.index]['partyDetails'][0]['_id'] = this.partyid,
-            tempData[this.handledata.Data.index]['partyDetails'][0]['name'] = this.tempPNAME,
-            // tempData[this.handledata.Data.index]["ownerid"] = this.handledata.Data.ownerid,//what if we already have entry of thios
             tempData[this.handledata.Data.index]['ownerDetails'][0]['_id'] = data.value.truckNo.split('+')[0],
-            tempData[this.handledata.Data.index]["loadingDate"] = this.myFormGroup.value.loadingDate,
-            tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
-            tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
-            tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
-            tempData[this.handledata.Data.index]["ohamt"] = this.myFormGroup.value.ohamt,
-            tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
-            tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment
-            tempData[this.handledata.Data.index]["pgno"] = this.myFormGroup.value.pgno
-            tempData[this.handledata.Data.index]["invoice"] = this.myFormGroup.value.invoice
-            tempData[this.handledata.Data.index]["complete"] = this.myFormGroup.value.complete
-            tempData[this.handledata.Data.index]["typeOfLoad"] = this.myFormGroup.value.typeOfLoad
-            tempData[this.handledata.Data.index]["waitLocation"] = this.myFormGroup.value.waitLocation
-            tempData[this.handledata.Data.index]["pochAmount"] = this.myFormGroup.value.pochAmount
+            tempData[this.handledata.Data.index]['ownerDetails'][0]['truckno'] = data.value.truckNo.split('+')[1],
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
-          // tempArray.splice(this.handledata.Data.index, 1)
           this.handledata.saveTurn(tempArray);
         }
         this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);

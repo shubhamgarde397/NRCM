@@ -72,6 +72,7 @@
             <th>Truckno</th>
             <th>Amount</th>
             <th>PgNo</th>
+            <th>Comments</th>
             <th *ngIf="role==1||role==2">AccountNo-IFSC</th>
             <th *ngIf="role==1||role==2">Account Name</th>
             <th *ngIf="!admin">Delete</th>
@@ -108,8 +109,11 @@
               <ul *ngFor="let k of i.truckData">
                 <li>{{k.pageno}}</li>
               </ul>
+            </td>
+            <td>{{i.commentToTruck}}
               <br>
               <button class="btn btn-warning" (click)="updateComments(i)">Comments</button>
+              <button class="btn btn-warning" (click)="clearComments(i)">Clear Comments</button>
             </td>
             <td *ngIf="role==1||role==2">{{i.accountNumber}}-{{i.ifsc}}</td>
             <td *ngIf="role==1||role==2">{{i.accountName}}</td>

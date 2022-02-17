@@ -346,6 +346,23 @@ export class BalancehiredisplayComponent implements OnInit {
     });
   }
 
+  clearComments(i){
+    console.log(i)
+    let formbody = {}
+    formbody['_id'] = i._id;
+    formbody['method'] = 'BalanceHireCommentUpdate';
+    formbody['tablename'] = 'BalanceHire';
+    formbody['commentToTruck']=i.commentToTruck.split(' ')[0];
+
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, 0)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      alert('Please refresh!')
+    });
+  }
+
+
 
   download1() {//threshhold is 295
     let pageno = 1;
