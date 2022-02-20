@@ -66,13 +66,13 @@ export class WhatsappTowhysappComponent implements OnInit {
     this.prevNumber = 1;
     this.fileFormData.append('from', from);
     this.fileFormData.append('to', to);
-    this.apiCallservice.handleData_Pyhon('textToJSON', 0, this.fileFormData)
-      .subscribe((res) => {
-        this.suyash = JSON.parse(res['_body']).Data;
-        this.countOfLines = JSON.parse(res['_body']).Lines[0].Count;
-        this.createDrawer();
-        this.spinner.hide();
-      });
+    // this.apiCallservice.handleData_Pyhon('textToJSON', 0, this.fileFormData)
+    //   .subscribe((res) => {
+    //     this.suyash = JSON.parse(res['_body']).Data;
+    //     this.countOfLines = JSON.parse(res['_body']).Lines[0].Count;
+    //     this.createDrawer();
+    //     this.spinner.hide();
+    //   });
   }
 
   createDrawer() {
@@ -90,15 +90,15 @@ export class WhatsappTowhysappComponent implements OnInit {
     this.fileFormData.append('file', this.selectedFile);
     this.fileFormData.append('from', ((data * 1000) - 999).toString());
     this.fileFormData.append('to', ((data * 1000)).toString());
-    this.apiCallservice.handleData_Pyhon('textToJSON', 0, this.fileFormData)
-      .subscribe((res) => {
-        this.suyash = JSON.parse(res['_body']).Data;
-        setTimeout(() => {
+    // this.apiCallservice.handleData_Pyhon('textToJSON', 0, this.fileFormData)
+    //   .subscribe((res) => {
+    //     this.suyash = JSON.parse(res['_body']).Data;
+    //     setTimeout(() => {
 
-          this.spinner.hide();
-        }, 10000);
+    //       this.spinner.hide();
+    //     }, 10000);
 
-      });
+    //   });
   }
 
   incomingFile(file) {

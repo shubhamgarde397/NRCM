@@ -50,14 +50,7 @@ export class RegisterComponent implements OnInit {
   }
 
   storeNewUser(adminUname, adminPassword) {
-    if (adminUname === 'shubham' && adminPassword === 'shubham') {
-      this.apiCallservice.handleData_New(0, 'login/addnewuserdata', 1, 0, this.new_value)
-        .subscribe(x => this.response = x);
-      this.router.navigate(['']);
-    } else {
-      alert('You are not authorized to enter the application...');
-      this.router.navigate(['']);
-    }
+ 
   }
 
   back() {

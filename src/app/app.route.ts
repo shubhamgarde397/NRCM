@@ -79,6 +79,10 @@ export const routes: Routes =
                         loadChildren: './pages/Report/generate-report/app.module#AppModule'
                     },
                     {
+                        path: 'AUTOMATED_MSG',
+                        loadChildren: './pages/AutomatedMsg/automated-msg/app.module#AppModule'
+                    },
+                    {
                         path: 'MAIL_DISPLAY',
                         loadChildren: './pages/Mail/mail-display/app.module#AppModule'
                     },
