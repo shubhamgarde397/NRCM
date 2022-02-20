@@ -17,7 +17,7 @@
 <div class="row">
     <div class="col-xs-6">
       TruckNo : 
-      <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
+      <select class="form-control" id="partyType" formControlName="truckNo"
         (change)="findtruckdetails()" id="truckNoone">
         <option *ngFor="let i of trucklist;let j = index;" value={{j}}>{{i.truckno}}</option>
       </select>
