@@ -84,23 +84,20 @@ constructor(public apiCallservice: ApiCallsService, public handlefunction: handl
 
   findtruckdetails(){
     let temp=this.trucklist[parseInt(this.myFormGroup.value.truckNo)]
-    console.log(this.trucklist[parseInt(this.myFormGroup.value.truckNo)])
     this.mtruckno=temp.truckno;
     this.mcontact=temp.contact[0]===undefined?'':temp.contact[0];
   };
   setPartyName(){
    let temp=this.partylist[parseInt(this.myFormGroup.value.partyName)];
-    console.log(this.partylist[parseInt(this.myFormGroup.value.partyName)]);
     this.mparty=temp.name;
   }
   setPlaceName(){
     let temp=this.villagelist[parseInt(this.myFormGroup.value.place)];
-    console.log(this.villagelist[parseInt(this.myFormGroup.value.place)]);
     this.mplace=temp.village_name;
   }
 
   store(){
-    window.open('sms:+919822492193?body='+this.mtruckno+'\n'+this.mparty+'\n'+this.mplace+'\n'+this.mcontact+'\n\nNitin Roadways','_blank');    
+    window.open('sms:+919822492193?body='+this.mtruckno+'%0A'+this.mparty+'%0A'+this.mplace+'%0A'+this.mcontact+'%0A%0A'+'Nitin Roadways','_blank');
     this.myFormGroup.patchValue({
       truckNo: '',
       partyName :'',
