@@ -37,4 +37,15 @@
     </div>
 </div>
 </div>
+
+<div class="row" *ngIf="buttonOption==='3'">
+   
+    <div class="well">
+        <div class="row">
+            <div class="col-sm-2" *ngFor="let i of emptyData">
+    <button style="margin: 5px;" class="btn btn-warning" (click)="downloadContactReport(i)">{{i._id}} : {{i.sum}}</button>
+            </div>
+        </div>
+    </div>
+    </div>
 </div>

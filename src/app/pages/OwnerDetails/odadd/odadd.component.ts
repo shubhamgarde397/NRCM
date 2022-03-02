@@ -113,6 +113,11 @@ export class OdaddComponent implements OnInit {
     formBody['preferences'] = this.villageArray;
     formBody['hbl'] = value['hbl'];
     formBody['weight'] = value['weight'];
+    formBody['p']='';
+    formBody['r']='';
+    formBody['d']='';
+    formBody['f']='';
+    formBody['P']='';
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
     if(formBody['oname'].length>25){alert('Name too long. Only 25 characters allowed.')}else{
     this.apiCallservice.handleData_New_python

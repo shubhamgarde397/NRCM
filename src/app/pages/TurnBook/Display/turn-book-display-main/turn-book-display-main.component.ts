@@ -58,7 +58,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '3', 'viewvalue': 'Truck Dispatched' ,'disabled':false},
     { 'value': '4', 'viewvalue': 'To From' ,'disabled':false},
     { 'value': '5', 'viewvalue': 'Monthly Data' ,'disabled':false},
-    { 'value': '6', 'viewvalue': 'Balance Hire' ,'disabled':false},
+    { 'value': '6', 'viewvalue': 'Balance Hire' ,'disabled':true},
     { 'value': '7', 'viewvalue': 'Update Poch Check' ,'disabled':false},
     { 'value': '8', 'viewvalue': 'Monthly By Series' ,'disabled':false},
     { 'value': '9', 'viewvalue': 'Cancelled Vehicles' ,'disabled':false},
@@ -66,9 +66,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '11', 'viewvalue': 'Details By Truck' ,'disabled':false},
     { 'value': '12', 'viewvalue': 'Invoice' ,'disabled':false},
     { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
-    // { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
-    // { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
-    // { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
+    { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
+    { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
+    { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
   ]
   public trucknoid11;
   public years = []
@@ -301,6 +301,7 @@ let buttons=[]
     this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
     this.tableSelected=false;
   }
+  downloadpdfMonthly(){}
 
   showDatabyidTurn = function (data) {
     this.show = true;
@@ -386,12 +387,8 @@ if(this.buttonOption !== '11'){
           r['typeOfVehiclefirst']=r.ownerDetails[0].typeOfVehicle.slice(0,1)
           });
         }
-        if (this.buttonOption == '6') {
-          this.turnbooklist = res.Data;
-          this.handleData.saveBH(this.turnbooklist);
-          this.tableSelected=true;
-        }
-        else if (this.buttonOption == '7') {
+        
+         if (this.buttonOption == '7') {
           this.pochDiv = false;
           this.turnbooklist = res.Data;
           this.handleData.saveBH(this.turnbooklist);
@@ -777,48 +774,8 @@ this.placeid=this.tempDate[0]['place']['_id']
       this.finalArray.push(this.finalObject);
       this.finalObject = {};
     }
-    this.finalFunction('dont');
+    this.finalFunction();
   }
-  }
-
-  addToCheckArray(i, j, c) {
-    i['balance']=this.balance(i);
-    if (i['loadingDate'] == "") {
-      alert('Loading Date cant be empty.')
-    }
-    else {
-      this.turnbooklist[j]['checker'] = c;
-      if (c == 1) {
-        this.tempArray.push(i);
-      } else if (c == 0) {
-        this.tempArray.splice(j, 1);
-      }
-    }
-  }
-
-  addToCheckArray2(i, j, c) {
-    this.balanceHireArrray[i][j]['checker'] = c;
-    this.balanceHireArrray[i].splice(j, 1)
-  }
-
-  saveToCheckArray() {
-    this.balanceHireArrray.push(this.tempArray);
-    this.tempArray = []
-    this.turnbooklist = this.reduceArray();
-  }
-
-  balance(i) {
-    return i.hamt -this.getAdvances(i)
-  }
-
-  getAdvances(i){
-    this.sum=0;
-    i.advanceArray.forEach(r=>{
-      if(r.consider){
-      this.sum = r.advanceAmt + this.sum
-      }
-    })
-    return this.sum===(NaN||undefined)?0:this.sum;
   }
 
   reduceArray() {
@@ -831,15 +788,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     return tempArray;
   }
 
-  moveToFinalStep() {
-    this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
-  }
-  moveToFinalStep2() {
-    this.finalCheckDone = !this.finalCheckDone;
-  }
-  moveToFinalStepReset(action) {
-    action==='do'?this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean:null;
-    this.balanceHireArrray = [];
+  moveToFinalStepReset() {
     this.tempArray = [];
     this.finalObject = {};
     this.finalArray = [];
@@ -853,54 +802,8 @@ this.placeid=this.tempDate[0]['place']['_id']
   comments(){
     this.comment = prompt('Enter Comment'); 
   }
-  setBalPage() {
-    let breaker = false;
-    
-    for (let i = 0; i < this.balanceHireArrray.length; i++) {
-      let truckData = []
-      if (breaker) { break; }
-      for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
-        if (breaker) { break; }
-        let tempObj = {};
-        if (((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) || ((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value.length == 0)) {
-          alert('Please fill in all the fields.');
-          breaker = true;
-          break;
-        }
-        else {
-          if (breaker) { break; }
-          this.ids.push(this.balanceHireArrray[i][j]['_id']);//ObjectId to mongoform in lambda write a loop
-          this.partyTypes.push(this.balanceHireArrray[i][j]['partyType']);
-          this.oids.push(this.balanceHireArrray[i][j]['ownerDetails'][0]['_id']);//ObjectId to mongoform in lambda write a loop
-          tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
-          tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
-          tempObj['shortDetails']=this.balanceHireArrray[i][j].partyType+'-'+this.balanceHireArrray[i][j].partyDetails[0].shortName+'-'+this.balanceHireArrray[i][j].villageDetails[0].shortName;
-          tempObj['pageno'] = parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value);
-          tempObj['amount'] = parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
-          tempObj['partyType'] = this.balanceHireArrray[i][j].partyType;
-          truckData.push(tempObj);
-        }
 
-      }
-      if (breaker) { break; }
-      let commentToTruck=''
-      this.finalObject['truckData'] = truckData
-      this.finalObject['todayDate'] = this.todaysDate;
-      this.finalObject['comments'] = "";
-      commentToTruck= String(this.balanceHireArrray[0][0].parentAccNo);
-     this.finalObject['commentToTruck']=this.comment===''?commentToTruck:commentToTruck+'\n'+this.comment;
-      this.finalObject['print'] = false;
-      this.finalObject['bankName'] = '';
-      this.finalObject['ifsc'] = '';
-      this.finalObject['accountNumber'] = '';
-      this.finalObject['accountName'] = '';
-      this.finalArray.push(this.finalObject);
-      this.finalObject = {};
-    }
-    this.finalFunction('do');
-  }
-
-  finalFunction(action) {
+  finalFunction() {
     let tempObj = {}
     tempObj['bhData'] = this.finalArray;
     tempObj['method'] = 'insertmany.many';
@@ -912,7 +815,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert(res.Status);
-        this.moveToFinalStepReset(action);
+        this.moveToFinalStepReset();
       });
   }
 

@@ -16,7 +16,8 @@ import 'jspdf-autotable';
 export class GenerateReportComponent implements OnInit {
 public options=[
   {value:'1',viewValue:'Pan'},
-  {value:'2',viewValue:'Account'}
+  {value:'2',viewValue:'Account'},
+  {value:'3',viewValue:'Contact'}
 ]
 public selectedOption;
 public buttonOption;
@@ -44,6 +45,9 @@ public toFillData=[];
     this.buttonValue = this.options[parseInt(this.selectedOption) - 1].viewValue;
     if(this.buttonOption==='2'){
       this.getData(5)
+    }
+    if(this.buttonOption==='3'){
+      this.getData(98)
     }
   }
 
@@ -100,6 +104,21 @@ public toFillData=[];
           }else if(this.buttonOption==='2'){
           this.generateReportAccount(this.toFillData)
           }
+        });
+      }
+
+      downloadContactReport(data){
+        let tempObj={};
+        tempObj['from']=this.handleF.reverseArray(data['_id'],'-')+'-01';
+        tempObj['to']=this.handleF.reverseArray(data['_id'],'-')+'-31';
+        tempObj['partyType']='';
+        tempObj['method']='pipelineContact'
+        tempObj['tablename']='';
+        tempObj['option']=986;
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+        .subscribe((res: any) => {
+          this.toFillData=res.chartData;
+          this.generateReportContact(this.toFillData)
         });
       }
 
@@ -295,4 +314,94 @@ public toFillData=[];
     
          doc.save('Account-Details.pdf')
        }
+       generateReportContact(data){//threshhold is 295
+        var doc = new jsPDF()
+        doc.setFontType('bold');
+        doc.setFontSize('10');
+        doc.setLineWidth(0.5);
+        //headers
+        let y = 4;
+        doc.text('Sr', 0.5, y)//partyname
+        doc.text('Date', 10.5, y)//partyname
+        doc.text('TruckNo', 10.5, y+4)//partyname
+        doc.text('Name', 45, y)//partyname
+        doc.text('Contact', 78, y)//partyname
+    
+        doc.text('Sr', 105.5, y)//partyname
+        doc.text('Date', 115.5, y)//partyname
+        doc.text('TruckNo', 115.5, y+4)//partyname
+        doc.text('Name', 150, y)//partyname
+        doc.text('Contact', 183, y)//partyname
+    
+        doc.line(0, 9, 210, 9);//line after main header
+        //headers
+    
+        y=10
+        let newpage=0;
+        for (let i = 0; i < data.length; i++) {
+    
+         if(y>290){
+           newpage=newpage+1;
+           doc.line(105, 0, 105, 300);//mid line
+           doc.line(8, 0, 8, 300);//mid line
+           doc.line(40, 0, 40, 300);//mid line
+           doc.line(75, 0, 75, 300);//mid line
+           doc.line(113, 0, 113, 300);//mid line
+           doc.line(145, 0, 145, 300);//mid line
+           doc.line(180, 0, 180, 300);//mid line
+           if(newpage===2){
+           doc.addPage();
+           newpage=0;
+           doc.setFontType('bold');
+           doc.setFontSize('10');
+           doc.setLineWidth(0.5);
+           //headers
+           y = 4;
+           doc.text('Sr', 0.5, y)//partyname
+           doc.text('Date', 10.5, y)//partyname
+           doc.text('TruckNo', 10.5, y+4)//partyname
+           doc.text('Name', 45, y)//partyname
+           doc.text('Contact', 78, y)//partyname
+    
+           doc.text('Sr', 105.5, y)//partyname
+           doc.text('Date', 115.5, y)//partyname
+           doc.text('TruckNo', 115.5, y+4)//partyname
+           doc.text('Name', 150, y)//partyname
+           doc.text('Contact', 183, y)//partyname
+    
+           doc.line(0, 9, 210, 9);//line after main header
+           //headers
+           y=10
+           //vertical lines
+           }
+    y=10
+       }
+       if(newpage===0){
+        doc.text(this.handleF.generate2DigitNumber(String(i+1)), 0.5, y+4)//partyname
+        doc.text(data[i].truckno, 10.5, y+4)//partyname
+         doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 10.5, y+8)//partyname
+           
+         doc.line(0, y+9, 105, y+9);//line after main header
+         y = y + 9;
+       }
+    if(newpage===1){
+      doc.text(this.handleF.generate2DigitNumber(String(i+1)), 105.5, y+4)//partyname
+      doc.text(data[i].truckno, 115.5, y+4)//partyname
+      doc.text(this.handleF.getDateddmmyy(data[i].loadingDate),115.5 , y+8)//partyname
+        
+      doc.line(105, y+9, 210, y+9);//line after main header
+      y = y + 9;
+    }
+      
+        }
+    
+        doc.line(105, 0, 105, y);//mid line
+        doc.line(8, 0, 8, y);//mid line
+        doc.line(40, 0, 40, y);//mid line
+        doc.line(75, 0, 75, y);//mid line
+        doc.line(113, 0, 113, y);//mid line
+        doc.line(145, 0, 145, y);//mid line
+        doc.line(180, 0, 180, y);//mid line
+        doc.save('Contact-Details.pdf')
+      }
 }
