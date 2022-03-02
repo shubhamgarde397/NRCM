@@ -26,6 +26,7 @@ export class GstupdateComponent implements OnInit {
   public commonArray;
   public cities;
   public city;
+  public pT;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -40,9 +41,12 @@ export class GstupdateComponent implements OnInit {
       dest: this.handledata.Data.dest,
       addr1: this.handledata.Data.addr1,
       addr2: this.handledata.Data.addr2,
-      cities:[]
+      cities:[],
+      accNo:this. handledata.Data.accNo,
+      partyType:this.handledata.Data.partyType
     });
     this.dest = this.handledata.Data.dest;
+    this.pT = this.handledata.Data.partyType;
     this.commonArray = this.sec.commonArray;
     this.villagenamelist = this.commonArray.villagenames;
     this.cities=this.handledata.Data.cities;
@@ -61,6 +65,8 @@ export class GstupdateComponent implements OnInit {
     formbody['dest'] = data.value.dest;
     formbody['addr2'] = data.value.addr1;
     formbody['addr3'] = data.value.addr2;
+    formbody['accNo'] = data.value.accNo;
+    formbody['partyType'] = data.value.partyType;
     formbody['cities'] = this.cities;
     formbody['_id'] = this.handledata.Data._id;
     formbody['method'] = 'update';

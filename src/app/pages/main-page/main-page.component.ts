@@ -394,7 +394,7 @@ export class MainPageComponent implements OnInit {
       }
     }, 1000);
     
-  }
+    }
 
 
 

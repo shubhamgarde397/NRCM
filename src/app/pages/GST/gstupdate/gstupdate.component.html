@@ -49,6 +49,24 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
+        <select id="dest" class="form-control" formControlName="partyType">
+          <option selected disabled>{{pT}}</option>
+          <option value="NRCM">NRCM</option>
+          <option value="NR">NR</option>
+          <option value="SNL">SNL</option>
+          <option value="SGL">SGL</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="number" class="form-control" formControlName="accNo">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
         <input type="text" id="addr2" class="form-control" formControlName="addr1" placeholder="Address 1">
       </div>
     </div>

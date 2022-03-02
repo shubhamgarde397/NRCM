@@ -242,17 +242,10 @@ let toAddData;
 
   setPartyName() {
     this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
+    this.myFormGroup.patchValue({parentAccNo:this.parties[this.myFormGroup.value.partyName.split('+')[1]].accNo})
+    this.myFormGroup.patchValue({partyType:this.parties[this.myFormGroup.value.partyName.split('+')[1]].partyType})
     this.myFormGroup.value.partyName = this.partyid;
-    if(this.partyid=='6023eb9cfb76858c10ee9435'){
-      this.myFormGroup.patchValue({
-        parentAccNo:12,
-      })
-    }else{
-      this.myFormGroup.patchValue({
-        parentAccNo:363,
-      })
-    }
-  }
+      }
   setPlaceName() {
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.myFormGroup.value.place = this.placeid;

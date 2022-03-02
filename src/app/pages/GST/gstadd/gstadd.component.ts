@@ -47,7 +47,9 @@ export class GstaddComponent implements OnInit {
       dest: [this.model.Village, Validators.required],
       addr2:'',
       addr3:'',
-      cities:[]
+      cities:[],
+      accNo:0,
+      partyType:''
     });
   }
 

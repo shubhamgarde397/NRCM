@@ -117,7 +117,7 @@ export class BalancehiredisplayComponent implements OnInit {
   
   }
 
-  addtoGiven(id){
+  addtoGiven(id,j){
     if (confirm('Add to Given Date?')) {
       let formbody = {}
       formbody['_id'] = id;
@@ -127,7 +127,8 @@ export class BalancehiredisplayComponent implements OnInit {
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, formbody, 0)
         .subscribe((res: any) => {
-          alert(res.Status)
+          alert(res.Status);
+          this.givenTrucks.splice(j,1);
         });
     }
   }

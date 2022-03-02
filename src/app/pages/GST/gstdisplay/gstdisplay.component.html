@@ -8,6 +8,8 @@
                 <th>Name</th>
                 <th>GST Number</th>
                 <th>Destination</th>
+                <th>Type</th>
+                <th>Account</th>
                 <th>Address</th>
                 <th>Cities</th>
                 <th>Options</th>
@@ -21,6 +23,8 @@
                 <td>{{i.name}}</td>
                 <td>{{i.gst}}</td>
                 <td>{{i.dest}}</td>
+                <td>{{i.partyType}}</td>
+                <td>{{i.accNo}}</td>
                 <td>{{i.addr1}},{{i.addr2}}</td>
                 <td><ul *ngFor="let j of i.cities"><li>{{j}}</li></ul></td>
                 <td>

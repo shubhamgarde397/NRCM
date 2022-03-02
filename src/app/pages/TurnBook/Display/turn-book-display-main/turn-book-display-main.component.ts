@@ -682,6 +682,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       tempObj['typeOfLoad'] = '';
       tempObj['complete'] = false;
       tempObj['pochAmount'] = 0;
+      tempObj['parentAccNo'] = data.parentAccNo;
       tempObj['paymentid'] = data.paymentDetails[0]._id;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {

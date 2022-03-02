@@ -323,6 +323,70 @@ this.downloadLoaded(this.reportData);
      }
      doc.save('Report.pdf')
    }
+
+   tasks(){//threshhold is 295
+
+    var doc = new jsPDF()
+    doc.setFontType('bold');
+    doc.setFontSize('10');
+    doc.setLineWidth(0.5);
+    let yaxis=0.2
+    let xaxis=1
+    //headers
+   //  ṣtart side
+ 
+
+    doc.line(105+yaxis, 0+xaxis, 105+yaxis, 300+xaxis);//mid line
+    doc.line(5+yaxis, 0+xaxis, 5+yaxis, 300+xaxis);//mid line
+    doc.line(40+yaxis, 0+xaxis, 40+yaxis, 300+xaxis);//mid line
+    doc.line(75+yaxis, 0+xaxis, 75+yaxis, 300+xaxis);//mid line
+    doc.line(110+yaxis, 0+xaxis, 110+yaxis, 300+xaxis);//mid line
+    doc.line(145+yaxis, 0+xaxis, 145+yaxis, 300+xaxis);//mid line
+    doc.line(180+yaxis, 0+xaxis, 180+yaxis, 300+xaxis);//mid line
+   //  end side
+
+    doc.text('Sr', 0.5+yaxis, 4+xaxis-1)//partyname
+    doc.text('Sr', 105.5+yaxis, 4+xaxis-1)//partyname
+    doc.text('In', 17.5+yaxis, 4+xaxis-1)//partyname
+    doc.text('In', 122.5+yaxis, 4+xaxis-1)//partyname
+    doc.text('What', 52+yaxis, 4+xaxis-1)//partyname
+    doc.text('What',157+yaxis , 4+xaxis-1)//partyname
+    doc.text('When', 85+yaxis, 4+xaxis-1)//partyname
+    doc.text('When',190+yaxis , 4+xaxis-1)//partyname
+    //headers
+
+// A loop for 10 line counter
+let j=1
+let counter = 0;
+for(let i=5;i<300;i=i+5){
+ if(j==11){
+   j=1
+
+   doc.line(0+yaxis, i+xaxis, 210+yaxis, i+xaxis);//line after main header
+   doc.text('Sr', 0.5+yaxis, i+4+xaxis)//partyname
+   doc.text('Sr', 105.5+yaxis, i+4+xaxis)//partyname
+   doc.text('In', 17.5+yaxis, i+4+xaxis)//partyname
+   doc.text('In', 122.5+yaxis, i+4+xaxis)//partyname
+   doc.text('What', 52+yaxis, i+4+xaxis)//partyname
+   doc.text('What',157 +yaxis, i+4+xaxis)//partyname
+   doc.text('When', 85+yaxis, i+4+xaxis)//partyname
+   doc.text('When',190+yaxis , i+4+xaxis)//partyname
+
+
+
+   i=i+5+xaxis
+ }
+ doc.text(this.hF.generate2DigitNumber(String(j)), 0.5+yaxis, i+3+xaxis)//partyname
+ doc.text(this.hF.generate2DigitNumber(String(j)), 105.5+yaxis, i+3+xaxis)//partyname
+ doc.line(0, i, 210, i);//line after main header
+ j=j+1
+ counter=counter + 1
+}
+
+ 
+   //  doc.save('Available-Data.pdf')
+    doc.save('Tasks.pdf')//partyname
+  }
  
 
 
