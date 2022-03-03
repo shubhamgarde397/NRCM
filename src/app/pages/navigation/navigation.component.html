@@ -83,6 +83,9 @@
           <li>
             <a (click)="latestLoadedTrucks()">Last Loaded Trucks</a>
           </li>
+          <li>
+            <a (click)="Prdfp()">Missing Prdfp</a>
+          </li>
 
           <li>
             <a routerLink="OTHER_REPORT">Other Report</a>
@@ -93,11 +96,11 @@
           <li>
             <a routerLink="MISSING_LR">Missing LRNO</a>
           </li>
-          <li>
+          <!-- <li>
             <form [formGroup]="myFormGroup">
             <input type="checkbox" (change)="amount(myFormGroup)" id="amountShow" class="form-control" formControlName="amountShow">
             </form>
-          </li>
+          </li> -->
         </ul>
       </li>
       <li class="dropdown" *ngIf="role==1||role==2">

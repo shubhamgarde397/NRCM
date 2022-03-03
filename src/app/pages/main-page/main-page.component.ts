@@ -15,13 +15,6 @@ import { handleFunction } from '../../common/services/functions/handleFunctions'
 })
 export class MainPageComponent implements OnInit {
   public contact;
-  temp = [
-   
-]
-
-
-
-
   public modalData;
   public loginV = false;
   public hoverThis = false;
@@ -129,7 +122,7 @@ export class MainPageComponent implements OnInit {
         this.changed = false;
       }
     }, 1000);
-    // this.generateReportContact(this.temp)
+
     }
 
 

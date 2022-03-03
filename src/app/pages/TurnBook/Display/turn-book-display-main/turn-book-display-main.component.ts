@@ -70,6 +70,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
     { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
   ]
+  public changeText=false;
   public trucknoid11;
   public years = []
   public buttons = []
@@ -463,6 +464,8 @@ let tempObj1={};
     if(this.trucknoid11!=='Default'){
     this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
     this.showprdfP=true;
+    console.log(this.turn11);
+    
     }
   }
 

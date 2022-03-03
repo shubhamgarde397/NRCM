@@ -394,4 +394,143 @@ for(let i=5;i<300;i=i+5){
     this.router.navigate(['']);
     this.apiCallservice.logout();
   }
+
+  Prdfp(){
+    if(confirm('Do you want pdf of missing Prdfp?')){
+      let tempObj={
+        "method": "missingprdfp",
+        "tablename": "",
+        "option": 9
+      }
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    .subscribe((res: any) => {
+      this.reportData=res.chartData;
+this.PrdfpReport(this.reportData);
+
+    });
+    }
+  }
+
+  PrdfpReport(data){//threshhold is 295
+    let pager=1;
+    var doc = new jsPDF()
+    doc.setFontSize('25');
+    doc.setFontType('bold');
+    doc.text('Prdfp', 15, 15)//partyname
+    doc.setFontSize('10');
+    doc.text(String(pager), 180, 5)//pageno
+    pager=pager+1;
+    doc.setFontSize('25');
+    doc.setLineWidth(0.5);
+    doc.line(0, 20, 210, 20);//line after main header
+    doc.line(20, 20, 20, 300);//punching area line
+    //headers
+    doc.setFontSize('10');
+    let y = 24;
+    let starty = 24;
+    doc.text('Sr', 23, y)//partyname
+    doc.text('TruckNo', 38, y)//partyname
+    doc.text('Contact', 57, y)//partyname
+    doc.text('Pan', 79, y)//partyname
+    doc.text('Lic', 92, y)//partyname
+    doc.text('RC', 105, y)//partyname
+    doc.text('Policy', 118, y)//partyname
+    doc.text('Fitness', 131, y)//partyname
+    doc.text('Name', 150, y)//partyname
+    //headers
+    doc.line(0, 25, 210, 25);//line after header
+
+    //vertical lines
+    doc.line(30, 20, 30, 25);//srno
+    doc.line(56, 20, 56, 25);//date
+    doc.line(78, 20, 78, 25);//truckno
+    doc.line(91, 20, 91, 25);//truckno
+    doc.line(104, 20, 104, 25);//lrno
+    doc.line(117, 20, 117, 25);//credit
+    doc.line(130, 20, 130, 25);//credit
+    doc.line(145, 20, 145, 25);//credit
+    //vertical lines
+    let startforI=0;
+      y = y + 6;
+      startforI=0;
+    
+
+    for (let i = startforI; i < data.length; i++) {
+
+      if(y>290){
+        y=24;
+        
+    starty = 20;
+    doc.line(30, y, 30, 291 );//srno
+    doc.line(56, y, 56, 291 );//date
+    doc.line(78, y, 78, 291 );//truckno
+    doc.line(91, y, 91, 291 );//truckno
+    doc.line(104, y, 104, 291 );//lrno
+    doc.line(117, y, 117, 291 );//credit
+    doc.line(130, y, 130, 291 );//credit
+    doc.line(145, y, 145, 291 );//credit
+        doc.addPage();
+        doc.setFontSize('25');
+    doc.setFontType('bold');
+    doc.text('Prdfp', 15, 15)//partyname
+    doc.setFontSize('10');
+    doc.text(String(pager), 180, 5)//pageno
+    pager=pager+1;
+    doc.setFontSize('25');
+    doc.setLineWidth(0.5);
+    doc.line(0, 20, 210, 20);//line after main header
+    doc.line(20, 20, 20, 300);//punching area line
+    //headers
+    doc.setFontSize('10');
+    doc.text('Sr', 23, y)//partyname
+    doc.text('TruckNo', 38, y)//partyname
+    doc.text('Contact', 57, y)//partyname
+    doc.text('Pan', 79, y)//partyname
+    doc.text('Lic', 92, y)//partyname
+    doc.text('RC', 105, y)//partyname
+    doc.text('Policy', 118, y)//partyname
+    doc.text('Fitness', 131, y)//partyname
+    doc.text('Name', 150, y)//partyname
+    //headers
+    doc.line(0, 25, 210, 25);//line after header
+
+    //vertical lines
+    doc.line(30, 20, 30, 25);//srno
+    doc.line(56, 20, 56, 25);//date
+    doc.line(78, 20, 78, 25);//truckno
+    doc.line(91, 20, 91, 25);//truckno
+    doc.line(104, 20, 104, 25);//lrno
+    doc.line(117, 20, 117, 25);//credit
+    doc.line(130, 20, 130, 25);//credit
+    doc.line(145, 20, 145, 25);//credit
+    y=30
+    //vertical lines
+    }
+      doc.text(String(i+1), 21, y)//partyname
+        doc.text(data[i].truckno, 31, y)//truckno
+        doc.text(data[i].contact, 57, y)//truckno
+
+
+      doc.line(20, y + 1, 210, y + 1);//line after header
+      y = y + 5;
+
+      
+    //vertical lines//getting applied for every loop, make it happen once only
+
+    
+    //vertical lines
+
+    }
+    
+    doc.line(30, starty, 30, y-4 );//srno
+    doc.line(56, starty, 56, y-4 );//date
+    doc.line(78, starty, 78, y-4 );//truckno
+    doc.line(91, starty, 91, y-4 );//truckno
+    doc.line(104, starty, 104, y-4 );//lrno
+    doc.line(117, starty, 117, y-4 );//credit
+    doc.line(130, starty, 130, y-4 );//credit
+    doc.line(145, starty, 145, y-4 );//credit
+    doc.save('Missing-Prdfp.pdf')
+  }
 }

@@ -96,7 +96,9 @@
             <th>Srno</th>
             <th>Date</th>
             <th>Loading Date</th>
-            <th>Truck No-Type</th>
+            <th (mouseover)="changeText=true" (mouseout)="changeText=false">
+              <span *ngIf="!changeText">TTLSW</span>
+              <span *ngIf="changeText">Truck-Type-Location-Size-Weight</span></th>
             <th>Place</th>
             <th>Party</th>
             <th>LRNO</th>
@@ -119,21 +121,21 @@
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.waitLocation}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}
-
-              <button class="btn btn-danger" type="button" (click)="edit(i.ownerDetails[0])"
-                style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].pan===''">
-                <i class="material-icons">
-                  local_parking
-                  </i>
-              </button>
-
-              <button class="btn btn-warning" type="button" (click)="edit(i.ownerDetails[0])"
-                style="width: 30%;font-size: 11px;" *ngIf="i.ownerDetails[0].accountDetails.length===0">
-                <i class="material-icons">
-                  account_balance
-                  </i>
-              </button>
+            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}-{{i.waitLocation}}-{{i.ownerDetails[0].hbl}}-{{i.ownerDetails[0].weight}}
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.P}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">P</div>
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.Pf}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Px</div>
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.df}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Lx</div>
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.pf}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">px</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.A}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">A</div>
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.rf}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Rx</div>
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.ff}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Fx</div>
+                  <div class="col-sm-3" [ngStyle]="{'background-color':i.C}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">C</div>
+                </div>
+              </div>
 
             </td>
             <td *ngIf="i.ownerDetails[0]===undefined"></td>
@@ -164,7 +166,6 @@
                   local_shipping
                 </i>
               </button>
-              <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyidTurn(i.ownerDetails[0])">edit</i>
             </div>
           </td>
             <td *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">
@@ -562,14 +563,16 @@
 <div class="row" *ngIf="buttonOption=='11'">
 <div class="col-sm-6" *ngIf="showprdfP">
   <div class="row">
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].P}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Pan</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].dE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Lic</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].pE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Policy</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].Pf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.pan}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].df}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.drivingLicExpiry}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].pf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.policyExpiry}}</div>
+    <!-- <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].C}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.contact[0]}}</div> -->
   </div>
   <div class="row">
     <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].A}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Acc</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].rE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">RC</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].fE}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Fitness</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].rf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.regCardExpiry}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].ff}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.fitnessExpiry}}</div>
+    <!-- <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].C}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.contact[0]}}</div> -->
   </div>
 </div>
 
