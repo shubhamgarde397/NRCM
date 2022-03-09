@@ -90,6 +90,16 @@
     </div>
 <!-- Place -->
 
+      <!-- Place -->
+      <div class="col-sm-3">
+        Place 2 : 
+        <select id="place" class="form-control" formControlName="place2" (change)="setPlaceName2()">
+          <option value="" selected>None</option>
+          <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
+        </select>
+        </div>
+    <!-- Place -->
+
       <!-- Party -->
     <div class="col-sm-3">
       Party :
@@ -99,6 +109,21 @@
     </select>
   </div>
   <!-- Party -->
+
+  <!--  -->
+  <div class="col-xs-1">
+    Load Type : 
+    <select class="form-control" formControlName="typeOfLoad">
+      <option value="Pipe">Pipe</option>
+      <option value="Fittings">Fittings</option>
+      <option value="GRL-Pipe">GRL-Pipe</option>
+      <option value="GRL-Bundle">GRL-Bundle</option>
+      <option value="GRL-PF">GRL-PF</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+
+  <!--  -->
 
   <div class="col-sm-3">
     Parent Acc No : 

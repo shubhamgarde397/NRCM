@@ -37,6 +37,7 @@ export class TurnBookAddComponent implements OnInit {
   public ownerid;
   public partyid='5fff37a31f4443d6ec77e078';
   public placeid='5bcdecdab6b821389c8abde0';
+  public placeid2='';
   public partyType;
   public method;
   public turnArray = [];
@@ -76,9 +77,11 @@ export class TurnBookAddComponent implements OnInit {
       waitLocation:['',[Validators.required]],
       partyName :'',
       place:'',
+      place2:'',
       partyType:'',
       loadingDate:'',
-      parentAccNo:0
+      parentAccNo:0,
+      typeOfLoad:''
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -140,6 +143,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
     tempobj['placeid'] = this.placeid;
+    tempobj['placeid2'] = this.placeid2;
     tempobj['partyid'] = this.partyid;
     tempobj['partyType'] = value['partyType'];
     tempobj['parentAccNo'] = value['parentAccNo'];
@@ -160,7 +164,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["input"]= "manual";
     tempobj["waitLocation"]= value['waitLocation'];
     tempobj["complete"]= false;
-    tempobj["typeOfLoad"]= value['partyType']==='NR'?'Others':'';
+    tempobj["typeOfLoad"]= value['typeOfLoad'];
 let toAdd=true;
 let toAddData;
     let tempObj={};
@@ -251,6 +255,11 @@ let toAddData;
     this.myFormGroup.value.place = this.placeid;
   }
 
+  setPlaceName2() {
+    this.placeid2 = this.villagelist[this.myFormGroup.value.place2.split('+')[1]]._id;
+    this.myFormGroup.value.place2 = this.placeid2;
+  }
+
   findParentAccNo(){
     if(this.myFormGroup.value.partyType==='NRCM'){
       this.myFormGroup.patchValue({
@@ -278,8 +287,14 @@ let toAddData;
     this.myFormGroup.patchValue({ truckNo: '' });
     this.myFormGroup.patchValue({ partyType: '' });
     this.myFormGroup.patchValue({ place: '' });
+    this.myFormGroup.patchValue({ place2: '' });
+    this.myFormGroup.patchValue({ parentAccNo: 0 });
+    this.myFormGroup.patchValue({ partyName: '' });
+    this.myFormGroup.patchValue({ typeOfLoad: '' });
+    
     this.placeid='5bcdecdab6b821389c8abde0';
     this.partyid='5fff37a31f4443d6ec77e078';
+    this.placeid2='';
     this.ownerid='';
 
   }

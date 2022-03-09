@@ -101,13 +101,16 @@
           placeholder="325689741">
       </div>
 
+
+      <div class="col-xs-3">
+        <input type="text" id="ifsc" class="form-control" (change)="getBankName()" formControlName="ifsc" placeholder="IFSC">
+      </div>
+
       <div class="col-xs-3">
         <input type="text" id="bankName" class="form-control" formControlName="bankName" placeholder="Bank Name">
       </div>
 
-      <div class="col-xs-3">
-        <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
-      </div>
+     
 
     </div>
     <div class="row">

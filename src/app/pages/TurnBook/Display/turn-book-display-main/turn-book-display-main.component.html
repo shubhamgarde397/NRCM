@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&& (buttonOption!=='16')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )&&(buttonOption!=='12' )&&(buttonOption!=='13')">
+          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='6') && (buttonOption!=='7')&& (buttonOption!=='8')&& (buttonOption!=='16')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )&&(buttonOption!=='12' )&&(buttonOption!=='13')&&(buttonOption!=='17' )">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
         <div class="col-sm-3" *ngIf="buttonOption==='4'">
@@ -563,15 +563,15 @@
 <div class="row" *ngIf="buttonOption=='11'">
 <div class="col-sm-6" *ngIf="showprdfP">
   <div class="row">
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].Pf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.pan}}</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].df}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.drivingLicExpiry}}</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].pf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.policyExpiry}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].Pf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">pan:{{turn11[0].truckName.pan}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].df}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">DL:{{turn11[0].truckName.drivingLicExpiry}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].pf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Pol:{{turn11[0].truckName.policyExpiry}}</div>
     <!-- <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].C}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.contact[0]}}</div> -->
   </div>
   <div class="row">
     <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].A}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Acc</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].rf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.regCardExpiry}}</div>
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].ff}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.fitnessExpiry}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].rf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">RC:{{turn11[0].truckName.regCardExpiry}}</div>
+    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].ff}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Fit:{{turn11[0].truckName.fitnessExpiry}}</div>
     <!-- <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].C}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">{{turn11[0].truckName.contact[0]}}</div> -->
   </div>
 </div>

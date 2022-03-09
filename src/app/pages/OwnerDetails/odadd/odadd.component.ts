@@ -92,6 +92,10 @@ export class OdaddComponent implements OnInit {
     this.villagedetailslist = this.commonArray.villagenames;
   }
 
+  getBankName(){
+    this.myFormGroup.patchValue({'bankName':this.myFormGroup.value.ifsc.slice(0,4)})
+  }
+
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {
     this.submitted = true;
     let formBody = {};

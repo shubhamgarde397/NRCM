@@ -69,6 +69,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
     { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
     { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
+    { 'value': '17', 'viewvalue': 'Double Loading' ,'disabled':false},
   ]
   public changeText=false;
   public trucknoid11;
