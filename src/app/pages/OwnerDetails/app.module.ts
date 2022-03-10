@@ -15,7 +15,7 @@ import { OwnerhandlerComponent } from './ownerhandler/ownerhandler.component';
         OdaddComponent,
         OdsearchComponent,
         OddispComponent,
-        OwnerUpdateComponent,
+        OwnerUpdateComponent
     ],
     imports: [
         CommonModule,

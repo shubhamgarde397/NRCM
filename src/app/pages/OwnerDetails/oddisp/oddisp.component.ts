@@ -14,6 +14,7 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 })
 export class OddispComponent implements OnInit {
   public ownerdetailslist = [];
+  public ownerdetailslist2 = [];
   public date3month;
   public todayDate;
   public show = false;
@@ -25,6 +26,10 @@ export class OddispComponent implements OnInit {
   public lambdaArr = [];
   public index = 0;
   public considerArray;
+  public whichType=true;
+  public editTruck;
+  public tableDate=false;
+  public tableDate2=false;
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -34,6 +39,45 @@ export class OddispComponent implements OnInit {
     public handleF:handleFunction
 
   ) { }
+
+  ngOnInit() {
+    this.todayDate=this.handleF.createDate(new Date());
+    this.role = this.sec.role;
+    this.commonArray = this.sec.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infoowner')
+   
+  }
+
+  getWhichType(data){
+this.whichType=data;
+switch(data){
+  case true:
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+    this.fetchData();
+    this.tableDate2=false;
+    break;
+    case false:
+      this.tableDate=false;
+      break;
+}
+  }
+
+  getSingleTruck(){
+    this.tableDate2=true;
+    this.spinnerService.show();
+    let tempObj = {}
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'displayEditTruck'
+    tempObj['truckno'] = this.editTruck;
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.ownerdetailslist2=res.Data;
+        this.spinnerService.hide();
+      });
+
+  }
+
 
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
@@ -95,14 +139,7 @@ export class OddispComponent implements OnInit {
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   };
 
-  ngOnInit() {
-    this.todayDate=this.handleF.createDate(new Date());
-    this.role = this.sec.role;
-    this.commonArray = this.sec.commonArray;
-    this.considerArray = this.handledata.createConsiderArray('infoowner')
-    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    this.fetchData();
-  }
+
   refresh(){
     this.considerArray=[0,0,1,0,0,0,0]
     this.getInformationData()
@@ -126,6 +163,7 @@ export class OddispComponent implements OnInit {
     this.ownerdetailslist = [];
 
     this.ownerdetailslist = this.commonArray.ownerdetails;
+    this.tableDate=this.ownerdetailslist.length>0?true:false;
   }
 
 }
