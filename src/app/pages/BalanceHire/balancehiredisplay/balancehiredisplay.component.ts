@@ -617,7 +617,7 @@ if(confirm('Do you want to temporary delete it?')){
     //  doc.save('Available-Data.pdf')
      doc.save('GPP.pdf')//partyname
    }
-  download() {//threshhold is 295
+  download(data) {//threshhold is 295
     let i;
     if (confirm('Fresh Page?')) {
       i = 16;
@@ -755,19 +755,25 @@ if(confirm('Do you want to temporary delete it?')){
       }
       let K = 0
       doc.setFontSize('10');
+      if(data=='all'){
       doc.text(String(this.balanceDate[z].commentToTruck), 38.5, i);//comments
+      }
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
 
         doc.setFontSize('10');
+        if(data=='all'){
         doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
+        }
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
         doc.setFontSize('8');
+        if(data=='all'){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
+        }
         doc.setFontSize('10');
         K = k;
         i = i + 6;
