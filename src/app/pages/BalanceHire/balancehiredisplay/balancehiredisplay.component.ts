@@ -275,6 +275,12 @@ export class BalancehiredisplayComponent implements OnInit {
         });
     }
   }
+
+  tempDelete(data){
+if(confirm('Do you want to temporary delete it?')){
+  this.balanceDate.splice(data,1);
+}
+  }
   printUpdate() {
     let data = {};
     if (confirm('Document printed?')) {

@@ -951,11 +951,13 @@ this.placeid=this.tempDate[0]['place']['_id']
      //headers
      doc.setFontSize('10');
      let y = 24;
-     let starty = 24;
+     let starty = 25;
      doc.text('Sr', 2, y)//partyname
      doc.text('TruckNo', 8, y)//partyname
      doc.text('Personal Details', 36, y)//partyname
      doc.text('Account Details', 99, y)//partyname
+     doc.text('Docs', 166, y)//partyname
+     doc.text('Policy', 188, y)//partyname
      //headers
      doc.line(0, 25, 210, 25);//line after header
  
@@ -963,6 +965,10 @@ this.placeid=this.tempDate[0]['place']['_id']
      doc.line(7, 20, 7, 25);//srno
      doc.line(33, 20, 33, 25);//date
      doc.line(97, 20, 97, 25);//date
+    //  doc.line(161, 20, 161, 25);//date
+     doc.line(165, 20, 165, 25);//date
+    //  doc.line(175, 20, 175, 25);//date
+     doc.line(187, 20, 187, 25);//date
      //vertical lines
      let startforI=0;
      y = y + 6;
@@ -973,9 +979,13 @@ this.placeid=this.tempDate[0]['place']['_id']
         doc.line(7, starty, 7, y-4);//srno
         doc.line(33, starty, 33, y-4);//date 
         doc.line(97, starty, 97, y-4);//date
+        doc.line(161, starty, 161, y-4);//date
+        doc.line(165, starty, 165, y-4);//date
+        doc.line(175, starty, 175, y-4);//date
+        doc.line(187, starty, 187, y-4);//date
          y=24;
          y=y+6;
-     starty = 24;
+     starty = 25;
          doc.addPage();
          doc.setFontSize('25');
      doc.setFontType('bold');
@@ -993,6 +1003,8 @@ this.placeid=this.tempDate[0]['place']['_id']
      doc.text('TruckNo', 8, y-6)//partyname
      doc.text('Personal Details', 36, y-6)//partyname
      doc.text('Account Details', 99, y-6)//partyname
+     doc.text('Docs', 166, y-6)//partyname
+     doc.text('Policy', 188, y-6)//partyname
      //headers
      doc.line(0, 25, 210, 25);//line after header
  
@@ -1000,6 +1012,10 @@ this.placeid=this.tempDate[0]['place']['_id']
      doc.line(7, 20, 7, 25);//srno
      doc.line(33, 20, 33, 25);//date
      doc.line(97, 20, 97, 25);//date
+     doc.line(161, 20, 161, 25);//date
+     doc.line(165, 20, 165, 25);//date
+    //  doc.line(175, 20, 175, 25);//date
+     doc.line(187, 20, 187, 25);//date
      //vertical lines
      }
      doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
@@ -1010,6 +1026,18 @@ this.placeid=this.tempDate[0]['place']['_id']
       doc.text(data[i]['ownerDetails'][0]['accountDetails'].length<1?'Name : ':'Name : '+data[i]['ownerDetails'][0]['accountDetails'][0]['accountName'], 99, y)//Name
       doc.text(data[i]['ownerDetails'][0]['accountDetails'].length<1?'No : ':'No : '+data[i]['ownerDetails'][0]['accountDetails'][0]['accountNumber'], 99, y+5)//Pan
       doc.text(data[i]['ownerDetails'][0]['accountDetails'].length<1?'IFSC : ':'IFSC : '+data[i]['ownerDetails'][0]['accountDetails'][0]['ifsc'], 99, y+10)//Contact
+
+      doc.text('RC',167,y)
+      doc.text('Pan',167,y+5)
+      doc.text('DL',167,y+10)
+
+      doc.text(data[i]['ownerDetails'][0].r?'Ok':'',177,y)
+      doc.text(data[i]['ownerDetails'][0].P?'Ok':'',177,y+5)
+      doc.text(data[i]['ownerDetails'][0].d?'Ok':'',177,y+10)
+
+      doc.text(data[i]['ownerDetails'][0].p?'Ok':'',188,y)
+
+
 
                 
        doc.line(0, y + 11, 210, y + 11);//line after header
@@ -1022,6 +1050,9 @@ this.placeid=this.tempDate[0]['place']['_id']
 doc.line(7, starty, 7, y-4);//srno
         doc.line(33, starty, 33, y-4);//date 
         doc.line(97, starty, 97, y-4);//date
+        doc.line(165, starty, 165, y-4);//date
+        doc.line(175, starty, 175, y-4);//date
+        doc.line(187, starty, 187, y-4);//date
 //vertical lines
      doc.save('Available-Details.pdf')
    }

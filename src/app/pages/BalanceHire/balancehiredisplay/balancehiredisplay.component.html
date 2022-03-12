@@ -86,7 +86,7 @@
         <tbody>
           <tr *ngFor="let i of balanceDate;let j = index"
             [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'black' }">
-            <td>{{j+1}}</td>
+            <td (click)="tempDelete(j)">{{j+1}}</td>
             <td>{{i.todayDate|date:'dd-MM-yyyy'}}</td>
             <td>
               <ul *ngFor="let k of i.truckData">

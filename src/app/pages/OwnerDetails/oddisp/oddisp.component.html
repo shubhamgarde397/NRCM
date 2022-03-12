@@ -110,7 +110,9 @@
         <thead>
             <tr class="table-header">
                 <th>Srno</th>
-                <th>TruckNumber-Type</th>
+                <th (mouseover)="changeText=true" (mouseout)="changeText=false">
+                    <span *ngIf="!changeText">TrdpfP</span>
+                    <span *ngIf="changeText">RC-DL-Policy-F-Pan</span></th>
                 <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
                 <th>License</th>
                 <th>Contact</th>
