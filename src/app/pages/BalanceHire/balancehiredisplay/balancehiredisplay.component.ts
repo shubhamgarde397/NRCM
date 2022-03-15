@@ -755,7 +755,7 @@ if(confirm('Do you want to temporary delete it?')){
       }
       let K = 0
       doc.setFontSize('10');
-      if(data=='all'){
+      if(data){
       doc.text(String(this.balanceDate[z].commentToTruck), 38.5, i);//comments
       }
       for (let k = 0; k < data.length; k++) {
@@ -763,7 +763,7 @@ if(confirm('Do you want to temporary delete it?')){
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
 
         doc.setFontSize('10');
-        if(data=='all'){
+        if(data){
         doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
         }
         doc.setFontSize('10');
@@ -771,7 +771,7 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
         doc.setFontSize('8');
-        if(data=='all'){
+        if(data){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
         }
         doc.setFontSize('10');

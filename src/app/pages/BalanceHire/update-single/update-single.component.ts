@@ -103,14 +103,13 @@ export class UpdateSingleComponent implements OnInit {
     tempObj['truckno']=data.value.truckno;
     tempObj['amount']=data.value.amount;
     tempObj['pageno']=data.value.pageno;
-tempObj['method']='BalanceHireSingleUpdateToAdd';
-tempObj['tablename']='BalanceHire';
-tempObj['id']=this.handledata.Data._id;
-this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
-    .subscribe((response: Response) => {
-      alert(response['Status']);
+    tempObj['method']='BalanceHireSingleUpdateToAdd';
+    tempObj['tablename']='BalanceHire';
+    tempObj['id']=this.handledata.Data._id;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((response: Response) => {
+        alert(response['Status']);
     });
-
   }
 
 

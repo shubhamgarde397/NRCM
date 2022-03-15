@@ -121,7 +121,7 @@
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-            <td *ngIf="i.ownerDetails[0]!==undefined">{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}-{{i.waitLocation}}-{{i.ownerDetails[0].hbl}}-{{i.ownerDetails[0].weight}}
+            <td *ngIf="i.ownerDetails[0]!==undefined">
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.P}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">P</div>
@@ -134,6 +134,17 @@
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.rf}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Rx</div>
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.ff}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Fx</div>
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.C}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">C</div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="row">
+                  <div class="col-sm-6">
+                    {{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}-{{i.waitLocation}}-{{i.ownerDetails[0].hbl}}-{{i.ownerDetails[0].weight}}<br>
+                    <span *ngIf="i.ownerDetails[0].contact[0]!==undefined">
+                      {{i.ownerDetails[0].contact[0]}}
+                    </span>
+                  </div>
+                  
                 </div>
               </div>
 
