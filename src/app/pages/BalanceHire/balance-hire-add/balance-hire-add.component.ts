@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
@@ -28,12 +29,19 @@ public comment='';
 public bhTrucks=[];
 public pgnos=[];
 public amounts=[];
+public uitodayDate=''
+public tableSelected=false;
+public nextStepButton=false;
 
-  constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router) { }
+  constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.find();
+  }
+
+  todayDateSetter(){
+    this.tableSelected=true;
   }
 
   edit(data) {
@@ -43,6 +51,7 @@ public amounts=[];
   }
 
   find = function () {
+    this.spinnerService.show();
     let tempObj = {};
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayTB'
@@ -52,8 +61,7 @@ public amounts=[];
         this.bhTrucks=[];
           this.turnbooklist = res.Data;
           this.handleData.saveBH(this.turnbooklist);
-          this.tableSelected=true;
-  
+          this.spinnerService.hide();
       });
 
   };
@@ -108,7 +116,8 @@ public amounts=[];
     tempObj['pgnos']=this.pgnos;
     tempObj['amounts']=this.amounts;
     tempObj['partyTypes'] = this.partyTypes;
-    tempObj['todayDate'] = this.todaysDate;
+    // tempObj['todayDate'] = this.todaysDate;
+    tempObj['todayDate'] = this.uitodayDate;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert(res.Status);
@@ -117,6 +126,7 @@ public amounts=[];
   }
 
   addToCheckArray(i, j, c) {
+    this.nextStepButton=true;
     i['balance']=this.balance(i);
     if (i['loadingDate'] == "") {
       alert('Loading Date cant be empty.')

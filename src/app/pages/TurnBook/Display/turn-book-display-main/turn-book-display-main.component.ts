@@ -121,6 +121,9 @@ public types={'None':0,'Open':0,'Container':0}
 public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
 public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','hamt':''}
 public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
+public whatActionGotSelected='2';
+public performActionButton='2';
+
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -138,6 +141,31 @@ public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
  
     this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
+  }
+
+  performActionSetter(data4){
+// 0 : delete forever
+// 1 : cancel
+// 2 : Edit
+// 3 : Change Truck
+      this.performActionButton=String(this.whatActionGotSelected);
+  }
+
+  performAction(i,j){
+    switch (this.performActionButton) {
+      case '0':
+        this.delete(i,j);
+      break;
+      case '1':
+        this.showDatabyid2(i,j,'cancel');
+      break;
+      case '2':
+        this.showDatabyid(i,j,1);
+      break;
+      case '3':
+        this.showDatabyid(i,j,3);
+      break;
+  }
   }
 
   getInformationData() {

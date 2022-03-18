@@ -1,7 +1,10 @@
 <!-- Balance Hire -->
 <div *ngIf="saveToCheckArrayBoolean">
+  <div class="row">
 
-  <table class="table" style="width:100%" align="center">
+  <div class="col-sm-4">Today Date : <input type="date" class="form-control" (change)="todayDateSetter()" [(ngModel)]="uitodayDate"></div>
+</div>
+  <table class="table" style="width:100%" align="center" *ngIf="tableSelected">
     <thead align="center" style="font-weight: bold">
       <tr class=table-header>
         <th>Srno</th>
@@ -46,11 +49,11 @@
         </td>
         <td *ngIf='i.checker===0'>
           <button mat-raised-button type="button" (click)="addToCheckArray(i,j,1)"
-            class="btn-primary btn-sm btn-just-icon">
+            class="btn-primary btn-sm btn-just-icon" [disabled]="balanceHireArrray.length>0">
             <i class="material-icons">add</i>
           </button><br>
           <button *ngIf='i.partyType==="NR"' mat-raised-button type="button" (click)="toPay(i,j,1)"
-            class="btn-warning btn-sm btn-just-icon">
+            class="btn-warning btn-sm btn-just-icon" [disabled]="balanceHireArrray.length>0">
             <i class="material-icons">add</i>
           </button>
         </td>
@@ -64,13 +67,13 @@
     </tbody>
   </table>
   <div>
-    <button mat-raised-button type="button" (click)="saveToCheckArray()" class="btn-danger btn-sm btn-just-icon">
+    <button mat-raised-button type="button" (click)="saveToCheckArray()" class="btn-danger btn-sm btn-just-icon" *ngIf="nextStepButton && balanceHireArrray.length<1">
       <i class="material-icons">add</i>
     </button>
   </div>
   <div>
     <button mat-raised-button type="button" (click)="moveToFinalStep()" class="btn-success btn-sm btn-just-icon"
-      *ngIf="balanceHireArrray.length>0">
+      *ngIf="balanceHireArrray.length>0 && uitodayDate!==''">
       <i class="material-icons">arrow_forward</i>
     </button>
   </div>

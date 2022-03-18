@@ -105,7 +105,7 @@
             <th>Amount-AccNo</th>
             <th *ngIf="buttonOption=='10'">Poch</th>
             <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">PN</th>
-            <th *ngIf="(buttonOption!=='9')&&(buttonOption!=='10')">Options</th>
+            <th *ngIf="(buttonOption!=='9')" style="width: 20vh;">Options</th>
             <th *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">Undo</th>
             <th  *ngIf="buttonOption=='1'">S</th>
           </tr>
@@ -114,13 +114,17 @@
         <tbody align="center">
           <tr *ngFor="let i of turnbooklist;let j = index"
             [ngStyle]="{'color': i.ownerDetails[0]===undefined ||i.ownerDetails[0].pan===''||i.ownerDetails[0].accountDetails.length===0 ? 'red' : 'black' }">
+
             <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
               done
               </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
                 close
                 </i></td>
+                
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
+
             <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+
             <td *ngIf="i.ownerDetails[0]!==undefined">
               <div class="col-sm-6">
                 <div class="row">
@@ -144,40 +148,33 @@
                       {{i.ownerDetails[0].contact[0]}}
                     </span>
                   </div>
-                  
                 </div>
               </div>
-
             </td>
+
             <td *ngIf="i.ownerDetails[0]===undefined"></td>
+
             <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}<br><span *ngIf="i.villageDetails2[0]!==undefined">{{i.villageDetails2[0].village_name}}</span></td>
+
             <td *ngIf="i.villageDetails[0]==undefined"></td>
             <td>{{i.partyType}}</td>
+
             <td>{{i.lrno}}</td>
+
             <td>{{i.hamt}}<br>{{i.ohamt}}<br>{{i.parentAccNo}}</td>
+
             <td  *ngIf="buttonOption=='10'">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
+
             <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">{{i.partyDetails[0].name}}<br>{{i.qr}}</td>
-            <td *ngIf="buttonOption!=='10'">
-            <div class="btn-group-vertical">
-              <button mat-raised-button (click)="delete(i,j)" *ngIf="(role==1||role==2)&&(buttonOption!=='9')"
-              class="btn-danger btn-sm btn-just-icon">
-              <i class="material-icons">delete_forever</i>
-            </button>
-            <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid2(i,j,'cancel')"
-            class="btn-warning btn-sm btn-just-icon">
-            <i class="material-icons">delete</i>
-          </button>
-          <button *ngIf="buttonOption!=='9'" mat-raised-button type="button" (click)="showDatabyid(i,j,1)"
-          class="btn-primary btn-sm btn-just-icon">
-          <i class="material-icons">edit</i>
-        </button>
-        <button mat-raised-button type="button" (click)="showDatabyid(i,j,3)"
-                class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">
-                  local_shipping
-                </i>
-              </button>
-            </div>
+
+            <td>
+              <select class="form-control" style="width:50%;" [(ngModel)]="whatActionGotSelected" (change)="performActionSetter(0)">
+                <option (change)="performActionSetter(2)" value=2>Edit</option>
+                <option (change)="performActionSetter(0)" value=0>Delete</option>
+                <option (change)="performActionSetter(1)" value=1>Cancel</option>
+                <option (change)="performActionSetter(3)" value=3>Change Truck</option>
+              </select>
+      <button class="btn btn-success" (click)="performAction(i,j)">Action</button>
           </td>
             <td *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">
               <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
@@ -185,9 +182,11 @@
                 <i class="material-icons">undo</i>
               </button>
             </td>
+
             <td *ngIf="buttonOption=='1'"> 
               <input type="checkbox">
             </td>
+            
           </tr>
         </tbody>
       </table>

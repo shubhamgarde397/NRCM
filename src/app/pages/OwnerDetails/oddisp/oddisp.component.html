@@ -110,11 +110,9 @@
         <thead>
             <tr class="table-header">
                 <th>Srno</th>
-                <th (mouseover)="changeText=true" (mouseout)="changeText=false">
-                    <span *ngIf="!changeText">TrdpfP</span>
-                    <span *ngIf="changeText">RC-DL-Policy-F-Pan</span></th>
+                <th>Truck</th>
                 <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
-                <th>License</th>
+                <th>Documents</th>
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
                 <th>Prefer</th>
@@ -124,38 +122,37 @@
         <tbody>
             <tr *ngFor="let i of ownerdetailslist2;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}<br>
-                    <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
-
-                    <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
-
-                    <i class="material-icons" *ngIf="i.p" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.p" style="color: red;">close</i>
-
-                    <i class="material-icons" *ngIf="i.f" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.f" style="color: red;">close</i>
-
-                    <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
+                <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
                     <br>{{i.hbl}}-{{i.weight}}
-                
                 </td>
                 <td>
                     <ul>
                         <li>{{i.oname}}</li>
-                        <li>{{i.pan}}</li>
+                        <li>{{i.pan}}
+                            <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
+                            <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
+                        </li>
                         <li>{{i.aadhar}}</li>
                         <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
                         </ul>
                     </td>
                 <td>
                     <ul>
-                    <li [ngStyle]="{'background-color': i.rE}" style="color: black;">RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
-                    <li [ngStyle]="{'background-color': i.dE}" style="color: black;">DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
-                    <li [ngStyle]="{'background-color': i.pE}" style="color: black;">Policy-{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
-                    <li [ngStyle]="{'background-color': i.fE}" style="color: black;">Fitness-{{i.fitnessExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li [ngStyle]="{'background-color': i.rE}" style="color: black;">
+                        RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}
+                        <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
+                        <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
+                    </li>
+                    <li [ngStyle]="{'background-color': i.dE}" style="color: black;">
+                        DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}
+                        <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
+                        <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
+                    </li>
+                    <li [ngStyle]="{'background-color': i.pE}" style="color: black;">
+                        Policy-{{i.policyExpiry|date:'dd-MM-yyyy'}}
+                        <i class="material-icons" *ngIf="i.p" style="color: green;">done</i>
+                        <i class="material-icons" *ngIf="!i.p" style="color: red;">close</i>
+                    </li>
                     </ul>
                 </td>
                 <td>
