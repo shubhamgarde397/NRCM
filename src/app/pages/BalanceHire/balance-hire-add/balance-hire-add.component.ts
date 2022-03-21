@@ -118,7 +118,7 @@ public nextStepButton=false;
     tempObj['partyTypes'] = this.partyTypes;
     // tempObj['todayDate'] = this.todaysDate;
     tempObj['todayDate'] = this.uitodayDate;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1,this.uitodayDate)
       .subscribe((res: any) => {
         alert(res.Status);
         this.moveToFinalStepReset(action);
