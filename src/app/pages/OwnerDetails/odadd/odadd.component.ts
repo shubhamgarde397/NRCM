@@ -71,7 +71,8 @@ export class OdaddComponent implements OnInit {
       reference: '',
       hbl: '',
       weight: '',
-      preferences: []
+      preferences: [],
+      srno:0
     });
     this.role = this.securityCheck.role;
   }
@@ -122,6 +123,7 @@ export class OdaddComponent implements OnInit {
     formBody['d']='';
     formBody['f']='';
     formBody['P']='';
+    formBody['srno']=0;
     formBody['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
     if(formBody['oname'].length>25){alert('Name too long. Only 25 characters allowed.')}else{
     this.apiCallservice.handleData_New_python
@@ -146,6 +148,7 @@ export class OdaddComponent implements OnInit {
         formres['accountDetails'] = this.accountArray;
         formres['preferences'] = this.villageArray;
         formres['show'] = true;
+        formres['srno'] = 0;
         formres['reference'] = this.truckdetailslistid === undefined ? "" : this.truckdetailslistid['_id'];
         this.securityCheck.commonArray['ownerdetails'].push(formres);
         this.reset();

@@ -52,7 +52,7 @@ public typeOfVehicle;
       drivingLicExpiry: [this.handledata.Data.drivingLicExpiry],
       policyExpiry: [this.handledata.Data.policyExpiry],
       regCardExpiry: [this.handledata.Data.regCardExpiry],
-      fitnessExpiry: [this.handledata.Data.fitnessExpiry],
+      fitnessExpiry: ['2099-12-01'],
       typeOfVehicle: [this.handledata.Data.typeOfVehicle],
       aadhar: [this.handledata.Data.aadhar],
       dob: [this.handledata.Data.dob],
@@ -67,7 +67,8 @@ public typeOfVehicle;
       f: [this.handledata.Data.f],
       P: [this.handledata.Data.P],
       hbl: [this.handledata.Data.hbl],
-      weight: [this.handledata.Data.weight]
+      weight: [this.handledata.Data.weight],
+      srno:[this.handledata.Data.srno]
     });
     
     this.contactArray = this.handledata.Data.contact;
@@ -104,7 +105,7 @@ public typeOfVehicle;
     formbody['drivingLicExpiry'] = data.value.drivingLicExpiry;
     formbody['policyExpiry'] = data.value.policyExpiry;
     formbody['regCardExpiry'] = data.value.regCardExpiry;
-    formbody['fitnessExpiry'] = data.value.fitnessExpiry;
+    formbody['fitnessExpiry'] = '2099-12-01';
     formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
     formbody['dob'] = data.value.dob;
@@ -118,15 +119,18 @@ public typeOfVehicle;
     formbody['p'] = data.value.p;
     formbody['r'] = data.value.r;
     formbody['d'] = data.value.d;
-    formbody['f'] = data.value.f;
+    formbody['f'] = true;
     formbody['P'] = data.value.P;
     formbody['hbl'] = data.value.hbl;
     formbody['weight'] = data.value.weight;
+    formbody['srno'] = data.value.srno;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
         if (response['Status'] === 'Updated') {
           alert(response['Status']);
+          console.log(this.sec.commonArray);
+          
           this.sec.commonArray['ownerdetails'].forEach((res) => {
             if (res._id == this.handledata.Data._id) {
               res['truckno'] = data.value.truckno;
@@ -135,9 +139,9 @@ public typeOfVehicle;
               res['drivingLicExpiry'] = data.value.drivingLicExpiry;
               res['policyExpiry'] = data.value.policyExpiry;
               res['regCardExpiry'] = data.value.regCardExpiry;
-              res['fitnessExpiry'] = data.value.fitnessExpiry;
+              res['fitnessExpiry'] = '2099-12-01';
               res['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle;
-              res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
+              // res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
               res['aadhar'] = data.value.aadhar;
               res['dob'] = data.value.dob;
               res['contact'] = this.contactArray;
@@ -147,10 +151,11 @@ public typeOfVehicle;
               res['p'] = data.value.p;
               res['r'] = data.value.r;
               res['d'] = data.value.d;
-              res['f'] = data.value.f;
+              res['f'] = true;
               res['P'] = data.value.P;
               res['hbl'] = data.value.hbl;
               res['weight'] = data.value.weight;
+              res['srno'] = data.value.srno;
             }
           })
 

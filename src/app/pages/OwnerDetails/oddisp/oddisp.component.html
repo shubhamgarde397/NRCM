@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let i of ownerdetailslist;let j = index">
-                <td>{{j+1}}</td>
+                <td>{{j+1}}<br>{{i.srno}}</td>
                 <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}<br>
                     <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
                     <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
@@ -121,7 +121,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let i of ownerdetailslist2;let j = index">
-                <td>{{j+1}}</td>
+                <td>{{j+1}}<br>{{i.srno}}</td>
                 <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
                     <br>{{i.hbl}}-{{i.weight}}
                 </td>
