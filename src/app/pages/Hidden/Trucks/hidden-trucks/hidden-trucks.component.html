@@ -9,12 +9,11 @@
               <th>Srno</th>
               <th>TruckNumber</th>
               <th>Owner Name<br>Aadhar<br>DOB</th>
-              <th>PAN<br>Chasis<br>Engine</th>
-              <th>RC<br>Expiry</th>
-              <th>DL<br>Expiry</th>
+              <th>PAN</th>
+              <th>RC Expiry</th>
+              <th>DL Expiry</th>
               <th>Contact</th>
               <th *ngIf="role==1||role==2">Account Details</th>
-              <th>Policy<br>Expiry</th>
               <th>Prefer</th>
               <th *ngIf="role==1||role==2">Delete</th>
           </tr>
@@ -33,8 +32,6 @@
               <td>
                   <ul>
                       <li>{{i.pan}}</li>
-                      <li>{{i.chasisNo}}</li>
-                      <li>{{i.engNo}}</li>
                   </ul>
                   
               </td>
@@ -61,13 +58,6 @@
                       <li>{{k.ifsc}}</li>
                       <hr>
                   </ul>
-              </td>
-              <td>
-                 <ul>
-                    <li>{{i.policy}}</li>
-                    <li [ngStyle]="{'background-color': i.pE}" style="color: black;">{{i.policyExpiry|date:'dd-MM-yyyy'}}</li>
-                    <li [ngStyle]="{'background-color': i.fE}" style="color: black;">{{i.fitnessExpiry|date:'dd-MM-yyyy'}}</li>
-                 </ul>
               </td>
               <td>
                 <ul *ngFor="let j of i.preferences;">

@@ -50,9 +50,7 @@ public typeOfVehicle;
       oname: [this.handledata.Data.oname],
       pan: [this.handledata.Data.pan],
       drivingLicExpiry: [this.handledata.Data.drivingLicExpiry],
-      policyExpiry: [this.handledata.Data.policyExpiry],
       regCardExpiry: [this.handledata.Data.regCardExpiry],
-      fitnessExpiry: ['2099-12-01'],
       typeOfVehicle: [this.handledata.Data.typeOfVehicle],
       aadhar: [this.handledata.Data.aadhar],
       dob: [this.handledata.Data.dob],
@@ -61,10 +59,8 @@ public typeOfVehicle;
       accountNumber: '',
       bankName: '',
       ifsc: '',
-      p: [this.handledata.Data.p],
       r: [this.handledata.Data.r],
       d: [this.handledata.Data.d],
-      f: [this.handledata.Data.f],
       P: [this.handledata.Data.P],
       hbl: [this.handledata.Data.hbl],
       weight: [this.handledata.Data.weight],
@@ -103,9 +99,7 @@ public typeOfVehicle;
     formbody['oname'] = data.value.oname;
     formbody['pan'] = data.value.pan;
     formbody['drivingLicExpiry'] = data.value.drivingLicExpiry;
-    formbody['policyExpiry'] = data.value.policyExpiry;
     formbody['regCardExpiry'] = data.value.regCardExpiry;
-    formbody['fitnessExpiry'] = '2099-12-01';
     formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
     formbody['dob'] = data.value.dob;
@@ -116,10 +110,8 @@ public typeOfVehicle;
     formbody['reference'] = this.handledata.Data.reference;
     formbody['method'] = 'update';
     formbody['tablename'] = 'ownerdetails';
-    formbody['p'] = data.value.p;
     formbody['r'] = data.value.r;
     formbody['d'] = data.value.d;
-    formbody['f'] = true;
     formbody['P'] = data.value.P;
     formbody['hbl'] = data.value.hbl;
     formbody['weight'] = data.value.weight;
@@ -137,9 +129,7 @@ public typeOfVehicle;
               res['oname'] = data.value.oname;
               res['pan'] = data.value.pan;
               res['drivingLicExpiry'] = data.value.drivingLicExpiry;
-              res['policyExpiry'] = data.value.policyExpiry;
               res['regCardExpiry'] = data.value.regCardExpiry;
-              res['fitnessExpiry'] = '2099-12-01';
               res['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle;
               // res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
               res['aadhar'] = data.value.aadhar;
@@ -148,10 +138,8 @@ public typeOfVehicle;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;
               res['reference'] = "";
-              res['p'] = data.value.p;
               res['r'] = data.value.r;
               res['d'] = data.value.d;
-              res['f'] = true;
               res['P'] = data.value.P;
               res['hbl'] = data.value.hbl;
               res['weight'] = data.value.weight;

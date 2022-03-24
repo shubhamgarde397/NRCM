@@ -196,7 +196,7 @@ public nextStepButton=false;
     this.amounts=[];
     this.comment='';
     this.bhTrucks=[];
-    this.find()
+    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/BalanceHireDisp']);
   }
 
   comments(){

@@ -435,8 +435,8 @@ this.PrdfpReport(this.reportData);
     doc.text('Pan', 79, y)//partyname
     doc.text('Lic', 92, y)//partyname
     doc.text('RC', 105, y)//partyname
-    doc.text('Policy', 118, y)//partyname
-    doc.text('Fitness', 131, y)//partyname
+    doc.text('Notes', 118, y)//partyname
+    doc.text('Notes', 131, y)//partyname
     doc.text('Name', 150, y)//partyname
     //headers
     doc.line(0, 25, 210, 25);//line after header
@@ -489,8 +489,8 @@ this.PrdfpReport(this.reportData);
     doc.text('Pan', 79, y)//partyname
     doc.text('Lic', 92, y)//partyname
     doc.text('RC', 105, y)//partyname
-    doc.text('Policy', 118, y)//partyname
-    doc.text('Fitness', 131, y)//partyname
+    doc.text('Notes', 118, y)//partyname
+    doc.text('Notes', 131, y)//partyname
     doc.text('Name', 150, y)//partyname
     //headers
     doc.line(0, 25, 210, 25);//line after header
