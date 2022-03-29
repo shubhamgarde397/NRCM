@@ -29,7 +29,8 @@ export class VillageUpdateComponent implements OnInit {
 
   ngOnInit() {
     this.myFormGroup = this.formBuilder.group({
-      village_name: this.handledata.Data.village_name
+      village_name: this.handledata.Data.village_name,
+      shortName: this.handledata.Data.shortName
     });
   }
   change = function (data) {
@@ -37,6 +38,7 @@ export class VillageUpdateComponent implements OnInit {
     let formbody = {}
     formbody['village_name'] = data.value.village_name;
     formbody['_id'] = this.handledata.Data._id;
+    formbody['shortName'] = data.value.shortName;
     formbody['method'] = 'update';
     formbody['tablename'] = 'villagenames';
 
@@ -44,7 +46,10 @@ export class VillageUpdateComponent implements OnInit {
       .subscribe((response: Response) => {
         alert(response['Status']);
         this.sec.commonArray['villagenames'].forEach((res) => {
-          if (res._id == this.handledata.Data._id) { res['village_name'] = data.value.village_name }
+          if (res._id == this.handledata.Data._id) { 
+            res['village_name'] = data.value.village_name 
+            res['shortName'] = data.value.shortName 
+          }
         })
 
         this.show = !this.show;

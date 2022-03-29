@@ -29,7 +29,8 @@ export class VillageaddComponent implements OnInit {
   ngOnInit() {
     this.model = new village(this.name);
     this.myFormGroup = this.formBuilder.group({
-      village_name: [this.model.village_name, Validators.required]
+      village_name: [this.model.village_name, Validators.required],
+      shortName:''
     });
   }
 

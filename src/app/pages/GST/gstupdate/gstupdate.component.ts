@@ -43,7 +43,8 @@ export class GstupdateComponent implements OnInit {
       addr2: this.handledata.Data.addr2,
       cities:[],
       accNo:this. handledata.Data.accNo,
-      partyType:this.handledata.Data.partyType
+      partyType:this.handledata.Data.partyType,
+      shortName:this.handledata.Data.shortName
     });
     this.dest = this.handledata.Data.dest;
     this.pT = this.handledata.Data.partyType;
@@ -67,6 +68,7 @@ export class GstupdateComponent implements OnInit {
     formbody['addr3'] = data.value.addr2;
     formbody['accNo'] = data.value.accNo;
     formbody['partyType'] = data.value.partyType;
+    formbody['shortName'] = data.value.shortName;
     formbody['cities'] = this.cities;
     formbody['_id'] = this.handledata.Data._id;
     formbody['method'] = 'update';
@@ -80,6 +82,7 @@ export class GstupdateComponent implements OnInit {
             res['name'] = data.value.name;
             res['gst'] = data.value.gst;
             res['dest'] = data.value.dest;
+            res['shortName'] = data.value.shortName;
           }
         })
 

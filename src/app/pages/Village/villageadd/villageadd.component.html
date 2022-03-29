@@ -20,6 +20,23 @@
     </div>
     <!--Name-->
 
+      <!--Name-->
+      <div class="form-group row">
+
+        <div class="col-xs-3">
+          <input type="text" id="shortName" class="form-control" formControlName="shortName"
+            placeholder="Village Name">
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.shortName.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+      <!--Name-->
+
 
 
     <div class="row">

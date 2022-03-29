@@ -5,7 +5,7 @@
         <thead class="table-header">
             <tr>
                 <th>Srno</th>
-                <th>Name</th>
+                <th>Name-SN</th>
                 <th>GST Number</th>
                 <th>Destination</th>
                 <th>Type</th>
@@ -20,7 +20,7 @@
         <tbody>
             <tr *ngFor="let i of gstdetailslist;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.name}}</td>
+                <td>{{i.name}}:{{i.shortName}}</td>
                 <td>{{i.gst}}</td>
                 <td>{{i.dest}}</td>
                 <td>{{i.partyType}}</td>

@@ -49,7 +49,8 @@ export class GstaddComponent implements OnInit {
       addr3:'',
       cities:[],
       accNo:0,
-      partyType:''
+      partyType:'',
+      shortName:''
     });
   }
 
