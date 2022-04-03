@@ -94,17 +94,14 @@
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
-            <th>Date</th>
-            <th>Loading Date</th>
+            <th>TurnBook-Loading</th>
             <th (mouseover)="changeText=true" (mouseout)="changeText=false">
               <span *ngIf="!changeText">TTLSW</span>
               <span *ngIf="changeText">Truck-Type-Location-Size-Weight</span></th>
-            <th>Place</th>
-            <th>Party</th>
+            <th>Party-Place-Name</th>
             <th>LRNO</th>
             <th>Amount-OAmt-AccNo</th>
             <th>Poch</th>
-            <th *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">PN</th>
             <th *ngIf="(buttonOption!=='9')" style="width: 20vh;">Options</th>
             <th *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">Undo</th>
             <th  *ngIf="buttonOption=='1'">S</th>
@@ -121,9 +118,7 @@
                 close
                 </i></td>
                 
-            <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-
-            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+            <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
 
             <td *ngIf="i.ownerDetails[0]!==undefined">
               <div class="col-sm-6">
@@ -152,18 +147,15 @@
 
             <td *ngIf="i.ownerDetails[0]===undefined"></td>
 
-            <td *ngIf="i.villageDetails[0]!==undefined">{{i.villageDetails[0].village_name}}<br><span *ngIf="i.villageDetails2[0]!==undefined">{{i.villageDetails2[0].village_name}}</span></td>
+            <td *ngIf="i.villageDetails[0]!==undefined">{{i.partyType}}-{{i.villageDetails[0].shortName}}<br><span *ngIf="i.villageDetails2[0]!==undefined">{{i.villageDetails2[0].shortName}}</span>-{{i.partyDetails[0].shortName}}</td>
 
             <td *ngIf="i.villageDetails[0]==undefined"></td>
-            <td>{{i.partyType}}</td>
 
             <td>{{i.lrno}}</td>
 
             <td>{{i.hamt}}<br>{{i.ohamt}}<br>{{i.parentAccNo}}</td>
 
             <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
-
-            <td *ngIf="(role==1||role==2)&&(buttonOption!=='9')&&(buttonOption!=='10')">{{i.partyDetails[0].name}}<br>{{i.qr}}</td>
 
             <td>  
               <select class="form-control" style="width:50%;" [(ngModel)]="whatActionGotSelected" (change)="performActionSetter(0)">
@@ -201,11 +193,9 @@
             <thead align="center" style="font-weight: bold">
               <tr class=table-header>
                 <th>Srno</th>
-                <th>Date</th>
-                <th>Loading Date</th>
+                <th>TurnBook-Loading</th>
                 <th>Truck No-Type</th>
-                <th>Place</th>
-                <th>Party</th>
+                <th>Place-Party-Load</th>
                 <th>LRNO</th>
                 <th>Select</th>
               </tr>
@@ -218,11 +208,9 @@
                   </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
                     close
                     </i></td>
-                <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+                <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}-{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
                 <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}</td>
-                <td>{{i.villageDetails[0].village_name}}</td>
-                <td>{{i.partyType}}</td>
+                <td>{{i.villageDetails[0].shortName}}-{{i.partyType}}-{{i.typeOfLoad}}</td>
                 <td>{{i.lrno}}</td>
                 <td *ngIf='i.checker===0'>
                   <button mat-raised-button type="button" (click)="uncheckPoch(i,j)"
@@ -595,12 +583,9 @@
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
-            <th>Entry Date</th>
-            <th>Loading Date</th>
+            <th>Entry-Loading</th>
             <th>Truck No-Type</th>
-            <th>Place</th>
-            <th>Party</th>
-            <th>Type</th>
+            <th>Type-Party-Place</th>
             <th>LRNO</th>
             <th>Amount</th>
             <th>PochDate : Pgno</th>
@@ -613,12 +598,9 @@
               </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
                 close
                 </i></td>
-            <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
+            <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.truckName.hbl}}={{i.truckName.weight}}</td>
-            <td>{{i.placeName.village_name}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.village_name}}</span></td>
-            <td>{{i.partyName.name}}</td>
-            <td>{{i.partyType}}</td>
+            <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
             <td>{{i.lrno}}</td>
             <td>{{i.hamt}}<br>{{i.ohamt}}</td>
             <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
