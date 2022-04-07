@@ -118,11 +118,20 @@ export class TurnBookLocationDispComponent implements OnInit {
     tempObj['location'] = this.tempVNAME;
     tempObj['date'] = this.locationDate;
     tempObj['_id'] = i._id;
-    tempObj['method'] = 'updatetbl';
+    tempObj['method'] = 'updatetblnew';
     tempObj['tbltype'] = 'update';
+
+    tempObj['part']=4;
+    tempObj['updateTruck']=true;
+    tempObj['show']=true;
+    tempObj['ownerid']=i['oD']['_id'];
+
+
     this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , 0)
     .subscribe((res: any) => {
-      this.updateTurnLocationTruck(i,j)
+      res['Data'].length>0?alert('Updated'):alert('Failed');
+      this.tbl.splice(j,1);
+      this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
     });
   }
 
