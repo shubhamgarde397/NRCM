@@ -26,6 +26,7 @@ export class TurnBookLocationDispComponent implements OnInit {
   public tempVNAME;
   public placeid;
   public show=false;
+  public locationDate='';
 
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,
     public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,public router:Router) { }
@@ -52,11 +53,7 @@ export class TurnBookLocationDispComponent implements OnInit {
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   };
-  setPlaceName() {
-    this.placeid = this.villagenamelist[this.myFormGroup.value.location.split('+')[1]]._id;
-    this.tempVNAME = this.villagenamelist[this.myFormGroup.value.location.split('+')[1]].village_name;
-    this.myFormGroup.value.place = this.tempVNAME;
-  }
+
 
   getInformationData() {
     this.spinnerService.show();
@@ -89,24 +86,7 @@ export class TurnBookLocationDispComponent implements OnInit {
     });
   }
 
-  updateTurnLocationTruck(i,index){
-    let tempObj={};
-    tempObj['part']=4;
-    tempObj['_id']=i._id;
-    tempObj['method'] = 'update';
-    tempObj['tablename'] = 'turnbook';
-    tempObj['updateTruck']=true;
-    tempObj['show']=true;
-    tempObj['ownerid']=i['oD']['_id'];
-    
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
-    .subscribe((res: any) => {
-      alert('Updated');
-      this.tbl.splice(index,1);
-      this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
-    });
-    
-  }
+
   showDatabyid(data,i){
     this.id=i;
     this.data=data;
@@ -128,6 +108,47 @@ export class TurnBookLocationDispComponent implements OnInit {
       let a = this.tbl.filter(r=>{return r._id==this.data._id})[0]
       a['updateTBL']=a.locationData.at(-1).location===a.destination?true:false
     });
+  }
+
+  newEdit(i,j){
+    this.tempVNAME = this.villagenamelist.find(r=>{return r.village_name == i.destination})['_id']
+    
+    let tempObj={}
+    tempObj['tablename'] = 'turnbook';
+    tempObj['location'] = this.tempVNAME;
+    tempObj['date'] = this.locationDate;
+    tempObj['_id'] = i._id;
+    tempObj['method'] = 'updatetbl';
+    tempObj['tbltype'] = 'update';
+    this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , 0)
+    .subscribe((res: any) => {
+      this.updateTurnLocationTruck(i,j)
+    });
+  }
+
+  updateTurnLocationTruck(i,index){
+    let tempObj={};
+    tempObj['part']=4;
+    tempObj['_id']=i._id;
+    tempObj['method'] = 'update';
+    tempObj['tablename'] = 'turnbook';
+    tempObj['updateTruck']=true;
+    tempObj['show']=true;
+    tempObj['ownerid']=i['oD']['_id'];
+    
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+    .subscribe((res: any) => {
+      alert('Updated');
+      this.tbl.splice(index,1);
+      this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
+    });
+    
+  }
+
+  setPlaceName() {
+    this.placeid = this.villagenamelist[this.myFormGroup.value.location.split('+')[1]]._id;
+    this.tempVNAME = this.villagenamelist[this.myFormGroup.value.location.split('+')[1]].village_name;
+    this.myFormGroup.value.place = this.tempVNAME;
   }
 
   delete(i,p,j){

@@ -1,5 +1,8 @@
 <div class="well" *ngIf="show">
   <button class="btn btn-danger" (click)="fetchBasicData()"><i class="material-icons">undo</i></button>
+  <div class="col-sm-6">
+    <input type="date" [(ngModel)]="locationDate" [ngModelOptions]="{standalone: true}" class="form-control">
+  </div>
   <table class="table display nowrap" style="width:100%" align="center" id="example">
     <thead>
       <tr class="table-header">
@@ -45,6 +48,9 @@
         <td>
           <button mat-raised-button type="button" (click)="showDatabyid(i,j)" class="btn-primary btn-sm btn-just-icon" data-toggle="modal" data-target="#myModal">
             <i class="material-icons">edit</i>
+          </button>
+          <button mat-raised-button type="button" (click)="newEdit(i,j)" *ngIf='locationDate!==""' class="btn-primary btn-sm btn-just-icon">
+            NB
           </button>
           <button mat-raised-button type="button" (click)="updateTurnLocationTruck(i,j)" class="btn-warning btn-sm btn-just-icon" *ngIf='i.updateTBL'>
 
