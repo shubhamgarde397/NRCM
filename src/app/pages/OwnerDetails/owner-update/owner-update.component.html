@@ -101,10 +101,17 @@
       <div class="col-xs-3">
         <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
       </div>
-
+      <div class="col-xs-3">
+        12 : <input type="checkbox" id="acc12" class="form-control" formControlName="acc12">
+      </div>
+      <div class="col-xs-3">
+        363 : <input type="checkbox" id="acc363" class="form-control" formControlName="acc363">
+      </div>
+</div>
       <div class="form-group row" *ngIf='role==1||role==2'>
         <div class="col-sm-1">
           <button type="button" class="btn btn-danger" style="width: 100%;" (click)="addaccount()">Add</button>
+          <button type="button" class="btn btn-success" style="width: 100%;" (click)="copyaccount()">Copy!</button>
         </div>
         <div class="col-sm-6">
           <table class="table table-bordered">
@@ -114,6 +121,8 @@
               <th>Number</th>
               <th>Bank</th>
               <th>IFSC</th>
+              <th>12</th>
+              <th>363</th>
               <th>Delete</th>
             </tr>
             <tr *ngFor="let i of accountArray;let j = index;">
@@ -122,12 +131,14 @@
               <td>{{i.accountNumber}}</td>
               <td>{{i.bankName}}</td>
               <td>{{i.ifsc}}</td>
+              <td>{{i.acc12}}</td>
+              <td>{{i.acc363}}</td>
               <td (click)="deleteOneA(i,j)">Delete</td>
             </tr>
           </table>
         </div>
       </div>
-    </div>
+
 
   </div>
     <hr *ngIf='role==1||role==2'>

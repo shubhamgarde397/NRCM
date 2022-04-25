@@ -1,0 +1,22 @@
+<div class="well" *ngIf="tblShow">
+  <table class="table display nowrap" style="width:100%" align="center" id="example">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>Poch Date</th>
+        <th>TruckNo</th>
+        <th>Loading Date</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of tbl;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.pochDate|date:'dd-MM-yyyy'}}</td>
+        <td>{{i.truckno}}</td>
+        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

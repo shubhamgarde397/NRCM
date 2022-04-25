@@ -1,0 +1,42 @@
+<div class="well" *ngIf="tblShow">
+  <table class="table display nowrap" style="width:100%" align="center" id="example">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Account</th>
+        <th>12</th>
+        <th>363</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of tbl;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.truckno}}</td>
+        <td>
+          <ul>
+            <li>{{i.accountDetails[0]['accountName']}}</li>
+            <li>{{i.accountDetails[0]['accountNumber']}}</li>
+            <li>{{i.accountDetails[0]['ifsc']}}</li>
+          </ul>
+        </td>
+        <td>{{i.accountDetails[0]['acc12']}}</td>
+        <td>{{i.accountDetails[0]['acc363']}}</td>
+        <td>
+          <button mat-raised-button type="button" *ngIf="(!i.accountDetails[0]['acc363'])&&(!i.accountDetails[0]['acc12'])" (click)="update('both',i,j)" class="btn-success btn-sm btn-just-icon">
+            Both
+          </button>
+          <button mat-raised-button type="button" *ngIf="!i.accountDetails[0]['acc12']" (click)="update('12',i,j)" class="btn-danger btn-sm btn-just-icon">
+            12
+          </button>
+          <button mat-raised-button type="button" *ngIf="!i.accountDetails[0]['acc363']" (click)="update('363',i,j)" class="btn-warning btn-sm btn-just-icon">
+            363
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

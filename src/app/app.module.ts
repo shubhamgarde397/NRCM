@@ -38,6 +38,8 @@ import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidde
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
 import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
 import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
+import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
+import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
     HiddenTrucksComponent,
     WhatsappComponent,
     QRCodeComponent,
-    QRUpdateComponent
+    QRUpdateComponent,
+    AccountDetailsDisplayComponent,
+    PaymentPendingDisplayComponent
   ],
   imports: [
     BrowserModule,

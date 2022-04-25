@@ -584,11 +584,12 @@
           <tr class=table-header>
             <th>Srno</th>
             <th>Entry-Loading</th>
-            <th>Truck No-Type</th>
+            <!-- <th>Truck No-Type</th> -->
             <th>Type-Party-Place</th>
             <th>LRNO</th>
             <th>Amount</th>
-            <th>PochDate : Pgno</th>
+            <th>Poch : Pg : G : Amt : Acc</th>
+            <th>Payment Details</th>
           </tr>
         </thead>
         <tbody align="center">
@@ -599,11 +600,12 @@
                 close
                 </i></td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.truckName.hbl}}={{i.truckName.weight}}</td>
+            <!-- <td>{{i.truckName.truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.truckName.hbl}}={{i.truckName.weight}}</td> -->
             <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
             <td>{{i.lrno}}</td>
             <td>{{i.hamt}}<br>{{i.ohamt}}</td>
-            <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
+            <td>{{i.actualPaymentDate}}<br>{{i.actualPaymentAmount}}</td>
           </tr>
         </tbody>
       </table>

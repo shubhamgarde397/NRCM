@@ -30,7 +30,8 @@ export class BalancehiredisplayComponent implements OnInit {
     { 'value': '1', 'viewvalue': 'Balance Hire' },
     { 'value': '2', 'viewvalue': 'Check Prints' },
     { 'value': '3', 'viewvalue': 'Given Date' },
-    { 'value': '4', 'viewvalue': 'Given Payment Pending' }
+    { 'value': '4', 'viewvalue': 'Given Payment Pending' },
+    { 'value': '5', 'viewvalue': 'Update Actual Payments' }
   ]
   public months = [
     { '1': 'Jan' },
@@ -61,6 +62,18 @@ export class BalancehiredisplayComponent implements OnInit {
   public givenPaymentTable=false;
   public givenDate;
   public GPPMsg='Loading... Please Wait!'
+
+  public selectedPochDate;
+  public actualPayment=false;
+  public fullpendingPayment=[];
+  public paymentSettings=false;
+  public saveArray=[
+  ]
+  public saveArrayData=false;
+  public selectedPaymentDate='';
+  public selectedPaymentAmount=0;
+  public showpaymentButton=false;
+  public defaultAmt=0;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -81,6 +94,85 @@ export class BalancehiredisplayComponent implements OnInit {
     this.admin = !this.admin;
   }
 
+  fetchPendinActualPayments(){
+    this.fullpendingPayment=[];
+    this.saveArray=[]
+    this.selectedPaymentAmount=0;
+    this.selectedPaymentDate=''
+    this.paymentSettings=false;
+    this.showpaymentButton=false;
+    this.saveArrayData=false;
+    this.defaultAmt=0;
+
+let formbody={}
+formbody['method']='getTrucksWithNoActualPayment';
+formbody['tablename']=''
+formbody['selectedPochDate']=this.selectedPochDate;
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, 0)
+    .subscribe((res: any) => {
+      this.fullpendingPayment=this.addBHAmount(res.Data);
+      this.paymentSettings=true;
+    });
+    
+  }
+  copyAmount(){
+    this.selectedPaymentAmount=this.defaultAmt;
+  }
+
+  addBHAmount(data){
+    data.forEach(r=>{
+      let arr=r['advanceArray']
+      for(let i=0;i<arr.length;i++){
+          if(arr[i]['reason']==='Balance'){
+              r['BHAmount']=arr[i]['advanceAmt']
+          }   
+      }
+  })
+    return data
+  }
+
+  paymentDateAmount(){
+    this.showpaymentButton=this.selectedPaymentDate==''?false:true;
+    this.showpaymentButton=this.selectedPaymentAmount==0?false:true;
+  }
+
+  addtosavearray(i,j){
+    this.saveArray.push(i)
+    this.saveArrayData=true;
+    this.fullpendingPayment.splice(j,1)
+    this.defaultAmt=this.defaultAmt+parseInt((i['BHAmount']))
+  }
+
+  deletetosavearray(i,j){
+    this.saveArray.splice(j,1)
+    this.saveArrayData=this.saveArray.length>0?true:false;
+    this.fullpendingPayment.push(i)
+    this.defaultAmt=this.defaultAmt-parseInt((i['BHAmount']))
+  }
+
+  sendDatatoUpdate(){
+    let obj={}
+    let saveArray2=[]
+    this.saveArray.forEach(r=>{saveArray2.push(r._id)})
+    obj['ids']=saveArray2;
+    obj['paymentDate']=this.selectedPaymentDate;
+    obj['paymentAmt']=this.selectedPaymentAmount;
+    obj['tablename']='';
+    obj['method']='updateActualPaymentDetails'
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, obj, 0)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.saveArray=[]
+      this.selectedPaymentAmount=0;
+      this.selectedPaymentDate=''
+      this.defaultAmt=0;
+    });
+  }
+
+ 
+
   findOption() {
     this.buttonOption = this.displayType;
     this.buttonValue = this.displayoptions[parseInt(this.displayType) - 1].viewvalue;
@@ -91,6 +183,7 @@ export class BalancehiredisplayComponent implements OnInit {
     this.createdDate = '';
     this.buttonOption == '3'?this.getGivenDateTrucks():undefined;
     this.buttonOption == '4'?this.getGivenTrucksPayment():undefined;
+this.actualPayment=this.buttonOption == '5'?true:false;
     
   }
   refresh(data){
@@ -207,11 +300,26 @@ export class BalancehiredisplayComponent implements OnInit {
       .subscribe((res: any) => {
         this.printInfo = true;
         this.balanceDate = [];
-        this.balanceDate = res.balanceData;
+        this.balanceDate = this.accE(res.balanceData);
         this.securityCheck.commonBalanceHire = res.balanceData;
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
+
+
+
+
       });
   };
+
+  
+  accE(data){
+    data.forEach(r=>{
+      let accountToTransfer=r.commentToTruck.split(' ')[0]
+        let varToCheck = 'acc'+String(accountToTransfer)
+        r['available']=r[varToCheck]?'':'X'
+    })
+    return data
+    }
+
   find2(data, type, set = true) {
     if (set) {
       switch (type) {
@@ -485,7 +593,7 @@ if(confirm('Do you want to temporary delete it?')){
       doc.text(this.balanceDate[z].accountName, 136.5, i - (data.length * 6));//accno
       doc.text(String(this.balanceDate[z].accountNumber), 136.5, i + 6 - (data.length * 6));//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 136.5, i + 12 - (data.length * 6));//ifsc-bankname
-
+      doc.text(this.balanceDate[z].available, 200, i - (data.length * 6));//accno
       i = i + 15;
     }
     //Dynamic Part End
@@ -658,6 +766,7 @@ if(confirm('Do you want to temporary delete it?')){
     doc.text(dateFormat, 90, i + 5 - 16)
     doc.text(String(pageno), 190, i + 5 - 16)
     pageno = pageno + 1;
+    let pageStopper = i+5-16;
     //Date
     //line after date
     doc.setDrawColor(0, 0, 0);
@@ -704,6 +813,7 @@ if(confirm('Do you want to temporary delete it?')){
 
 
       if (((data.length * 6) + 15 + i) > 295) {
+        doc.text('->', 192, pageStopper)
         doc.addPage();
         doc.line(0, 148.2, 5, 148.2);//punching line helper
         //Static Part Start
@@ -713,6 +823,7 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setTextColor(0, 0, 0);
         doc.text(dateFormat, 90, 5)
         doc.text(String(pageno), 190, 5)
+        pageStopper = 5;
         pageno = pageno + 1;
         //Date
         //line after date
@@ -794,9 +905,11 @@ if(confirm('Do you want to temporary delete it?')){
       doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
       doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
+      doc.text(this.balanceDate[z].available, 200, i - (data.length * 6));//accno
 
       i = i + 12;
     }
+    doc.text('#', 192, pageStopper)
     //Dynamic Part End
     doc.save(dateFormat + '.pdf')
   }

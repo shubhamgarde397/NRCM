@@ -13,6 +13,8 @@ import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidde
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
 import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
 import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
+import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
+import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
 
 export const routes: Routes =
     [
@@ -98,6 +100,14 @@ export const routes: Routes =
                     {
                         path: 'TURN_BOOK_LOCATION_DISP',
                         component:TurnBookLocationDispComponent
+                    },
+                    {
+                        path: 'ACCOUNT_DETAILS_DISPLAY',
+                        component:AccountDetailsDisplayComponent
+                    },
+                    {
+                        path: 'PENDING_PAYMENT_DISPLAY',
+                        component:PaymentPendingDisplayComponent
                     },
                     {
                         path: 'PARTY_PAYMENT_HANDLER',

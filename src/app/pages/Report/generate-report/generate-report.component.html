@@ -48,4 +48,63 @@
         </div>
     </div>
     </div>
+
+    <div class="well" *ngIf="buttonOption==='4'">
+        <div class="row">
+            <div class="col-sm-4">
+        <select class="form-control" [(ngModel)]="truckid" (change)="getTruckId()">
+            <option disabled>Select Option</option>
+            <option *ngFor="let i of trucks" value={{i._id}}>{{i.truckno}}</option>
+          </select>
+        </div>
+    </div>
+    <div class="well" *ngIf="selectDate">
+        <div class="row">
+            <div class="col-sm-3">Loading From<input type="date" class="form-control" [(ngModel)]="fdate"></div>
+            <div class="col-sm-3">Loading To<input type="date" class="form-control" [(ngModel)]="tdate"></div>
+            <div class="col-sm-3"><button class="btn btn-danger" (click)="getAllTruckData()">Get</button></div>
+        </div>
+    </div>
+    <div class="well" *ngIf="showTable">
+        {{Selectedtruckno}}
+        <table class="table">
+            <thead>
+              <tr>
+                <th>Srno</th>
+                <th>Loading Date</th>
+                <th>Place</th>
+                <th>Balance</th>
+                <th>PaymentDate</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ii of k;let jj=index;">
+                <td>{{jj+1}}</td>
+                <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+                <td>{{ii.placeName}}</td>
+                <td>{{ii.balance}}</td>
+                <td>{{ii.partyType}}</td>
+                <td>{{ii.actualPaymentDate}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Srno</th>
+                <th>Payment Date</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ii of k;let jj=index;">
+                <td>{{jj+1}}</td>
+                <td>{{ii.actualPaymentDate|date:'dd-MM-yyyy'}}</td>
+                <td>{{ii.actualPaymentAmount}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    </div>
 </div>

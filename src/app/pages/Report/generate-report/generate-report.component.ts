@@ -17,7 +17,8 @@ export class GenerateReportComponent implements OnInit {
 public options=[
   {value:'1',viewValue:'Pan'},
   {value:'2',viewValue:'Account'},
-  {value:'3',viewValue:'Contact'}
+  {value:'3',viewValue:'Contact'},
+  {value:'4',viewValue:'Truck Payment PDF'}
 ]
 public selectedOption;
 public buttonOption;
@@ -28,6 +29,13 @@ public selectedMY;
 public buttons=[];
 public emptyData;
 public toFillData=[];
+public selectDate=false;
+public showTable=false;
+public truckid='';
+public trucks;
+public fdate;
+public tdate;
+public truckAllData;
   constructor(
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
@@ -40,6 +48,38 @@ public toFillData=[];
   this.buttons=this.getButtons();
   }
 
+  getTruckId(){
+    this.selectDate=true
+  }
+
+  getAllTruckData(){
+    this.showTable=true;
+    let temp={
+      'method':'getAllTrucksTEMP',
+      'tablename':'',
+      'ownerid':this.truckid,
+      'from':this.fdate,
+      'to':this.tdate
+    }
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, temp, 0)
+    .subscribe((res: any) => {
+      this.truckAllData=res.Data;
+    });
+  }
+
+  getAllTrucks(){
+    let temp={
+      'method':'getAllTrucks',
+      'tablename':''
+    }
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, temp, 0)
+    .subscribe((res: any) => {
+      this.trucks=res.Data
+    });
+  }
+
   setOptionValues(){
     this.buttonOption = this.selectedOption;
     this.buttonValue = this.options[parseInt(this.selectedOption) - 1].viewValue;
@@ -48,6 +88,9 @@ public toFillData=[];
     }
     if(this.buttonOption==='3'){
       this.getData(98)
+    }
+    if(this.buttonOption==='4'){
+      this.getAllTrucks()
     }
   }
 

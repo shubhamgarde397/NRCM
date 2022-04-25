@@ -493,7 +493,16 @@ let tempObj1={};
     if(this.trucknoid11!=='Default'){
     this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
     this.showprdfP=true;
-    console.log(this.turn11);
+    this.turn11.forEach(r=>{
+      let ad=r.advanceArray
+      for(let i=0;i<ad.length;i++){
+          if(ad[i]['reason']==='Balance'){
+              r['BHamt']=ad[i]['advanceAmt']
+              r['BHAccNo']=ad[i]['BHAccNo']
+              r['BHAccName']=ad[i]['BHAccname']
+          }
+      }
+  })
     
     }
   }

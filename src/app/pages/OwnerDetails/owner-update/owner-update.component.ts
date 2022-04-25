@@ -59,12 +59,15 @@ public typeOfVehicle;
       accountNumber: '',
       bankName: '',
       ifsc: '',
+      acc12: false,
+      acc363: false,
       r: [this.handledata.Data.r],
       d: [this.handledata.Data.d],
       P: [this.handledata.Data.P],
       hbl: [this.handledata.Data.hbl],
       weight: [this.handledata.Data.weight],
       srno:[this.handledata.Data.srno]
+      
     });
     
     this.contactArray = this.handledata.Data.contact;
@@ -116,13 +119,14 @@ public typeOfVehicle;
     formbody['hbl'] = data.value.hbl;
     formbody['weight'] = data.value.weight;
     formbody['srno'] = data.value.srno;
+    formbody['acc12'] = data.value.acc12;
+    formbody['acc363'] = data.value.acc363;
+    
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
         if (response['Status'] === 'Updated') {
           alert(response['Status']);
-          console.log(this.sec.commonArray);
-          
           this.sec.commonArray['ownerdetails'].forEach((res) => {
             if (res._id == this.handledata.Data._id) {
               res['truckno'] = data.value.truckno;
@@ -144,6 +148,8 @@ public typeOfVehicle;
               res['hbl'] = data.value.hbl;
               res['weight'] = data.value.weight;
               res['srno'] = data.value.srno;
+              res['acc12'] = data.value.acc12;
+              res['acc363'] = data.value.acc363;
             }
           })
 
@@ -171,12 +177,25 @@ public typeOfVehicle;
       tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
       tempObj['bankName'] = this.myFormGroup.value.bankName;
       tempObj['ifsc'] = this.myFormGroup.value.ifsc;
+      tempObj['acc12'] = this.myFormGroup.value.acc12;
+      tempObj['acc363'] = this.myFormGroup.value.acc363;
       this.accountArray.push(tempObj);
       this.myFormGroup.patchValue({ accountName: '' });
       this.myFormGroup.patchValue({ accountNumber: '' });
       this.myFormGroup.patchValue({ bankName: '' });
       this.myFormGroup.patchValue({ ifsc: '' });
+      this.myFormGroup.patchValue({ acc12: false });
+      this.myFormGroup.patchValue({ acc363: false });
     }
+  }
+
+  copyaccount(){
+    this.myFormGroup.patchValue({ accountName: this.accountArray[0]['accountName'] });
+      this.myFormGroup.patchValue({ accountNumber: this.accountArray[0]['accountNumber'] });
+      this.myFormGroup.patchValue({ bankName: this.accountArray[0]['bankName'] });
+      this.myFormGroup.patchValue({ ifsc: this.accountArray[0]['ifsc'] });
+      this.myFormGroup.patchValue({ acc12: this.accountArray[0]['acc12'] });
+      this.myFormGroup.patchValue({ acc363: this.accountArray[0]['acc363'] });
   }
 
   deleteOneA(i, j) {
