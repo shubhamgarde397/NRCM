@@ -131,10 +131,11 @@ switch(data){
     }
   }
 
-  showDatabyid = function (data) {
+  showDatabyid = function (data,no) {
 
     this.show = true;
     this.found = data;
+    data['updateNumber']=no
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   };

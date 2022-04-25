@@ -23,6 +23,7 @@ public typeOfVehicle;
   public pan: string;
   public mobileno: number;
   public myFormGroup: FormGroup;
+  public myFormGroup1: FormGroup;
   public submitted = false;
   public role = 6;
   public contactArray = [];
@@ -34,6 +35,8 @@ public typeOfVehicle;
   public villagedetailslist;
   public commonArray;
   public considerArray = [];
+  public no;
+  public ownerdetailslist;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -69,12 +72,18 @@ public typeOfVehicle;
       srno:[this.handledata.Data.srno]
       
     });
+
+    this.myFormGroup1 = this.formBuilder.group({
+      truckno: [this.handledata.Data.truckno],
+      newtruckno:''
+    });
     
     this.contactArray = this.handledata.Data.contact;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
     this.role = this.sec.role;
     this.type=this.handledata.Data.typeOfVehicle;
+    this.no=this.handledata.Data.updateNumber
   }
 
   getInformationData() {
@@ -87,6 +96,7 @@ public typeOfVehicle;
   }
 
   fetchBasic() {
+    this.villagedetailslist=[];
     this.commonArray = this.sec.commonArray;
     this.villagedetailslist = this.commonArray.villagenames;
   }
@@ -211,6 +221,20 @@ public typeOfVehicle;
 
   deleteOneP(i, j) {
     this.preferenceArray.splice(j, 1);
+  }
+
+
+  changeTruck(data){
+    let tempObj={}
+    tempObj['method']='changeTnoInDateTruckAndTruckDetails';
+    tempObj['tablename']='';
+    tempObj['ownerid']=this.handledata.Data['_id']
+    tempObj['newtruckno']=this.myFormGroup1.value.newtruckno;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this._location.back();
+    });    
   }
 
 }
