@@ -69,6 +69,9 @@ public nextStepButton=false;
   toPay(i,j,c){
     if(confirm('Is it To Pay Vehicle?')){
     this.turnbooklist[j]['checker'] = c;
+    i['amount']=0;
+    i['pgno']=990;
+    this.bhTrucks.push(i);
     if (c == 1) {
       this.tempArray.push(i);
     } else if (c == 0) {

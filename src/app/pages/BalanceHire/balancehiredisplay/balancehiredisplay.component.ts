@@ -74,6 +74,8 @@ export class BalancehiredisplayComponent implements OnInit {
   public selectedPaymentAmount=0;
   public showpaymentButton=false;
   public defaultAmt=0;
+  public ownerdetailslist;
+  public showPDFButton=false;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -81,6 +83,7 @@ export class BalancehiredisplayComponent implements OnInit {
   }
 
   ngOnInit() {
+  
     this.printInfo = false;
     this.role = this.securityCheck.role;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
@@ -88,6 +91,19 @@ export class BalancehiredisplayComponent implements OnInit {
       this.years.push(i + 2021)
     }
     this.givenDate=this.handleF.createDate(new Date());
+  }
+
+  getInformationData() {
+    // send truckno here, and fetch only those truck nos data send array
+    this.spinnerService.show();
+    let tempObj = { "method": "getTrucks", "tablename": '' };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.ownerdetailslist=res.Data
+        this.handledata.saveTruckHuge(res.Data);
+        this.spinnerService.hide();
+        this.showPDFButton=true;
+      });
   }
 
   adminAccess() {
@@ -300,7 +316,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
       .subscribe((res: any) => {
         this.printInfo = true;
         this.balanceDate = [];
-        this.balanceDate = this.accE(res.balanceData);
+           this.balanceDate = this.accE(res.balanceData);
         this.securityCheck.commonBalanceHire = res.balanceData;
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
 
@@ -315,7 +331,9 @@ this.actualPayment=this.buttonOption == '5'?true:false;
     data.forEach(r=>{
       let accountToTransfer=r.commentToTruck.split(' ')[0]
         let varToCheck = 'acc'+String(accountToTransfer)
-        r['available']=r[varToCheck]?'':'X'
+          let truckno = r.truckData[0]['truckno'];
+          let tp=this.ownerdetailslist.find(r=>r.truckno===truckno)
+        r['available']=tp['accountDetails'][0][varToCheck]?'':'X'
     })
     return data
     }
@@ -427,6 +445,8 @@ if(confirm('Do you want to temporary delete it?')){
     data['editOption'] = 1;
     data['truckData'].map(r=>{r.field=true;})
     data['commentToTruck']=data['commentToTruck']
+
+    
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/UpdateSingle']);
   }
@@ -725,7 +745,7 @@ if(confirm('Do you want to temporary delete it?')){
     //  doc.save('Available-Data.pdf')
      doc.save('GPP.pdf')//partyname
    }
-  download(data) {//threshhold is 295
+  download(dataTF) {//threshhold is 295
     let i;
     if (confirm('Fresh Page?')) {
       i = 16;
@@ -866,7 +886,7 @@ if(confirm('Do you want to temporary delete it?')){
       }
       let K = 0
       doc.setFontSize('10');
-      if(data){
+      if(dataTF){
       doc.text(String(this.balanceDate[z].commentToTruck), 38.5, i);//comments
       }
       for (let k = 0; k < data.length; k++) {
@@ -874,7 +894,7 @@ if(confirm('Do you want to temporary delete it?')){
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
 
         doc.setFontSize('10');
-        if(data){
+        if(dataTF){
         doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
         }
         doc.setFontSize('10');
@@ -882,7 +902,7 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
         doc.setFontSize('8');
-        if(data){
+        if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
         }
         doc.setFontSize('10');
@@ -919,6 +939,8 @@ if(confirm('Do you want to temporary delete it?')){
     this.found = data;
     data['index'] = j;
     data['editOption'] = 0;
+    data['commentToTruck']=data['commentToTruck']
+
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
   };

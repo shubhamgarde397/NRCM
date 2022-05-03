@@ -45,9 +45,10 @@ export class UpdateComponent implements OnInit {
     public spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.truckdetailslist=this.handledata.getTruckHuge();
     this.commonArray = this.sec.commonArray;
-    this.considerArray = this.handledata.createConsiderArray('infoonlyowner')
-    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchData();
+    // this.considerArray = this.handledata.createConsiderArray('infoonlyowner')
+    // this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchData();
     this.fetchData();
 
     this.myFormGroup = this.formBuilder.group({
@@ -61,7 +62,7 @@ export class UpdateComponent implements OnInit {
   }
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
-    this.truckdetailslist = this.commonArray.ownerdetails;
+    // this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;
   };
 
@@ -84,16 +85,6 @@ export class UpdateComponent implements OnInit {
   }
 
 
-  getInformationData() {
-    this.spinnerService.show();
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
-      .subscribe((res: any) => {
-        this.sec.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.sec.commonArray['ownerdetails'];
-        this.fetchData();
-        this.spinnerService.hide();
-      });
-  }
 
   back() {
     this.show = !this.show;
@@ -105,7 +96,7 @@ export class UpdateComponent implements OnInit {
     let tempObj = {}
     tempObj['method'] = 'update';
     tempObj['tablename'] = 'BalanceHire';
-    tempObj['todayDate'] = this.handledata.Data.todayDate;
+    tempObj['todayDateMain'] = this.handledata.Data.todayDate;
     tempObj['print'] = false;
     tempObj['truckData'] = this.handledata.Data.truckData;
     tempObj['bankName'] = this.myFormGroup.value.bankName;
@@ -113,6 +104,7 @@ export class UpdateComponent implements OnInit {
     tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
     tempObj['accountName'] = this.myFormGroup.value.accountName;
     tempObj['comments'] = this.handledata.Data.comments;
+    tempObj['commentToTruck'] = this.handledata.Data.commentToTruck;
     tempObj['_id'] = this.handledata.Data._id;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((response: Response) => {

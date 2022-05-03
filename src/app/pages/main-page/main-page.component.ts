@@ -39,8 +39,7 @@ export class MainPageComponent implements OnInit {
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction) {
     localStorage.clear();
-
-  }
+    }
 
 
   login() {
@@ -145,7 +144,5 @@ export class MainPageComponent implements OnInit {
     }
     return I;
   }
- 
- 
 }
 

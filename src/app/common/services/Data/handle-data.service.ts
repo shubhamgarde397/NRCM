@@ -17,6 +17,7 @@ export class HandleDataService {
     "qr": [{}],
     "Role": 6
   }
+  public hugeData=[]
   public IP = [];
   public turnData = [];
   public BHData = [];
@@ -25,7 +26,12 @@ public PPData=[];
   public updateTurnData=false;
 
   constructor(public securityCheck: SecurityCheckService) { }
-
+  saveTruckHuge(data){
+    this.hugeData=data;
+  }
+  getTruckHuge(){
+    return this.hugeData;
+  }
   updateTurn(){
     return this.updateTurnData;
   }

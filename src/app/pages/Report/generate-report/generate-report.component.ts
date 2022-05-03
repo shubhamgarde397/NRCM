@@ -18,7 +18,7 @@ public options=[
   {value:'1',viewValue:'Pan'},
   {value:'2',viewValue:'Account'},
   {value:'3',viewValue:'Contact'},
-  {value:'4',viewValue:'Truck Payment PDF'}
+  {value:'4',viewValue:'Truck Payment PDF C'}
 ]
 public selectedOption;
 public buttonOption;
@@ -65,6 +65,7 @@ public truckAllData;
     ('commoninformation', 1, temp, 0)
     .subscribe((res: any) => {
       this.truckAllData=res.Data;
+      this.showTable=true;
     });
   }
 
@@ -447,4 +448,109 @@ public truckAllData;
         doc.line(180, 0, 180, y);//mid line
         doc.save('Contact-Details.pdf')
       }
+      selectDatesNow(){
+        this.selectDate=true;
+        this.showTable=false;
+      }
+      getTruckPaymentPDFComplex(){
+
+      }
+
+      // download(){//threshhold is 295
+      //   let data=this.temp;
+      
+      //     let pager=1;
+      //      var doc = new jsPDF()
+      //      doc.setFontSize('25');
+      //      doc.line(0, 148.2, 5, 148.2);//punching line helper
+      //      doc.setFontType('bold');
+      //      doc.text('Account : ', 15, 15)//partyname
+      //      doc.setFontSize('10');
+      //      doc.text(String(pager), 180, 5)//pageno
+      //      pager=pager+1;
+      //      doc.setFontSize('25');
+      //      doc.setLineWidth(0.5);
+      //      doc.line(0, 20, 210, 20);//line after main header
+      //      //headers
+      //      doc.setFontSize('10');
+      //      let y = 24;
+      //      let starty = 25;
+      //      doc.text('Sr', 2, y)//partyname
+      //      doc.text('TruckNo', 8, y)//partyname
+      //      doc.text('Account Details', 36, y)//partyname
+      //      doc.text('12', 166, y)//partyname
+      //      doc.text('363', 188, y)//partyname
+      //      //headers
+      //      doc.line(0, 25, 210, 25);//line after header
+       
+      //      //vertical lines
+      //      doc.line(7, 20, 7, 25);//srno
+      //      doc.line(33, 20, 33, 25);//date
+      //      doc.line(100, 20, 100, 25);//date
+      //      doc.line(165, 20, 165, 25);//date
+      //      doc.line(187, 20, 187, 25);//date
+      //      //vertical lines
+      //      let startforI=0;
+      //      y = y + 6;
+      //      startforI=0;
+      //      for (let i = startforI; i < data.length; i++) {
+       
+      //        if(y>276){
+      //         doc.line(7, starty, 7, y-4);//srno
+      //         doc.line(33, starty, 33, y-4);//date 
+      //         doc.line(100, starty, 100, y-4);//date
+      //         doc.line(165, starty, 165, y-4);//date
+      //         doc.line(187, starty, 187, y-4);//date
+      //          y=24;
+      //          y=y+6;
+      //      starty = 25;
+      //          doc.addPage();
+      //          doc.setFontSize('25');
+      //      doc.setFontType('bold');
+      //      doc.text('Account : ', 15, 15)//partyname
+      //      doc.setFontSize('10');
+      //      doc.text(String(pager), 180, 5)//pageno
+      //      pager=pager+1;
+      //      doc.setFontSize('25');
+      //      doc.setLineWidth(0.5);
+      //      doc.line(0, 20, 210, 20);//line after main header
+      //      //headers
+      //      doc.setFontSize('10');
+      //      doc.text('Sr', 2, y-6)//partyname
+      //      doc.text('TruckNo', 8, y-6)//partyname
+      //      doc.text('Account Details', 36, y-6)//partyname
+      //      doc.text('12', 166, y-6)//partyname
+      //      doc.text('363', 188, y-6)//partyname
+      //      //headers
+      //      doc.line(0, 25, 210, 25);//line after header
+       
+      //      //vertical lines
+      //      doc.line(7, 20, 7, 25);//srno
+      //      doc.line(33, 20, 33, 25);//date
+      //      doc.line(100, 20, 100, 25);//date
+      //      doc.line(165, 20, 165, 25);//date
+      //      doc.line(187, 20, 187, 25);//date
+      //      //vertical lines
+      //      }
+      //      doc.text(this.handleF.generate2DigitNumber(String(i+1)), 1, y-1)//partyname
+      //      doc.text(data[i]['truckno'], 8, y)//Name
+      //       doc.text('Name : '+data[i]['accountDetails'][0]['accountName'], 36, y)//Name
+      //       doc.text('No   : '+data[i]['accountDetails'][0]['accountNumber'], 36, y+5)//Pan
+      //       doc.text('IFSC  : '+data[i]['accountDetails'][0]['ifsc'], 36, y+10)//Contact
+                      
+      //        doc.line(0, y + 11, 210, y + 11);//line after header
+      //        y = y + 15;
+       
+           
+           
+      //      }
+      // //vertical lines//getting applied for every loop, make it happen once only
+      // doc.line(7, starty, 7, y-4);//srno
+      //         doc.line(33, starty, 33, y-4);//date 
+      //         doc.line(100, starty, 100, y-4);//date
+      //         doc.line(165, starty, 165, y-4);//date
+      //         doc.line(187, starty, 187, y-4);//date
+      // //vertical lines
+      //      doc.save('Account-Details.pdf')
+      //    }
 }

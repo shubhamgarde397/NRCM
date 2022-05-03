@@ -6,6 +6,9 @@
         <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
       </select>
     </div>
+    <div class="col-sm-5">
+      <button class="btn btn-warning" (click)="getInformationData()">Get Trucks</button>
+    </div>
   </div>
 
 
@@ -49,10 +52,10 @@
         <button class="btn btn-warning" (click)="find()" *ngIf="role==1||role==2">Find</button>
       </div>
       <div class="form-group col-xs-1" align="center">
-        <button class="btn btn-danger" (click)="download(true)" *ngIf="role==1||role==2">PDF</button>
+        <button class="btn btn-danger" (click)="download(true)" *ngIf="showPDFButton">PDF</button>
       </div>
       <div class="form-group col-xs-1" align="center">
-        <button class="btn btn-danger" (click)="download(false)" *ngIf="role==1||role==2">PDF-Mail</button>
+        <button class="btn btn-danger" (click)="download(false)" *ngIf="showPDFButton">PDF-Mail</button>
       </div>
       <div class="form-group col-xs-1" align="center">
         <button class="btn btn-danger" (click)="adminAccess()" *ngIf="role==1||role==2">Admin</button>

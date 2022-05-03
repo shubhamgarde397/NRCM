@@ -52,7 +52,7 @@
     <div class="well" *ngIf="buttonOption==='4'">
         <div class="row">
             <div class="col-sm-4">
-        <select class="form-control" [(ngModel)]="truckid" (change)="getTruckId()">
+        <select class="form-control" [(ngModel)]="truckid" (change)="selectDatesNow()">
             <option disabled>Select Option</option>
             <option *ngFor="let i of trucks" value={{i._id}}>{{i.truckno}}</option>
           </select>
@@ -67,41 +67,27 @@
     </div>
     <div class="well" *ngIf="showTable">
         {{Selectedtruckno}}
+        <div class="btn btn-warning" (click)="getTruckPaymentPDFComplex()">PDF!</div>
         <table class="table">
             <thead>
               <tr>
                 <th>Srno</th>
                 <th>Loading Date</th>
-                <th>Place</th>
+                <th>TruckNo</th>
                 <th>Balance</th>
                 <th>PaymentDate</th>
+                <th>PaymentAmt</th>
+                <!-- <th>Comments</th> -->
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let ii of k;let jj=index;">
+              <tr *ngFor="let ii of truckAllData;let jj=index;">
                 <td>{{jj+1}}</td>
                 <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{ii.placeName}}</td>
                 <td>{{ii.balance}}</td>
-                <td>{{ii.partyType}}</td>
                 <td>{{ii.actualPaymentDate}}</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <table class="table">
-            <thead>
-              <tr>
-                <th>Srno</th>
-                <th>Payment Date</th>
-                <th>Balance</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let ii of k;let jj=index;">
-                <td>{{jj+1}}</td>
-                <td>{{ii.actualPaymentDate|date:'dd-MM-yyyy'}}</td>
                 <td>{{ii.actualPaymentAmount}}</td>
+                <!-- <td><input type="text" placeholder="Comments" id="comment_{{jj}}"></td> -->
               </tr>
             </tbody>
           </table>
