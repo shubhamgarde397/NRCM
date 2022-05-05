@@ -57,6 +57,10 @@ export const routes: Routes =
                         loadChildren: './pages/OwnerDetails/app.module#OwnerModule'
                     },
                     {
+                        path: 'TRANSPORT_HANDLER',
+                        loadChildren: './pages/Transport/app.module#AppModule'
+                    },
+                    {
                         path: 'HIDDEN_OWNER_HANDLER',
                         component:HiddenTrucksComponent
                     },

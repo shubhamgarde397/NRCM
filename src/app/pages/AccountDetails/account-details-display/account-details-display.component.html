@@ -1,5 +1,19 @@
-<div class="well" *ngIf="tblShow">
-  <table class="table display nowrap" style="width:100%" align="center" id="example">
+<div class="well">
+  <div class="row">
+    <div class="col-sm-5">
+      <select class="form-control" [(ngModel)]="displayType" (change)="findOption()">
+        <option *ngFor="let i of options;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
+      </select>
+    </div>
+    <div class="col-sm-5">
+      <h3>{{buttonValue}}</h3>
+      <button class="btn btn-danger" (click)="callOptionAPI()" *ngIf="showButton">Click to Get!</button>
+    </div>
+  </div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='1'">
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="tblShow">
     <thead>
       <tr class="table-header">
         <th>Srno</th>
@@ -39,4 +53,46 @@
       </tr>
     </tbody>
   </table>
+</div>
+
+<div class="well" *ngIf="buttonOption==='2'">
+    <div class="row">
+        <div class="col-sm-4">
+    <select class="form-control" [(ngModel)]="selectedMY" (change)="getData('')">
+        <option disabled>Select Option</option>
+        <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+      </select>
+    </div>
+</div>
+<div class="well">
+    <div class="row">
+        <div class="col-sm-2" *ngFor="let i of emptyData">
+<button class="btn btn-warning" (click)="downloadPan(i)">{{i._id}} : {{i.sum}}</button>
+        </div>
+    </div>
+</div>
+<div class="well" *ngIf="pantable">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Srno</th>
+          <th>Date</th>
+          <th>Truck No</th>
+          <th>Name</th>
+          <th>PAN</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ii of panarray;let jj=index;">
+          <td>{{jj+1}}</td>
+          <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+          <td>{{ii.truckno}}</td>
+          <td><input type="text" placeholder="Name" id="name_{{jj}}"></td>
+          <td><input type="text" placeholder="PAN" id="pan_{{jj}}"></td>
+          <td><button class="btn btn-warning" (click)="updatePan(ii,jj)">Update</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
 </div>

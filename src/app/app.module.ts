@@ -40,9 +40,6 @@ import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
 import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
 import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
 import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
-import { TransportAddComponent } from './pages/Transport/transport-add/transport-add.component';
-import { TransportDisplayComponent } from './pages/Transport/transport-display/transport-display.component';
-import { TransportUpdateComponent } from './pages/Transport/transport-update/transport-update.component';
 
 @NgModule({
   declarations: [
@@ -63,10 +60,7 @@ import { TransportUpdateComponent } from './pages/Transport/transport-update/tra
     QRCodeComponent,
     QRUpdateComponent,
     AccountDetailsDisplayComponent,
-    PaymentPendingDisplayComponent,
-    TransportAddComponent,
-    TransportDisplayComponent,
-    TransportUpdateComponent
+    PaymentPendingDisplayComponent
   ],
   imports: [
     BrowserModule,

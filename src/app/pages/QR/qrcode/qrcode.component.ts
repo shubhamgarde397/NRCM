@@ -63,7 +63,7 @@ export class QRCodeComponent implements OnInit {
   }
 
   refresh(){
-    this.considerArray=[0,0,0,0,0,0,1]
+    this.considerArray=[0,0,0,0,0,0,1,0]
     this.getInformationData()
   }
   

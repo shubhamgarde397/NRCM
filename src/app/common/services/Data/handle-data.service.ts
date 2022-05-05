@@ -15,6 +15,7 @@ export class HandleDataService {
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
     "qr": [{}],
+    "transport":[{}],
     "Role": 6
   }
   public hugeData=[]
@@ -121,6 +122,8 @@ this.updateTurnData=data;
         return [Consts.HIDDEN_TRUCK_INDEX]
       case 'infoqr':
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
+      case 'infotpt':
+        return [Consts.VILLAGE_INDEX,Consts.TRANSPORT_INDEX]
 
     }
   }
@@ -128,7 +131,7 @@ this.updateTurnData=data;
   resetArray(data) {
     switch (data) {
       case 'full':
-        this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0, 0,0];
     }
 
   }

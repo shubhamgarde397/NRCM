@@ -8,6 +8,7 @@ export class Consts {
     public static LRLIST_INDEX = [{ 'index': 4, 'name': 'missingLRReason' }];
     public static HIDDEN_TRUCK_INDEX = [{ 'index': 5, 'name': 'ownerdetails' }];
     public static QR_INDEX = [{ 'index': 6, 'name': 'qrCode' }];
+    public static TRANSPORT_INDEX=[{'index':7,'name':'transport'}];
     public static monthNames =
         [
             'January', 'February', 'March', 'April', 'May', 'June',
