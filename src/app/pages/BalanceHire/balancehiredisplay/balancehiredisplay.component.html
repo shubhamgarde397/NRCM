@@ -272,9 +272,19 @@
         <div class="col-sm-2">
           <button class="btn btn-success" [disabled]="!showpaymentButton" (click)="sendDatatoUpdate()">Send</button>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
           Appx Amount : <input [(ngModel)]="defaultAmt" disabled>
           <button class="btn btn-success" (click)="copyAmount()">Copy Amount</button>
+        </div>
+        <div class="col-sm-2">
+          <select class="form-control" [(ngModel)]="statusOfPoch">
+            <option>Okay</option>
+            <option>Damage</option>
+            <option>Shortage</option>
+            <option>Loan</option>
+            <option>Double Load</option>
+            <option>Late</option>
+          </select>
         </div>
       </div>
         

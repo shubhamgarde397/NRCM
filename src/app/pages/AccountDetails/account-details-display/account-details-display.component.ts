@@ -5,6 +5,7 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import { checkNoChangesView } from '@angular/core/src/view/view';
 @Component({
   selector: 'app-account-details-display',
   templateUrl: './account-details-display.component.html',
@@ -13,8 +14,11 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 export class AccountDetailsDisplayComponent implements OnInit {
   // $BASIC $
   public options = [
-    {'viewValue':'Accounts','value':'1'},
-    {'viewValue':'Pan','value':'2'}
+    {'viewValue':'Account Number','value':'1'},
+    {'viewValue':'Pan','value':'2'},
+    {'viewValue':'Contact','value':'3'},
+    {'viewValue':'Account','value':'4'},
+    {'viewValue':'Transport Name','value':'5'}
   ]
   public displayType;
   public buttonOption;
@@ -37,6 +41,15 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public selectedMY;
   public emptyData;
 // #PAN #
+
+// $Contact$
+public contacttable=false;
+public contactarray=[]
+// #Contact#
+// $Account$
+public accounttable=false;
+public accountarray=[]
+// #Account#
 
   constructor(
     public apiCallservice: ApiCallsService, 
@@ -61,6 +74,12 @@ switch (this.buttonOption) {
     break;
     case '2':
     this.getPanInfoData();
+    break;
+    case '3':
+    this.buttonOption='3';
+    break;
+    case '4':
+    this.buttonOption='4';
     break;
 }
   }
@@ -126,6 +145,29 @@ switch (this.buttonOption) {
     });
   }
 
+  getContacts(){
+    let tempObj={};
+    tempObj['method']='SmartContact'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    this.contactarray=res.chartData;
+    this.contacttable=true;
+    });
+  }
+
+  getAccount(data){
+    let tempObj={};
+    tempObj['method']='SmartAccount'
+    tempObj['tablename']='';
+    tempObj['option']=data;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    this.accountarray=res.chartData;
+    this.accounttable=true;
+    });
+  }
+
   update(type,i,j){
     let tempObj = { "method": "updateacc12363TF", "tablename": '','type':type,'id':i._id};
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
@@ -149,6 +191,7 @@ switch (this.buttonOption) {
         }
       });
   }
+
   downloadPan(data,option){
     let tempObj={};
     tempObj['from']=this.buttons[parseInt(this.selectedMY)]['option']===1?this.buttons[parseInt(this.selectedMY)]['value'].split('_')[0]:null;
@@ -165,9 +208,6 @@ switch (this.buttonOption) {
   }
 
   updatePan(i,j){
-    console.log(i);
-    console.log(j);
-    
     let pan=(<HTMLInputElement>document.getElementById('pan_' + j)).value;
     let name=(<HTMLInputElement>document.getElementById('name_' + j)).value;
     if(pan===''||name===''){
@@ -183,6 +223,59 @@ switch (this.buttonOption) {
       tempObj['ownerid']=i['ownerid'];
       tempObj['tablename']='';
       tempObj['method']='SMARTPAN';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.panarray.splice(j,1);
+      });
+    }
+  }
+  updateContact(i,j){
+    let contact=(<HTMLInputElement>document.getElementById('contact_' + j)).value;
+    let m=(<HTMLInputElement>document.getElementById('m_' + j)).checked;
+    if(contact===''){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      tempObj['contact']=contact;
+      tempObj['ownerid']=i['_id'];
+      tempObj['m']=m;
+      tempObj['tablename']='';
+      tempObj['method']='SMARTCONTACTUPDATE';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.contactarray.splice(j,1);
+      });
+    }
+  }
+
+  updateAccount(i,j){
+    console.log(i);
+    
+    let accname=(<HTMLInputElement>document.getElementById('accname_' + j)).value;
+    let accno=(<HTMLInputElement>document.getElementById('accno_' + j)).value;
+    let bname=(<HTMLInputElement>document.getElementById('bname_' + j)).value;
+    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + j)).value;
+    if(accname===''||accno===''||bname===''||ifsc===''){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      let itempObj={}
+      itempObj['accountName']=accname;
+      itempObj['accountNumber']=accno;
+      itempObj['bankName']=bname;
+      itempObj['ifsc']=ifsc;
+      itempObj['acc12']=false;
+      itempObj['acc363']=false;
+      tempObj['aD']=[
+        itempObj
+      ]
+      tempObj['ownerid']=i['_id'];
+      tempObj['tablename']='';
+      tempObj['method']='SMARTACCOUNTUPDATE';
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert(res.Status);

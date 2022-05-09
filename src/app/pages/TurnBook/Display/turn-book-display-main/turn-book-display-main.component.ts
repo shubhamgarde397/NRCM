@@ -484,7 +484,11 @@ let tempObj1={};
     tempObj1['truckno'] = this.truckVar;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
       .subscribe((res: any) => {
+        
         this.byTruckName=true;
+        this.selectDate=false;
+        this.reportPDF=false;
+
         this.turnbooklist = res.Data;
         this.unique11turnbooklist= res.Data.map(r=>r.truckName.truckno).filter(function(item, pos) {return res.Data.map(r=>r.truckName.truckno).indexOf(item) == pos;})
         this.tableSelected=true;
@@ -494,6 +498,13 @@ let tempObj1={};
 
   };
 
+
+  getpdfcomplex(){
+    this.selectDate=!this.selectDate;
+    this.byTruckName=!this.byTruckName;
+  }
+
+  
   find11UniqueTruck(){
     if(this.trucknoid11!=='Default'){
       this.selectDate=false;
@@ -1101,10 +1112,7 @@ doc.line(7, starty, 7, y-4);//srno
      doc.save('Available-Details.pdf')
    }
 
-   getpdfcomplex(){
-     this.selectDate=true;
-     this.byTruckName=false;
-   }
+  
 
    getAllTruckData(){
      this.reportPDF=true;
@@ -1214,6 +1222,8 @@ doc.line(7, starty, 7, y-4);//srno
         doc.text(this.turn12[i]['actualPaymentDate']!=''?String(this.turn12[i]['actualPaymentAmount']):'', 129, y)//truckno
         doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccname']):''):'', 146, y)//truckno
         doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccNo']):''):'', 146, y+5)//truckno
+        doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'':this.turn12[i]['statusOfPoch'],185,y);
+        doc.text(this.turn12[i]['statusOfPoch']===('Okay'&&'')?'':'No Payment',185,y+5);
   
   
          y = y + 12;

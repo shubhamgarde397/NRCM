@@ -72,6 +72,7 @@ export class BalancehiredisplayComponent implements OnInit {
   public saveArrayData=false;
   public selectedPaymentDate='';
   public selectedPaymentAmount=0;
+  public statusOfPoch='';
   public showpaymentButton=false;
   public defaultAmt=0;
   public ownerdetailslist;
@@ -151,6 +152,7 @@ formbody['selectedPochDate']=this.selectedPochDate;
   paymentDateAmount(){
     this.showpaymentButton=this.selectedPaymentDate==''?false:true;
     this.showpaymentButton=this.selectedPaymentAmount==0?false:true;
+    this.showpaymentButton=this.statusOfPoch==''?false:true;
   }
 
   addtosavearray(i,j){
@@ -174,6 +176,7 @@ formbody['selectedPochDate']=this.selectedPochDate;
     obj['ids']=saveArray2;
     obj['paymentDate']=this.selectedPaymentDate;
     obj['paymentAmt']=this.selectedPaymentAmount;
+    obj['statusOfPoch']=this.statusOfPoch;
     obj['tablename']='';
     obj['method']='updateActualPaymentDetails'
     this.apiCallservice.handleData_New_python

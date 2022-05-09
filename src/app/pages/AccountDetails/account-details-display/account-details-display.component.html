@@ -96,3 +96,94 @@
     </table>
 </div>
 </div>
+
+
+<div class="well" *ngIf="buttonOption==='3'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getContacts()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="contacttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Number</th>
+        <th>Mobile</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of contactarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="number" value={{ii.contact[0]}} placeholder="" id="contact_{{jj}}"></td>
+        <td><input type="checkbox" value={{ii.m}} id="m_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updateContact(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='4'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAccount('empty')">Get Empty!</button>
+<button class="btn btn-warning" (click)="getAccount('all')">Get All!</button>
+  </div>
+
+<div class="well" *ngIf="accounttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>AccName</th>
+        <th>AccNumber</th>
+        <th>Bank Name</th>
+        <th>IFSC</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of accountarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+
+        <td *ngIf="ii.accountDetails.length!==0">
+          <input type="text" value={{ii.accountDetails[0].accountName}} placeholder="Account Name" id="accname_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+          <input type="text" placeholder="Account Name" id="accname_{{jj}}">
+        </td>
+
+        <td *ngIf="ii.accountDetails.length!==0">
+          <input type="number" value={{ii.accountDetails[0].accountNumber}} placeholder="Account Number" id="accno_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+            <input type="number" placeholder="Account Number" id="accno_{{jj}}">
+          </td>
+
+          <td *ngIf="ii.accountDetails.length!==0">
+          <input type="text" value={{ii.accountDetails[0].bankName}} placeholder="Bank Name" id="bname_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+          <input type="text" placeholder="Bank Name" id="bname_{{jj}}">
+        </td>
+
+        <td *ngIf="ii.accountDetails.length!==0">
+          <input type="text" value={{ii.accountDetails[0].ifsc}} placeholder="IFSC" id="ifsc_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+          <input type="text" placeholder="IFSC" id="ifsc_{{jj}}">
+        </td>
+
+        <td><button class="btn btn-warning" (click)="updateAccount(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
