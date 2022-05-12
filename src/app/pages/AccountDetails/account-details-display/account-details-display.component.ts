@@ -26,6 +26,8 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public showButton=false;
   public myFormGroup: FormGroup;
   public show=false;
+  public considerArray;
+  public commonArray;
 // #BASIC #
 
   //$ Account $
@@ -50,6 +52,12 @@ public contactarray=[]
 public accounttable=false;
 public accountarray=[]
 // #Account#
+// $TPT
+public tpttable=false;
+public tptarray=[];
+public transportlist=[];
+public selectedTransporter='';
+// #TPT
 
   constructor(
     public apiCallservice: ApiCallsService, 
@@ -81,12 +89,36 @@ switch (this.buttonOption) {
     case '4':
     this.buttonOption='4';
     break;
+    case '5':
+      this.buttonOption='5';
+      this.commonArray = this.securityCheck.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infotpt')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationDataCC() : this.fetchBasicCC();
+    this.transportlist = this.commonArray.transport;
+      break;
 }
   }
 
   resetAllDivs(){
     this.tblShow=false;
     this.pantable=false;
+  }
+
+  getInformationDataCC() {
+    this.spinnerService.show();
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.securityCheck.commonArray['transport'];;
+        this.fetchBasicCC();
+        this.spinnerService.hide();
+      });
+  }
+
+  fetchBasicCC() {
+    this.commonArray = this.securityCheck.commonArray;
+    this.transportlist = [];
+    this.transportlist = this.commonArray.transport;
   }
 
   getInformationData() {
@@ -282,5 +314,35 @@ switch (this.buttonOption) {
         this.panarray.splice(j,1);
       });
     }
+  }
+
+  getTransports(){
+    let tempObj={};
+    tempObj['method']='SmartTransport'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      this.tptarray=res.chartData;
+      this.tpttable=true;
+    });
+  }
+
+  updatetpt(i,j){
+    if(this.selectedTransporter===''){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      tempObj['tptid']=this.selectedTransporter;
+      tempObj['ownerid']=i['_id'];
+      tempObj['tablename']='';
+      tempObj['method']='SMARTTRANSPORTUPDATE';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.tptarray.splice(j,1);
+      });
+    }
+    
   }
 }

@@ -187,3 +187,36 @@
   </table>
 </div>
 </div>
+
+<div class="well" *ngIf="buttonOption==='5'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getTransports()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="tpttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Transport</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of tptarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+          <select [(ngModel)]="selectedTransporter" class="form-control">
+            <option *ngFor="let i of transportlist;let k = index" value={{i._id}}>{{i.tptName}}</option>
+          </select>
+
+        </td>
+        <td><button class="btn btn-warning" (click)="updatetpt(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>

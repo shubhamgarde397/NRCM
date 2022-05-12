@@ -123,7 +123,7 @@ this.updateTurnData=data;
       case 'infoqr':
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
       case 'infotpt':
-        return [Consts.VILLAGE_INDEX,Consts.TRANSPORT_INDEX]
+        return [Consts.TRANSPORT_INDEX]
 
     }
   }

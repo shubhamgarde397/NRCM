@@ -1,9 +1,6 @@
 <div class="row">
-  <div class="col-sm-3"></div>
-  <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('declaration')">Declaration</button>
-  </div>
+  <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('declaration')">Declaration</button></div>
   <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('bank')">Bank</button></div>
-  <div class="col-sm-3"></div>
 </div>
 
 
@@ -80,6 +77,8 @@
 
     <div class="col-sm-3"><button class="btn btnBig btn-warning" (click)="download(false)">No Signature</button></div>
     <div class="col-sm-3"><button class="btn btnBig btn-warning" (click)="download(true)">Signature</button></div>
+    <div class="col-sm-3"><button class="btn btn-warning" (click)="letterpad(true)">Letter Pad with Signature</button></div>
+    <div class="col-sm-3"><button class="btn btn-warning" (click)="letterpad(false)">Letter Pad without Signature</button></div>
   </div>
   <!-- Declaration -->
   <!-- Bank -->
