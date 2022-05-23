@@ -44,6 +44,7 @@
 
 
                     <br>{{i.hbl}}-{{i.weight}}
+                    <br><span *ngIf="i.transports.length>0">{{i.transports[0].tptName}}</span>
                 
                 </td>
                 <td>
@@ -75,7 +76,8 @@
                         <hr>
                     </ul>
                 </td>
-                <td>
+                <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'all')">Show Preference</button></td>
+                <td *ngIf="i.preferenceChk">
                     <ul *ngFor="let j of i.preferences;">
                         <li>{{j}}</li>
                     </ul>
@@ -162,7 +164,8 @@
                         <hr>
                     </ul>
                 </td>
-                <td>
+                <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'single')">Show Preference</button></td>
+                <td *ngIf="i.preferenceChk">
                     <ul *ngFor="let j of i.preferences;">
                         <li>{{j}}</li>
                     </ul>

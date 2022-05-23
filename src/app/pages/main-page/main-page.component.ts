@@ -121,7 +121,6 @@ export class MainPageComponent implements OnInit {
         this.changed = false;
       }
     }, 1000);
-
     }
 
 
@@ -144,5 +143,7 @@ export class MainPageComponent implements OnInit {
     }
     return I;
   }
+
+ 
 }
 

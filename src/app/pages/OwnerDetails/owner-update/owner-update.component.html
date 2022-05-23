@@ -146,15 +146,15 @@
     <!-- Preference -->
     <div class="form-group row">
       <div class="col-xs-3">
-        <select id="preferences" class="form-control" [(ngModel)]="pA" [ngModelOptions]="{standalone: true}">
+        <select id="preferences" class="form-control" [(ngModel)]="pA" [ngModelOptions]="{standalone: true}"  (change)="findvillagedetails()">
           <option disabled selected>Select Village</option>
-          <option *ngFor="let i of villagedetailslist;let j=index;" value={{i.village_name}}>{{i.village_name}}
+          <option *ngFor="let i of villagedetailslist;let j=index;" value={{i._id}}+{{i.village_name}}>{{i.village_name}}
           </option>
         </select>
-        <button type="button" class="btn btn-primary" (click)="addMoreP()">Add</button>
+        
       </div>
       <div class="col-xs-4">
-        <ul *ngFor="let i of preferenceArray;let j =index;">
+        <ul *ngFor="let i of preferenceArrayName;let j =index;">
           <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneP(i,j)"
               class="btn-danger btn-sm btn-just-icon">
               <i class="material-icons">delete_forever</i>

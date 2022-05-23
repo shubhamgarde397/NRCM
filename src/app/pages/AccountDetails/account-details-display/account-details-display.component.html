@@ -220,3 +220,103 @@
   </table>
 </div>
 </div>
+
+<div class="well" *ngIf="buttonOption==='6'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAllTrucks()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="trucktable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Type</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of truckarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+          <button mat-raised-button type="button" (click)="updatetruck('Container',ii,jj)" class="btn-success btn-sm btn-just-icon">
+            Container
+          </button>
+          <button mat-raised-button type="button" (click)="updatetruck('Open',ii,jj)" class="btn-danger btn-sm btn-just-icon">
+            Open
+          </button>
+          <button mat-raised-button type="button" (click)="updatetruck('Taurus',ii,jj)" class="btn-warning btn-sm btn-just-icon">
+            Taurus
+          </button>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='7'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAllWeights()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="weighttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Weight</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of weightarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+         <input type="number" [(ngModel)]="selectedWeight">
+        </td>
+        <td><button class="btn btn-warning" (click)="updateWeight(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='8'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAllDimensions()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="dimensiontable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Dimension</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of dimensionarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+         <input type="text" [(ngModel)]="selectedDimension">
+        </td>
+        <td><button class="btn btn-warning" (click)="updatedimension(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+

@@ -114,6 +114,7 @@ export class OdaddComponent implements OnInit {
     formBody['preferences'] = this.villageArray;
     formBody['hbl'] = value['hbl'];
     formBody['weight'] = value['weight'];
+    formBody['transportid']='627bfad4ac882f830d44a95c';
     formBody['r']='';
     formBody['d']='';
     formBody['P']='';

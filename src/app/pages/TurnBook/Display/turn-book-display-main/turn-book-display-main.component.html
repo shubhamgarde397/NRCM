@@ -104,7 +104,7 @@
             <th>Poch</th>
             <th *ngIf="(buttonOption!=='9')" style="width: 20vh;">Options</th>
             <th *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">Undo</th>
-            <th  *ngIf="buttonOption=='1'">S</th>
+            
           </tr>
         </thead>
 
@@ -136,17 +136,17 @@
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-sm-6">
-                    {{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}-{{i.waitLocation}}-{{i.ownerDetails[0].hbl}}-{{i.ownerDetails[0].weight}}<br>
+                    <input type="checkbox">&nbsp;{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}-{{i.waitLocation}}-{{i.ownerDetails[0].hbl}}-{{i.ownerDetails[0].weight}}<br>
                     <span *ngIf="i.ownerDetails[0].contact[0]!==undefined">
                       {{i.ownerDetails[0].contact[0]}}
                     </span>
+                    
                   </div>
                 </div>
               </div>
             </td>
 
             <td *ngIf="i.ownerDetails[0]===undefined"></td>
-
             <td *ngIf="i.villageDetails[0]!==undefined">{{i.partyType}}-{{i.villageDetails[0].shortName}}<br><span *ngIf="i.villageDetails2[0]!==undefined">{{i.villageDetails2[0].shortName}}</span>-{{i.partyDetails[0].shortName}}</td>
 
             <td *ngIf="i.villageDetails[0]==undefined"></td>
@@ -173,9 +173,7 @@
               </button>
             </td>
 
-            <td *ngIf="buttonOption=='1'"> 
-              <input type="checkbox">
-            </td>
+          
             
           </tr>
         </tbody>
@@ -600,7 +598,7 @@
       <td>{{j+1}}</td>
       <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
       <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
-      <td>{{i.actualPaymentDate}}<br>{{i.actualPaymentAmount}}</td>
+      <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
     </tr>
   </tbody>
 </table>
@@ -620,7 +618,7 @@
       <td>{{j+1}}</td>
       <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
       <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
-      <td>{{i.actualPaymentDate}}<br>{{i.actualPaymentAmount}}</td>
+      <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
       <td>
         <button class="btn btn-danger" (click)="considerForPaymentOption(false,j)" *ngIf="i.considerForPayment">Delete</button>
         <button class="btn btn-success" (click)="considerForPaymentOption(true,j)" *ngIf="!i.considerForPayment">Consider</button>
@@ -655,7 +653,7 @@
             <td>{{i.lrno}}</td>
             <td>{{i.hamt}}<br>{{i.ohamt}}</td>
             <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
-            <td>{{i.actualPaymentDate}}<br>{{i.actualPaymentAmount}}</td>
+            <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
           </tr>
         </tbody>
       </table>

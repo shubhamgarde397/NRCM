@@ -30,12 +30,13 @@ public typeOfVehicle;
   public accountArray = [];
   public contactA;
   public preferenceArray = [];
-  public pA;
+  public pA='';
   public type;
   public villagedetailslist;
   public commonArray;
   public considerArray = [];
   public no;
+  public preferenceArrayName=[]
   public ownerdetailslist;
   constructor(
     public handledata: HandleDataService,
@@ -99,6 +100,8 @@ public typeOfVehicle;
     this.villagedetailslist=[];
     this.commonArray = this.sec.commonArray;
     this.villagedetailslist = this.commonArray.villagenames;
+    console.log(this.villagedetailslist);
+    
   }
 
   back() {
@@ -131,6 +134,7 @@ public typeOfVehicle;
     formbody['srno'] = data.value.srno;
     formbody['acc12'] = data.value.acc12;
     formbody['acc363'] = data.value.acc363;
+    formbody['transportid'] = this.handledata.Data.transportid;
     
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
@@ -214,13 +218,17 @@ public typeOfVehicle;
     }
   }
 
-  addMoreP() {
-    this.preferenceArray.push(this.pA)
-    this.pA = ''
+
+  findvillagedetails(){
+    this.preferenceArray.push(this.pA.split('+')[0])
+    this.preferenceArrayName.push(this.pA.split('+')[1])
+    this.pA=''
+
   }
 
   deleteOneP(i, j) {
     this.preferenceArray.splice(j, 1);
+    this.preferenceArrayName.splice(j, 1);
   }
 
 

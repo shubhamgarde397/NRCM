@@ -18,7 +18,10 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Pan','value':'2'},
     {'viewValue':'Contact','value':'3'},
     {'viewValue':'Account','value':'4'},
-    {'viewValue':'Transport Name','value':'5'}
+    {'viewValue':'Transport Name','value':'5'},
+    {'viewValue':'Vehicle Type','value':'6'},
+    {'viewValue':'Weight','value':'7'},
+    {'viewValue':'Dimensions','value':'8'}
   ]
   public displayType;
   public buttonOption;
@@ -58,6 +61,22 @@ public tptarray=[];
 public transportlist=[];
 public selectedTransporter='';
 // #TPT
+// $WEIGHT
+public weighttable=false;
+public weightarray=[];
+public selectedWeight=0;
+// #WEIGHT
+// $DEIMENSIONS
+public dimensiontable=false;
+public dimensionarray=[];
+public selectedDimension='';
+// #DEIMENSIONS
+
+// 
+public truckarray=[];
+public trucktable=false;
+public selectedTruck;
+// 
 
   constructor(
     public apiCallservice: ApiCallsService, 
@@ -96,6 +115,15 @@ switch (this.buttonOption) {
     this.handledata.goAhead(this.considerArray) ? this.getInformationDataCC() : this.fetchBasicCC();
     this.transportlist = this.commonArray.transport;
       break;
+      case '6':
+        this.buttonOption='6';
+        break;
+        case '7':
+          this.buttonOption='7';
+          break;
+          case '8':
+            this.buttonOption='8';
+            break;
 }
   }
 
@@ -343,6 +371,88 @@ switch (this.buttonOption) {
         this.tptarray.splice(j,1);
       });
     }
-    
+  }
+
+  getAllTrucks(){
+    let tempObj={};
+    tempObj['method']='SmartTruck'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      this.truckarray=res.chartData;
+      this.trucktable=true;
+    });
+  }
+
+  updatetruck(data,i,j){
+  
+      let tempObj={}
+      tempObj['truckType']=data;
+      tempObj['ownerid']=i['_id'];
+      tempObj['tablename']='';
+      tempObj['method']='SMARTTRUCKUPDATE';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.truckarray.splice(j,1);
+      });
+  }
+
+  getAllWeights(){
+    let tempObj={};
+    tempObj['method']='SmartWeight'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      this.weightarray=res.chartData;
+      this.weighttable=true;
+    });
+  }
+
+  updateWeight(i,j){
+    if(this.selectedWeight===0){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      tempObj['weight']=this.selectedWeight;
+      tempObj['ownerid']=i['_id'];
+      tempObj['tablename']='';
+      tempObj['method']='SMARTWEIGHTUPDATE';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.weightarray.splice(j,1);
+      });
+    }
+  }
+
+  getAllDimensions(){
+    let tempObj={};
+    tempObj['method']='SmartDimension'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      this.dimensionarray=res.chartData;
+      this.dimensiontable=true;
+    });
+  }
+
+  updatedimension(i,j){
+    if(this.selectedDimension===''){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      tempObj['hbl']=this.selectedDimension;
+      tempObj['ownerid']=i['_id'];
+      tempObj['tablename']='';
+      tempObj['method']='SMARTDIMENSIONUPDATE';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.dimensionarray.splice(j,1);
+      });
+    }
   }
 }

@@ -30,6 +30,7 @@ export class OddispComponent implements OnInit {
   public editTruck;
   public tableDate=false;
   public tableDate2=false;
+  public villagedetailslist = [];
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -52,12 +53,14 @@ export class OddispComponent implements OnInit {
 this.whichType=data;
 switch(data){
   case true:
-    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    this.fetchData();
+    
     this.tableDate2=false;
+    this.tableDate=false;
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     break;
     case false:
       this.tableDate=false;
+      this.fetchBasic();
       break;
 }
   }
@@ -79,10 +82,6 @@ switch(data){
   }
 
 
-  fetchData = function () {
-    this.commonArray = this.sec.commonArray;
-    this.ownerdetailslist = this.commonArray.ownerdetails;
-  };
 
   deleteOwnerDetails = function (id) {
     if (confirm('Are you sure?')) {
@@ -135,10 +134,36 @@ switch(data){
 
     this.show = true;
     this.found = data;
+    console.log(data);
+    
     data['updateNumber']=no
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   };
+
+  showPreference(i,j,data){
+    switch(data){
+      case 'single':
+        let t=this.ownerdetailslist2.find(r=>r._id===i)['preferences']
+   this.ownerdetailslist2[j]['preferenceChk']=true;
+   this.ownerdetailslist2[j]['preferences']=[]
+   for(let v=0;v<t.length;v++){
+    let yo=this.villagedetailslist.find(r=>r._id===t[v])
+    this.ownerdetailslist2[j]['preferences'].push(yo['village_name'])
+}
+        break;
+        case 'all':
+          let y=this.ownerdetailslist.find(r=>r._id===i)['preferences']
+   this.ownerdetailslist[j]['preferenceChk']=true;
+   this.ownerdetailslist[j]['preferences']=[]
+   for(let v=0;v<y.length;v++){
+    let yo=this.villagedetailslist.find(r=>r._id===y[v])
+    this.ownerdetailslist[j]['preferences'].push(yo['village_name'])
+}
+          break;
+    }
+   
+  }
 
 
   refresh(){
@@ -160,11 +185,13 @@ switch(data){
 
   fetchBasic() {
     this.commonArray = this.sec.commonArray;
-
     this.ownerdetailslist = [];
-
     this.ownerdetailslist = this.commonArray.ownerdetails;
+    this.villagedetailslist = [];
+    this.villagedetailslist = this.commonArray.villagenames;
+
     this.tableDate=this.ownerdetailslist.length>0?true:false;
+
   }
 
 }

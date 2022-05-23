@@ -103,7 +103,7 @@ export class PDFComponent implements OnInit {
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221. Tel :- 020-26959222', 25, 51)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
     doc.text('Email :- punenitinroadways@gmail.com', 25, 58)
 
 
@@ -227,7 +227,7 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221. Tel :- 020-26959222', 25, 51)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
     doc.text('Email :- punenitinroadways@gmail.com', 25, 58)
 
 
@@ -361,7 +361,7 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221. Tel :- 020-26959222', 25, 51)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
     doc.text('Email :- punenitinroadways@gmail.com', 25, 58)
 
 
