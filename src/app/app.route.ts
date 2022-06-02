@@ -15,6 +15,7 @@ import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
 import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
 import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
 import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
+import { NavigationSComponent } from './pages/navigation-s/navigation-s.component';
 
 export const routes: Routes =
     [
@@ -136,6 +137,22 @@ export const routes: Routes =
                     {
                         path: 'C2W',
                         component: C2wComponent
+                    }
+                ]
+        },
+        {
+            path: 'NavigationS',
+            component: NavigationSComponent,
+
+            children:
+                [
+                    {
+                        path: 'NRCM_HOME',
+                        component: NavigationSComponent
+                    },
+                    {
+                        path: 'SHIVAPUR_TURNBOOK_HANDLER',
+                        loadChildren: './pages/Shivapur/Turnbook/turn-book.module#TurnBookModule'
                     }
                 ]
         },

@@ -1,0 +1,154 @@
+
+  <div class="row">
+    <div class="col-lg-12">
+      <!-- DATE-->
+
+
+      <div class="form-group row">
+        <div class="col-sm-3">
+          <select class="form-control" id="partyType" [(ngModel)]="trucknoid" (change)="findOption()" id="truckNoone">
+            <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}} [hidden]="i.disabled">{{i.viewvalue}}</option>
+          </select>
+          </div>
+
+        <div class="col-sm-3"
+          *ngIf="(buttonOption!=='1' )&&(buttonOption!=='2')">
+          <input type="date" class="form-control" [(ngModel)]="dynDate">
+        </div>
+
+      </div>
+
+
+
+      <div class="row">
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            {{buttonValue}}
+          </button>
+        </div>
+        <div class="col-sm-3">
+        Open : {{types.Open}}
+        Container : {{types.Container}}
+        None : {{types.None}}
+      </div>
+      </div>
+
+
+      <!--DATE -->
+
+      <h3>{{todaysDate}}</h3>
+    <div><button class="btn btn-warning" (click)="changeDetails()" style="width: 100%;">Change Format</button></div>
+      <table class="table" style="width:100%" align="center" *ngIf="!details">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>TurnBook</th>
+            <th>Type</th>
+            <th>Docs</th>
+            <th>Options</th>
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of turnbooklist;let j = index">
+
+            <td>{{j+1}}</td>
+            <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.trucks.truckno}}<br>{{i.trucks['typeOfVehicle']}}</td>
+            <td>
+              <div class="col-sm-2">
+                <div class="row">
+                  <div class="col-sm-1" [ngStyle]="{'background-color':i.trucks['P'] ? 'green' : 'red' }">Pan</div>
+                  <div class="col-sm-1" [ngStyle]="{'background-color':i.trucks['d'] ? 'green' : 'red' }">Lic</div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-1" [ngStyle]="{'background-color':i.trucks['r'] ? 'green' : 'red' }">RC</div>
+                  <div class="col-sm-1" [ngStyle]="{'background-color':i.trucks['contact'].length==0 ? 'red' : 'green' }">{{i.trucks.contact[0]}}</div>
+                </div>
+              </div>
+            </td>
+
+            <td>  
+
+      <button class="btn btn-success" data-toggle="modal" data-target="#myModal" (click)="setButtonValues(i._id,j)">Action</button>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+
+<div class="well" *ngIf="details">
+  <div class="row" *ngFor="let i of turnbooklist;let j = index">
+      <h3>{{j+1}}.)&nbsp;Truck No : <br>{{i.trucks['truckno']}}</h3>
+      <h4>Type : {{i.trucks['typeOfVehicle']}}</h4>
+      <h3>PAN : {{i.trucks['pan']}}</h3>
+      <h3>Name : {{i.trucks['oname']}}</h3>
+      <h3 *ngIf="i.trucks['contact'].length>0">Contact:{{i.trucks['contact'][0]}}</h3>
+      <h3>PAN-Xerox : <span [ngStyle]="{'color': i.trucks['P'] ? 'green' : 'red' }">{{i.trucks['P']}}</span></h3>
+      <h3>Lic-Xerox : <span [ngStyle]="{'color': i.trucks['d'] ? 'green' : 'red' }">{{i.trucks['d']}}</span></h3>
+      <h3>RC-Xerox : <span [ngStyle]="{'color': i.trucks['r'] ? 'green' : 'red' }">{{i.trucks['r']}}</span></h3>
+      <h3>Weight : {{i.trucks['weight']}}</h3>
+      <h3>Dimensions : {{i.trucks['hbl']}}</h3>
+      <h3>Account</h3>
+      <table class="table table-bordered"  *ngIf="i.trucks['accountDetails'].length>0">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Name</th>
+            <th>Number</th>
+            <th>IFSC</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{i.trucks['accountDetails'][0]['accountName']}}</td>
+            <td>{{i.trucks['accountDetails'][0]['accountNumber']}}</td>
+            <td>{{i.trucks['accountDetails'][0]['ifsc']}}</td>
+          </tr>
+        </tbody>
+      </table>
+<hr style="color: black;">
+  </div>
+</div>
+
+    </div>
+  </div>
+
+
+  <div class="container">
+  
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+      
+    
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Add Balance Hire</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+            <button class="btn btn-danger" (click)="performAction(2)" value=2>Load</button>
+            </div>
+            <br>
+            <div class="row">
+            <button class="btn btn-warning" (click)="performAction(0)" value=0>Delete</button>
+            </div>
+            <br>
+            <div class="row">
+            <button class="btn btn-info" (click)="performAction(1)" value=1>Cancel</button>
+            </div>
+            <br>
+            <div class="row">
+              <button class="btn btn-success" (click)="performAction(3)" value=1>Okay</button>
+              </div>
+              <br>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>

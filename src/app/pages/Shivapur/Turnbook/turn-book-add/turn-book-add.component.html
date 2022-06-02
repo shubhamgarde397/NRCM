@@ -1,0 +1,64 @@
+<div class="well">
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeTurnBookData()" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="row" style="display: flex;">
+
+      <div class="col-sm-4">
+        <button type="button" (click)="leftRight('back')"class="btn btn-danger">Back</button>
+      </div>
+      
+      <div class="col-sm-4">
+        <input type="date" id="turnbookDate" class="form-control" [(ngModel)]="turnbookDate" formControlName="turnbookDate" style="display: none;">
+        <h5>{{turnbookDate|date:'dd-MM-yyyy'}}</h5>
+      </div>
+      
+      <div class="col-sm-4">
+        <button type="button" (click)="leftRight('ahead')"class="btn btn-primary">Ahead</button>
+      </div>
+</div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-12">
+        TruckNo : 
+        <input type="text" class="form-control" formControlName="truckNo">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.truckNo.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--Truckno-->
+
+   
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div *ngIf="!submitted" class="col-xs-1">
+
+        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+
+      <div *ngIf="submitted" class="col-xs-1">
+        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+</div>

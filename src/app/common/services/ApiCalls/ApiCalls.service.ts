@@ -29,17 +29,19 @@ export class ApiCallsService {
   public URL = '';
   public username;
   public typeofuser=3;
+  public branch='';
 
   constructor(public hs: HandleDataService, public http: Http, public httpClient: HttpClient, public securityCheck: SecurityCheckService, public obs: ObsServiceService, public getfullapi: getFullApi, public handlefunction: handleFunction, public security: SecurityCheckService, public router: Router) {
     this.username = this.securityCheck.username
     this.typeofuser=this.securityCheck.typeofuser;
+    this.branch=this.securityCheck.getBranch();
   }
 
   handleData_New_python(api, apiCall, formBody = {}, code,todayDate=this.handlefunction.createDate(new Date())) {
     formBody['user'] = this.username;
     formBody['typeofuser'] = this.typeofuser;
     formBody['todayDate']=todayDate;
-    formBody['website'] = 'nrcm';
+    formBody['website'] = this.branch;
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
     this.URL = this.getfullapi.getFullAPI(api);

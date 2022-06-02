@@ -694,14 +694,23 @@ this.placeid=this.tempDate[0]['place']['_id']
   showDatabyid2 = function (data, j, type) {
     let newdate;
     let newtype;
+    let newpochDate;
+    let newgivenDate;
+    let pgno;
     switch (type) {
       case 'cancel':
         newdate = '2099-12-12';
         newtype = 'Cancel';
+        newpochDate = '2099-12-12';
+        newgivenDate='2099-12-12';
+        pgno = 997;
         break;
       case 'uncancel':
         newdate = '';
         newtype = '';
+        newpochDate = '';
+        newgivenDate='';
+        pgno = 999;
         break;
     }
     if (confirm('Do you want to Cancel this Vehicle?')) {
@@ -726,8 +735,8 @@ this.placeid=this.tempDate[0]['place']['_id']
       tempObj["partyType"] = newtype;
       tempObj["hamt"] = 0;
       tempObj["ohamt"] = data.ohamt;
-      tempObj["pochDate"] = '2099-12-12';
-      tempObj["givenDate"] = '2099-12-12';
+      tempObj["pochDate"] = newpochDate;
+      tempObj["givenDate"] = newgivenDate;
       tempObj["pochPayment"] = false;
       tempObj["pgno"] = 997;
       tempObj['index'] = j;

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { ApiCallsService } from '../../common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from '../../common/services/Data/handle-data.service';
 import { handleFunction } from '../../common/services/functions/handleFunctions';
@@ -37,14 +38,16 @@ export class MainPageComponent implements OnInit {
   public document = new jsPDF();
 
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
-    public router: Router, public handleF: handleFunction) {
+    public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
     localStorage.clear();
     }
 
 
-  login() {
+  login(data) {
+    this.security.setBranch(data);
     this.router.navigate(['Login']);
     this.loginV = true;
+    
   }
   sendMsg(type,typo){
 

@@ -26,12 +26,6 @@
     </div>
   </div>
 
-  <div class="form-group row">
-    <div class="col-sm-3">
-      Loading Date : 
-        <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
-    </div>
-  </div>
 
     <div class="form-group row">
       <div class="col-xs-3">
@@ -57,82 +51,9 @@
           </font>
         </div>
       </div>
-
-      <div class="col-xs-3">
-        Location : 
-        <select class="form-control" formControlName="waitLocation">
-          <option value="Shivapur">Shivapur</option>
-          <option value="Dhaba">Dhaba</option>
-          <option value="None">None</option>
-        </select>
-      </div>  
     </div>
     <!--Truckno-->
 
-    <!--Type  -->
-    <div class="form-group row">
-      <div class="col-xs-3">
-        Party Type : 
-        <select class="form-control" formControlName="partyType" (change)="findParentAccNo()">
-          <option value="" selected>None</option>
-          <option value="NRCM">NRCM</option>
-          <option value="NR">NR</option>
-        </select>
-      </div>  
-
-      <!-- Place -->
-  <div class="col-sm-3">
-    Place : 
-    <select id="place" class="form-control" formControlName="place" (change)="setPlaceName()">
-      <option value="" selected>None</option>
-      <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
-    </select>
-    </div>
-<!-- Place -->
-
-      <!-- Place -->
-      <div class="col-sm-3">
-        Place 2 : 
-        <select id="place" class="form-control" formControlName="place2" (change)="setPlaceName2()">
-          <option value="" selected>None</option>
-          <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
-        </select>
-        </div>
-    <!-- Place -->
-
-      <!-- Party -->
-    <div class="col-sm-3">
-      Party :
-    <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
-      <option selected  value=''>None</option>
-      <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
-    </select>
-  </div>
-  <!-- Party -->
-
-  <!--  -->
-  <div class="col-xs-1">
-    Load Type : 
-    <select class="form-control" formControlName="typeOfLoad">
-      <option value="Pipe">Pipe</option>
-      <option value="Fittings">Fittings</option>
-      <option value="GRL-Pipe">GRL-Pipe</option>
-      <option value="GRL-Bundle">GRL-Bundle</option>
-      <option value="GRL-PF">GRL-PF</option>
-      <option value="Other">Other</option>
-    </select>
-  </div>
-
-  <!--  -->
-
-  <div class="col-sm-3">
-    Parent Acc No : 
-  <input type="number" id="parentAccNo" class="form-control" formControlName="parentAccNo">
-  </div>
-
-
-    </div>
-    <!-- Type -->
 
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>

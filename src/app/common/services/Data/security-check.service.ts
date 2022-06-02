@@ -24,6 +24,7 @@ export class SecurityCheckService {
   public role = 6;
   public typeofuser = 3;
   public amountShow=false;
+  public branch='';
   constructor() {
     this.yearNames = this.generateYears();
   }
@@ -33,6 +34,13 @@ this.amountShow=data;
   }
   getAmountShow(){
     return this.amountShow;
+  }
+
+  setBranch(data){
+    this.branch=data;
+  }
+  getBranch(){
+    return this.branch;
   }
 
 

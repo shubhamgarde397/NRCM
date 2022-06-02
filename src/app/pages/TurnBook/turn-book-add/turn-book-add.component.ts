@@ -74,14 +74,10 @@ export class TurnBookAddComponent implements OnInit {
       turnbookDate: ['', Validators.required],
       truckNo: ['', Validators.required],
       trucknoM: ['', [Validators.required]],
-      waitLocation:['',[Validators.required]],
+      waitLocation:['None'],
       partyName :'',
       place:'',
-      place2:'',
-      partyType:'',
-      loadingDate:'',
-      parentAccNo:0,
-      typeOfLoad:''
+      place2:''
     });
     this.considerArray = this.handledata.createConsiderArray('turnbook')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -143,11 +139,11 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
     tempobj['ownerid'] = this.ownerid;
     tempobj['placeid'] = this.placeid;
-    tempobj['placeid2'] = this.placeid2;
+    tempobj['placeid2'] = '';
     tempobj['partyid'] = this.partyid;
-    tempobj['partyType'] = value['partyType'];
-    tempobj['parentAccNo'] = value['parentAccNo'];
-    tempobj['loadingDate'] = value['loadingDate'];
+    tempobj['partyType'] = '';
+    tempobj['parentAccNo'] = 0;
+    tempobj['loadingDate'] = '';
     tempobj['turnbookDate'] = this.turnbookDate;
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
@@ -162,9 +158,9 @@ export class TurnBookAddComponent implements OnInit {
     tempobj["pgno"]= 999;
     tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";
     tempobj["input"]= "manual";
-    tempobj["waitLocation"]= value['waitLocation'];
+    tempobj["waitLocation"]= 'None';
     tempobj["complete"]= false;
-    tempobj["typeOfLoad"]= value['typeOfLoad'];
+    tempobj["typeOfLoad"]= '';
 let toAdd=true;
 let toAddData;
     let tempObj={};
@@ -244,42 +240,7 @@ let toAddData;
     
   }
 
-  setPartyName() {
-    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
-    this.myFormGroup.patchValue({parentAccNo:this.parties[this.myFormGroup.value.partyName.split('+')[1]].accNo})
-    this.myFormGroup.patchValue({partyType:this.parties[this.myFormGroup.value.partyName.split('+')[1]].partyType})
-    this.myFormGroup.value.partyName = this.partyid;
-      }
-  setPlaceName() {
-    this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
-    this.myFormGroup.value.place = this.placeid;
-  }
 
-  setPlaceName2() {
-    this.placeid2 = this.villagelist[this.myFormGroup.value.place2.split('+')[1]]._id;
-    this.myFormGroup.value.place2 = this.placeid2;
-  }
-
-  findParentAccNo(){
-    if(this.myFormGroup.value.partyType==='NRCM'){
-      this.myFormGroup.patchValue({
-        parentAccNo:12,
-      })
-    }
-    else if(this.myFormGroup.value.partyType==='NR'){
-   
-        this.myFormGroup.patchValue({
-          parentAccNo:363,
-        })
-   
-      
-    }
-    else{
-      this.myFormGroup.patchValue({
-        parentAccNo:0,
-      })
-    }
-  }
 
   reset() {
     this.manualTruck = false;
