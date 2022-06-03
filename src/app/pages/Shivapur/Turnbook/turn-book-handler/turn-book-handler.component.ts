@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 
 @Component({
   selector: 'app-turn-book-handler',
@@ -10,14 +8,9 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
 export class TurnBookHandlerComponent implements OnInit {
 
 
-  constructor(public sec: HandleDataService, public router: Router) { }
+  constructor() { }
 
   ngOnInit() {
-  }
-
-  reset() {
-    this.sec.resetArray('turnbook');
-    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler']);
   }
 
 }

@@ -26,7 +26,6 @@ export class TurnBookDisplayComponent implements OnInit {
  
   public date = new Date();
   public turnbooklist: any;
-  public dateFromUI;
   public buttonValue: any = 'Avaliable Trucks';
   public buttonOption = '1';
   public trucknoid;
@@ -40,9 +39,8 @@ export class TurnBookDisplayComponent implements OnInit {
  
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' ,'disabled':false},
-    { 'value': '2', 'viewvalue': 'Truck Arrival' ,'disabled':false},
-    { 'value': '3', 'viewvalue': 'Truck Dispatched' ,'disabled':false},
-    { 'value': '4', 'viewvalue': 'Cancelled Vehicles' ,'disabled':false},
+    { 'value': '2', 'viewvalue': 'Cancelled Vehicles' ,'disabled':false},
+    { 'value': '3', 'viewvalue': 'Dont Know' ,'disabled':false},
   ]
  
   public years = []
@@ -56,7 +54,6 @@ export class TurnBookDisplayComponent implements OnInit {
 public types={'None':0,'Open':0,'Container':0}
 public whatActionGotSelected='2';
 public performActionButton='2';
-public selectDate=false;
 public details=false;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
@@ -123,7 +120,7 @@ public details=false;
     let tempObj = {};
 
     tempObj['tablename'] = ''
-    tempObj['method'] = 'displayTodayAvailable'
+    tempObj['method'] = 'displayTodayAvailable_'+this.buttonOption;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
@@ -135,57 +132,10 @@ public details=false;
           });
 
           this.turnbooklist = res.Data;
-          console.log(this.turnbooklist);
           this.isAvailable=true;
           this.tableSelected=true;
        
       });
-  };
-
-
-  showDatabyid = function (data, j, number) {
-    this.show = true;
-    let tempObj = {};
-    tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
-    tempObj['place2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0].village_name;
-    tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
-    tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
-    tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
-    tempObj['accountDetails'] = data.ownerDetails[0]['accountDetails'];
-    tempObj['parentAccNo'] = data.parentAccNo;
-    tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
-    tempObj['placeid2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0]._id;
-    tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
-    tempObj['entryDate'] = data.entryDate;
-    tempObj['_id'] = data._id;
-    tempObj['partyType'] = data.partyType;
-    tempObj['turnbookDate'] = data.turnbookDate;
-    tempObj['loadingDate'] = data.loadingDate;
-    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
-    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
-    tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
-    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
-    tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
-    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
-    tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
-    tempObj['payment'] = data.paymentDetails;
-    tempObj['index'] = j;
-    tempObj['number'] = number;
-    tempObj['invoice'] = data.invoice;
-    tempObj['locations'] = data.locations;
-    tempObj['locationDate'] = data.locationDate;
-    tempObj['complete'] = data.complete;
-    tempObj['typeOfLoad'] = data.typeOfLoad;
-    tempObj['waitLocation'] = data.waitLocation;
-    tempObj['advanceArray'] = data.advanceArray;
-    tempObj['qr'] = data.qr;
-    tempObj['paymentDisabled']=true;
-    tempObj['pochAmount']=data.pochAmount;
-    this.handleData.saveupdateTurn(true);
-
-
-    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
-    this.handleData.saveData(tempObj);
   };
 
 

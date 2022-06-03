@@ -11,11 +11,6 @@
           </select>
           </div>
 
-        <div class="col-sm-3"
-          *ngIf="(buttonOption!=='1' )&&(buttonOption!=='2')">
-          <input type="date" class="form-control" [(ngModel)]="dynDate">
-        </div>
-
       </div>
 
 
@@ -92,7 +87,6 @@
       <table class="table table-bordered"  *ngIf="i.trucks['accountDetails'].length>0">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
-            <th>Srno</th>
             <th>Name</th>
             <th>Number</th>
             <th>IFSC</th>
@@ -127,21 +121,25 @@
           </div>
           <div class="modal-body">
             <div class="row">
+              <div class="col=sm-6">
             <button class="btn btn-danger" (click)="performAction(2)" value=2>Load</button>
-            </div>
-            <br>
-            <div class="row">
+          </div>
+          <div class="col=sm-6">
             <button class="btn btn-warning" (click)="performAction(0)" value=0>Delete</button>
+          </div>
             </div>
             <br>
+            
             <div class="row">
-            <button class="btn btn-info" (click)="performAction(1)" value=1>Cancel</button>
-            </div>
-            <br>
-            <div class="row">
-              <button class="btn btn-success" (click)="performAction(3)" value=1>Okay</button>
+              <div class="col=sm-6">
+                <button class="btn btn-info" (click)="performAction(1)" value=1>Cancel</button>
               </div>
-              <br>
+              <div class="col=sm-6">
+                <button class="btn btn-success" (click)="performAction(3)" value=1>Okay</button>
+              </div>
+            
+            </div>
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

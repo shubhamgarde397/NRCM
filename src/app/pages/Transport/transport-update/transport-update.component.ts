@@ -35,7 +35,6 @@ export class TransportUpdateComponent implements OnInit {
       addr3:this.handledata.Data.addr3
     });
     this.contactArray = this.handledata.Data.contact;
-    console.log(this.contactArray);
     
   }
 

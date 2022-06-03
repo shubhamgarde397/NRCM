@@ -312,7 +312,6 @@ switch (this.buttonOption) {
   }
 
   updateAccount(i,j){
-    console.log(i);
     
     let accname=(<HTMLInputElement>document.getElementById('accname_' + j)).value;
     let accno=(<HTMLInputElement>document.getElementById('accno_' + j)).value;

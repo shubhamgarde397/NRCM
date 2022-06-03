@@ -100,7 +100,6 @@ public typeOfVehicle;
     this.villagedetailslist=[];
     this.commonArray = this.sec.commonArray;
     this.villagedetailslist = this.commonArray.villagenames;
-    console.log(this.villagedetailslist);
     
   }
 

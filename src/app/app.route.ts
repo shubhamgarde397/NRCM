@@ -153,6 +153,10 @@ export const routes: Routes =
                     {
                         path: 'SHIVAPUR_TURNBOOK_HANDLER',
                         loadChildren: './pages/Shivapur/Turnbook/turn-book.module#TurnBookModule'
+                    },
+                    {
+                        path: 'PAYMENT_HANDLER',
+                        loadChildren: './pages/Shivapur/DailyPayments/payment.module#PaymentModule'
                     }
                 ]
         },

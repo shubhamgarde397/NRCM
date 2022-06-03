@@ -86,7 +86,6 @@ let value={}
       value['username']=value1.value.username
       value['password']=value1.value.password
       value['tablename']='';
-      console.log(value);
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, value, 0)
         .subscribe((res: any) => {

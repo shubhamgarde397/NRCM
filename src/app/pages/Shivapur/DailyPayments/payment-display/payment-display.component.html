@@ -1,0 +1,26 @@
+      <div class="row">
+        <div class="col-sm-12">
+          <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            Find
+          </button>
+        </div>
+      </div>
+
+
+      <table class="table" style="width:100%" align="center" *ngIf="show">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno<br>User</th>
+            <th>Date<br>Amount</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of paymentlist;let j = index">
+            <td>{{j+1}}<br>{{i.user}}</td>
+            <td>{{i.cashFlowDate|date:'dd-MM-yyyy'}}<br>{{i.cashFlowAmount}}</td>
+            <td>{{i.cashFlowReason}}</td>
+          </tr>
+        </tbody>
+      </table>

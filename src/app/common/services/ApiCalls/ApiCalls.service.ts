@@ -41,7 +41,7 @@ export class ApiCallsService {
     formBody['user'] = this.username;
     formBody['typeofuser'] = this.typeofuser;
     formBody['todayDate']=todayDate;
-    formBody['website'] = this.branch;
+    formBody['website'] = this.securityCheck.getBranch();
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
     this.URL = this.getfullapi.getFullAPI(api);

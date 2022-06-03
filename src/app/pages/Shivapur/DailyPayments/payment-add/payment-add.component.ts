@@ -9,13 +9,14 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Http } from '@angular/http';
 import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-turn-book-add',
-  templateUrl: './turn-book-add.component.html',
-  styleUrls: ['./turn-book-add.component.css']
+  selector: 'app-payment-add',
+  templateUrl: './payment-add.component.html',
+  styleUrls: ['./payment-add.component.css']
 })
-export class TurnBookAddComponent implements OnInit {
+export class PaymentAddComponent implements OnInit {
   public myFormGroup: FormGroup;
   public submitted = false;
   public response: any;
@@ -27,10 +28,11 @@ export class TurnBookAddComponent implements OnInit {
   public y;
   public role;
   public method;
-  public turnbookDate;
+  public cashFlowDate;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
-    public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
+    public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService,
+    public router:Router) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
   }
@@ -38,7 +40,7 @@ export class TurnBookAddComponent implements OnInit {
 
 
   ngOnInit() {
-    this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
+    this.cashFlowDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.obs.dateService.subscribe((res: any) => {
       let arr = res.split('_');
       this.m = this.handlefunction.generateMonthName(arr[0]);
@@ -46,8 +48,9 @@ export class TurnBookAddComponent implements OnInit {
     })
 
     this.myFormGroup = this.formBuilder.group({
-      turnbookDate: ['', Validators.required],
-      truckNo: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]],
+      cashFlowDate:['',Validators.required],
+      cashFlowAmount:[0,Validators.required],
+      cashFlowReason:['',Validators.required],
     });
 
     this.role = this.securityCheck.role;
@@ -59,33 +62,21 @@ export class TurnBookAddComponent implements OnInit {
 
   }
 
-  storeTurnBookData() {
+  store(data) {
     this.submitted = true;
     let tempobj = {};
-    tempobj['truckno'] = this.myFormGroup.value.truckNo;
-    tempobj['turnbookDate'] = this.turnbookDate;
+    tempobj['cashFlowDate'] = this.cashFlowDate;
+    tempobj['cashFlowAmount'] = this.myFormGroup.value.cashFlowAmount;
+    tempobj['cashFlowReason'] = this.myFormGroup.value.cashFlowReason;
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = '';
-    tempobj['method'] = 'insertTB';
-    tempobj["user"]= "rohit";
-    tempobj["typeofuser"]= 1;
+    tempobj['method'] = 'insertPayment';
+    tempobj['option'] = data;
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
         .subscribe((res: any) => {
           alert(res.Status)
-          this.myFormGroup.patchValue({ truckNo: '' })
-          
-          this.spinnerService.hide();
-          this.reset();
         });
-  }
-
-  
-
-  reset() {
-    this.submitted = false;
-    this.myFormGroup.patchValue({ truckNo: '' });
-
   }
 
   back() {
@@ -97,14 +88,14 @@ export class TurnBookAddComponent implements OnInit {
     let date;
     switch (LR) {
       case 'back':
-        tempArray=this.turnbookDate.split('-');
+        tempArray=this.cashFlowDate.split('-');
         date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])-1)
-        this.turnbookDate = this.handlefunction.createDate(date);
+        this.cashFlowDate = this.handlefunction.createDate(date);
         break;
       case 'ahead':
-        tempArray=this.turnbookDate.split('-');
+        tempArray=this.cashFlowDate.split('-');
         date=new Date(tempArray[0],parseInt(tempArray[1])-1,parseInt(tempArray[2])+1)
-        this.turnbookDate = this.handlefunction.createDate(date);
+        this.cashFlowDate = this.handlefunction.createDate(date);
         break;
     }
   }

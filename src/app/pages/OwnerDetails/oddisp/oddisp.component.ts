@@ -134,7 +134,6 @@ switch(data){
 
     this.show = true;
     this.found = data;
-    console.log(data);
     
     data['updateNumber']=no
     this.handledata.saveData(data);

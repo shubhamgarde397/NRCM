@@ -1,0 +1,36 @@
+button{
+    border-radius: 100px;
+}
+
+.table-header{
+  background-color: orange;
+  color: white;
+  font-weight: bold;
+}
+
+.table-wrapper-scroll-y {
+  display: block;
+  max-height: 300px;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.modal-content{
+  margin-top: 3in;
+  margin-bottom: 3in;
+}
+
+.edit:hover{
+  color: red;
+}
+.checkboxGreen{
+  background-color:#5cb85c;
+  color: white;
+  border-radius: 4px;
+}
+
+.checkboxRed{
+  background-color:#d9534f;
+  color: white;
+  border-radius: 4px;
+}

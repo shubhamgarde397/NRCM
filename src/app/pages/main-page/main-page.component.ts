@@ -45,6 +45,7 @@ export class MainPageComponent implements OnInit {
 
   login(data) {
     this.security.setBranch(data);
+    
     this.router.navigate(['Login']);
     this.loginV = true;
     
