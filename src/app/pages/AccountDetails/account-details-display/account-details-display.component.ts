@@ -31,6 +31,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public show=false;
   public considerArray;
   public commonArray;
+  public typeDataConsists=false;
 // #BASIC #
 
   //$ Account $
@@ -76,6 +77,7 @@ public selectedDimension='';
 public truckarray=[];
 public trucktable=false;
 public selectedTruck;
+public typeDataConsistsArray=[];
 // 
 
   constructor(
@@ -380,21 +382,35 @@ switch (this.buttonOption) {
     .subscribe((res: any) => {
       this.truckarray=res.chartData;
       this.trucktable=true;
+      this.typeDataConsists=false;
+      this.typeDataConsistsArray=[];
     });
   }
 
-  updatetruck(data,i,j){
-  
-      let tempObj={}
-      tempObj['truckType']=data;
-      tempObj['ownerid']=i['_id'];
-      tempObj['tablename']='';
-      tempObj['method']='SMARTTRUCKUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.truckarray.splice(j,1);
-      });
+  updatetruck2(data){
+    let tempObj={}
+    tempObj['truckType']=data;
+    tempObj['ownerids']=this.typeDataConsistsArray.map(r=> r._id)
+    tempObj['tablename']='';
+    tempObj['method']='SMARTTRUCKUPDATE2';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.typeDataConsists=false;
+      this.typeDataConsistsArray=[];
+    });
+  }
+
+  addTotypeDataConsists(i,j){
+    this.typeDataConsistsArray.push(i);
+    this.typeDataConsists=true;
+    this.truckarray.splice(j,1);
+  }
+
+  deleteTotypeDataConsists(i,j){
+    this.truckarray.push(i);
+    this.typeDataConsists=this.typeDataConsistsArray.length===0?false:true;
+    this.typeDataConsistsArray.splice(j,1);
   }
 
   getAllWeights(){

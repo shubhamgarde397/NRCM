@@ -227,31 +227,46 @@
 <button class="btn btn-warning" (click)="getAllTrucks()">Get Data!</button>
   </div>
 
+  <div class="well" *ngIf="typeDataConsists">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Srno</th>
+          <th>Truck No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ii of typeDataConsistsArray;let jj=index;">
+          <td>{{jj+1}}</td>
+          <td (click)="deleteTotypeDataConsists(ii,jj)">{{ii.truckno}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button mat-raised-button type="button" (click)="updatetruck2('Container')" class="btn-success btn-sm btn-just-icon">
+      Container
+    </button>
+    <button mat-raised-button type="button" (click)="updatetruck2('Open')" class="btn-danger btn-sm btn-just-icon">
+      Open
+    </button>
+    <button mat-raised-button type="button" (click)="updatetruck2('Taurus')" class="btn-warning btn-sm btn-just-icon">
+      Taurus
+    </button>
+  </div>
+
 <div class="well" *ngIf="trucktable">
   <table class="table">
     <thead>
       <tr>
         <th>Srno</th>
         <th>Truck No</th>
-        <th>Type</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ii of truckarray;let jj=index;">
         <td>{{jj+1}}</td>
-        <td>{{ii.truckno}}</td>
-        <td>
-          <button mat-raised-button type="button" (click)="updatetruck('Container',ii,jj)" class="btn-success btn-sm btn-just-icon">
-            Container
-          </button>
-          <button mat-raised-button type="button" (click)="updatetruck('Open',ii,jj)" class="btn-danger btn-sm btn-just-icon">
-            Open
-          </button>
-          <button mat-raised-button type="button" (click)="updatetruck('Taurus',ii,jj)" class="btn-warning btn-sm btn-just-icon">
-            Taurus
-          </button>
-
-        </td>
+        <td (click)="addTotypeDataConsists(ii,jj)">{{ii.truckno}}</td>
       </tr>
     </tbody>
   </table>

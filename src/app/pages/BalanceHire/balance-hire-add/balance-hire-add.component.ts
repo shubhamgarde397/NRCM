@@ -46,6 +46,7 @@ public nextStepButton=false;
 
   edit(data) {
     data['index'] = 0;
+    data['updateNumber']=true
     this.handleData.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   }

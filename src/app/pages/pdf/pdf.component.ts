@@ -71,14 +71,12 @@ export class PDFComponent implements OnInit {
     this.amt = '';
   }
   downloadBank() {
-    var colorfromUI = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUI);
-    var colorfromUILine = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(this.colorfromUILine);
     this.max = this.bankArray[0].Amount;
     this.bankArray.forEach(r => { if (r.Amount > this.max) { this.max = r.Amount; } })
     var doc = new jsPDF()
     doc.setFontSize('30');
     doc.setFontType('bold');
-    doc.setTextColor(parseInt(colorfromUI[1], 16), parseInt(colorfromUI[2], 16), parseInt(colorfromUI[3], 16));
+    doc.setTextColor(224,0,0);
     doc.text('Nitin Roadways And Cargo Movers',15, 25)
 
     doc.setFontSize('16');
@@ -87,16 +85,16 @@ export class PDFComponent implements OnInit {
     doc.setTextColor(0, 0, 0);
     doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
 
-    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
+    doc.setDrawColor(163,0,0);
     doc.setLineWidth(0.5);
     doc.line(15, 38, 195, 38);
 
     doc.setFontSize('15');
     doc.setFontType('bold');
-    doc.setTextColor(parseInt(colorfromUI[1], 16), parseInt(colorfromUI[2], 16), parseInt(colorfromUI[3], 16));
+    doc.setTextColor(224,0,0);
     doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15, 43)
 
-    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
+    doc.setDrawColor(163,0,0);
     doc.setLineWidth(0.5);
     doc.line(15, 44, 195, 44);
 
@@ -113,11 +111,11 @@ export class PDFComponent implements OnInit {
     doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 25, 65)
 
 
-    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
+    doc.setDrawColor(224,0,0);
     doc.setLineWidth(0.8);
     doc.line(15, 67, 195, 67);
 
-    doc.setDrawColor(parseInt(colorfromUILine[1], 16), parseInt(colorfromUILine[2], 16), parseInt(colorfromUILine[3], 16));
+    doc.setDrawColor(224,0,0);
     doc.setLineWidth(0.2);
     doc.line(15, 68, 195, 68);
 

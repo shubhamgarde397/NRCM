@@ -125,6 +125,7 @@ export class MainPageComponent implements OnInit {
         this.changed = false;
       }
     }, 1000);
+    // this.download();
     }
 
 
@@ -147,7 +148,60 @@ export class MainPageComponent implements OnInit {
     }
     return I;
   }
+download(){
+    var doc = new jsPDF()
+    doc.setFontSize('30');
+    doc.setFontType('bold');
+    doc.setTextColor(224,0,0);
+    doc.text('Nitin Roadways And Cargo Movers',15, 25)
 
+    doc.setFontSize('16');
+    doc.setFontType('bold');
+    doc.setFontType('italic');
+    doc.setTextColor(0, 0, 0);
+    doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
+
+    doc.setDrawColor(163,0,0);
+    doc.setLineWidth(0.5);
+    doc.line(15, 38, 195, 38);
+
+    doc.setFontSize('15');
+    doc.setFontType('bold');
+    doc.setTextColor(224,0,0);
+    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15, 43)
+
+    doc.setDrawColor(163,0,0);
+    doc.setLineWidth(0.5);
+    doc.line(15, 44, 195, 44);
+
+    doc.setFontType('normal');
+    doc.setFontSize('15');
+    doc.setTextColor(0, 0, 0);
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
+    doc.text('Email :- punenitinroadways@gmail.com', 25, 58)
+
+
+    doc.setFontType('italic');
+    doc.setFontSize('14');
+    doc.setTextColor(0, 0, 0);
+    doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 25, 65)
+
+
+    doc.setDrawColor(224,0,0);
+    doc.setLineWidth(0.8);
+    doc.line(15, 67, 195, 67);
+
+    doc.setDrawColor(224,0,0);
+    doc.setLineWidth(0.2);
+    doc.line(15, 68, 195, 68);
+
+    doc.setFontSize('12');
+    doc.setFontType('normal');
+    doc.setTextColor(0, 0, 0);
+
+   
+    doc.save('test.pdf')
+  }
  
 }
 

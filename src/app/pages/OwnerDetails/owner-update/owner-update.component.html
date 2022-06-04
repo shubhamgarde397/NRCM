@@ -176,7 +176,7 @@
 </div>
 
 <div class="well" *ngIf="!no">
-  <form [formGroup]="myFormGroup1" (ngSubmit)="changeTruck(myFormGroup1)" submitted=true enctype="multipart/form data"
+  <form [formGroup]="myFormGroup1" submitted=true enctype="multipart/form data"
   action="/">
 
   <div class="row form-group">
@@ -197,10 +197,10 @@
 
 
   <div class="row">
-    <div class="form-group" class="col-xs-2"></div>
-    <div class="form-group" class="col-xs-1">
-      <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-        <i class="material-icons">send</i>
+    
+    <div class="form-group" class="col-xs-3">
+      <button class="btn btn-danger" (click)="changeTruck()">
+        TBO
       </button>
     </div>
   </div>

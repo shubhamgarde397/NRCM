@@ -231,7 +231,7 @@ public typeOfVehicle;
   }
 
 
-  changeTruck(data){
+  changeTruck(){
     let tempObj={}
     tempObj['method']='changeTnoInDateTruckAndTruckDetails';
     tempObj['tablename']='';
