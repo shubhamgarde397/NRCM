@@ -348,6 +348,7 @@ let buttons=[]
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};
     this.byTruckName=false;
+    this.parties = this.commonArray.gstdetails;
     switch (this.buttonOption) {
       case '1':
         tempObj['turnbookDate'] = '2021-04-01';
@@ -448,6 +449,7 @@ if(this.buttonOption !== '11'){
             this.showbuttonOption8 = false;
             this.show8Msg = "All set for this month.";
           }
+          this.parties = this.parties.filter(r=>{return r.partyType===this.buttonOptionPartyType})
         }
         else if (this.buttonOption == '16') {
           if (res.Data.length > 0) {

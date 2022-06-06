@@ -66,6 +66,9 @@ export class TurnBookUpdateComponent implements OnInit {
   public partyToUI='';
   public qrHit=false;
   public paymentDisabled=true;
+  public Loadarr=[];
+  public retHireAmt;
+  public retTruckAmt;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -208,6 +211,28 @@ tempObj['to']=this.handlefunction.createDate(this.date);
   }
 
   setPartyName() {
+    let partyDetails=this.parties[this.myFormGroup.value.partyName.split('+')[1]]
+    console.log(partyDetails.load);
+    
+    this.Loadarr=[]
+    for(let i=0;i<Object.keys(partyDetails.load).length;i++){
+    let temp={}
+        temp['loadSingle']=Object.keys(partyDetails.load)[i]
+        temp['loadAmount']=Object.values(partyDetails.load)[i]
+        // temp['rentAmount']=Object.values(partyDetails.load)[i]
+        this.Loadarr.push(temp)
+    }
+
+    this.Loadarr=[]
+for(let i=0;i<partyDetails.load.length;i++){
+  let temp={}
+    temp['loadSingle']=Object.keys(partyDetails.load[i])[0]
+    temp['loadHire']=Object.values(partyDetails.load[i])[0]['Hire']
+    temp['loadAdvance']=Object.values(partyDetails.load[i])[0]['Advance']
+    this.Loadarr.push(temp)
+}
+
+
     this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
     this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
     this.myFormGroup.value.partyName = this.tempPNAME;
@@ -313,6 +338,19 @@ tempObj['to']=this.handlefunction.createDate(this.date);
         parentAccNo:0,
       })
     }
+    this.parties = this.commonArray.gstdetails;
+    this.parties=this.parties.filter(r=>r.partyType==this.myFormGroup.value.partyType)
+
+  }
+
+  infoFromtypeOfLoad(){
+    let typeOfLoad;
+    typeOfLoad=this.myFormGroup.value.typeOfLoad.split('+');
+    this.myFormGroup.patchValue({
+      typeOfLoad:typeOfLoad[0],
+      hamt:typeOfLoad[1],
+      ohamt:typeOfLoad[2]
+    })
   }
 
   change = function (data) {
@@ -342,8 +380,8 @@ tempObj['to']=this.handlefunction.createDate(this.date);
       tempObj["paymentid"] = this.paymentid;//Make changes in backend
       tempObj["waitLocation"]=this.myFormGroup.value.waitLocation;
       tempObj["advanceArray"]=this.advanceArray;
-      tempObj["qr"]=parseInt(this.myFormGroup.value.qr);
-      tempObj["pochAmount"]=parseInt(this.myFormGroup.value.pochAmount);
+      tempObj["qr"]=parseInt(this.myFormGroup.value.qr)===null?0:parseInt(this.myFormGroup.value.qr);
+      tempObj["pochAmount"]=parseInt(this.myFormGroup.value.pochAmount)===null?0:parseInt(this.myFormGroup.value.pochAmount);
       tempObj["qrid"]=this.qrHit?(this.myFormGroup.value.qr===0?'61c082b87dcfd6ecb7f02b90':this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0]._id):'61c082b87dcfd6ecb7f02b90';
       this.addtoTB===true?tempObj['addtotbids']=true:false
       if(this.handledata.Data.locations.length===0){
@@ -355,7 +393,7 @@ tempObj['to']=this.handlefunction.createDate(this.date);
         tempObj["locationDate"]=this.handledata.Data.locationDate;
         tempObj["locations"]=this.handledata.Data.locations;
       }
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('turnbook1', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert(res.Status);
         if (res.Status === 'Updated') {

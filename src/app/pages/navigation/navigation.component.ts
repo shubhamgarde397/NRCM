@@ -28,6 +28,7 @@ export class NavigationComponent implements OnInit {
   public dbName = 'NRCM_Information';
   public AUTH;
   public date = new Date();
+  public todayDate;
   public username;
   public role = 6;
   public nameOfUser = 'Guest';
@@ -50,13 +51,16 @@ export class NavigationComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.username;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
     this.getInformationData();
     this.AUTH = this.securit.AUTH;
+
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();
+    
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
     this.showThisMsg = this.securityCheck.typeofuser !== 1 ? true : false;
 

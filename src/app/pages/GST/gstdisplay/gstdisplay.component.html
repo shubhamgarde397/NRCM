@@ -7,6 +7,7 @@
                 <th>Srno</th>
                 <th>Name-SN</th>
                 <th>GST Number</th>
+                <th>Rent</th>
                 <th>Destination</th>
                 <th>Type</th>
                 <th>Account</th>
@@ -22,6 +23,16 @@
                 <td>{{j+1}}</td>
                 <td>{{i.name}}:{{i.shortName}}</td>
                 <td>{{i.gst}}</td>
+                <td>
+                    <div *ngFor="let ii of i.load">
+                        <div *ngFor="let key of objectKeys(ii)">
+                          <h4><u>{{key}}</u></h4>
+                          <span *ngFor="let key2 of objectKeys(ii[key])">
+                            {{key2}}:{{ii[key][key2]|json}}
+                          </span>
+                        </div>
+                      </div>
+                </td>
                 <td>{{i.dest}}</td>
                 <td>{{i.partyType}}</td>
                 <td>{{i.accNo}}</td>

@@ -27,6 +27,11 @@ export class GstupdateComponent implements OnInit {
   public cities;
   public city;
   public pT;
+  public load=[]
+  public loadSingle;
+  public loadAmount;
+  public loadAdvance;
+  public objectKeys = Object.keys;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -44,13 +49,24 @@ export class GstupdateComponent implements OnInit {
       cities:[],
       accNo:this. handledata.Data.accNo,
       partyType:this.handledata.Data.partyType,
-      shortName:this.handledata.Data.shortName
+      shortName:this.handledata.Data.shortName,
+      load:[]
     });
     this.dest = this.handledata.Data.dest;
     this.pT = this.handledata.Data.partyType;
     this.commonArray = this.sec.commonArray;
     this.villagenamelist = this.commonArray.villagenames;
     this.cities=this.handledata.Data.cities;
+    this.load=this.handledata.Data.load
+  }
+
+  addLoad(){
+    let temp={}
+    temp[this.loadSingle]={'Hire':this.loadAmount,'Advance':this.loadAdvance}
+    this.load.push(temp);
+  }
+  deleteLoad(i,j){
+    this.load.splice(j,1);
   }
 
   addCity(){
@@ -58,6 +74,7 @@ export class GstupdateComponent implements OnInit {
   }
 
   change = function (data) {
+
     this.submitted = true;
 
     let formbody = {}
@@ -71,6 +88,7 @@ export class GstupdateComponent implements OnInit {
     formbody['shortName'] = data.value.shortName;
     formbody['cities'] = this.cities;
     formbody['_id'] = this.handledata.Data._id;
+    formbody['load'] = this.load;
     formbody['method'] = 'update';
     formbody['tablename'] = 'gstdetails';
 

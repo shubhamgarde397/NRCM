@@ -66,9 +66,42 @@
           <option selected disabled>{{pT}}</option>
           <option value="NRCM">NRCM</option>
           <option value="NR">NR</option>
-          <option value="SNL">SNL</option>
-          <option value="SGL">SGL</option>
         </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-6">
+        <table class="table table-border">
+          <tr>
+            <th>Load Name</th>
+            <th>Load Amount</th>
+            <th>Load Advance</th>
+            <th>Add</th>
+          </tr>
+          <tr>
+            <td><input type="text" [(ngModel)]="loadSingle" [ngModelOptions]="{standalone: true}"></td>
+            <td><input type="number" [(ngModel)]="loadAmount" [ngModelOptions]="{standalone: true}"></td>
+            <td><input type="number" [(ngModel)]="loadAdvance" [ngModelOptions]="{standalone: true}"></td>
+            <td><button type="button" (click)="addLoad()">Add</button></td>
+          </tr>
+          </table>
+        
+      </div>
+
+
+      <div class="col-xs-6">
+        <div *ngFor="let ii of load;let j=index;">
+          <div *ngFor="let key of objectKeys(ii)">
+            <h4><u>{{key}}</u>
+              <span (click)="deleteLoad(i,j)">X</span>
+          </h4>
+            <span *ngFor="let key2 of objectKeys(ii[key])">
+              {{key2}}:{{ii[key][key2]|json}}
+            </span>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -92,13 +125,26 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <select [(ngModel)]="city" [ngModelOptions]="{standalone: true}">
-          <option *ngFor="let k of villagenamelist">{{k.village_name}}</option>
-        </select>
-        <button type="button" (click)="addCity()">Add</button>
+        <table class="table table-border">
+          <tr>
+            <th>Name</th>
+            <th>Option</th>
+          </tr>
+          <tr>
+            <td>
+              <select [(ngModel)]="city" [ngModelOptions]="{standalone: true}">
+                <option *ngFor="let k of villagenamelist">{{k.village_name}}</option>
+              </select></td>
+            <td>
+              <button type="button" (click)="addCity()">Add</button>
+            </td>
+          </tr>
+        </table>
+        
+
       </div>
       <div class="col-xs-3">
-        <table>
+        <table class="table table-border">
           <tr>
           <th>Sr</th>
           <th>City</th>
@@ -139,7 +185,4 @@
 
     </div>
   </form>
-
-
-
 </div>

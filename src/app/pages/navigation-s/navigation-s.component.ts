@@ -33,7 +33,7 @@ export class NavigationSComponent implements OnInit {
   public date = new Date();
   public username;
   public nameOfUser = 'Guest';
-  
+  public todayDate;
 public loginUsers=[]
 public disabledUsername=''
 public Basic=false;
@@ -52,6 +52,7 @@ public Basic=false;
   ) { }
 
   ngOnInit() {
+    this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.username = this.securityCheck.username;
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();

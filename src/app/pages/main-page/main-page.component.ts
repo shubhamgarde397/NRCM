@@ -15,6 +15,22 @@ import { handleFunction } from '../../common/services/functions/handleFunctions'
   providers: [ApiCallsService]
 })
 export class MainPageComponent implements OnInit {
+  public jsonData=[
+    {
+        "Pipe": {
+            "Hire": 0,
+            "Advance": 0
+        }
+    },
+    {
+        "Fittings": {
+            "Hire": 0,
+            "Advance": 5
+        }
+    }
+]
+public objectKeys = Object.keys;
+public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   public contact;
   public modalData;
   public loginV = false;
@@ -116,17 +132,7 @@ export class MainPageComponent implements OnInit {
   }
 
 
-  ngOnInit() {
-    setInterval(() => {
-      this.now = new Date();
-      if (this.now.getSeconds() % 10 === 0) {
-        this.changed = true;
-      } else {
-        this.changed = false;
-      }
-    }, 1000);
-    // this.download();
-    }
+
 
 
 
@@ -186,7 +192,6 @@ download(){
     doc.setTextColor(0, 0, 0);
     doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 25, 65)
 
-
     doc.setDrawColor(224,0,0);
     doc.setLineWidth(0.8);
     doc.line(15, 67, 195, 67);
@@ -199,9 +204,34 @@ download(){
     doc.setFontType('normal');
     doc.setTextColor(0, 0, 0);
 
+    doc.setFontType('bold');
+    doc.setDrawColor(0,0,0);
+    doc.text('Bill No. : ',25,79)
+    doc.text('Date : ',150,79)
+
+    doc.line(15, 85, 195, 85);
+    doc.line(15, 85, 15, 290);
+    doc.line(195, 85, 195, 290);
+    doc.line(15, 290, 195, 290);
+
+    doc.text("Owner's Name : ",18,95);
+    doc.text("Contact : ",120,95);
+
    
     doc.save('test.pdf')
   }
+
+  ngOnInit() {
+    setInterval(() => {
+      this.now = new Date();
+      if (this.now.getSeconds() % 10 === 0) {
+        this.changed = true;
+      } else {
+        this.changed = false;
+      }
+    }, 1000);
+    // this.download();
+    }
  
 }
 

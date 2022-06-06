@@ -14,6 +14,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 })
 
 export class GstdisplayComponent implements OnInit {
+  public objectKeys = Object.keys;
   public gstdetailslist;
   public show = false;
   public found;
