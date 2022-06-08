@@ -9,6 +9,7 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValueTransformer } from '@angular/compiler/src/util';
+import { range } from 'rxjs';
 
 @Component({
   selector: 'app-turn-book-display-main',
@@ -128,6 +129,7 @@ public reportPDF=false;
 public turn12;
 public fdate;
 public tdate;
+public buttonOptionVehicleType='';
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -145,6 +147,17 @@ public tdate;
  
     this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
+  }
+
+  getVehicleTypeList(){
+    this.turnbooklist = [];
+    this.turnbooklist = this.handleData.giveTurn(); 
+    if(this.buttonOptionVehicleType==='All'){
+
+    }
+    else{
+      this.turnbooklist=this.turnbooklist.filter(r=>{return r.ownerDetails[0].typeOfVehicle===this.buttonOptionVehicleType})
+    }
   }
 
   performActionSetter(data4){
@@ -1461,6 +1474,8 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
   doc.save(this.turn12[0]['truckName']['truckno']+'.pdf')
     }
 
+   
+
     totalLorryHire(){
       let sum=0
       this.turn12.forEach(r=>{
@@ -1483,4 +1498,124 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
     considerForPaymentOption(data,index){
       this.turn12[index]['considerForPayment']=data;
     }
+
+    getpdfcomplex2(){
+
+      let pager=1;
+      let bigValueofY=0;
+      var doc = new jsPDF()
+      doc.setFontSize('25');
+      doc.setFontType('bold');
+      doc.text('Payment Details', 15, 15)//partyname
+      doc.setFontSize('10');
+      doc.text(this.fdate+' to '+this.tdate, 165, 19)//date
+      doc.text(String(pager), 180, 5)//pageno
+      pager=pager+1;
+      doc.setFontSize('25');
+      doc.setLineWidth(0.5);
+      doc.line(0, 20, 210, 20);//line after main header
+      doc.line(20, 20, 20, 300);//punching area line
+      //headers
+      doc.setFontSize('10');
+      let y = 24;
+      let starty = 24;
+      doc.line(0, 148.2, 5, 148.2);//punching line helper
+      doc.text('Sr', 23, y)//partyname
+      doc.text('Date', 38, y)//partyname
+      doc.text('Truck No.', 60, y)//partyname
+      doc.text('Balance', 86, y)//partyname
+      doc.text('Pmt. Date', 101, y)//partyname
+      doc.text('Pmt. Amt', 128, y)//partyname
+      doc.text('Account', 146, y)//partyname
+    
+       doc.line(30, 20, 30, 25);//srno
+       doc.line(55, 20, 55, 25);//date
+       doc.line(83, 20, 83, 25);//truckno
+       doc.line(100, 20, 100, 25);//lrno
+       doc.line(127, 20, 127, 25);//credit
+       doc.line(145, 20, 145, 25);//debit
+    
+      //headers
+      doc.line(0, 25, 210, 25);//line after header
+    
+      let startforI=0;
+        y = y + 6;
+        startforI=0;
+    
+      for (let i = startforI; i < this.turn12.length; i++) {
+    
+       
+        if(y>290){
+          
+          y=30;
+         doc.line(30, starty, 30, 291);//srno
+         doc.line(55, starty, 55, 291);//date
+         doc.line(83, starty, 83, 291);//truckno
+         doc.line(100, starty, 100, 291);//lrno
+         doc.line(127, starty, 127, 291);//credit
+         doc.line(145, starty, 145, 291);//debit
+    
+         starty = 20;
+          doc.addPage();
+          doc.setFontSize('25');
+      doc.setFontType('bold');
+      doc.text('Payment Details', 15, 15)//partyname
+      doc.setFontSize('10');
+      doc.text(this.fdate+' to '+this.tdate, 165, 19)//date
+      doc.text(String(pager), 180, 5)//pageno
+      pager=pager+1;
+      doc.setFontSize('25');
+      doc.setLineWidth(0.5);
+      doc.line(0, 20, 210, 20);//line after main header
+      doc.line(20, 20, 20, 300);//punching area line
+      //headers
+      doc.setFontSize('10');
+      doc.text('Sr', 23, y-6)//partyname
+      doc.text('Date', 38, y-6)//partyname
+      doc.text('Truck No.', 60, y-6)//partyname
+      doc.text('Balance', 86, y-6)//partyname
+      doc.text('Pmt. Date', 101, y-6)//partyname
+      doc.text('Pmt. Amt', 128, y-6)//partyname
+      doc.text('Account', 146, y-6)//partyname
+       
+      
+      //headers
+      doc.line(0, 25, 210, 25);//line after header
+    
+      //vertical lines
+      doc.line(30, 20, 30, 25);//srno
+      doc.line(55, 20, 55, 25);//date
+      doc.line(83, 20, 83, 25);//truckno
+      doc.line(100, 20, 100, 25);//lrno
+      doc.line(127, 20, 127, 25);//credit
+      doc.line(145, 20, 145, 25);//debit
+      //vertical lines
+      }
+         doc.text(String(i+1), 23, y)//partyname
+        doc.text(this.handleF.getDateddmmyy(this.turn12[i]['loadingDate']), 32, y)//partyname
+          doc.text(this.turn12[i]['truckName']['truckno'], 57, y)//truckno
+          doc.text(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['advanceAmt']):'', 88, y)//truckno
+          doc.text(this.handleF.getDateddmmyy(this.turn12[i]['actualPaymentDate']), 101, y)//truckno
+          doc.text(this.turn12[i]['actualPaymentDate']!=''?String(this.turn12[i]['actualPaymentAmount']):'', 129, y)//truckno
+          doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccname']):''):'', 146, y)//truckno
+          doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccNo']):''):'', 146, y+5)//truckno
+          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'':this.turn12[i]['statusOfPoch'],185,y);
+          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'Payment Done':(this.turn12[i]['statusOfPoch']===''?'Not Received':'No Payment'),185,y+5);
+    
+    
+           y = y + 12;
+           doc.line(20, y-5 , 210, y-5 );//line after header
+      bigValueofY=y-5;
+      doc.setFontSize('10');
+    }
+    doc.line(30, starty, 30, bigValueofY);//srno
+    doc.line(55, starty, 55, bigValueofY);//date
+    doc.line(83, starty, 83, bigValueofY);//truckno
+    doc.line(100, starty, 100, bigValueofY);//lrno
+    doc.line(127, starty, 127, bigValueofY);//credit
+    doc.line(145, starty, 145, bigValueofY);//debit
+  
+  
+    doc.save(this.turn12[0]['truckName']['truckno']+'.pdf')
+      }
 }

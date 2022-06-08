@@ -61,6 +61,10 @@ export class GstdisplayComponent implements OnInit {
     }
   };
 
+  copyEmail(data){
+    window.navigator['clipboard'].writeText(data)
+  }
+
   showDatabyid = function (data) {
     this.handledata.saveData(data);
     this.show = true;

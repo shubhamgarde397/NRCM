@@ -62,7 +62,7 @@ public details=false;
 
   ngOnInit() {
 
-       this.role = this.securityCheck.role;
+       this.role = this.securityCheck.role;      
    
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.turnbooklist = [];

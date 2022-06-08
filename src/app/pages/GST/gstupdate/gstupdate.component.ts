@@ -31,6 +31,8 @@ export class GstupdateComponent implements OnInit {
   public loadSingle;
   public loadAmount;
   public loadAdvance;
+  public Email=[]
+  public email=''
   public objectKeys = Object.keys;
   constructor(
     public handledata: HandleDataService,
@@ -50,14 +52,16 @@ export class GstupdateComponent implements OnInit {
       accNo:this. handledata.Data.accNo,
       partyType:this.handledata.Data.partyType,
       shortName:this.handledata.Data.shortName,
-      load:[]
+      load:[],
+      Email:[]
     });
     this.dest = this.handledata.Data.dest;
     this.pT = this.handledata.Data.partyType;
     this.commonArray = this.sec.commonArray;
     this.villagenamelist = this.commonArray.villagenames;
     this.cities=this.handledata.Data.cities;
-    this.load=this.handledata.Data.load
+    this.load=this.handledata.Data.load;
+    this.Email=this.handledata.Data.email;
   }
 
   addLoad(){
@@ -67,6 +71,16 @@ export class GstupdateComponent implements OnInit {
   }
   deleteLoad(i,j){
     this.load.splice(j,1);
+  }
+
+  addEmail(){
+    console.log(this.email);
+    console.log(this.Email);
+    
+    this.Email.push(this.email);
+  }
+  deleteEmail(i,j){
+    this.Email.splice(j,1);
   }
 
   addCity(){
@@ -80,6 +94,7 @@ export class GstupdateComponent implements OnInit {
     let formbody = {}
     formbody['name'] = data.value.name;
     formbody['gst'] = data.value.gst;
+    formbody['email'] = this.Email;
     formbody['dest'] = data.value.dest;
     formbody['addr2'] = data.value.addr1;
     formbody['addr3'] = data.value.addr2;
@@ -99,6 +114,7 @@ export class GstupdateComponent implements OnInit {
           if (res._id == this.handledata.Data._id) {
             res['name'] = data.value.name;
             res['gst'] = data.value.gst;
+            res['email'] = this.Email;
             res['dest'] = data.value.dest;
             res['shortName'] = data.value.shortName;
           }

@@ -83,7 +83,8 @@
       <h3>RC-Xerox : <span [ngStyle]="{'color': i.trucks['r'] ? 'green' : 'red' }">{{i.trucks['r']}}</span></h3>
       <h3>Weight : {{i.trucks['weight']}}</h3>
       <h3>Dimensions : {{i.trucks['hbl']}}</h3>
-      <h3>Account</h3>
+      <h3  *ngIf="role===1">Account</h3>
+      <div *ngIf="role===1">
       <table class="table table-bordered"  *ngIf="i.trucks['accountDetails'].length>0">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
@@ -100,6 +101,7 @@
           </tr>
         </tbody>
       </table>
+    </div>
 <hr style="color: black;">
   </div>
 </div>

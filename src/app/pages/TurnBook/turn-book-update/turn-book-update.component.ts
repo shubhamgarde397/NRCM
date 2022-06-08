@@ -346,6 +346,7 @@ for(let i=0;i<partyDetails.load.length;i++){
   infoFromtypeOfLoad(){
     let typeOfLoad;
     typeOfLoad=this.myFormGroup.value.typeOfLoad.split('+');
+    this.typeToUI=this.myFormGroup.value.typeOfLoad.split('+')[0]
     this.myFormGroup.patchValue({
       typeOfLoad:typeOfLoad[0],
       hamt:typeOfLoad[1],
@@ -393,7 +394,7 @@ for(let i=0;i<partyDetails.load.length;i++){
         tempObj["locationDate"]=this.handledata.Data.locationDate;
         tempObj["locations"]=this.handledata.Data.locations;
       }
-    this.apiCallservice.handleData_New_python('turnbook1', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert(res.Status);
         if (res.Status === 'Updated') {

@@ -81,6 +81,7 @@ export class LoginComponent implements OnInit {
 let value={}
 
       this.security.setUsername(value1.value['username']);
+      
 
       value['method'] = 'login';
       value['username']=value1.value.username
@@ -93,6 +94,7 @@ let value={}
             this.isLoginSuccesss=true;
             this.obs.updateApprovalMessage(res);
             this.router.navigate(['NavigationS']);
+            this.security.setRole(res.Data[0]['role']);
           }
           else{
             this.isLoginSuccesss=false;

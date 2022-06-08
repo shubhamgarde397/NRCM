@@ -59,7 +59,7 @@
         Load Type : {{typeToUI}}
         <select class="form-control" formControlName="typeOfLoad" (change)="infoFromtypeOfLoad()">
           <option value="Blank">Blank</option>
-          <option *ngFor="let i of Loadarr;"  value={{i.loadSingle}}+{{i.loadHire}}+{{i.loadAdvance}}>{{i.loadSingle}}</option>
+          <option *ngFor="let i of Loadarr;"value={{i.loadSingle}}+{{i.loadHire}}+{{i.loadAdvance}}>{{i.loadSingle}}</option>
         </select>
       </div>
       <div class="col-sm-2">

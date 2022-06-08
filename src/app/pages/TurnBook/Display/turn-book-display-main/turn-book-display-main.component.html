@@ -14,8 +14,14 @@
           <select class="form-control" [(ngModel)]="buttonOptionPartyType">
             <option value="NRCM">NRCM</option>
           <option value="NR">NR</option>
-          <option value="SNL">SNL</option>
-          <option value="SGL">SGL</option>
+          </select>
+        </div>
+        <div class="col-sm-3" *ngIf="buttonOption==='1'">
+          <select class="form-control" [(ngModel)]="buttonOptionVehicleType" (change)="getVehicleTypeList()">
+            <option value="Open">Open</option>
+          <option value="Container">Container</option>
+          <option value="None">None</option>
+          <option value="All">All</option>
           </select>
         </div>
 
@@ -577,6 +583,7 @@
     <div class="col-sm-12">
 
 <div class="btn btn-warning" (click)="getpdfcomplex()">PDF C</div>
+
 <div *ngIf="selectDate">
   <div class="row">
     <div class="col-sm-3">Loading From<input type="date" class="form-control" [(ngModel)]="fdate"></div>
@@ -629,6 +636,7 @@
 
 
 <button class="btn btn-danger" (click)="downloadThePDF()" *ngIf="reportPDF">Download</button>
+<button class="btn btn-warning" (click)="getpdfcomplex2()">PDF 2</button>
   <table class="table" style="width:100%" align="center" *ngIf="byTruckName">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>

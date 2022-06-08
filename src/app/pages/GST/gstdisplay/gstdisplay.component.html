@@ -6,11 +6,10 @@
             <tr>
                 <th>Srno</th>
                 <th>Name-SN</th>
-                <th>GST Number</th>
+                <th>GST Number<br>Email</th>
                 <th>Rent</th>
                 <th>Destination</th>
                 <th>Type</th>
-                <th>Account</th>
                 <th>Address</th>
                 <th>Cities</th>
                 <th>Options</th>
@@ -22,7 +21,10 @@
             <tr *ngFor="let i of gstdetailslist;let j = index">
                 <td>{{j+1}}</td>
                 <td>{{i.name}}:{{i.shortName}}</td>
-                <td>{{i.gst}}</td>
+                <td>{{i.gst}}<br>
+                <ul>
+                    <li *ngFor="let ii of i.email" (click)="copyEmail(ii)">{{ii}}</li>
+                </ul></td>
                 <td>
                     <div *ngFor="let ii of i.load">
                         <div *ngFor="let key of objectKeys(ii)">
@@ -34,8 +36,7 @@
                       </div>
                 </td>
                 <td>{{i.dest}}</td>
-                <td>{{i.partyType}}</td>
-                <td>{{i.accNo}}</td>
+                <td>{{i.partyType}}-{{i.accNo}}</td>
                 <td>{{i.addr1}},{{i.addr2}}</td>
                 <td><ul *ngFor="let j of i.cities"><li>{{j}}</li></ul></td>
                 <td>
