@@ -6,9 +6,6 @@
         <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}}>{{i.viewvalue}}</option>
       </select>
     </div>
-    <div class="col-sm-5">
-      <button class="btn btn-warning" (click)="getInformationData()">Get Trucks</button>
-    </div>
   </div>
 
 
@@ -44,24 +41,27 @@
   <div class="row" *ngIf="((buttonOption=='1')||(buttonOption=='2'))">
     <div class="row" *ngIf="printInfo">
 
-      <div class="form-group col-xs-1" align="center">
-        <input type="date" [(ngModel)]="selectedDate" *ngIf="role==1||role==2">
+      <div class="col-xs-3" align="center">
+        <input type="date" [(ngModel)]="selectedDate">
       </div>
 
-      <div class="form-group col-xs-1" align="center">
-        <button class="btn btn-warning" (click)="find()" *ngIf="role==1||role==2">Find</button>
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-warning" (click)="find()">Find</button>
       </div>
-      <div class="form-group col-xs-1" align="center">
-        <button class="btn btn-danger" (click)="download(true)" *ngIf="showPDFButton">PDF</button>
+
       </div>
-      <div class="form-group col-xs-1" align="center">
-        <button class="btn btn-danger" (click)="download(false)" *ngIf="showPDFButton">PDF-Mail</button>
+      <div class="row">
+        <div class="col-xs-2" align="center">
+          <button class="btn btn-danger" (click)="download(true)" *ngIf="showPDFButton">PDF</button>
+        </div>
+        <div class="col-xs-2" align="center">
+          <button class="btn btn-danger" (click)="download(false)" *ngIf="showPDFButton">PDF-Mail</button>
+        </div>
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-danger" (click)="adminAccess()"*ngIf="showPDFButton">Admin</button>
       </div>
-      <div class="form-group col-xs-1" align="center">
-        <button class="btn btn-danger" (click)="adminAccess()" *ngIf="role==1||role==2">Admin</button>
-      </div>
-      <div class="form-group col-xs-1" align="center">
-        <button class="btn btn-danger" (click)="printUpdate()" *ngIf="role==1||role==2"
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-danger" (click)="printUpdate()"*ngIf="showPDFButton"
           [ngStyle]="{'background-color': !printed ? 'red' : 'black' }" [disabled]="printed">Print</button>
       </div>
     </div>

@@ -84,14 +84,8 @@ public details=false;
       case 0:
         this.doFunction(this.publicI,this.publicJ,'delete');
       break;
-      case 1:
-        this.doFunction(this.publicI,this.publicJ,'cancel');
-      break;
       case 2:
         this.doFunction(this.publicI,this.publicJ,'load');
-      break;
-      case 3:
-        this.doFunction(this.publicI,this.publicJ,'okay');
       break;
   }
   }

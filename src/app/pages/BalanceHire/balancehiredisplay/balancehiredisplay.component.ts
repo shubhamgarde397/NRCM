@@ -94,19 +94,6 @@ export class BalancehiredisplayComponent implements OnInit {
     this.givenDate=this.handleF.createDate(new Date());
   }
 
-  getInformationData() {
-    // send truckno here, and fetch only those truck nos data send array
-    this.spinnerService.show();
-    let tempObj = { "method": "getTrucks", "tablename": '' };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
-      .subscribe((res: any) => {
-        this.ownerdetailslist=res.Data
-        this.handledata.saveTruckHuge(res.Data);
-        this.spinnerService.hide();
-        this.showPDFButton=true;
-      });
-  }
-
   adminAccess() {
     this.admin = !this.admin;
   }
@@ -317,6 +304,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
+        this.showPDFButton=true;
         this.printInfo = true;
         this.balanceDate = [];
            this.balanceDate = this.accE(res.balanceData);
@@ -331,14 +319,8 @@ this.actualPayment=this.buttonOption == '5'?true:false;
 
   
   accE(data){
-    data.forEach(r=>{
-      let accountToTransfer=r.commentToTruck.split(' ')[0]
-        let varToCheck = 'acc'+String(accountToTransfer)
-          let truckno = r.truckData[0]['truckno'];
-          let tp=this.ownerdetailslist.find(r=>r.truckno===truckno)
-        r['available']=tp['accountDetails'][0][varToCheck]?'':'X'
-    })
-    return data
+    data.forEach(r=>{r['available']=r['acc'+String(r.commentToTruck.split(' ')[0])]?'':'X'})
+      return data
     }
 
   find2(data, type, set = true) {
@@ -608,6 +590,8 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
         doc.text(this.balanceDate[z].truckData[k].shortDetails, 120, i);//truckno
+        doc.setFontSize('8');
+        doc.text(this.balanceDate[z].truckData[k].Prd, 130, i);//truckno
         K = k;
         i = i + 6;
       }
@@ -907,7 +891,8 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setFontSize('8');
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
-        }
+        doc.text(this.balanceDate[z].truckData[k].Prd, 145, i);//truckno
+        }        
         doc.setFontSize('10');
         K = k;
         i = i + 6;
@@ -929,7 +914,6 @@ if(confirm('Do you want to temporary delete it?')){
       doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
       doc.text(this.balanceDate[z].available, 200, i - (data.length * 6));//accno
-
       i = i + 12;
     }
     doc.text('#', 192, pageStopper)
