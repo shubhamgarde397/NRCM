@@ -733,6 +733,16 @@ if(confirm('Do you want to temporary delete it?')){
      doc.save('GPP.pdf')//partyname
    }
   download(dataTF) {//threshhold is 295
+    let contact=[]
+    let prd=false;
+for(let i=0;i<this.balanceDate.length;i++){
+    for(let j=0;j<this.balanceDate[i]['truckData'].length;j++){
+        if(this.balanceDate[i]['truckData'][j]['Prd']!==''){
+            prd=true;
+            contact=[...contact,...this.balanceDate[i]['truckData'][j]['contact']]
+        }
+    }
+}
     let i;
     if (confirm('Fresh Page?')) {
       i = 16;
@@ -894,17 +904,7 @@ if(confirm('Do you want to temporary delete it?')){
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
         doc.text(this.balanceDate[z].truckData[k].Prd, 149, i);//truckno
-        doc.setFontSize('8');
-          if(this.balanceDate[z].truckData[k].Prd===''){}
-          else
-          {
-            if(this.balanceDate[z].truckData[k].contact.length>0){
-              console.log(storethisI)
-              console.log(k);
-              
-              doc.text(String(this.balanceDate[z].truckData[k].contact[0]), 38.5, storethisI+(k*2)+3);//comments
-            }
-          }
+
         }        
         doc.setFontSize('10');
         K = k;
@@ -927,6 +927,16 @@ if(confirm('Do you want to temporary delete it?')){
       doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
       doc.text(this.balanceDate[z].available, 200, i - (data.length * 6));//accno
+      doc.setFontSize('8');
+      if(prd){
+        if(contact.length>0){
+          for(let op=0;op<contact.length;op++){
+            doc.text(String(contact[op]), 38.5, i-(2*(op*1.5)+3));//comments
+          }
+          
+        
+      }
+    }
       i = i + 12;
     }
     doc.text('#', 192, pageStopper)
