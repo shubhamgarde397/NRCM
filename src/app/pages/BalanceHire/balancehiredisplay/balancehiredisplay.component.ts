@@ -873,8 +873,10 @@ if(confirm('Do you want to temporary delete it?')){
       }
       let K = 0
       doc.setFontSize('10');
+      let storethisI=i;
       if(dataTF){
       doc.text(String(this.balanceDate[z].commentToTruck), 38.5, i);//comments
+
       }
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
@@ -891,7 +893,18 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setFontSize('8');
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
-        doc.text(this.balanceDate[z].truckData[k].Prd, 145, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].Prd, 149, i);//truckno
+        doc.setFontSize('8');
+          if(this.balanceDate[z].truckData[k].Prd===''){}
+          else
+          {
+            if(this.balanceDate[z].truckData[k].contact.length>0){
+              console.log(storethisI)
+              console.log(k);
+              
+              doc.text(String(this.balanceDate[z].truckData[k].contact[0]), 38.5, storethisI+(k*2)+3);//comments
+            }
+          }
         }        
         doc.setFontSize('10');
         K = k;

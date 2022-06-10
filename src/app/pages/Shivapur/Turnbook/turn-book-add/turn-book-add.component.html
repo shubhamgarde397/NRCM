@@ -20,18 +20,30 @@
 
 
     <div class="form-group row">
-      <div class="col-xs-12">
-        TruckNo : 
-        <input type="text" class="form-control" formControlName="truckNo">
+      TruckNo : {{generatedTruckNo}}
+      <br>
+      <div class="col-sm-2">
+        <select class="form-control" formControlName="truckRC" (change)="generateMyTruck()">
+          <option value="TN">TN</option>
+          <option value="KA">KA</option>
+          <option value="AP">AP</option>
+          <option value="MH">MH</option>
+        </select>
+      </div>
+      <div class="col-sm-2">
+        <select class="form-control" formControlName="truckDistrict" (change)="generateMyTruck()">
+          <option value={{i}} *ngFor="let i of arr">{{i}}</option>
+        </select>
       </div>
 
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.truckNo.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+      <div class="col-sm-3">
+        <input type="text" formControlName="truckABC" class="form-control" (change)="generateMyTruck()">
       </div>
+
+      <div class="col-sm-6">
+        <input type="number" formControlName="truckNo" class="form-control" (change)="generateMyTruck()">
+      </div>
+
     </div>
     <!--Truckno-->
 

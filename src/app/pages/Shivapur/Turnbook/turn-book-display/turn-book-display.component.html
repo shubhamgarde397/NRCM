@@ -49,7 +49,7 @@
 
             <td>{{j+1}}</td>
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.trucks.truckno}}<br>{{i.trucks['typeOfVehicle']}}</td>
+            <td>{{i.trucks.truckno}}<br>{{i.trucks['typeOfVehicle']}}<br><span *ngIf='!i.trucks.document'><span style="color: red;font-weight: bold;" (click)="document(i.trucks._id,j)">(Please take Document)</span></span></td>
             <td>
               <div class="col-sm-2">
                 <div class="row">

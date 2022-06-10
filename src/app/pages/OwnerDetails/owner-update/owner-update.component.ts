@@ -134,6 +134,7 @@ public typeOfVehicle;
     formbody['acc12'] = data.value.acc12;
     formbody['acc363'] = data.value.acc363;
     formbody['transportid'] = this.handledata.Data.transportid;
+    formbody['document'] = this.handledata.Data.document;
     
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)

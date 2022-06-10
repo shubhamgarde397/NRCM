@@ -28,6 +28,8 @@ export class TurnBookAddComponent implements OnInit {
   public role;
   public method;
   public turnbookDate;
+  public generatedTruckNo='';
+  arr=['01', '02', '03', '04', '05', '06', '07', '08', '09']
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
@@ -38,6 +40,9 @@ export class TurnBookAddComponent implements OnInit {
 
 
   ngOnInit() {
+    for(let i=10;i<100;i++){
+      this.arr.push(String(i))
+  }
     this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.obs.dateService.subscribe((res: any) => {
       let arr = res.split('_');
@@ -47,14 +52,39 @@ export class TurnBookAddComponent implements OnInit {
 
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: ['', Validators.required],
-      truckNo: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]],
+      // truckNo: ['', [Validators.required]],
+      truckRC:['', [Validators.required]],
+      truckDistrict:['', [Validators.required]],
+      truckABC:[''],
+      truckNo:['', [Validators.required,Validators.pattern('[0-9]{4}')]],
     });
 
     this.role = this.securityCheck.role;
   }
 
+  generateMyTruck(){
+    if(this.myFormGroup.value.truckABC===''){
+    this.generatedTruckNo=
+    this.myFormGroup.value.truckRC+
+    this.myFormGroup.value.truckDistrict+
+    ' '+
+    this.myFormGroup.value.truckNo
+    }else{
+      this.generatedTruckNo=
+    this.myFormGroup.value.truckRC+
+    this.myFormGroup.value.truckDistrict+
+    ' '+
+    this.myFormGroup.value.truckABC.toUpperCase()+
+    ' '+
+    this.myFormGroup.value.truckNo
+    }
+  }
+
 
   revert() {
+    this.myFormGroup.patchValue({ truckRC: '' });
+    this.myFormGroup.patchValue({ truckDistrict: '' });
+    this.myFormGroup.patchValue({ truckABC: '' });
     this.myFormGroup.patchValue({ truckNo: '' });
 
   }
@@ -62,7 +92,7 @@ export class TurnBookAddComponent implements OnInit {
   storeTurnBookData() {
     this.submitted = true;
     let tempobj = {};
-    tempobj['truckno'] = this.myFormGroup.value.truckNo;
+    tempobj['truckno'] = this.generatedTruckNo;
     tempobj['turnbookDate'] = this.turnbookDate;
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = '';

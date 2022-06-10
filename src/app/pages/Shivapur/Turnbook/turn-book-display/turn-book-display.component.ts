@@ -108,6 +108,19 @@ public details=false;
     this.tableSelected=false;
   }
 
+  document(data,index){
+    let tempObj = {};
+
+    tempObj['tablename'] = ''
+    tempObj['method'] ='updateDocument'
+    tempObj['_id']=data;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert('Updated!');
+        this.turnbooklist[index]['trucks']['document']=true;
+      });
+    
+  }
 
 
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
