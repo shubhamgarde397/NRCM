@@ -23,9 +23,6 @@
       <div class="col-xs-3">
         Pan - <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A">
       </div>
-      <div class="col-xs-2">
-        Srno - <input type="number" id="srno" class="form-control" formControlName="srno">
-      </div>
     </div>
 
 
@@ -153,7 +150,7 @@
         </select>
         
       </div>
-      <div class="col-xs-4">
+      <div class="col-xs-3">
         <ul *ngFor="let i of preferenceArrayName;let j =index;">
           <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneP(i,j)"
               class="btn-danger btn-sm btn-just-icon">
@@ -162,8 +159,25 @@
         </ul>
       </div>
     </div>
-    <!-- Preference -->
+ <!-- Preference -->
+<!-- Transport -->
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <button class="btn btn-danger" (click)="getTransports()">Get!</button>
+        <select id="preferences" class="form-control" [(ngModel)]="selectedTransportNo" [ngModelOptions]="{standalone: true}"  (change)="findTramsportDetails()">
+          <option disabled selected>Select Transport</option>
+          <option *ngFor="let i of transportsArrayList;let j=index;" value={{j}}>{{i.tptName}}
+          </option>
+        </select>
+        
+      </div>
+      <div class="col-xs-3">
+        {{selectedTransport}}
+      </div>
+    </div>
 
+
+   <!-- Transport -->
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>
       <div class="form-group" class="col-xs-1">

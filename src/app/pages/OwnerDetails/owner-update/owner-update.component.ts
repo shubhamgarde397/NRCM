@@ -38,6 +38,11 @@ public typeOfVehicle;
   public no;
   public preferenceArrayName=[]
   public ownerdetailslist;
+  public transportsArray=[];
+public selectedTransport;
+public selectedTransportid;
+public transportsArrayList=[];
+public selectedTransportNo;
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -70,7 +75,7 @@ public typeOfVehicle;
       P: [this.handledata.Data.P],
       hbl: [this.handledata.Data.hbl],
       weight: [this.handledata.Data.weight],
-      srno:[this.handledata.Data.srno]
+      transports:[this.handledata.Data.transports]
       
     });
 
@@ -82,6 +87,9 @@ public typeOfVehicle;
     this.contactArray = this.handledata.Data.contact;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
+    this.transportsArray = this.handledata.Data.transports;
+    this.selectedTransport=this.transportsArray[0]['tptName'];
+    this.selectedTransportid=this.transportsArray[0]['_id'];
     this.role = this.sec.role;
     this.type=this.handledata.Data.typeOfVehicle;
     this.no=this.handledata.Data.updateNumber
@@ -98,9 +106,27 @@ public typeOfVehicle;
 
   fetchBasic() {
     this.villagedetailslist=[];
+    this.transportsArray = [];
     this.commonArray = this.sec.commonArray;
     this.villagedetailslist = this.commonArray.villagenames;
-    
+    this.transportsArrayList = this.commonArray.transport;
+  }
+
+  
+
+  getTransports(){
+    this.considerArray = this.handledata.createConsiderArray('infotpt')
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.sec.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.sec.commonArray['transport'];;
+        this.fetchBasic();
+      });
+  }
+
+  findTramsportDetails(){
+    this.selectedTransport=this.transportsArrayList[this.selectedTransportNo]['tptName']
+    this.selectedTransportid=this.transportsArrayList[this.selectedTransportNo]['_id']
   }
 
   back() {
@@ -130,10 +156,9 @@ public typeOfVehicle;
     formbody['P'] = data.value.P;
     formbody['hbl'] = data.value.hbl;
     formbody['weight'] = data.value.weight;
-    formbody['srno'] = data.value.srno;
     formbody['acc12'] = data.value.acc12;
     formbody['acc363'] = data.value.acc363;
-    formbody['transportid'] = this.handledata.Data.transportid;
+    formbody['transportid'] = this.selectedTransportid;
     formbody['document'] = this.handledata.Data.document;
     
 
@@ -161,7 +186,6 @@ public typeOfVehicle;
               res['P'] = data.value.P;
               res['hbl'] = data.value.hbl;
               res['weight'] = data.value.weight;
-              res['srno'] = data.value.srno;
               res['acc12'] = data.value.acc12;
               res['acc363'] = data.value.acc363;
             }

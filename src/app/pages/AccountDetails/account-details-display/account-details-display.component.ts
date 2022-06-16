@@ -356,7 +356,7 @@ switch (this.buttonOption) {
     });
   }
 
-  updatetpt(i,j){
+  updatetpt(i,j,data){
     if(this.selectedTransporter===''){
       alert('Cannot add empty fields')
     }
@@ -365,6 +365,7 @@ switch (this.buttonOption) {
       tempObj['tptid']=this.selectedTransporter;
       tempObj['ownerid']=i['_id'];
       tempObj['tablename']='';
+      tempObj['typer']=data;
       tempObj['method']='SMARTTRANSPORTUPDATE';
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {

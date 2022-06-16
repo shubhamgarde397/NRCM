@@ -214,7 +214,11 @@
           </select>
 
         </td>
-        <td><button class="btn btn-warning" (click)="updatetpt(ii,jj)">Update</button></td>
+        <td>
+          <button class="btn btn-warning" (click)="updatetpt(ii,jj,'diff')">Update</button>
+          <br>
+          <button class="btn btn-warning" (click)="updatetpt(ii,jj,'self')">Self</button>
+        </td>
       </tr>
     </tbody>
   </table>

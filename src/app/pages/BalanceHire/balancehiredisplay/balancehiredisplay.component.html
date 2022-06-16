@@ -350,6 +350,51 @@
     </div>
     </div>
 
+    <!-- <div class="well" *ngIf="buttonOption=='6'">  
+      <div class="row">
+        <h3>Balance Message</h3>
+       
+        <div class="well"  *ngIf="actualPayment">
+         
+          <div class="row">
+          <div class="col-sm-3">
+            Select Poch Date To Procees : 
+            <input type="date" class="form-control" [(ngModel)]="selectedDoneDate" (change)="fetchDonePayments()">  
+          </div> 
+        
+        </div>
+          
+            <div class="row" *ngIf="paymentSettings">
+  
+              <table class="table" style="width:100%" align="center">
+                <thead class="table-header">
+                    <tr>
+                        <th>Srno</th>
+                        <th>Truckno</th>
+                        <th>Date</th>
+                        <th>Party:Type:Place</th>
+                        <th>Poch:Pgno</th>
+                        <th>Option</th>
+                    </tr>
+                </thead>
+        
+        
+                <tbody>
+                    <tr *ngFor="let i of fullPaymentDone;let j = index">
+                        <td>{{j+1}}</td>
+                        <td>{{i.truckno}}</td>
+                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                        <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.BHAmount}}</td>
+                        <td><button class="btn btn-warning">Add</button></td>
+                    </tr>
+                </tbody>
+            </table>  
+  
+            </div>
+        </div>
+      </div>
+      </div> -->
+
 <div *ngIf="show">
   <router-outlet></router-outlet>
 </div>

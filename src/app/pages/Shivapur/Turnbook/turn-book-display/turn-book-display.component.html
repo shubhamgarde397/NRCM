@@ -32,8 +32,8 @@
       <!--DATE -->
 
       <h3>{{todaysDate}}</h3>
-    <div><button class="btn btn-warning" (click)="changeDetails()" style="width: 100%;">Change Format</button></div>
-      <table class="table" style="width:100%" align="center" *ngIf="!details">
+    <!-- <div><button class="btn btn-warning" (click)="changeDetails()" style="width: 100%;">Change Format</button></div> -->
+      <!-- <table class="table" style="width:100%" align="center" *ngIf="!details">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
@@ -69,11 +69,13 @@
           </td>
           </tr>
         </tbody>
-      </table>
+      </table> -->
 
-<div class="well" *ngIf="details">
+<div class="well" *ngIf="!details">
   <div class="row" *ngFor="let i of turnbooklist;let j = index">
       <h3>{{j+1}}.)&nbsp;Truck No : <br>{{i.trucks['truckno']}}</h3>
+      <h5><span *ngIf='!i.trucks.document'><span style="color: red;font-weight: bold;" (click)="document(i.trucks._id,j)">(Please take Document)</span></span></h5>
+      <button class="btn btn-success" data-toggle="modal" data-target="#myModal" (click)="setButtonValues(i._id,j)">Action</button>
       <h4>Type : {{i.trucks['typeOfVehicle']}}</h4>
       <h3>PAN : {{i.trucks['pan']}}</h3>
       <h3>Name : {{i.trucks['oname']}}</h3>

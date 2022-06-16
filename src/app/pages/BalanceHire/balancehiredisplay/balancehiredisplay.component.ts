@@ -31,7 +31,8 @@ export class BalancehiredisplayComponent implements OnInit {
     { 'value': '2', 'viewvalue': 'Check Prints' },
     { 'value': '3', 'viewvalue': 'Given Date' },
     { 'value': '4', 'viewvalue': 'Given Payment Pending' },
-    { 'value': '5', 'viewvalue': 'Update Actual Payments' }
+    { 'value': '5', 'viewvalue': 'Update Actual Payments' },
+    { 'value': '6', 'viewvalue': 'Balance Message' }
   ]
   public months = [
     { '1': 'Jan' },
@@ -733,16 +734,7 @@ if(confirm('Do you want to temporary delete it?')){
      doc.save('GPP.pdf')//partyname
    }
   download(dataTF) {//threshhold is 295
-    let contact=[]
-    let prd=false;
-for(let i=0;i<this.balanceDate.length;i++){
-    for(let j=0;j<this.balanceDate[i]['truckData'].length;j++){
-        if(this.balanceDate[i]['truckData'][j]['Prd']!==''){
-            prd=true;
-            contact=[...contact,...this.balanceDate[i]['truckData'][j]['contact']]
-        }
-    }
-}
+
     let i;
     if (confirm('Fresh Page?')) {
       i = 16;
@@ -881,9 +873,11 @@ for(let i=0;i<this.balanceDate.length;i++){
         doc.setTextColor(0, 0, 0);
         i = 16;
       }
+
+
+
       let K = 0
       doc.setFontSize('10');
-      let storethisI=i;
       if(dataTF){
       doc.text(String(this.balanceDate[z].commentToTruck), 38.5, i);//comments
 
@@ -922,21 +916,31 @@ for(let i=0;i<this.balanceDate.length;i++){
       doc.line(92, i - (data.length * 6) - 5, 92, i + 7);
       doc.line(155, i - (data.length * 6) - 5, 155, i + 7);
 
+      // let contact=[]
+      // let prd=false;
+      // for(let j=0;j<this.balanceDate[i]['truckData'].length;j++){
+      //     if(this.balanceDate[i]['truckData'][j]['Prd']!==''){
+      //         prd=true;
+      //         contact=[...contact,...this.balanceDate[i]['truckData'][j]['contact']]
+      //     }
+      // }
+    //   if(prd){
+    //     if(contact.length>0){
+    //       for(let op=0;op<contact.length;op++){
+    //         doc.text(String(contact[op]), 38.5, i-(2*(op*1.5)+3));//comments
+    //       }
+          
+        
+    //   }
+    // }
+  
       doc.setFontSize('10');
       doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
       doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
-      doc.text(this.balanceDate[z].available, 200, i - (data.length * 6));//accno
+      doc.text(this.balanceDate[z].available, 200, i + 6 - (data.length * 6));//accno
       doc.setFontSize('8');
-      if(prd){
-        if(contact.length>0){
-          for(let op=0;op<contact.length;op++){
-            doc.text(String(contact[op]), 38.5, i-(2*(op*1.5)+3));//comments
-          }
-          
-        
-      }
-    }
+      
       i = i + 12;
     }
     doc.text('#', 192, pageStopper)

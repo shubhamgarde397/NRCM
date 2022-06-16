@@ -21,7 +21,8 @@
               <td>{{j+1}}</td>
               <td>{{i.tptName}}</td>
               <td>{{i.name}}</td>
-              <td>{{i.pan}}</td>
+              <td>{{i.pan}}<br> <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
+                <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i></td>
               <td><ul *ngFor="let j of i.contact"><li>{{j}}</li></ul></td>
               <td>Account Details WIP</td>
               <td>{{i.addr1}}<br>{{i.addr2}}<br>{{i.addr3}}</td>

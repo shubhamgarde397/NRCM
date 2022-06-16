@@ -732,58 +732,22 @@ this.placeid=this.tempDate[0]['place']['_id']
       this.show = true;
 
       let tempObj = {};
-      tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
-      tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
-      tempObj['placeid2'] = '';
-      tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
       tempObj['_id'] = data._id;
       tempObj['loadingDate'] = newdate;
-
-      tempObj['locations'] = data.locations;
-      tempObj['locationDate'] = data.locationDate;
-      tempObj['method'] = 'update';
+      
+      tempObj['method'] = 'canuncanel';
       tempObj['tablename'] = 'turnbook';
-      tempObj["turnbookDate"] = data.turnbookDate,
-        tempObj["entryDate"] = data.entryDate,
-        tempObj["lrno"] = 0;
-        tempObj["invoice"] = '';
       tempObj["partyType"] = newtype;
-      tempObj["hamt"] = 0;
-      tempObj["ohamt"] = data.ohamt;
       tempObj["pochDate"] = newpochDate;
       tempObj["givenDate"] = newgivenDate;
-      tempObj["pochPayment"] = false;
-      tempObj["pgno"] = 997;
-      tempObj['index'] = j;
-      tempObj['qr'] = 0;
-      tempObj['qrid'] = '61c082b87dcfd6ecb7f02b90';
-      tempObj['advanceArray'] = data.advanceArray;
+      tempObj["pgno"] = pgno;
       tempObj['number'] = 2;
-      tempObj['typeOfLoad'] = '';
-      tempObj['complete'] = false;
-      tempObj['pochAmount'] = 0;
-      tempObj['parentAccNo'] = data.parentAccNo;
-      tempObj['paymentid'] = data.paymentDetails[0]._id;
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
           alert(res.Status);
-          this.handleData.turnData[j]['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;;
-          this.handleData.turnData[j]['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
-          this.handleData.turnData[j]['placeid2'] = '';
-          this.handleData.turnData[j]['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
           this.handleData.turnData[j]['loadingDate'] = newdate;
-          this.handleData.turnData[j]["turnbookDate"] = data.turnbookDate,
-            this.handleData.turnData[j]["entryDate"] = data.entryDate,
-            this.handleData.turnData[j]["lrno"] = '';
           this.handleData.turnData[j]["partyType"] = newtype;
-          this.handleData.turnData[j]["hamt"] = '';
-          this.handleData.turnData[j]["pochDate"] = '';
-          this.handleData.turnData[j]["pochPayment"] = '';
-          this.handleData.turnData[j]["pgno"] = '';
           this.handleData.turnData[j]['index'] = j;
-          this.handleData.turnData[j]["locations"] = '';
-          this.handleData.turnData[j]["complete"] = false;
-          this.handleData.turnData[j]['locationDate'] = j;
           let tempData = this.handleData.giveTurn();
           this.handleData.saveTurn([]);
           let tempArray = []

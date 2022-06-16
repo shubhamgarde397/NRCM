@@ -29,6 +29,7 @@ export class TransportUpdateComponent implements OnInit {
       tptName:this.handledata.Data.tptName,
       name: this.handledata.Data.name,
       pan:this.handledata.Data.pan,
+      P:this.handledata.Data.P,
       contact:[this.handledata.Data.contact],
       addr1:this.handledata.Data.addr1,
       addr2:this.handledata.Data.addr2,
@@ -45,6 +46,7 @@ export class TransportUpdateComponent implements OnInit {
     formbody['tptName'] = data.value.tptName;
     formbody['name'] = data.value.name;
     formbody['pan'] = data.value.pan;
+    formbody['P'] = data.value.P;
     formbody['contact'] = this.contactArray;
     formbody['addr1'] = data.value.addr1;
     formbody['addr2'] = data.value.addr2;
@@ -61,6 +63,7 @@ export class TransportUpdateComponent implements OnInit {
             res['tptName'] = data.value.tptName;
             res['name'] = data.value.name;
             res['pan'] = data.value.pan;
+            res['P']=data.value.P;
             res['contact'] = this.contactArray;
             res['addr1'] = data.value.addr1;
             res['addr2'] = data.value.addr2;

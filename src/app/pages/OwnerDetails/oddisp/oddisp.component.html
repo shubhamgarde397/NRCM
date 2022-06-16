@@ -29,7 +29,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let i of ownerdetailslist;let j = index">
-                <td>{{j+1}}<br>{{i.srno}}</td>
+                <td>{{j+1}}</td>
                 <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}<br>
                     <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
                     <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
@@ -82,13 +82,6 @@
                         <li>{{j}}</li>
                     </ul>
                 </td>
-                <td  *ngIf="role==1||role==2">
-                    <div class="btn-group-xs">                        
-                        <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
-                        <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
-                        <i class="material-icons" style="color: green;cursor: pointer;" (click)="showDatabyid(i,false)">redo</i>
-                      </div>
-                </td>
             </tr>
         </tbody>
     </table>
@@ -121,7 +114,7 @@
         </thead>
         <tbody>
             <tr *ngFor="let i of ownerdetailslist2;let j = index">
-                <td>{{j+1}}<br>{{i.srno}}</td>
+                <td>{{j+1}}</td>
                 <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
                     <br>{{i.hbl}}-{{i.weight}}
                 </td>
