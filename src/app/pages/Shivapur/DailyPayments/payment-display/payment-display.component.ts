@@ -13,6 +13,7 @@ export class PaymentDisplayComponent implements OnInit {
 public show = false;
 public date = new Date();
 public role = 6;
+public paymentlist;
 
 constructor(public apiCallservice: ApiCallsService ) {
 }
@@ -32,6 +33,20 @@ find = function () {
         this.paymentlist = res.Data;
     });
 };
+
+delete(i,j){
+  if(confirm('Are you sure to delete?')){
+    let tempObj={}
+    tempObj['method']='deleteP';
+    tempObj['_id']=i['_id'];
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation',1,tempObj,1)
+    .subscribe((res:any)=>{
+      alert(res.Status);
+      this.paymentlist.splice(j, 1);
+    })
+}
+}
 
 
 }

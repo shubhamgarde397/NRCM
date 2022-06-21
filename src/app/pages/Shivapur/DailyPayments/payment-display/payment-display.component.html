@@ -13,6 +13,7 @@
             <th>Srno<br>User</th>
             <th>Date<br>Amount</th>
             <th>Reason</th>
+            <th>Option</th>
           </tr>
         </thead>
 
@@ -21,6 +22,7 @@
             <td>{{j+1}}<br>{{i.user}}</td>
             <td>{{i.cashFlowDate|date:'dd-MM-yyyy'}}<br>{{i.cashFlowAmount}}</td>
             <td>{{i.cashFlowReason}}</td>
+            <td><button class="btn btn-danger" (click)="delete(i,j)">Delete</button></td>
           </tr>
         </tbody>
       </table>

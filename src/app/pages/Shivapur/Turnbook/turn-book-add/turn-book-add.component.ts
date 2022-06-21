@@ -56,7 +56,7 @@ export class TurnBookAddComponent implements OnInit {
       truckRC:['', [Validators.required]],
       truckDistrict:['', [Validators.required]],
       truckABC:[''],
-      truckNo:['', [Validators.required,Validators.pattern('[0-9]{4}')]],
+      truckNo:['', [Validators.required,Validators.pattern('[0-9]{3,4}')]],
     });
 
     this.role = this.securityCheck.role;
