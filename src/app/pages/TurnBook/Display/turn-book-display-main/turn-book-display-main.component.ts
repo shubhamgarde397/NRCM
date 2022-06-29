@@ -1485,7 +1485,7 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
       let starty = 24;
       doc.line(0, 148.2, 5, 148.2);//punching line helper
       doc.text('Sr', 23, y)//partyname
-      doc.text('Date', 38, y)//partyname
+      doc.text('Loading Date', 32, y)//partyname
       doc.text('Truck No.', 60, y)//partyname
       doc.text('Balance', 86, y)//partyname
       doc.text('Pmt. Date', 101, y)//partyname
@@ -1535,7 +1535,7 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
       //headers
       doc.setFontSize('10');
       doc.text('Sr', 23, y-6)//partyname
-      doc.text('Date', 38, y-6)//partyname
+      doc.text('Loading Date', 32, y-6)//partyname
       doc.text('Truck No.', 60, y-6)//partyname
       doc.text('Balance', 86, y-6)//partyname
       doc.text('Pmt. Date', 101, y-6)//partyname
@@ -1564,7 +1564,8 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
           doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccname']):''):'', 146, y)//truckno
           doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccNo']):''):'', 146, y+5)//truckno
           doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'':this.turn12[i]['statusOfPoch'],185,y);
-          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'Payment Done':(this.turn12[i]['statusOfPoch']===''?'Not Received':'No Payment'),185,y+5);
+          let pmtx=this.turn12[i]['statusOfPoch']==='Okay'?'185':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'178':'178'):'185')
+          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'Payment Done':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'Received Pending':'Payment Pending'):'No Payment'),pmtx,y+5);
     
     
            y = y + 12;

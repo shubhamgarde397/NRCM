@@ -40,7 +40,7 @@ import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
 import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
 import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
 import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
-import { NavigationSComponent } from './pages/navigation-s/navigation-s.component';
+
 
 
 @NgModule({
@@ -48,7 +48,6 @@ import { NavigationSComponent } from './pages/navigation-s/navigation-s.componen
     AppComponent,
     LoginComponent,
     NavigationComponent,
-    NavigationSComponent,
     RegisterComponent,
     WelcomePageComponent,
     DrawerComponent,

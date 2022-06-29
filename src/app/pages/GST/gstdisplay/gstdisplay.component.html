@@ -8,7 +8,7 @@
                 <th>Name-SN</th>
                 <th>GST Number<br>Email</th>
                 <th>Rent</th>
-                <th>Destination</th>
+                <th>Destination<br>Contact</th>
                 <th>Type</th>
                 <th>Address</th>
                 <th>Cities</th>
@@ -20,7 +20,7 @@
         <tbody>
             <tr *ngFor="let i of gstdetailslist;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.name}}:{{i.shortName}}</td>
+                <td>{{i.name}}:{{i.shortName}}<br>Msg N: <span style="cursor:grab;" (click)="msgs(i.msgid)">{{i.msgid}}</span><br>Msg S: <span style="cursor:grab;" (click)="msgs(i.msgidS)">{{i.msgidS}}</span></td>
                 <td>{{i.gst}}<br>
                 <ul>
                     <li *ngFor="let ii of i.email" (click)="copyEmail(ii)">{{ii}}</li>
@@ -35,7 +35,11 @@
                         </div>
                       </div>
                 </td>
-                <td>{{i.dest}}</td>
+                <td>{{i.dest}}<br>
+                        <ul *ngFor="let k of i.contact">
+                            <li>{{k}}</li>
+                        </ul>
+                </td>
                 <td>{{i.partyType}}-{{i.accNo}}</td>
                 <td>{{i.addr1}},{{i.addr2}}</td>
                 <td><ul *ngFor="let j of i.cities"><li>{{j}}</li></ul></td>

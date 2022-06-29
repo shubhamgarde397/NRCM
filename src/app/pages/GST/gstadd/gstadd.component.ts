@@ -51,7 +51,10 @@ export class GstaddComponent implements OnInit {
       accNo:0,
       partyType:'',
       shortName:'',
-      email:[]
+      email:[],
+      contact:[],
+      msgid:'',
+      msgidS:''
     });
   }
 

@@ -5,6 +5,20 @@ body
     font-family: sans-serif;
 }
 
+.wid{
+width: 100%;;
+}
+
+.backgroundWhite{
+    background-color: white;
+}
+.fonthead{
+    font-weight: 700;
+    font-family: monospace;
+}
+.fontbody{
+    font-family: monospace;
+}
 ul
 {
     position: fixed;

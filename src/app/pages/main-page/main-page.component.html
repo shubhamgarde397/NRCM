@@ -2,33 +2,41 @@
   <router-outlet>
   </router-outlet>
 </div>
-<div *ngIf="!loginV">
+<div *ngIf="!loginV" style="font-family: 'Comfortaa', arial, sans-serif;">
 
 
 
-  <nav class="navbar navbar-inverse">
-    <div class="container row">
+  <nav class="navbar navbar-inverse" style="position: fixed;width:100%;z-index:1;">
+    <div class="container row" style="width: 100%;">
+      <div class="col-sm-6">
       <div class="navbar-header">
-        <a class="navbar-brand" routerLink="NRCM_HOME">Nitin Roadways And Cargo Movers</a>
+        <a class="navbar-brand fonthead" routerLink="NRCM_HOME">
+          Nitin Roadways And Cargo Movers
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3 fontbody">
+        <a class="navbar-brand" routerLink="NRCM_HOME">Home&nbsp;&nbsp;</a>
+        <a class="navbar-brand" routerLink="NRCM_ABOUT">About Us&nbsp;&nbsp;</a>
+        <a class="navbar-brand" routerLink="NRCM_HOME">Truck&nbsp;&nbsp;</a>
+        <a class="navbar-brand" routerLink="NRCM_HOME">Contact&nbsp;&nbsp;</a>
+        <a class="navbar-brand" (click)="login('nrcm')">Login</a>
       </div>
     </div>
 
   </nav>
 
-  <div class="well">
-    <div class="row">
-      <div class="col-sm-3"><button style="width: 50%;height: 100%;" (click)="login('nrcm')" class="btn btn-success">Personal Login</button></div>
-      <div class="col-sm-3"><button style="width: 50%;height: 100%;" (click)="login('Shivapur')" class="btn btn-success">Shivapur Login</button></div>
-      <div class="col-sm-3"><button style="width: 50%;height: 100%;" (click)="whatsapp()" class="btn btn-success">Whatsapp</button></div>
-    </div>
-    <div class="row">
-      <br><span style="color:white;">v.22.3.4</span>
-      <br><span style="color:white;">d.22.3.12</span>
-    </div>
-
-    <div class="container">
-      <h2>What We Do...</h2>
-      <div id="myCarousel" class="carousel slide" data-ride="carousel">
+  <div class="well backgroundWhite">
+<br>
+<br>
+<br>
+    <div class="row container wid backgroundWhite">
+      <div class="well backgroundWhite" style="background-color: antiquewhite;">
+        <marquee><h3 class="fonthead">Daily Service : Tamil Nadu, Pondicherry, Karnataka, Kerala</h3></marquee>
+      </div>
+      <h2 class="wid fonthead">Our Advantages</h2>
+      <div id="myCarousel" class="carousel slide wid" data-ride="carousel">
         <ol class="carousel-indicators">
           <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
           <li data-target="#myCarousel" data-slide-to="1"></li>
@@ -37,17 +45,17 @@
         <div class="carousel-inner">
           <div class="item active">
             <img src="../../../assets/images/travel.jpg" alt="Chicago" style="width:100%;">
-            <h3>We Transport goods from Maharashtra to all the Southern part of the Nation!</h3>
+            <h3 class="fontbody">Daily Service to Tamil Nadu, Pondicherry , Karnataka and Kerala</h3>
           </div>
 
           <div class="item">
             <img src="../../../assets/images/online.jpg" alt="Chicago" style="width:100%;">
-            <h3>We pay advance amounts through net banking , so not a chance of getting delayed with your travel.</h3>
+            <h3 class="fontbody">No delayed Payments!</h3>
           </div>
 
           <div class="item">
             <img src="../../../assets/images/tfs.jpg" alt="Chicago" style="width:100%;">
-            <h3>Avaliable for you 24 by 7 !</h3>
+            <h3 class="fontbody">Avaliable 24 by 7 !</h3>
           </div>
         </div>
 
@@ -62,28 +70,140 @@
       </div>
     </div>
 
-    <div class="row container">
-      <h2>Feel free to reach out to us on :</h2>
-      <h3>Give us a call on :</h3>
+    <div class="row well wid backgroundWhite">
+      <h1 style="text-align: center;" class="fonthead">-Popular Truck Types-</h1>
+    </div>
+<div class="row container wid backgroundWhite">
+    <div class="col-md-12">
+      <style>#type1{width:95% !important;}#border{border: 2px solid #ddd;height: 298px !important;width: 19% !important;}@media only screen and (max-width: 991px) {#border{width: 140% !important;}.payment-option{display: inline-block !important;}}@media only screen and (min-device-width : 768px) and (max-device-width : 1024px)  {#type1{display:none;} }</style>
+          <div class="col-md-2" id="border" style="margin-right:10px;">
+          <div class="center">
+          <img src="../../../assets/images/tataace.jpg" loading="lazy" alt="Tata Ace - TruckGuru LLP">
+          </div>
+          <div class="center fontbody">
+          <h4 style="margin-top: 100px !important;"><b>TATA ACE</b></h4>
+          </div>
+          </div>
+
+          <div class="col-md-2" id="border" style="margin-right:10px;">
+          <div class="center">
+          <img src="../../../assets/images/eicher-19feet.jpg" loading="lazy" alt="Eicher Truck - TruckGuru LLP">
+          </div>
+          <div class="center fontbody">
+          <h4 style="margin-top: 40px !important;"><b>EICHER 19/20 Feet</b></h4>
+          </div>
+          </div>
+
+          <div class="col-md-2" id="border" style="margin-right:10px;">
+          <div class="center">
+          <img src="../../../assets/images/taurus-21ton.jpg" loading="lazy" alt="Truck - TruckGuru LLP">
+          </div>
+          <div class="center fontbody">
+          <h4 style="margin-top: 68px !important;"><b>TATA TAURUS 21 T</b></h4>
+          </div>
+          </div>
+
+            <div class="col-md-2" id="border" style="margin-right:10px;">
+            <div class="center">
+            <img src="../../../assets/images/24ft.jpg" loading="lazy" alt="Eicher Truck - TruckGuru LLP">
+            </div>
+            <div class="center fontbody">
+            <h4 style="margin-top: 40px !important;"><b>Container 20/22/24 Feet</b></h4>
+            </div>
+            </div>
+
+            <div class="col-md-2" id="border" style="margin-right:10px;">
+            <div class="center">
+            <img src="../../../assets/images/32ft.jpg" loading="lazy" alt="Truck - TruckGuru LLP">
+            </div>
+            <div class="center fontbody">
+            <h4 style="margin-top: 60px !important;"><b>Container 32 Feet</b></h4>
+            </div>
+            </div>
+      </div>
+
+  
+  </div>
+<br>
+<br>
+
+<div class="wid fonthead backgroundWhite">
+  <h1 style="text-align: center;">JOIN US AND LETS GROW TOGETHER.</h1>
+</div>
+<br>
+<br>
+
+
+<!-- <div class="wid fonthead backgroundWhite">
+  <h1 style="text-align: center;">ABOUT US</h1>
+  <h3>
+  <ol class="wid fontbody backgroundWhite">
+    <li>More Than 5000+ Happy Customers.</li>
+  </ol>
+</h3>
+</div> -->
+<!-- <br>
+<br> -->
+
+
+<div class="container wid" style="color:white;background-color: #262626;">
+    <div class="row">
+
+     <div class="col-sm-4">
+      <h3 class="fonthead">  Contact for Loading : <br><br>Mr. Nitin</h3>
       <h4>
-        <a href="tel:+91 9822288257">+91 9822288257</a> &nbsp;&nbsp;
+        <a href="tel:+91 9822288257" style="color:white" class="fontbody">+91 9822288257</a> &nbsp;&nbsp;
         <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('nitin','wa')"><i class="material-icons"> whatsapp</i></button>
         <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
       </h4>
       <h4>
-        <a href="tel:+91 9423580221">+91 9423580221</a> &nbsp;&nbsp;
+        <a href="tel:+91 9423580221" style="color:white" class="fontbody">+91 9423580221</a> &nbsp;&nbsp;
         <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','wa')"><i class="material-icons">whatsapp</i></button>
         <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
       </h4>
-      <h4>
-        <a href="tel:+91 9766707061">+91 9766707061</a> &nbsp;&nbsp;
-        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('shubham','wa')"><i class="material-icons">whatsapp</i></button>
-        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('shubham','txt')"><i class="material-icons">chat</i></button>
-      </h4>
 
-      <h3>Mail us to :</h3>
-      <h4>nitinroadways@gmail.com</h4>
+      <h4>
+        <a href="tel:+91 9423580221" style="color:white" class="fontbody">+91 9423580221</a> &nbsp;&nbsp;
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','wa')"><i class="material-icons">whatsapp</i></button>
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
+      </h4> 
+     </div>
+
+     <div class="col-sm-4">
+      <h3 class="fonthead">  Contact for Balance and Payments : <br><br>Mr. Shubham</h3>
+      <h4>
+        <a href="tel:+91 9766707061" style="color:white" class="fontbody">+91 9766707061</a> &nbsp;&nbsp;
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('shubham','wa')"><i class="material-icons"> whatsapp</i></button>
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('shubham','txt')"><i class="material-icons">chat</i></button>
+      </h4>
+     </div>
+     <div class="col-sm-4">
+      <div class="row">
+        <h3 class="fonthead">
+          Registered Office : <br></h3>
+          <h4 class="fontbody">
+            &nbsp;NITIN ROADWAYS AND CARGO MOVERS,<br>
+            &nbsp;Shop No. 253,<br>
+            &nbsp;Opp Katraj Police Station,<br>
+            &nbsp;Pune Satara Road,<br>
+            &nbsp;Katraj,<br>
+            &nbsp;Pune 411046.
+        <br>
+        <br>
+        Email : punenitinroadways@gmail.com
+      </h4>
+      </div>
+     </div>
+     
+    
+
     </div>
+    <div class="row" style="text-align: center">
+      © 2022 Nitin Roadways And Cargo Movers<br>
+      Safe | Fast | Reliable | Punctual | 24*7 Avaliable
+    </div>
+  </div>
+
 
   </div>
 

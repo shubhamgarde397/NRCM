@@ -29,6 +29,7 @@ export class TransportAddComponent implements OnInit {
       tptName:'',
       name: '',
       pan:'',
+      P:false,
       contact:[],
       addr1:'',
       addr2:'',

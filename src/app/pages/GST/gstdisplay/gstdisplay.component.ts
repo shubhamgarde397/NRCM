@@ -36,6 +36,10 @@ export class GstdisplayComponent implements OnInit {
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.gstdetailslist = this.commonArray.gstdetails;
   }
+  msgs(data){
+    
+    window.open('https://messages.google.com/web/conversations/'+data,'_blank');    
+  }
   refresh(){
     this.considerArray=[0,1,0,0,0,0,0,0]
     this.getInformationData()

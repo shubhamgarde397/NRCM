@@ -13,6 +13,10 @@
           </font>
         </div>
       </div>
+
+      <div class="col-xs-3">
+        <input type="text" id="name" class="form-control" formControlName="msgid" placeholder="0-1000">
+      </div>
     </div>
 
     <div class="form-group row">
@@ -166,7 +170,7 @@
     </div>
 
 <hr>
-<h3>Email Address</h3>
+<h3>Contact : </h3>
     <div class="form-group row">
       <div class="col-xs-3">
         <table class="table table-border">
@@ -204,6 +208,33 @@
         </table>
       </div>
     </div>
+
+        <!--  -->
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Contact - <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
+              [(ngModel)]="contactA">
+          </div>
+          <div class="col-xs-2">
+            <button type="button" class="btn btn-primary" (click)="addMore()">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+          <div class="col-xs-3">
+            <table>
+              <tr>
+                <th>Contact</th>
+                <th>Delete</th>
+              </tr>
+              <tr *ngFor="let i of contactArray;let j = index;">
+                <td>{{i}}</td>
+                <td><button (click)="deleteArray(j,1)">Delete</button></td>
+              </tr>
+    
+            </table>
+          </div>
+        </div>
+        <!--  -->
 
 
     <div class="row">
