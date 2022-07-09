@@ -33,7 +33,8 @@ export class TransportUpdateComponent implements OnInit {
       contact:[this.handledata.Data.contact],
       addr1:this.handledata.Data.addr1,
       addr2:this.handledata.Data.addr2,
-      addr3:this.handledata.Data.addr3
+      addr3:this.handledata.Data.addr3,
+      email:this.handledata.Data.email
     });
     this.contactArray = this.handledata.Data.contact;
     
@@ -51,6 +52,7 @@ export class TransportUpdateComponent implements OnInit {
     formbody['addr1'] = data.value.addr1;
     formbody['addr2'] = data.value.addr2;
     formbody['addr3'] = data.value.addr3;
+    formbody['email'] = data.value.email;
     formbody['_id'] = this.handledata.Data._id;
     formbody['method'] = 'update';
     formbody['tablename'] = 'transport';
@@ -68,6 +70,7 @@ export class TransportUpdateComponent implements OnInit {
             res['addr1'] = data.value.addr1;
             res['addr2'] = data.value.addr2;
             res['addr3'] = data.value.addr3;
+            res['email'] = data.value.email;
           }
         })
 

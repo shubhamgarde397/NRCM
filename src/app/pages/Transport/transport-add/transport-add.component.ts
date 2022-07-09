@@ -33,7 +33,8 @@ export class TransportAddComponent implements OnInit {
       contact:[],
       addr1:'',
       addr2:'',
-      addr3:''
+      addr3:'',
+      email:''
     });
   }
 
