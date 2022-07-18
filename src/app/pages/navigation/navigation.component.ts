@@ -36,7 +36,7 @@ export class NavigationComponent implements OnInit {
   public showThisMsg = false
   public reportData=[];
   public myFormGroup: FormGroup;
-  
+  public arr=[];
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -74,7 +74,7 @@ export class NavigationComponent implements OnInit {
 
   getInformationData() {
     this.spin.show();
-    let caller = this.URL === 'www.nitinroadways.in' ? 'first' : 'default';
+    let caller = this.URL === 'default';
     let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray(caller) };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
@@ -83,6 +83,14 @@ export class NavigationComponent implements OnInit {
         this.securityCheck.role = res.Role;
         this.role = res.Role;
         this.spin.hide();
+        let k=Object.keys(res.lrsend[0])
+        let v=Object.values(res.lrsend[0])
+        for(let i=0;i<2;i++){
+          let obj={}
+          obj['location']=k[i]
+          obj['value']=v[i]
+          this.arr.push(obj)
+      }
         this.router.navigate(['Navigation/NRCM_HOME'])
       });
   }

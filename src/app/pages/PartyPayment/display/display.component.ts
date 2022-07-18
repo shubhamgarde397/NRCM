@@ -25,6 +25,7 @@ export class DisplayComponent implements OnInit {
   public date = new Date();
   public dateFromUI;
   public buttonValue: any = 'Party';
+  public typeOfCols='default';
   public trucknoid;
   public dynDate;
   public dynDate2;
@@ -55,6 +56,7 @@ export class DisplayComponent implements OnInit {
   public partyids=[];
   public mailSendButton=false;
 public balanceFollowGlobal={};
+public typeOfColsB=false;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
@@ -69,6 +71,10 @@ public balanceFollowGlobal={};
     this.partyids=[];
     this.paymentData=this.handledata.givePaymentData();
     this.paymentData.length>0?this.tableData = true:this.tableData = false;
+  }
+
+  typeofcolsF(){
+    this.typeOfColsB=true;
   }
 
   findgst() {
@@ -458,17 +464,31 @@ public balanceFollowGlobal={};
          doc.text(String('-'), 57, y)//truckno
          doc.text('-', 101, y)//truckno
        }
-       if (this.paymentData[i].type === 'buy') {
-         doc.text(String(this.paymentData[i].amount), 130, y)//partyname
-         doc.text(String('-'), 148, y)//partyname
-       } else {
-         doc.text(String(this.paymentData[i].amount), 148, y)//partyname
-         doc.text(String('-'), 130, y)//partyname
-       }
+
+       if(this.typeOfCols==='default'){
+            if (this.paymentData[i].type === 'buy') {
+              doc.text(String(this.paymentData[i].amount), 130, y)//partyname
+              doc.text(String('-'), 148, y)//partyname
+            } else {
+              doc.text(String(this.paymentData[i].amount), 148, y)//partyname
+              doc.text(String('-'), 130, y)//partyname
+            }
+      }else if(this.typeOfCols==='noamount'){
+          doc.text(String('-'), 130, y)//partyname
+          doc.text(String('-'), 148, y)//partyname
+      }
  
-       if(data=='self'){
-       doc.text(String(this.paymentData[i]['value']), 172, y)//partyname
-        }
+      if(this.typeOfCols==='default'){
+        if(data=='self'){
+          doc.text(String(this.paymentData[i]['value']), 172, y)//partyname
+           }
+      }else if(this.typeOfCols==='noamount'){
+        if(data=='self'){
+          doc.text(String('-'), 172, y)//partyname
+           }
+      }
+
+       
       
         if(this.paymentData[i].placeName2===undefined){
           y = y + 5;
@@ -482,16 +502,20 @@ public balanceFollowGlobal={};
      let [amount,payment,balance]=this.returnAmountPaymentBalance()
      doc.setFontSize('10');
     //  doc.text(String(this.paymentData.length+1), 23, bigValueofY)//partyname
-     doc.text('Total', 104, bigValueofY)//partyname
-     doc.text(String(amount), 128, bigValueofY)//partyname
-     doc.text(String(payment), 148, bigValueofY)//partyname
-     if(data=='self'){
-     doc.text(String(balance), 172, bigValueofY)//partyname
-     }
-     if(data=='party'){
-      doc.text('Balance', 172, bigValueofY-5)//partyname
+    if(this.typeOfCols==='default'){
+      doc.text('Total', 104, bigValueofY)//partyname
+      doc.text(String(amount), 128, bigValueofY)//partyname
+      doc.text(String(payment), 148, bigValueofY)//partyname
+      if(data=='self'){
       doc.text(String(balance), 172, bigValueofY)//partyname
-     }
+      }
+      if(data=='party'){
+       doc.text('Balance', 172, bigValueofY-5)//partyname
+       doc.text(String(balance), 172, bigValueofY)//partyname
+      }
+    }else if(this.typeOfCols==='noamount'){
+    }
+   
 
      doc.line(30, starty, 30, bigValueofY+1);//srno
      doc.line(55, starty, 55, bigValueofY+1);//date
