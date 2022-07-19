@@ -74,7 +74,9 @@ export class NavigationComponent implements OnInit {
 
   getInformationData() {
     this.spin.show();
-    let caller = this.URL === 'default';
+    let caller = this.URL === 'www.nitinroadways.in' ? 'default' : 'default';
+    // let caller = this.URL === 'www.nitinroadways.in' ? 'first' : 'default';
+    
     let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray(caller) };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
