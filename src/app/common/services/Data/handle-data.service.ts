@@ -22,11 +22,20 @@ export class HandleDataService {
   public IP = [];
   public turnData = [];
   public BHData = [];
-public PPData=[];
+  public PPData=[];
   public PaymentData=[]
   public updateTurnData=false;
+  public arr=[]
 
   constructor(public securityCheck: SecurityCheckService) { }
+
+  saveLRStatus(data){
+    this.arr=data;
+  }
+
+  getLRStatus(){
+    return this.arr;
+  }
   saveTruckHuge(data){
     this.hugeData=data;
   }

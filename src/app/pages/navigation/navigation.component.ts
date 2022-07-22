@@ -91,7 +91,8 @@ export class NavigationComponent implements OnInit {
           let obj={}
           obj['location']=k[i]
           obj['value']=v[i]
-          this.arr.push(obj)
+          this.arr.push(obj);
+          this.handledata.saveLRStatus(this.arr);
       }
         this.router.navigate(['Navigation/NRCM_HOME'])
       });

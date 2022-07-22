@@ -13,11 +13,12 @@ export class WelcomePageComponent implements OnInit {
   public avatar: any;
   public bin: number;
   binNumber = [];
+  public arr=[];
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService,
     public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService, public sec: SecurityCheckService) { }
 
   ngOnInit() {
-
+this.arr=this.handledata.getLRStatus();
   }
 
   findBin() {
