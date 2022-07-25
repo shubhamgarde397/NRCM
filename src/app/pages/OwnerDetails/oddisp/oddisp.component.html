@@ -1,13 +1,16 @@
 <div class="row">
     <div class="col-sm-4">
-        <button class="btn btn-info" (click)="getWhichType(true)">All Truck</button>
+        <button class="btn btn-info" (click)="getWhichType('1')">All Truck</button>
     </div>
     <div class="col-sm-4">
-        <button class="btn btn-info" (click)="getWhichType(false)">Single</button>
+        <button class="btn btn-info" (click)="getWhichType('2')">Single</button>
+    </div>
+    <div class="col-sm-4">
+        <button class="btn btn-info" (click)="getWhichType('3')">AccNo</button>
     </div>
 </div>
 
-<div *ngIf="whichType">
+<div *ngIf="whichType==='1'">
 
 <div class="well" *ngIf="!show">
 
@@ -92,7 +95,7 @@
 
 </div>
 
-<div *ngIf="!whichType">
+<div *ngIf="whichType==='2'">
 <div class="well">
 <div>
     <input type="text" [(ngModel)]="editTruck">
@@ -176,3 +179,88 @@
     </table>
 </div>
 </div>
+
+<div *ngIf="whichType==='3'">
+    <div class="well">
+    <div>
+        <input type="number" [(ngModel)]="editTruckAcc" placeholder="Any Account No.">
+        <button class="btn btn-danger" (click)="getSingleTruckAcc()"><i class="material-icons" >send</i></button></div>
+    
+        <table class="table" style="width:100%" align="center"  *ngIf="tableDate3">
+    
+            <thead>
+                <tr class="table-header">
+                    <th>Srno</th>
+                    <th>Truck</th>
+                    <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
+                    <th>Documents</th>
+                    <th>Contact</th>
+                    <th *ngIf="role==1||role==2">Account Details</th>
+                    <th>Prefer</th>
+                    <th *ngIf="role==1||role==2">Options</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of ownerdetailslist2;let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
+                        <br>{{i.hbl}}-{{i.weight}}
+                    </td>
+                    <td>
+                        <ul>
+                            <li>{{i.oname}}</li>
+                            <li>{{i.pan}}
+                                <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
+                                <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
+                            </li>
+                            <li>{{i.aadhar}}</li>
+                            <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
+                            </ul>
+                        </td>
+                    <td>
+                        <ul>
+                        <li [ngStyle]="{'background-color': i.rE}" style="color: black;">
+                            RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}
+                            <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
+                            <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
+                        </li>
+                        <li [ngStyle]="{'background-color': i.dE}" style="color: black;">
+                            DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}
+                            <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
+                            <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
+                        </li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul *ngFor="let k of i.contact">
+                            <li>{{k}}</li>
+                        </ul>
+                    </td>
+                    <td *ngIf="role==1||role==2">
+                        <ul *ngFor="let k of i.accountDetails">
+                            <li>{{k.accountName}} : {{k.bankName}}</li>
+                            <li>{{k.accountNumber}}</li>
+                            <li>{{k.ifsc}}</li>
+                            <li>12 : {{k.acc12}}</li>
+                            <li>363 : {{k.acc363}}</li>
+                            <hr>
+                        </ul>
+                    </td>
+                    <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'single')">Show Preference</button></td>
+                    <td *ngIf="i.preferenceChk">
+                        <ul *ngFor="let j of i.preferences;">
+                            <li>{{j}}</li>
+                        </ul>
+                    </td>
+                    <td  *ngIf="role==1||role==2">
+                        <div class="btn-group-xs">                        
+                            <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
+                            <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
+                            <i class="material-icons" style="color: green;cursor: pointer;" (click)="showDatabyid(i,false)">redo</i>
+                          </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>

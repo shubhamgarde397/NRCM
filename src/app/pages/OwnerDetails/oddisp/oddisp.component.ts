@@ -26,10 +26,12 @@ export class OddispComponent implements OnInit {
   public lambdaArr = [];
   public index = 0;
   public considerArray;
-  public whichType=true;
+  public whichType='0';
   public editTruck;
+  public editTruckAcc;
   public tableDate=false;
   public tableDate2=false;
+  public tableDate3=false;
   public villagedetailslist = [];
   constructor(
     public apiCallservice: ApiCallsService,
@@ -52,16 +54,20 @@ export class OddispComponent implements OnInit {
   getWhichType(data){
 this.whichType=data;
 switch(data){
-  case true:
+  case '1':
     
     this.tableDate2=false;
     this.tableDate=false;
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     break;
-    case false:
+    case '2':
       this.tableDate=false;
       this.fetchBasic();
       break;
+      case '3':
+        this.tableDate=false;
+        this.fetchBasic();
+        break;
 }
   }
 
@@ -79,6 +85,21 @@ switch(data){
         this.spinnerService.hide();
       });
 
+  }
+
+  getSingleTruckAcc(){
+    this.tableDate3=true;
+    this.spinnerService.show();
+    let tempObj = {}
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'displayEditTruckAcc'
+    tempObj['accNo'] = this.editTruckAcc;
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.ownerdetailslist2=res.Data;
+        this.spinnerService.hide();
+      });
   }
 
 

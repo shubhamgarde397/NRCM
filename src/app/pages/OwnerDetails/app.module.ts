@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { OdaddComponent } from './odadd/odadd.component';
-import { OdsearchComponent } from './odsearch/odsearch.component';
 import { OddispComponent } from './oddisp/oddisp.component';
 import { OwnerUpdateComponent } from './owner-update/owner-update.component';
 import { OwnerhandlerComponent } from './ownerhandler/ownerhandler.component';
@@ -13,7 +12,6 @@ import { OwnerhandlerComponent } from './ownerhandler/ownerhandler.component';
     declarations: [
         OwnerhandlerComponent,
         OdaddComponent,
-        OdsearchComponent,
         OddispComponent,
         OwnerUpdateComponent
     ],
