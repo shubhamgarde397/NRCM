@@ -23,7 +23,9 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Transport Name','value':'5'},
     {'viewValue':'Vehicle Type','value':'6'},
     {'viewValue':'Weight','value':'7'},
-    {'viewValue':'Dimensions','value':'8'}
+    {'viewValue':'Dimensions','value':'8'},
+    {'viewValue':'Update Account Details','value':'9'},
+    {'viewValue':'Truck Format','value':'10'}
   ]
   public displayType;
   public buttonOption;
@@ -82,6 +84,16 @@ public selectedTruck;
 public typeDataConsistsArray=[];
 // 
 
+// 
+public accountarrayUF=[];
+public accounttableUF=false;
+// 
+
+// 
+public truckformatarray=[];
+public truckformattable=false;
+// 
+
   constructor(
     public apiCallservice: ApiCallsService, 
     public securityCheck: SecurityCheckService,
@@ -100,34 +112,49 @@ public typeDataConsistsArray=[];
   callOptionAPI(){
     this.resetAllDivs();
 switch (this.buttonOption) {
-  case '1':
-    this.getInformationData()
+    case '1':
+      this.getInformationData()
     break;
+
     case '2':
-    this.getPanInfoData();
+      this.getPanInfoData();
     break;
+
     case '3':
-    this.buttonOption='3';
+      this.buttonOption='3';
     break;
+
     case '4':
     this.buttonOption='4';
     break;
+
     case '5':
       this.buttonOption='5';
       this.commonArray = this.securityCheck.commonArray;
-    this.considerArray = this.handledata.createConsiderArray('infotpt')
-    this.handledata.goAhead(this.considerArray) ? this.getInformationDataCC() : this.fetchBasicCC();
-    this.transportlist = this.commonArray.transport;
-      break;
-      case '6':
-        this.buttonOption='6';
-        break;
-        case '7':
-          this.buttonOption='7';
-          break;
-          case '8':
-            this.buttonOption='8';
-            break;
+      this.considerArray = this.handledata.createConsiderArray('infotpt')
+      this.handledata.goAhead(this.considerArray) ? this.getInformationDataCC() : this.fetchBasicCC();
+      this.transportlist = this.commonArray.transport;
+    break;
+
+    case '6':
+      this.buttonOption='6';
+    break;
+
+    case '7':
+      this.buttonOption='7';
+    break;
+
+    case '8':
+      this.buttonOption='8';
+    break;
+
+    case '9':
+      this.buttonOption='9';
+    break;
+  
+    case '10':
+      this.buttonOption='10';
+    break;
 }
   }
 
@@ -217,6 +244,28 @@ switch (this.buttonOption) {
     .subscribe((res: any) => {
     this.contactarray=res.chartData;
     this.contacttable=true;
+    });
+  }
+
+  getAccountsUpdateTrue(){
+    let tempObj={};
+    tempObj['method']='SmartAccountUpdateTrue'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {  
+    this.accountarrayUF=res.chartData;
+    this.accounttableUF=true;
+    });
+  }
+
+  gettruckFormat(){
+    let tempObj={};
+    tempObj['method']='SmartTruckFormat'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {  
+    this.truckformatarray=res.chartData;
+    this.truckformattable=true;
     });
   }
 
@@ -311,6 +360,59 @@ switch (this.buttonOption) {
       .subscribe((res: any) => {
         alert(res.Status);
         this.contactarray.splice(j,1);
+      });
+    }
+  }
+
+  updateaccountDetails(i,j){
+    
+    let accname=(<HTMLInputElement>document.getElementById('accname_' + j)).value;
+    let accno=(<HTMLInputElement>document.getElementById('accno_' + j)).value;
+    let bname=(<HTMLInputElement>document.getElementById('bname_' + j)).value;
+    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + j)).value;
+    if(accname===''||accno===''||bname===''||ifsc===''){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      let itempObj={}
+      itempObj['accountName']=accname;
+      itempObj['accountNumber']=accno;
+      itempObj['bankName']=bname;
+      itempObj['ifsc']=ifsc;
+      itempObj['acc12']=false;
+      itempObj['acc363']=false;
+      tempObj['aD']=[
+        itempObj
+      ]
+      tempObj['ownerid']=i['_id'];
+      tempObj['tablename']='';
+      tempObj['method']='SMARTACCOUNTUPDATEUF';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.accountarrayUF.splice(j,1);
+      });
+    }
+  }
+
+
+  updatetruckformat(i,j){
+    
+    let truckno=(<HTMLInputElement>document.getElementById('truckno_' + j)).value;
+    if(truckno===''){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      tempObj['truckno']=truckno;
+      tempObj['ownerid']=i['_id'];
+      tempObj['tablename']='';
+      tempObj['method']='SMARTTRUCKFORMATUPDATE';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.truckformatarray.splice(j,1);
       });
     }
   }

@@ -33,6 +33,25 @@ export class OddispComponent implements OnInit {
   public tableDate2=false;
   public tableDate3=false;
   public villagedetailslist = [];
+
+  // 
+  public tableDate4=false;
+  public editTruckTPT='';
+  public ownerdetailslist4=[];
+  public tptlist=[]
+  // 
+
+  // 
+  public tableDate5=false;
+  public ownerdetailslist5=[];
+  // 
+
+  // 
+  public editTrucklocation='';
+  public tableDate6=false;
+  public ownerdetailslist6=[]
+  // 
+
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -68,6 +87,25 @@ switch(data){
         this.tableDate=false;
         this.fetchBasic();
         break;
+        case '4':
+        this.tableDate=false;
+        this.considerArray = this.handledata.createConsiderArray('infotpt')
+        this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+        this.fetchBasic();
+        break;
+
+        case '5':
+          this.tableDate=false;
+          this.considerArray = this.handledata.createConsiderArray('infotpt')
+          this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+          this.fetchBasic();
+          break;
+          case '6':
+            this.considerArray=[0,0,0,1,0,0,0,0]
+          this.getInformationData()
+          this.fetchBasic();
+            break;
+        
 }
   }
 
@@ -98,6 +136,53 @@ switch(data){
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.ownerdetailslist2=res.Data;
+        this.spinnerService.hide();
+      });
+  }
+
+  getTruckbyTPT(){
+    this.tableDate4=true;
+    this.spinnerService.show();
+    let tempObj = {}
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'displaybyTPT'
+    tempObj['tptid'] = this.tptlist.find(r=>r.tptName==this.editTruckTPT)['_id']
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.ownerdetailslist4=res.chartData;
+        this.spinnerService.hide();
+      });
+  }
+
+  getTruckbyTPTTB(){
+    this.tableDate4=true;
+    this.spinnerService.show();
+    let tempObj = {}
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'displaybyTPTTB'
+    tempObj['tptid'] = this.tptlist.find(r=>r.tptName==this.editTruckTPT)['_id']
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.ownerdetailslist5=res.chartData;
+        this.tableDate5=true;
+        this.spinnerService.hide();
+      });
+  }
+
+  getTruckbyTPTLoc(){
+    this.tableDate6=true;
+    this.spinnerService.show();
+    let tempObj = {}
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'displaybyTPTLoc'
+    tempObj['placeid'] = this.editTrucklocation;
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.ownerdetailslist6=res.chartData;
+        this.tableDate6=true;
         this.spinnerService.hide();
       });
   }
@@ -185,6 +270,30 @@ switch(data){
    
   }
 
+  showPreference2(i,j,data){
+    switch(data){
+      case 'single':
+        let t=this.ownerdetailslist6.find(r=>r._id===i)['preferences']
+   this.ownerdetailslist6[j]['preferenceChk']=true;
+   this.ownerdetailslist6[j]['preferences']=[]
+   for(let v=0;v<t.length;v++){
+    let yo=this.villagedetailslist.find(r=>r._id===t[v])
+    this.ownerdetailslist6[j]['preferences'].push(yo['village_name'])
+}
+        break;
+        case 'all':
+          let y=this.ownerdetailslist.find(r=>r._id===i)['preferences']
+   this.ownerdetailslist[j]['preferenceChk']=true;
+   this.ownerdetailslist[j]['preferences']=[]
+   for(let v=0;v<y.length;v++){
+    let yo=this.villagedetailslist.find(r=>r._id===y[v])
+    this.ownerdetailslist[j]['preferences'].push(yo['village_name'])
+}
+          break;
+    }
+   
+  }
+
 
   refresh(){
     this.considerArray=[0,0,1,0,0,0,0,0]
@@ -196,8 +305,9 @@ switch(data){
     let tempObj = { "method": "displaynew", "consider": this.considerArray };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.sec.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.sec.commonArray['ownerdetails'];;
+        this.sec.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.sec.commonArray['ownerdetails'];
         this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];
+        this.sec.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.sec.commonArray['transport'];
         this.fetchBasic();
         this.spinnerService.hide();
       });
@@ -206,10 +316,11 @@ switch(data){
   fetchBasic() {
     this.commonArray = this.sec.commonArray;
     this.ownerdetailslist = [];
-    this.ownerdetailslist = this.commonArray.ownerdetails;
     this.villagedetailslist = [];
+    this.tptlist=[]
+    this.ownerdetailslist = this.commonArray.ownerdetails;
     this.villagedetailslist = this.commonArray.villagenames;
-
+    this.tptlist = this.commonArray.transport;
     this.tableDate=this.ownerdetailslist.length>0?true:false;
 
   }

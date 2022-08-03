@@ -340,3 +340,65 @@
 </div>
 </div>
 
+
+<div class="well" *ngIf="buttonOption==='9'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAccountsUpdateTrue()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="accounttableUF">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Name</th>
+        <th>Number</th>
+        <th>Bank</th>
+        <th>IFSC</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of accountarrayUF;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="text" value={{ii.accountDetails[0].accountName}} placeholder="accountName" id="accname_{{jj}}"></td>
+        <td><input type="number" value={{ii.accountDetails[0].accountNumber}} placeholder="accountNumber" id="accno_{{jj}}"></td>
+        <td><input type="text" value={{ii.accountDetails[0].bankName}} placeholder="bankName" id="bname_{{jj}}"></td>
+        <td><input type="text" value={{ii.accountDetails[0].ifsc}} placeholder="ifsc" id="ifsc_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updateaccountDetails(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='10'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="gettruckFormat()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="truckformattable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>New TruckNo</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of truckformatarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.tno}}</td>
+        <td><input type="text" placeholder="TN12 TN 1212" id="truckno_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updatetruckformat(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>

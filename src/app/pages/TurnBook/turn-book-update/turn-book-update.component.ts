@@ -212,8 +212,6 @@ tempObj['to']=this.handlefunction.createDate(this.date);
 
   setPartyName() {
     let partyDetails=this.parties[this.myFormGroup.value.partyName.split('+')[1]]
-    console.log(partyDetails.load);
-    
     this.Loadarr=[]
     for(let i=0;i<Object.keys(partyDetails.load).length;i++){
     let temp={}
