@@ -935,9 +935,11 @@ if(confirm('Do you want to temporary delete it?')){
     // }
   
       doc.setFontSize('10');
+      if(this.balanceDate[z].update){}else{
       doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
       doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
+      }
       doc.text(this.balanceDate[z].available, 200, i + 6 - (data.length * 6));//accno
       doc.setFontSize('8');
       

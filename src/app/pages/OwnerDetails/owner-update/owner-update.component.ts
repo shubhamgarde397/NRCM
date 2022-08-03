@@ -160,7 +160,10 @@ public selectedTransportNo;
     formbody['acc363'] = data.value.acc363;
     formbody['transportid'] = this.selectedTransportid;
     formbody['document'] = this.handledata.Data.document;
-    
+    formbody['score'] = this.handledata.Data.score;
+    formbody['total'] = this.handledata.Data.total;
+    formbody['load'] = this.handledata.Data.load;
+    formbody['update']=this.handledata.Data.update;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {

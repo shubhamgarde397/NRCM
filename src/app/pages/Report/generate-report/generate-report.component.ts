@@ -18,7 +18,8 @@ public options=[
   {value:'1',viewValue:'Pan'},
   {value:'2',viewValue:'Account'},
   {value:'3',viewValue:'Contact'},
-  {value:'4',viewValue:'Truck Payment PDF C'}
+  {value:'4',viewValue:'Truck Payment PDF C'},
+  {value:'5',viewValue:'Format Trucks'}
 ]
 public selectedOption;
 public buttonOption;
@@ -36,6 +37,7 @@ public trucks;
 public fdate;
 public tdate;
 public truckAllData;
+public formatDate;
   constructor(
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
@@ -93,6 +95,20 @@ public truckAllData;
     if(this.buttonOption==='4'){
       this.getAllTrucks()
     }
+    if(this.buttonOption==='5'){
+      this.getIncorrectFormatTrucks();
+    }
+  }
+
+  getIncorrectFormatTrucks(){
+        let tempObj={};
+        tempObj['method']='pipelinePan'
+        tempObj['tablename']='';
+        tempObj['option']=987;
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+        .subscribe((res: any) => {
+        this.formatDate=res.chartData;
+        });
   }
 
   getButtons() {

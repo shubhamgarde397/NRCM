@@ -93,4 +93,29 @@
           </table>
     </div>
     </div>
+
+    <div class="well" *ngIf="buttonOption==='5'">
+
+    <div class="well" *ngIf="showTable">
+        <div class="btn btn-warning" (click)="getTruckPaymentPDFComplex()">PDF!</div>
+        <table class="table">
+            <thead>
+              <tr>
+                <th>Srno</th>
+                <th>TruckNo</th>
+                <th>New Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let ii of truckAllData;let jj=index;">
+                <td>{{jj+1}}</td>
+                <td>{{ii.truckno}}</td>
+                <td>
+                    <!-- <input type="text" id>Work here -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+    </div>
 </div>
