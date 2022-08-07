@@ -8,16 +8,30 @@
     <div class="col-sm-2">
         <button class="btn btn-info" (click)="getWhichType('3')">AccNo</button>
     </div>
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <button class="btn btn-info" (click)="getWhichType('4')">By Tpt</button>
     </div>
 
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <button class="btn btn-info" (click)="getWhichType('5')">Tpt TB</button>
     </div>
     <div class="col-sm-2">
         <button class="btn btn-info" (click)="getWhichType('6')">Where?</button>
     </div>
+    <div class="col-sm-2">
+        <button class="btn btn-info" (click)="getWhichType('7')">Acc Name</button>
+    </div>
+</div>
+<div class="row" *ngIf="selected7">
+    <table border="1" class="table table-border">
+        <tr>
+            <th><input type="number" placeholder="from" [(ngModel)]="fromsrno"></th>
+            <th class="btn btn-danger" (click)="getTBPDF('all')">All</th>
+            <th class="btn btn-warning" (click)="getTBPDF('pending')">Pending</th>
+            <th class="btn btn-info" (click)="getTBPDF('done')">Done</th>
+            
+        </tr>
+    </table>
 </div>
 
 <div *ngIf="whichType==='1'">
@@ -475,3 +489,43 @@
         </table>
     </div>
     </div>
+
+    <div *ngIf="whichType==='7'">
+        <div class="well">
+        <div>
+            <input type="text" [(ngModel)]="editname">
+            <button class="btn btn-danger" (click)="getSingleAccName()"><i class="material-icons" >send</i></button></div>
+        
+            <table class="table" style="width:100%" align="center" *ngIf="tableDate7">
+                <thead align="center" style="font-weight: bold">
+                  <tr class=table-header>
+                    <th>Srno</th>
+                    <th>Loading</th>
+                    <th>TruckNo</th>
+                    <th>Type-Party-Place</th>
+                    <th>LRNO</th>
+                    <th>Amount</th>
+                    <th>Poch : Pg : Amt : Acc</th>
+                    <th>Payment Details</th>
+                  </tr>
+                </thead>
+                <tbody align="center">
+                  <tr *ngFor="let i of ownerdetailslist7;let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                    <td>{{i.truckno}}</td>
+                    <td>{{i.partyType}}-{{i.psname}}-{{i.vsname}}<br><span *ngIf="i.vsname2!==undefined">{{i.vsname2}}</span>-{{i.typeOfLoad}}</td>
+                    <td>{{i.lrno}}</td>
+                    <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+                    <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} <br>
+                        <span *ngIf="i.advanceArray.length>0">
+                        {{i.advanceArray[0].advanceAmt}}:{{i.advanceArray[0].BHAccname}}<br>{{i.advanceArray[0].BHAccNo}}
+                        </span>
+        
+                    </td>
+                    <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        </div>

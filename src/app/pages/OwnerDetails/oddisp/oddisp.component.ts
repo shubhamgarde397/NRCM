@@ -5,6 +5,8 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import 'jspdf-autotable';
+import * as  jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-oddisp',
@@ -52,6 +54,14 @@ export class OddispComponent implements OnInit {
   public ownerdetailslist6=[]
   // 
 
+  // 
+  public editname='';
+  public tableDate7=false;
+  public ownerdetailslist7=[]
+  public fromsrno=0;
+  public selected7=false;
+  // 
+
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -72,6 +82,7 @@ export class OddispComponent implements OnInit {
 
   getWhichType(data){
 this.whichType=data;
+this.selected7=false;
 switch(data){
   case '1':
     
@@ -136,6 +147,22 @@ switch(data){
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.ownerdetailslist2=res.Data;
+        this.spinnerService.hide();
+      });
+  }
+
+  getSingleAccName(){
+    this.tableDate7=true;
+    this.spinnerService.show();
+    let tempObj = {}
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'displayTruckbyAccName'
+    tempObj['accName'] = this.editname;
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.ownerdetailslist7=res.Data;
+        this.selected7=true;
         this.spinnerService.hide();
       });
   }
@@ -322,7 +349,149 @@ switch(data){
     this.villagedetailslist = this.commonArray.villagenames;
     this.tptlist = this.commonArray.transport;
     this.tableDate=this.ownerdetailslist.length>0?true:false;
-
   }
 
+  getTBPDF(data){
+    let takenarr=[]
+    let selectedData=this.ownerdetailslist7.slice(this.fromsrno-1);
+    switch (data) {
+      case 'all':takenarr=selectedData.filter(r=>{return r.partyType!=='Cancel'});break;
+      case 'pending':takenarr=selectedData.filter(r=>{return (r.statusOfPoch!=='Okay')&&(r.partyType!=='Cancel')});break;
+      case 'done':takenarr=selectedData.filter(r=>{return (r.statusOfPoch==='Okay')&&(r.partyType!=='Cancel')});break;
+    }
+    this.downloadLoanReport(takenarr);
+  }
+
+  downloadLoanReport(data){
+    
+    let pager=1;
+    let bigValueofY=0;
+    var doc = new jsPDF()
+    doc.setFontSize('25');
+    doc.setFontType('bold');
+    doc.text('Payment Details', 15, 15)//partyname
+    doc.setFontSize('10');
+    doc.text(String(pager), 180, 5)//pageno
+    pager=pager+1;
+    doc.setFontSize('25');
+    doc.setLineWidth(0.5);
+    doc.line(0, 20, 210, 20);//line after main header
+    doc.line(20, 20, 20, 300);//punching area line
+    //headers
+    doc.setFontSize('10');
+    let y = 24;
+    let starty = 24;
+    doc.line(0, 148.2, 5, 148.2);//punching line helper
+    doc.text('Sr', 23, y)//partyname
+    doc.text('Loading Date', 32, y)//partyname
+    doc.text('Truck No.', 60, y)//partyname
+    doc.text('Balance', 84, y)//partyname
+    doc.text('Status', 105, y)//partyname
+    doc.text('Poch', 135, y)//partyname
+    doc.text('Party', 162, y)//partyname
+  
+
+
+     doc.line(30, 20, 30, 25);//srno
+     doc.line(55, 20, 55, 25);//date
+     doc.line(83, 20, 83, 25);//truckno
+     doc.line(100, 20, 100, 25);//lrno
+     doc.line(133, 20, 133, 25);//credit
+     doc.line(160, 20, 160, 25);//debit
+     doc.line(188, 20, 188, 25);//debit
+  
+    //headers
+    doc.line(0, 25, 210, 25);//line after header
+  
+    let startforI=0;
+      y = y + 6;
+      startforI=0;
+  
+    for (let i = startforI; i < data.length; i++) {
+  
+     
+      if(y>290){
+        
+        y=30;
+       doc.line(30, starty, 30, 291);//srno
+       doc.line(55, starty, 55, 291);//date
+       doc.line(83, starty, 83, 291);//truckno
+       doc.line(100, starty, 100, 291);//lrno
+       doc.line(133, starty, 133, 291);//credit
+       doc.line(160, starty, 160, 291);//debit
+       doc.line(188, starty, 188, 291);//debit
+  
+       starty = 20;
+        doc.addPage();
+        doc.setFontSize('25');
+    doc.setFontType('bold');
+    doc.text('Payment Details', 15, 15)//partyname
+    doc.setFontSize('10');
+    doc.text(String(pager), 180, 5)//pageno
+    pager=pager+1;
+    doc.setFontSize('25');
+    doc.setLineWidth(0.5);
+    doc.line(0, 20, 210, 20);//line after main header
+    doc.line(20, 20, 20, 300);//punching area line
+    //headers
+    doc.setFontSize('10');
+    doc.text('Sr', 23, y-6)//partyname
+    doc.text('Loading Date', 32, y-6)//partyname
+    doc.text('Truck No.', 60, y-6)//partyname
+    doc.text('Balance', 84, y-6)//partyname
+    doc.text('Status', 105, y-6)//partyname
+    doc.text('Poch', 135, y-6)//partyname
+    doc.text('Party', 162, y-6)//partyname
+     
+
+    
+    //headers
+    doc.line(0, 25, 210, 25);//line after header
+  
+    //vertical lines
+    doc.line(30, 20, 30, 25);//srno
+    doc.line(55, 20, 55, 25);//date
+    doc.line(83, 20, 83, 25);//truckno
+    doc.line(100, 20, 100, 25);//lrno
+    doc.line(133, 20, 133, 25);//credit
+    doc.line(160, 20, 160, 25);//debit
+    doc.line(188, 20, 188, 25);//debit
+    //vertical lines
+    }
+        doc.text(String(i+1), 23, y)//partyname
+
+        doc.text(this.handleF.getDateddmmyy(data[i]['loadingDate']), 32, y)//partyname
+
+        doc.text(data[i]['truckName']['truckno'], 57, y)//truckno
+
+        doc.text(data[i]['advanceArray'][0]?String(data[i]['advanceArray'][0]['advanceAmt']):'', 88, y)//truckno
+
+        doc.text(data[i]['statusOfPoch']==='Okay'?'Okay':(data[i]['statusOfPoch']===''?(data[i]['pochDate']===''?'Received Pending':'Payment Pending'):data[i]['statusOfPoch']),101,y);
+
+        doc.text(this.handleF.getDateddmmyy(data[i]['pochDate']),135,y);
+        doc.text(String(data[i]['pgno']),135,y+6);
+
+        doc.text(data[i]['partyType']+'-'+data[i]['psname'],162,y);
+        doc.text(data[i]['vsname'],162,y+6);
+  
+  
+         y = y + 12;
+         doc.line(20, y-5 , 210, y-5 );//line after header
+    bigValueofY=y-3;
+    doc.setFontSize('10');
+  }
+  doc.line(30, starty, 30, bigValueofY);//srno
+  doc.line(55, starty, 55, bigValueofY);//date
+  doc.line(83, starty, 83, bigValueofY);//truckno
+  doc.line(100, starty, 100, bigValueofY);//lrno
+  doc.line(133, starty, 133, bigValueofY);//credit
+  doc.line(160, starty, 160, bigValueofY);//debit
+  doc.line(188, starty, 188, bigValueofY);//debit
+
+
+  doc.save('Data.pdf')
+    }
+
 }
+
+
