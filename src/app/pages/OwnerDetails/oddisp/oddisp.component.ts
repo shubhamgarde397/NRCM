@@ -352,18 +352,25 @@ switch(data){
   }
 
   getTBPDF(data){
-    let takenarr=[]
-    let selectedData=this.ownerdetailslist7.slice(this.fromsrno-1);
+    let selectedData=this.ownerdetailslist7;
     switch (data) {
-      case 'all':takenarr=selectedData.filter(r=>{return r.partyType!=='Cancel'});break;
-      case 'pending':takenarr=selectedData.filter(r=>{return (r.statusOfPoch!=='Okay')&&(r.partyType!=='Cancel')});break;
-      case 'done':takenarr=selectedData.filter(r=>{return (r.statusOfPoch==='Okay')&&(r.partyType!=='Cancel')});break;
+      case 'all':this.ownerdetailslist7=selectedData.filter(r=>{return r.partyType!=='Cancel'});break;
+      case 'pending':this.ownerdetailslist7=selectedData.filter(r=>{return (r.statusOfPoch!=='Okay')&&(r.partyType!=='Cancel')});break;
+      case 'done':this.ownerdetailslist7=selectedData.filter(r=>{return (r.statusOfPoch==='Okay')&&(r.partyType!=='Cancel')});break;
     }
-    this.downloadLoanReport(takenarr);
+    
   }
 
-  downloadLoanReport(data){
-    
+  newData2(){
+    this.ownerdetailslist7=this.ownerdetailslist7.slice(this.fromsrno-1);
+  }
+
+  tempDelete(index){
+    this.ownerdetailslist7.splice(index,1);
+  }
+
+  downloadLoanReport(){
+    let data=this.ownerdetailslist7;
     let pager=1;
     let bigValueofY=0;
     var doc = new jsPDF()

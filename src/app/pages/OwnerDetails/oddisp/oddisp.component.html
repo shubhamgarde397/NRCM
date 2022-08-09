@@ -25,11 +25,14 @@
 <div class="row" *ngIf="selected7">
     <table border="1" class="table table-border">
         <tr>
-            <th><input type="number" placeholder="from" [(ngModel)]="fromsrno"></th>
+            <th><input type="number" placeholder="from" [(ngModel)]="fromsrno"><button class="btn btn-danger" (click)="newData2()">Click</button></th>
             <th class="btn btn-danger" (click)="getTBPDF('all')">All</th>
             <th class="btn btn-warning" (click)="getTBPDF('pending')">Pending</th>
             <th class="btn btn-info" (click)="getTBPDF('done')">Done</th>
             
+        </tr>
+        <tr>
+            <td><button class="btn btn-warning" (click)="downloadLoanReport()">Download</button></td>
         </tr>
     </table>
 </div>
@@ -513,7 +516,7 @@
                   <tr *ngFor="let i of ownerdetailslist7;let j = index">
                     <td>{{j+1}}</td>
                     <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                    <td>{{i.truckno}}</td>
+                    <td (click)="tempDelete(j)">{{i.truckno}}</td>
                     <td>{{i.partyType}}-{{i.psname}}-{{i.vsname}}<br><span *ngIf="i.vsname2!==undefined">{{i.vsname2}}</span>-{{i.typeOfLoad}}</td>
                     <td>{{i.lrno}}</td>
                     <td>{{i.hamt}}<br>{{i.ohamt}}</td>
