@@ -66,6 +66,7 @@ export class BalancehiredisplayComponent implements OnInit {
 
   public selectedPochDate;
   public actualPayment=false;
+  public actualPaymentTable=false;
   public fullpendingPayment=[];
   public paymentSettings=false;
   public saveArray=[
@@ -78,6 +79,8 @@ export class BalancehiredisplayComponent implements OnInit {
   public defaultAmt=0;
   public ownerdetailslist;
   public showPDFButton=false;
+  public fullPaymentDone=[];
+  public updateMsgType='';
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -410,6 +413,64 @@ if(confirm('Do you want to temporary delete it?')){
     } else { }
   }
 
+  fetchDonePayments(){
+    let data = {};
+      data['method'] = 'bhMessageData';
+      data['tablename'] = '';
+
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, data, 0)
+        .subscribe((res: any) => {
+          this.fullPaymentDone=res.chartData;
+          this.actualPaymentTable = true;
+        });
+  }
+  sendMsg(no,type,data){
+    
+  let msg=''
+  msg=msg+'*****%20%20*Balance%20Payment%20Details*%20%20*****%0A%0A'
+  msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
+  msg=msg+'*Loading*%20Date%20:%20'+this.handleF.getDateddmmyy(data.loadingDate)+'%0A'
+  msg=msg+'*Load*%20:%20'+data.typeOfLoad+'%0A'
+  msg=msg+'*Destination*%20:%20'+data.vsname+'%20'+(data.vsname2?data.vsname2:'')+'%0A'
+  msg=msg+'*Status%20of%20Balance*%20:%20'+data.statusOfPoch+'%0A'
+  msg=msg+'*Balance%20Amount*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].advanceAmt:'')+'%0A%0A'
+  msg=msg+'*%20*Payment%20Details*%20*%0A%0A'
+  msg=msg+'*Payment%20Amount*%20:%20'+data.actualPaymentAmount+'%0A'
+  msg=msg+'*Payment%20Date*%20:%20'+this.handleF.getDateddmmyy(data.actualPaymentDate)+'%0A%0A%0A'
+  msg=msg+'*%20*Account%20Details*%20*%0A%0A'
+  msg=msg+'*Accname*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].BHAccname.replace(/\s/g, "%20"):'')+'%0A'
+  msg=msg+'*AccNo*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].BHAccNo:'')+'%0A'
+  msg=msg+'*IFSC*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].BHIFSC:'')+'%0A%0A'
+  msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
+  msg=msg+'*Pune*%0A'
+  msg=msg+'9822288257%0A'
+  msg=msg+'9766707061%0A'
+    switch (type) {
+      case 'wa':
+          window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');    
+        break;
+        case 'txt':
+          window.open('sms:+91'+no+'?body='+msg,'_blank');    
+        break;
+    }
+  }
+
+  updatePaymentMsg(i){
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = i._id;
+      formbody['method'] = 'updateMsgTypeForBalance';
+      formbody['tablename'] = '';
+      formbody['typeOfMessage'] = this.updateMsgType;
+
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, formbody, 0)
+        .subscribe((res: any) => {
+          alert(res.Status)
+        });
+    }
+  }
   deleteBHComplete(data, j) {
     if (confirm('Are you sure?')) {
       let formbody = {}

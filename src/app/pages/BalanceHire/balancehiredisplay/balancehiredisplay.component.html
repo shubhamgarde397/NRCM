@@ -350,51 +350,67 @@
     </div>
     </div>
 
-    <!-- <div class="well" *ngIf="buttonOption=='6'">  
+    <div class="well" *ngIf="buttonOption=='6'">  
       <div class="row">
         <h3>Balance Message</h3>
-       
-        <div class="well"  *ngIf="actualPayment">
-         
-          <div class="row">
+        <div class="row">
           <div class="col-sm-3">
-            Select Poch Date To Procees : 
-            <input type="date" class="form-control" [(ngModel)]="selectedDoneDate" (change)="fetchDonePayments()">  
+            <button class="btn btn-warning" (click)="fetchDonePayments()"></button>
           </div> 
-        
         </div>
-          
-            <div class="row" *ngIf="paymentSettings">
-  
+        <div class="well"  *ngIf="actualPaymentTable">
               <table class="table" style="width:100%" align="center">
                 <thead class="table-header">
-                    <tr>
-                        <th>Srno</th>
-                        <th>Truckno</th>
-                        <th>Date</th>
-                        <th>Party:Type:Place</th>
-                        <th>Poch:Pgno</th>
-                        <th>Option</th>
-                    </tr>
+                  <tr>
+                    <!-- srno 	loadingdate		truckno	destination		balance	paymentDate		paymentAmount     Options(Text and Whatsapp) -->
+          
+                    <th>Srno</th>
+                    <th>Loading Date</th>
+                    <th>Truckno</th>
+                    <th>Place</th>
+                    <th>PochDate</th>
+                    <th>Payment </th>
+                    <th>Status</th>
+                    <th>Media</th>
+                    <th>Edit</th>
+                  </tr>
                 </thead>
-        
         
                 <tbody>
                     <tr *ngFor="let i of fullPaymentDone;let j = index">
                         <td>{{j+1}}</td>
-                        <td>{{i.truckno}}</td>
                         <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                        <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.BHAmount}}</td>
-                        <td><button class="btn btn-warning">Add</button></td>
+                        <td>{{i.truckno}}</td>
+                        <td>{{i.vsname}}-<span *ngIf="i.vsname2!==undefined">{{i.vsname2}}-</span>{{i.typeOfLoad}}</td>
+                        <td>{{i.pochDate|date:'dd-MM-yyyy'}}</td>
+                        <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br><span *ngIf="i.advanceArray[0]!==undefined">{{i.advanceArray[0]['advanceAmt']}}</span></td>
+                        <td>{{i.statusOfPoch}}</td>
+                        <td>
+                          <ul *ngFor="let k of i.contact">
+                            <li>
+                              {{k}}
+                              <button class="btn btn-success" style="border-radius: 33px;" *ngIf="!i.pmtMsgWA" (click)="sendMsg(k,'wa',i)"><i class="material-icons">whatsapp</i></button>
+                              <button class="btn btn-success" style="border-radius: 33px;" *ngIf="!i.pmtMsgText" (click)="sendMsg(k,'txt',i)"><i class="material-icons">chat</i></button>
+                            </li>
+                          </ul>
+                        </td>
+                        <td>
+                          <select class="form-control" [(ngModel)]="updateMsgType" *ngIf="i.contact.length>0">
+                            <option value="pmtMsgText">Text</option>
+                            <option value="pmtMsgWA">Whatsapp</option>
+                            <option value="Both">Both</option>
+                        </select>
+                        <button class="btn btn-warning" *ngIf="i.contact.length>0" (click)="updatePaymentMsg(i)">Update</button>
+                      </td>
                     </tr>
                 </tbody>
             </table>  
-  
-            </div>
         </div>
       </div>
-      </div> -->
+      </div>
 
 <div *ngIf="show">
   <router-outlet></router-outlet>
 </div>
+
+

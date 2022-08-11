@@ -1,0 +1,202 @@
+##  See http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-mapping-template-reference.html
+##  This template will pass through all parameters including path, querystring, header, stage variables, and context through to the integration endpoint via the body/payload
+#set($inputRoot = $input.path('$'))
+#if($inputRoot['Status']=='VillageInsert')
+{
+        "_id":"$inputRoot['_id']",
+        "village_name":"$inputRoot['village_name']",
+        "Status":"Inserted Successfully"
+
+}
+#end
+#if($inputRoot['Status']=='InsertDuplicate')
+{
+        "Status":"$inputRoot['StatusToSend']",
+        "Hidden":$inputRoot['hidden']
+
+}
+#end
+#if($inputRoot['Status']=='GSTInsert')
+{
+    "status":"$inputRoot",
+        "_id":"$inputRoot['_id']",
+        "name":"$inputRoot['name']",
+        "gst":"$inputRoot['gst']",
+        "dest":"$inputRoot['dest']",
+        "Status":"Inserted Successfully"
+
+}
+#end
+#if($inputRoot['Status']=='OwnerInsert')
+{
+        "_id":"$inputRoot['_id']",
+        "Status":"Inserted Successfully"
+}
+#end
+#if($inputRoot['Status']=='QRInsert')
+{
+        "_id":"$inputRoot['_id']",
+        "Status":"Inserted Successfully"
+}
+#end
+#if($inputRoot['Status']=='LRReasonInsert')
+{
+        "_id":"$inputRoot['_id']",
+        "Status":"Inserted Successfully"
+}
+#end
+#if($inputRoot['Status']=='TruckDetailsInsert')
+{
+        "_id":"$inputRoot['_id']",
+         "Status":"Inserted Successfully"
+
+}
+#end
+#if($inputRoot['Status']=='MailInsert')
+{
+        "_id":"$inputRoot['_id']",
+         "Status":"Inserted Successfully"
+
+}
+#end
+#if($inputRoot['Status']=='RegularTruckInsert')
+{
+        "_id":"$inputRoot['_id']",
+        "regulartruck":"$inputRoot['regulartruck']",
+         "Status":"Inserted Successfully"
+
+}
+#end
+#if($inputRoot['Status']=='RegularPartyInsert')
+{
+        "_id":"$inputRoot['_id']",
+        "name":"$inputRoot['name']",
+         "Status":"Inserted Successfully"
+}
+#end
+#if($inputRoot['Status']=='PDInsert')
+{
+        "_id":"$inputRoot['_id']",
+         "Status":"Inserted Successfully"
+}
+#end
+#if($inputRoot['Status']=='Delete')
+{
+    "Status":"Deleted"
+}
+#end
+#if($inputRoot['Status']=='Update')
+{
+    "Status":"$inputRoot['Message']"
+}
+#end
+#if($inputRoot['Status']=='BalanceHireInsert')
+{
+    "Status":"Inserted Successfully",
+    "_id":"$inputRoot['_id']"
+}
+#end
+#if($inputRoot['Status']=='PaymentInsert')
+{
+    "Status":"Inserted Successfully"
+}
+#end
+#if($inputRoot[9]['Status']=='Display')
+{
+    "gstdetails":$inputRoot[0]['gstdetails'],
+    "ownerdetails":$inputRoot[1]['ownerdetails'],
+    "villagenames":$inputRoot[2]['villagenames'],
+    "lrlist":$inputRoot[3]['missingLRReason'],
+    "hiddenownerdetails":$inputRoot[4]['hiddenownerdetails'],
+    "qr":$inputRoot[5]['qr'],
+    "transport":$inputRoot[6]['transport'],
+    "lrsend":$inputRoot[7]['lrsend'],
+    "Role":$inputRoot[8]['role']
+}
+#end
+#if($inputRoot['Status']=='Chart')
+{
+    "chartData":$inputRoot['Data']
+}
+#end
+#if($inputRoot['Status']=='SingleTruck')
+{
+    "Data":$inputRoot['Data']
+}
+#end
+#if($inputRoot[9]['Status']=='DisplayNew')
+{
+    "gstdetails":$inputRoot[0]['gstdetails'],
+    "ownerdetails":$inputRoot[1]['ownerdetails'],
+    "villagenames":$inputRoot[2]['villagenames'],
+    "lrlist":$inputRoot[3]['missingLRReason'],
+    "hiddenownerdetails":$inputRoot[4]['hiddenownerdetails'],
+    "qr":$inputRoot[5]['qr'],
+    "transport":$inputRoot[6]['transport'],
+    "lrsend":$inputRoot[7]['lrsend'],
+    "Role":$inputRoot[8]['role']
+}
+#end
+#if($inputRoot['Status']=='DisplayOwner')
+{
+    "ownerdetails":$inputRoot['Data'],
+}
+#end
+#if($inputRoot['Status']=='DisplayTruckDetails')
+{
+    "truckdata":$inputRoot['Data']
+}
+#end
+#if($inputRoot['Status']=='DisplayPP')
+{
+    "paymentData":$inputRoot['Data']
+}
+#end
+#if($inputRoot['Status']=='DisplayCommon')
+{
+    "Data":$inputRoot["Data"]
+}
+#end
+#if($inputRoot['Status']=='DisplayCommonN')
+{
+    "Data":$inputRoot["Data"],
+    "Users":$inputRoot["Users"],
+    "Login":$inputRoot["Login"]
+}
+#end
+#if($inputRoot['Status']=='DisplayCommon1')
+{
+    "Detail1":$inputRoot['Detail1'],
+    "Detail2":$inputRoot['Detail2'],
+    "Detail3":$inputRoot['Detail3'],
+    "Detail4":$inputRoot['Detail4'],
+    "Detail5":$inputRoot['Detail5']
+}
+#end
+#if($inputRoot['Status']=='BalanceHireDetails')
+{
+    "balanceData":$inputRoot['Data']
+}
+#end
+#if($inputRoot['Status']=='Ignore')
+{
+    "Status":"$inputRoot['StatusToSend']"
+}
+#end
+#if($inputRoot['Status']=='InsertDuplicate2')
+{
+    "Status":"Duplicate Entry Found! Cannot Add!"
+}
+#end
+#if($inputRoot['Status']=='ShivapurUpdate')
+{
+    "Status":"$inputRoot['StatusToSend']"
+}
+#end
+#if($inputRoot['Status']=='DataStatus')
+{
+    "Data":$inputRoot["Data"],
+    "Status":"Inserted Successfully"
+}
+#end
+
