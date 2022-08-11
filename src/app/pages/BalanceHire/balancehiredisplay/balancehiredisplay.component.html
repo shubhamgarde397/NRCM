@@ -355,15 +355,14 @@
         <h3>Balance Message</h3>
         <div class="row">
           <div class="col-sm-3">
-            <button class="btn btn-warning" (click)="fetchDonePayments()"></button>
+            <button class="btn btn-warning" (click)="fetchDonePayments()">Get Data</button>
           </div> 
         </div>
         <div class="well"  *ngIf="actualPaymentTable">
+          <button class="btn btn-warning" (click)="downloadEmptyContacts()">Download Empty Contacts</button>
               <table class="table" style="width:100%" align="center">
                 <thead class="table-header">
                   <tr>
-                    <!-- srno 	loadingdate		truckno	destination		balance	paymentDate		paymentAmount     Options(Text and Whatsapp) -->
-          
                     <th>Srno</th>
                     <th>Loading Date</th>
                     <th>Truckno</th>
@@ -400,7 +399,7 @@
                             <option value="pmtMsgWA">Whatsapp</option>
                             <option value="Both">Both</option>
                         </select>
-                        <button class="btn btn-warning" *ngIf="i.contact.length>0" (click)="updatePaymentMsg(i)">Update</button>
+                        <button class="btn btn-warning" *ngIf="i.contact.length>0" (click)="updatePaymentMsg(i,j)">Update</button>
                       </td>
                     </tr>
                 </tbody>

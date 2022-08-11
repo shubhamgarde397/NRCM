@@ -425,6 +425,98 @@ if(confirm('Do you want to temporary delete it?')){
           this.actualPaymentTable = true;
         });
   }
+
+  downloadEmptyContacts(){//threshhold is 295
+    var doc = new jsPDF()
+    let data=this.fullPaymentDone.filter(r=>{return r.contact.length==0});
+    doc.setFontType('bold');
+    doc.setFontSize('10');
+    doc.setLineWidth(0.5);
+    //headers
+    let y = 4;
+    doc.text('Sr', 0.5, y)//partyname
+    doc.text('Date', 10.5, y)//partyname
+    doc.text('TruckNo', 10.5, y+4)//partyname
+    doc.text('Name', 45, y)//partyname
+    doc.text('Contact', 78, y)//partyname
+
+    doc.text('Sr', 105.5, y)//partyname
+    doc.text('Date', 115.5, y)//partyname
+    doc.text('TruckNo', 115.5, y+4)//partyname
+    doc.text('Name', 150, y)//partyname
+    doc.text('Contact', 183, y)//partyname
+
+    doc.line(0, 9, 210, 9);//line after main header
+    //headers
+
+    y=10
+    let newpage=0;
+    for (let i = 0; i < data.length; i++) {
+
+     if(y>290){
+       newpage=newpage+1;
+       doc.line(105, 0, 105, 300);//mid line
+       doc.line(8, 0, 8, 300);//mid line
+       doc.line(40, 0, 40, 300);//mid line
+       doc.line(75, 0, 75, 300);//mid line
+       doc.line(113, 0, 113, 300);//mid line
+       doc.line(145, 0, 145, 300);//mid line
+       doc.line(180, 0, 180, 300);//mid line
+       if(newpage===2){
+       doc.addPage();
+       newpage=0;
+       doc.setFontType('bold');
+       doc.setFontSize('10');
+       doc.setLineWidth(0.5);
+       //headers
+       y = 4;
+       doc.text('Sr', 0.5, y)//partyname
+       doc.text('Date', 10.5, y)//partyname
+       doc.text('TruckNo', 10.5, y+4)//partyname
+       doc.text('Name', 45, y)//partyname
+       doc.text('Contact', 78, y)//partyname
+
+       doc.text('Sr', 105.5, y)//partyname
+       doc.text('Date', 115.5, y)//partyname
+       doc.text('TruckNo', 115.5, y+4)//partyname
+       doc.text('Name', 150, y)//partyname
+       doc.text('Contact', 183, y)//partyname
+
+       doc.line(0, 9, 210, 9);//line after main header
+       //headers
+       y=10
+       //vertical lines
+       }
+y=10
+   }
+   if(newpage===0){
+    doc.text(this.handleF.generate2DigitNumber(String(i+1)), 0.5, y+4)//partyname
+    doc.text(data[i].truckno, 10.5, y+4)//partyname
+     doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 10.5, y+8)//partyname
+       
+     doc.line(0, y+9, 105, y+9);//line after main header
+     y = y + 9;
+   }
+if(newpage===1){
+  doc.text(this.handleF.generate2DigitNumber(String(i+1)), 105.5, y+4)//partyname
+  doc.text(data[i].truckno, 115.5, y+4)//partyname
+  doc.text(this.handleF.getDateddmmyy(data[i].loadingDate),115.5 , y+8)//partyname
+    
+  doc.line(105, y+9, 210, y+9);//line after main header
+  y = y + 9;
+}
+  
+    }
+
+    doc.line(105, 0, 105, y);//mid line
+    doc.line(8, 0, 8, y);//mid line
+    doc.line(40, 0, 40, y);//mid line
+    doc.line(75, 0, 75, y);//mid line
+    doc.line(113, 0, 113, y);//mid line
+    doc.line(145, 0, 145, y);//mid line
+    doc.line(180, 0, 180, y);//mid line
+    doc.save('Contact-Details.pdf')
+  }
   sendMsg(no,type,data){
     
   let msg=''
@@ -448,7 +540,7 @@ if(confirm('Do you want to temporary delete it?')){
   msg=msg+'9766707061%0A'
     switch (type) {
       case 'wa':
-          window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');    
+          window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
         break;
         case 'txt':
           window.open('sms:+91'+no+'?body='+msg,'_blank');    
@@ -456,7 +548,7 @@ if(confirm('Do you want to temporary delete it?')){
     }
   }
 
-  updatePaymentMsg(i){
+  updatePaymentMsg(i,index){
     if (confirm('Are you sure?')) {
       let formbody = {}
       formbody['_id'] = i._id;
@@ -467,7 +559,8 @@ if(confirm('Do you want to temporary delete it?')){
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, formbody, 0)
         .subscribe((res: any) => {
-          alert(res.Status)
+          alert(res.Status);
+          this.fullPaymentDone[index][this.updateMsgType]=true;
         });
     }
   }
