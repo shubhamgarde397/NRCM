@@ -25,7 +25,8 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Weight','value':'7'},
     {'viewValue':'Dimensions','value':'8'},
     {'viewValue':'Update Account Details','value':'9'},
-    {'viewValue':'Truck Format','value':'10'}
+    {'viewValue':'Truck Format','value':'10'},
+    {'viewValue':'Truck Registration Fee','value':'11'}
   ]
   public displayType;
   public buttonOption;
@@ -94,6 +95,10 @@ public truckformatarray=[];
 public truckformattable=false;
 // 
 
+// 
+public emptyregData=[];
+public emptyregDatatable=false;
+// 
   constructor(
     public apiCallservice: ApiCallsService, 
     public securityCheck: SecurityCheckService,
@@ -154,6 +159,9 @@ switch (this.buttonOption) {
   
     case '10':
       this.buttonOption='10';
+    break;
+    case '11':
+      this.buttonOption='11';
     break;
 }
   }
@@ -233,6 +241,48 @@ switch (this.buttonOption) {
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
     .subscribe((res: any) => {
     this.emptyData=res.chartData;
+    });
+  }
+
+  getEmptyRegFee(){
+    let tempObj={};
+    tempObj['method']='SmartRegFee'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    this.emptyregData=res.chartData;
+    this.emptyregDatatable=true;
+    });
+  }
+
+  updateRegFee(i,j){
+    let regFeeDate=(<HTMLInputElement>document.getElementById('regFeeDate_' + j)).value;
+    let regFee=(<HTMLInputElement>document.getElementById('regFee_' + j)).checked;
+    if(regFeeDate===''){
+      alert('Cannot add empty fields')
+    }
+    else{
+      let tempObj={}
+      tempObj['regFeeDate']=regFeeDate;
+      tempObj['_id']=i['_id'];
+      tempObj['regFee']=regFee;
+      tempObj['tablename']='';
+      tempObj['method']='SMARTREGFEEUPDATE';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.emptyregData.splice(j,1);
+      });
+    }
+  }
+  
+  doRegExpiry(){
+    let tempObj={};
+    tempObj['method']='regFeeExpired'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    alert(res.Status)
     });
   }
 

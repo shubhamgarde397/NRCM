@@ -8,7 +8,6 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { ExcelService } from '../../../common/services/sharedServices/excel.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
-import { t } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-balancehiredisplay',
@@ -32,7 +31,9 @@ export class BalancehiredisplayComponent implements OnInit {
     { 'value': '3', 'viewvalue': 'Given Date' },
     { 'value': '4', 'viewvalue': 'Given Payment Pending' },
     { 'value': '5', 'viewvalue': 'Update Actual Payments' },
-    { 'value': '6', 'viewvalue': 'Balance Message' }
+    { 'value': '6', 'viewvalue': 'Balance Message To Driver' },
+    { 'value': '7', 'viewvalue': 'Update Advance Payments' },
+    { 'value': '8', 'viewvalue': 'Advance Message To Driver' }
   ]
   public months = [
     { '1': 'Jan' },
@@ -81,6 +82,18 @@ export class BalancehiredisplayComponent implements OnInit {
   public showPDFButton=false;
   public fullPaymentDone=[];
   public updateMsgType='';
+
+  public advAmt=0;
+  public advDate='';
+  public alltrucks=[];
+  public contact='';
+  public advancePayment=false;
+
+  public advancePaymenttoTruck=false;
+  public fullAdvDone=[];
+  public updateMsgTypeA='';
+
+
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -314,10 +327,6 @@ this.actualPayment=this.buttonOption == '5'?true:false;
            this.balanceDate = this.accE(res.balanceData);
         this.securityCheck.commonBalanceHire = res.balanceData;
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
-
-
-
-
       });
   };
 
@@ -425,6 +434,18 @@ if(confirm('Do you want to temporary delete it?')){
           this.actualPaymentTable = true;
         });
   }
+  fetchDonePaymentsAdv(){
+    let data = {};
+      data['method'] = 'displayTruckstoSendAdvanceMsg';
+      data['tablename'] = '';
+
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, data, 0)
+        .subscribe((res: any) => {
+          this.fullAdvDone=res.chartData;
+          this.advancePaymenttoTruck = true;
+        });
+  }
 
   downloadEmptyContacts(){//threshhold is 295
     var doc = new jsPDF()
@@ -518,22 +539,22 @@ if(newpage===1){
     doc.save('Contact-Details.pdf')
   }
   sendMsg(no,type,data){
-    
+    let bal=data.advanceArray.find(r=>{return r.reason==='Balance'})
   let msg=''
   msg=msg+'*****%20%20*Balance%20Payment%20Details*%20%20*****%0A%0A'
   msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
   msg=msg+'*Loading*%20Date%20:%20'+this.handleF.getDateddmmyy(data.loadingDate)+'%0A'
   msg=msg+'*Load*%20:%20'+data.typeOfLoad+'%0A'
   msg=msg+'*Destination*%20:%20'+data.vsname+'%20'+(data.vsname2?data.vsname2:'')+'%0A'
-  msg=msg+'*Status%20of%20Balance*%20:%20'+data.statusOfPoch+'%0A'
-  msg=msg+'*Balance%20Amount*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].advanceAmt:'')+'%0A%0A'
+  msg=msg+'*Status%20of%20Delivery*%20:%20'+data.statusOfPoch+'%0A'
+  msg=msg+'*Balance%20Amount*%20:%20'+(bal?bal.advanceAmt:'')+'%0A%0A'
   msg=msg+'*%20*Payment%20Details*%20*%0A%0A'
   msg=msg+'*Payment%20Amount*%20:%20'+data.actualPaymentAmount+'%0A'
   msg=msg+'*Payment%20Date*%20:%20'+this.handleF.getDateddmmyy(data.actualPaymentDate)+'%0A%0A%0A'
   msg=msg+'*%20*Account%20Details*%20*%0A%0A'
-  msg=msg+'*Accname*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].BHAccname.replace(/\s/g, "%20"):'')+'%0A'
-  msg=msg+'*AccNo*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].BHAccNo:'')+'%0A'
-  msg=msg+'*IFSC*%20:%20'+(data.advanceArray[0]?data.advanceArray[0].BHIFSC:'')+'%0A%0A'
+  msg=msg+'*Accname*%20:%20'+(bal?bal.BHAccname.replace(/\s/g, "%20"):'')+'%0A'
+  msg=msg+'*AccNo*%20:%20'+(bal?bal.BHAccNo:'')+'%0A'
+  msg=msg+'*IFSC*%20:%20'+(bal?bal.BHIFSC:'')+'%0A%0A'
   msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
   msg=msg+'*Pune*%0A'
   msg=msg+'9822288257%0A'
@@ -547,6 +568,41 @@ if(newpage===1){
         break;
     }
   }
+  sendMsgA(no,type,data){
+    let r=data.rc?'':'RC'
+    let l=data.lc?'':'License'
+    let p=data.pan?'':'PAN'
+    let shall=(data.rc&&data.lc&&data.pan);
+    let doc=(data.rc?'':'%20RC')+(data.lc?'':'%20License')+(data.pan?'':'%20PAN')
+    let bal=data.advanceArray.find(r=>{return r.reason==='Advance'})
+    let msg=''
+    msg=msg+'*****%20%20*Advance%20Payment%20Details*%20%20*****%0A%0A'
+    msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
+    msg=msg+'*Rent%20Amount*%20:%20'+data.ohamt+'%0A%0A'
+    msg=msg+'*%20*Advance%20Details*%20*%0A%0A'
+    msg=msg+'*Advance%20Amount*%20:%20'+bal.advanceAmt+'%0A'
+    msg=msg+'*Advance%20Date*%20:%20'+this.handleF.getDateddmmyy(bal.advanceDate)+'%0A'
+    msg=msg+'*Balance*%20:%20'+(data.ohamt-bal.advanceAmt)+'%0A%0A%0A'
+    msg=msg+'*%20*Account%20Details*%20*%0A%0A'
+    msg=msg+'*Accname*%20:%20'+data.accountDetails[0].accountName.replace(/\s/g, "%20")+'%0A'
+    msg=msg+'*AccNo*%20:%20'+data.accountDetails[0].accountNumber+'%0A'
+    msg=msg+'*IFSC*%20:%20'+data.accountDetails[0].ifsc+'%0A%0A'
+    if(!shall){
+    msg=msg+'Unga%20Vandika%0A*'+doc+'*%0ASend%20Pananga%0A%0A';
+    }
+    msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
+    msg=msg+'*Pune*%0A'
+    msg=msg+'9822288257%0A'
+    msg=msg+'9766707061%0A'
+      switch (type) {
+        case 'wa':
+            window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
+          break;
+          case 'txt':
+            window.open('sms:+91'+no+'?body='+msg,'_blank');    
+          break;
+      }
+    }
 
   updatePaymentMsg(i,index){
     if (confirm('Are you sure?')) {
@@ -561,6 +617,22 @@ if(newpage===1){
         .subscribe((res: any) => {
           alert(res.Status);
           this.fullPaymentDone[index][this.updateMsgType]=true;
+        });
+    }
+  }
+  updatePaymentMsgAdv(i,index){
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = i._id;
+      formbody['method'] = 'updateMsgTypeForAdvance';
+      formbody['tablename'] = '';
+      formbody['advanceMsg'] = this.updateMsgTypeA;
+
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, formbody, 0)
+        .subscribe((res: any) => {
+          alert(res.Status);
+          this.fullPaymentDone[index][this.updateMsgTypeA]=true;
         });
     }
   }
@@ -1139,6 +1211,51 @@ if(newpage===1){
         this.createdDate = this.createdDate.slice(0, 7);
         this.find2(this.createdDate, 'month', false)
         break;
+    }
+  }
+
+
+  getTrucks(){
+
+    let data = {};
+    data['method'] = 'displayEmptyTrucks';
+    data['tablename'] = '';
+
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, data, 0)
+      .subscribe((res: any) => {
+        this.alltrucks=res.chartData;
+        this.advancePayment = true;
+      });
+      
+  }
+
+  advancePaymentDone(i,j){
+    console.log(parseInt((<HTMLInputElement>document.getElementById('rentAmt_' + j)).value));
+    
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = i._id;
+      formbody['ownerid'] = i.ownerid;
+      formbody['account'] = i.account;
+      formbody['method'] = 'updateadvanceamtdate';
+      formbody['tablename'] = '';
+      formbody['rentAmt']=parseInt((<HTMLInputElement>document.getElementById('rentAmt_' + j)).value)
+      formbody['advAmt']=parseInt((<HTMLInputElement>document.getElementById('advAmt_' + j)).value)
+      formbody['advDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
+      formbody['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
+      
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, formbody, 0)
+        .subscribe((res: any) => {
+          alert(res.Status);
+          this.alltrucks[j]['rentAmt']=(<HTMLInputElement>document.getElementById('rentAmt_' + j)).value
+          this.alltrucks[j]['advanceAmt']=(<HTMLInputElement>document.getElementById('advAmt_' + j)).value
+          this.alltrucks[j]['advanceDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
+          this.alltrucks[j]['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
+          this.advAmt=0;
+          this.advDate='';
+        });
     }
   }
 }

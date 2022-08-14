@@ -339,7 +339,7 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('bold');
     doc.setFontType('italic');
     doc.setTextColor(0, 0, 0);
-    doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
+    // doc.text('TRANSPORT CONTRACTOR', 65, 35)
 
     doc.setDrawColor(153, 29, 39);
     doc.setLineWidth(0.5);

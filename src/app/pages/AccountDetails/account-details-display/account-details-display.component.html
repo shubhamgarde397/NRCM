@@ -402,3 +402,35 @@
   </table>
 </div>
 </div>
+
+<div class="well" *ngIf="buttonOption==='11'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getEmptyRegFee()">Get Reg Data!</button>
+<button class="btn btn-warning" (click)="doRegExpiry()">Registration Expire</button>
+
+  </div>
+
+<div class="well" *ngIf="emptyregDatatable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Date</th>
+        <th>Check</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of emptyregData;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="date" placeholder="" value={{ii.regFeeDate}} id="regFeeDate_{{jj}}"></td>
+        <td><input type="checkbox" id="regFee_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updateRegFee(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
