@@ -61,9 +61,7 @@ public details=false;
   }
 
   ngOnInit() {
-
-       this.role = this.securityCheck.role;      
-   
+       this.role = this.securityCheck.role;
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn(); 
@@ -108,43 +106,21 @@ public details=false;
     this.tableSelected=false;
   }
 
-  document(data,index){
-    let tempObj = {};
-
-    tempObj['tablename'] = ''
-    tempObj['method'] ='updateDocument'
-    tempObj['_id']=data;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
-      .subscribe((res: any) => {
-        alert('Updated!');
-        this.turnbooklist[index]['trucks']['document']=true;
-      });
-    
-  }
-
-
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};
-
     tempObj['tablename'] = ''
     tempObj['method'] = 'displayTodayAvailable_'+this.buttonOption;
-
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
-
         this.types={'None':0,'Open':0,'Container':0}
-
         res.Data.forEach(r=>{
           this.types[r.trucks.typeOfVehicle]=this.types[r.trucks.typeOfVehicle]+1;
           });
-
           this.turnbooklist = res.Data;
           this.isAvailable=true;
           this.tableSelected=true;
-       
       });
   };
-
 
   delete(id, j) {
     if (confirm('Are you sure?')) {
@@ -161,6 +137,4 @@ public details=false;
         });
     }
   }
-
-
 }

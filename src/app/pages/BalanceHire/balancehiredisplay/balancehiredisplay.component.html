@@ -419,7 +419,6 @@
                       <tr>
                           <th>Srno</th>
                           <th>Truckno</th>
-                          <th>Rent</th>
                           <th>Amount</th>
                           <th>Date</th>
                           <th>Contact</th>
@@ -433,7 +432,6 @@
                       <tr *ngFor="let i of alltrucks;let j = index">
                           <td>{{j+1}}</td>
                           <td>{{i.truckno}}</td>
-                          <td><input type="number" id="rentAmt_{{j}}"></td>
                           <td><input type="number" id="advAmt_{{j}}"></td>
                           <td><input type="date" id="advDate_{{j}}"></td>
                           <td><input type="number" id="advContact_{{j}}"*ngIf="i.contact.length==0">
@@ -473,7 +471,6 @@
                       <tr>
                         <th>Srno</th>
                         <th>Truckno</th>
-                        <th>Rent Amt</th>
                         <th>Advance Amt</th>
                         <th>Advance Date</th>
                         <th>Contact</th>
@@ -486,7 +483,6 @@
                         <tr *ngFor="let i of fullAdvDone;let j = index">
                             <td>{{j+1}}</td>
                             <td>{{i.truckno}}</td>
-                            <td>{{i.ohamt}}</td>
                             <td>{{i.advanceAmt}}</td>
                             <td>{{i.advanceDate}}</td>
                             <td>

@@ -578,11 +578,9 @@ if(newpage===1){
     let msg=''
     msg=msg+'*****%20%20*Advance%20Payment%20Details*%20%20*****%0A%0A'
     msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
-    msg=msg+'*Rent%20Amount*%20:%20'+data.ohamt+'%0A%0A'
     msg=msg+'*%20*Advance%20Details*%20*%0A%0A'
     msg=msg+'*Advance%20Amount*%20:%20'+bal.advanceAmt+'%0A'
     msg=msg+'*Advance%20Date*%20:%20'+this.handleF.getDateddmmyy(bal.advanceDate)+'%0A'
-    msg=msg+'*Balance*%20:%20'+(data.ohamt-bal.advanceAmt)+'%0A%0A%0A'
     msg=msg+'*%20*Account%20Details*%20*%0A%0A'
     msg=msg+'*Accname*%20:%20'+data.accountDetails[0].accountName.replace(/\s/g, "%20")+'%0A'
     msg=msg+'*AccNo*%20:%20'+data.accountDetails[0].accountNumber+'%0A'
@@ -1231,7 +1229,6 @@ if(newpage===1){
   }
 
   advancePaymentDone(i,j){
-    console.log(parseInt((<HTMLInputElement>document.getElementById('rentAmt_' + j)).value));
     
     if (confirm('Are you sure?')) {
       let formbody = {}
@@ -1240,7 +1237,6 @@ if(newpage===1){
       formbody['account'] = i.account;
       formbody['method'] = 'updateadvanceamtdate';
       formbody['tablename'] = '';
-      formbody['rentAmt']=parseInt((<HTMLInputElement>document.getElementById('rentAmt_' + j)).value)
       formbody['advAmt']=parseInt((<HTMLInputElement>document.getElementById('advAmt_' + j)).value)
       formbody['advDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
       formbody['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
@@ -1249,7 +1245,6 @@ if(newpage===1){
         ('commoninformation', 1, formbody, 0)
         .subscribe((res: any) => {
           alert(res.Status);
-          this.alltrucks[j]['rentAmt']=(<HTMLInputElement>document.getElementById('rentAmt_' + j)).value
           this.alltrucks[j]['advanceAmt']=(<HTMLInputElement>document.getElementById('advAmt_' + j)).value
           this.alltrucks[j]['advanceDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
           this.alltrucks[j]['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
