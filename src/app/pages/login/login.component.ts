@@ -46,7 +46,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.header=this.security.getBranch()==='nrcm'?'Nitin Roadways And Cargo Movers':'Nitin Roadways Shivapur';
+    this.header='Nitin Roadways And Cargo Movers';
     this.model = new login(this.username, this.password);
     this.myFormGroup = this.formBuilder.group({
       username: [this.model.username, Validators.required],

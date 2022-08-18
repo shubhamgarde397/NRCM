@@ -40,7 +40,6 @@ export class OdaddComponent implements OnInit {
   public villagedetailslist;
   public tdid;
   public vid;
-  public drivingLic;
   public role = 6;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, 
     public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, 
@@ -57,10 +56,7 @@ export class OdaddComponent implements OnInit {
       oname: '',
       pan: '',
       contact: [],
-      regCardExpiry:'',
       aadhar:"",
-      dob:"",
-      drivingLicExpiry:'2021-11-20',
       typeOfVehicle:'None',
       accountName: '',
       accountNumber: '',
@@ -105,10 +101,7 @@ export class OdaddComponent implements OnInit {
     formBody['oname'] = value['oname'];
     formBody['pan'] = value['pan'];
     formBody['contact'] = this.contactArray;
-    formBody['drivingLicExpiry'] = value['drivingLicExpiry'];
-    formBody['regCardExpiry'] = value['regCardExpiry'];
     formBody['aadhar'] = value['aadhar'];
-    formBody['dob'] = value['dob'];
     formBody['typeOfVehicle']=value['typeOfVehicle'];
     formBody['show'] = true;
     formBody['accountDetails'] = this.accountArray;
@@ -133,10 +126,7 @@ export class OdaddComponent implements OnInit {
         formres['truckno'] = value['truckno'];
         formres['oname'] = value['oname'];
         formres['pan'] = value['pan'];
-        formres['drivingLicExpiry'] = value['drivingLicExpiry'];
-    formres['regCardExpiry'] = value['regCardExpiry'];
     formres['aadhar'] = value['aadhar'];
-    formres['dob'] = value['dob'];
     formres['typeOfVehicle'] = value['typeOfVehicle'];
     formres['hbl'] = value['hbl'];
     formres['weight'] = value['weight'];

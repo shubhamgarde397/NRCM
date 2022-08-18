@@ -447,6 +447,7 @@ if(confirm('Do you want to temporary delete it?')){
         });
   }
 
+
   downloadEmptyContacts(){//threshhold is 295
     var doc = new jsPDF()
     let data=this.fullPaymentDone.filter(r=>{return r.contact.length==0});
@@ -576,11 +577,12 @@ if(newpage===1){
     let doc=(data.rc?'':'%20RC')+(data.lc?'':'%20License')+(data.pan?'':'%20PAN')
     let bal=data.advanceArray.find(r=>{return r.reason==='Advance'})
     let msg=''
+    msg=msg+'*NITIN%20ROADWAYS%20AND%20CARGO%20MOVERS*%0A%0A'
     msg=msg+'*****%20%20*Advance%20Payment%20Details*%20%20*****%0A%0A'
-    msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
+    msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A%0A'
     msg=msg+'*%20*Advance%20Details*%20*%0A%0A'
     msg=msg+'*Advance%20Amount*%20:%20'+bal.advanceAmt+'%0A'
-    msg=msg+'*Advance%20Date*%20:%20'+this.handleF.getDateddmmyy(bal.advanceDate)+'%0A'
+    msg=msg+'*Advance%20Date*%20:%20'+this.handleF.getDateddmmyy(bal.advanceDate)+'%0A%0A'
     msg=msg+'*%20*Account%20Details*%20*%0A%0A'
     msg=msg+'*Accname*%20:%20'+data.accountDetails[0].accountName.replace(/\s/g, "%20")+'%0A'
     msg=msg+'*AccNo*%20:%20'+data.accountDetails[0].accountNumber+'%0A'
@@ -615,8 +617,15 @@ if(newpage===1){
         .subscribe((res: any) => {
           alert(res.Status);
           this.fullPaymentDone[index][this.updateMsgType]=true;
+          this.fullPaymentDone.splice(index,1);
         });
     }
+  }
+
+  forse(i,index){
+    this.updateMsgType='pmtMsgText';
+    this.updatePaymentMsg(i,index);
+    
   }
   updatePaymentMsgAdv(i,index){
     if (confirm('Are you sure?')) {
@@ -630,7 +639,8 @@ if(newpage===1){
         ('commoninformation', 1, formbody, 0)
         .subscribe((res: any) => {
           alert(res.Status);
-          this.fullPaymentDone[index][this.updateMsgTypeA]=true;
+          this.fullAdvDone[index][this.updateMsgTypeA]=true;
+          this.fullAdvDone.splice(index,1);
         });
     }
   }
@@ -1250,6 +1260,7 @@ if(newpage===1){
           this.alltrucks[j]['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
           this.advAmt=0;
           this.advDate='';
+          this.alltrucks.splice(j,1);
         });
     }
   }

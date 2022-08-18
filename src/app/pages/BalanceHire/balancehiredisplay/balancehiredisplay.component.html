@@ -400,6 +400,7 @@
                             <option value="Both">Both</option>
                         </select>
                         <button class="btn btn-warning" *ngIf="i.contact.length>0" (click)="updatePaymentMsg(i,j)">Update</button>
+                        <button class="btn btn-warning" *ngIf="i.contact.length==0" (click)="forse(i,j)">Force!</button>
                       </td>
                     </tr>
                 </tbody>

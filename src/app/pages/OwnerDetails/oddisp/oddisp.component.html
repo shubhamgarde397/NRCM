@@ -49,7 +49,7 @@
             <tr class="table-header">
                 <th>Srno</th>
                 <th>TruckNumber-Type-pdr</th>
-                <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
+                <th>Owner Name<br>Pan<br>Aadhar</th>
                 <th>License</th>
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
@@ -82,13 +82,20 @@
                         <li>{{i.oname}}</li>
                         <li>{{i.pan}}</li>
                         <li>{{i.aadhar}}</li>
-                        <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
                         </ul>
                     </td>
                 <td>
                     <ul>
-                    <li [ngStyle]="{'background-color': i.rE}" style="color: black;">RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
-                    <li [ngStyle]="{'background-color': i.dE}" style="color: black;">DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
+                    <li><i class="material-icons" *ngIf="i.r" style="color: green;">
+                        done
+                        </i><i class="material-icons" *ngIf="!i.r" style="color: red;">
+                          close
+                          </i></li>
+                    <li><i class="material-icons" *ngIf="i.d" style="color: green;">
+                        done
+                        </i><i class="material-icons" *ngIf="!i.d" style="color: red;">
+                          close
+                          </i></li>
                     </ul>
                 </td>
                 <td>
@@ -134,7 +141,7 @@
             <tr class="table-header">
                 <th>Srno</th>
                 <th>Truck</th>
-                <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
+                <th>Owner Name<br>Pan<br>Aadhar</th>
                 <th>Documents</th>
                 <th>Contact</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
@@ -156,18 +163,15 @@
                             <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
                         </li>
                         <li>{{i.aadhar}}</li>
-                        <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
                         </ul>
                     </td>
                 <td>
                     <ul>
                     <li [ngStyle]="{'background-color': i.rE}" style="color: black;">
-                        RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}
                         <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
                         <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
                     </li>
                     <li [ngStyle]="{'background-color': i.dE}" style="color: black;">
-                        DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}
                         <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
                         <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
                     </li>
@@ -219,7 +223,7 @@
                 <tr class="table-header">
                     <th>Srno</th>
                     <th>Truck</th>
-                    <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
+                    <th>Owner Name<br>Pan<br>Aadhar</th>
                     <th>Documents</th>
                     <th>Contact</th>
                     <th *ngIf="role==1||role==2">Account Details</th>
@@ -241,18 +245,15 @@
                                 <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
                             </li>
                             <li>{{i.aadhar}}</li>
-                            <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
                             </ul>
                         </td>
                     <td>
                         <ul>
                         <li [ngStyle]="{'background-color': i.rE}" style="color: black;">
-                            RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}
                             <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
                             <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
                         </li>
                         <li [ngStyle]="{'background-color': i.dE}" style="color: black;">
-                            DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}
                             <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
                             <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
                         </li>
@@ -308,7 +309,7 @@
                     <tr class="table-header">
                         <th>Srno</th>
                         <th>Truck</th>
-                        <th>Owner Name<br>Pan<br>Aadhar<br>DOB</th>
+                        <th>Owner Name<br>Pan<br>Aadhar</th>
                         <th>Documents</th>
                         <th>Contact</th>
                         <th *ngIf="role==1||role==2">Account Details</th>
@@ -330,18 +331,15 @@
                                     <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
                                 </li>
                                 <li>{{i.aadhar}}</li>
-                                <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
                                 </ul>
                             </td>
                         <td>
                             <ul>
                             <li [ngStyle]="{'background-color': i.rE}" style="color: black;">
-                                RC-{{i.regCardExpiry|date:'dd-MM-yyyy'}}
                                 <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
                                 <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
                             </li>
                             <li [ngStyle]="{'background-color': i.dE}" style="color: black;">
-                                DL-{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}
                                 <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
                                 <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
                             </li>

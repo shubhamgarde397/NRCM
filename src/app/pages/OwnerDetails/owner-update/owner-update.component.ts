@@ -58,11 +58,8 @@ public selectedTransportNo;
       truckno: [this.handledata.Data.truckno],
       oname: [this.handledata.Data.oname],
       pan: [this.handledata.Data.pan],
-      drivingLicExpiry: [this.handledata.Data.drivingLicExpiry],
-      regCardExpiry: [this.handledata.Data.regCardExpiry],
       typeOfVehicle: [this.handledata.Data.typeOfVehicle],
       aadhar: [this.handledata.Data.aadhar],
-      dob: [this.handledata.Data.dob],
       contact: [this.handledata.Data.contact],
       accountName: '',
       accountNumber: '',
@@ -139,11 +136,8 @@ public selectedTransportNo;
     formbody['truckno'] = data.value.truckno;
     formbody['oname'] = data.value.oname;
     formbody['pan'] = data.value.pan;
-    formbody['drivingLicExpiry'] = data.value.drivingLicExpiry;
-    formbody['regCardExpiry'] = data.value.regCardExpiry;
     formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
-    formbody['dob'] = data.value.dob;
     formbody['contact'] = this.contactArray;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
@@ -164,6 +158,7 @@ public selectedTransportNo;
     formbody['total'] = this.handledata.Data.total;
     formbody['load'] = this.handledata.Data.load;
     formbody['update']=this.handledata.Data.update;
+    formbody['ticket']=this.handledata.Data.ticket;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {
@@ -174,12 +169,9 @@ public selectedTransportNo;
               res['truckno'] = data.value.truckno;
               res['oname'] = data.value.oname;
               res['pan'] = data.value.pan;
-              res['drivingLicExpiry'] = data.value.drivingLicExpiry;
-              res['regCardExpiry'] = data.value.regCardExpiry;
               res['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle;
               // res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
               res['aadhar'] = data.value.aadhar;
-              res['dob'] = data.value.dob;
               res['contact'] = this.contactArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;

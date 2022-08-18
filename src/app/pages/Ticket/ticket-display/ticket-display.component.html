@@ -1,0 +1,60 @@
+<div class="col-sm-4">
+  <button class="btn btn-danger" (click)="find()">
+    Get Tickets
+  </button>
+</div>
+<table class="table" style="width:100%" align="center" *ngIf="table">
+  <thead align="center" style="font-weight: bold">
+    <tr class=table-header>
+      <th>Srno</th>
+      <th>TruckNo</th>
+        <th>Name</th>
+        <th>Pan</th>
+        <th>Accounthetails</th>
+        <th>Contact</th>
+        <th>Type</th>
+        <th>Documents</th>
+        <th>Length</th>
+        <th>Weight</th>
+        <th>Transport</th>
+        <th>Option</th>
+    </tr>
+  </thead>
+
+  <tbody align="center">
+    <tr *ngFor="let i of tickets;let j = index">
+      <td>{{j+1}}</td>
+
+        <td>{{i.truck.truckno}}</td>
+        <td>{{i.truck.oname}}</td>
+        <td>{{i.truck.pan}}-</td>
+        <td><table>
+          <tr>
+            <th>Srno</th>
+            <th>Name</th>
+            <th>No</th>
+            <th>Bank</th>
+            <th>IFSC</th>
+          </tr>
+        </table></td>
+        <td>
+          <ul>
+            <li *ngFor="let k of contact">{{k}}</li>
+          </ul>
+        </td>
+        <td>{{i.truck.typeOfVehicle}}</td>
+        <td></td>
+        <td>{{i.truck.hbl}}</td>
+        <td>{{i.truck.weight}}</td>
+        <td>{{i.truck.tptName}}</td>
+        <td>
+          <ul>
+            <li><button class="btn btn-danger" (click)="update(i,j,'submit')">Okay</button></li>
+            <li><button class="btn btn-danger" (click)="update(i,j,'return')">Bad</button></li>
+
+          </ul>
+        </td>
+    </tr>
+  </tbody>
+</table>
+<div *ngIf="!table"><h3>{{msg}}</h3></div>

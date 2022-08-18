@@ -89,6 +89,10 @@ export const routes: Routes =
                         loadChildren: './pages/Mail/mail-display/app.module#AppModule'
                     },
                     {
+                        path:'TICKET_HANDLER',
+                        loadChildren:'./pages/Ticket/ticket.module#TicketModule'
+                    },
+                    {
                         path:'MISSING_LR',
                         loadChildren: './pages/MissingLRNOS/missing-display/app.module#AppModule'
                     },

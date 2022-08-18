@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TurnBookUpdateComponent } from './turn-book-update.component';
+import { TicketHandlerComponent } from './ticket-handler.component';
 
-describe('TurnBookUpdateComponent', () => {
-  let component: TurnBookUpdateComponent;
-  let fixture: ComponentFixture<TurnBookUpdateComponent>;
+describe('TicketHandlerComponent', () => {
+  let component: TicketHandlerComponent;
+  let fixture: ComponentFixture<TicketHandlerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TurnBookUpdateComponent ]
+      declarations: [ TicketHandlerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(TurnBookUpdateComponent);
+    fixture = TestBed.createComponent(TicketHandlerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

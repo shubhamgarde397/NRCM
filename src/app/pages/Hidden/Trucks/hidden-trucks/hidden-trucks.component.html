@@ -8,10 +8,10 @@
           <tr class="table-header">
               <th>Srno</th>
               <th>TruckNumber</th>
-              <th>Owner Name<br>Aadhar<br>DOB</th>
+              <th>Owner Name<br>Aadhar</th>
               <th>PAN</th>
-              <th>RC Expiry</th>
-              <th>DL Expiry</th>
+              <th>RC</th>
+              <th>DL</th>
               <th>Contact</th>
               <th *ngIf="role==1||role==2">Account Details</th>
               <th>Prefer</th>
@@ -26,7 +26,6 @@
                   <ul>
                       <li>{{i.oname}}</li>
                       <li>{{i.aadhar}}</li>
-                      <li>{{i.dob|date:'dd-MM-yyyy'}}</li>
                       </ul>
                   </td>
               <td>
@@ -36,14 +35,22 @@
                   
               </td>
               <td><ul>
-                  <li>{{i.regCard}}</li>
-                  <li [ngStyle]="{'background-color': i.rE}" style="color: black;">{{i.regCardExpiry|date:'dd-MM-yyyy'}}</li>
+                  <li>
+                  <i class="material-icons" *ngIf="i.r" style="color: green;">
+                    done
+                    </i><i class="material-icons" *ngIf="!i.r" style="color: red;">
+                      close
+                      </i>
+                      </li>
                   </ul>
               </td>
               <td>
                   <ul>
-                  <li>{{i.drivingLic}}</li>
-                  <li [ngStyle]="{'background-color': i.dE}" style="color: black;">{{i.drivingLicExpiry|date:'dd-MM-yyyy'}}</li>
+                  <li><i class="material-icons" *ngIf="i.d" style="color: green;">
+                    done
+                    </i><i class="material-icons" *ngIf="!i.d" style="color: red;">
+                      close
+                      </i></li>
               </ul>
               </td>
               <td>
