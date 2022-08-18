@@ -27,23 +27,47 @@
 
         <td>{{i.truck.truckno}}</td>
         <td>{{i.truck.oname}}</td>
-        <td>{{i.truck.pan}}-</td>
+        <td>{{i.truck.pan}}-
+           <i class="material-icons" *ngIf="i.truck.P" style="color: green;">
+            done
+            </i><i class="material-icons" *ngIf="!i.truck.P" style="color: red;">
+              close
+              </i>
+        </td>
         <td><table>
           <tr>
-            <th>Srno</th>
+            <th>Sr</th>
             <th>Name</th>
             <th>No</th>
-            <th>Bank</th>
             <th>IFSC</th>
+          </tr>
+          <tr>
+            <td>1</td>
+            <td>{{i.truck.accountDetails[0]['accountName']}}</td>
+            <td>{{i.truck.accountDetails[0]['accountNumber']}}</td>
+            <td>{{i.truck.accountDetails[0]['ifsc']}}</td>
           </tr>
         </table></td>
         <td>
           <ul>
-            <li *ngFor="let k of contact">{{k}}</li>
+            <li *ngFor="let k of i.truck.contact">{{k}}</li>
           </ul>
         </td>
         <td>{{i.truck.typeOfVehicle}}</td>
-        <td></td>
+        <td>
+          <ul>
+            <li>RC : <i class="material-icons" *ngIf="i.truck.r" style="color: green;">
+                done
+                </i><i class="material-icons" *ngIf="!i.truck.r" style="color: red;">
+                  close
+                  </i></li>
+            <li>LC : <i class="material-icons" *ngIf="i.truck.d" style="color: green;">
+                done
+                </i><i class="material-icons" *ngIf="!i.truck.d" style="color: red;">
+                  close
+                  </i></li>
+            </ul>
+        </td>
         <td>{{i.truck.hbl}}</td>
         <td>{{i.truck.weight}}</td>
         <td>{{i.truck.tptName}}</td>

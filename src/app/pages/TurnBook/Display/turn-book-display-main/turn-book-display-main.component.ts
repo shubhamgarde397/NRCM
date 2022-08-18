@@ -1508,7 +1508,7 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
     
       for (let i = startforI; i < this.turn12.length; i++) {
     
-       
+       console.log(this.turn12[i])
         if(y>290){
           
           y=30;
@@ -1558,11 +1558,11 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
          doc.text(String(i+1), 23, y)//partyname
         doc.text(this.handleF.getDateddmmyy(this.turn12[i]['loadingDate']), 32, y)//partyname
           doc.text(this.turn12[i]['truckName']['truckno'], 57, y)//truckno
-          doc.text(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['advanceAmt']):'', 88, y)//truckno
+          doc.text(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})?String(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})['advanceAmt']):'', 88, y)//truckno
           doc.text(this.handleF.getDateddmmyy(this.turn12[i]['actualPaymentDate']), 101, y)//truckno
           doc.text(this.turn12[i]['actualPaymentDate']!=''?String(this.turn12[i]['actualPaymentAmount']):'', 129, y)//truckno
-          doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccname']):''):'', 146, y)//truckno
-          doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'][0]?String(this.turn12[i]['advanceArray'][0]['BHAccNo']):''):'', 146, y+5)//truckno
+          doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})?String(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})['BHAccname']):''):'', 146, y)//truckno
+          doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})?String(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})['BHAccNo']):''):'', 146, y+5)//truckno
           doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'':this.turn12[i]['statusOfPoch'],185,y);
           let pmtx=this.turn12[i]['statusOfPoch']==='Okay'?'185':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'178':'178'):'185')
           doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'Payment Done':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'Received Pending':'Payment Pending'):'No Payment'),pmtx,y+5);
