@@ -41,6 +41,8 @@ export class TicketDisplayComponent implements OnInit {
     tempObj['type']=type;
     tempObj['oid']=i.oid;
     tempObj['_id']=i._id;
+    tempObj['date']=i.date;
+    tempObj['truckno']=i.truckno;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
