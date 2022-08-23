@@ -27,8 +27,10 @@ public typeOfVehicle;
   public submitted = false;
   public role = 6;
   public contactArray = [];
+  public contactOArray = [];v
   public accountArray = [];
   public contactA;
+  public contactOA;
   public preferenceArray = [];
   public pA='';
   public type;
@@ -82,6 +84,7 @@ public selectedTransportNo;
     });
     
     this.contactArray = this.handledata.Data.contact;
+    this.contactOArray = this.handledata.Data.contactO;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
     this.transportsArray = this.handledata.Data.transports;
@@ -139,6 +142,7 @@ public selectedTransportNo;
     formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
     formbody['contact'] = this.contactArray;
+    formbody['contactO'] = this.contactOArray;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
     formbody['preferences'] = this.preferenceArray;
@@ -173,6 +177,7 @@ public selectedTransportNo;
               // res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
               res['aadhar'] = data.value.aadhar;
               res['contact'] = this.contactArray;
+              res['contactO'] = this.contactOArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;
               res['reference'] = "";
@@ -200,6 +205,15 @@ public selectedTransportNo;
 
   deleteOne(i, j) {
     this.contactArray.splice(j, 1);
+  }
+
+  addMoreO() {
+    this.contactOArray.push(this.contactOA)
+    this.contactOA = '';
+  }
+
+  deleteOOne(i, j) {
+    this.contactOArray.splice(j, 1);
   }
 
   addaccount() {

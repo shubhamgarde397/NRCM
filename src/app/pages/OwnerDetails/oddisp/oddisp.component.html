@@ -52,6 +52,7 @@
                 <th>Owner Name<br>Pan<br>Aadhar</th>
                 <th>License</th>
                 <th>Contact</th>
+                <th>ContactO</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
                 <th>Prefer</th>
                 <th *ngIf="role==1||role==2">Delete<br>Update</th>
@@ -103,6 +104,11 @@
                         <li>{{k}}</li>
                     </ul>
                 </td>
+                <td>
+                    <ul *ngFor="let kk of i.contactO">
+                        <li>{{kk}}</li>
+                    </ul>
+                </td>
                 <td *ngIf="role==1||role==2">
                     <ul *ngFor="let k of i.accountDetails">
                         <li>{{k.accountName}} : {{k.bankName}}</li>
@@ -144,6 +150,7 @@
                 <th>Owner Name<br>Pan<br>Aadhar</th>
                 <th>Documents</th>
                 <th>Contact</th>
+                <th>ContactO</th>
                 <th *ngIf="role==1||role==2">Account Details</th>
                 <th>Prefer</th>
                 <th *ngIf="role==1||role==2">Options</th>
@@ -180,6 +187,11 @@
                 <td>
                     <ul *ngFor="let k of i.contact">
                         <li>{{k}}</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul *ngFor="let kk of i.contactO">
+                        <li>{{kk}}</li>
                     </ul>
                 </td>
                 <td *ngIf="role==1||role==2">
@@ -226,6 +238,7 @@
                     <th>Owner Name<br>Pan<br>Aadhar</th>
                     <th>Documents</th>
                     <th>Contact</th>
+                    <th>ContactO</th>
                     <th *ngIf="role==1||role==2">Account Details</th>
                     <th>Prefer</th>
                     <th *ngIf="role==1||role==2">Options</th>
@@ -262,6 +275,11 @@
                     <td>
                         <ul *ngFor="let k of i.contact">
                             <li>{{k}}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul *ngFor="let kk of i.contactO">
+                            <li>{{kk}}</li>
                         </ul>
                     </td>
                     <td *ngIf="role==1||role==2">
@@ -312,6 +330,7 @@
                         <th>Owner Name<br>Pan<br>Aadhar</th>
                         <th>Documents</th>
                         <th>Contact</th>
+                        <th>ContactO</th>
                         <th *ngIf="role==1||role==2">Account Details</th>
                         <th>Prefer</th>
                         <th *ngIf="role==1||role==2">Options</th>
@@ -348,6 +367,11 @@
                         <td>
                             <ul *ngFor="let k of i.contact">
                                 <li>{{k}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul *ngFor="let kk of i.contactO">
+                                <li>{{kk}}</li>
                             </ul>
                         </td>
                         <td *ngIf="role==1||role==2">
@@ -437,6 +461,7 @@
                     <th>Truck</th>
                     <th>Owner Name</th>
                     <th>Contact</th>
+                    <th>ContactO</th>
                     <th >Account Details</th>
                     <th>Prefer</th>
                     <th >Options</th>
@@ -460,6 +485,11 @@
                     <td>
                         <ul *ngFor="let k of i.contact">
                             <li>{{k}}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul *ngFor="let kk of i.contactO">
+                            <li>{{kk}}</li>
                         </ul>
                     </td>
                     <td>
