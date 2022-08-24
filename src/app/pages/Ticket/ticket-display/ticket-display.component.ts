@@ -1,4 +1,6 @@
 import { Component, OnInit,  } from '@angular/core';
+import { Router } from '@angular/router';
+import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
 
 @Component({
@@ -14,11 +16,19 @@ export class TicketDisplayComponent implements OnInit {
   public table=false;
   public tickets=[];
   public msg='Click Get Tickets.'
-  constructor(public apiCallservice: ApiCallsService) {
+  constructor(public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router) {
   }
 
   ngOnInit() {
   }
+
+  showDatabyid = function (data) {
+    this.show = true;
+    data=data['truck'];
+    data['updateNumber']=true;
+    this.handledata.saveData(data);
+    this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
+  };
 
   find = function () {//only for data from 1st april 2021 and loading data is empty
     this.msg='Please Wait! Loading...'
