@@ -435,8 +435,13 @@
                           <td>{{i.truckno}}</td>
                           <td><input type="number" id="advAmt_{{j}}"></td>
                           <td><input type="date" id="advDate_{{j}}"></td>
-                          <td><input type="number" id="advContact_{{j}}"*ngIf="i.contact.length==0">
+                          <td><input type="number" id="advContact_{{j}}" *ngIf="i.contact.length==0">
                           <ul *ngFor="let k of i.contact">
+                            <li>{{k}}</li>
+                          </ul>
+                        </td>
+                        <td><input type="number" id="advContactO_{{j}}" *ngIf="i.contactO.length==0">
+                          <ul *ngFor="let k of i.contactO">
                             <li>{{k}}</li>
                           </ul>
                         </td>
@@ -475,6 +480,7 @@
                         <th>Advance Amt</th>
                         <th>Advance Date</th>
                         <th>Contact</th>
+                        <th>ContactOwner</th>
                         <th>Media</th>
                         <th>Edit</th>
                       </tr>
@@ -492,6 +498,15 @@
                                   {{k}}
                                   <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(k,'wa',i)"><i class="material-icons">whatsapp</i></button>
                                   <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(k,'txt',i)"><i class="material-icons">chat</i></button>
+                                </li>
+                              </ul>
+                            </td>
+                            <td>
+                              <ul *ngFor="let m of i.contactO">
+                                <li>
+                                  {{k}}
+                                  <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(m,'wa',i)"><i class="material-icons">whatsapp</i></button>
+                                  <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(m,'txt',i)"><i class="material-icons">chat</i></button>
                                 </li>
                               </ul>
                             </td>

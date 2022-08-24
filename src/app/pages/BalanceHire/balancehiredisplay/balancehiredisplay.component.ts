@@ -1250,6 +1250,8 @@ if(newpage===1){
       formbody['advAmt']=parseInt((<HTMLInputElement>document.getElementById('advAmt_' + j)).value)
       formbody['advDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
       formbody['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
+      formbody['contactO']=(<HTMLInputElement>document.getElementById('advContactO_' + j))?[(<HTMLInputElement>document.getElementById('advContactO_' + j)).value]:this.alltrucks[j]['contactO'];
+      
       
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, formbody, 0)
@@ -1258,6 +1260,7 @@ if(newpage===1){
           this.alltrucks[j]['advanceAmt']=(<HTMLInputElement>document.getElementById('advAmt_' + j)).value
           this.alltrucks[j]['advanceDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
           this.alltrucks[j]['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
+          this.alltrucks[j]['contactO']=(<HTMLInputElement>document.getElementById('advContactO_' + j))?[(<HTMLInputElement>document.getElementById('advContactO_' + j)).value]:this.alltrucks[j]['contactO'];
           this.advAmt=0;
           this.advDate='';
           this.alltrucks.splice(j,1);
