@@ -130,6 +130,7 @@ public turn12;
 public fdate;
 public tdate;
 public buttonOptionVehicleType='';
+public changeTextA=false;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -147,6 +148,9 @@ public buttonOptionVehicleType='';
  
     this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
+  }
+  changeTextAF(){
+    this.changeTextA=!this.changeTextA;
   }
 
   getVehicleTypeList(){

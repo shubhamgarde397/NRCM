@@ -175,11 +175,11 @@
                 <td>
                     <ul>
                     <li [ngStyle]="{'background-color': i.rE}" style="color: black;">
-                        <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
+                        R:<i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
                         <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
                     </li>
                     <li [ngStyle]="{'background-color': i.dE}" style="color: black;">
-                        <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
+                        L:<i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
                         <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
                     </li>
                     </ul>
@@ -194,7 +194,7 @@
                         <li>{{kk}}</li>
                     </ul>
                 </td>
-                <td *ngIf="role==1||role==2">
+                <td>
                     <ul *ngFor="let k of i.accountDetails">
                         <li>{{k.accountName}} : {{k.bankName}}</li>
                         <li>{{k.accountNumber}}</li>

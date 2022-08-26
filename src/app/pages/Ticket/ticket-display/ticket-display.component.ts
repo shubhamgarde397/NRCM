@@ -25,7 +25,7 @@ export class TicketDisplayComponent implements OnInit {
   showDatabyid = function (data) {
     this.show = true;
     data=data['truck'];
-    data['updateNumber']=true;
+    data['updateNumber']=true;    
     this.handledata.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   };
