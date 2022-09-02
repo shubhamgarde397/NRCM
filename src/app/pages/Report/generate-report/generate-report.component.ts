@@ -19,7 +19,8 @@ public options=[
   {value:'2',viewValue:'Account'},
   {value:'3',viewValue:'Contact'},
   {value:'4',viewValue:'Truck Payment PDF C'},
-  {value:'5',viewValue:'Format Trucks'}
+  {value:'5',viewValue:'Format Trucks'},
+  {value:'6',viewValue:'Poch Bill Book'}
 ]
 public selectedOption;
 public buttonOption;
@@ -38,6 +39,9 @@ public fdate;
 public tdate;
 public truckAllData;
 public formatDate;
+public from;
+public to;
+public acknowledgement=false;
   constructor(
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
@@ -49,6 +53,157 @@ public formatDate;
   ngOnInit() {
   this.buttons=this.getButtons();
   }
+
+  PochBill(){//threshhold is 295
+    var doc = new jsPDF()
+      for(let i=this.from;i<=this.to;i++)
+      {
+        this.pdfData(doc,false,i);
+        this.pdfData(doc,true,i);
+      }
+
+    doc.save('pochbillmain.pdf')
+  }
+
+  pdfData(doc,acknowledgement,i){
+    doc.setFontSize('30');
+    doc.setFontType('bold');
+    doc.setTextColor(224,0,0);
+    doc.text('NITIN ROADWAYS',28, 38)
+    doc.line(0, 106, 5, 106);//punching line helper
+    doc.setDrawColor(163,0,0);
+    doc.setLineWidth(0.5);
+    doc.line(3, 43, 146, 43);
+    
+    doc.setFontSize('11');
+    doc.setFontType('bold');
+    doc.setTextColor(224,0,0);
+    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 8,47)
+    doc.setDrawColor(163,0,0);
+    doc.setLineWidth(0.5);
+    doc.line(3, 48, 146, 48);
+    
+    doc.setFontType('normal');
+    doc.setFontSize('12');
+    doc.setTextColor(0, 0, 0);
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, 55)
+    doc.setFontSize('12');
+    doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, 60)
+    
+    
+    doc.setFontType('italic');
+    doc.setFontSize('11');
+    doc.setTextColor(0, 0, 0);
+    doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 10, 65)
+    
+    doc.setDrawColor(224,0,0);
+    doc.setLineWidth(0.8);
+    doc.line(3, 67, 146, 67);
+    
+    doc.setDrawColor(224,0,0);
+    doc.setLineWidth(0.2);
+    doc.line(3, 68, 146, 68);
+    
+    doc.setFontSize('12');
+    doc.setFontType('normal');
+    doc.setTextColor(0, 0, 0);
+    
+    doc.setFontType('bold');
+    doc.setDrawColor(0,0,0);
+    doc.text('Bill No. :    '+String(i),10,75)
+    doc.text('Date : ________',110,75)
+    
+    doc.text("We Nitin Roadways are submitting ____ PODs to",20,86)
+    doc.text("______________________________________________",20,92.5)
+    
+    // Table
+    // Table square
+    doc.line(17, 103, 140, 103);
+    doc.line(17, 103, 17, 145);
+    doc.line(140, 103, 140, 145);
+    doc.line(17, 145, 140, 145);
+    // Table square
+    // Table rows
+    doc.line(17, 110, 140, 110);
+    doc.line(17, 117, 140, 117);
+    doc.line(17, 124, 140, 124);
+    doc.line(17, 131, 140, 131);
+    doc.line(17, 138, 140, 138);
+    // Table rows
+    // Table heading
+    doc.line(25, 103, 25, 145);//srno
+    doc.line(47, 103, 47, 145);//date
+    doc.line(79, 103, 79, 145);//truckno
+    doc.line(115, 103, 115, 145);//destination
+    
+    doc.setFontSize('8');
+    doc.setFontType('bold');
+    
+    doc.text('Sr.',19,108)
+    doc.setFontSize('10');
+    doc.text('1',20,115)
+    doc.text('2',20,122)
+    doc.text('3',20,129)
+    doc.text('4',20,136)
+    doc.text('5',20,143)
+    doc.setFontSize('8');
+    doc.text('Loading Date',27,108)
+    doc.text('Truck No',53,108)
+    doc.text('Destination',87,108)
+    doc.text('Balance',120,108)
+    // Table heading
+    // Table
+    // Signature
+    doc.setFontSize('10');
+    if(acknowledgement){
+      doc.text("Receiver's Signature ___________________",68.5,165)
+    }else{
+      doc.text("Signature ___________________",87,165)
+    }
+    // Signature
+    doc.setFontSize('10');
+    doc.setFontType('bold');
+    doc.text('Please check and pay the pending balance to : ',35,178)
+    
+     // Account
+    // Account square
+    doc.line(17, 181, 140, 181);
+    doc.line(17, 181, 17, 195);
+    doc.line(140, 181, 140, 195);
+    doc.line(17, 195, 140, 195);
+    // Account square
+    // Account rows
+    doc.line(17, 188, 140, 188);
+    // Account rows
+    // Account heading
+    doc.line(47, 181, 47, 195);//date
+    doc.line(79, 181, 79, 195);//truckno
+    doc.line(109, 181, 109, 195);//truckno
+    
+    doc.setFontSize('10');
+    doc.setFontType('bold');
+    
+    doc.text('Account Name',19.5,186)
+    doc.text('Account Number',49,186)
+    doc.text('Bank Name',85,186)
+    doc.text('IFSC',120,186)
+    
+    doc.text('Nitin Roadways',19,193)
+    doc.text('3265201000363',50,193)
+    doc.text('Canara Bank',83,193)
+    doc.text('CNRB0003265',112,193)
+    // Account heading
+    // Table
+    // Acknowledgement
+    if(acknowledgement){
+      doc.setFontSize('12');
+      doc.setFontType('bold');
+      doc.text('ACKNOWLEDGEMENT SLIP',49,205)
+      }
+      // Acknowledgement
+    doc.addPage()
+  }
+
 
   getTruckId(){
     this.selectDate=true

@@ -5,7 +5,7 @@
         <thead class="table-header">
             <tr>
                 <th>Srno</th>
-                <th>Name-SN</th>
+                <th>Name</th>
                 <th>GST Number<br>Email</th>
                 <th>Rent</th>
                 <th>Destination<br>Contact</th>
@@ -20,7 +20,7 @@
         <tbody>
             <tr *ngFor="let i of gstdetailslist;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.name}}:{{i.shortName}}<br>Msg N: <span style="cursor:grab;" (click)="msgs(i.msgid)">{{i.msgid}}</span><br>Msg S: <span style="cursor:grab;" (click)="msgs(i.msgidS)">{{i.msgidS}}</span></td>
+                <td>{{i.name}}:{{i.shortName}}</td>
                 <td>{{i.gst}}<br>
                 <ul>
                     <li *ngFor="let ii of i.email" (click)="copyEmail(ii)">{{ii}}</li>

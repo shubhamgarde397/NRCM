@@ -57,9 +57,7 @@ export class GstupdateComponent implements OnInit {
       shortName:this.handledata.Data.shortName,
       load:[],
       Email:[],
-      contact:[],
-      msgid:this.handledata.Data.msgid,
-      msgidS:this.handledata.Data.msgidS
+      contact:[]
     });
     this.dest = this.handledata.Data.dest;
     this.pT = this.handledata.Data.partyType;
@@ -117,8 +115,6 @@ export class GstupdateComponent implements OnInit {
     formbody['_id'] = this.handledata.Data._id;
     formbody['load'] = this.load;
     formbody['contact']=this.contactArray;
-    formbody['msgid'] = data.value.msgid;
-    formbody['msgidS'] = data.value.msgidS;
     formbody['method'] = 'update';
     formbody['tablename'] = 'gstdetails';
 

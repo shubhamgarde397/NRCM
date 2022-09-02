@@ -83,26 +83,27 @@ export class PDFComponent implements OnInit {
     doc.setFontType('bold');
     doc.setFontType('italic');
     doc.setTextColor(0, 0, 0);
-    doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
+    // doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
 
     doc.setDrawColor(163,0,0);
     doc.setLineWidth(0.5);
-    doc.line(15, 38, 195, 38);
+    doc.line(15, 33, 195, 33);
 
     doc.setFontSize('15');
     doc.setFontType('bold');
     doc.setTextColor(224,0,0);
-    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15, 43)
+    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15, 38)
 
     doc.setDrawColor(163,0,0);
     doc.setLineWidth(0.5);
-    doc.line(15, 44, 195, 44);
+    doc.line(15, 39, 195, 39);
 
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
     doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
-    doc.text('Email :- punenitinroadways@gmail.com', 25, 58)
+    doc.setFontSize('12');
+    doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 58)
 
 
     doc.setFontType('italic');
@@ -205,28 +206,27 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('bold');
     doc.setFontType('italic');
     doc.setTextColor(0, 0, 0);
-    doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
+    // doc.text('(TRANSPORT CONTRACTOR & COMMISSION AGENT)', 30, 35)
 
     doc.setDrawColor(153, 29, 39);
     doc.setLineWidth(0.5);
-    doc.line(15, 38, 195, 38);
+    doc.line(15, 33, 195, 33);
 
     doc.setFontSize('15');
     doc.setFontType('bold');
     doc.setTextColor(215, 6, 9);
-    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15,
-
-      43)
+    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15,38)
 
     doc.setDrawColor(153, 29, 29);
     doc.setLineWidth(0.5);
-    doc.line(15, 44, 195, 44);
+    doc.line(15, 39, 195, 39);
 
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
     doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
-    doc.text('Email :- punenitinroadways@gmail.com', 25, 58)
+    doc.setFontSize('12');
+    doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 58)
 
 
     doc.setFontType('italic');
@@ -343,24 +343,22 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
 
     doc.setDrawColor(153, 29, 39);
     doc.setLineWidth(0.5);
-    doc.line(15, 38, 195, 38);
+    doc.line(15, 33, 195, 33);
 
     doc.setFontSize('15');
     doc.setFontType('bold');
     doc.setTextColor(215, 6, 9);
-    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15,
-
-      43)
-
+    doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY', 15,38)
     doc.setDrawColor(153, 29, 29);
     doc.setLineWidth(0.5);
-    doc.line(15, 44, 195, 44);
+    doc.line(15, 39, 195, 39);
 
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
     doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
-    doc.text('Email :- punenitinroadways@gmail.com', 25, 58)
+    doc.setFontSize('12');
+    doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 58)
 
 
     doc.setFontType('italic');

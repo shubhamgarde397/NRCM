@@ -52,9 +52,7 @@ export class GstaddComponent implements OnInit {
       partyType:'',
       shortName:'',
       email:[],
-      contact:[],
-      msgid:'',
-      msgidS:''
+      contact:[]
     });
   }
 

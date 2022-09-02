@@ -118,4 +118,19 @@
           </table>
     </div>
     </div>
+
+    <div class="well" *ngIf="buttonOption==='6'">
+      
+      <div class="row">
+          <div class="col-sm-4"><input type="number" [(ngModel)]="from"></div>
+          <div class="col-sm-4"><input type="number" [(ngModel)]="to"></div>
+      </div>
+
+      <div class="well">
+          <div class="row">
+                <button class="btn btn-warning" (click)="PochBill()">Download Book</button>
+          </div>
+      </div>
+
+  </div>
 </div>
