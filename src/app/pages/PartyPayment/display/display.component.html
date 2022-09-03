@@ -1,5 +1,3 @@
-<div class="well container">
-
   <div class="row">
     <div class="col-sm-4" *ngIf="partyids.length>0">
       <table>
@@ -13,7 +11,7 @@
 <div class="col-sm-10" >
   <div class="form-group row">
 
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
         <option disabled selected>Select Name of The Party</option>
         <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
@@ -21,35 +19,75 @@
         </option>
       </select>
     </div>
-   
-  </div>
 
-  <div class="row">
-    <h4>Truck Loading Dates : </h4>
-    <div class="col-sm-4">
-      <input type="date" class="form-control col-sm-2" [(ngModel)]="fromloading">
-      <label>{{fromloading}}</label>
-    </div>
-    <div class="col-sm-4">
-      <input type="date" class="form-control col-sm-2" [(ngModel)]="toloading">
-      <label>{{toloading}}</label>
-    </div>
-    <div class="col-sm-4">
+    <div class="col-sm-3">
       <select class="form-control" [(ngModel)]="typeOfCols" (change)="typeofcolsF()">
         <option value="default">Default</option>
         <option value="noamount">No Amount</option>
       </select>
     </div>
+   
+  </div>
+
+  <div class="row">
+    <h4>Truck Loading Dates : </h4>
+    <div class="col-sm-2">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="fromloading" id="loadDate">
+      <label>{{fromloading}}</label>
+    </div>
+    <div class="col-sm-2">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="toloading">
+      <label>{{toloading}}</label>
+    </div>
+    
+    <div class="col-sm-2">
+      <button class="btn btn-warning" (click)="cancel('load')">No Loading</button>
+    </div>
+
+    <div class="col-sm-2">
+      <select class="form-control" (click)="setDate('year')" id="year">
+        <option value="undefined">Default</option>
+        <option value="2021">2021</option>
+        <option value="2022">2022</option>
+        <option value="2023">2023</option>
+      </select>
+    </div>
+
+    <div class="col-sm-2">
+      <select class="form-control" (click)="setDate('month')" id="month">
+        <option value="undefined">Default</option>
+        <option value="01">01</option>
+        <option value="02">02</option>
+        <option value="03">03</option>
+        <option value="04">04</option>
+        <option value="05">05</option>
+        <option value="06">06</option>
+        <option value="07">07</option>
+        <option value="08">08</option>
+        <option value="09">09</option>
+        <option value="10">10</option>
+        <option value="11">11</option>
+        <option value="12">12</option>
+      </select>
+    </div>
+
+    <div class="col-sm-2">
+      <button class="btn btn-warning" (click)="setDate('final')">Set Date</button>
+    </div>
+    
     </div>
     <div class="row">
       <h4>Payment Dates : </h4>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <input type="date" class="form-control col-sm-2" [(ngModel)]="frompayment">
       <label>{{frompayment}}</label>
     </div>
-    <div class="col-sm-4">
+    <div class="col-sm-2">
       <input type="date" class="form-control col-sm-2" [(ngModel)]="topayment">
       <label>{{topayment}}</label>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-warning" (click)="cancel('payment')">No Payment</button>
     </div>
   </div>
 
@@ -183,4 +221,3 @@
     </div>
     </div>
   </div>
-</div>

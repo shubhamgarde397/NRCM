@@ -57,6 +57,8 @@ export class DisplayComponent implements OnInit {
   public mailSendButton=false;
 public balanceFollowGlobal={};
 public typeOfColsB=false;
+public month;
+public year;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
@@ -98,6 +100,32 @@ public typeOfColsB=false;
     this.gstdetailslist = this.commonArray.gstdetails;
   }
 
+  cancel(data){
+    switch (data) {
+      case 'load':
+        this.fromloading='2021-01-01';
+        this.toloading='2021-01-01';
+        break;
+        case 'payment':
+          this.frompayment='2021-01-01';
+          this.topayment='2021-01-01';
+        break;
+    }
+  }
+  setDate(type){
+    switch (type) {
+      case 'month':
+        this.month=(<HTMLInputElement>document.getElementById('month')).value;
+        break;
+        case 'year':
+        this.year=(<HTMLInputElement>document.getElementById('year')).value;
+        break;
+        case 'final':
+        this.toloading=this.year+'-'+this.month+'-31'
+        this.fromloading=this.year+'-'+this.month+'-01'
+          break;
+    }
+  }
 
   setDateMonth(){    
     this.date1="2021-"+this.handleF.generate2DigitNumber(String(this.handleF.getMonthNumber(this.monthName)))+"-01"

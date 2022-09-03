@@ -33,7 +33,8 @@ export class BalancehiredisplayComponent implements OnInit {
     { 'value': '5', 'viewvalue': 'Update Actual Payments' },
     { 'value': '6', 'viewvalue': 'Balance Message To Driver' },
     { 'value': '7', 'viewvalue': 'Update Advance Payments' },
-    { 'value': '8', 'viewvalue': 'Advance Message To Driver' }
+    { 'value': '8', 'viewvalue': 'Advance Message To Driver' },
+    { 'value': '9', 'viewvalue': 'Party Msg' }
   ]
   public months = [
     { '1': 'Jan' },
@@ -93,6 +94,8 @@ export class BalancehiredisplayComponent implements OnInit {
   public fullAdvDone=[];
   public updateMsgTypeA='';
 
+  public fetchLoadedTruckTF=false;
+  public currentLoadedParty=[];
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
@@ -446,7 +449,35 @@ if(confirm('Do you want to temporary delete it?')){
           this.advancePaymenttoTruck = true;
         });
   }
+  
+  fetchLoadedTruck(){
+    let data = {};
+      data['method'] = 'displayTruckstoSendPartyMsg';
+      data['tablename'] = '';
 
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, data, 0)
+        .subscribe((res: any) => {
+          this.currentLoadedParty=res.chartData;
+          this.fetchLoadedTruckTF = true;
+        });
+  }
+
+  updatePaymentMsgParty(i,index){
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = i._id;
+      formbody['method'] = 'updateMsgTypeForParty';
+      formbody['tablename'] = '';
+
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, formbody, 0)
+        .subscribe((res: any) => {
+          alert(res.Status);
+          this.currentLoadedParty.splice(index,1);
+        });
+    }
+  }
 
   downloadEmptyContacts(){//threshhold is 295
     var doc = new jsPDF()
@@ -604,6 +635,37 @@ if(newpage===1){
       }
     }
 
+    sendMsgP(no,type,data,j){
+      
+      let msg=''
+      msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A%0A'
+      msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
+      msg=msg+'*Destination*%20:%20'+data.dest1;
+      let dest22=data.dest?msg=msg+data.dest2+'%0A':'%0A'
+      msg=msg+dest22;
+      msg=msg+'*Contact*%20:%20+91%20'+(<HTMLInputElement>document.getElementById('contact_'+j)).value+'%0A'
+      msg=msg+'*QR*%20:%20'+(<HTMLInputElement>document.getElementById('qr_'+j)).value+'%0A%0A';
+      
+      switch (data.typeOfLoad) {
+        case 'Other':
+          msg=msg+'The following truck has been dispatched from Pune.'
+          break;
+          case 'Pipe':
+            msg=msg+'The following truck has been dispatched from Urse Plant.'
+          break;
+          case 'Fittings':
+            msg=msg+'The following truck has been dispatched from Talegaon Fittings Plant.'
+          break;
+      }
+      msg=msg+'%0A%0A';
+      msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
+      msg=msg+'*Pune*%0A'
+      msg=msg+'9822288257%0A'
+      msg=msg+'9766707061%0A'
+      window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
+            
+      }
+
   updatePaymentMsg(i,index){
     if (confirm('Are you sure?')) {
       let formbody = {}
@@ -644,6 +706,7 @@ if(newpage===1){
         });
     }
   }
+
   deleteBHComplete(data, j) {
     if (confirm('Are you sure?')) {
       let formbody = {}

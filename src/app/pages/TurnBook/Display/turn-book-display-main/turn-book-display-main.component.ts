@@ -516,7 +516,29 @@ let tempObj1={};
     }
 
   };
-
+  sendBalanceData(data,j){
+    let bal=data.advanceArray.find(r=>{return r.reason==='Balance'})
+  let msg=''
+  msg=msg+'*****%20%20*Balance%20Payment%20Details*%20%20*****%0A%0A'
+  msg=msg+'*TruckNo*%20:%20'+data.truckName.truckno.replace(/\s/g, "%20")+'%0A'
+  msg=msg+'*Loading*%20Date%20:%20'+this.handleF.getDateddmmyy(data.loadingDate)+'%0A'
+  msg=msg+'*Load*%20:%20'+data.typeOfLoad+'%0A'
+  msg=msg+'*Destination*%20:%20'+data.placeName.village_name +'%20'+(data.placeName.village_name2?data.placeName.village_name2:'')+'%0A'
+  msg=msg+'*Status%20of%20Delivery*%20:%20'+data.statusOfPoch+'%0A'
+  msg=msg+'*Balance%20Amount*%20:%20'+(bal?bal.advanceAmt:'')+'%0A%0A'
+  msg=msg+'*%20*Payment%20Details*%20*%0A%0A'
+  msg=msg+'*Payment%20Amount*%20:%20'+data.actualPaymentAmount+'%0A'
+  msg=msg+'*Payment%20Date*%20:%20'+this.handleF.getDateddmmyy(data.actualPaymentDate)+'%0A%0A%0A'
+  msg=msg+'*%20*Account%20Details*%20*%0A%0A'
+  msg=msg+'*Accname*%20:%20'+(bal?bal.BHAccname.replace(/\s/g, "%20"):'')+'%0A'
+  msg=msg+'*AccNo*%20:%20'+(bal?bal.BHAccNo:'')+'%0A'
+  msg=msg+'*IFSC*%20:%20'+(bal?bal.BHIFSC:'')+'%0A%0A'
+  msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
+  msg=msg+'*Pune*%0A'
+  msg=msg+'9822288257%0A'
+  msg=msg+'9766707061%0A'
+  window.open('https://wa.me/+91'+data.truckName.contact[0]+'/?text='+msg,'_blank');  
+  }
 
   getpdfcomplex(){
     this.selectDate=!this.selectDate;

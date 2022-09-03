@@ -74,7 +74,9 @@ public selectedTransportNo;
       P: [this.handledata.Data.P],
       hbl: [this.handledata.Data.hbl],
       weight: [this.handledata.Data.weight],
-      transports:[this.handledata.Data.transports]
+      transports:[this.handledata.Data.transports],
+      regFee:[this.handledata.Data.regFee],
+      regFeeDate:[this.handledata.Data.regFeeDate]
       
     });
 
@@ -163,6 +165,8 @@ public selectedTransportNo;
     formbody['load'] = this.handledata.Data.load;
     formbody['update']=this.handledata.Data.update;
     formbody['ticket']=this.handledata.Data.ticket;
+    formbody['regFee']=this.handledata.Data.regFee;
+    formbody['regFeeDate']=this.handledata.Data.regFeeDate;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
       .subscribe((response: Response) => {

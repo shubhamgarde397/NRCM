@@ -388,7 +388,7 @@
                           <ul *ngFor="let k of i.contact">
                             <li>
                               {{k}}
-                              <button class="btn btn-success" style="border-radius: 33px;" *ngIf="!i.pmtMsgWA" (click)="sendMsg(k,'wa',i)"><i class="material-icons">whatsapp</i></button>
+                              <button class="btn btn-success" style="border-radius: 33px;" *ngIf="!i.pmtMsgWA" (click)="sendMsg(k,'wa',i)"><span class="material-icons">whatsapp</span></button>
                               <button class="btn btn-success" style="border-radius: 33px;" *ngIf="!i.pmtMsgText" (click)="sendMsg(k,'txt',i)"><i class="material-icons">chat</i></button>
                             </li>
                           </ul>
@@ -496,7 +496,7 @@
                               <ul *ngFor="let k of i.contact">
                                 <li>
                                   {{k}}
-                                  <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(k,'wa',i)"><i class="material-icons">whatsapp</i></button>
+                                  <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(k,'wa',i)"><span class="material-icons">whatsapp</span></button>
                                   <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(k,'txt',i)"><i class="material-icons">chat</i></button>
                                 </li>
                               </ul>
@@ -505,7 +505,7 @@
                               <ul *ngFor="let m of i.contactO">
                                 <li>
                                   {{k}}
-                                  <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(m,'wa',i)"><i class="material-icons">whatsapp</i></button>
+                                  <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(m,'wa',i)"><span class="material-icons">whatsapp</span></button>
                                   <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgA(m,'txt',i)"><i class="material-icons">chat</i></button>
                                 </li>
                               </ul>
@@ -523,6 +523,47 @@
             </div>
           </div>
           </div>
+
+          <div class="well" *ngIf="buttonOption=='9'">  
+            <div class="row">
+              <h3>Balance Message</h3>
+              <div class="row">
+                <div class="col-sm-3">
+                  <button class="btn btn-warning" (click)="fetchLoadedTruck()">Get Data</button>
+                </div> 
+              </div>
+              <div class="well"  *ngIf="fetchLoadedTruckTF">
+                    <table class="table" style="width:100%" align="center">
+                      <thead class="table-header">
+                        <tr>
+                          <th>Srno</th>
+                          <th>Truckno</th>
+                          <th>Party</th>
+                          <th>QR</th>
+                          <th>Media</th>
+                          <th>Edit</th>
+                        </tr>
+                      </thead>
+              
+                      <tbody>
+                          <tr *ngFor="let i of currentLoadedParty;let j = index">
+                              <td>{{j+1}}</td>
+                              <td>
+                                {{i.truckno}}
+                                <input type="number" value={{i.contact}} id="contact_{{j}}">
+                              </td>
+                              <td>
+                                  {{i.partyName}}
+                                  <ul *ngFor="let kk of i.contactP"><li>{{kk}}<button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsgP(kk,'wa',i,j)"><span class="material-icons">whatsapp</span></button></li></ul>
+                              </td>
+                              <td><input type="number" id="qr_{{j}}"></td>
+                              <td><button class="btn btn-warning" *ngIf="i.contactP.length>0" (click)="updatePaymentMsgParty(i,j)">Update</button></td>
+                          </tr>
+                      </tbody>
+                  </table>  
+              </div>
+            </div>
+            </div>
 <div *ngIf="show">
   <router-outlet></router-outlet>
 </div>
