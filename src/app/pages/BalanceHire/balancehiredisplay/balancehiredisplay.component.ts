@@ -97,6 +97,17 @@ export class BalancehiredisplayComponent implements OnInit {
   public fetchLoadedTruckTF=false;
   public currentLoadedParty=[];
 
+  public commonArray;
+  public considerArray;
+  public gstdetailslist
+  public fetchPartyTF=false;
+  public partyName;
+  public qr;
+  public typeOfLoad;
+  public dest1;
+  public dest2;
+public partyDetails;
+
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -460,6 +471,7 @@ if(confirm('Do you want to temporary delete it?')){
         .subscribe((res: any) => {
           this.currentLoadedParty=res.chartData;
           this.fetchLoadedTruckTF = true;
+          this.fetchPartyTF=false;
         });
   }
 
@@ -600,6 +612,61 @@ if(newpage===1){
         break;
     }
   }
+
+  fetchparty(){
+    this.commonArray = this.securityCheck.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infogst')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+    this.gstdetailslist = this.commonArray.gstdetails;
+    this.fetchPartyTF=true;
+    this.fetchLoadedTruckTF=false;
+  }
+
+  getInformationData() {
+    this.spinnerService.show();
+    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
+        this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
+        this.fetchBasic();
+        this.spinnerService.hide();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.securityCheck.commonArray;
+    this.gstdetailslist = [];
+    this.gstdetailslist = this.commonArray.gstdetails;
+  }
+
+  setPartyName() {
+    this.partyDetails=this.gstdetailslist[this.partyName.split('+')[1]]
+  }
+
+  Whatsapp(){
+    let data={}
+    data['truckno']=(<HTMLInputElement>document.getElementById('truck_000')).value;
+    data['dest1']=this.dest1;
+    data['dest2']=this.dest2;
+    data['contact']=(<HTMLInputElement>document.getElementById('contact_000')).value
+    data['typeOfLoad']=this.typeOfLoad;
+    data['qr']=this.qr;
+
+    this.sendMsgP(this.partyDetails.contact[0],'',data,0,2)
+  }
+
+  getTruckDetails(){
+    let temp={}
+    temp['truckno']=(<HTMLInputElement>document.getElementById('truck_000')).value;
+    temp['tablename']='';
+    temp['method']='getTruckContact';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, 0)
+      .subscribe((res: any) => {
+        (<HTMLInputElement>document.getElementById('contact_000')).value=res.Data[0]
+      });
+  }
+
   sendMsgA(no,type,data){
     let r=data.rc?'':'RC'
     let l=data.lc?'':'License'
@@ -635,25 +702,34 @@ if(newpage===1){
       }
     }
 
-    sendMsgP(no,type,data,j){
-      
+    sendMsgP(no,type,data,j,option){
+      let contactD;
+      let qr;
+      if(option===1){
+        contactD=(<HTMLInputElement>document.getElementById('contact_'+j)).value+'%0A'
+        qr=(<HTMLInputElement>document.getElementById('qr_'+j)).value+'%0A%0A';
+      }else if(option===2){
+        contactD=data['contact']+'%0A'
+        qr=data['qr']+'%0A%0A';
+      }
       let msg=''
       msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A%0A'
       msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
       msg=msg+'*Destination*%20:%20'+data.dest1;
-      let dest22=data.dest?msg=msg+data.dest2+'%0A':'%0A'
-      msg=msg+dest22;
-      msg=msg+'*Contact*%20:%20+91%20'+(<HTMLInputElement>document.getElementById('contact_'+j)).value+'%0A'
-      msg=msg+'*QR*%20:%20'+(<HTMLInputElement>document.getElementById('qr_'+j)).value+'%0A%0A';
+      msg=msg+(data.dest2?('/'+data.dest2+'%0A'):'%0A');
+      msg=msg+'*Contact*%20:%20+91%20'+contactD
+      
       
       switch (data.typeOfLoad) {
         case 'Other':
-          msg=msg+'The following truck has been dispatched from Pune.'
+          msg=msg+'%0AThe following truck has been dispatched.'
           break;
           case 'Pipe':
+            msg=msg+'*QR*%20:%20'+qr;
             msg=msg+'The following truck has been dispatched from Urse Plant.'
           break;
           case 'Fittings':
+            msg=msg+'*QR*%20:%20'+qr
             msg=msg+'The following truck has been dispatched from Talegaon Fittings Plant.'
           break;
       }

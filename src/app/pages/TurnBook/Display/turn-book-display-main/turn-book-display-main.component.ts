@@ -57,7 +57,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' ,'disabled':false},
     { 'value': '2', 'viewvalue': 'Truck Arrival' ,'disabled':false},
     { 'value': '3', 'viewvalue': 'Truck Dispatched' ,'disabled':false},
-    { 'value': '4', 'viewvalue': 'To From' ,'disabled':false},
+    { 'value': '4', 'viewvalue': 'To From' ,'disabled':true},
     { 'value': '5', 'viewvalue': 'Monthly Data' ,'disabled':false},
     { 'value': '6', 'viewvalue': 'Balance Hire' ,'disabled':true},
     { 'value': '7', 'viewvalue': 'Update Poch Check' ,'disabled':false},
@@ -65,13 +65,24 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '9', 'viewvalue': 'Cancelled Vehicles' ,'disabled':false},
     { 'value': '10', 'viewvalue': 'By Party' ,'disabled':false},
     { 'value': '11', 'viewvalue': 'Details By Truck' ,'disabled':false},
-    { 'value': '12', 'viewvalue': 'Invoice' ,'disabled':false},
+    { 'value': '12', 'viewvalue': 'Invoice' ,'disabled':true},
     { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
     { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
     { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
     { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
     { 'value': '17', 'viewvalue': 'Double Loading' ,'disabled':false},
+    { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
   ]
+  // 18
+  public inProgress=true;
+  public showbuttonOption18=false;
+  public turn18;
+  public turn18show;
+  public index;
+  public oldIndex;
+  public bigData;
+  public partyVar18;
+  // 18
   public changeText=false;
   public trucknoid11;
   public years = []
@@ -149,6 +160,53 @@ public changeTextA=false;
     this.tableSelected=this.turnbooklist.length>0?true:false;
     this.getTrucks()
   }
+
+  enableInternalAddition(i,j){
+    if(this.inProgress){
+      this.turn18[j]['field']=false;
+      this.index=j;
+      this.oldIndex=j;
+      this.inProgress=false;
+      }else{
+        alert('Submit or Cancel the edit field.')
+      }
+      this.bigData=i;
+  }
+  disableInternalAddition(i,j){
+    if(!this.inProgress){
+      this.inProgress=true;
+      this.index=j;
+      this.oldIndex=j;
+      this.turn18[j]['field']=true;
+      }else{
+        alert('Submit or Cancel the edit field.')
+      }
+      this.bigData=i;
+  }
+  submitAmt(){
+    let arr=[]
+    let obj={}
+    for(let j=0;j<this.turn18.length;j++){
+      obj['id']=this.turn18[j]['_id'];
+      obj['amt']=parseInt((<HTMLInputElement>document.getElementById('hamt_'+j)).value)
+      arr.push(obj)
+      obj={};
+    }
+    let tempObj={}
+    tempObj['method']='turn18amt';
+    tempObj['tablename']='';
+    tempObj['data']=arr;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.aF(this.turn18show)
+      });
+  }
+
+  aF(arr){ // remove by entry by partyid from turn18
+    while(arr.length--){if(arr[arr.length] && arr[arr.length].hasOwnProperty('partyid') && (arguments.length > 2 && arr[arr.length]['partyid'] === (this.handleF.findgst(this.partyVar18, this.parties))['_id'] ) ){arr.splice(arr.length,1);}}
+    return arr;
+}
+
   changeTextAF(){
     this.changeTextA=!this.changeTextA;
   }
@@ -341,6 +399,10 @@ let buttons=[]
   findgst() {
     this.partyid = this.handleF.findgst(this.partyVar, this.parties);
   }
+  findgst18() {
+    this.turn18=this.turn18show;
+    this.turn18=this.turn18.filter(r=>{return r.partyid===(this.handleF.findgst(this.partyVar18, this.parties))['_id']})
+  }
 
   findtruck() {
     this.truckid = this.handleF.findowner(this.truckVar, this.trucks,'Select Truck No');
@@ -391,6 +453,10 @@ let buttons=[]
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
         break;
+        case '18':
+        tempObj['date'] = this.selectedmy;
+        tempObj['partyType']=this.buttonOptionPartyType;
+        break;
         case '16':
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
@@ -418,6 +484,10 @@ let buttons=[]
     if (this.buttonOption !== '8') {
       this.showbuttonOption8 = false;
     }
+    if(this.buttonOption !== '18'){
+      this.showbuttonOption8 = false;
+      this.showbuttonOption18 = true;
+    }
     if (this.buttonOption !== '16') {
       this.showbuttonOption8 = false;
     }
@@ -431,7 +501,7 @@ if(this.buttonOption !== '11'){
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
-        if(this.buttonOption!=='8'&&this.buttonOption!=='16'){
+        if(this.buttonOption!=='8'&&this.buttonOption!=='16'&&this.buttonOption!=='18'){
         this.types={'None':0,'Open':0,'Container':0}
         this.Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
         res.Data.forEach(r=>{
@@ -467,6 +537,17 @@ if(this.buttonOption !== '11'){
             this.show8Msg = "All set for this month.";
           }
           this.parties = this.parties.filter(r=>{return r.partyType===this.buttonOptionPartyType})
+        }
+        else if (this.buttonOption == '18') {
+          this.parties = this.parties.filter(r=>{return r.partyType===this.buttonOptionPartyType})
+          if (res.Data.length > 0) {
+            this.showbuttonOption18 = true;
+            this.turn18 = res.Data;
+            this.turn18show=res.Data;
+          } else {
+            this.showbuttonOption18 = false;
+            this.show18Msg = "All set for this month.";
+          }
         }
         else if (this.buttonOption == '16') {
           if (res.Data.length > 0) {
