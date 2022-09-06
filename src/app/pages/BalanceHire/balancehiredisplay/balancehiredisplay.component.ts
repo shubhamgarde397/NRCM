@@ -107,7 +107,7 @@ export class BalancehiredisplayComponent implements OnInit {
   public dest1;
   public dest2;
 public partyDetails;
-
+public contactP;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -642,6 +642,7 @@ if(newpage===1){
 
   setPartyName() {
     this.partyDetails=this.gstdetailslist[this.partyName.split('+')[1]]
+    this.contactP=this.partyDetails.contact[0];
   }
 
   Whatsapp(){
@@ -653,7 +654,7 @@ if(newpage===1){
     data['typeOfLoad']=this.typeOfLoad;
     data['qr']=this.qr;
 
-    this.sendMsgP(this.partyDetails.contact[0],'',data,0,2)
+    this.sendMsgP(this.contactP,'',data,0,2)
   }
 
   getTruckDetails(){
