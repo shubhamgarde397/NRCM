@@ -106,7 +106,7 @@ export class HiddenTrucksComponent implements OnInit {
     this.fetchData();
   }
   refresh(){
-    this.considerArray=[0,0,0,0,0,1,0,0]
+    this.considerArray=[0,0,0,0,0,1,0]
     this.getInformationData()
   }
 

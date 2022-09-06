@@ -32,7 +32,7 @@ export class TransportDisplayComponent implements OnInit {
     this.transportlist = this.commonArray.transport;
   }
   refresh(){
-    this.considerArray=[0,0,0,0,0,0,0,1]
+    this.considerArray=[0,0,0,0,0,0,1]
     this.getInformationData()
   }
   delete = function (id) {

@@ -59,12 +59,9 @@ export class TurnBookUpdateComponent implements OnInit {
   public tempPaymentNAME;
   public addtoTB=false;
   public advanceArray=[]
-  public qrArray;
   public sum=0;
-  public qr;
   public typeToUI='';
   public partyToUI='';
-  public qrHit=false;
   public paymentDisabled=true;
   public Loadarr=[];
   public retHireAmt;
@@ -113,7 +110,6 @@ export class TurnBookUpdateComponent implements OnInit {
       BHAccname:'',
       BHAccNo:'',
       BHIFSC:'',
-      qr:this.handledata.Data.qr,
       pochAmount:this.handledata.Data.pochAmount
     });
     this.myFormGroup1 = this.formBuilder.group({
@@ -138,7 +134,6 @@ export class TurnBookUpdateComponent implements OnInit {
       entryDate: this.handledata.Data.entryDate,
       waitLocation:this.handledata.Data.waitLocation,
       truckNo: ['', Validators.required],
-      qr:this.handledata.Data.qr,
       pochAmount:this.handledata.Data.pochAmount
     });
     this.place = this.handledata.Data.place;
@@ -154,7 +149,6 @@ export class TurnBookUpdateComponent implements OnInit {
     this.updateOption = this.handledata.Data.number;
     this.oldTruckNo = this.handledata.Data.truckno;
     this.advanceArray = this.handledata.Data.advanceArray;
-    this.qr=this.handledata.Data.qr;
     this.balance();
     this.paymentid==='617114b7baa1bf3b9386a6a9'?this.fetchPaymentData(this.handledata.Data.loadingDate,this.handledata.Data.partyid):this.myFormGroup.controls.partyPayment.disable();
   }
@@ -251,19 +245,12 @@ for(let i=0;i<partyDetails.load.length;i++){
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
     this.tempVNAME = this.villagelist[this.myFormGroup.value.place.split('+')[1]].village_name;
     this.myFormGroup.value.place = this.tempVNAME;
-    this.qrArray=this.qrArray.filter(r=>r.place===this.tempVNAME);
   }
 
   setPlaceName2() {
     this.placeid2 = this.villagelist[this.myFormGroup.value.place2.split('+')[1]]._id;
     this.tempVNAME2 = this.villagelist[this.myFormGroup.value.place2.split('+')[1]].village_name;
     this.myFormGroup.value.place2 = this.tempVNAME2;
-  }
-
-  QRDetails(){
-    this.typeToUI=this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0].type;
-    this.partyToUI=this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0].party;
-    this.qrHit=true;
   }
 
   getInformationData() {
@@ -273,7 +260,6 @@ for(let i=0;i<partyDetails.load.length;i++){
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
         this.securityCheck.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.securityCheck.commonArray['ownerdetails'];
-        this.securityCheck.commonArray['qr'] = Object.keys(res.qr[0]).length > 0 ? res.qr : this.securityCheck.commonArray['qr'];;
         this.fetchBasic();
       });
   }
@@ -282,11 +268,9 @@ for(let i=0;i<partyDetails.load.length;i++){
     this.commonArray = this.securityCheck.commonArray;
     this.parties = [];
     this.villagelist = [];
-    this.qrArray = [];
     this.truckdetailslist = [];
     this.parties = this.commonArray.gstdetails;
     this.villagelist = this.commonArray.villagenames;
-    this.qrArray = this.commonArray.qr;
     this.truckdetailslist = this.commonArray.ownerdetails;
   }
 
@@ -379,9 +363,7 @@ for(let i=0;i<partyDetails.load.length;i++){
       tempObj["paymentid"] = this.paymentid;//Make changes in backend
       tempObj["waitLocation"]=this.myFormGroup.value.waitLocation;
       tempObj["advanceArray"]=this.advanceArray;
-      tempObj["qr"]=parseInt(this.myFormGroup.value.qr)===null?0:parseInt(this.myFormGroup.value.qr);
       tempObj["pochAmount"]=parseInt(this.myFormGroup.value.pochAmount)===null?0:parseInt(this.myFormGroup.value.pochAmount);
-      tempObj["qrid"]=this.qrHit?(this.myFormGroup.value.qr===0?'61c082b87dcfd6ecb7f02b90':this.qrArray.filter(r=>r.qr==parseInt(this.myFormGroup.value.qr))[0]._id):'61c082b87dcfd6ecb7f02b90';
       this.addtoTB===true?tempObj['addtotbids']=true:false
       if(this.handledata.Data.locations.length===0){
         tempObj["locationDate"]=[this.myFormGroup.value.loadingDate===''?this.handlefunction.createDate(new Date()):this.myFormGroup.value.loadingDate];
@@ -425,15 +407,11 @@ for(let i=0;i<partyDetails.load.length;i++){
             tempData[this.handledata.Data.index]["typeOfLoad"] = this.myFormGroup.value.typeOfLoad;
             tempData[this.handledata.Data.index]["waitLocation"] = this.myFormGroup.value.waitLocation;
             tempData[this.handledata.Data.index]["advanceArray"] = this.advanceArray;
-            tempData[this.handledata.Data.index]["qr"] = this.myFormGroup.value.qr;
             tempData[this.handledata.Data.index]["pochAmount"] = this.myFormGroup.value.pochAmount;
           this.handledata.saveTurn([]);
           let tempArray = []
           tempArray = tempData;
           this.handledata.saveTurn(tempArray);
-          if(parseInt(this.myFormGroup.value.qr)!==0){
-            this.securityCheck.commonArray['qr']=this.securityCheck.commonArray['qr'].filter(r=>{return r.qr!=parseInt(this.myFormGroup.value.qr)});
-          }
         }
 
 

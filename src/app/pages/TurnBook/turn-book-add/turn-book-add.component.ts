@@ -21,35 +21,15 @@ export class TurnBookAddComponent implements OnInit {
   public submitted = false;
   public response: any;
   public date = new Date();
-  public alertBoxSuccess = false;
-  public dbName = 1;
-  public truckNamesOwner = [];
-  public commonArray;
-  public trucklist: any;
-  public hireExtendingMoney = [];
   public days = [];
   public yearNames = [];
   public m;
   public y;
-  public considerArray;
   public role;
-  public ownerdetailslist;
-  public ownerid;
-  public partyid='5fff37a31f4443d6ec77e078';
-  public placeid='5bcdecdab6b821389c8abde0';
-  public placeid2='';
-  public partyType;
-  public method;
-  public turnArray = [];
-  public truckdetailslist = [];
-  public villagelist;
-  public trucknoid;
-  public villageData = "";
-  public trucknoidno;
-  public manualTruck = false;
   public trucknoM;
   public turnbookDate;
-  public parties;
+  public turnAdd=[]
+  public toAdd=[]
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
@@ -61,207 +41,70 @@ export class TurnBookAddComponent implements OnInit {
 
   ngOnInit() {
     this.turnbookDate = this.handlefunction.getDate(this.handlefunction.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
-    this.obs.dateService.subscribe((res: any) => {
-      let arr = res.split('_');
-      this.m = this.handlefunction.generateMonthName(arr[0]);
-      this.y = arr[1];
-    })
-
-    this.commonArray = this.securityCheck.commonArray;
-    this.hireExtendingMoney = this.handlefunction.getMoney();
-
+    this.getAvailable();
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: ['', Validators.required],
-      truckNo: ['', Validators.required],
-      trucknoM: ['', [Validators.required]],
-      waitLocation:['None'],
-      partyName :'',
-      place:'',
-      place2:''
+      trucknoM: ['', [Validators.required]]
     });
-    this.considerArray = this.handledata.createConsiderArray('turnbook')
-    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-
     this.role = this.securityCheck.role;
   }
 
-  getInformationData() {
-    this.spinnerService.show();
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
-      .subscribe((res: any) => {
-        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
-        this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
-        this.securityCheck.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.securityCheck.commonArray['ownerdetails'];;
-        this.truckdetailslist = this.commonArray.ownerdetails;
-        this.villagelist = this.commonArray.villagenames;
-        this.parties = this.commonArray.gstdetails;
-        this.fetchBasic();
-        this.spinnerService.hide();
-      });
-  }
 
-  fetchBasic() {
-    this.commonArray = this.securityCheck.commonArray;
-    this.parties = [];
-    this.villagelist = [];
-    this.truckdetailslist = [];
-    this.parties = this.commonArray.gstdetails;
-    this.villagelist = this.commonArray.villagenames;
-    this.truckdetailslist = this.commonArray.ownerdetails;
-
-  }
-
-  revert() {
-    this.manualTruck = false;
-    this.myFormGroup.patchValue({ trucknoM: '' });
-    this.trucknoid = '';
-
-  }
-
-  findtruckdetails() {
-    let tf = this.trucknoid.split('+')[0] === 'Other' ? true : false;
-    if (tf) {
-      this.manualTruck = true;
-      this.ownerid = '';
-      this.method = "insert.new";
-    } else {
-      this.manualTruck = false;
-      this.myFormGroup.patchValue({ trucknoM: this.trucknoid.split('+')[1] })
-      this.ownerid = this.trucknoid.split('+')[0];
-      this.method = "insert.old";
-    }
-  }
-
-  storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
+  storeTurnBookData() {
     this.submitted = true;
     let tempobj = {};
-    tempobj['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
-    tempobj['ownerid'] = this.ownerid;
-    tempobj['placeid'] = this.placeid;
-    tempobj['placeid2'] = '';
-    tempobj['partyid'] = this.partyid;
-    tempobj['partyType'] = '';
-    tempobj['parentAccNo'] = 0;
-    tempobj['loadingDate'] = '';
+    tempobj['trucks'] = this.toAdd;
     tempobj['turnbookDate'] = this.turnbookDate;
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'turnbook';
-    tempobj['method'] = this.method;
+    tempobj['method'] = 'bulkTurnTrucks';
     tempobj["user"]= "shubham";
     tempobj["typeofuser"]= 1;
-    tempobj["lrno"]= 0;
-    tempobj["hamt"]= 0;
-    tempobj["pochDate"]= "";
-    tempobj["invoice"]= "";
-    tempobj["pochPayment"]= false;
-    tempobj["pgno"]= 999;
-    tempobj["paymentid"]= "617114b7baa1bf3b9386a6a9";
-    tempobj["input"]= "manual";
-    tempobj["waitLocation"]= 'None';
-    tempobj["complete"]= false;
-    tempobj["typeOfLoad"]= '';
-let toAdd=true;
-let toAddData;
-    let tempObj={};
-    let today=new Date();
-    let last14Days=new Date(today.getFullYear(), today.getMonth(), today.getDate()-14);
-    tempObj['tablename'] = 'turnbook'
-    tempObj['method'] = 'displayA14Days'
-    tempObj['display'] = '0';
-    tempObj['turnbookDate'] = today.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(today.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(today.getDate()));
-    tempObj['turnbookDateS14']=last14Days.getFullYear()+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getMonth()+1))+'-'+this.handlefunction.generate2DigitNumber(String(last14Days.getDate()));
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
-      .subscribe((res: any) => {
-      toAddData=res.Data.filter(r=>r.truckid===this.ownerid);
-      toAdd=toAddData.length>0?true:false;
-      if(toAdd){
-        alert('Entry Already Present.\nTurnbook Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].turnbookDate))+'.\nTruck No : '+toAddData[0].truckno+'.\nLoading Date : '+this.handlefunction.getDateddmmyy(String(toAddData[0].loadingDate))+'.\nParty Name : ' +toAddData[0].partyName);
-        toAdd=!confirm('Do you still Want to add?');
-       }
-       if(!toAdd){
-      this.submitted = true;
-      this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
         .subscribe((res: any) => {
-          if (res.hidden) {
-            alert(res.Status);
-            var question=confirm('Vehicle present but its hidden, do you want to unhide and add?');
-            if(question){
-            tempobj['truckno'] = this.trucknoM;
-            tempobj['method'] = 'showAndAdd';
-            tempobj['show']=true;
-            tempobj['find']=true;
-            tempobj['tablename'] = 'ownerdetails';
-            this.apiCallservice.handleData_New_python('turnbook', 1, tempobj, 1)
-            .subscribe((res: any) => {
-              alert(res.Status);
-              this.securityCheck.commonArray['ownerdetails'].push(res.Data[0]);
-              this.manualTruck = false;
-          this.myFormGroup.patchValue({ place: '' });
+          alert(res.Status)
           this.myFormGroup.patchValue({ trucknoM: '' })
-          this.villageData = "";
-          this.spinnerService.hide();
-          this.fetchBasic();
-          this.reset();
-            })
-            }
-          }else if(res.empty){
-            alert(res.Status);
-          }
-          else if(!res.hidden){alert(res.Status)}
-          else{
-            if (this.method === "insert.new") {
-              let tempObj1 = {};
-              tempObj1['oname'] = "";
-              tempObj1['pan'] = "";
-              tempObj1['contact'] = [];
-              tempObj1['truckno'] = this.trucknoid.split('+')[0] === 'Other' ? this.trucknoM : this.trucknoid.split('+')[1];
-              tempObj1['accountDetails'] = [];
-              tempObj1['reference'] = "";
-              tempObj1['preferences'] = [];
-              tempObj1['_id'] = res['_id'].split('+')[1];
-              this.securityCheck.commonArray['ownerdetails'].push(tempObj1);
-              alert('Inserted Successfully!');
-            } else {
-              alert('Inserted Successfully!');
-            }
-          }
-          this.manualTruck = false;
-          this.myFormGroup.patchValue({ place: '' });
-          this.myFormGroup.patchValue({ trucknoM: '' })
-          this.villageData = "";
-          this.spinnerService.hide();
-          this.fetchBasic();
-          this.reset();
         });
-      }
-    });
- 
-    
   }
 
-
-
-  reset() {
-    this.manualTruck = false;
-    this.submitted = false;
-    this.myFormGroup.patchValue({ truckNo: '' });
-    this.myFormGroup.patchValue({ partyType: '' });
-    this.myFormGroup.patchValue({ place: '' });
-    this.myFormGroup.patchValue({ place2: '' });
-    this.myFormGroup.patchValue({ parentAccNo: 0 });
-    this.myFormGroup.patchValue({ partyName: '' });
-    this.myFormGroup.patchValue({ typeOfLoad: '' });
-    
-    this.placeid='5bcdecdab6b821389c8abde0';
-    this.partyid='5fff37a31f4443d6ec77e078';
-    this.placeid2='';
-    this.ownerid='';
-
+  getAvailable(){
+    let tempobj = {};
+      tempobj['tablename'] = 'turnbook';
+      tempobj['method'] = 'getAvailable';
+      tempobj["user"]= "shubham";
+      tempobj["typeofuser"]= 1;
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
+          .subscribe((res: any) => {
+            this.turnAdd=res.balanceData
+            this.turnAdd.forEach(r=>{r['delete']=false});
+          });
   }
-  delete(data) {
+
+  checkValidity(data){
+    
+    
+    let c= this.turnAdd.find(r=>{return r.truckno==data})
+    return c?false:true;
+  }
+
+  addToTurn(){
+    if(this.checkValidity(this.myFormGroup.value.trucknoM)){
+    let temp={}
+    temp['turnbookDate']=this.turnbookDate;
+    temp['truckno']=this.myFormGroup.value.trucknoM
+    temp['delete']=true
+    this.turnAdd.push(temp);
+    this.toAdd.push(temp)
+    this.myFormGroup.patchValue({trucknoM:''})
+    }else{
+      alert('Truck already present!')
+    }
+  }
+
+  deleteFromTurn(data) {
     if (confirm('Are you sure?')) {
-      this.turnArray.splice(data, 1);
+      this.turnAdd.splice(data, 1);
+      this.toAdd.splice(data, 1);
     }
   }
 
@@ -285,4 +128,6 @@ let toAddData;
         break;
     }
   }
+
 }
+

@@ -1,5 +1,5 @@
 <div class="well">
-  <form [formGroup]="myFormGroup" (ngSubmit)="storeTurnBookData(myFormGroup)" submitted=true
+  <form [formGroup]="myFormGroup" (ngSubmit)="addToTurn()" submitted=true
     enctype="multipart/form data" action="/">
 
     <div class="row">
@@ -30,18 +30,7 @@
     <div class="form-group row">
       <div class="col-xs-3">
         TruckNo : 
-        <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
-          (change)="findtruckdetails()" id="truckNoone" *ngIf="!manualTruck">
-          <option value="Other+">Other</option>
-          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}-{{i.typeOfVehicle[0]}}</option>
-        </select>
-
-        <input type="text" *ngIf="manualTruck" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM">
-        <div *ngIf="manualTruck" class="col-xs-1" (click)="revert()">
-          <font color="black">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+        <input type="text" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM">
       </div>
 
       <div class="col-xs-1">
@@ -56,27 +45,34 @@
 
 
     <div class="row">
-      <div class="form-group" class="col-xs-2"></div>
-      <div class="form-group" class="col-xs-1">
+      <div class="form-group" class="col-xs-2">
         <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
           <i class="material-icons">send</i>
         </button>
       </div>
-
-      <div *ngIf="!submitted" class="col-xs-1">
-
-        <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
-          <i class="material-icons">undo</i>
-        </button>
-      </div>
-
-      <div *ngIf="submitted" class="col-xs-1">
-        <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
-          <i class="material-icons">add</i>
-        </button>
-      </div>
-
     </div>
   </form>
+
+  <div class="form-group row">
+    <table class="table table-bordered">
+      <thead>
+<tr>
+  <th>Srno</th>
+  <th>TurnBook Date</th>
+  <th>Truckno</th>
+  <th>Options</th>
+</tr>
+      </thead>
+      <tbody>
+<tr *ngFor="let i of turnAdd;let j = index;">
+  <td>{{j+1}}</td>
+  <td>{{i.turnbookDate}}</td>
+  <td><input type="checkbox">&nbsp;{{i.truckno}}</td>
+  <td *ngIf="i.delete"><button class="btn btn-danger" (click)="deleteFromTurn(j)">Delete</button></td>
+</tr>
+      </tbody>
+    </table>
+    <div class="btn btn-warning" (click)="storeTurnBookData()">Send</div>
+  </div>
 
 </div>

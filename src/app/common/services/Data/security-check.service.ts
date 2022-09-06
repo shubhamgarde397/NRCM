@@ -6,14 +6,13 @@ import { Injectable } from '@angular/core';
 export class SecurityCheckService {
   public yearNames = [];
   public monthNames;
-  public IP = [0, 0, 0, 0, 0, 0, 0, 0, 0,0];
+  public IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   public commonArray = {
     "gstdetails": [{}],
     "ownerdetails": [{}],
     "villagenames": [{}],
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
-    "qr": [{}],
     "transport":[{}],
     "Role": 6
   }

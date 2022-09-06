@@ -36,8 +36,6 @@ import { C2wComponent } from './pages/C2W/c2w/c2w.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
-import { QRCodeComponent } from './pages/QR/qrcode/qrcode.component';
-import { QRUpdateComponent } from './pages/QR/qrupdate/qrupdate.component';
 import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
 import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
 
@@ -59,8 +57,6 @@ import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/pa
     TurnBookLocationDispComponent,
     HiddenTrucksComponent,
     WhatsappComponent,
-    QRCodeComponent,
-    QRUpdateComponent,
     AccountDetailsDisplayComponent,
     PaymentPendingDisplayComponent
   ],

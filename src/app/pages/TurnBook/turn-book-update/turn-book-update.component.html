@@ -62,15 +62,6 @@
           <option *ngFor="let i of Loadarr;"value={{i.loadSingle}}+{{i.loadHire}}+{{i.loadAdvance}}>{{i.loadSingle}}</option>
         </select>
       </div>
-      <div class="col-sm-2">
-        QR : 
-        <select id="qr" class="form-control " formControlName="qr" (change)="QRDetails()">
-          <option selected disabled value={{qr}}>{{qr}}</option>
-          <option *ngFor="let i of qrArray;let j = index;" value={{i.qr}}>{{i.qr}}</option>
-        </select>
-      </div>
-      
-
     </div>
     <!--loadingDate -->
 

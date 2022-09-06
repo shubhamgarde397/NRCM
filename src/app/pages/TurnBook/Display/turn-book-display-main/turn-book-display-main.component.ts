@@ -253,7 +253,6 @@ public changeTextA=false;
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
-        this.securityCheck.commonArray['qr'] = Object.keys(res.qr[0]).length > 0 ? res.qr : this.securityCheck.commonArray['qr'];
         this.fetchBasic();
       });
   }
@@ -803,7 +802,6 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempObj['typeOfLoad'] = data.typeOfLoad;
     tempObj['waitLocation'] = data.waitLocation;
     tempObj['advanceArray'] = data.advanceArray;
-    tempObj['qr'] = data.qr;
     tempObj['paymentDisabled']=true;
     tempObj['pochAmount']=data.pochAmount;
     this.handleData.saveupdateTurn(true);

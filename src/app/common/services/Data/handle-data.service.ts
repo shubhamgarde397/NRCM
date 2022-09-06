@@ -14,7 +14,6 @@ export class HandleDataService {
     "villagenames": [{}],
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
-    "qr": [{}],
     "transport":[{}],
     "Role": 6
   }
@@ -124,13 +123,11 @@ this.updateTurnData=data;
       case 'turnbook':
         return [Consts.VILLAGE_INDEX, Consts.GST_INDEX,Consts.OWNER_INDEX];
       case 'turnbookadd':
-        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX,Consts.OWNER_INDEX]
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.OWNER_INDEX]
       case 'infolrlist':
         return [Consts.LRLIST_INDEX]
       case 'infohiddenlist':
         return [Consts.HIDDEN_TRUCK_INDEX]
-      case 'infoqr':
-        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.QR_INDEX]
       case 'infotpt':
         return [Consts.TRANSPORT_INDEX]
 
@@ -140,7 +137,7 @@ this.updateTurnData=data;
   resetArray(data) {
     switch (data) {
       case 'full':
-        this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0, 0,0];
+        this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0,0];
     }
 
   }
