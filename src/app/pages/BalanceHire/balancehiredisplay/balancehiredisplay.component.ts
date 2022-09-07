@@ -718,20 +718,20 @@ if(newpage===1){
       msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
       msg=msg+'*Destination*%20:%20'+data.dest1;
       msg=msg+(data.dest2?('/'+data.dest2+'%0A'):'%0A');
-      msg=msg+'*Contact*%20:%20+91%20'+contactD
+      msg=msg+'*Contact*%20:+%20+91%20'+contactD
       
       
       switch (data.typeOfLoad) {
         case 'Other':
-          msg=msg+'%0AThe following truck has been dispatched.'
+          msg=msg+'%0AThe above truck has been dispatched.'
           break;
           case 'Pipe':
             msg=msg+'*QR*%20:%20'+qr;
-            msg=msg+'The following truck has been dispatched from Urse Plant.'
+            msg=msg+'The above truck has been dispatched from Urse Plant.'
           break;
           case 'Fittings':
             msg=msg+'*QR*%20:%20'+qr
-            msg=msg+'The following truck has been dispatched from Talegaon Fittings Plant.'
+            msg=msg+'The above truck has been dispatched from Talegaon Fittings Plant.'
           break;
       }
       msg=msg+'%0A%0A';

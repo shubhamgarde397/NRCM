@@ -229,7 +229,15 @@
 <div class="well" *ngIf="buttonOption==='6'">
 
   <div class="row">
-<button class="btn btn-warning" (click)="getAllTrucks()">Get Data!</button>
+<button class="btn btn-warning" (click)="getAllTrucks()">None Type All</button>
+  </div>
+  <div class="row">
+  <div class="col-sm-3">
+    <input type="date" [(ngModel)]="loadingDate6">
+  </div>
+  <div class="col-sm-3">
+    <button class="btn btn-danger" (click)="getAllTrucksByDate()">Specific</button>
+  </div>
   </div>
 
   <div class="well" *ngIf="typeDataConsists">

@@ -99,6 +99,7 @@ public truckformattable=false;
 public emptyregData=[];
 public emptyregDatatable=false;
 // 
+public loadingDate6;
   constructor(
     public apiCallservice: ApiCallsService, 
     public securityCheck: SecurityCheckService,
@@ -532,6 +533,20 @@ switch (this.buttonOption) {
   getAllTrucks(){
     let tempObj={};
     tempObj['method']='SmartTruck'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      this.truckarray=res.chartData;
+      this.trucktable=true;
+      this.typeDataConsists=false;
+      this.typeDataConsistsArray=[];
+    });
+  }
+
+  getAllTrucksByDate(){
+    let tempObj={};
+    tempObj['method']='SmartTruck6'
+    tempObj['loadingDate']=this.loadingDate6;
     tempObj['tablename']='';
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
     .subscribe((res: any) => {
