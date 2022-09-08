@@ -36,7 +36,6 @@ export class UpdateComponent implements OnInit {
       tempobj["method"]= "pendingPayment",
       tempobj["tablename"]= "partyPayment",
       tempobj["user"]= "shubham",
-      tempobj["typeofuser"]= 1
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 0)
       .subscribe((response: Response) => {
         this.pendingTrucks=response['Data'];

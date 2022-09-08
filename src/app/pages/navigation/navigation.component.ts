@@ -65,7 +65,6 @@ export class NavigationComponent implements OnInit {
     this.year = this.date.getFullYear();
     
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
-    this.showThisMsg = this.securityCheck.typeofuser !== 1 ? true : false;
 
     this.myFormGroup = this.formBuilder.group({
       amountShow: this.securityCheck.getAmountShow()
@@ -549,7 +548,6 @@ doc.addPage()
 
   logout() {
     this.router.navigate(['']);
-    this.apiCallservice.logout();
   }
 
   Prdfp(){

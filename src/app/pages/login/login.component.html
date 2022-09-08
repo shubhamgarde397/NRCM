@@ -1,9 +1,9 @@
-<div *ngIf="isLoginSuccess==='true'">
+<div *ngIf="isLoginSuccess===true">
   <router-outlet></router-outlet>
 </div>
 
 
-<div class="container-fluid home" *ngIf="isLoginSuccess==='false'">
+<div class="container-fluid home" *ngIf="isLoginSuccess===false">
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="header">
       <div class="col-xs-8 col-xs-offset-2 col-sm-8 col-sm-offset-2 col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-4">

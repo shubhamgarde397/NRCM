@@ -59,7 +59,6 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = 'bulkTurnTrucks';
     tempobj["user"]= "shubham";
-    tempobj["typeofuser"]= 1;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
         .subscribe((res: any) => {
           alert(res.Status)
@@ -72,8 +71,7 @@ export class TurnBookAddComponent implements OnInit {
       tempobj['tablename'] = 'turnbook';
       tempobj['method'] = 'getAvailable';
       tempobj["user"]= "shubham";
-      tempobj["typeofuser"]= 1;
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
+         this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
           .subscribe((res: any) => {
             this.turnAdd=res.balanceData
             this.turnAdd.forEach(r=>{r['delete']=false});

@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   public logindetailslist;
   public financialYear;
   public dbName = 'NRCM_Information';
-  public isLoginSuccess = 'false';
+  public isLoginSuccess = false;
   public userTypeHTML;
   public userTypeTS;
   public modalUser = false;
@@ -52,10 +52,6 @@ export class LoginComponent implements OnInit {
       username: [this.model.username, Validators.required],
       password: [this.model.password, Validators.required],
     });
-    this.apiCallservice.authSuccess.subscribe(
-      (res: any) => { this.isLoginSuccess = res; }
-    );
-    this.apiCallservice.initAuth();
   }
   setUser() {
     this.userTypeTS = this.userTypeHTML;
@@ -65,47 +61,40 @@ export class LoginComponent implements OnInit {
   }
 
   login({ value, valid }: { value: login, valid: boolean }, check) {
-   this.security.getBranch()==='nrcm'?this.loginH(this.myFormGroup,check):this.loginS(this.myFormGroup,check);
-  }
-
-
-  loginH({ value, valid }: { value: login, valid: boolean }, check) {
-    value = value === undefined ? {} : value;
     this.spinnerService.show();
       this.security.setUsername(value['username']);
-      this.apiCallservice.signIn(value['username'], value['password'], 1);//type);
-  }
-
-  loginS(value1, check) {
-    this.spinnerService.show();
-let value={}
-
-      this.security.setUsername(value1.value['username']);
-      
 
       value['method'] = 'login';
-      value['username']=value1.value.username
-      value['password']=value1.value.password
-      value['tablename']='';
+      value['username']=value.username
+      value['password']=value.password
+      value['tablename']=''
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, value, 0)
         .subscribe((res: any) => {
           if(res['Login']){
-            this.isLoginSuccesss=true;
+            if(this.entry(res['Data'],'nrcm')){
+            this.isLoginSuccess=true;
             this.obs.updateApprovalMessage(res);
-            this.router.navigate(['NavigationS']);
-            this.security.setRole(res.Data[0]['role']);
+            this.router.navigate(['Navigation']);
+            }
+            if(this.entry(res['Data'],'nrcm_transport')){
+              this.isLoginSuccess=true;
+              this.obs.updateApprovalMessage(res);
+              this.router.navigate(['Transport_Navigation']);
+              }
           }
           else{
-            this.isLoginSuccesss=false;
-            this.router.navigate(['']);
+            alert('Contact Admin for registration!')
           }
         });
   }
 
-
   register() {
     this.show = !this.show;
     this.router.navigate(['Register']);
+  }
+
+  entry(data,type){
+    return data.find(r=>{return r.type===type})? true:false
   }
 }

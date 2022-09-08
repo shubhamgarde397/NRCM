@@ -38,6 +38,8 @@ import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidde
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
 import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
 import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
+import { TPTLoginPageComponent } from './pages/TPTLogin/tptlogin-page/tptlogin-page.component';
+import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.component';
 
 
 
@@ -58,7 +60,9 @@ import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/pa
     HiddenTrucksComponent,
     WhatsappComponent,
     AccountDetailsDisplayComponent,
-    PaymentPendingDisplayComponent
+    PaymentPendingDisplayComponent,
+    TPTLoginPageComponent,
+    LinkTruckComponent
   ],
   imports: [
     BrowserModule,

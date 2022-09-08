@@ -21,7 +21,6 @@ export class SecurityCheckService {
   public AUTH = false;
   public username;
   public role = 6;
-  public typeofuser = 3;
   public amountShow=false;
   public branch='';
   constructor() {
@@ -69,11 +68,5 @@ this.amountShow=data;
     this.role = role;
   }
 
-  setTypeOfUser(data) {
-    this.typeofuser = data;
-  }
-  getTypeOfUser() {
-    return this.typeofuser
-  }
 
 }
