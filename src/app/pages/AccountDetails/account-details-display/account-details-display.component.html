@@ -330,7 +330,9 @@
       <tr>
         <th>Srno</th>
         <th>Truck No</th>
-        <th>Dimension</th>
+        <th>Height</th>
+        <th>Weight</th>
+        <th>Length</th>
         <th>Update</th>
       </tr>
     </thead>
@@ -339,7 +341,9 @@
         <td>{{jj+1}}</td>
         <td>{{ii.truckno}}</td>
         <td>
-         <input type="text" [(ngModel)]="selectedDimension">
+         <input type="number" [(ngModel)]="selectedDimensionH">
+         <input type="number" [(ngModel)]="selectedDimensionB">
+         <input type="number" [(ngModel)]="selectedDimensionL">
         </td>
         <td><button class="btn btn-warning" (click)="updatedimension(ii,jj)">Update</button></td>
       </tr>

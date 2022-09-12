@@ -53,9 +53,9 @@
                 <th>License</th>
                 <th>Contact</th>
                 <th>ContactO</th>
-                <th *ngIf="role==1||role==2">Account Details</th>
+                <th>Account Details</th>
                 <th>Prefer</th>
-                <th *ngIf="role==1||role==2">Delete<br>Update</th>
+                <th>Delete<br>Update</th>
             </tr>
         </thead>
         <tbody>
@@ -74,7 +74,7 @@
                     
 
 
-                    <br>{{i.hbl}}-{{i.weight}}
+                    <br>{{i.h}}-{{i.b}}-{{i.l}}-{{i.weight}}
                     <br><span *ngIf="i.transports.length>0">{{i.transports[0].tptName}}</span>
                 
                 </td>
@@ -109,7 +109,7 @@
                         <li>{{kk}}</li>
                     </ul>
                 </td>
-                <td *ngIf="role==1||role==2">
+                <td>
                     <ul *ngFor="let k of i.accountDetails">
                         <li>{{k.accountName}} : {{k.bankName}}</li>
                         <li>{{k.accountNumber}}</li>
@@ -151,16 +151,16 @@
                 <th>Documents</th>
                 <th>Contact</th>
                 <th>ContactO</th>
-                <th *ngIf="role==1||role==2">Account Details</th>
+                <th>Account Details</th>
                 <th>Prefer</th>
-                <th *ngIf="role==1||role==2">Options</th>
+                <th>Options</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let i of ownerdetailslist2;let j = index">
                 <td>{{j+1}}</td>
                 <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
-                    <br>{{i.hbl}}-{{i.weight}}
+                    <br>{{i.h}}-{{i.b}}-{{i.l}}-{{i.weight}}
                 </td>
                 <td>
                     <ul>
@@ -210,7 +210,7 @@
                         <li>{{j}}</li>
                     </ul>
                 </td>
-                <td  *ngIf="role==1||role==2">
+                <td >
                     <div class="btn-group-xs">                        
                         <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
                         <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
@@ -239,16 +239,16 @@
                     <th>Documents</th>
                     <th>Contact</th>
                     <th>ContactO</th>
-                    <th *ngIf="role==1||role==2">Account Details</th>
+                    <th>Account Details</th>
                     <th>Prefer</th>
-                    <th *ngIf="role==1||role==2">Options</th>
+                    <th>Options</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let i of ownerdetailslist2;let j = index">
                     <td>{{j+1}}</td>
                     <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
-                        <br>{{i.hbl}}-{{i.weight}}
+                        <br>{{i.h}}-{{i.b}}-{{i.l}}-{{i.weight}}
                     </td>
                     <td>
                         <ul>
@@ -282,7 +282,7 @@
                             <li>{{kk}}</li>
                         </ul>
                     </td>
-                    <td *ngIf="role==1||role==2">
+                    <td>
                         <ul *ngFor="let k of i.accountDetails">
                             <li>{{k.accountName}} : {{k.bankName}}</li>
                             <li>{{k.accountNumber}}</li>
@@ -298,7 +298,7 @@
                             <li>{{j}}</li>
                         </ul>
                     </td>
-                    <td  *ngIf="role==1||role==2">
+                    <td >
                         <div class="btn-group-xs">                        
                             <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
                             <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
@@ -331,16 +331,16 @@
                         <th>Documents</th>
                         <th>Contact</th>
                         <th>ContactO</th>
-                        <th *ngIf="role==1||role==2">Account Details</th>
+                        <th>Account Details</th>
                         <th>Prefer</th>
-                        <th *ngIf="role==1||role==2">Options</th>
+                        <th>Options</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr *ngFor="let i of ownerdetailslist4;let j = index">
                         <td>{{j+1}}</td>
                         <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
-                            <br>{{i.hbl}}-{{i.weight}}
+                            <br>{{i.h}}-{{i.b}}-{{i.l}}-{{i.weight}}
                         </td>
                         <td>
                             <ul>
@@ -374,7 +374,7 @@
                                 <li>{{kk}}</li>
                             </ul>
                         </td>
-                        <td *ngIf="role==1||role==2">
+                        <td>
                             <ul *ngFor="let k of i.accountDetails">
                                 <li>{{k.accountName}} : {{k.bankName}}</li>
                                 <li>{{k.accountNumber}}</li>
@@ -390,7 +390,7 @@
                                 <li>{{j}}</li>
                             </ul>
                         </td>
-                        <td  *ngIf="role==1||role==2">
+                        <td >
                             <div class="btn-group-xs">                        
                                 <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
                                 <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
@@ -474,7 +474,7 @@
                         <span *ngIf="i.empty" style="color: green;">{{i.truckno}}-</span>
                         <span *ngIf="!i.empty" style="color: red;">{{i.truckno}}-</span>
                        {{i.typeOfVehiclefirst}}
-                        <br>{{i.hbl}}-{{i.weight}}
+                        <br>{{i.h}}-{{i.b}}-{{i.l}}-{{i.weight}}
                     </td>
                     <td>
                         <ul>

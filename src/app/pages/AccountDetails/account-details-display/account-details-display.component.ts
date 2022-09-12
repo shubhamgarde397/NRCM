@@ -77,7 +77,9 @@ public selectedWeight=0;
 // $DEIMENSIONS
 public dimensiontable=false;
 public dimensionarray=[];
-public selectedDimension='';
+public selectedDimensionH;
+public selectedDimensionB;
+public selectedDimensionL;
 // #DEIMENSIONS
 
 // 
@@ -661,12 +663,14 @@ switch (this.buttonOption) {
   }
 
   updatedimension(i,j){
-    if(this.selectedDimension===''){
+    if(this.selectedDimensionH===0||this.selectedDimensionB===0||this.selectedDimensionL===0){
       alert('Cannot add empty fields')
     }
     else{
       let tempObj={}
-      tempObj['hbl']=this.selectedDimension;
+      tempObj['h']=parseFloat(this.selectedDimensionH);
+      tempObj['b']=parseFloat(this.selectedDimensionB);
+      tempObj['l']=parseFloat(this.selectedDimensionL);
       tempObj['ownerid']=i['_id'];
       tempObj['tablename']='';
       tempObj['method']='SMARTDIMENSIONUPDATE';

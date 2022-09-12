@@ -72,7 +72,9 @@ public selectedTransportNo;
       r: [this.handledata.Data.r],
       d: [this.handledata.Data.d],
       P: [this.handledata.Data.P],
-      hbl: [this.handledata.Data.hbl],
+      h: [this.handledata.Data.h],
+      b: [this.handledata.Data.b],
+      l: [this.handledata.Data.l],
       weight: [this.handledata.Data.weight],
       transports:[this.handledata.Data.transports],
       regFee:[this.handledata.Data.regFee],
@@ -154,7 +156,9 @@ public selectedTransportNo;
     formbody['r'] = data.value.r;
     formbody['d'] = data.value.d;
     formbody['P'] = data.value.P;
-    formbody['hbl'] = data.value.hbl;
+    formbody['h'] = data.value.h;
+    formbody['b'] = data.value.b;
+    formbody['l'] = data.value.l;
     formbody['weight'] = data.value.weight;
     formbody['acc12'] = data.value.acc12;
     formbody['acc363'] = data.value.acc363;
@@ -188,7 +192,9 @@ public selectedTransportNo;
               res['r'] = data.value.r;
               res['d'] = data.value.d;
               res['P'] = data.value.P;
-              res['hbl'] = data.value.hbl;
+              res['h'] = data.value.h;
+              res['b'] = data.value.b;
+              res['l'] = data.value.l;
               res['weight'] = data.value.weight;
               res['acc12'] = data.value.acc12;
               res['acc363'] = data.value.acc363;

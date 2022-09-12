@@ -63,7 +63,9 @@ export class OdaddComponent implements OnInit {
       bankName: '',
       ifsc: '',
       reference: '',
-      hbl: '',
+      h: 0,
+      b: 0,
+      l: 0,
       weight: '',
       preferences: [],
       m:false,
@@ -106,7 +108,9 @@ export class OdaddComponent implements OnInit {
     formBody['show'] = true;
     formBody['accountDetails'] = this.accountArray;
     formBody['preferences'] = this.villageArray;
-    formBody['hbl'] = value['hbl'];
+    formBody['h'] = value['h'];
+    formBody['b'] = value['b'];
+    formBody['l'] = value['l'];
     formBody['weight'] = value['weight'];
     formBody['transportid']='627bfad4ac882f830d44a95c';
     formBody['r']='';
@@ -128,7 +132,9 @@ export class OdaddComponent implements OnInit {
         formres['pan'] = value['pan'];
     formres['aadhar'] = value['aadhar'];
     formres['typeOfVehicle'] = value['typeOfVehicle'];
-    formres['hbl'] = value['hbl'];
+    formres['h'] = value['h'];
+    formres['b'] = value['b'];
+    formres['l'] = value['l'];
     formres['weight'] = value['weight'];
         formres['contact'] = this.contactArray;
         formres['accountDetails'] = this.accountArray;
@@ -205,7 +211,9 @@ export class OdaddComponent implements OnInit {
     this.myFormGroup.patchValue({ ifsc: '' });
     this.myFormGroup.patchValue({ reference: '' });
     this.myFormGroup.patchValue({ preferences: [] });
-    this.myFormGroup.patchValue({ hbl: [] });
+    this.myFormGroup.patchValue({ h: 0 });
+    this.myFormGroup.patchValue({ b: 0 });
+    this.myFormGroup.patchValue({ l: 0 });
     this.myFormGroup.patchValue({ weight: [] });
   }
 }

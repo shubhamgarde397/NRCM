@@ -1,11 +1,12 @@
 <nav class="navbar navbar-inverse">
 
-  <div class="container-fluid">
-
+  <div class="container row" style="width:100%;">
+    <div class="col-sm-4">
     <div class="navbar-header">
       <a class="navbar-brand" routerLink="NRCM_TPT_HOME">NRCM</a>
     </div>
-
+</div>
+<div class="col-sm-6">
     <ul class="nav navbar-nav">
 
       <li class="dropdown">
@@ -37,9 +38,12 @@
       <li style="    color: white;
       font-size: 20px;
       margin-top: 10px;
-      margin-left: 15px;">Welcome {{nameOfUser}}</li>
+      margin-left: 15px;"></li>
     </ul>
-
+    </div>
+    <div class="col-sm-2">
+      <span class="navbar-brand">Welcome {{nameOfUser}}</span>
+    </div>
   </div>
 
 </nav>

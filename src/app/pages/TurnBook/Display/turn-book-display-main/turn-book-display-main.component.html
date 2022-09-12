@@ -151,7 +151,7 @@
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="checkbox">&nbsp;{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}-{{i.waitLocation}}-{{i.ownerDetails[0].hbl}}-{{i.ownerDetails[0].weight}}<br>
+                    <input type="checkbox">&nbsp;{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}-{{i.waitLocation}}-{{i.ownerDetails[0].h}}-{{i.ownerDetails[0].b}}-{{i.ownerDetails[0].l}}-{{i.ownerDetails[0].weight}}<br>
                     <span *ngIf="i.ownerDetails[0].contact[0]!==undefined">
                       {{i.ownerDetails[0].contact[0]}}
                     </span>
@@ -222,7 +222,7 @@
                     close
                     </i></td>
                 <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}-{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].hbl}}={{i.ownerDetails[0].weight}}</td>
+                <td>{{i.ownerDetails[0].truckno}}-{{i.typeOfVehiclefirst}}<br>{{i.ownerDetails[0].h}}-{{i.ownerDetails[0].b}}-{{i.ownerDetails[0].l}}={{i.ownerDetails[0].weight}}</td>
                 <td>{{i.villageDetails[0].shortName}}-{{i.partyType}}-{{i.typeOfLoad}}</td>
                 <td>{{i.lrno}}</td>
                 <td *ngIf='i.checker===0'>
