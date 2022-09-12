@@ -1,0 +1,120 @@
+<div class="well" *ngIf="display">
+
+<div class="row">
+  <div class="col-sm-2" *ngFor="let i of ownerdetailslist;let j=index;">
+    <button class="btn btn-danger" (click)="getTruckDetails(i._id,j)">{{i.truckno}}</button>
+  </div>
+</div>
+</div>
+<div class="container" *ngIf="display2">
+
+      <h3 style="font-weight: bolder;">Account Details</h3>
+      <hr>
+      <div class="row">
+        <h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Sr</th>
+              <th>Account Name</th>
+              <th>Account Number</th>
+              <th>Bank Name</th>
+              <th>IFSC</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>{{selectedTruck['accountDetails'][0].accountName}}</td>
+              <td>{{selectedTruck['accountDetails'][0].accountNumber}}</td>
+              <td>{{selectedTruck['accountDetails'][0].bankName}}</td>
+              <td>{{selectedTruck['accountDetails'][0].ifsc}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </h3>
+      </div>
+      <h2 style="font-weight: bolder;">Vehicle Details</h2>
+      <hr>
+    <h3 style="font-weight: bolder;">Documents</h3>
+    <hr>
+    <div class="row">
+      <h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>Srno</th>
+              <th>Document</th>
+              <th>Copy</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>License</td>
+              <td><i class="material-icons" *ngIf="selectedTruck.d" style="color: green;">done</i>
+                <i class="material-icons" *ngIf="!selectedTruck.d" style="color: red;">close</i></td>
+                <td><span *ngIf="selectedTruck.d">Okay</span><span *ngIf="!selectedTruck.d">Please send Photo copy of License of the driver.</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </h3>
+    </div>
+
+    <h3 style="font-weight: bolder;">Vehicle Details</h3>
+    <hr>
+    <div class="row">
+      <h3>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Sr</th>
+            <th>Height</th>
+            <th>Weight</th>
+            <th>Type</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>{{selectedTruck.hbl}}</td>
+            <td>{{selectedTruck.weight}}</td>
+            <td>{{selectedTruck.typeOfVehicle}}</td>
+            <td>{{selectedTruck.contact[0]}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </h3>
+    </div>
+</div>
+
+
+<div class="well" *ngIf="display2">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 style="font-weight: bolder;">Vehicle Owner Details</h1>
+      <hr style="background-color: black;height: 8px;">
+      <div class="row">
+        <div class="col-sm-12"><h3>PAN : <i class="material-icons" *ngIf="selectedTruck.P" style="color: green;">done</i>
+                                        <i class="material-icons" *ngIf="!selectedTruck.P" style="color: red;">close</i></h3></div>
+        <div class="col-sm-12"><h3>RC : <i class="material-icons" *ngIf="selectedTruck.r" style="color: green;">done</i>
+          <i class="material-icons" *ngIf="!selectedTruck.r" style="color: red;">close</i></h3></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12"><span style="font-weight: bolder;">PAN </span><span>:{{selectedTruck.pan}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12"><span style="font-weight: bolder;">Owner </span><span>:{{selectedTruck.oname}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12"><span style="font-weight: bolder;">Contact </span><span>:{{selectedTruck.contactO[0]}}</span></div>
+      </div>
+    </div>
+    <div class="col-sm-4"></div>
+    <div class="col-sm-4"></div>
+  </div>
+</div>
+
+  

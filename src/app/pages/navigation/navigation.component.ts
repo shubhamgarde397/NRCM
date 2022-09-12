@@ -56,7 +56,7 @@ export class NavigationComponent implements OnInit {
   ngOnInit() {
     this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.URL = window.location.href.split('/')[2];
-    this.username = this.securityCheck.username;
+    this.username = this.securityCheck.dname;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
     this.getInformationData();
     this.AUTH = this.securit.AUTH;

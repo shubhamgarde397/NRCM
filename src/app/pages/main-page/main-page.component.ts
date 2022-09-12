@@ -1062,6 +1062,7 @@ public data=[]
     localStorage.clear();
     // this.generateReportAccount();
     }
+
     generateReportAccount(){//threshhold is 295
 // Fetch all trucks who have either 12 or 363 as false
       let data=this.handleF.removeDuplicates(this.data)

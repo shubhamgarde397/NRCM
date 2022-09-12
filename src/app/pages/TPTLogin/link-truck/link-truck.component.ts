@@ -24,6 +24,7 @@ public usernameU;
 public passwordU;
 public tptIdU;
 public type;
+public dname;
 public tpts2;
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,public sec: SecurityCheckService
   ) { }
@@ -103,6 +104,7 @@ public tpts2;
     tempObj['method']='register_nrcm'
     tempObj['password']=this.password
     tempObj['username']=this.username;
+    tempObj['dname']=this.dname;
     tempObj['type']=this.type;
     tempObj['tablename']=''
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)

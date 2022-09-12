@@ -38,8 +38,14 @@ import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidde
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
 import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
 import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
-import { TPTLoginPageComponent } from './pages/TPTLogin/tptlogin-page/tptlogin-page.component';
 import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.component';
+import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnavigation.component';
+import { TPTWelcomeComponent } from './pages/TPTLogin/tptwelcome/tptwelcome.component';
+import { TruckDetailsComponent } from './pages/TPTLogin/truck-details/truck-details.component';
+import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/personal-details.component';
+import { PendingPaymentComponent } from './pages/TPTLogin/pending-payment/pending-payment.component';
+import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
+import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 
 
 
@@ -61,8 +67,14 @@ import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.compo
     WhatsappComponent,
     AccountDetailsDisplayComponent,
     PaymentPendingDisplayComponent,
-    TPTLoginPageComponent,
-    LinkTruckComponent
+    LinkTruckComponent,
+    TPTNavigationComponent,
+    TPTWelcomeComponent,
+    TruckDetailsComponent,
+    PersonalDetailsComponent,
+    PendingPaymentComponent,
+    TicketComponent,
+    TruckLoadingComponent
   ],
   imports: [
     BrowserModule,

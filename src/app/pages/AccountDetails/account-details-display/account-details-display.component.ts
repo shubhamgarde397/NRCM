@@ -26,7 +26,8 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Dimensions','value':'8'},
     {'viewValue':'Update Account Details','value':'9'},
     {'viewValue':'Truck Format','value':'10'},
-    {'viewValue':'Truck Registration Fee','value':'11'}
+    {'viewValue':'Truck Registration Fee','value':'11'},
+    {'viewValue':'Account 12/363','value':'12'}
   ]
   public displayType;
   public buttonOption;
@@ -37,6 +38,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public considerArray;
   public commonArray;
   public typeDataConsists=false;
+  public count=0;
 // #BASIC #
 
   //$ Account $
@@ -122,6 +124,10 @@ switch (this.buttonOption) {
       this.getInformationData()
     break;
 
+    case '12':
+      this.getInformationData2()
+    break;
+
     case '2':
       this.getPanInfoData();
     break;
@@ -196,6 +202,17 @@ switch (this.buttonOption) {
       .subscribe((res: any) => {
         this.tblShow=true;
         this.tbl=res.Data;
+        this.spinnerService.hide();
+        
+      });
+  }
+  getInformationData2() {
+    this.spinnerService.show();
+    let tempObj = { "method": "smartacc12363", "tablename": '','count':this.count};
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.tblShow=true;
+        this.tbl=res.chartData;
         this.spinnerService.hide();
         
       });
@@ -332,11 +349,12 @@ switch (this.buttonOption) {
     });
   }
 
-  update(type,i,j){
+  update(type,i,j,yo=''){
     let tempObj = { "method": "updateacc12363TF", "tablename": '','type':type,'id':i._id};
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         alert(res.Status);
+        if(yo===''){
         switch (type) {
           case 'both':
             this.tbl.splice(j,1)
@@ -353,6 +371,25 @@ switch (this.buttonOption) {
           default:
             break;
         }
+      }
+      else{
+        switch (type) {
+          case 'both':
+            this.tbl.splice(j,1)
+            break;
+            case '12':
+            this.tbl[j]['acc']['acc12']=true;
+            this.tbl[j]['acc']['acc363']?this.tbl.splice(j,1):null;
+            break;
+            case '363':
+              this.tbl[j]['acc']['acc363']=true;
+              this.tbl[j]['acc']['acc12']?this.tbl.splice(j,1):null;
+            break;
+        
+          default:
+            break;
+        }
+      }
       });
   }
 
@@ -641,14 +678,18 @@ switch (this.buttonOption) {
     }
   }
 
-  generateReportAccount(){//threshhold is 295
+  generateReportAccount(yo=''){//threshhold is 295
     // Fetch all trucks who have either 12 or 363 as false
           let data=this.handleF.removeDuplicates(this.tbl)
           let pager=1;
            var doc = new jsPDF()
            doc.setFontSize('25');
            doc.setFontType('bold');
+           if(yo===''){
            doc.text('Account Details : ', 15, 15)//partyname
+           }else{
+            doc.text('Account Details : '+String(this.count), 15, 15)//partyname
+           }
            doc.setFontSize('10');
           //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
            doc.text(String(pager), 180, 5)//pageno
@@ -695,7 +736,11 @@ switch (this.buttonOption) {
                doc.addPage();
                doc.setFontSize('25');
            doc.setFontType('bold');
-           doc.text('Account Details : ', 15, 15)//partyname
+           if(yo===''){
+            doc.text('Account Details : ', 15, 15)//partyname
+            }else{
+             doc.text('Account Details : '+String(this.count), 15, 15)//partyname
+            }
            doc.setFontSize('10');
           //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 190, 19)//date
            doc.text(String(pager), 180, 5)//pageno
@@ -722,14 +767,21 @@ switch (this.buttonOption) {
            doc.line(134, 20, 134, 25);//credit
            //vertical lines
            }
-           
+           if(yo===''){
             doc.text(String(i+1), 3, y)//partyname
             doc.text(data[i].truckno, 11, y)//partyname
-    
            doc.text(data[i].accountDetails[0].accountName, 39, y)//partyname
            doc.text(String(data[i].accountDetails[0].accountNumber), 39, y+4)//partyname
            doc.text(data[i].accountDetails[0].ifsc, 39, y+8)//partyname
-      
+           }else{
+            doc.text(String(i+1), 3, y)//partyname
+            doc.text(data[i].truckno, 11, y)//partyname
+           doc.text(data[i].acc.accountName, 39, y)//partyname
+           doc.text(String(data[i].acc.accountNumber), 39, y+4)//partyname
+           doc.text(data[i].acc.ifsc, 39, y+8)//partyname
+           doc.text(data[i].a12?'okay':'', 92, y+4)//partyname
+           doc.text(data[i].a363?'okay':'', 114, y+4)//partyname
+           }
                       
              doc.line(0, y + 11, 210, y + 11);//line after header
              y = y + 15;

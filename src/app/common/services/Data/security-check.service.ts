@@ -23,6 +23,9 @@ export class SecurityCheckService {
   public role = 6;
   public amountShow=false;
   public branch='';
+  public dname;
+  public userid;
+  public arr;
   constructor() {
     this.yearNames = this.generateYears();
   }
@@ -62,6 +65,15 @@ this.amountShow=data;
   }
   setUsername(username) {
     this.username = username;
+  }
+  setDisplayname(name){
+    this.dname = name;
+  }
+  setUserid(_id){
+    this.userid=_id;
+  }
+  setTruckData(data){
+    this.arr=data;
   }
 
   setRole(role) {

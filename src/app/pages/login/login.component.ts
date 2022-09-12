@@ -72,6 +72,8 @@ export class LoginComponent implements OnInit {
         ('commoninformation', 1, value, 0)
         .subscribe((res: any) => {
           if(res['Login']){
+            this.security.setDisplayname(res['Data'][0]['displayName']);
+            this.security.setUserid(res['Data'][0]['_id']);
             if(this.entry(res['Data'],'nrcm')){
             this.isLoginSuccess=true;
             this.obs.updateApprovalMessage(res);

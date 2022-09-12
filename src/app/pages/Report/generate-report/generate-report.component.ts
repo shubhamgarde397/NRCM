@@ -66,6 +66,9 @@ public acknowledgement=false;
   }
 
   pdfData(doc,acknowledgement,i){
+    doc.setLineDash([0.5, 1], 10);
+    doc.line(0, 26, 295, 26);
+    doc.setLineDash([1, 0], 10);
     doc.setFontSize('30');
     doc.setFontType('bold');
     doc.setTextColor(224,0,0);
