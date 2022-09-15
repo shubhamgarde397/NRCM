@@ -1,3 +1,98 @@
-<p>
-  personal-details works!
-</p>
+<div class="well" *ngIf="display">
+
+  <div class="row">
+    <div class="col-sm-2" *ngFor="let i of options;let j=index;">
+      <button class="btn btn-danger" (click)="getOptionDetails(i.value)">{{i.viewValue}}</button>
+    </div>
+  </div>
+  </div>
+  <div class="well" *ngIf="display1">
+    <h1 style="font-weight: bolder;text-align: center;">Change Personal Details</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Transport Name</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="tptName"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Owner Name</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="oname"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Address 1</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="addr1"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Address 2</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="addr2"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Address 3</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="addr3"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Email</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="email"></div>
+    </div>
+
+
+    <div class="row">
+    
+      <div class="col-sm-2"><span style="font-weight: bold;">Truck Contact</span></div>
+      <div class="col-sm-4">
+        <input type="text" id="contact" class="form-control" [(ngModel)]="contactA"
+          [ngModelOptions]="{standalone: true}" placeholder="9876543211">
+        <button type="button" class="btn btn-primary" (click)="addMore()">Add</button>
+      </div>
+      <div class="col-sm-4">
+        <ul *ngFor="let i of contactArray;let j =index;">
+          <li>{{i}} <button type="button" mat-raised-button (click)="deleteOne(i,j)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button></li>
+        </ul>
+      </div>
+    </div>
+   
+    <br>
+    <div class="row">
+      <div class="col-sm-6"><button class="btn btn-danger" style="width: 100%;" (click)="changeDetails()">Change</button></div>
+    </div>
+
+  </div>
+  </div>
+
+  <div class="well" *ngIf="display2">
+    <h1 style="font-weight: bolder;text-align: center;">Change Login Details</h1>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">New Username</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="uname"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">New Password</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="pword"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">New Display Name</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="dname"></div>
+    </div>
+    
+    <hr style="background-color: black;height: 4px;">
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Enter Old Username</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="ouname"></div>
+    </div>
+    <div class="row">
+      <div class="col-sm-2"><span style="font-weight: bold;">Enter Old Password</span></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="opword"></div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-sm-6"><button class="btn btn-danger" style="width: 100%;" (click)="changePassword()">Change</button></div>
+    </div>
+
+  </div>
+  </div>
+  
+    

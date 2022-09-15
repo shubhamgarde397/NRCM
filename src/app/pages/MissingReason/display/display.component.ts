@@ -19,12 +19,10 @@ export class DisplayComponent implements OnInit {
   public dbName = 'NRCM_Information';
   public commonArray;
   public considerArray;
-  public role = 6;
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,
     public sec: SecurityCheckService
   ) { }
   fetchData = function () {
-    this.role = this.sec.role;
     this.commonArray = this.sec.commonArray;
     this.lrlist = this.commonArray.lrlist;
   };

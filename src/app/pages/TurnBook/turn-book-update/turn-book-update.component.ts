@@ -37,7 +37,6 @@ export class TurnBookUpdateComponent implements OnInit {
   public place;
   public place2;
   public considerArray = [];
-  public role = 6;
   public placeid;
   public placeid2;
   public partyid;
@@ -79,7 +78,6 @@ export class TurnBookUpdateComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.considerArray = this.handledata.createConsiderArray('turnbookadd')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    this.role = this.securityCheck.role;
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: this.handledata.Data.turnbookDate,
       truckno: this.handledata.Data.truckno,

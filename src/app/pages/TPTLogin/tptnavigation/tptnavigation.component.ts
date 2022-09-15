@@ -27,7 +27,6 @@ export class TPTNavigationComponent implements OnInit {
   public date = new Date();
   public todayDate;
   public username;
-  public role = 6;
   public nameOfUser = 'Guest';
   public URL = '';
   public showThisMsg = false

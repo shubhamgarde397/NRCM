@@ -5,7 +5,7 @@
       <tr class="table-header">
         <th>Srno</th>
         <th>Village Name</th>
-        <th *ngIf="role==1||role==2">Delete</th>
+        <th>Delete</th>
         <th>Update</th>
       </tr>
     </thead>
@@ -15,7 +15,7 @@
       <tr *ngFor="let i of villageslist;let j = index">
         <td>{{j+1}}</td>
         <td>{{i.village_name}}:{{i.shortName}}</td>
-        <td *ngIf="role==1||role==2">
+        <td>
           <button mat-raised-button (click)="deleteVillageDetails(i._id)" class="btn-danger btn-sm btn-just-icon">
             <i class="material-icons">delete_forever</i>
           </button>

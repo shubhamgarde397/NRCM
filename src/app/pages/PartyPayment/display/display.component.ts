@@ -29,7 +29,6 @@ export class DisplayComponent implements OnInit {
   public trucknoid;
   public dynDate;
   public dynDate2;
-  public role = 6;
   public dataTruck;
   public partyid = '';
   public considerArray;
@@ -69,7 +68,6 @@ public year;
     this.considerArray = this.handledata.createConsiderArray('infogstonly')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.monthNames=this.handleF.genaratemonthNames()
-    this.role = this.securityCheck.role;
     this.partyids=[];
     this.paymentData=this.handledata.givePaymentData();
     this.paymentData.length>0?this.tableData = true:this.tableData = false;

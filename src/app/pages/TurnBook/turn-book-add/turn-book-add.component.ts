@@ -25,7 +25,6 @@ export class TurnBookAddComponent implements OnInit {
   public yearNames = [];
   public m;
   public y;
-  public role;
   public trucknoM;
   public turnbookDate;
   public turnAdd=[]
@@ -46,7 +45,6 @@ export class TurnBookAddComponent implements OnInit {
       turnbookDate: ['', Validators.required],
       trucknoM: ['', [Validators.required]]
     });
-    this.role = this.securityCheck.role;
   }
 
 

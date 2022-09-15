@@ -13,9 +13,9 @@
               <th>RC</th>
               <th>DL</th>
               <th>Contact</th>
-              <th *ngIf="role==1||role==2">Account Details</th>
+              <th>Account Details</th>
               <th>Prefer</th>
-              <th *ngIf="role==1||role==2">Delete</th>
+              <th>Delete</th>
           </tr>
       </thead>
       <tbody>
@@ -58,7 +58,7 @@
                       <li>{{k}}</li>
                   </ul>
               </td>
-              <td *ngIf="role==1||role==2">
+              <td>
                   <ul *ngFor="let k of i.accountDetails">
                       <li>{{k.accountName}} : {{k.bankName}}</li>
                       <li>{{k.accountNumber}}</li>
@@ -71,7 +71,7 @@
                     <li>{{j}}</li>
                 </ul>
             </td>
-              <td *ngIf="role==1||role==2">
+              <td>
                   <button mat-raised-button (click)="showOwnerDetails(i._id)"
                       class="btn-danger btn-sm btn-just-icon">
                       <i class="material-icons">delete_forever</i>

@@ -25,7 +25,6 @@ public typeOfVehicle;
   public myFormGroup: FormGroup;
   public myFormGroup1: FormGroup;
   public submitted = false;
-  public role = 6;
   public contactArray = [];
   public contactOArray = [];v
   public accountArray = [];
@@ -94,7 +93,6 @@ public selectedTransportNo;
     this.transportsArray = this.handledata.Data.transports;
     this.selectedTransport=this.transportsArray[0]['tptName'];
     this.selectedTransportid=this.transportsArray[0]['_id'];
-    this.role = this.sec.role;
     this.type=this.handledata.Data.typeOfVehicle;
     this.no=this.handledata.Data.updateNumber
   }

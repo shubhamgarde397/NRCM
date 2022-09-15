@@ -20,6 +20,7 @@ export class SecurityCheckService {
 
   public AUTH = false;
   public username;
+  public username2;
   public role = 6;
   public amountShow=false;
   public branch='';
@@ -71,6 +72,9 @@ this.amountShow=data;
   }
   setUserid(_id){
     this.userid=_id;
+  }
+  setUserName(data){
+    this.username2=data;
   }
   setTruckData(data){
     this.arr=data;

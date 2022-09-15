@@ -117,7 +117,6 @@ public contactP;
   ngOnInit() {
   
     this.printInfo = false;
-    this.role = this.securityCheck.role;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
     for (let i = 0; i < new Date().getFullYear() - 2020; i++) {
       this.years.push(i + 2021)

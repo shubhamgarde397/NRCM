@@ -12,7 +12,6 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 export class TicketDisplayComponent implements OnInit {
   public today;
   public date ;
-  public role = 6;
   public table=false;
   public tickets=[];
   public msg='Click Get Tickets.'

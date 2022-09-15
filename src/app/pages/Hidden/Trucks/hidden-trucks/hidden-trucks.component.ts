@@ -19,7 +19,6 @@ export class HiddenTrucksComponent implements OnInit {
   public found;
   public arr;
   public data;
-  public role = 6;
   public commonArray;
   public lambdaArr = [];
   public index = 0;
@@ -99,7 +98,6 @@ export class HiddenTrucksComponent implements OnInit {
 
   ngOnInit() {
     this.todayDate=this.handleF.createDate(new Date());
-    this.role = this.sec.role;
     this.commonArray = this.sec.commonArray;
     this.considerArray = this.handledata.createConsiderArray('infohiddenlist')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();

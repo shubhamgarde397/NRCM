@@ -26,7 +26,6 @@ export class AddComponent implements OnInit {
   public truckNamesOwner = [];
   public commonArray;
   public considerArray;
-  public role;
   public partyid;
   public nopid;
   public method;
@@ -47,8 +46,6 @@ export class AddComponent implements OnInit {
     });
     this.considerArray = this.handledata.createConsiderArray('infogstonly')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-
-    this.role = this.securityCheck.role;
   }
 
 

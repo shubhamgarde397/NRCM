@@ -30,7 +30,6 @@ export class NavigationComponent implements OnInit {
   public date = new Date();
   public todayDate;
   public username;
-  public role = 6;
   public nameOfUser = 'Guest';
   public URL = '';
   public showThisMsg = false
@@ -85,7 +84,6 @@ export class NavigationComponent implements OnInit {
         this.securityCheck.commonArray = res;
         this.securityCheck.commonArray['Role'] = res.Role;
         this.securityCheck.role = res.Role;
-        this.role = res.Role;
         this.spin.hide();
         let k=Object.keys(res.lrsend[0])
         let v=Object.values(res.lrsend[0])

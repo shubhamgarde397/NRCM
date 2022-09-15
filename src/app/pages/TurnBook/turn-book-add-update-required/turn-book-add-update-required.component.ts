@@ -80,7 +80,6 @@ export class TurnBookAddUpdateRequiredComponent implements OnInit {
   public Pan: string;
   public MobileNo: string;
   public mobilenoauto;
-  public role = 6;
   public considerArray;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
@@ -104,7 +103,6 @@ export class TurnBookAddUpdateRequiredComponent implements OnInit {
     });
     this.considerArray = this.handledata.createConsiderArray('booking')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    this.role = this.securityCheck.role;
   }
 
   getInformationData() {

@@ -40,7 +40,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public trucknoid;
   public dynDate;
   public dynDate2;
-  public role = 6;
   public dataTruck;
   public adminAccess = false;
   public trucklist;
@@ -151,7 +150,6 @@ public changeTextA=false;
     this.considerArray = this.handleData.createConsiderArray('turnbookadd')
     this.handleData.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.buttons=this.getButtons()
-    this.role = this.securityCheck.role;
     this.commonArray = this.securityCheck.commonArray;
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.turnbooklist = [];

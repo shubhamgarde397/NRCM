@@ -40,7 +40,6 @@ export class OdaddComponent implements OnInit {
   public villagedetailslist;
   public tdid;
   public vid;
-  public role = 6;
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, 
     public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, 
     public securityCheck: SecurityCheckService,
@@ -71,7 +70,6 @@ export class OdaddComponent implements OnInit {
       m:false,
       preferenceCheck:false
     });
-    this.role = this.securityCheck.role;
   }
   getInformationData() {
     this.spinnerService.show();
