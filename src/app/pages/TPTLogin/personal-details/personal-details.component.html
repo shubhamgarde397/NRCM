@@ -13,47 +13,44 @@
       <div class="col-sm-2"><span style="font-weight: bold;">Transport Name</span></div>
       <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="tptName"></div>
     </div>
+    <br>
     <div class="row">
       <div class="col-sm-2"><span style="font-weight: bold;">Owner Name</span></div>
-      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="oname"></div>
+      <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="name"></div>
     </div>
+    <br>
     <div class="row">
       <div class="col-sm-2"><span style="font-weight: bold;">Address 1</span></div>
       <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="addr1"></div>
     </div>
+    <br>
     <div class="row">
       <div class="col-sm-2"><span style="font-weight: bold;">Address 2</span></div>
       <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="addr2"></div>
     </div>
+    <br>
     <div class="row">
       <div class="col-sm-2"><span style="font-weight: bold;">Address 3</span></div>
       <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="addr3"></div>
     </div>
-
+    <br>
     <div class="row">
       <div class="col-sm-2"><span style="font-weight: bold;">Email</span></div>
       <div class="col-sm-4"><input type="text" class="form-control" [(ngModel)]="email"></div>
     </div>
-
+    <br>
 
     <div class="row">
     
-      <div class="col-sm-2"><span style="font-weight: bold;">Truck Contact</span></div>
+      <div class="col-sm-2"><span style="font-weight: bold;">Owner Contact</span></div>
       <div class="col-sm-4">
         <input type="text" id="contact" class="form-control" [(ngModel)]="contactA"
           [ngModelOptions]="{standalone: true}" placeholder="9876543211">
-        <button type="button" class="btn btn-primary" (click)="addMore()">Add</button>
-      </div>
-      <div class="col-sm-4">
-        <ul *ngFor="let i of contactArray;let j =index;">
-          <li>{{i}} <button type="button" mat-raised-button (click)="deleteOne(i,j)"
-              class="btn-danger btn-sm btn-just-icon">
-              <i class="material-icons">delete_forever</i>
-            </button></li>
-        </ul>
+          <br>
       </div>
     </div>
    
+    <br>
     <br>
     <div class="row">
       <div class="col-sm-6"><button class="btn btn-danger" style="width: 100%;" (click)="changeDetails()">Change</button></div>

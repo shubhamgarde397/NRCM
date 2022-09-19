@@ -15,6 +15,8 @@ export class TicketDisplayComponent implements OnInit {
   public table=false;
   public tickets=[];
   public msg='Click Get Tickets.'
+
+  public tabletransport=false;
   constructor(public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router) {
   }
 
@@ -34,14 +36,34 @@ export class TicketDisplayComponent implements OnInit {
     let tempObj = {};
     tempObj['tablename'] = ''
     tempObj['method'] = 'myticket_pending';
+    tempObj['type']='truck'
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
+        this.tickets=[];
           this.tickets = res.Data;
           this.table=res.Data.length>0?true:false;
+          this.tabletransport=false;
           this.msg=this.table?'':'No Pending Tickets!'
       });
   };
+
+  findTransport(){
+    this.msg='Please Wait! Loading...'
+    let tempObj = {};
+    tempObj['tablename'] = ''
+    tempObj['method'] = 'myticket_pending';
+    tempObj['type']='transport'
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+        this.tickets=[];
+          this.tickets = res.Data;
+          this.tabletransport=res.Data.length>0?true:false;
+          this.table=false;
+          this.msg=this.tabletransport?'':'No Pending Tickets!'
+      });
+  }
 
   update(i,j,type){
     let tempObj = {};
@@ -59,6 +81,37 @@ export class TicketDisplayComponent implements OnInit {
          this.tickets.splice(j,1)
       });
     
+  }
+
+  accept(data,i){
+    let tempObj={}
+    tempObj['method']='acceptTptTicket';
+    tempObj['tablename']='';
+    tempObj['_id']=this.tickets[data]['oid']
+    tempObj['tptName']=(<HTMLInputElement>document.getElementById('tptName_'+data)).value;
+    tempObj['name']=(<HTMLInputElement>document.getElementById('name_'+data)).value;
+    tempObj['addr1']=(<HTMLInputElement>document.getElementById('addr1_'+data)).value;
+    tempObj['addr2']=(<HTMLInputElement>document.getElementById('addr2_'+data)).value;
+    tempObj['addr3']=(<HTMLInputElement>document.getElementById('addr3_'+data)).value;
+    tempObj['email']=(<HTMLInputElement>document.getElementById('email_'+data)).value;
+    tempObj['contact']=[(<HTMLInputElement>document.getElementById('contact_'+data)).value];
+ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+         alert(res.Status);
+         this.tickets.splice(data,1)
+      });
+    
+  }
+  reject(data,i){
+    let tempObj={}
+    tempObj['method']='rejectTptTicket';
+    tempObj['tablename']='';
+    tempObj['_id']=this.tickets[data]['oid']
+ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      .subscribe((res: any) => {
+         alert(res.Status);
+         this.tickets.splice(data,1)
+      });
   }
 }
 

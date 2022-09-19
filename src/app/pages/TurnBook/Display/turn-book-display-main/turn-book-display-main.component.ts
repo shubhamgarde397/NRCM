@@ -594,7 +594,7 @@ let tempObj1={};
     }
 
   };
-  sendBalanceData(data,j){
+  sendBalanceData(data,j,type){
     let bal=data.advanceArray.find(r=>{return r.reason==='Balance'})
   let msg=''
   msg=msg+'*****%20%20*Balance%20Payment%20Details*%20%20*****%0A%0A'
@@ -615,7 +615,22 @@ let tempObj1={};
   msg=msg+'*Pune*%0A'
   msg=msg+'9822288257%0A'
   msg=msg+'9766707061%0A'
-  window.open('https://wa.me/+91'+data.truckName.contact[0]+'/?text='+msg,'_blank');  
+  switch (type) {
+    case 'truck':
+      window.open('https://wa.me/+91'+data.truckName.contact[0]+'/?text='+msg,'_blank');      
+      break;
+      case 'shubham':
+      window.open('https://wa.me/+919766707061/?text='+msg,'_blank');      
+      break;
+  
+      case 'dad':
+      window.open('https://wa.me/+919822288257/?text='+msg,'_blank');      
+      break;
+  
+    default:
+      break;
+  }
+  
   }
 
   getpdfcomplex(){

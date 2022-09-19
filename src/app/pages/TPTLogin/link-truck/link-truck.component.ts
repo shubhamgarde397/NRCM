@@ -62,6 +62,15 @@ public tpts2;
         this.tptusers=res.Data;
       });
   }
+  getInformationUsersWhoDidNotLogin(){
+    let tempObj = {};
+    tempObj['method']='getTptUsersLoginWhoDidNot'
+    tempObj['tablename']=''
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.tptusers=res.Data;
+      });
+  }
   getUseridInfo(){
     let x=this.tptusers.find(r=>{return r._id===this.tptIdU})
     this.usernameU=x.name;

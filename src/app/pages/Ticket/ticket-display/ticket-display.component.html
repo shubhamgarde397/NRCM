@@ -1,85 +1,133 @@
-<div class="col-sm-4">
+
+  <div class="col-sm-4">
   <button class="btn btn-danger" (click)="find()">
-    Get Tickets
+    Truck Tickets
+  </button>
+  <button class="btn btn-danger" (click)="findTransport()">
+    Transport Tickets
   </button>
 </div>
-<table class="table" style="width:100%" align="center" *ngIf="table">
-  <thead align="center" style="font-weight: bold">
-    <tr class=table-header>
-      <th>Srno</th>
-      <th>TruckNo</th>
-        <th>Name</th>
-        <th>Pan</th>
-        <th>Accounthetails</th>
-        <th>Contact</th>
-        <th>Type</th>
-        <th>Documents</th>
-        <th>Length</th>
-        <th>Weight</th>
-        <th>Transport</th>
-        <th>Option</th>
-    </tr>
-  </thead>
+<div class="well">
+  <table class="table" style="width:100%" align="center" *ngIf="table">
+    <thead align="center" style="font-weight: bold">
+      <tr class=table-header>
+        <th>Srno</th>
+        <th>TruckNo</th>
+          <th>Name</th>
+          <th>Pan</th>
+          <th>Accounthetails</th>
+          <th>Contact</th>
+          <th>Type</th>
+          <th>Documents</th>
+          <th>Length</th>
+          <th>Weight</th>
+          <th>Transport</th>
+          <th>Option</th>
+      </tr>
+    </thead>
 
-  <tbody align="center">
-    <tr *ngFor="let i of tickets;let j = index">
-      <td>{{j+1}}</td>
+    <tbody align="center">
+      <tr *ngFor="let i of tickets;let j = index">
+        <td>{{j+1}}</td>
 
-        <td>{{i.truck.truckno}}</td>
-        <td>{{i.truck.oname}}</td>
-        <td>{{i.truck.pan}}-
-           <i class="material-icons" *ngIf="i.truck.P" style="color: green;">
-            done
-            </i><i class="material-icons" *ngIf="!i.truck.P" style="color: red;">
-              close
-              </i>
-        </td>
-        <td><table>
-          <tr>
-            <th>Sr</th>
-            <th>Name</th>
-            <th>No</th>
-            <th>IFSC</th>
-          </tr>
-          <tr>
-            <td>1</td>
-            <td>{{i.truck.accountDetails[0]['accountName']}}</td>
-            <td>{{i.truck.accountDetails[0]['accountNumber']}}</td>
-            <td>{{i.truck.accountDetails[0]['ifsc']}}</td>
-          </tr>
-        </table></td>
-        <td>
-          <ul>
-            <li *ngFor="let k of i.truck.contact">{{k}}</li>
-          </ul>
-        </td>
-        <td>{{i.truck.typeOfVehicle}}</td>
-        <td>
-          <ul>
-            <li>RC : <i class="material-icons" *ngIf="i.truck.r" style="color: green;">
-                done
-                </i><i class="material-icons" *ngIf="!i.truck.r" style="color: red;">
-                  close
-                  </i></li>
-            <li>LC : <i class="material-icons" *ngIf="i.truck.d" style="color: green;">
-                done
-                </i><i class="material-icons" *ngIf="!i.truck.d" style="color: red;">
-                  close
-                  </i></li>
+          <td>{{i.truck.truckno}}</td>
+          <td>{{i.truck.oname}}</td>
+          <td>{{i.truck.pan}}-
+            <i class="material-icons" *ngIf="i.truck.P" style="color: green;">
+              done
+              </i><i class="material-icons" *ngIf="!i.truck.P" style="color: red;">
+                close
+                </i>
+          </td>
+          <td><table>
+            <tr>
+              <th>Sr</th>
+              <th>Name</th>
+              <th>No</th>
+              <th>IFSC</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>{{i.truck.accountDetails[0]['accountName']}}</td>
+              <td>{{i.truck.accountDetails[0]['accountNumber']}}</td>
+              <td>{{i.truck.accountDetails[0]['ifsc']}}</td>
+            </tr>
+          </table></td>
+          <td>
+            <ul>
+              <li *ngFor="let k of i.truck.contact">{{k}}</li>
             </ul>
-        </td>
-        <td>{{i.truck.h}}-{{i.truck.b}}-{{i.truck.l}}</td>
-        <td>{{i.truck.weight}}</td>
-        <td>{{i.truck.tptName}}</td>
-        <td>
-          <ul>
-            <li><button class="btn btn-danger" (click)="update(i,j,'submit')">Okay</button></li>
-            <li><button class="btn btn-danger" (click)="update(i,j,'return')">Bad</button></li>
-            <li><button class="btn btn-danger" (click)="update(i,j,'anil')">Anil</button></li>
-            <li><button class="btn btn-danger" (click)="showDatabyid(i)">Edit</button></li>
-          </ul>
-        </td>
-    </tr>
-  </tbody>
-</table>
-<div *ngIf="!table"><h3>{{msg}}</h3></div>
+          </td>
+          <td>{{i.truck.typeOfVehicle}}</td>
+          <td>
+            <ul>
+              <li>RC : <i class="material-icons" *ngIf="i.truck.r" style="color: green;">
+                  done
+                  </i><i class="material-icons" *ngIf="!i.truck.r" style="color: red;">
+                    close
+                    </i></li>
+              <li>LC : <i class="material-icons" *ngIf="i.truck.d" style="color: green;">
+                  done
+                  </i><i class="material-icons" *ngIf="!i.truck.d" style="color: red;">
+                    close
+                    </i></li>
+              </ul>
+          </td>
+          <td>{{i.truck.h}}-{{i.truck.b}}-{{i.truck.l}}</td>
+          <td>{{i.truck.weight}}</td>
+          <td>{{i.truck.tptName}}</td>
+          <td>
+            <ul>
+              <li><button class="btn btn-danger" (click)="update(i,j,'submit')">Okay</button></li>
+              <li><button class="btn btn-danger" (click)="update(i,j,'return')">Bad</button></li>
+              <li><button class="btn btn-danger" (click)="update(i,j,'anil')">Anil</button></li>
+              <li><button class="btn btn-danger" (click)="showDatabyid(i)">Edit</button></li>
+            </ul>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="tabletransport">
+    <div class="row" *ngFor="let i of tickets;let j = index">
+        <table class="table-bordered">
+          <tr>
+            <th>Change</th>
+            <th>Tpt Name</th>
+            <th>Owner</th>
+            <th>Addr 1</th>
+            <th>Addr 2</th>
+            <th>Addr 3</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Option</th>
+          </tr>
+          <tr>
+            <td>New</td>
+            <td><input type="text" value={{i.tptName}} id="tptName_{{j}}"> </td>
+            <td><input type="text" value={{i.name}} id="name_{{j}}"></td>
+            <td><input type="text" value={{i.addr1}} id="addr1_{{j}}"> </td>
+            <td><input type="text" value={{i.addr2}} id="addr2_{{j}}"> </td>
+            <td><input type="text" value={{i.addr3}} id="addr3_{{j}}"></td>
+            <td><input type="text" value={{i.email}} id="email_{{j}}"> </td>
+            <td><input type="text" value={{i.contact[0]}} id="contact_{{j}}"></td>
+            <td><button class="btn btn-danger" (click)=accept(j,i)>Accept</button></td>
+          </tr>
+
+          <tr>
+            <td>Old</td>
+            <td>{{i.transport[0].tptName}} </td>
+            <td>{{i.transport[0].name}}</td>
+            <td>{{i.transport[0].addr1}} </td>
+            <td>{{i.transport[0].addr2}} </td>
+            <td>{{i.transport[0].addr3}}</td>
+            <td>{{i.transport[0].email}} </td>
+            <td>{{i.transport[0].contact[0]}}</td>
+            <td><button class="btn btn-danger" (click)=reject(j,i)>Reject</button></td>
+          </tr>
+        </table>
+      
+    </div>
+  </div>
+  
+  <div *ngIf="(table||tabletransport)"><h3>{{msg}}</h3></div>
+</div>

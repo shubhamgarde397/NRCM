@@ -29,12 +29,10 @@ export class PersonalDetailsComponent implements OnInit {
    public opword;
    public ouname;
    public dname;
-
-   public contactArray=[]
    public contactA;
    public pD;
   public tptName;
-  public oname;
+  public name;
   public addr1;
   public addr2;
   public addr3;
@@ -85,9 +83,9 @@ export class PersonalDetailsComponent implements OnInit {
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.pD=res.Data[0];
-        this.contactArray=this.pD.contact;
+        this.contactA=this.pD.contact[0]?this.pD.contact[0]:'';
         this.tptName=this.pD.tptName
-        this.oname=this.pD.oname
+        this.name=this.pD.name
         this.addr1=this.pD.addr1
         this.addr2=this.pD.addr2
         this.addr3=this.pD.addr3
@@ -114,26 +112,22 @@ export class PersonalDetailsComponent implements OnInit {
    changeDetails(){
     let tempObj={}
     tempObj['tptName']=this.tptName;
-    tempObj['oname']=this.oname;
+    tempObj['name']=this.name;
     tempObj['addr1']=this.addr1;
     tempObj['addr2']=this.addr2;
     tempObj['addr3']=this.addr3;
     tempObj['email']=this.email;
     tempObj['method']='changepd';
     tempObj['tablename']='';
+    tempObj['contact']=[this.contactA];
     tempObj['uid']=this.sec.userid;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    .subscribe((res: any) => {
+      alert(res.Status);
+    });
    }
 
-   addMore() {
-    this.contactArray.push(this.contactA)
-    this.contactA = '';
-  }
 
-  deleteOne(i, j) {
-    this.contactArray.splice(j, 1);
-  }
- 
- 
  }
  
  

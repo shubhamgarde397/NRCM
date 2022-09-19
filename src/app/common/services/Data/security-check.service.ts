@@ -27,6 +27,7 @@ export class SecurityCheckService {
   public dname;
   public userid;
   public arr;
+  public firstTime;
   constructor() {
     this.yearNames = this.generateYears();
   }
@@ -75,6 +76,9 @@ this.amountShow=data;
   }
   setUserName(data){
     this.username2=data;
+  }
+  setFirstTime(data){
+  this.firstTime=data;
   }
   setTruckData(data){
     this.arr=data;

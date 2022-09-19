@@ -75,6 +75,8 @@ export class LoginComponent implements OnInit {
             this.security.setDisplayname(res['Data'][0]['displayName']);
             this.security.setUserid(res['Data'][0]['_id']);
             this.security.setUserName(res['Data'][0]['name']);
+            this.security.setFirstTime(res['Data'][0]['firstLogin']);
+            res['Data'][0]['firstLogin']?this.firstTime(res['Data'][0]):null;
             if(this.entry(res['Data'],'nrcm')){
             this.isLoginSuccess=true;
             this.obs.updateApprovalMessage(res);
@@ -90,6 +92,16 @@ export class LoginComponent implements OnInit {
             alert('Contact Admin for registration!')
           }
         });
+  }
+
+  firstTime(data){
+    let value={}
+    value['method']='firstTimeLogin'
+    value['tablename']=''
+    value['id']=data['_id']
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, value, 0)
+    .subscribe((res: any) => {});
   }
 
   register() {
