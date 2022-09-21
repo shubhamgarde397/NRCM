@@ -18,6 +18,8 @@ import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnaviga
 import { TPTWelcomeComponent } from './pages/TPTLogin/tptwelcome/tptwelcome.component';
 import { TruckDetailsComponent } from './pages/TPTLogin/truck-details/truck-details.component';
 import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/personal-details.component';
+import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
+import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 
 export const routes: Routes =
     [
@@ -56,6 +58,14 @@ export const routes: Routes =
                 {
                     path:'PERSONAL_DETAILS',
                     component:PersonalDetailsComponent
+                },
+                {
+                    path:'TICKET_DETAILS',
+                    component:TicketComponent
+                },
+                {
+                    path:'LOADING_DETAILS',
+                    component:TruckLoadingComponent
                 }
             ]
         },

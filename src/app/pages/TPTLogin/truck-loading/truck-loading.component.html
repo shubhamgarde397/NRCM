@@ -1,3 +1,107 @@
-<p>
-  truck-loading works!
-</p>
+<div *ngIf="!mainData">
+<button class="btn btn-warning" (click)="fetchMain()">Click here to go to next step</button>
+</div>
+
+<div class="row" *ngIf="mainData">
+  <div class="col-sm-2" *ngFor="let i of ownerdetailslist;let j=index;">
+    <button class="btn btn-danger" (click)="getTruckDetails(i.truckno)">{{i.truckno}}</button>
+  </div>
+</div>
+
+<div class="row" *ngIf="mainData2">
+  <div class="col-sm-1"></div>
+  <div class="col-sm-11">
+    <span style="font-weight: bolder;">Loading Date : </span>&nbsp;<select class="form-control" (change)="getTruckDetailsDate()" [(ngModel)]="selectedDate">
+      <option *ngFor="let i of alltrucks2;let j=index;" value={{i.loadingDate}}>{{i.loadingDate|date:'dd-MM-yyyy'}}</option>
+    </select>
+    <h4 style="color: red;font-style:italic;">* Note : Our Loading Date and Your Loading Date may differ by 1 or 2 days.</h4>
+  </div>
+</div>
+
+  <div class="well" *ngIf="mainData3">
+      
+    <div class="row">
+      <h2>Lorry Details : </h2>
+      <table class='table'>
+        <tr>
+          <th>Truck No</th><th>{{alltrucks3[0]['truckName']}}</th>
+        </tr>
+        <tr>
+          <th>Loading Date</th><th>{{alltrucks3[0]['loadingDate']|date:'dd-MM-yyyy'}}</th>
+        </tr>
+        <tr>
+          <th>Load Type</th><th>{{alltrucks3[0]['typeOfLoad']}}</th>
+        </tr>
+        <tr>
+          <th>Destination 1 </th><th>{{alltrucks3[0]['placeName']}}</th>
+        </tr>
+        <tr *ngIf="alltrucks3[0]['placeName2']!==undefined">
+          <th>Destination 2</th><th>{{alltrucks3[0]['placeName2']}}</th>
+        </tr>
+        <tr *ngIf="alltrucks3[0]['placeName2']==undefined">
+          <th>Destination 2</th><th>NA</th>
+        </tr>
+        <tr>
+          <th>We Received the POD on</th><th>{{alltrucks3[0]['pochDate']|date:'dd-MM-yyyy'}}</th>
+        </tr>
+        <tr>
+          <th>Status of POD</th><th>{{alltrucks3[0]['statusOfPoch']}}</th>
+        </tr>
+      </table>
+    </div>
+        <div class="container">
+          <h2>POD Payment</h2>
+          <a style="color:rebeccapurple;font-style: italic;" (click)="downloadDetailsPDF()">Click here to get details of {{alltrucks3[0]['actualPaymentAmount']}} in a PDF.</a>
+          <table class="table table-bordered">
+            <tr>
+              <th>POD Payment Date</th>
+              <th>POD Payment Amount</th>
+            </tr>
+            <tr>
+              <td>{{alltrucks3[0]['actualPaymentDate']|date:'dd-MM-yyyy'}}</td>
+              <td>{{alltrucks3[0]['actualPaymentAmount']}}</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="container">
+          <h2>Account Payment Details</h2>
+          <table class="table table-bordered">
+            <tr>
+              <th>Account Name</th>
+              <th>Account Number</th>
+              <th>Bank Name</th>
+              <th>IFSC</th>
+            </tr>
+            <tr>
+              <td>{{alltrucks3[0]['accName']}}</td>
+              <td>{{alltrucks3[0]['accNumber']}}</td>
+              <td>{{alltrucks3[0]['bankName']}}</td>
+              <td>{{alltrucks3[0]['ifsc']}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    
+    <div *ngIf="tabletransport"><h3>{{msg}}</h3></div>
+
+
+
+
+    <!-- [
+    {
+        '$match': {
+            'todayDate': '2022-07-07'
+        }
+    }, {
+        '$addFields': {
+            'amt': {
+                '$sum': '$truckData.amount'
+            }
+        }
+    }, {
+        '$match': {
+            'amt': 23600
+        }
+    }
+] -->

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-inverse">
 
   <div class="container row" style="width:100%;">
-    <div class="col-sm-4">
+    <div class="col-sm-2">
     <div class="navbar-header">
       <a class="navbar-brand" routerLink="NRCM_TPT_HOME">NRCM</a>
     </div>
@@ -16,33 +16,25 @@
        <li class="dropdown">
         <a routerLink="PERSONAL_DETAILS">Edit Personal Details</a>
       </li>
-<!--
+
       <li class="dropdown">
-        <a routerLink="PENDING_PAYMENT_DISPLAY">Pending Payment</a>
+        <a routerLink="LOADING_DETAILS">Loading Details</a>
       </li>
 
 
       <li class="dropdown">
-        <a routerLink="TICKET_HANDLER">Ticket</a>
-      </li> -->
-
-      <li class="dropdown">
-        <a (click)="logout()">Logout
-          <span class="caret"></span>
-        </a>
+        <a routerLink="TICKET_DETAILS">Ticket</a>
       </li>
 
-      <li class="time">
-        {{todayDate|date:'dd-MM-yyyy'}}
-      </li>
-      <li style="    color: white;
-      font-size: 20px;
-      margin-top: 10px;
-      margin-left: 15px;"></li>
+     
     </ul>
     </div>
-    <div class="col-sm-2">
-      <span class="navbar-brand">Welcome {{nameOfUser}}</span>
+
+    
+    <div class="col-sm-4">
+      <span class="navbar-brand" style="float: right;"(click)="logout()">Logout<span class="caret"></span></span>
+      <span class="navbar-brand" style="float: right;">{{todayDate|date:'dd-MM-yyyy'}}</span>
+      <span class="navbar-brand" style="float: right;font-weight: bolder;">Welcome {{nameOfUser}}</span>
     </div>
   </div>
 

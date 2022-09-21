@@ -77,9 +77,6 @@ this.amountShow=data;
   setUserName(data){
     this.username2=data;
   }
-  setFirstTime(data){
-  this.firstTime=data;
-  }
   setTruckData(data){
     this.arr=data;
   }

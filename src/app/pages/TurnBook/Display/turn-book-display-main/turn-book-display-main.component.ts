@@ -239,9 +239,9 @@ public changeTextA=false;
       case '2':
         this.showDatabyid(i,j,1);
       break;
-      case '3':
-        this.showDatabyid(i,j,3);
-      break;
+      // case '3':
+      //   this.showDatabyid(i,j,3);
+      // break;
   }
   }
 

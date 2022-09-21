@@ -170,11 +170,13 @@
     <th>Sr</th>
     <th>Transport Name</th>
     <th>UP</th>
+    <th>Count</th>
   </tr>
   <tr *ngFor="let i of tptusers;let j=index;">
     <td>{{j+1}}</td>
     <td>{{i.displayName}}</td>
     <td>{{i.name}}-{{i.password}}</td>
+    <td>{{i.count}}</td>
   </tr>
 </table>
  
