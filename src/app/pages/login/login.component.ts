@@ -75,6 +75,7 @@ export class LoginComponent implements OnInit {
             this.security.setDisplayname(res['Data'][0]['displayName']);
             this.security.setUserid(res['Data'][0]['_id']);
             this.security.setUserName(res['Data'][0]['name']);
+            this.security.setNRCMid(res['Data'][0]['nrcmid']);
             if(this.entry(res['Data'],'nrcm')){
             this.isLoginSuccess=true;
             this.obs.updateApprovalMessage(res);

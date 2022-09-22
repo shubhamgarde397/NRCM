@@ -1625,8 +1625,6 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
         startforI=0;
     
       for (let i = startforI; i < this.turn12.length; i++) {
-    
-       console.log(this.turn12[i])
         if(y>290){
           
           y=30;

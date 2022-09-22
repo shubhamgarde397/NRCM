@@ -23,13 +23,11 @@ export class ApiCallsService {
     formBody['user'] = this.securityCheck.username;
     formBody['todayDate']=todayDate;
     formBody['website'] = this.securityCheck.getBranch();
+    formBody['nrcmid'] = this.securityCheck.nrcmid;
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
     this.URL = this.getfullapi.getFullAPI(api);
-    console.log(this.URL);
-    
-    console.log(formBody);
-    
+   
     switch (apiCall) {
       case 0: return this.http.get(this.URL).pipe(map((res) => res));
       case 1: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));

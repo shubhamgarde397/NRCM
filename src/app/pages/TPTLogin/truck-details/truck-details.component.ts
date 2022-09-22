@@ -42,8 +42,6 @@ export class TruckDetailsComponent implements OnInit {
   getTruckDetails(data,index){//_id,index
     this.display2=true;
     this.selectedTruck=this.ownerdetailslist[index];
-    console.log(this.selectedTruck);
-    
   }
 
 
