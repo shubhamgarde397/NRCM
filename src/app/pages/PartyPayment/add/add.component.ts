@@ -102,7 +102,7 @@ export class AddComponent implements OnInit {
     tempobj['partyData'] = this.partyData;
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     tempobj['tablename'] = 'partyPayment';
-    tempobj['method'] = 'insertmany';
+    tempobj['method'] = 'partyPaymentInsert';
     tempobj['partyData'].map(r=>delete r['partyName']);
     this.submitted = true;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)

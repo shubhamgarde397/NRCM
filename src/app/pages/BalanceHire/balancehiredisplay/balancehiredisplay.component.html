@@ -567,17 +567,13 @@
               <div class="well"  *ngIf="fetchPartyTF">
                 <div class="row">
                   <div class="col-sm-4">Truck No : <input type="text" id="truck_000" class="form-control"></div>
-                  <div class="col-sm-4"><button class="btn btn-warning" (click)="getTruckDetails()">Get Details!</button></div>
+                  <!-- <div class="col-sm-4"><button class="btn btn-warning" (click)="getTruckDetails()">Get Details!</button></div> -->
                 </div>  
+
                 <div class="row">
                   <div class="col-sm-4">ContactD : <input type="number" id="contact_000" class="form-control"></div>
                 </div>  
-                <div class="row">
-                  <div class="col-sm-4">Location 1 : <input type="text" [(ngModel)]="dest1" class="form-control"></div>
-                </div>  
-                <div class="row">
-                  <div class="col-sm-4">Location 2:<input type="text" [(ngModel)]="dest2" class="form-control"></div>
-                </div>  
+
                 <div class="row">
                   <div class="col-sm-4">Type of Load : 
                     <select class="form-control" [(ngModel)]="typeOfLoad">
@@ -588,10 +584,20 @@
                     </select>
                   </div>
                 </div>
+
                 <div class="row">
                   <div class="col-sm-4">QR : <input type="number" [(ngModel)]="qr" class="form-control"></div>
                 </div>  
+
                 <div class="row">
+                  <div class="col-sm-4">Location 1 : <input type="text" [(ngModel)]="dest1" class="form-control"></div>
+                </div>  
+                <div class="row">
+                  <div class="col-sm-4">Location 2:<input type="text" [(ngModel)]="dest2" class="form-control"></div>
+                </div>  
+                
+               
+                <!-- <div class="row">
                   <div class="col-sm-4">
                     Party : 
                   <select id="partyName" class="form-control " [(ngModel)]="partyName" (change)="setPartyName()">
@@ -599,9 +605,9 @@
                     <option *ngFor="let i of gstdetailslist;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
                   </select>
                 </div>
-                </div> 
+                </div>  -->
                 <div class="row">
-                  <div class="col-sm-4">Contact : <input type="number" [(ngModel)]="contactP" class="form-control"></div>
+                  <div class="col-sm-4">Party Contact : <input type="number" [(ngModel)]="contactP" class="form-control"></div>
                 </div>  
                 <div class="row">
                   <div class="col-sm-4">

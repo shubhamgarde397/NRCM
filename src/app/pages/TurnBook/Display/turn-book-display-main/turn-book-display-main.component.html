@@ -465,7 +465,6 @@
           <th>LR</th>
           <th>Location</th>
           <th>Amt</th>
-          <th>Option</th>
         </tr>
         </thead>
         <tbody>
@@ -475,16 +474,11 @@
             <td>{{i.truckno}}</td>
             <td>{{i.lrno}}</td>
             <td>{{i.place}}</td>
-            <td><input type="number" [disabled]='i.field===true' value={{i.hamt}} id="{{'hamt_'+ j}}"></td>
-            <td><button type="button" class="btn btn-info" (click)="enableInternalAddition(i,j)" [disabled]='inProgress===false'>
-              <i class="material-icons">edit</i>
-            </button><button type="button" class="btn btn-info" (click)="disableInternalAddition(i,j)" [disabled]='inProgress===true'>
-              <i class="material-icons">close</i>
-            </button></td>
+            <td><input type="number" value={{i.hamt}} id="{{'hamt_'+ j}}"></td>
           </tr>
         </tbody>
        </table>
-       <button type=" button" class="btn btn-warning" (click)="submitAmt()"  [disabled]='inProgress===false'>
+       <button type=" button" class="btn btn-warning" (click)="submitAmt()">
         <i class="material-icons">send</i>
       </button>
       </div>

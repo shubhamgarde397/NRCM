@@ -159,28 +159,6 @@ public changeTextA=false;
     this.getTrucks()
   }
 
-  enableInternalAddition(i,j){
-    if(this.inProgress){
-      this.turn18[j]['field']=false;
-      this.index=j;
-      this.oldIndex=j;
-      this.inProgress=false;
-      }else{
-        alert('Submit or Cancel the edit field.')
-      }
-      this.bigData=i;
-  }
-  disableInternalAddition(i,j){
-    if(!this.inProgress){
-      this.inProgress=true;
-      this.index=j;
-      this.oldIndex=j;
-      this.turn18[j]['field']=true;
-      }else{
-        alert('Submit or Cancel the edit field.')
-      }
-      this.bigData=i;
-  }
   submitAmt(){
     let arr=[]
     let obj={}
@@ -196,12 +174,19 @@ public changeTextA=false;
     tempObj['data']=arr;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
-        this.aF(this.turn18show)
+        alert(res.Status)
       });
   }
 
-  aF(arr){ // remove by entry by partyid from turn18
-    while(arr.length--){if(arr[arr.length] && arr[arr.length].hasOwnProperty('partyid') && (arguments.length > 2 && arr[arr.length]['partyid'] === (this.handleF.findgst(this.partyVar18, this.parties))['_id'] ) ){arr.splice(arr.length,1);}}
+  aF(){ // remove by entry by partyid from turn18
+    let arr=this.turn18show;
+    console.log(arr);
+    
+    while(arr.length--){
+      if (arr[arr.length] && arr[arr.length].hasOwnProperty('partyid') && (arguments.length > 2 && arr[arr.length]['partyid'] === (this.handleF.findgst(this.partyVar18, this.parties))['_id'] ) )
+      {
+        arr.splice(arr.length,1);
+      }}
     return arr;
 }
 
@@ -398,7 +383,13 @@ let buttons=[]
   }
   findgst18() {
     this.turn18=this.turn18show;
+    console.log(this.turn18);
+    
     this.turn18=this.turn18.filter(r=>{return r.partyid===(this.handleF.findgst(this.partyVar18, this.parties))['_id']})
+  }
+
+  removegst(){
+
   }
 
   findtruck() {
@@ -904,45 +895,6 @@ this.placeid=this.tempDate[0]['place']['_id']
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
   }
 
-  toPay(i,j,c){
-    if(confirm('Is it To Pay Vehicle?')){
-    this.turnbooklist[j]['checker'] = c;
-    if (c == 1) {
-      this.tempArray.push(i);
-    } else if (c == 0) {
-      this.tempArray.splice(j, 1);
-    }
-    this.balanceHireArrray.push(this.tempArray);
-    this.turnbooklist = this.reduceArray();
-    for (let i = 0; i < this.balanceHireArrray.length; i++) {
-      let truckData = []
-      for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
-        let tempObj = {};
-          this.ids.push(this.balanceHireArrray[i][j]['_id']);
-          this.partyTypes.push(this.balanceHireArrray[i][j]['partyType']);
-          this.oids.push(this.balanceHireArrray[i][j]['ownerDetails'][0]['_id']);
-          tempObj['date'] = this.balanceHireArrray[i][j].loadingDate;
-          tempObj['truckno'] = this.balanceHireArrray[i][j].ownerDetails[0].truckno;
-          tempObj['pageno'] = 990;
-          tempObj['amount'] = 0;
-          truckData.push(tempObj);
-      }
-      this.finalObject['truckData'] = truckData
-      this.finalObject['todayDate'] = this.todaysDate;
-      this.finalObject['comments'] = "";
-      this.finalObject['print'] = false;
-      this.finalObject['bankName'] = '';
-      this.finalObject['ifsc'] = '';
-      this.finalObject['accountNumber'] = '';
-      this.finalObject['accountName'] = '';
-      this.finalObject['commentToTruck'] = 'To Pay'
-      this.finalArray.push(this.finalObject);
-      this.finalObject = {};
-    }
-    this.finalFunction();
-  }
-  }
-
   reduceArray() {
     let tempArray = []
     for (let i = 0; i < this.turnbooklist.length; i++) {
@@ -966,22 +918,6 @@ this.placeid=this.tempDate[0]['place']['_id']
 
   comments(){
     this.comment = prompt('Enter Comment'); 
-  }
-
-  finalFunction() {
-    let tempObj = {}
-    tempObj['bhData'] = this.finalArray;
-    tempObj['method'] = 'insertmany.many';
-    tempObj['tablename'] = 'BalanceHire';
-    tempObj['ids'] = this.ids;
-    tempObj['oids'] = this.oids;
-    tempObj['partyTypes'] = this.partyTypes;
-    tempObj['todayDate'] = this.todaysDate;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.moveToFinalStepReset();
-      });
   }
 
   getTrucks() {

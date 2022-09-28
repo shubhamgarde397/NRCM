@@ -30,6 +30,7 @@ export class MainPageComponent implements OnInit {
     }
 ]
 public objectKeys = Object.keys;
+public data=[]
 public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   public contact;
   public modalData;
@@ -52,8 +53,6 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   public finalJson = {};
   public pythonVar = '';
   public document = new jsPDF();
-public data=[]
-
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
     localStorage.clear();

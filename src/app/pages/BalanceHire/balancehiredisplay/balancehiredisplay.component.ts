@@ -811,7 +811,22 @@ if(newpage===1){
   }
 
   updateComments(i,j){
-    let a = prompt('Your Comment was : '+String(i['commentToTruck'])+'.\nDo you want to add more to it?');
+    let letsgo=true;
+    let a1 = prompt('Your Comment was : '+String(i['commentToTruck'])+'.\nDo you want to add more to it?');
+    letsgo=a1?true:false
+    a1=a1===null?'':a1.replace(' ','-');
+
+    let b=prompt('How many '+a1+'ed ?')
+    letsgo=b?true:false
+    b=b===null?'0':' '+b;
+
+    let c=prompt('Enter the truck srno.')
+    letsgo=c?true:false
+    c=c===null?'1':' '+c;
+
+
+    if(letsgo){
+    let a = a1+b+c;
     a=a===null?'':' '+a;
     a=String(i['commentToTruck'])+String(a);
     let formbody = {}
@@ -825,6 +840,10 @@ if(newpage===1){
     .subscribe((res: any) => {
       alert(res.Status)
     });
+  }
+  else{
+    alert('Update cancelled.')
+  }
   }
 
   clearComments(i){
@@ -842,144 +861,6 @@ if(newpage===1){
     });
   }
 
-
-
-  download1() {//threshhold is 295
-    let pageno = 1;
-    let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
-    var doc = new jsPDF();
-    doc.line(0, 148.2, 5, 148.2);//punching line helper
-    //Static Part Start
-    //Date
-    doc.setFontSize('10');
-    doc.line(0, 148.2, 5, 148.2);//punching line helper
-    doc.setFontType('bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text(dateFormat, 90, 5)
-    doc.text(String(pageno), 190, 5)
-    pageno = pageno + 1;
-    //Date
-    //line after date
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.line(0, 6, 210, 6);
-    //line after date
-    //5 vertical lines for amount, comments, pageno,date,trucno, account details(account details is further divided into 3 parts per data need a loop here)
-    //vertical line after date
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.line(37, 6, 37, 300);
-    doc.line(61, 6, 61, 300);
-    doc.line(72, 6, 70.4, 300);
-    doc.line(92, 6, 92, 300);
-    doc.line(135, 6, 135, 300);
-    //vertical line after date
-    //Headers
-    doc.setFontSize('10');
-    doc.setFontType('bold');
-    doc.setTextColor(0, 0, 0);
-    doc.text('Amount', 16, 10)
-    doc.text('Comments', 38, 10)
-    doc.text('Pg', 63, 10)
-    doc.text('Date', 72.5, 10)
-    doc.text('TruckNo', 92.5, 10)
-    doc.text('Account Details', 135.5, 10)
-    //Headers End
-    //Line after headers
-    doc.setDrawColor(0, 0, 0);
-    doc.setLineWidth(0.5);
-    doc.line(0, 12, 210, 12);
-    //Line after headers
-    //Static Part End
-    //Dynamic Part Start
-    doc.setFontSize('10');
-    doc.setFontType('normal');
-    doc.setTextColor(0, 0, 0);
-    let i = 18;
-    // doc.text('Shubham is awesome', 1, i);
-    for (let z = 0; z < this.balanceDate.length; z++) {
-      let data = this.balanceDate[z].truckData;
-      if (((data.length * 6) + 15 + i) > 295) {
-        doc.addPage();
-        doc.line(0, 148.2, 5, 148.2);//punching line helper
-        //Static Part Start
-        //Date
-        doc.setFontSize('10');
-        doc.setFontType('bold');
-        doc.setTextColor(0, 0, 0);
-        doc.text(dateFormat, 90, 5)
-        doc.text(String(pageno), 190, 5)
-        pageno = pageno + 1;
-        //Date
-        //line after date
-        doc.setDrawColor(0, 0, 0);
-        doc.setLineWidth(0.5);
-        doc.line(0, 6, 210, 6);
-        //line after date
-        //5 vertical lines for amount, comments, pageno,date,trucno, account details(account details is further divided into 3 parts per data need a loop here)
-        //vertical line after date
-        doc.setDrawColor(0, 0, 0);
-        doc.setLineWidth(0.5);
-        doc.line(37, 6, 37, 300);
-        doc.line(61, 6, 61, 300);
-        doc.line(72, 6, 70.4, 300);
-        doc.line(92, 6, 92, 300);
-        doc.line(135, 6, 135, 300);
-        //vertical line after date
-        //Headers
-        doc.setFontSize('10');
-        doc.setFontType('bold');
-        doc.setTextColor(0, 0, 0);
-        doc.text('Amount', 16, 10)
-        doc.text('Comments', 38, 10)
-        doc.text('Pg', 63, 10)
-        doc.text('Date', 72.5, 10)
-        doc.text('TruckNo', 92.5, 10)
-        doc.text('Account Details', 135.5, 10)
-        //Headers End
-        //Line after headers
-        doc.setDrawColor(0, 0, 0);
-        doc.setLineWidth(0.5);
-        doc.line(0, 12, 210, 12);
-        //Line after headers
-        //Static Part End
-        //Dynamic Part Start
-        doc.setFontSize('10');
-        doc.setFontType('normal');
-        doc.setTextColor(0, 0, 0);
-        i = 18;
-      }
-
-      let K = 0
-      doc.setFontSize('10');
-      doc.text(this.balanceDate[z].commentToTruck, 38.5, i);//comments
-      for (let k = 0; k < data.length; k++) {
-        doc.setFontSize('10');
-        doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
-
-        doc.setFontSize('10');
-        doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
-        doc.setFontSize('10');
-        doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
-        doc.setFontSize('10');
-        doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
-        doc.text(this.balanceDate[z].truckData[k].shortDetails, 120, i);//truckno
-        doc.setFontSize('8');
-        doc.text(this.balanceDate[z].truckData[k].Prd, 130, i);//truckno
-        K = k;
-        i = i + 6;
-      }
-      doc.line(0, i + 7, 210, i + 7);
-      doc.setFontSize('10');
-      doc.text(this.balanceDate[z].accountName, 136.5, i - (data.length * 6));//accno
-      doc.text(String(this.balanceDate[z].accountNumber), 136.5, i + 6 - (data.length * 6));//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 136.5, i + 12 - (data.length * 6));//ifsc-bankname
-      doc.text(this.balanceDate[z].available, 200, i - (data.length * 6));//accno
-      i = i + 15;
-    }
-    //Dynamic Part End
-    doc.save(dateFormat + '.pdf')
-  }
   getValueofI(a) {
     let I = 16;
     let l;
@@ -1252,7 +1133,7 @@ if(newpage===1){
       let K = 0
       doc.setFontSize('10');
       if(dataTF){
-      doc.text(String(this.balanceDate[z].commentToTruck), 38.5, i);//comments
+        doc.text(String(this.balanceDate[z].commentToTruck).split(' ')[0], 38.5, i);//comments
 
       }
       for (let k = 0; k < data.length; k++) {
@@ -1282,6 +1163,18 @@ if(newpage===1){
       doc.line(5, i-4, 32, i-4);
       doc.text(String(totalAmount),16,i)
       }
+
+      if(this.balanceDate[z].commentToTruck.split(' ')[1]===undefined?false:true){
+        doc.setLineDash([0.5, 1], 10);
+        doc.line(37, i-4, 155, i-4);
+        doc.setLineDash([1, 0], 10);
+        doc.setFontSize('8')
+        doc.text(String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[0]?String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[0]:'', 38.5, i);//comments
+        doc.text((String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[0]?'How many '+String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[0]+'-':'')+(String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[1]?String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[1]:''), 92.5, i);//comments
+        // doc.text(, 119, i);//comments
+        doc.text(String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[2]?'Srno.'+String(this.balanceDate[z].commentToTruck).split(' ').slice(1).join(' ').split(' ')[2]:'', 125, i);//comments
+      }
+      
       doc.line(0, i + 7, 210, i + 7);
       doc.line(37, i - (data.length * 6) - 5, 37, i + 7);
       doc.line(61, i - (data.length * 6) - 5, 61, i + 7);

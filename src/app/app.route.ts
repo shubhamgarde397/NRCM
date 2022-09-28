@@ -20,6 +20,7 @@ import { TruckDetailsComponent } from './pages/TPTLogin/truck-details/truck-deta
 import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/personal-details.component';
 import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
+import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 
 export const routes: Routes =
     [
@@ -94,6 +95,10 @@ export const routes: Routes =
                     {
                         path: 'HIDDEN_OWNER_HANDLER',
                         component:HiddenTrucksComponent
+                    },
+                    {
+                        path: 'DUES_PAGE',
+                        component:DuesPageComponent
                     },
                     {
                         path:'LINK_TRUCK',

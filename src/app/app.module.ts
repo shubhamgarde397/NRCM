@@ -46,6 +46,7 @@ import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/pers
 import { PendingPaymentComponent } from './pages/TPTLogin/pending-payment/pending-payment.component';
 import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
+import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 
 
 
@@ -74,7 +75,8 @@ import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-load
     PersonalDetailsComponent,
     PendingPaymentComponent,
     TicketComponent,
-    TruckLoadingComponent
+    TruckLoadingComponent,
+    DuesPageComponent
   ],
   imports: [
     BrowserModule,

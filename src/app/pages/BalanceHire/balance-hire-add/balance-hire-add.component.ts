@@ -24,6 +24,7 @@ public bhTrucks=[];
 public uitodayDate=''
 public tableSelected=false;
 public nextStepButton=false;
+public dues=[];
 
   constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { }
 
@@ -59,7 +60,7 @@ public nextStepButton=false;
     'A', 
     'P', 
     'balance', 
-    'truckName']
+    'truckName','transports']
     for(let i=0;i<data.length;i++){
       for(let j=0;j<rkeys.length;j++){delete data[i][rkeys[j]]}
         delete data[i]['ownerDetails']
@@ -85,17 +86,26 @@ public nextStepButton=false;
     this.spinnerService.show();
     let tempObj = {};
     tempObj['tablename'] = 'turnbook'
-    tempObj['method'] = 'displayTB'
+    tempObj['method'] = 'displayTB2'
     tempObj['display'] = '6';
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
       .subscribe((res: any) => {
         this.bhTrucks=[];
           this.turnbooklist = res.Data;
+          this.dues = res.Data2;
           this.handleData.saveBH(this.turnbooklist);
           this.spinnerService.hide();
       });
-
   };
+
+  fetchBasic(){
+    let temp={"method": "DuesDisplay","tablename": ""}
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, temp, 0)
+      .subscribe((res: any) => {
+        this.dues=res.Data
+      });
+  }
 
   toPay(i,j,c){
     if(confirm('Is it To Pay Vehicle?')){
