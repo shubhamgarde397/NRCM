@@ -817,7 +817,7 @@ if(newpage===1){
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/UpdateSingle']);
   }
 
-  updateComments(i,j){
+  updateComments(){
     let msg1=(<HTMLInputElement>document.getElementById('msg')).value;
     let no1=(<HTMLInputElement>document.getElementById('no')).value;
     let tsrno1=(<HTMLInputElement>document.getElementById('tsrno')).value;
@@ -844,7 +844,7 @@ if(newpage===1){
   }
   }
 
-  clearComments(i,j){
+  clearComments(j){
     let formbody = {}
     formbody['_id'] = this.bigI._id;
     formbody['index'] = j;
