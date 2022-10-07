@@ -8,6 +8,9 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { ExcelService } from '../../../common/services/sharedServices/excel.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import { Button } from 'protractor';
+import { DuesPageComponent } from '../../Dues/dues-page/dues-page.component';
+import { templateSourceUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-balancehiredisplay',
@@ -110,6 +113,16 @@ public partyDetails;
 public contactP;
 public sentComments=[];
 public bigI;
+public duesButton=true;
+public Dues=[];
+public dueChangeValue;
+public addDueDetailsTF=false;
+public dueInfo;
+public dueInfoPending;
+
+public dueMAmt;
+public dueMDate;
+
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -324,6 +337,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
   }
 
   find = function () {
+    this.duesButton=true;
     let tempObj = {};
     if (this.selectedDate === undefined) {
       this.selectedDate = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
@@ -335,15 +349,89 @@ this.actualPayment=this.buttonOption == '5'?true:false;
     tempObj['tablename'] = 'BalanceHire';
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, 0)
-      .subscribe((res: any) => {
+      .subscribe((res:any) => {
         this.showPDFButton=true;
         this.printInfo = true;
         this.balanceDate = [];
-           this.balanceDate = this.accE(res.balanceData);
+        this.balanceDate = this.accE(res.balanceData);
+        this.Dues=res.Dues;
+        this.findDues(res);
         this.securityCheck.commonBalanceHire = res.balanceData;
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
       });
   };
+
+  findDues(data){
+    let boids=[]
+    let doids=[]
+    data.balanceData.forEach(r=>{r['truckData'].forEach(y=>{boids.push(y['ownerid'])})})
+
+
+    data.Dues.forEach(r=>{doids.push(r['ownerid'])})
+    doids.every(r=>{
+      boids.every(y=>{
+          if(r===y){
+            this.duesButton=false;
+              return false;
+          }
+          return true;//means continue the loop
+      })
+      return true;//means continue the loop
+    })
+// if data is true it means no dues, if data is false it means dues are there
+  }
+
+  getDues(){
+    this.balanceDate.forEach(r=>{
+      r.truckData.forEach(s=>{
+          
+          s['dues']=this.Dues.filter(t=>{
+              return t.truckno===s.truckno 
+          })
+          
+      })
+      
+  })
+  }
+  dueChange(){
+let a=this.dueChangeValue.split('_')
+this.addDueDetailsTF=true;
+this.dueInfo=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]
+this.dueInfoPending=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['pending']
+  }
+
+  storeDue(){
+    let a=this.dueChangeValue.split('_')
+let bhid=this.balanceDate[a[0]]['_id']
+let tbid=this.balanceDate[a[0]]['truckData'][a[1]]['tbid']
+let oid=this.balanceDate[a[0]]['truckData'][a[1]]['ownerid']
+let duesid=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['_id']
+
+
+    console.log(a);
+
+    let tempObj={
+      'bhid':bhid,
+      'tbid':tbid,
+      'oid':oid,
+      'duesid':duesid,
+      'dueDate':this.dueMDate,
+      'dueAmt':this.dueMAmt,
+      'totalDue':this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['amt'],
+      'type':'due',
+      'msg':'Loan',
+      'tsrno':String(parseInt(a[1])+1),
+      'tablename':'',
+      'method':'DuesUpdateFromBH'
+    }
+
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, tempObj, 0)
+    .subscribe((res: any) => {
+      alert(res.Status)
+    });
+    
+  }
 
   
   accE(data){
@@ -831,7 +919,7 @@ if(newpage===1){
     formbody['_id'] = this.bigI._id;
     formbody['method'] = 'BalanceHireCommentUpdate';
     formbody['tablename'] = 'BalanceHire';
-    formbody['commentToTruck2']={'msg':msg1,'no':no1,'tsrno':tsrno1};
+    formbody['commentToTruck2']={'msg':msg1,'no':no1,'tsrno':tsrno1,'type':'balance'};
 
     this.apiCallservice.handleData_New_python
     ('commoninformation', 1, formbody, 0)
@@ -1169,9 +1257,19 @@ if(newpage===1){
         doc.setLineDash([1, 0], 10);
         }
         doc.setFontSize('8')
-        doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg']), 38.5, i+k+1);//comments
-        doc.text('How many : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
-        doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno']), 92.5, i+k+1);//comments
+
+        if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='balance'){
+          doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg']), 38.5, i+k+1);//comments
+          doc.text('How many : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
+          doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno']), 92.5, i+k+1);//comments
+        }
+        else if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='due'){
+          doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg'])+' -Total Due -', 38.5, i+k+1);//comments
+          doc.text(String(this.balanceDate[z].commentToTruck2[k]['totalDue']),61.5,i+k+1)
+          doc.text('Due : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
+          doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno'])+'  Due Date : '+String(this.balanceDate[z].commentToTruck2[k]['dueDate']), 92.5, i+k+1);//comments
+        }
+
         i = i + 2;
         bigK=k;
       }

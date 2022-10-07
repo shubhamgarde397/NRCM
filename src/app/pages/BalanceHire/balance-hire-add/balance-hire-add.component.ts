@@ -153,7 +153,6 @@ public dues=[];
       }
     }
   }
-
   reduceArray() {
     let tempArray = []
     for (let i = 0; i < this.turnbooklist.length; i++) {

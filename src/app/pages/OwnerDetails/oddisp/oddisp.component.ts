@@ -118,6 +118,23 @@ switch(data){
 }
   }
 
+  copyAcc(data){
+    console.log(data);
+    
+    let msg=''
+    msg=msg+'*'+data.truckno+'*\n\n';
+    msg=msg+'*Accname*-'+(data.accountDetails[0].accountName)+'\n';
+    msg=msg+'*AccNo*-'+(data.accountDetails[0].accountNumber)+'\n';
+    msg=msg+'*IFSC*-'+(data.accountDetails[0].ifsc)
+    window.navigator['clipboard'].writeText(msg)
+  }
+
+
+  // tn05bd9099
+  // 9840296064
+
+
+
   getSingleTruck(){
     this.tableDate2=true;
     this.spinnerService.show();

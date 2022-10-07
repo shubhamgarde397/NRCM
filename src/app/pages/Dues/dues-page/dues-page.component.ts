@@ -24,7 +24,7 @@ export class DuesPageComponent implements OnInit {
       date:'',
       amt:'',
       reason:'',
-      showto:''
+      from:''
     });
     this.fetchBasic();
   }
