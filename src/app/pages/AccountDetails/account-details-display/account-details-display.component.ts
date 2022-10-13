@@ -358,16 +358,20 @@ switch (this.buttonOption) {
         alert(res.Status);
         if(yo===''){
         switch (type) {
-          case 'both':
-            this.tbl.splice(j,1)
-            break;
             case '12':
             this.tbl[j]['accountDetails'][0]['acc12']=true;
             this.tbl[j]['accountDetails'][0]['acc363']?this.tbl.splice(j,1):null;
+            this.tbl[j]['accountDetails'][0]['acc65']?this.tbl.splice(j,1):null;
+            break;
+            case '65':
+            this.tbl[j]['accountDetails'][0]['acc65']=true;
+            this.tbl[j]['accountDetails'][0]['acc363']?this.tbl.splice(j,1):null;
+            this.tbl[j]['accountDetails'][0]['acc12']?this.tbl.splice(j,1):null;
             break;
             case '363':
               this.tbl[j]['accountDetails'][0]['acc363']=true;
               this.tbl[j]['accountDetails'][0]['acc12']?this.tbl.splice(j,1):null;
+              this.tbl[j]['accountDetails'][0]['acc65']?this.tbl.splice(j,1):null;
             break;
         
           default:
@@ -376,16 +380,21 @@ switch (this.buttonOption) {
       }
       else{
         switch (type) {
-          case 'both':
-            this.tbl.splice(j,1)
-            break;
             case '12':
             this.tbl[j]['acc']['acc12']=true;
             this.tbl[j]['acc']['acc363']?this.tbl.splice(j,1):null;
+            this.tbl[j]['acc']['acc65']?this.tbl.splice(j,1):null;
             break;
             case '363':
               this.tbl[j]['acc']['acc363']=true;
               this.tbl[j]['acc']['acc12']?this.tbl.splice(j,1):null;
+              this.tbl[j]['acc']['acc65']?this.tbl.splice(j,1):null;
+            break;
+            case '65':
+            this.tbl[j]['acc']['acc65']=true;
+            this.tbl[j]['acc']['acc12']?this.tbl.splice(j,1):null;
+            this.tbl[j]['acc']['acc363']?this.tbl.splice(j,1):null;
+            
             break;
         
           default:
@@ -472,6 +481,7 @@ switch (this.buttonOption) {
       itempObj['ifsc']=ifsc;
       itempObj['acc12']=false;
       itempObj['acc363']=false;
+      itempObj['acc65']=false;
       tempObj['aD']=[
         itempObj
       ]
@@ -524,6 +534,7 @@ switch (this.buttonOption) {
       itempObj['bankName']=bname;
       itempObj['ifsc']=ifsc;
       itempObj['acc12']=false;
+      itempObj['acc65']=false;
       itempObj['acc363']=false;
       tempObj['aD']=[
         itempObj

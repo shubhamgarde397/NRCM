@@ -399,16 +399,17 @@ this.addDueDetailsTF=true;
 this.dueInfo=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]
 this.dueInfoPending=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['pending']
   }
-
   storeDue(){
+    if(this.dueMAmt>this.dueInfoPending){
+      alert('Due amount cant be greater than pending amount.')
+    }
+    else if(this.dueMAmt===0){alert('Due amount cant be 0.')}
+    else if(this.dueMAmt<=this.dueInfoPending){
     let a=this.dueChangeValue.split('_')
 let bhid=this.balanceDate[a[0]]['_id']
 let tbid=this.balanceDate[a[0]]['truckData'][a[1]]['tbid']
 let oid=this.balanceDate[a[0]]['truckData'][a[1]]['ownerid']
 let duesid=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['_id']
-
-
-    console.log(a);
 
     let tempObj={
       'bhid':bhid,
@@ -430,7 +431,7 @@ let duesid=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['_id']
     .subscribe((res: any) => {
       alert(res.Status)
     });
-    
+  }
   }
 
   
@@ -1267,7 +1268,8 @@ if(newpage===1){
           doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg'])+' -Total Due -', 38.5, i+k+1);//comments
           doc.text(String(this.balanceDate[z].commentToTruck2[k]['totalDue']),61.5,i+k+1)
           doc.text('Due : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
-          doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno'])+'  Due Date : '+String(this.balanceDate[z].commentToTruck2[k]['dueDate']), 92.5, i+k+1);//comments
+          doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno'])+'  Due Date : '+String(this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(8, 10) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(5, 7) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(0, 4)), 92.5, i+k+1);//comments
+          
         }
 
         i = i + 2;

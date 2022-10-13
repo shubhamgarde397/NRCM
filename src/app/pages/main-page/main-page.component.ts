@@ -53,11 +53,131 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   public finalJson = {};
   public pythonVar = '';
   public document = new jsPDF();
+  public t=  [
+        {
+          "_id": "6342d81488a7c7ec532bae1d",
+          "date": "2022-10-09",
+          "reason": "Loan",
+          "amt": 35000,
+          "info": [{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          }],
+          "tpt": [
+            {
+              "_id": "6342bfe9cdc03a4b4f0dc975",
+              "insertedby": 1,
+              "updatedby": 0,
+              "insertedOn": "2022-10-09",
+              "updatedOn": "2022-10-09",
+              "tptName": "Atul Subhash Gaikwad",
+              "name": "Atul Subhash Gaikwad",
+              "email": "",
+              "pan": "",
+              "P": false,
+              "contact": [],
+              "addr1": "",
+              "addr2": "",
+              "addr3": ""
+            }
+          ],
+          "totalTaken": 0,
+          "totalPending": 35000
+        },
+        {
+          "_id": "6342dd9af6e7798b49bc17b6",
+          "date": "2022-10-09",
+          "reason": "Loan",
+          "amt": 20000,
+          "info": [{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          },{
+            "tbid": "MH12 QW 9999",
+            "dueAmtTaken": 500,
+            "date": "2022-10-08",
+            "bhid": "63413f9ae7b0c72299c8c415"
+          }],
+          "tpt": [
+            {
+              "_id": "62c2e28a7432179ed9ab0be0",
+              "tptName": "Welcome Transport",
+              "name": "",
+              "pan": "",
+              "P": false,
+              "contact": [
+                "9383942754",
+                "9381453077",
+                "9543983661"
+              ],
+              "addr1": "No 1, Perumal Koil Street,",
+              "addr2": "Mathiravedu, Velappanchavadi,",
+              "addr3": "Chennai - 600077",
+              "email": "",
+              "userid": "",
+              "insertedby": 1,
+              "updatedby": 0,
+              "insertedOn": "2022-09-22",
+              "updatedOn": "2022-09-22"
+            }
+          ],
+          "totalTaken": 0,
+          "totalPending": 20000
+        }
+    ]
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
     localStorage.clear();
     // this.generateReportAccount();
     }
+
+
+    
+    
 
     generateReportAccount(){//threshhold is 295
 // Fetch all trucks who have either 12 or 363 as false

@@ -14,6 +14,11 @@ export class DuesPageComponent implements OnInit {
   public myFormGroup: FormGroup;
   public dues=[];
   public showdues=false;
+
+public tbdata={"advanceArray": [{"advanceAmt": '',"advanceDate": "",}],"loadingDate": "2023-10-31","dueInfo": [{"dueWholeAmt": 0,"dueAmtTaken": 0,"date": ""}]};
+public bhdata={"truckData": [],"commentToTruck2": []};
+public whichData=false;
+
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public handledata: HandleDataService) { }
 
 
@@ -64,6 +69,30 @@ export class DuesPageComponent implements OnInit {
         });
     }
   };
+
+  details(type,i,j){
+    console.log(type);
+    console.log(i);
+    console.log(j);
+    this.whichData=type;
+    let temp={
+      'method':'displayDueDeepDetails',
+      'tablename':'',
+      'tbid':i['info'][j]['tbid'],
+      'bhid':i['info'][j]['bhid']
+    }
+    this.apiCallservice.handleData_New_python('turnbook', 1, temp, 0)
+        .subscribe((response: any) => {
+          this.bhdata=response.Data[0]
+          this.tbdata=response.Data2[0]
+          setTimeout(() => {
+            this.whichData=response.Data.length>0?true:false;  
+          }, 2000);
+          
+        });
+    
+
+  }
 
 
 

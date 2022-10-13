@@ -20,7 +20,8 @@ public options=[
   {value:'3',viewValue:'Contact'},
   {value:'4',viewValue:'Truck Payment PDF C'},
   {value:'5',viewValue:'Format Trucks'},
-  {value:'6',viewValue:'Poch Bill Book'}
+  {value:'6',viewValue:'Poch Bill Book'},
+  {value:'7',viewValue:'Dues Report'}
 ]
 public selectedOption;
 public buttonOption;
@@ -256,6 +257,9 @@ public acknowledgement=false;
     if(this.buttonOption==='5'){
       this.getIncorrectFormatTrucks();
     }
+    if(this.buttonOption==='7'){
+      this.generateDuesReport();
+    }
   }
 
   getIncorrectFormatTrucks(){
@@ -339,6 +343,149 @@ public acknowledgement=false;
           this.generateReportContact(this.toFillData)
         });
       }
+
+      generateDuesReport(){
+        let tempObj={};
+        tempObj['method']='DuePDFforTransport'
+        tempObj['tablename']='';
+        this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
+        .subscribe((res: any) => {
+          this.generateDuesReportPDF(res.Data)
+        });
+      }
+
+      generateDuesReportPDF(data){//threshhold is 295
+        let pager=1;
+         var doc = new jsPDF()
+         doc.setFontSize('25');
+         doc.setFontType('bold');
+         doc.text('DUES', 15, 12)//partyname
+  
+         doc.setFontSize('10');
+         doc.text(String(pager), 180, 5)//pageno
+  
+         pager=pager+1;
+         doc.setFontSize('25');
+         doc.setLineWidth(0.5);
+         doc.line(0, 15, 210, 15);//line after main header
+         doc.line(12, 15, 12, 300);//punching area line
+         //headers
+  
+          let y=24;
+         doc.setFontSize('10');
+         
+         for (let i = 0; i < data.length; i++) {
+     
+              if(y>200){
+                y=30;
+  
+                doc.addPage();
+  
+                var doc = new jsPDF()
+                doc.setFontSize('25');
+                doc.setFontType('bold');
+                doc.text('DUES', 15, 15)//partyname
+       
+                doc.setFontSize('10');
+                doc.text(String(pager), 180, 5)//pageno
+       
+                pager=pager+1;
+                doc.setFontSize('25');
+                doc.setLineWidth(0.5);
+                doc.line(0, 20, 210, 20);//line after main header
+                doc.line(12, 20, 12, 300);//punching area line
+                //headers
+       
+       
+                doc.setFontSize('10');
+              
+                }
+  // 146 horizontal threshhold
+                  doc.setLineDash([0,0], y);
+                    doc.text('Name : '+data[i]['tpt'][0]['tptName'], 15, y)//partyname
+                  y=y+10;
+  
+                    doc.text('Total Loan', 15, y)//partyname
+                    doc.text('Reason', 45, y)//partyname
+                    doc.text('Loan Taken', 65, y)//partyname
+                    doc.text('Loan Date', 95, y)//partyname
+                    doc.text('Pending', 125, y)//partyname
+  
+                    doc.text(String(data[i]['amt']), 15, y+5)//partyname
+                    doc.text(data[i]['reason'], 45, y+5)//partyname
+                    doc.text(String(data[i]['totalTaken']), 65, y+5)//partyname
+                    doc.text(String(data[i]['date']), 95, y+5)//partyname
+                    doc.text(String(data[i]['totalPending']), 125, y+5)//partyname
+  
+                            
+                    //vertical lines
+                    doc.line(43, y-5, 43, y +6);//srno
+                    doc.line(63, y-5, 63, y +6);//date
+                    doc.line(93, y-5, 93, y +6);//truckno
+                    doc.line(123, y-5, 123, y +6);//credit
+  
+                    doc.line(12, y-5, 150, y-5);//credit
+                    doc.line(12, y+1, 150, y+1);//credit
+                    doc.line(12, y+6, 150, y+6);//credit
+  
+                    //vertical lines
+  
+                    
+                    y = y + 15;
+                    if(data[i]['info'].length>0){
+                    let smally=y
+                        doc.setLineDash([0,0], y);
+                        doc.text('Sr', 15, y)//partyname
+                        doc.text('Truckno', 21, y)//partyname
+                        doc.text('Date', 51, y)//partyname
+                        doc.text('Amt Taken', 81, y)//partyname
+                        doc.line(12, y+1, 110, y+1);//truckno 
+                      //vertical lines
+                        doc.line(12, smally-5, 110, smally-5);//srno
+                        doc.line(50, smally-5, 110, smally-5);//date
+                        doc.line(80, smally-5, 110, smally-5);//truckno
+                        //vertical lines
+  
+          for(let l=0;l<data[i]['info'].length;l++){
+  
+            doc.text(String(l+1), 15, y+5);//partyname
+            doc.text(data[i]['info'][l]['tbid'], 21, y+5)//partyname
+            doc.text(data[i]['info'][l]['date'], 51, y+5)//partyname
+            doc.text(String(data[i]['info'][l]['dueAmtTaken']), 81, y+5)//partyname
+            doc.line(12, y+6, 110, y+6);//truckno 
+            y = y + 5;
+  
+          }
+  
+          //vertical lines
+  
+          doc.line(20, smally-5, 20, y);//srno
+          doc.line(50, smally-5, 50, y);//date
+          doc.line(80, smally-5, 80, y);//truckno
+          doc.line(110, smally-5, 110, y+1);//credit
+  
+        }else{
+          doc.text('Dues not taken yet',15,y);
+          y=y+5;
+        }
+  
+          //vertical lines
+  
+          
+          y = y + 3;
+          doc.setLineDash([2, 1], y);
+          doc.line(12, y + 1, 210, y + 1);//line after header
+          doc.line(12, y + 2, 210, y + 2);//line after header
+          doc.setLineDash([0,0], y);
+          y = y + 10;
+    
+  
+        }
+  
+  
+    
+         doc.save('Dues.pdf')
+       }
 
       generateReport(data){//threshhold is 295
         let pager=1;

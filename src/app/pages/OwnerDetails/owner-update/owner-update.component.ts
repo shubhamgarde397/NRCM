@@ -67,6 +67,7 @@ public selectedTransportNo;
       bankName: '',
       ifsc: '',
       acc12: false,
+      acc65: false,
       acc363: false,
       r: [this.handledata.Data.r],
       d: [this.handledata.Data.d],
@@ -159,6 +160,7 @@ public selectedTransportNo;
     formbody['l'] = data.value.l;
     formbody['weight'] = data.value.weight;
     formbody['acc12'] = data.value.acc12;
+    formbody['acc65'] = data.value.acc65;
     formbody['acc363'] = data.value.acc363;
     formbody['transportid'] = this.selectedTransportid;
     formbody['document'] = this.handledata.Data.document;
@@ -195,6 +197,7 @@ public selectedTransportNo;
               res['l'] = data.value.l;
               res['weight'] = data.value.weight;
               res['acc12'] = data.value.acc12;
+              res['acc65'] = data.value.acc65;
               res['acc363'] = data.value.acc363;
             }
           })
@@ -233,6 +236,7 @@ public selectedTransportNo;
       tempObj['bankName'] = this.myFormGroup.value.bankName;
       tempObj['ifsc'] = this.myFormGroup.value.ifsc;
       tempObj['acc12'] = this.myFormGroup.value.acc12;
+      tempObj['acc65'] = this.myFormGroup.value.acc65;
       tempObj['acc363'] = this.myFormGroup.value.acc363;
       this.accountArray.push(tempObj);
       this.myFormGroup.patchValue({ accountName: '' });
@@ -240,6 +244,7 @@ public selectedTransportNo;
       this.myFormGroup.patchValue({ bankName: '' });
       this.myFormGroup.patchValue({ ifsc: '' });
       this.myFormGroup.patchValue({ acc12: false });
+      this.myFormGroup.patchValue({ acc65: false });
       this.myFormGroup.patchValue({ acc363: false });
     }
   }
@@ -250,6 +255,7 @@ public selectedTransportNo;
       this.myFormGroup.patchValue({ bankName: this.accountArray[0]['bankName'] });
       this.myFormGroup.patchValue({ ifsc: this.accountArray[0]['ifsc'] });
       this.myFormGroup.patchValue({ acc12: this.accountArray[0]['acc12'] });
+      this.myFormGroup.patchValue({ acc65: this.accountArray[0]['acc65'] });
       this.myFormGroup.patchValue({ acc363: this.accountArray[0]['acc363'] });
   }
 

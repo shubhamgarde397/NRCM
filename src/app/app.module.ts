@@ -47,6 +47,7 @@ import { PendingPaymentComponent } from './pages/TPTLogin/pending-payment/pendin
 import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
+import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
 
 
 
@@ -76,7 +77,8 @@ import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
     PendingPaymentComponent,
     TicketComponent,
     TruckLoadingComponent,
-    DuesPageComponent
+    DuesPageComponent,
+    DuesFromAdvanceDisplayComponent
   ],
   imports: [
     BrowserModule,
