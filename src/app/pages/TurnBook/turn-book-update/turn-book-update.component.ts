@@ -220,24 +220,10 @@ for(let i=0;i<partyDetails.load.length;i++){
     temp['loadHire']=Object.values(partyDetails.load[i])[0]['Hire']
     temp['loadAdvance']=Object.values(partyDetails.load[i])[0]['Advance']
     this.Loadarr.push(temp)
-}
-
-
+  }
     this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
     this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
     this.myFormGroup.value.partyName = this.tempPNAME;
-    if(this.partyid=='6023eb9cfb76858c10ee9435'){
-      this.myFormGroup.patchValue({
-        parentAccNo:12,
-      })
-    }
-    else{
-      {
-        this.myFormGroup.patchValue({
-          parentAccNo:363,
-        })
-      }
-    }
   }
   setPlaceName() {
     this.placeid = this.villagelist[this.myFormGroup.value.place.split('+')[1]]._id;
@@ -313,6 +299,14 @@ for(let i=0;i<partyDetails.load.length;i++){
    
       
     }
+    else if(this.myFormGroup.value.partyType==='SNL'){
+   
+      this.myFormGroup.patchValue({
+        parentAccNo:65,
+      })
+ 
+    
+  }
     else{
       this.myFormGroup.patchValue({
         parentAccNo:0,

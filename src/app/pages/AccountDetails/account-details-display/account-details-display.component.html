@@ -22,6 +22,7 @@
         <th>Account</th>
         <th>12</th>
         <th>363</th>
+        <th>65</th>
         <th>Options</th>
       </tr>
     </thead>
@@ -39,8 +40,8 @@
           </ul>
         </td>
         <td>{{i.accountDetails[0]['acc12']}}</td>
-        <td>{{i.accountDetails[0]['acc65']}}</td>
         <td>{{i.accountDetails[0]['acc363']}}</td>
+        <td>{{i.accountDetails[0]['acc65']}}</td>
         <td>
           <button mat-raised-button type="button" *ngIf="!i.accountDetails[0]['acc12']" (click)="update('12',i,j)" class="btn-danger btn-sm btn-just-icon">
             12
@@ -461,6 +462,7 @@
         <th>Account</th>
         <th>12</th>
         <th>363</th>
+        <th>65</th>
         <th>Options</th>
       </tr>
     </thead>
@@ -481,15 +483,16 @@
         </td>
         <td>{{i.a12}}</td>
         <td>{{i.a363}}</td>
+        <td>{{i.a65}}</td>
         <td>
-          <button mat-raised-button type="button" *ngIf="(!i.a363)&&(!i.a12)" (click)="update('both',i,j,'4')" class="btn-success btn-sm btn-just-icon">
-            Both
-          </button>
           <button mat-raised-button type="button" *ngIf="!i.a12" (click)="update('12',i,j,'4')" class="btn-danger btn-sm btn-just-icon">
             12
           </button>
           <button mat-raised-button type="button" *ngIf="!i.a363" (click)="update('363',i,j,'4')" class="btn-warning btn-sm btn-just-icon">
             363
+          </button>
+          <button mat-raised-button type="button" *ngIf="!i.a65" (click)="update('65',i,j,'4')" class="btn-warning btn-sm btn-just-icon">
+            65
           </button>
         </td>
       </tr>
