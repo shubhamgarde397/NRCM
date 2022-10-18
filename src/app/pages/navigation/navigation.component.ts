@@ -98,6 +98,55 @@ export class NavigationComponent implements OnInit {
       });
   }
 
+  generateDuesReportPDF(data){//threshhold is 295
+    let pager=1;
+     var doc = new jsPDF()
+     doc.setFontSize('25');
+     doc.setFontType('bold');
+     doc.text('DUES', 15, 12)//partyname
+
+     doc.setFontSize('10');
+     doc.text(String(pager), 180, 5)//pageno
+
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 15, 210, 15);//line after main header
+     doc.line(12, 15, 12, 300);//punching area line
+     //headers
+
+     doc.setFontSize('10');
+              doc.setLineDash([0,0], 20);
+                doc.text('Name : '+data['truckno'], 15, 20)//partyname
+                doc.text('Loan : '+data['amt'], 15, 25)//partyname
+                doc.text('Reason : '+data['reason'], 15, 30)//partyname
+                doc.text('Loan Date : '+data['date'], 15, 35)//partyname
+        doc.line(0, 40, 210, 40);//line after main header
+        
+        doc.text('Sr', 13, 45)//partyname
+        doc.text('Date', 28, 45)//partyname
+        doc.text('Msg', 55, 45)//partyname
+        doc.text('Amt Taken',76, 45)//partyname
+        doc.text('S',100, 45)//partyname
+
+        // doc.line(0, 46, 210, 46);//line after main header
+        for(let k=0;k<20;k++){
+          doc.line(0, 46+(k*6), 210, 46+(k*6));//line after main header
+        }
+
+        //vertical lines
+       doc.line(18, 40, 18, 200);//srno
+       doc.line(47, 40, 47, 200);//date
+       doc.line(74, 40, 74, 200);//date
+       doc.line(99, 40, 99, 200);//truckno
+       //vertical lines
+              
+
+
+
+     doc.save('Dues.pdf')
+   }
+
   receivedReport(){
     let tempObj={};
     let today=new Date();

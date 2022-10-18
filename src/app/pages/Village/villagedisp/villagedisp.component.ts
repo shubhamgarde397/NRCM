@@ -24,15 +24,7 @@ export class VillagedispComponent implements OnInit {
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,
     public sec: SecurityCheckService
   ) { }
-  fetchData = function () {
-    this.commonArray = this.sec.commonArray;
-    this.villageslist = this.commonArray.villagenames;
-  };
-
-  refresh(){
-    this.considerArray=[0,0,0,1,0,0,0]
-    this.getInformationData()
-  }
+ 
   deleteVillageDetails = function (id) {
     if (confirm('Are you sure?')) {
       let formbody = {}
@@ -77,6 +69,16 @@ export class VillagedispComponent implements OnInit {
         this.fetchData();
         this.spinnerService.hide();
       });
+  }
+
+  fetchData = function () {
+    this.commonArray = this.sec.commonArray;
+    this.villageslist = this.commonArray.villagenames;
+  };
+
+  refresh(){
+    this.considerArray=[0,0,0,1,0,0,0,0]
+    this.getInformationData()
   }
 
 

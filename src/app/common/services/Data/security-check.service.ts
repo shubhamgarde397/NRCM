@@ -14,6 +14,7 @@ export class SecurityCheckService {
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
     "transport":[{}],
+    "dues":[{}],
     "Role": 6
   }
   public commonBalanceHire = [];

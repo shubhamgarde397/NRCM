@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallsService } from '../../../../common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 
 @Component({
   selector: 'app-dues-from-advance-display',
@@ -18,21 +19,16 @@ export class DuesFromAdvanceDisplayComponent implements OnInit {
   public dueMAmt;
   public whichData=false;
   public bigI;
+  public considerArray;
+  public commonArray;
 
-  constructor(public apiCallservice: ApiCallsService,public handledata: HandleDataService) { }
+  constructor(public apiCallservice: ApiCallsService,public handledata: HandleDataService,public sec:SecurityCheckService) { }
 
   ngOnInit() {
-    this.fetchBasic();
-  }
-
-  fetchBasic(){
-    let temp={"method": "DuesDisplayAd","tablename": ""}
-    this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, temp, 0)
-      .subscribe((res: any) => {
-        this.dues=res.Data
-        this.showdues=true;
-      });
+    this.commonArray = this.sec.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infodues')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchData();
+    this.fetchData();
   }
 
   update(i,j){
@@ -63,6 +59,24 @@ export class DuesFromAdvanceDisplayComponent implements OnInit {
         });
       }
       }
-
+      getInformationData() {
+        let tempObj = { "method": "displaynew", "consider": this.considerArray };
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+          .subscribe((res: any) => {
+            this.sec.commonArray['dues'] = Object.keys(res.dues[0]).length > 0 ? res.dues : this.sec.commonArray['dues'];;
+            this.fetchData();
+          });
+      }
+    
+      fetchData = function () {
+        this.commonArray = this.sec.commonArray;
+        this.dues = this.commonArray.dues;
+        this.showdues=true;
+      };
+    
+      refresh(){
+        this.considerArray=[0,0,0,0,0,0,0,1]
+        this.getInformationData()
+      }
       
 }

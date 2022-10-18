@@ -27,10 +27,6 @@ export class GstupdateComponent implements OnInit {
   public cities;
   public city;
   public pT;
-  public load=[]
-  public loadSingle;
-  public loadAmount;
-  public loadAdvance;
   public Email=[]
   public email=''
   public contact=[]
@@ -55,7 +51,6 @@ export class GstupdateComponent implements OnInit {
       accNo:this. handledata.Data.accNo,
       partyType:this.handledata.Data.partyType,
       shortName:this.handledata.Data.shortName,
-      load:[],
       Email:[],
       contact:[]
     });
@@ -64,19 +59,18 @@ export class GstupdateComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.villagenamelist = this.commonArray.villagenames;
     this.cities=this.handledata.Data.cities;
-    this.load=this.handledata.Data.load;
     this.Email=this.handledata.Data.email;
     this.contact=this.handledata.Data.contact;
   }
 
-  addLoad(){
-    let temp={}
-    temp[this.loadSingle]={'Hire':this.loadAmount,'Advance':this.loadAdvance}
-    this.load.push(temp);
-  }
-  deleteLoad(i,j){
-    this.load.splice(j,1);
-  }
+  // addLoad(){
+  //   let temp={}
+  //   temp[this.loadSingle]={'Hire':this.loadAmount,'Advance':this.loadAdvance}
+  //   this.load.push(temp);
+  // }
+  // deleteLoad(i,j){
+  //   this.load.splice(j,1);
+  // }
 
   addEmail(){
     this.Email.push(this.email);
@@ -113,7 +107,7 @@ export class GstupdateComponent implements OnInit {
     formbody['shortName'] = data.value.shortName;
     formbody['cities'] = this.cities;
     formbody['_id'] = this.handledata.Data._id;
-    formbody['load'] = this.load;
+    // formbody['load'] = this.load;
     formbody['contact']=this.contactArray;
     formbody['method'] = 'update';
     formbody['tablename'] = 'gstdetails';

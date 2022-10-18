@@ -3,6 +3,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 
 @Component({
   selector: 'app-dues-page',
@@ -19,7 +20,7 @@ public tbdata={"advanceArray": [{"advanceAmt": '',"advanceDate": "",}],"loadingD
 public bhdata={"truckData": [],"commentToTruck2": []};
 public whichData=false;
 
-  constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public handledata: HandleDataService) { }
+  constructor(public apiCallservice: ApiCallsService,public formBuilder: FormBuilder,public handledata: HandleDataService) { }
 
 
 

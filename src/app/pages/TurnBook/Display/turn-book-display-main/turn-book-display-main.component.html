@@ -712,7 +712,12 @@
             <td>{{i.hamt}}<br>{{i.ohamt}}</td>
             <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
             <td [ngStyle]="{'background-color': i.colors[1]}">{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
-            <td><button class="btn btn-warning" (click)="sendBalanceData(i,j,'truck')">Send</button><button class="btn btn-warning" (click)="sendBalanceData(i,j,'shubham')">Self</button><button class="btn btn-warning" (click)="sendBalanceData(i,j,'dad')">Dad</button></td>
+            <td>
+              <button class="btn btn-warning" (click)="sendBalanceData(i,j,'truck')">Send</button>
+              <button class="btn btn-warning" (click)="sendBalanceData(i,j,'shubham')">Self</button>
+              <button class="btn btn-warning" (click)="sendBalanceData(i,j,'dad')">Dad</button>
+              <button class="btn btn-warning" (click)="clearData(i,j)">Clear</button>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -53,230 +53,113 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   public finalJson = {};
   public pythonVar = '';
   public document = new jsPDF();
-  public t=  [
-        {
-          "_id": "6342d81488a7c7ec532bae1d",
-          "date": "2022-10-09",
-          "reason": "Loan",
-          "amt": 35000,
-          "info": [{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          }],
-          "tpt": [
-            {
-              "_id": "6342bfe9cdc03a4b4f0dc975",
-              "insertedby": 1,
-              "updatedby": 0,
-              "insertedOn": "2022-10-09",
-              "updatedOn": "2022-10-09",
-              "tptName": "Atul Subhash Gaikwad",
-              "name": "Atul Subhash Gaikwad",
-              "email": "",
-              "pan": "",
-              "P": false,
-              "contact": [],
-              "addr1": "",
-              "addr2": "",
-              "addr3": ""
-            }
-          ],
-          "totalTaken": 0,
-          "totalPending": 35000
-        },
-        {
-          "_id": "6342dd9af6e7798b49bc17b6",
-          "date": "2022-10-09",
-          "reason": "Loan",
-          "amt": 20000,
-          "info": [{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          },{
-            "tbid": "MH12 QW 9999",
-            "dueAmtTaken": 500,
-            "date": "2022-10-08",
-            "bhid": "63413f9ae7b0c72299c8c415"
-          }],
-          "tpt": [
-            {
-              "_id": "62c2e28a7432179ed9ab0be0",
-              "tptName": "Welcome Transport",
-              "name": "",
-              "pan": "",
-              "P": false,
-              "contact": [
-                "9383942754",
-                "9381453077",
-                "9543983661"
-              ],
-              "addr1": "No 1, Perumal Koil Street,",
-              "addr2": "Mathiravedu, Velappanchavadi,",
-              "addr3": "Chennai - 600077",
-              "email": "",
-              "userid": "",
-              "insertedby": 1,
-              "updatedby": 0,
-              "insertedOn": "2022-09-22",
-              "updatedOn": "2022-09-22"
-            }
-          ],
-          "totalTaken": 0,
-          "totalPending": 20000
-        }
-    ]
+
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
     localStorage.clear();
     // this.generateReportAccount();
     }
-
-
     
     
 
-    generateReportAccount(){//threshhold is 295
-// Fetch all trucks who have either 12 or 363 as false
-      let data=this.handleF.removeDuplicates(this.data)
-      let pager=1;
-       var doc = new jsPDF()
-       doc.setFontSize('25');
-       doc.setFontType('bold');
-       doc.text('Account Details : ', 15, 15)//partyname
-       doc.setFontSize('10');
-      //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
-       doc.text(String(pager), 180, 5)//pageno
-       pager=pager+1;
-       doc.setFontSize('25');
-       doc.setLineWidth(0.5);
-       doc.line(0, 20, 210, 20);//line after main header
-       //headers
-       doc.setFontSize('10');
-       let y = 24;
-       let starty = 24;
-       doc.text('Sr', 3, y)//partyname
-       doc.text('TruckNo', 12, y)//partyname
-       doc.text('Account', 39, y)//partyname
-       doc.text('12', 92, y)//partyname
-       doc.text('363', 114, y)//partyname
-       doc.text('Account Number', 150, y)//partyname
-       //headers
-       doc.line(0, 25, 210, 25);//line after header
+//     generateReportAccount(){//threshhold is 295
+// // Fetch all trucks who have either 12 or 363 as false
+//       let data=this.handleF.removeDuplicates(this.data)
+//       let pager=1;
+//        var doc = new jsPDF()
+//        doc.setFontSize('25');
+//        doc.setFontType('bold');
+//        doc.text('Account Details : ', 15, 15)//partyname
+//        doc.setFontSize('10');
+//       //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
+//        doc.text(String(pager), 180, 5)//pageno
+//        pager=pager+1;
+//        doc.setFontSize('25');
+//        doc.setLineWidth(0.5);
+//        doc.line(0, 20, 210, 20);//line after main header
+//        //headers
+//        doc.setFontSize('10');
+//        let y = 24;
+//        let starty = 24;
+//        doc.text('Sr', 3, y)//partyname
+//        doc.text('TruckNo', 12, y)//partyname
+//        doc.text('Account', 39, y)//partyname
+//        doc.text('12', 92, y)//partyname
+//        doc.text('363', 114, y)//partyname
+//        doc.text('Account Number', 150, y)//partyname
+//        //headers
+//        doc.line(0, 25, 210, 25);//line after header
    
-       //vertical lines
-       doc.line(10, 20, 10, 25);//srno
-       doc.line(38, 20, 38, 25);//date
-       doc.line(90, 20, 90, 25);//truckno
-       doc.line(112, 20, 112, 25);//credit
-       doc.line(134, 20, 134, 25);//credit
-       //vertical lines
-       let startforI=0;
-       y = y + 6;
-       startforI=0;
-       for (let i = startforI; i < data.length; i++) {
+//        //vertical lines
+//        doc.line(10, 20, 10, 25);//srno
+//        doc.line(38, 20, 38, 25);//date
+//        doc.line(90, 20, 90, 25);//truckno
+//        doc.line(112, 20, 112, 25);//credit
+//        doc.line(134, 20, 134, 25);//credit
+//        //vertical lines
+//        let startforI=0;
+//        y = y + 6;
+//        startforI=0;
+//        for (let i = startforI; i < data.length; i++) {
    
-         if(y>290){
-           y=24;
-           y=y+6;
-       starty = 24;
-           doc.addPage();
-           doc.setFontSize('25');
-       doc.setFontType('bold');
-       doc.text('Account Details : ', 15, 15)//partyname
-       doc.setFontSize('10');
-      //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 190, 19)//date
-       doc.text(String(pager), 180, 5)//pageno
-       pager=pager+1;
-       doc.setFontSize('25');
-       doc.setLineWidth(0.5);
-       doc.line(0, 20, 210, 20);//line after main header
-       //headers
-       doc.setFontSize('10');
-       doc.text('Sr', 3, y-6)//partyname
-       doc.text('TruckNo', 12, y-6)//partyname
-       doc.text('Account', 39, y-6)//partyname
-       doc.text('12', 92, y-6)//partyname
-       doc.text('363', 114, y-6)//partyname
-       doc.text('Account Number', 150, y-6)//partyname
-       //headers
-       doc.line(0, 25, 210, 25);//line after header
+//          if(y>290){
+//            y=24;
+//            y=y+6;
+//        starty = 24;
+//            doc.addPage();
+//            doc.setFontSize('25');
+//        doc.setFontType('bold');
+//        doc.text('Account Details : ', 15, 15)//partyname
+//        doc.setFontSize('10');
+//       //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 190, 19)//date
+//        doc.text(String(pager), 180, 5)//pageno
+//        pager=pager+1;
+//        doc.setFontSize('25');
+//        doc.setLineWidth(0.5);
+//        doc.line(0, 20, 210, 20);//line after main header
+//        //headers
+//        doc.setFontSize('10');
+//        doc.text('Sr', 3, y-6)//partyname
+//        doc.text('TruckNo', 12, y-6)//partyname
+//        doc.text('Account', 39, y-6)//partyname
+//        doc.text('12', 92, y-6)//partyname
+//        doc.text('363', 114, y-6)//partyname
+//        doc.text('Account Number', 150, y-6)//partyname
+//        //headers
+//        doc.line(0, 25, 210, 25);//line after header
    
-       //vertical lines
-       doc.line(10, 20, 10, 25);//srno
-       doc.line(38, 20, 38, 25);//date
-       doc.line(90, 20, 90, 25);//truckno
-       doc.line(112, 20, 112, 25);//credit
-       doc.line(134, 20, 134, 25);//credit
-       //vertical lines
-       }
+//        //vertical lines
+//        doc.line(10, 20, 10, 25);//srno
+//        doc.line(38, 20, 38, 25);//date
+//        doc.line(90, 20, 90, 25);//truckno
+//        doc.line(112, 20, 112, 25);//credit
+//        doc.line(134, 20, 134, 25);//credit
+//        //vertical lines
+//        }
        
-        doc.text(String(i+1), 3, y)//partyname
-        doc.text(data[i].truckno, 11, y)//partyname
+//         doc.text(String(i+1), 3, y)//partyname
+//         doc.text(data[i].truckno, 11, y)//partyname
 
-       doc.text(data[i].accountDetails[0].accountName, 39, y)//partyname
-       doc.text(String(data[i].accountDetails[0].accountNumber), 39, y+4)//partyname
-       doc.text(data[i].accountDetails[0].ifsc, 39, y+8)//partyname
+//        doc.text(data[i].accountDetails[0].accountName, 39, y)//partyname
+//        doc.text(String(data[i].accountDetails[0].accountNumber), 39, y+4)//partyname
+//        doc.text(data[i].accountDetails[0].ifsc, 39, y+8)//partyname
   
                   
-         doc.line(0, y + 11, 210, y + 11);//line after header
-         y = y + 15;
+//          doc.line(0, y + 11, 210, y + 11);//line after header
+//          y = y + 15;
    
          
-       //vertical lines//getting applied for every loop, make it happen once only
-       doc.line(10, starty, 10, y-4);//srno
-       doc.line(38, starty, 38, y-4);//date
-       doc.line(90, starty, 90, y-4);//truckno
-       doc.line(112, starty, 112, y-4);//credit
-       doc.line(134, starty, 134, y-4);//credit
-       //vertical lines
-       }
+//        //vertical lines//getting applied for every loop, make it happen once only
+//        doc.line(10, starty, 10, y-4);//srno
+//        doc.line(38, starty, 38, y-4);//date
+//        doc.line(90, starty, 90, y-4);//truckno
+//        doc.line(112, starty, 112, y-4);//credit
+//        doc.line(134, starty, 134, y-4);//credit
+//        //vertical lines
+//        }
   
-       doc.save('Account-Details.pdf')
-     }
+//        doc.save('Account-Details.pdf')
+//      }
 
   login(data) {
     this.security.setBranch(data);

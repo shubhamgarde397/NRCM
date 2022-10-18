@@ -41,7 +41,7 @@ export class GstdisplayComponent implements OnInit {
     window.open('https://messages.google.com/web/conversations/'+data,'_blank');    
   }
   refresh(){
-    this.considerArray=[0,1,0,0,0,0,0]
+    this.considerArray=[0,1,0,0,0,0,0,0]
     this.getInformationData()
   }
   deleteGSTDetails = function (id) {

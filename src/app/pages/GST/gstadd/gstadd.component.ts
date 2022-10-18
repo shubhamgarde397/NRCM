@@ -60,27 +60,27 @@ export class GstaddComponent implements OnInit {
     this.submitted = true;
     value['method'] = 'insert';
     value['tablename'] = 'gstdetails';
-    value['load']=value['partyType']=='NRCM'?[
-      {
-        "Pipe": {
-          "Hire": 0,
-          "Advance": 0
-        }
-      },
-      {
-        "Fittings": {
-          "Hire": 0,
-          "Advance": 0
-        }
-      }
-    ]:[
-      {
-        "Other": {
-          "Hire": 0,
-          "Advance": 0
-        }
-      }
-    ]
+    // value['load']=value['partyType']=='NRCM'?[
+    //   {
+    //     "Pipe": {
+    //       "Hire": 0,
+    //       "Advance": 0
+    //     }
+    //   },
+    //   {
+    //     "Fittings": {
+    //       "Hire": 0,
+    //       "Advance": 0
+    //     }
+    //   }
+    // ]:[
+    //   {
+    //     "Other": {
+    //       "Hire": 0,
+    //       "Advance": 0
+    //     }
+    //   }
+    // ]
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, value, 0)
       .subscribe((res: any) => {

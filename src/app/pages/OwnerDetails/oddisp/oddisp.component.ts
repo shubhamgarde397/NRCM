@@ -110,7 +110,7 @@ switch(data){
           this.fetchBasic();
           break;
           case '6':
-            this.considerArray=[0,0,0,1,0,0,0]
+            this.considerArray=[0,0,0,1,0,0,0,0]
           this.getInformationData()
           this.fetchBasic();
             break;
@@ -338,7 +338,7 @@ switch(data){
 
 
   refresh(){
-    this.considerArray=[0,0,1,0,0,0,0]
+    this.considerArray=[0,0,1,0,0,0,0,0]
     this.getInformationData()
   }
 

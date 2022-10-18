@@ -933,7 +933,7 @@ if(newpage===1){
   }
   }
 
-  clearComments(j){
+  clearComments(i,j){
     let formbody = {}
     formbody['_id'] = this.bigI._id;
     formbody['index'] = j;
@@ -1218,6 +1218,7 @@ if(newpage===1){
 
 
       let K = 0
+      let accountI=i;
       doc.setFontSize('10');
       if(dataTF){
         doc.text(String(this.balanceDate[z].commentToTruck).split(' ')[0], 38.5, i);//comments
@@ -1291,11 +1292,15 @@ if(newpage===1){
   
       doc.setFontSize('10');
       if(this.balanceDate[z].update){}else{
-      doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
-      doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
+      // doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
+      // doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
+      // doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
+      doc.text(this.balanceDate[z].accountName, 156.5, accountI);//accno
+      doc.text(String(this.balanceDate[z].accountNumber), 156.5, accountI+6);//accname
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, accountI+12);//ifsc-bankname
       }
-      doc.text(this.balanceDate[z]['available'], 200, i + 6 - (data.length * 6));//accno
+      // doc.text(this.balanceDate[z]['available'], 200, i + 6 - (data.length * 6));//accno
+      doc.text(this.balanceDate[z]['available'], 200, accountI+6);//accno
       doc.setFontSize('8');
       
       i = i + 12-(bigK*2);

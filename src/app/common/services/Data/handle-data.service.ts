@@ -15,6 +15,7 @@ export class HandleDataService {
     "lrlist": [{}],
     "hiddenownerdetails": [{}],
     "transport":[{}],
+    "dues":[{}],
     "Role": 6
   }
   public hugeData=[]
@@ -105,7 +106,7 @@ this.updateTurnData=data;
   getIndexes(data) {
     switch (data) {
       case 'default':
-        return [Consts.ROLE_INDEX];
+        return [Consts.ROLE_INDEX,Consts.DUES_INDEX];
       case 'first':
         return [Consts.ROLE_INDEX, Consts.OWNER_INDEX];//send everything not sprecific to index
       case 'booking':
@@ -130,6 +131,8 @@ this.updateTurnData=data;
         return [Consts.HIDDEN_TRUCK_INDEX]
       case 'infotpt':
         return [Consts.TRANSPORT_INDEX]
+        case 'infodues':
+        return [Consts.DUES_INDEX]
 
     }
   }

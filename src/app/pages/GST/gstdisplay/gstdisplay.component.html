@@ -7,7 +7,7 @@
                 <th>Srno</th>
                 <th>Name</th>
                 <th>GST Number<br>Email</th>
-                <th>Rent</th>
+                <!-- <th>Rent</th> -->
                 <th>Destination<br>Contact</th>
                 <th>Type</th>
                 <th>Address</th>
@@ -24,8 +24,9 @@
                 <td>{{i.gst}}<br>
                 <ul>
                     <li *ngFor="let ii of i.email" (click)="copyEmail(ii)">{{ii}}</li>
-                </ul></td>
-                <td>
+                </ul>
+            </td>
+                <!-- <td>
                     <div *ngFor="let ii of i.load">
                         <div *ngFor="let key of objectKeys(ii)">
                           <h4><u>{{key}}</u></h4>
@@ -34,7 +35,7 @@
                           </span>
                         </div>
                       </div>
-                </td>
+                </td> -->
                 <td>{{i.dest}}<br>
                         <ul *ngFor="let k of i.contact">
                             <li>{{k}}</li>
