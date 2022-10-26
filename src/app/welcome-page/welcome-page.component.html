@@ -30,7 +30,7 @@
     <div class="row">
         <h3>LR book Status</h3>
         <ul *ngFor="let i of arr;let j=index;">
-          <li><b>{{i.location}}:{{i.value}}</b></li>
+          <li><b>{{i.location}}</b>:<b [ngStyle]="{'color': i.color}">{{i.value}}</b></li>
         </ul>
       </div>
 

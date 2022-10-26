@@ -91,6 +91,7 @@ export class NavigationComponent implements OnInit {
           let obj={}
           obj['location']=k[i]
           obj['value']=v[i]
+          obj['color']=v[2+i]
           this.arr.push(obj);
           this.handledata.saveLRStatus(this.arr);
       }

@@ -1259,7 +1259,7 @@ if(newpage===1){
         doc.setLineDash([1, 0], 10);
         }
         doc.setFontSize('8')
-
+        if(dataTF){
         if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='balance'){
           doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg']), 38.5, i+k+1);//comments
           doc.text('How many : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
@@ -1270,7 +1270,7 @@ if(newpage===1){
           doc.text(String(this.balanceDate[z].commentToTruck2[k]['totalDue']),61.5,i+k+1)
           doc.text('Due : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
           doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno'])+'  Due Date : '+String(this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(8, 10) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(5, 7) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(0, 4)), 92.5, i+k+1);//comments
-          
+        } 
         }
 
         i = i + 2;
