@@ -856,29 +856,19 @@ if(newpage===1){
 
       Whatsapp2(){
         let a =this.pasteAndSendV.split('\t');
-        console.log(a)
         let data={}
-        data['truckno']=a[1];
-        data['dest1']=a[7];
-        data['dest2']=a[9];
-        data['contact']=a[2]
-        data['typeOfLoad']=a[3];
+        data['truckno']=a[2];
+        data['dest1']=a[6];
+        data['dest2']=a[7];
+        data['contact']=a[3]
+        data['typeOfLoad']=a[4];
         data['qr']=a[8];
-    console.log(data);
-    
-        this.sendMsgPT(a[5],'',data,0,2)
+        this.sendMsgPT(a[9],data)
       }
 
-      sendMsgPT(no,type,data,j,option){
-        let contactD;
-        let qr;
-        if(option===1){
-          contactD=(<HTMLInputElement>document.getElementById('contact_'+j)).value+'%0A'
-          qr=(<HTMLInputElement>document.getElementById('qr_'+j)).value+'%0A%0A';
-        }else if(option===2){
-          contactD=data['contact']+'%0A'
-          qr=data['qr']+'%0A%0A';
-        }
+      sendMsgPT(no,data){
+        let contactD=data['contact']+'%0A'
+        let qr=data['qr']+'%0A%0A';
         let msg=''
         msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A%0A'
         msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
@@ -888,9 +878,6 @@ if(newpage===1){
         
         
         switch (data.typeOfLoad) {
-          case 'Other':
-            msg=msg+'%0AThe above truck has been dispatched.'
-            break;
             case 'Pipe':
               msg=msg+'*QR*%20:%20'+qr;
               msg=msg+'The above truck has been dispatched from Urse Plant.'
@@ -905,8 +892,7 @@ if(newpage===1){
         msg=msg+'*Pune*%0A'
         msg=msg+'9822288257%0A'
         msg=msg+'9766707061%0A'
-        // window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
-        console.log('https://wa.me/+91'+no+'/?text='+msg)
+        window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');
               
         }
 
