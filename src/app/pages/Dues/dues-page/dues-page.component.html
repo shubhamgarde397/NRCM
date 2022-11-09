@@ -72,7 +72,7 @@
     </div>
   </form>
 </div>
-
+<button class="btn btn-success" (click)="fetchBasic()">Refresh!</button>
 <table class="table" style="width:100%" align="center" *ngIf="showdues">
 
   <thead class="table-header">
@@ -82,6 +82,7 @@
           <th>Date</th>
           <th>Reason</th>
           <th>Amount</th>
+          <th>Pending</th>
           <th>From</th>
           <th>Info</th>
           <th>Options</th>
@@ -96,6 +97,7 @@
           <td>{{i.date}}</td>
           <td>{{i.reason}}</td>
           <td>{{i.amt}}</td>
+          <td>{{i.pending}}</td>
           <td>{{i.from}}</td>
           <td>
             <span *ngFor="let k of i.info;let z = index;">

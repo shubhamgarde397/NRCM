@@ -1532,7 +1532,6 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
     }
 
     getpdfcomplex2(){
-
       let pager=1;
       let bigValueofY=0;
       var doc = new jsPDF()
@@ -1573,7 +1572,7 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
       let startforI=0;
         y = y + 6;
         startforI=0;
-    
+    let index=0;
       for (let i = startforI; i < this.turn12.length; i++) {
         if(y>290){
           
@@ -1621,7 +1620,9 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
       doc.line(145, 20, 145, 25);//debit
       //vertical lines
       }
-         doc.text(String(i+1), 23, y)//partyname
+      if(this.turn12[i]['considerForPayment']==true){
+         doc.text(String(index+1), 23, y)//partyname
+         index=index+1;
         doc.text(this.handleF.getDateddmmyy(this.turn12[i]['loadingDate']), 32, y)//partyname
           doc.text(this.turn12[i]['truckName']['truckno'], 57, y)//truckno
           doc.text(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})?String(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})['advanceAmt']):'', 88, y)//truckno
@@ -1632,12 +1633,13 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
           doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'':this.turn12[i]['statusOfPoch'],185,y);
           let pmtx=this.turn12[i]['statusOfPoch']==='Okay'?'185':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'178':'178'):'185')
           doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'Payment Done':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'Received Pending':'Payment Pending'):'No Payment'),pmtx,y+5);
-    
+      
     
            y = y + 12;
            doc.line(20, y-5 , 210, y-5 );//line after header
       bigValueofY=y-5;
       doc.setFontSize('10');
+    }
     }
     doc.line(30, starty, 30, bigValueofY);//srno
     doc.line(55, starty, 55, bigValueofY);//date

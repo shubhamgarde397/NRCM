@@ -100,6 +100,9 @@ export class BalancehiredisplayComponent implements OnInit {
   public fetchLoadedTruckTF=false;
   public currentLoadedParty=[];
 
+  public pasteAndSend=false;
+  public pasteAndSendV='';
+
   public commonArray;
   public considerArray;
   public gstdetailslist
@@ -393,6 +396,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
       
   })
   }
+
   dueChange(){
 let a=this.dueChangeValue.split('_')
 this.addDueDetailsTF=true;
@@ -410,6 +414,7 @@ let bhid=this.balanceDate[a[0]]['_id']
 let tbid=this.balanceDate[a[0]]['truckData'][a[1]]['tbid']
 let oid=this.balanceDate[a[0]]['truckData'][a[1]]['ownerid']
 let duesid=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['_id']
+let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
 
     let tempObj={
       'bhid':bhid,
@@ -419,6 +424,7 @@ let duesid=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['_id']
       'dueDate':this.dueMDate,
       'dueAmt':this.dueMAmt,
       'totalDue':this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['amt'],
+      'duesDate':duesdate,
       'type':'due',
       'msg':'Loan',
       'tsrno':String(parseInt(a[1])+1),
@@ -567,6 +573,7 @@ if(confirm('Do you want to temporary delete it?')){
           this.currentLoadedParty=res.chartData;
           this.fetchLoadedTruckTF = true;
           this.fetchPartyTF=false;
+          this.pasteAndSend=false;
         });
   }
 
@@ -715,6 +722,13 @@ if(newpage===1){
     this.gstdetailslist = this.commonArray.gstdetails;
     this.fetchPartyTF=true;
     this.fetchLoadedTruckTF=false;
+    this.pasteAndSend=false;
+  }
+
+  fetchpasteAndSend(){
+    this.fetchPartyTF=false;
+    this.fetchLoadedTruckTF=false;
+    this.pasteAndSend=true;
   }
 
   getInformationData() {
@@ -751,6 +765,8 @@ if(newpage===1){
 
     this.sendMsgP(this.contactP,'',data,0,2)
   }
+
+
 
   getTruckDetails(){
     let temp={}
@@ -837,6 +853,62 @@ if(newpage===1){
       window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
             
       }
+
+      Whatsapp2(){
+        let a =this.pasteAndSendV.split('\t');
+        console.log(a)
+        let data={}
+        data['truckno']=a[1];
+        data['dest1']=a[7];
+        data['dest2']=a[9];
+        data['contact']=a[2]
+        data['typeOfLoad']=a[3];
+        data['qr']=a[8];
+    console.log(data);
+    
+        this.sendMsgPT(a[5],'',data,0,2)
+      }
+
+      sendMsgPT(no,type,data,j,option){
+        let contactD;
+        let qr;
+        if(option===1){
+          contactD=(<HTMLInputElement>document.getElementById('contact_'+j)).value+'%0A'
+          qr=(<HTMLInputElement>document.getElementById('qr_'+j)).value+'%0A%0A';
+        }else if(option===2){
+          contactD=data['contact']+'%0A'
+          qr=data['qr']+'%0A%0A';
+        }
+        let msg=''
+        msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A%0A'
+        msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
+        msg=msg+'*Destination*%20:%20'+data.dest1;
+        msg=msg+(data.dest2?('/'+data.dest2+'%0A'):'%0A');
+        msg=msg+'*Contact*%20:+%20+91%20'+contactD
+        
+        
+        switch (data.typeOfLoad) {
+          case 'Other':
+            msg=msg+'%0AThe above truck has been dispatched.'
+            break;
+            case 'Pipe':
+              msg=msg+'*QR*%20:%20'+qr;
+              msg=msg+'The above truck has been dispatched from Urse Plant.'
+            break;
+            case 'Fittings':
+              msg=msg+'*QR*%20:%20'+qr
+              msg=msg+'The above truck has been dispatched from Talegaon Fittings Plant.'
+            break;
+        }
+        msg=msg+'%0A%0A';
+        msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
+        msg=msg+'*Pune*%0A'
+        msg=msg+'9822288257%0A'
+        msg=msg+'9766707061%0A'
+        // window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
+        console.log('https://wa.me/+91'+no+'/?text='+msg)
+              
+        }
 
   updatePaymentMsg(i,index){
     if (confirm('Are you sure?')) {

@@ -537,6 +537,7 @@
                 <div class="col-sm-3">
                   <button class="btn btn-warning" (click)="fetchLoadedTruck()">Get Data</button>
                   <button class="btn btn-warning" (click)="fetchparty()">Form-2</button>
+                  <button class="btn btn-warning" (click)="fetchpasteAndSend()">Paste And Send</button>
                 </div> 
               </div>
               <div class="well"  *ngIf="fetchLoadedTruckTF">
@@ -621,6 +622,19 @@
                   </div>
                 </div>  
                 
+              </div>
+
+              <div class="well"  *ngIf="pasteAndSend">
+                <div class="row">
+                  <input type="text" class="col-sm-12 form-control" [(ngModel)]="pasteAndSendV">
+                </div>  
+
+                <div class="row">
+                  <div class="col-sm-4">
+                    <button class="btn btn-danger" (click)="Whatsapp2()">Send</button>
+                  </div>
+                </div>  
+
               </div>
             </div>
             </div>

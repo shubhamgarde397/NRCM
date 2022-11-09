@@ -527,7 +527,10 @@ public acknowledgement=false;
      
            if(y>290){
              y=30;
-             
+             doc.line(30, 25, 30, 295);//srno
+             doc.line(55, 25, 55, 295);//date
+             doc.line(83, 25, 83, 295);//truckno
+             doc.line(148, 25, 148, 295);//credit
          starty = 20;
              doc.addPage();
              doc.setFontSize('25');
@@ -565,18 +568,20 @@ public acknowledgement=false;
          doc.text('', 86, y)//partyname
          doc.text('', 150, y)//partyname
                     
-           doc.line(20, y + 1, 210, y + 1);//line after header
-           y = y + 5;
+           doc.line(20, y + 5, 210, y + 5);//line after header
+           y = y + 9;
      
            
          //vertical lines//getting applied for every loop, make it happen once only
+
+         //vertical lines
+         bigValueofY=y;
+         }
+
          doc.line(30, starty, 30, y - 4);//srno
          doc.line(55, starty, 55, y - 4);//date
          doc.line(83, starty, 83, y - 4);//truckno
          doc.line(148, starty, 148, y - 4);//credit
-         //vertical lines
-         bigValueofY=y;
-         }
     
          doc.save('PAN-Details.pdf')
        }

@@ -503,12 +503,26 @@ public year;
           doc.text(String('-'), 130, y)//partyname
           doc.text(String('-'), 148, y)//partyname
       }
+      else if(this.typeOfCols==='nobalance'){
+        if (this.paymentData[i].type === 'buy') {
+          doc.text(String(this.paymentData[i].amount), 130, y)//partyname
+          doc.text(String('-'), 148, y)//partyname
+        } else {
+          doc.text(String(this.paymentData[i].amount), 148, y)//partyname
+          doc.text(String('-'), 130, y)//partyname
+        }
+    }
  
       if(this.typeOfCols==='default'){
         if(data=='self'){
           doc.text(String(this.paymentData[i]['value']), 172, y)//partyname
            }
       }else if(this.typeOfCols==='noamount'){
+        if(data=='self'){
+          doc.text(String('-'), 172, y)//partyname
+           }
+      }
+      else if(this.typeOfCols==='nobalance'){
         if(data=='self'){
           doc.text(String('-'), 172, y)//partyname
            }
@@ -540,6 +554,8 @@ public year;
        doc.text(String(balance), 172, bigValueofY)//partyname
       }
     }else if(this.typeOfCols==='noamount'){
+    }
+    else if(this.typeOfCols==='nobalance'){
     }
    
 
