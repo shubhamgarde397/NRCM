@@ -857,13 +857,13 @@ if(newpage===1){
       Whatsapp2(){
         let a =this.pasteAndSendV.split('\t');
         let data={}
-        data['truckno']=a[2];
-        data['dest1']=a[6];
-        data['dest2']=a[7];
-        data['contact']=a[3]
-        data['typeOfLoad']=a[4];
-        data['qr']=a[8];
-        this.sendMsgPT(a[9],data)
+        data['truckno']=a[1];
+        data['dest1']=a[5];
+        data['dest2']=a[6];
+        data['contact']=a[2]
+        data['typeOfLoad']=a[3];
+        data['qr']=a[7];
+        this.sendMsgPT(a[8],data)
       }
 
       sendMsgPT(no,data){
