@@ -22,6 +22,7 @@ import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
+import { DisplayComponent } from './pages/CI/JG/display/display.component';
 
 export const routes: Routes =
     [
@@ -104,6 +105,10 @@ export const routes: Routes =
                     {
                         path: 'DUES_PAGE_ADVANCE',
                         component:DuesFromAdvanceDisplayComponent
+                    },
+                    {
+                        path: 'JG',
+                        component:DisplayComponent
                     },
                     {
                         path:'LINK_TRUCK',

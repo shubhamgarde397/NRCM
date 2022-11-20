@@ -23,6 +23,8 @@ public dues;
     public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService, public sec: SecurityCheckService) { }
 
   ngOnInit() {
+    console.log(this.handledata.getLRStatus);
+    
 this.arr=this.handledata.getLRStatus();
 this.fetchData();
   }

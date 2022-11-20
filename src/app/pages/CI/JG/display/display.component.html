@@ -1,0 +1,83 @@
+<div class="row">
+  <div class="col-sm-4">
+      <button class="btn btn-info" (click)="getWhichType('1')">Add to JG</button>
+  </div>
+  <div class="col-sm-4">
+      <button class="btn btn-info" (click)="getWhichType('2')">Display all of JG</button>
+  </div>
+</div>
+
+<div class="well" *ngIf="whichType==='1'">
+ 
+      <input type="text" [(ngModel)]="truckno">
+      <button class="btn btn-danger" (click)="getVehicleDetails()">Get Details!</button>
+      
+      <table class="table" style="width:100%" align="center" *ngIf="table">
+  
+          <thead>
+              <tr class="table-header">
+                  <th>Srno</th>
+                  <th>TruckNumber-Type</th>
+                  <th>Contact</th>
+                  <th>ContactO</th>
+                  <th>JG</th>
+                  <th>Add</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let i of dataArray;let j = index">
+                  <td>{{j+1}}</td>
+                  <td>{{i.truckno}}-{{i.typeOfVehicle}}
+                  </td>
+
+                  <td>
+                      <ul *ngFor="let k of i.contact">
+                          <li>{{k}}</li>
+                      </ul>
+                  </td>
+                  <td>
+                      <ul *ngFor="let kk of i.contactO">
+                          <li>{{kk}}</li>
+                      </ul>
+                  </td>
+                  <td><span *ngIf="i.jg">Yes</span><span *ngIf="!i.jg">No</span></td>
+                  <td><button class="btn btn-danger" (click)="addToJG()">Add to JG</button></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+
+  <div class="well" *ngIf="whichType==='2'">
+ 
+    <button class="btn btn-danger" (click)="getVehicleDetails()">Get Details!</button>
+    <table class="table" style="width:100%" align="center" *ngIf="table">
+
+        <thead>
+            <tr class="table-header">
+                <th>Srno</th>
+                <th>TruckNumber-Type</th>
+                <th>Contact</th>
+                <th>ContactO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let i of dataArray;let j = index">
+                <td>{{j+1}}</td>
+                <td>{{i.truckno}}-{{i.typeOfVehicle}}
+                </td>
+
+                <td>
+                    <ul *ngFor="let k of i.contact">
+                        <li>{{k}}</li>
+                    </ul>
+                </td>
+                <td>
+                    <ul *ngFor="let kk of i.contactO">
+                        <li>{{kk}}</li>
+                    </ul>
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</div>

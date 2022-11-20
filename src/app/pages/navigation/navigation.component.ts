@@ -74,29 +74,28 @@ export class NavigationComponent implements OnInit {
   }
 
   getInformationData() {
-    this.spin.show();
-    let caller = this.URL === 'www.nitinroadways.in' ? 'default' : 'default';
-    // let caller = this.URL === 'www.nitinroadways.in' ? 'first' : 'default';
-    
-    let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray(caller) };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
-      .subscribe((res: any) => {
-        this.securityCheck.commonArray = res;
-        this.securityCheck.commonArray['Role'] = res.Role;
-        this.securityCheck.role = res.Role;
-        this.spin.hide();
-        let k=Object.keys(res.lrsend[0])
-        let v=Object.values(res.lrsend[0])
-        for(let i=0;i<2;i++){
-          let obj={}
-          obj['location']=k[i]
-          obj['value']=v[i]
-          obj['color']=v[2+i]
-          this.arr.push(obj);
-          this.handledata.saveLRStatus(this.arr);
-      }
+    // this.spin.show();
+    // let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray('default') };
+    // this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    //   .subscribe((res: any) => {
+    //     this.securityCheck.commonArray = res;
+    //     this.securityCheck.commonArray['Role'] = res.Role;
+    //     this.securityCheck.role = res.Role;
+    //     this.spin.hide();
+    //     let k=Object.keys(res.lrsend[0])
+    //     let v=Object.values(res.lrsend[0])
+    //     for(let i=0;i<2;i++){
+    //       let obj={}
+    //       obj['location']=k[i]
+    //       obj['value']=v[i]
+    //       obj['color']=v[2+i]
+    //       this.arr.push(obj);
+    //       this.handledata.saveLRStatus(this.arr);
+    //   }
+    //     this.router.navigate(['Navigation/NRCM_HOME'])
+    //   });
+      this.arr=this.handledata.getLRStatus()
         this.router.navigate(['Navigation/NRCM_HOME'])
-      });
   }
 
   generateDuesReportPDF(data){//threshhold is 295

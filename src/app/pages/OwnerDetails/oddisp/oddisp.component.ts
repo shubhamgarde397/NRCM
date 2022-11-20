@@ -126,6 +126,8 @@ switch(data){
     msg=msg+'*Accname*-'+(data.accountDetails[0].accountName)+'\n';
     msg=msg+'*AccNo*-'+(data.accountDetails[0].accountNumber)+'\n';
     msg=msg+'*IFSC*-'+(data.accountDetails[0].ifsc)
+    console.log(msg);
+    
     window.navigator['clipboard'].writeText(msg)
   }
 

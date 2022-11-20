@@ -136,6 +136,7 @@
   <div class="row">
 <button class="btn btn-warning" (click)="getAccount('empty')">Get Empty!</button>
 <button class="btn btn-warning" (click)="getAccount('all')">Get All!</button>
+<button class="btn btn-warning" (click)="generateReportAccount2()">Download</button>
   </div>
 
 <div class="well" *ngIf="accounttable">
@@ -359,6 +360,7 @@
 
   <div class="row">
 <button class="btn btn-warning" (click)="getAccountsUpdateTrue()">Get Data!</button>
+<button class="btn btn-warning" (click)="generateReportAccount2()">Download</button>
   </div>
 
 <div class="well" *ngIf="accounttableUF">
@@ -369,8 +371,8 @@
         <th>Truck No</th>
         <th>Name</th>
         <th>Number</th>
-        <th>Bank</th>
         <th>IFSC</th>
+        <th>Bank</th>
         <th>Update</th>
       </tr>
     </thead>
@@ -378,10 +380,10 @@
       <tr *ngFor="let ii of accountarrayUF;let jj=index;">
         <td>{{jj+1}}</td>
         <td>{{ii.truckno}}</td>
-        <td><input type="text" value={{ii.accountDetails[0].accountName}} placeholder="accountName" id="accname_{{jj}}"></td>
-        <td><input type="number" value={{ii.accountDetails[0].accountNumber}} placeholder="accountNumber" id="accno_{{jj}}"></td>
-        <td><input type="text" value={{ii.accountDetails[0].bankName}} placeholder="bankName" id="bname_{{jj}}"></td>
-        <td><input type="text" value={{ii.accountDetails[0].ifsc}} placeholder="ifsc" id="ifsc_{{jj}}"></td>
+        <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
+        <td><input type="number" placeholder="Account Number" id="accno_{{jj}}"></td>
+        <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>
+        <td><input type="text" placeholder="BankName" id="bname_{{jj}}"></td>
         <td><button class="btn btn-warning" (click)="updateaccountDetails(ii,jj)">Update</button></td>
       </tr>
     </tbody>

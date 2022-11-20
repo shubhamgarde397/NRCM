@@ -9,6 +9,7 @@ import { login } from './login';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { SecurityCheckService } from '../../common/services/Data/security-check.service';
 import { PassDataService } from 'src/app/pass-data.service';
+import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 
 @Component({
   selector: 'app-login',
@@ -34,13 +35,15 @@ export class LoginComponent implements OnInit {
   public loginButton = false;
   public header='';
   public isLoginSuccesss = false;
+  public arr=[];
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
     public formBuilder: FormBuilder,
     public spinnerService: Ng4LoadingSpinnerService,
     public security: SecurityCheckService,
-    public obs:PassDataService
+    public obs:PassDataService,
+    public handledata:HandleDataService
   ) {
 
   }
@@ -61,6 +64,8 @@ export class LoginComponent implements OnInit {
   }
 
   login({ value, valid }: { value: login, valid: boolean }, check) {
+    this.handledata.createConsiderArray('default')
+
     this.spinnerService.show();
       this.security.setUsername(value['username']);
 
@@ -68,6 +73,8 @@ export class LoginComponent implements OnInit {
       value['username']=value.username
       value['password']=value.password
       value['tablename']=''
+      value['consider']=[1,0,0,0,0,0,0,1]
+      
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, value, 0)
         .subscribe((res: any) => {
@@ -80,12 +87,43 @@ export class LoginComponent implements OnInit {
             this.isLoginSuccess=true;
             this.obs.updateApprovalMessage(res);
             this.router.navigate(['Navigation']);
+
+
+            let newdata=res['Data1']
+            let resNew={
+              "gstdetails": [{}],
+              "ownerdetails": [{}],
+              "villagenames": [{}],
+              "lrlist": [{}],
+              "hiddenownerdetails": [{}],
+              "transport":[{}],
+              "dues":[{}],
+              "Role": 6
+            }
+            for(let i=0;i<newdata.length-1;i++){
+              resNew[Object.keys(newdata[i])[0]]=Object.values(newdata[i])[0]
+          }
+            this.security.commonArray = resNew;
+            this.security.commonArray['Role'] = resNew.Role;
+            this.security.role = resNew.Role;
+            let k=Object.keys(resNew['lrsend'][0])
+            let v=Object.values(resNew['lrsend'][0])
+            for(let i=0;i<2;i++){
+              let obj={}
+              obj['location']=k[i]
+              obj['value']=v[i]
+              obj['color']=v[2+i]
+              this.arr.push(obj);
+              this.handledata.saveLRStatus(this.arr);
+              }
             }
             if(this.entry(res['Data'],'nrcm_transport')){
               this.isLoginSuccess=true;
               this.obs.updateApprovalMessage(res);
               this.router.navigate(['Transport_Navigation']);
               }
+
+
           }
           else{
             alert('Contact Admin for registration!')

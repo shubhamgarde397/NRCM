@@ -1168,7 +1168,7 @@ doc.line(7, starty, 7, y-4);//srno
      doc.save('Available-Details.pdf')
    }
 
-  
+
 
    getAllTruckData(){
      this.reportPDF=true;

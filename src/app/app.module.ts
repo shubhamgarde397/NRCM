@@ -48,6 +48,7 @@ import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
+import { DisplayComponent } from './pages/CI/JG/display/display.component';
 
 
 
@@ -78,7 +79,8 @@ import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues
     TicketComponent,
     TruckLoadingComponent,
     DuesPageComponent,
-    DuesFromAdvanceDisplayComponent
+    DuesFromAdvanceDisplayComponent,
+    DisplayComponent
   ],
   imports: [
     BrowserModule,

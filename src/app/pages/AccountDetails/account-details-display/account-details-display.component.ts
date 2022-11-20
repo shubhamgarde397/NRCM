@@ -463,6 +463,10 @@ switch (this.buttonOption) {
     }
   }
 
+  updateifscCode(j){
+    (<HTMLInputElement>document.getElementById('bname_' + j)).value=(<HTMLInputElement>document.getElementById('ifsc_' + j)).value.slice(0,4)
+  }
+
   updateaccountDetails(i,j){
     
     let accname=(<HTMLInputElement>document.getElementById('accname_' + j)).value;
@@ -812,4 +816,75 @@ switch (this.buttonOption) {
       
            doc.save('Account-Details.pdf')
          }
+
+         generateReportAccount2(){//threshhold is 295
+          // Fetch all trucks who have either 12 or 363 as false
+                let data=this.accountarrayUF;
+                let pager=1;
+                 var doc = new jsPDF()
+                 doc.setFontType('bold');
+                 doc.setFontSize('25');
+                 doc.setLineWidth(0.5);
+                 doc.line(0, 5, 210, 5);//line after main header
+                 //headers
+                 doc.setFontSize('10');
+                 let y = 9;
+                 let starty = 9;
+                 doc.text('Sr', 3, y)//partyname
+                 doc.text('TruckNo', 12, y)//partyname
+                 doc.text('Account', 39, y)//partyname
+                 //headers
+                 doc.line(0, 10, 210, 10);//line after header
+             
+                 //vertical lines
+                 doc.line(10, 5, 10, 10);//srno
+                 doc.line(38, 5, 38, 10);//date
+                 //vertical lines
+                 let startforI=0;
+                 y = y + 6;
+                 startforI=0;
+                 for (let i = startforI; i < data.length; i++) {
+             
+                   if(y>195){
+                    //vertical lines//getting applied for every loop, make it happen once only
+                 doc.line(10, starty, 10, y-4);//srno
+                 doc.line(38, starty, 38, y-4);//date
+                 //vertical lines
+                     y=9;
+                     y=y+6;
+                 starty = 9;
+                     doc.addPage();
+                 doc.setFontType('bold');
+                 doc.setFontSize('25');
+                 doc.setLineWidth(0.5);
+                 doc.line(0, 5, 210, 5);//line after main header
+                 //headers
+                 doc.setFontSize('10');
+                 doc.text('Sr', 3, y-6)//partyname
+                 doc.text('TruckNo', 12, y-6)//partyname
+                 doc.text('Account', 39, y-6)//partyname
+                 //headers
+                 doc.line(0, 10, 210, 10);//line after header
+             
+                 //vertical lines
+                 doc.line(10, 5, 10, 10);//srno
+                 doc.line(38, 5, 38, 10);//date
+                 //vertical lines
+                 }
+    
+                  doc.text(String(i+1), 3, y)//partyname
+                  doc.text(data[i].truckno, 11, y)//partyname
+     
+                            
+                   doc.line(0, y + 11, 210, y + 11);//line after header
+                   y = y + 15;
+                 }
+      
+                 //vertical lines//getting applied for every loop, make it happen once only
+                 doc.line(10, starty, 10, y-4);//srno
+                 doc.line(38, starty, 38, y-4);//date
+                 //vertical lines
+            
+                 doc.save('Account-Details.pdf')
+               }
 }
