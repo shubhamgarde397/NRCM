@@ -118,6 +118,7 @@ public sentComments=[];
 public bigI;
 public duesButton=true;
 public Dues=[];
+public DuesT=[];
 public dueChangeValue;
 public addDueDetailsTF=false;
 public dueInfo;
@@ -358,6 +359,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
         this.balanceDate = [];
         this.balanceDate = this.accE(res.balanceData);
         this.Dues=res.Dues;
+        this.DuesT=res.DuesT;
         this.findDues(res);
         this.securityCheck.commonBalanceHire = res.balanceData;
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
@@ -1202,6 +1204,10 @@ if(newpage===1){
     doc.text('Pg', 63, i + 10 - 16)
     doc.text('Date', 72.5, i + 10 - 16)
     doc.text('TruckNo', 92.5, i + 10 - 16)
+    if(!dataTF){
+    doc.text('Payment Details', 120.5, i + 10 - 16)
+    }
+
     doc.text('Account Details', 155.5, i + 10 - 16)
     //Headers End
     //Line after headers
@@ -1258,6 +1264,11 @@ if(newpage===1){
         doc.text('Pg', 63, 10)
         doc.text('Date', 72.5, 10)
         doc.text('TruckNo', 92.5, 10)
+
+        if(!dataTF){
+          doc.text('Payment Details', 120.5, 10)
+          }
+
         doc.text('Account Details', 155.5, 10)
         //Headers End
         //Line after headers
@@ -1298,8 +1309,8 @@ if(newpage===1){
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
         doc.text(this.balanceDate[z].truckData[k].Prd, 149, i);//truckno
-
         }        
+
         doc.setFontSize('10');
         K = k;
         i = i + 6;
@@ -1356,6 +1367,10 @@ if(newpage===1){
       doc.text(this.balanceDate[z].accountName, 156.5, accountI);//accno
       doc.text(String(this.balanceDate[z].accountNumber), 156.5, accountI+6);//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, accountI+12);//ifsc-bankname
+      }
+      if(!dataTF){
+        doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 124, accountI);//truckno
+        doc.text(String(this.balanceDate[z].apm), 124, accountI+6);//truckno
       }
       // doc.text(this.balanceDate[z]['available'], 200, i + 6 - (data.length * 6));//accno
       doc.text(this.balanceDate[z]['available'], 200, accountI+6);//accno

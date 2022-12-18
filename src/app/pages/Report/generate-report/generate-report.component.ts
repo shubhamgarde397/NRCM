@@ -493,7 +493,7 @@ public acknowledgement=false;
          var doc = new jsPDF()
          doc.setFontSize('25');
          doc.setFontType('bold');
-         doc.text('PAN DETAILS : '+this.buttons[parseInt(this.selectedMY)]['value'], 15, 15)//partyname
+         doc.text('PAN DETAILS', 15, 15)//partyname
          doc.setFontSize('10');
         //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
          doc.text(String(pager), 180, 5)//pageno
@@ -501,41 +501,39 @@ public acknowledgement=false;
          doc.setFontSize('25');
          doc.setLineWidth(0.5);
          doc.line(0, 20, 210, 20);//line after main header
-         doc.line(20, 20, 20, 300);//punching area line
          //headers
          doc.setFontSize('10');
          let y = 24;
          let starty = 24;
-         doc.text('Sr', 23, y)//partyname
-         doc.text('Date', 32, y)//partyname
-         doc.text('TruckNo', 56, y)//partyname
-         doc.text('Owner Name', 86, y)//partyname
-         doc.text('PAN', 150, y)//partyname
+         doc.text('Sr', 3, y)//partyname
+         doc.text('Date', 12, y)//partyname
+         doc.text('TruckNo', 36, y)//partyname
+         doc.text('Owner Name/PAN', 66, y)//partyname
          //headers
          doc.line(0, 25, 210, 25);//line after header
      
          //vertical lines
-         doc.line(30, 20, 30, 25);//srno
-         doc.line(55, 20, 55, 25);//date
-         doc.line(83, 20, 83, 25);//truckno
-         doc.line(148, 20, 148, 25);//credit
+         doc.line(10, 20, 10, 25);//srno
+         doc.line(35, 20, 35, 25);//date
+         doc.line(63, 20, 63, 25);//truckno
+         doc.line(128, 20, 128, 25);//credit
          //vertical lines
-         let startforI=0;
+         let startforI=20;
          y = y + 6;
          startforI=0;
          for (let i = startforI; i < data.length; i++) {
      
-           if(y>290){
+           if(y>195){
              y=30;
-             doc.line(30, 25, 30, 295);//srno
-             doc.line(55, 25, 55, 295);//date
-             doc.line(83, 25, 83, 295);//truckno
-             doc.line(148, 25, 148, 295);//credit
+             doc.line(10, 25, 10, 295);//srno
+             doc.line(35, 25, 35, 295);//date
+             doc.line(63, 25, 63, 295);//truckno
+             doc.line(128, 25, 128, 295);//credit
          starty = 20;
              doc.addPage();
              doc.setFontSize('25');
          doc.setFontType('bold');
-         doc.text('PAN DETAILS : '+this.buttons[parseInt(this.selectedMY)]['value'], 15, 15)//partyname
+         doc.text('PAN DETAILS', 15, 15)//partyname
          doc.setFontSize('10');
         //  doc.text(this.handleF.getDateddmmyy(this.date1)+' to '+this.handleF.getDateddmmyy(this.date2), 165, 19)//date
          doc.text(String(pager), 180, 5)//pageno
@@ -543,33 +541,31 @@ public acknowledgement=false;
          doc.setFontSize('25');
          doc.setLineWidth(0.5);
          doc.line(0, 20, 210, 20);//line after main header
-         doc.line(20, 20, 20, 300);//punching area line
          //headers
          doc.setFontSize('10');
-         doc.text('Sr', 23, y-6)//partyname
-         doc.text('Date', 32, y-6)//partyname
-         doc.text('TruckNo', 56, y-6)//partyname
-         doc.text('Owner Name', 86, y-6)//partyname
-         doc.text('PAN', 150, y-6)//partyname
+         doc.text('Sr', 3, y-6)//partyname
+         doc.text('Date', 12, y-6)//partyname
+         doc.text('TruckNo', 36, y-6)//partyname
+         doc.text('Owner Name/PAN', 66, y-6)//partyname
          //headers
          doc.line(0, 25, 210, 25);//line after header
      
          //vertical lines
-         doc.line(30, 20, 30, 25);//srno
-         doc.line(55, 20, 55, 25);//date
-         doc.line(83, 20, 83, 25);//truckno
-         doc.line(148, 20, 148, 25);//credit
+         doc.line(10, 20, 10, 25);//srno
+         doc.line(35, 20, 35, 25);//date
+         doc.line(63, 20, 63, 25);//truckno
+         doc.line(128, 20, 128, 25);//credit
          //vertical lines
          }
          
-          doc.text(String(i+1), 23, y)//partyname
-          doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 32, y)//partyname
-         doc.text(data[i].truckno, 56, y)//partyname
-         doc.text('', 86, y)//partyname
-         doc.text('', 150, y)//partyname
+          doc.text(String(i+1), 3, y)//partyname
+          doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 12, y)//partyname
+         doc.text(data[i].truckno, 36, y)//partyname
+         doc.text('', 66, y)//partyname
+         doc.text('', 130, y)//partyname
                     
-           doc.line(20, y + 5, 210, y + 5);//line after header
-           y = y + 9;
+           doc.line(0, y + 10, 190, y + 10);//line after header
+           y = y + 18;
      
            
          //vertical lines//getting applied for every loop, make it happen once only
@@ -578,10 +574,10 @@ public acknowledgement=false;
          bigValueofY=y;
          }
 
-         doc.line(30, starty, 30, y - 4);//srno
-         doc.line(55, starty, 55, y - 4);//date
-         doc.line(83, starty, 83, y - 4);//truckno
-         doc.line(148, starty, 148, y - 4);//credit
+         doc.line(10, starty, 10, y - 4);//srno
+         doc.line(35, starty, 35, y - 4);//date
+         doc.line(63, starty, 63, y - 4);//truckno
+         doc.line(128, starty, 128, y - 4);//credit
     
          doc.save('PAN-Details.pdf')
        }

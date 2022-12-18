@@ -11,7 +11,7 @@
  
       <input type="text" [(ngModel)]="truckno">
       <button class="btn btn-danger" (click)="getVehicleDetails()">Get Details!</button>
-      
+      <button class="btn btn-danger" (click)="addToJG()">Add to JG</button>
       <table class="table" style="width:100%" align="center" *ngIf="table">
   
           <thead>
@@ -21,7 +21,6 @@
                   <th>Contact</th>
                   <th>ContactO</th>
                   <th>JG</th>
-                  <th>Add</th>
               </tr>
           </thead>
           <tbody>
@@ -41,7 +40,6 @@
                       </ul>
                   </td>
                   <td><span *ngIf="i.jg">Yes</span><span *ngIf="!i.jg">No</span></td>
-                  <td><button class="btn btn-danger" (click)="addToJG()">Add to JG</button></td>
               </tr>
           </tbody>
       </table>

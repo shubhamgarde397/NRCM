@@ -165,10 +165,10 @@
         </td>
 
         <td *ngIf="ii.accountDetails.length!==0">
-          <input type="number" value={{ii.accountDetails[0].accountNumber}} placeholder="Account Number" id="accno_{{jj}}">
+          <input type="text" value={{ii.accountDetails[0].accountNumber}} placeholder="Account Number" id="accno_{{jj}}">
         </td>
         <td *ngIf="ii.accountDetails.length===0">
-            <input type="number" placeholder="Account Number" id="accno_{{jj}}">
+            <input type="text" placeholder="Account Number" id="accno_{{jj}}">
           </td>
 
           <td *ngIf="ii.accountDetails.length!==0">
@@ -381,7 +381,7 @@
         <td>{{jj+1}}</td>
         <td>{{ii.truckno}}</td>
         <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
-        <td><input type="number" placeholder="Account Number" id="accno_{{jj}}"></td>
+        <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
         <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>
         <td><input type="text" placeholder="BankName" id="bname_{{jj}}"></td>
         <td><button class="btn btn-warning" (click)="updateaccountDetails(ii,jj)">Update</button></td>

@@ -43,7 +43,7 @@ export class GstaddComponent implements OnInit {
     this.model = new gstdata(this.Name, this.Gst, this.Dest);
     this.myFormGroup = this.formBuilder.group({
       name: [this.model.Name, Validators.required],
-      gst: [this.model.GST_No, [Validators.required, Validators.pattern('^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9]{1}[A-Z]{1}[0-9|A-Z]{1}')]],
+      gst: [this.model.GST_No],
       dest: [this.model.Village, Validators.required],
       addr2:'',
       addr3:'',
