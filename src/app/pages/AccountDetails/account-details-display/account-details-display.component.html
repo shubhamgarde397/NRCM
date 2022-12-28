@@ -501,3 +501,38 @@
     </tbody>
   </table>
 </div>
+
+<div class="well" *ngIf="buttonOption==='13'">
+  <button class="btn btn-danger" (click)="getRC('TN')">TN</button>
+  <button class="btn btn-success" (click)="getRC('MH')">MH</button>
+  <button class="btn btn-info" (click)="getRC('KA')">KA</button>
+  <button class="btn btn-warning" (click)="getRC('AP')">AP</button>
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="tblShow13">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Full</th>
+        <th>Contact</th>
+        <th>Score</th>
+        <th>JG?</th>
+        <th>Prefer</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of myrcData;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.truckno}}:{{i.s[0].typeOfVehicle}}</td>
+        <td><ul><li *ngFor="let kk of i.full">
+          <span *ngFor="let b of kk.split(':')">{{b}}-></span>
+        </li></ul></td>
+        <td><ul><li *ngFor="let c of i.contact">{{c}}</li></ul></td>
+        <td>{{i.load}}/{{i.total}}={{i.score}}</td>
+        <td [ngStyle]="{'background-color': i.s[0].jg===undefined ? '#5CB85C' : '#F0AD4E' }">{{i.s[0].jg}}</td>
+        <td><ul><li *ngFor="let p of i.s[0].preferences">{{p}}</li></ul></td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -27,7 +27,8 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Update Account Details','value':'9'},
     {'viewValue':'Truck Format','value':'10'},
     {'viewValue':'Truck Registration Fee','value':'11'},
-    {'viewValue':'Account 12/363','value':'12'}
+    {'viewValue':'Account 12/363','value':'12'},
+    {'viewValue':'My RC','value':'13'}
   ]
   public displayType;
   public buttonOption;
@@ -44,6 +45,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
   //$ Account $
   public tbl;
   public tblShow=false;
+  public tblShow13=false;
 //# Account #
 // $PAN $
   public panarray=[];
@@ -103,6 +105,7 @@ public truckformattable=false;
 public emptyregData=[];
 public emptyregDatatable=false;
 // 
+public myrcData=[];
 public loadingDate6;
   constructor(
     public apiCallservice: ApiCallsService, 
@@ -113,6 +116,17 @@ public loadingDate6;
 
   ngOnInit() {
   }
+
+  getRC(data){
+
+    let tempObj = { "method": "myrcvehicles", "rc": data,'tablename':''};
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      .subscribe((res: any) => {
+        this.tblShow13=true;
+        this.myrcData=res.Data;
+      });
+  }
+
   findOption() {
     this.showButton=true;
     this.buttonOption = this.displayType;
