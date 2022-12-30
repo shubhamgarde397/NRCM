@@ -54,7 +54,8 @@ export class DisplayComponent implements OnInit {
   public mailSentDate;
   public partyids=[];
   public mailSendButton=false;
-public balanceFollowGlobal={};
+public balanceFollowGlobal=[];
+public balanceFollowArr=[]
 public typeOfColsB=false;
 public month;
 public year;
@@ -154,15 +155,24 @@ public year;
       this.fromloading=tempObj['fromloading'];
       this.toloading=tempObj['toloading'];
       if (confirm('Want to add Balance Follow?')) {
+        let howmany=parseInt(prompt('How many BF?'));
+        for(let ii=0;ii<howmany;ii++){
+
+          let balanceFollowTemp={}
         this.balanceFollowMsg = prompt('Balance Follow Message');
         this.balanceFollowAmount = parseInt(prompt('Balance Follow Amount'));
-        balanceFollow['partyName'] = this.balanceFollowMsg;
-        balanceFollow['amount'] = this.balanceFollowAmount;
-        balanceFollow['type'] = 'buy';
-        balanceFollow['lrno'] = 'Balance Follow';
-        balanceFollow['bf'] = true;
+        balanceFollowTemp['partyName'] = this.balanceFollowMsg;
+        balanceFollowTemp['amount'] = this.balanceFollowAmount;
+        balanceFollowTemp['type'] = 'buy';
+        balanceFollowTemp['lrno'] = 'Balance Follow';
+        balanceFollowTemp['bf'] = true;
+        this.balanceFollowArr.push(balanceFollowTemp);
+        }
+        this.balanceFollowArr.reverse()
+
       }else{
-        balanceFollow['bf'] = false;
+        // balanceFollow['bf'] = false;
+        this.balanceFollowArr.push({'bf':false});
       }
       flag = true;
       }
@@ -170,11 +180,11 @@ public year;
       tempObj['tablename'] = 'partyPayment'
       tempObj['partyid']=this.partyids.map(r=>r._id);
       tempObj['display'] = parseInt('5');
-      this.balanceFollowGlobal=balanceFollow;
+      this.balanceFollowGlobal=this.balanceFollowArr;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
         .subscribe((res: any) => {
           this.paymentData = res.paymentData;
-          this.paymentData =  this.pdfJSONForParty(res.paymentData,balanceFollow,'addBalance');
+          this.paymentData =  this.pdfJSONForParty(res.paymentData,this.balanceFollowArr,'addBalance');
           if (this.paymentData.length > 0) {
             this.tableData = true;
             this.handledata.savePaymentData(this.paymentData);
@@ -238,6 +248,7 @@ public year;
     tempObj['paymentTo']=this.topayment;
     tempObj['balanceFollowMsg']=this.balanceFollowMsg
     tempObj['balanceFollowAmount']=this.balanceFollowAmount
+    tempObj['balanceFollowArr']=this.balanceFollowArr
     tempObj['mailSentDate']=this.mailSentDate;
     tempObj['method']='insert';
     tempObj['tablename']='MailDetails';
@@ -267,12 +278,16 @@ public year;
     return data;
   }
   pdfJSONForParty(data, balanceFollow,todo) {
+    console.log(balanceFollow)
+    console.log(data);
     
     let val = 0
     if(todo=='addBalance'){
-    if(balanceFollow['bf']){
-    data.unshift(balanceFollow);
+      for(let i=0;i<balanceFollow.length;i++){
+    if(balanceFollow[i]['bf']){
+    data.unshift(balanceFollow[i]);
     }
+  }
   }
     data.forEach((res) => {
       if (res['type'] == 'buy') {
@@ -335,8 +350,9 @@ public year;
   deleteTemp(id,j){
     if (confirm('Are you sure to temporarily delete?')) {
       if(id['bF']){
-        this.balanceFollowGlobal={}
-        this.balanceFollowGlobal['bF']=false;
+        // this.balanceFollowGlobal={}
+        // this.balanceFollowGlobal['bF']=false;
+        this.balanceFollowGlobal.splice(j,1)
       }
           this.paymentData.splice(j, 1);
           if (this.paymentData.length > 0) {
@@ -355,6 +371,7 @@ public year;
   }
 
   downloadForParty(data) {//threshhold is 295
+    console.log(this.paymentData)
     this.mailSendButton=true;
     let pager=1;
      let bigValueofY=0;
@@ -401,19 +418,22 @@ public year;
      doc.line(0, 25, 210, 25);//line after header
  
      let startforI=0;
-     if (this.paymentData[0]['bf'] == true) {
-       y = y + 5;
-       starty = 31;
-       doc.text(this.paymentData[0].partyName, 30, y)//partyname
-       doc.text(String(this.paymentData[0].value), 130, y)//partyname
-       doc.line(20, 31, 210, 31);
-      //  doc.line(150, 25, 150, 31);
-       y = y + 6;
-       startforI=1;
-     }else{
-       y = y + 6;
-       startforI=0;
-     }
+     starty = 31;
+     for(let yy=0;yy<this.balanceFollowArr.length;yy++){
+          y = y + 5;
+          
+          doc.text(this.paymentData[yy].partyName, 30, y)//partyname
+          doc.text(String(this.paymentData[yy].amount), 130, y)//partyname
+          doc.line(20, 31, 210, 31);
+          //  doc.line(150, 25, 150, 31);
+          startforI++;
+          doc.line(20, 31+(yy*5), 210, 31+(yy*5));
+         
+
+      }
+      starty = starty+((this.balanceFollowArr.length-1)*5);
+      y=y+6
+      
  
      for (let i = startforI; i < this.paymentData.length; i++) {
  

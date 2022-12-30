@@ -26,7 +26,7 @@ export class GstupdateComponent implements OnInit {
   public commonArray;
   public cities;
   public city;
-  public pT;
+  public pT;x
   public Email=[]
   public email=''
   public contact=[]
@@ -109,7 +109,7 @@ export class GstupdateComponent implements OnInit {
     formbody['_id'] = this.handledata.Data._id;
     // formbody['load'] = this.load;
     formbody['contact']=this.contactArray;
-    formbody['method'] = 'update';
+    formbody['method'] = 'updategst';
     formbody['tablename'] = 'gstdetails';
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)

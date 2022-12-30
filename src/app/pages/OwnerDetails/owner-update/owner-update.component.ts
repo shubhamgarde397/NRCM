@@ -150,7 +150,7 @@ public selectedTransportNo;
     formbody['accountDetails'] = this.accountArray;
     formbody['preferences'] = this.preferenceArray;
     formbody['reference'] = this.handledata.Data.reference;
-    formbody['method'] = 'update';
+    formbody['method'] = 'updateOwner';
     formbody['tablename'] = 'ownerdetails';
     formbody['r'] = data.value.r;
     formbody['d'] = data.value.d;

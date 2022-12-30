@@ -598,6 +598,19 @@ let tempObj1={};
       });
     }
   }
+  
+  clearBalanceAdd(i,j){
+    if(confirm('Do you want to Uncheck Balance Add?')){
+    let tempObj1={};
+    tempObj1['tablename'] = ''
+    tempObj1['method'] = 'uncheckBalanceAdded'
+    tempObj1['_id']=i._id;
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
+      .subscribe((res: any) => {
+        alert(res.Status);
+      });
+    }
+  }
 
   sendBalanceData(data,j,type){
     let bal=data.advanceArray.find(r=>{return r.reason==='Balance'})

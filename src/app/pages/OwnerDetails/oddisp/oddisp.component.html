@@ -55,6 +55,7 @@
                 <th>ContactO</th>
                 <th>Account Details</th>
                 <th>Prefer</th>
+                <th>Native</th>
                 <th>Delete<br>Update</th>
             </tr>
         </thead>
@@ -126,6 +127,11 @@
                         <li>{{j}}</li>
                     </ul>
                 </td>
+                <td>
+                    <ul *ngFor="let j of i.nativeplaces;">
+                        <li>{{j}}</li>
+                    </ul>
+                </td>
             </tr>
         </tbody>
     </table>
@@ -154,6 +160,7 @@
                 <th>ContactO</th>
                 <th>Account Details</th>
                 <th>Prefer</th>
+                <th>Native</th>
                 <th>Options</th>
             </tr>
         </thead>
@@ -213,6 +220,11 @@
                         <li>{{j}}</li>
                     </ul>
                 </td>
+                <td>
+                    <ul *ngFor="let j of i.nativeplaces;">
+                        <li>{{j}}</li>
+                    </ul>
+                </td>
                 <td >
                     <div class="btn-group-xs">                        
                         <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
@@ -244,6 +256,7 @@
                     <th>ContactO</th>
                     <th>Account Details</th>
                     <th>Prefer</th>
+                    <th>Native</th>
                     <th>Options</th>
                 </tr>
             </thead>
@@ -302,6 +315,11 @@
                             <li>{{j}}</li>
                         </ul>
                     </td>
+                    <td>
+                        <ul *ngFor="let j of i.nativeplaces;">
+                            <li>{{j}}</li>
+                        </ul>
+                    </td>
                     <td >
                         <div class="btn-group-xs">                        
                             <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
@@ -337,6 +355,7 @@
                         <th>ContactO</th>
                         <th>Account Details</th>
                         <th>Prefer</th>
+                        <th>Native</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -392,6 +411,11 @@
                         <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'single')">Show Preference</button></td>
                         <td *ngIf="i.preferenceChk">
                             <ul *ngFor="let j of i.preferences;">
+                                <li>{{j}}</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul *ngFor="let j of i.nativeplaces;">
                                 <li>{{j}}</li>
                             </ul>
                         </td>
@@ -469,6 +493,7 @@
                     <th>ContactO</th>
                     <th >Account Details</th>
                     <th>Prefer</th>
+                    <th>Native</th>
                     <th >Options</th>
                 </tr>
             </thead>
@@ -511,6 +536,11 @@
                     <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference2(i._id,j,'single')">Show Preference</button></td>
                     <td *ngIf="i.preferenceChk">
                         <ul *ngFor="let j of i.preferences;">
+                            <li>{{j}}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <ul *ngFor="let j of i.nativeplaces;">
                             <li>{{j}}</li>
                         </ul>
                     </td>
