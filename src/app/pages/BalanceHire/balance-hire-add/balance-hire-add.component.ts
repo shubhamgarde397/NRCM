@@ -44,7 +44,6 @@ public dues=[];
     'entryDate', 
     'lrno', 
     'hamt', 
-    'ohamt', 
     'pochDate', 
     'pochPayment', 
     'checker', 

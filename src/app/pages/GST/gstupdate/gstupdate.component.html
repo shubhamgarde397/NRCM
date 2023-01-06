@@ -4,40 +4,26 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Name">
+        Party Name : <input type="text" id="name" class="form-control" formControlName="name" placeholder="Name">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.name.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+
+      
+  
+        <div class="col-xs-3">
+          <input type="checkbox" id="contact" class="form-control" formControlName="show">
+      </div>
+
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        GST No. : <input type="text" id="gst" class="form-control" formControlName="gst" placeholder="GST No">
       </div>
     </div>
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="text" id="gst" class="form-control" formControlName="gst" placeholder="GST No">
-      </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.gst.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="text" id="shortName" class="form-control" formControlName="shortName" placeholder="Short Name">
-      </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.shortName.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+        Short : <input type="text" id="shortName" class="form-control" formControlName="shortName" placeholder="Short Name">
       </div>
     </div>
 
@@ -46,26 +32,20 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <select id="dest" class="form-control" formControlName="dest">
+        Native Place : <select id="dest" class="form-control" formControlName="dest">
           <option>{{dest}}</option>
           <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
         </select>
       </div>
-      <div class="col-xs-3">
-        <div [hidden]="myFormGroup.controls.dest.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
     </div>
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <select id="dest" class="form-control" formControlName="partyType">
+        Party Type : <select id="dest" class="form-control" formControlName="partyType">
           <option selected disabled>{{pT}}</option>
           <option value="NRCM">NRCM</option>
           <option value="NR">NR</option>
+          <option value="SNL">SNL</option>
         </select>
       </div>
     </div>
@@ -109,7 +89,7 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        <input type="number" class="form-control" formControlName="accNo">
+        Parent Acc No : <input type="number" class="form-control" formControlName="accNo">
       </div>
     </div>
 <hr>
@@ -126,7 +106,7 @@
       </div>
     </div>
 <hr>
-<h3>Cities</h3>
+<h3>Cities we deliver to : </h3>
     <div class="form-group row">
       <div class="col-xs-3">
         <table class="table table-border">
@@ -166,7 +146,7 @@
     </div>
 
 <hr>
-<h3>Contact : </h3>
+<h3>Contact : Email</h3>
     <div class="form-group row">
       <div class="col-xs-3">
         <table class="table table-border">
@@ -206,9 +186,10 @@
     </div>
 
         <!--  -->
+        <h3>Contact : Phone</h3>
         <div class="form-group row">
           <div class="col-xs-3">
-            Contact - <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
+           <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
               [(ngModel)]="contactA">
           </div>
           <div class="col-xs-2">

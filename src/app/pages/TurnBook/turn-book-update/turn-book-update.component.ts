@@ -88,7 +88,7 @@ export class TurnBookUpdateComponent implements OnInit {
       lrno: this.handledata.Data.lrno,
       partyType: this.handledata.Data.partyType,
       hamt: this.handledata.Data.hamt,
-      ohamt: this.handledata.Data.ohamt,
+      rent: this.handledata.Data.rent,
       invoice:this.handledata.Data.invoice,
       balance: 0,
       pochDate: this.handledata.Data.pochDate,
@@ -120,7 +120,7 @@ export class TurnBookUpdateComponent implements OnInit {
       lrno: this.handledata.Data.lrno,
       partyType: this.handledata.Data.partyType,
       hamt: this.handledata.Data.hamt,
-      ohamt: this.handledata.Data.ohamt,
+      rent: this.handledata.Data.rent,
       balance: 0,
       parentAccNo:this.handledata.Data.parentAccNo,
       invoice:this.handledata.Data.invoice,
@@ -324,7 +324,7 @@ for(let i=0;i<partyDetails.load.length;i++){
     this.myFormGroup.patchValue({
       typeOfLoad:typeOfLoad[0],
       hamt:typeOfLoad[1],
-      ohamt:typeOfLoad[2]
+      rent:typeOfLoad[2]
     })
   }
 
@@ -344,7 +344,7 @@ for(let i=0;i<partyDetails.load.length;i++){
       tempObj["partyType"] = this.myFormGroup.value.partyType,
       tempObj["hamt"] = this.myFormGroup.value.hamt,
       tempObj["parentAccNo"] = this.myFormGroup.value.parentAccNo,
-      tempObj["ohamt"] = this.myFormGroup.value.ohamt,
+      tempObj["rent"] = this.myFormGroup.value.rent,
       tempObj["pochDate"] = this.myFormGroup.value.pochDate,
       tempObj["givenDate"] = this.myFormGroup.value.givenDate,
       tempObj["pochPayment"] = this.myFormGroup.value.pochPayment;
@@ -388,7 +388,7 @@ for(let i=0;i<partyDetails.load.length;i++){
             tempData[this.handledata.Data.index]["lrno"] = this.myFormGroup.value.lrno,
             tempData[this.handledata.Data.index]["partyType"] = this.myFormGroup.value.partyType,
             tempData[this.handledata.Data.index]["hamt"] = this.myFormGroup.value.hamt,
-            tempData[this.handledata.Data.index]["ohamt"] = this.myFormGroup.value.ohamt,
+            tempData[this.handledata.Data.index]["rent"] = this.myFormGroup.value.rent,
             tempData[this.handledata.Data.index]["pochDate"] = this.myFormGroup.value.pochDate,
             tempData[this.handledata.Data.index]["givenDate"] = this.myFormGroup.value.givenDate,
             tempData[this.handledata.Data.index]["pochPayment"] = this.myFormGroup.value.pochPayment

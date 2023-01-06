@@ -818,7 +818,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempObj['loadingDate'] = data.loadingDate;
     tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
     tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
-    tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
+    tempObj['rent'] = data.rent === undefined ? 0 : data.rent;
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;

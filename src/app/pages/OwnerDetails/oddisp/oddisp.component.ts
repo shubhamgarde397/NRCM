@@ -314,6 +314,28 @@ switch(data){
    
   }
 
+  shownative(i,j,data){
+    switch(data){
+      case 'single':
+        let t=this.ownerdetailslist2.find(r=>r._id===i)['nativeplaces']
+   this.ownerdetailslist2[j]['nativeplaces']=[]
+   for(let v=0;v<t.length;v++){
+    let yo=this.villagedetailslist.find(r=>r._id===t[v])
+    this.ownerdetailslist2[j]['nativeplaces'].push(yo['village_name'])
+}
+        break;
+        case 'all':
+          let y=this.ownerdetailslist.find(r=>r._id===i)['nativeplaces']
+   this.ownerdetailslist[j]['nativeplaces']=[]
+   for(let v=0;v<y.length;v++){
+    let yo=this.villagedetailslist.find(r=>r._id===y[v])
+    this.ownerdetailslist[j]['nativeplaces'].push(yo['village_name'])
+}
+          break;
+    }
+   
+  }
+
   showPreference2(i,j,data){
     switch(data){
       case 'single':

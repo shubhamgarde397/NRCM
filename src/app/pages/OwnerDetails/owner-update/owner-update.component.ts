@@ -32,6 +32,7 @@ public typeOfVehicle;
   public contactOA;
   public preferenceArray = [];
   public pA='';
+  public nA='';
   public type;
   public villagedetailslist;
   public commonArray;
@@ -44,6 +45,8 @@ public selectedTransport;
 public selectedTransportid;
 public transportsArrayList=[];
 public selectedTransportNo;
+public nativeArrayName=[]
+public nativeArray=[]
   constructor(
     public handledata: HandleDataService,
     public _location: Location,
@@ -91,6 +94,7 @@ public selectedTransportNo;
     this.contactOArray = this.handledata.Data.contactO;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
+    this.nativeArray = this.handledata.Data.nativeplaces;
     this.transportsArray = this.handledata.Data.transports;
     this.selectedTransport=this.transportsArray[0]['tptName'];
     this.selectedTransportid=this.transportsArray[0]['_id'];
@@ -149,6 +153,7 @@ public selectedTransportNo;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
     formbody['preferences'] = this.preferenceArray;
+    formbody['nativeplaces'] = this.nativeArray;
     formbody['reference'] = this.handledata.Data.reference;
     formbody['method'] = 'updateOwner';
     formbody['tablename'] = 'ownerdetails';
@@ -188,6 +193,7 @@ public selectedTransportNo;
               res['contactO'] = this.contactOArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;
+              res['nativeplaces'] = this.nativeArray;
               res['reference'] = "";
               res['r'] = data.value.r;
               res['d'] = data.value.d;
@@ -273,9 +279,20 @@ public selectedTransportNo;
 
   }
 
+  findvillagedetailsN(){
+    this.nativeArray.push(this.nA.split('+')[0])
+    this.nativeArrayName.push(this.nA.split('+')[1])
+    this.nA=''
+
+  }
+
   deleteOneP(i, j) {
     this.preferenceArray.splice(j, 1);
     this.preferenceArrayName.splice(j, 1);
+  }
+  deleteOneN(i, j) {
+    this.nativeArray.splice(j, 1);
+    this.nativeArrayName.splice(j, 1);
   }
 
 

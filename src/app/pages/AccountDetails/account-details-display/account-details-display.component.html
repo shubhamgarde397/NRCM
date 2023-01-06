@@ -512,6 +512,7 @@
       <tr class="table-header">
         <th>Srno</th>
         <th>TruckNo</th>
+        <th>Type</th>
         <th>Full</th>
         <th>Contact</th>
         <th>Score</th>
@@ -524,14 +525,114 @@
     <tbody>
       <tr *ngFor="let i of myrcData;let j = index">
         <td>{{j+1}}</td>
-        <td>{{i.truckno}}:{{i.s[0].typeOfVehicle}}</td>
+        <td>{{i.truckno}}</td>
+        <td>{{i.s[0].typeOfVehicle}}</td>
         <td><ul><li *ngFor="let kk of i.full">
           <span *ngFor="let b of kk.split(':')">{{b}}-></span>
         </li></ul></td>
         <td><ul><li *ngFor="let c of i.contact">{{c}}</li></ul></td>
         <td>{{i.load}}/{{i.total}}={{i.score}}</td>
         <td [ngStyle]="{'background-color': i.s[0].jg===undefined ? '#5CB85C' : '#F0AD4E' }">{{i.s[0].jg}}</td>
-        <td><ul><li *ngFor="let p of i.s[0].preferences">{{p}}</li></ul></td>
+        <td><ul><li *ngFor="let p of i.preferences">{{p}}</li></ul></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="well" *ngIf="buttonOption==='14'">
+  <div class="row">
+      <div class="col-sm-4">
+  <select class="form-control" [(ngModel)]="selectedMY" (change)="getData14()">
+      <option disabled>Select Option</option>
+      <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+    </select>
+  </div>
+</div>
+<div class="well" *ngIf="table14">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Name</th>
+        <th>Sum</th>
+        <th>Check</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of emptyData14;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.pn}}</td>
+        <td>{{ii.sum}}</td>
+        <td><input type="checkbox"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='15'">
+  <div class="row">
+      <div class="col-sm-4">
+  <select class="form-control" [(ngModel)]="selectedMY" (change)="getData15()">
+      <option disabled>Select Option</option>
+      <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+    </select>
+  </div>
+</div>
+<div class="well" *ngIf="table15">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Name</th>
+        <th>Sum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of emptyData15;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii._id}}</td>
+        <td>{{ii.sum}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='16'">
+
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="table16">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Date</th>
+        <th>Party</th>
+        <th>PartyType</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of emptyData16;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.datetruck}}</td>
+        <td>{{i.loadingDate}}</td>
+        <td>{{i.pn}}</td>
+        <td>{{i.partyType}}</td>
+        <td>
+          
+          <button mat-raised-button type="button" (click)="updateparent(12,i._id)" class="btn-success btn-sm btn-just-icon">
+            12
+          </button>
+          <button mat-raised-button type="button" (click)="updateparent(363,i._id)" class="btn-danger btn-sm btn-just-icon">
+            363
+          </button>
+          <button mat-raised-button type="button" (click)="updateparent(65,i._id)" class="btn-warning btn-sm btn-just-icon">
+            65
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>

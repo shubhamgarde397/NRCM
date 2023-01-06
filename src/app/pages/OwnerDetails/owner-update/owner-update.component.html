@@ -160,7 +160,7 @@
     <!-- Account Details -->
     <!-- Preference -->
     <div class="form-group row">
-      <div class="col-xs-3">
+      <div class="col-xs-3">Preference:
         <select id="preferences" class="form-control" [(ngModel)]="pA" [ngModelOptions]="{standalone: true}"  (change)="findvillagedetails()">
           <option disabled selected>Select Village</option>
           <option *ngFor="let i of villagedetailslist;let j=index;" value={{i._id}}+{{i.village_name}}>{{i.village_name}}
@@ -178,6 +178,29 @@
       </div>
     </div>
  <!-- Preference -->
+
+ <!-- Native -->
+ <div class="form-group row">
+  <div class="col-xs-3">Native:
+    <select class="form-control" [(ngModel)]="nA" [ngModelOptions]="{standalone: true}"  (change)="findvillagedetailsN()">
+      <option disabled selected>Select Village</option>
+      <option *ngFor="let i of villagedetailslist;let j=index;" value={{i._id}}+{{i.village_name}}>{{i.village_name}}
+      </option>
+    </select>
+    
+  </div>
+  <div class="col-xs-3">
+    <ul *ngFor="let i of nativeArrayName;let j =index;">
+      <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneN(i,j)"
+          class="btn-danger btn-sm btn-just-icon">
+          <i class="material-icons">delete_forever</i>
+        </button></li>
+    </ul>
+  </div>
+</div>
+<!-- Native -->
+
+
 <!-- Transport -->
     <div class="form-group row">
       <div class="col-xs-3">

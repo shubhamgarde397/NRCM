@@ -121,8 +121,7 @@
                         <hr>
                     </ul>
                 </td>
-                <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'all')">Show Preference</button></td>
-                <td *ngIf="i.preferenceChk">
+                <td>
                     <ul *ngFor="let j of i.preferences;">
                         <li>{{j}}</li>
                     </ul>
@@ -131,6 +130,8 @@
                     <ul *ngFor="let j of i.nativeplaces;">
                         <li>{{j}}</li>
                     </ul>
+                    <button class="btn btn-danger" (click)="shownative(i._id,j,'all')">Show Native</button>
+                    
                 </td>
             </tr>
         </tbody>
@@ -160,8 +161,8 @@
                 <th>ContactO</th>
                 <th>Account Details</th>
                 <th>Prefer</th>
-                <th>Native</th>
-                <th>Options</th>
+                    <th>Native</th>   
+                    <th>Options</th>
             </tr>
         </thead>
         <tbody>
@@ -214,8 +215,7 @@
                         <hr>
                     </ul>
                 </td>
-                <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'single')">Show Preference</button></td>
-                <td *ngIf="i.preferenceChk">
+                <td>
                     <ul *ngFor="let j of i.preferences;">
                         <li>{{j}}</li>
                     </ul>
@@ -231,8 +231,7 @@
                         <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
                         <i class="material-icons" style="color: green;cursor: pointer;" (click)="showDatabyid(i,false)">redo</i>
                       </div>
-                </td>
-            </tr>
+                </td>            </tr>
         </tbody>
     </table>
 </div>
@@ -255,9 +254,6 @@
                     <th>Contact</th>
                     <th>ContactO</th>
                     <th>Account Details</th>
-                    <th>Prefer</th>
-                    <th>Native</th>
-                    <th>Options</th>
                 </tr>
             </thead>
             <tbody>
@@ -308,24 +304,6 @@
                             <li>65 : {{k.acc65}}</li>
                             <hr>
                         </ul>
-                    </td>
-                    <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'single')">Show Preference</button></td>
-                    <td *ngIf="i.preferenceChk">
-                        <ul *ngFor="let j of i.preferences;">
-                            <li>{{j}}</li>
-                        </ul>
-                    </td>
-                    <td>
-                        <ul *ngFor="let j of i.nativeplaces;">
-                            <li>{{j}}</li>
-                        </ul>
-                    </td>
-                    <td >
-                        <div class="btn-group-xs">                        
-                            <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
-                            <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
-                            <i class="material-icons" style="color: green;cursor: pointer;" (click)="showDatabyid(i,false)">redo</i>
-                          </div>
                     </td>
                 </tr>
             </tbody>
@@ -408,8 +386,7 @@
                                 <hr>
                             </ul>
                         </td>
-                        <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference(i._id,j,'single')">Show Preference</button></td>
-                        <td *ngIf="i.preferenceChk">
+                        <td>
                             <ul *ngFor="let j of i.preferences;">
                                 <li>{{j}}</li>
                             </ul>
@@ -460,7 +437,7 @@
             <td>{{i.truckno}}</td>
             <td>{{i.partyType}}-{{i.psname}}-{{i.vsname}}<br><span *ngIf="i.vsname2!==undefined">{{i.vsname2}}</span>-{{i.typeOfLoad}}</td>
             <td>{{i.lrno}}</td>
-            <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+            <td>{{i.hamt}}<br>{{i.rent}}</td>
             <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} <br>
                 <span *ngIf="i.advanceArray.length>0">
                 {{i.advanceArray[0].advanceAmt}}:{{i.advanceArray[0].BHAccname}}<br>{{i.advanceArray[0].BHAccNo}}
@@ -478,7 +455,7 @@
     <div class="well">
     <div>
         <select class="form-control" [(ngModel)]="editTrucklocation">
-            <option *ngFor="let own of villagedetailslist;let j=index;" value={{own._id}}>{{own.village_name}}</option>
+            <option *ngFor="let own of villagedetailslist;let j=index;" value={{own.village_name}}>{{own.village_name}}</option>
             </select>
         <button class="btn btn-danger" (click)="getTruckbyTPTLoc()"><i class="material-icons" >send</i></button></div>
     
@@ -494,7 +471,6 @@
                     <th >Account Details</th>
                     <th>Prefer</th>
                     <th>Native</th>
-                    <th >Options</th>
                 </tr>
             </thead>
             <tbody>
@@ -533,8 +509,7 @@
                             <hr>
                         </ul>
                     </td>
-                    <td *ngIf="!i.preferenceChk"><button class="btn btn-danger" (click)="showPreference2(i._id,j,'single')">Show Preference</button></td>
-                    <td *ngIf="i.preferenceChk">
+                    <td>
                         <ul *ngFor="let j of i.preferences;">
                             <li>{{j}}</li>
                         </ul>
@@ -543,13 +518,6 @@
                         <ul *ngFor="let j of i.nativeplaces;">
                             <li>{{j}}</li>
                         </ul>
-                    </td>
-                    <td >
-                        <div class="btn-group-xs">                        
-                            <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
-                            <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
-                            <i class="material-icons" style="color: green;cursor: pointer;" (click)="showDatabyid(i,false)">redo</i>
-                          </div>
                     </td>
                 </tr>
             </tbody>
@@ -583,7 +551,7 @@
                     <td (click)="tempDelete(j)">{{i.truckno}}</td>
                     <td>{{i.partyType}}-{{i.psname}}-{{i.vsname}}<br><span *ngIf="i.vsname2!==undefined">{{i.vsname2}}</span>-{{i.typeOfLoad}}</td>
                     <td>{{i.lrno}}</td>
-                    <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+                    <td>{{i.hamt}}<br>{{i.rent}}</td>
                     <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} <br>
                         <span *ngIf="i.advanceArray.length>0">
                         {{i.advanceArray[0].advanceAmt}}:{{i.advanceArray[0].BHAccname}}<br>{{i.advanceArray[0].BHAccNo}}

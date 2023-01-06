@@ -52,7 +52,8 @@ export class GstupdateComponent implements OnInit {
       partyType:this.handledata.Data.partyType,
       shortName:this.handledata.Data.shortName,
       Email:[],
-      contact:[]
+      contact:[],
+      show:this.handledata.Data.show
     });
     this.dest = this.handledata.Data.dest;
     this.pT = this.handledata.Data.partyType;
@@ -106,6 +107,7 @@ export class GstupdateComponent implements OnInit {
     formbody['partyType'] = data.value.partyType;
     formbody['shortName'] = data.value.shortName;
     formbody['cities'] = this.cities;
+    formbody['show'] = data.value.show;
     formbody['_id'] = this.handledata.Data._id;
     // formbody['load'] = this.load;
     formbody['contact']=this.contactArray;

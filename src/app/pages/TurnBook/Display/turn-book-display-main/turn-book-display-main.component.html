@@ -168,7 +168,7 @@
 
             <td>{{i.lrno}}</td>
 
-            <td>{{i.hamt}}<br>{{i.ohamt}}<br>{{i.parentAccNo}}</td>
+            <td>{{i.hamt}}<br>{{i.rent}}<br>{{i.parentAccNo}}</td>
 
             <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
 
@@ -709,7 +709,7 @@
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
             <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
             <td>{{i.lrno}}</td>
-            <td>{{i.hamt}}<br>{{i.ohamt}}</td>
+            <td>{{i.hamt}}<br>{{i.rent}}</td>
             <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
             <td [ngStyle]="{'background-color': i.colors[1]}">{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
             <td>

@@ -12,6 +12,7 @@
                 <th>Type</th>
                 <th>Address</th>
                 <th>Cities</th>
+                <th>Show</th>
                 <th>Options</th>
             </tr>
         </thead>
@@ -44,6 +45,7 @@
                 <td>{{i.partyType}}-{{i.accNo}}</td>
                 <td>{{i.addr1}},{{i.addr2}}</td>
                 <td><ul *ngFor="let j of i.cities"><li>{{j}}</li></ul></td>
+                <td>{{i.show}}</td>
                 <td>
                     <button mat-raised-button (click)="deleteGSTDetails(i._id)" class="btn-danger btn-sm btn-just-icon">
                         <i class="material-icons">delete_forever</i>

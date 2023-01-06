@@ -28,7 +28,10 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Truck Format','value':'10'},
     {'viewValue':'Truck Registration Fee','value':'11'},
     {'viewValue':'Account 12/363','value':'12'},
-    {'viewValue':'My RC','value':'13'}
+    {'viewValue':'My RC','value':'13'},
+    {'viewValue':'Count Partywise','value':'14'},
+    {'viewValue':'Count Loadwise','value':'15'},
+    {'viewValue':'Missing Parent','value':'16'},
   ]
   public displayType;
   public buttonOption;
@@ -100,13 +103,22 @@ public accounttableUF=false;
 public truckformatarray=[];
 public truckformattable=false;
 // 
+public table14=false;
+public emptyData14=[];
 
+public table15=false;
+public emptyData15=[];
+
+public table16=false;
+public emptyData16=[];
 // 
 public emptyregData=[];
 public emptyregDatatable=false;
 // 
 public myrcData=[];
 public loadingDate6;
+
+public numbers=[];
   constructor(
     public apiCallservice: ApiCallsService, 
     public securityCheck: SecurityCheckService,
@@ -146,6 +158,18 @@ switch (this.buttonOption) {
 
     case '2':
       this.getPanInfoData();
+    break;
+
+    case '14':
+      this.getPanInfoData();
+    break;
+
+    case '15':
+      this.getPanInfoData();
+    break;
+
+    case '16':
+      this.getData16();
     break;
 
     case '3':
@@ -275,6 +299,47 @@ switch (this.buttonOption) {
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
     .subscribe((res: any) => {
     this.emptyData=res.chartData;
+    });
+  }
+
+  getData14(){
+    let tempObj={};
+    tempObj['from']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[0];
+    tempObj['to']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[1];
+    tempObj['method']='countSumOfParty'
+    tempObj['tablename']='';
+    tempObj['option']=14;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    this.emptyData14=res.Data;
+    this.table14=true;
+    });
+  }
+
+  
+
+  getData16(){
+    let tempObj={};
+    tempObj['method']='missingParentAcc'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    this.emptyData16=res.Data;
+    this.table16=true;
+    });
+  }
+
+  getData15(){
+    let tempObj={};
+    tempObj['from']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[0];
+    tempObj['to']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[1];
+    tempObj['method']='countSumOfPF'
+    tempObj['tablename']='';
+    tempObj['option']=15;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    this.emptyData15=res.Data;
+    this.table15=true;
     });
   }
 
@@ -631,6 +696,20 @@ switch (this.buttonOption) {
     tempObj['ownerids']=this.typeDataConsistsArray.map(r=> r._id)
     tempObj['tablename']='';
     tempObj['method']='SMARTTRUCKUPDATE2';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.typeDataConsists=false;
+      this.typeDataConsistsArray=[];
+    });
+  }
+
+  updateparent(data,i){
+    let tempObj={}
+    tempObj['parentAccNo']=data;
+    tempObj['_id']=i
+    tempObj['tablename']='';
+    tempObj['method']='SMARTPARENTACCUPDATE';
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
     .subscribe((res: any) => {
       alert(res.Status);

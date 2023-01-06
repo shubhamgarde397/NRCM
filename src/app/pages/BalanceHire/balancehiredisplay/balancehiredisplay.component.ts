@@ -302,7 +302,6 @@ this.actualPayment=this.buttonOption == '5'?true:false;
     tempObj['loadingDate'] = data.loadingDate;
     tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
     tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
-    tempObj['ohamt'] = data.ohamt === undefined ? 0 : data.ohamt;
     tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
     tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
     tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
@@ -1307,8 +1306,8 @@ if(newpage===1){
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
         doc.setFontSize('8');
         if(dataTF){
-        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 119, i);//truckno
-        doc.text(this.balanceDate[z].truckData[k].Prd, 149, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 117, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].Prd, 151, i);//truckno
         }        
 
         doc.setFontSize('10');
