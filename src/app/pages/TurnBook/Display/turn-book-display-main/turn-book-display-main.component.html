@@ -182,7 +182,7 @@
       <button class="btn btn-success" (click)="performAction(i,j)">Action</button>
           </td>
             <td *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">
-              <button mat-raised-button type="button" (click)="showDatabyid2(i,j,'uncancel')"
+              <button mat-raised-button type="button" (click)="showDatabyid2(i,'uncancel')"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">undo</i>
               </button>
@@ -783,7 +783,7 @@
         </button>
       </div>
       <div class="col-sm-4">
-        <button type="button" class="btn btn-warning" (click)="showDatabyid2('cancel')">
+        <button type="button" class="btn btn-warning" (click)="showDatabyid2('','cancel')">
           Cancel
         </button>
       </div>

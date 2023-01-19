@@ -226,7 +226,7 @@ public updateTruck:any={};
         this.delete(i,j);
       break;
       case '1':
-        this.showDatabyid2(i,j,'cancel');
+        this.showDatabyid2(i,'cancel');
       break;
       case '2':
         this.showDatabyid(i,j,1);
@@ -849,7 +849,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     this.handleData.saveData(tempObj);
   };
 
-  showDatabyid2 = function (data, j, type) {
+  showDatabyid2 = function (data, type) {
     let newdate;
     let newtype;
     let newpochDate;
@@ -888,17 +888,18 @@ this.placeid=this.tempDate[0]['place']['_id']
       this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
           alert(res.Status);
-          this.handleData.turnData[j]['loadingDate'] = newdate;
-          this.handleData.turnData[j]["partyType"] = newtype;
-          this.handleData.turnData[j]['index'] = j;
-          let tempData = this.handleData.giveTurn();
-          this.handleData.saveTurn([]);
-          let tempArray = []
-          tempArray = tempData;
-          tempArray.splice(j, 1)
-          this.handleData.saveTurn(tempArray)
-          this.turnbooklist = [];
-          this.turnbooklist = this.handleData.giveTurn();
+          alert('Please Refresh!')
+          // this.handleData.turnData[j]['loadingDate'] = newdate;
+          // this.handleData.turnData[j]["partyType"] = newtype;
+          // this.handleData.turnData[j]['index'] = j;
+          // let tempData = this.handleData.giveTurn();
+          // this.handleData.saveTurn([]);
+          // let tempArray = []
+          // tempArray = tempData;
+          // tempArray.splice(j, 1)
+          // this.handleData.saveTurn(tempArray)
+          // this.turnbooklist = [];
+          // this.turnbooklist = this.handleData.giveTurn();
         });
     }
     else {
