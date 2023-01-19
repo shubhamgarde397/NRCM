@@ -133,4 +133,20 @@
       </div>
 
   </div>
+
+  <div class="well" *ngIf="buttonOption==='8'">
+      
+    <div class="row">
+      Please enter no. of flips you want : 
+        <div class="col-sm-4"><input type="number" [(ngModel)]="blankpages"></div>
+    </div>
+
+    <div class="well">
+        <div class="row">
+              <button class="btn btn-warning" (click)="PochBillBlank()">Download Book</button>
+        </div>
+        <h2>Enter the bundle and print these blank pages</h2>
+    </div>
+
+</div>
 </div>

@@ -637,3 +637,37 @@
     </tbody>
   </table>
 </div>
+
+<div class="well" *ngIf="buttonOption==='17'">
+
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="table17">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Date</th>
+        <th>Party</th>
+        <th>Options</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of emptyData17;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.datetruck}}</td>
+        <td>{{i.loadingDate}}</td>
+        <td>{{i.pn}}</td>
+        <td>
+          
+          <button mat-raised-button type="button" (click)="updatetype('Pipe',i._id)" class="btn-success btn-sm btn-just-icon">
+            Pipe
+          </button>
+          <button mat-raised-button type="button" (click)="updatetype('Fittings',i._id)" class="btn-danger btn-sm btn-just-icon">
+            Fittings
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

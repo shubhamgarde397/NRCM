@@ -21,8 +21,10 @@ public options=[
   {value:'4',viewValue:'Truck Payment PDF C'},
   {value:'5',viewValue:'Format Trucks'},
   {value:'6',viewValue:'Poch Bill Book'},
-  {value:'7',viewValue:'Dues Report'}
+  {value:'7',viewValue:'Dues Report'},
+  {value:'8',viewValue:'Flip Pages'}
 ]
+public blankpages=0;
 public selectedOption;
 public buttonOption;
 public buttonValue;
@@ -64,6 +66,14 @@ public acknowledgement=false;
       }
 
     doc.save('pochbillmain.pdf')
+  }
+
+  PochBillBlank(){
+    var doc = new jsPDF()
+    for(let i=0;i<this.blankpages;i++){
+      doc.addPage();
+    }
+    doc.save('blanks.pdf')
   }
 
   pdfData(doc,acknowledgement,i){

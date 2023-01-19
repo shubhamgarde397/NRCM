@@ -52,13 +52,14 @@ export class GstaddComponent implements OnInit {
       partyType:'',
       shortName:'',
       email:[],
-      contact:[]
+      contact:[],
+      show:true
     });
   }
 
   storeGstDetailsData({ value, valid }: { value: gstdata, valid: boolean }) {
     this.submitted = true;
-    value['method'] = 'insert';
+    value['method'] = 'gstinsert';
     value['tablename'] = 'gstdetails';
     // value['load']=value['partyType']=='NRCM'?[
     //   {

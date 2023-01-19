@@ -24,7 +24,7 @@ export class GstupdateComponent implements OnInit {
   public myFormGroup: FormGroup;
   public submitted = false;
   public commonArray;
-  public cities;
+  public cities=[];
   public city;
   public pT;x
   public Email=[]

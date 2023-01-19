@@ -32,6 +32,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Count Partywise','value':'14'},
     {'viewValue':'Count Loadwise','value':'15'},
     {'viewValue':'Missing Parent','value':'16'},
+    {'viewValue':'Missing Type Of Loan','value':'17'},
   ]
   public displayType;
   public buttonOption;
@@ -111,6 +112,9 @@ public emptyData15=[];
 
 public table16=false;
 public emptyData16=[];
+
+public table17=false;
+public emptyData17=[];
 // 
 public emptyregData=[];
 public emptyregDatatable=false;
@@ -170,6 +174,10 @@ switch (this.buttonOption) {
 
     case '16':
       this.getData16();
+    break;
+
+    case '17':
+      this.getData17();
     break;
 
     case '3':
@@ -326,6 +334,17 @@ switch (this.buttonOption) {
     .subscribe((res: any) => {
     this.emptyData16=res.Data;
     this.table16=true;
+    });
+  }
+
+  getData17(){
+    let tempObj={};
+    tempObj['method']='missingtypeofloaad'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+    this.emptyData17=res.Data;
+    this.table17=true;
     });
   }
 
@@ -715,6 +734,18 @@ switch (this.buttonOption) {
       alert(res.Status);
       this.typeDataConsists=false;
       this.typeDataConsistsArray=[];
+    });
+  }
+
+  updatetype(data,i){
+    let tempObj={}
+    tempObj['typeOfLoad']=data;
+    tempObj['_id']=i
+    tempObj['tablename']='';
+    tempObj['method']='SMARTTYPEUPDATE';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    .subscribe((res: any) => {
+      alert(res.Status);
     });
   }
 

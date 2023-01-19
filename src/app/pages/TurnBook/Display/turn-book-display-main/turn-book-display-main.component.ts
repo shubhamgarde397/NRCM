@@ -141,6 +141,13 @@ public fdate;
 public tdate;
 public buttonOptionVehicleType='';
 public changeTextA=false;
+
+public paymentDate='';
+public paymentAmount=0;
+public statusOfPoch='';
+public updateTruck:any={};
+
+
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -950,6 +957,30 @@ this.placeid=this.tempDate[0]['place']['_id']
   getTrucks() {
     this.trucklist = this.commonArray.ownerdetails;
   }
+
+  getData(i,j){
+this.updateTruck=i;
+this.updateTruck['index']=j;
+  }
+
+  // addActual(i,j){
+  //   let obj={}
+
+  //   obj['id']=i['_id'];
+  //   obj['paymentDate']=this.selectedPaymentDate;
+  //   obj['paymentAmt']=this.selectedPaymentAmount;
+  //   obj['statusOfPoch']=this.statusOfPoch;
+  //   obj['tablename']='';
+  //   obj['method']='updateActualPaymentDetailsSingly'
+  //   this.apiCallservice.handleData_New_python
+  //   ('commoninformation', 1, obj, 0)
+  //   .subscribe((res: any) => {
+  //     alert(res.Status);
+  //     this.statusOfPoch='';
+  //     this.selectedPaymentAmount=0;
+  //     this.selectedPaymentDate=''
+  //   });
+  // }
 
 
 
