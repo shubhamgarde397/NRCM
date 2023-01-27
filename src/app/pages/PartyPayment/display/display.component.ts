@@ -14,6 +14,7 @@ import 'jspdf-autotable';
   styleUrls: ['./display.component.css']
 })
 export class DisplayComponent implements OnInit {
+  public detailedPrint=false;
   data: any;
   show = false;
   tabledata: false;
@@ -428,15 +429,22 @@ public year;
   }
 
   downloadForParty1(data) {//threshhold is 295
-    console.log(this.paymentData)
     this.mailSendButton=true;
     let pager=1;
      let bigValueofY=0;
      var doc = new jsPDF()
-     doc.setFontSize('25');
+     doc.setFontSize('20');
      doc.setFontType('bold');
-     doc.text(this.partyids[0]['name'], 15, 15)//partyname
+     doc.setTextColor(234, 1, 0);
+     doc.text('Nitin Roadways And Cargo Movers', 38, 8)//partyname
+     doc.setFontSize('15');
+     doc.setTextColor(215, 6, 9);
+     doc.text(this.partyids[0]['name'], 60, 15)//partyname
      doc.setFontSize('10');
+     doc.setTextColor(0, 0, 0);
+     doc.text('GST No. : '+this.partyids[0]['gst'], 70, 19)//partyname
+     doc.setFontSize('10');
+     doc.text('Details From Date : ', 165, 15)
      doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
      doc.text(String(pager), 180, 5)//pageno
      pager=pager+1;
@@ -508,10 +516,19 @@ public year;
 
         starty = 20;
          doc.addPage();
-         doc.setFontSize('25');
+         doc.setFontSize('20');
      doc.setFontType('bold');
-     doc.text(this.partyids[0]['name'], 15, 15)//partyname
+
+     doc.setTextColor(234, 1, 0);
+     doc.text('Nitin Roadways And Cargo Movers', 38, 8)//partyname
+     doc.setFontSize('15');
+     doc.setTextColor(215, 6, 9);
+     doc.text(this.partyids[0]['name'], 60, 15)//partyname
      doc.setFontSize('10');
+     doc.setTextColor(0, 0, 0);
+     doc.text('GST No. : '+this.partyids[0]['gst'], 70, 19)//partyname
+     doc.setFontSize('10');
+     doc.text('Details From Date : ', 165, 15)
      doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
      doc.text(String(pager), 180, 5)//pageno
      pager=pager+1;
@@ -644,6 +661,38 @@ public year;
      doc.line(145, starty, 145, bigValueofY+1);//debit
      doc.line(171, starty, 171, bigValueofY+1);//balance
      doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
+
+console.log(this.detailedPrint);
+
+     if(this.detailedPrint){
+     doc.addPage();
+     y=30
+     doc.setFontSize('20');
+     doc.setFontType('bold');
+     doc.setTextColor(234, 1, 0);
+     doc.text('Nitin Roadways And Cargo Movers', 38, 8)//partyname
+     doc.setFontSize('15');
+     doc.setTextColor(215, 6, 9);
+     doc.text(this.partyids[0]['name'], 60, 15)//partyname
+     doc.setFontSize('10');
+     doc.setTextColor(0, 0, 0);
+     doc.text('GST No. : '+this.partyids[0]['gst'], 70, 19)//partyname
+     doc.setFontSize('10');
+     doc.text('Details From Date : ', 165, 15)
+     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+      doc.setFontSize('15');
+     doc.text('Please pay Balance Amount : '+String(balance), 23, y)//partyname
+     
+
+     }
+
      doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.fromloading)+'_'+this.handleF.getDateddmmyy(this.toloading)+ '.pdf')
    }
 

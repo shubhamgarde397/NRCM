@@ -266,7 +266,7 @@
   </div>
   </div>
 
-  <div class="well" *ngIf="buttonOption=='5'">  
+  <!-- <div class="well" *ngIf="buttonOption=='5'">  
     <div class="row">
       <h3>Update Actual Payment</h3>
      
@@ -361,7 +361,94 @@
           </div>
       </div>
     </div>
-    </div>
+    </div> -->
+
+    <div class="well" *ngIf="buttonOption=='5'">  
+      <div class="row">
+        <h3>Update Actual Payment</h3>
+       
+        <div class="well"  *ngIf="actualPayment">
+         
+          <div class="row">
+          <div class="col-sm-3">
+            Select Poch Date To Procees :
+            <input type="date" class="form-control" [(ngModel)]="selectedPochDate" (change)="fetchPendinActualPayments()">  
+          </div> 
+          <!-- <div class="col-sm-3">
+            Select Actual Payment Date and Amount
+            <input type="date" class="form-control" [(ngModel)]="selectedPaymentDate" (change)="paymentDateAmount()">  
+            <input type="number" class="form-control" [(ngModel)]="selectedPaymentAmount" (change)="paymentDateAmount()"> 
+          </div>  -->
+          <!-- <div class="col-sm-2">
+            <button class="btn btn-success" [disabled]="!showpaymentButton" (click)="sendDatatoUpdate()">Send</button>
+          </div> -->
+          <!-- <div class="col-sm-2">
+            Appx Amount : <input [(ngModel)]="defaultAmt" disabled>
+            <button class="btn btn-success" (click)="copyAmount()">Copy Amount</button>
+          </div> -->
+          <!-- <div class="col-sm-2">
+            <select class="form-control" [(ngModel)]="statusOfPoch">
+              <option>Okay</option>
+              <option>Damage</option>
+              <option>Shortage</option>
+              <option>Diesel</option>
+              <option>Loan</option>
+              <option>Double Load</option>
+              <option>Late</option>
+              <option>To Pay</option>
+            </select>
+          </div> -->
+        </div>
+          
+            <div class="row">
+  
+              <h4>Selected Trucks for Payment</h4>
+
+              <button class="btn btn-success" (click)="sendDatatoUpdate()">Send</button>
+
+            <table class="table" style="width:100%" align="center" *ngIf="paymentSettings">
+  
+              <thead class="table-header">
+                  <tr>
+                      <th>Srno</th>
+                      <th>Truckno</th>
+                      <th>Date</th>
+                      <th>Party:Type:Place</th>
+                      <th>Poch:Pgno</th>
+                      <th>Option</th>
+                  </tr>
+              </thead>
+      
+      
+              <tbody>
+                  <tr *ngFor="let i of fullpendingPayment;let j = index">
+                      <td>{{j+1}}</td>
+                      <td>{{i.truckno}}</td>
+                      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                      <td>{{i.party}}<br>{{i.place}}</td>
+                      <td>{{i.pochDate|date:'dd-MM-yyyy'}}<br>{{i.pgno}}<br>{{i.BHAmount}}</td>
+                      <td> <input type="date" class="form-control" id="date_{{j}}" (change)="paymentDateAmount()">  
+                      <input type="number" class="form-control" id="amt_{{j}}" (change)="paymentDateAmount()"> 
+                      <select class="form-control" id="status_{{j}}" (change)="paymentDateAmount()">
+                        <option value="Okay">Okay</option>
+                        <option value="Damage">Damage</option>
+                        <option value="Shortage">Shortage</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="Loan">Loan</option>
+                        <option value="Double Load">Double Load</option>
+                        <option value="Late">Late</option>
+                        <option value="To Pay">To Pay</option>
+                      </select></td>
+                  </tr>
+              </tbody>
+          </table>  
+  
+
+  
+            </div>
+        </div>
+      </div>
+      </div>
 
     <div class="well" *ngIf="buttonOption=='6'">  
       <div class="row">

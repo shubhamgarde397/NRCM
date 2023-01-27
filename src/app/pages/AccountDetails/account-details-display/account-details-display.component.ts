@@ -517,28 +517,39 @@ switch (this.buttonOption) {
     });
   }
 
-  updatePan(i,j){
-    let pan=(<HTMLInputElement>document.getElementById('pan_' + j)).value;
-    let name=(<HTMLInputElement>document.getElementById('name_' + j)).value;
-    if(pan===''||name===''){
-      alert('Cannot add empty fields')
+  updatePan(){
+
+    let bigArray=[]
+    let tempObj={}
+
+    
+
+    for(let i=0;i<this.panarray.length;i++){
+
+      let pan=(<HTMLInputElement>document.getElementById('pan_' + i)).value;
+      let name=(<HTMLInputElement>document.getElementById('name_' + i)).value;
+
+      if(pan.length<10){}
+
+      else{
+        let obj={}
+        obj['pan']=pan;
+        obj['name']=name;
+        obj['ownerid']=this.panarray[i]['ownerid'];
+        bigArray.push(obj);
+      }
     }
-    else if(pan.length<10){
-      alert('Bad PAN Number!')
-    }
-    else{
-      let tempObj={}
-      tempObj['pan']=pan;
-      tempObj['name']=name;
-      tempObj['ownerid']=i['ownerid'];
       tempObj['tablename']='';
-      tempObj['method']='SMARTPAN';
+      tempObj['method']='SMARTPANNEW';
+      tempObj['array']=bigArray;
+
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert(res.Status);
-        this.panarray.splice(j,1);
+        alert('Please Refresh!')
       });
-    }
+    
+
   }
   updateContact(i,j){
     let contact=(<HTMLInputElement>document.getElementById('contact_' + j)).value;
@@ -566,16 +577,18 @@ switch (this.buttonOption) {
   }
 
   updateaccountDetails(i,j){
+
+    let aD=[]
+    let tempObj={};
     
-    let accname=(<HTMLInputElement>document.getElementById('accname_' + j)).value;
-    let accno=(<HTMLInputElement>document.getElementById('accno_' + j)).value;
-    let bname=(<HTMLInputElement>document.getElementById('bname_' + j)).value;
-    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + j)).value;
-    if(accname===''||accno===''||bname===''||ifsc===''){
-      alert('Cannot add empty fields')
-    }
+
+    for(let i=0;i<this.accountarrayUF.length;i++){
+    let accname=(<HTMLInputElement>document.getElementById('accname_' + i)).value;
+    let accno=(<HTMLInputElement>document.getElementById('accno_' + i)).value;
+    let bname=(<HTMLInputElement>document.getElementById('bname_' + i)).value;
+    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + i)).value;
+    if(accname===''||accno===''||bname===''||ifsc===''){}
     else{
-      let tempObj={}
       let itempObj={}
       itempObj['accountName']=accname;
       itempObj['accountNumber']=accno;
@@ -584,18 +597,19 @@ switch (this.buttonOption) {
       itempObj['acc12']=false;
       itempObj['acc363']=false;
       itempObj['acc65']=false;
-      tempObj['aD']=[
-        itempObj
-      ]
-      tempObj['ownerid']=i['_id'];
+      itempObj['_id']=this.accountarrayUF[i]['_id'];
+      aD.push(itempObj)
+      
+    }
+  }
+  tempObj['aD']=aD;
       tempObj['tablename']='';
-      tempObj['method']='SMARTACCOUNTUPDATEUF';
+      tempObj['method']='SMARTACCOUNTUPDATEUFNEW';
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
       .subscribe((res: any) => {
         alert(res.Status);
         this.accountarrayUF.splice(j,1);
       });
-    }
   }
 
 

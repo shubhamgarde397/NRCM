@@ -962,26 +962,27 @@ this.placeid=this.tempDate[0]['place']['_id']
   getData(i,j){
 this.updateTruck=i;
 this.updateTruck['index']=j;
+
   }
 
-  // addActual(i,j){
-  //   let obj={}
+  addActual(){
+    let obj={}
 
-  //   obj['id']=i['_id'];
-  //   obj['paymentDate']=this.selectedPaymentDate;
-  //   obj['paymentAmt']=this.selectedPaymentAmount;
-  //   obj['statusOfPoch']=this.statusOfPoch;
-  //   obj['tablename']='';
-  //   obj['method']='updateActualPaymentDetailsSingly'
-  //   this.apiCallservice.handleData_New_python
-  //   ('commoninformation', 1, obj, 0)
-  //   .subscribe((res: any) => {
-  //     alert(res.Status);
-  //     this.statusOfPoch='';
-  //     this.selectedPaymentAmount=0;
-  //     this.selectedPaymentDate=''
-  //   });
-  // }
+    obj['id']=this.updateTruck['_id'];
+    obj['paymentDate']=this.paymentDate;
+    obj['paymentAmt']=this.paymentAmount;
+    obj['statusOfPoch']=this.statusOfPoch;
+    obj['tablename']='';
+    obj['method']='updateActualPaymentDetailsSingly'
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, obj, 0)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.statusOfPoch='';
+      this.paymentAmount=0;
+      this.paymentDate=''
+    });
+  }
 
 
 

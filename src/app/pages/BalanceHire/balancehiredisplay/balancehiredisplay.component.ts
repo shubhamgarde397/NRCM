@@ -205,24 +205,50 @@ formbody['selectedPochDate']=this.selectedPochDate;
     this.defaultAmt=this.defaultAmt-parseInt((i['BHAmount']))
   }
 
+  // sendDatatoUpdate(){
+  //   let obj={}
+  //   let saveArray2=[]
+  //   this.saveArray.forEach(r=>{saveArray2.push(r._id)})
+  //   obj['ids']=saveArray2;
+  //   obj['paymentDate']=this.selectedPaymentDate;
+  //   obj['paymentAmt']=this.selectedPaymentAmount;
+  //   obj['statusOfPoch']=this.statusOfPoch;
+  //   obj['tablename']='';
+  //   obj['method']='updateActualPaymentDetails'
+  //   this.apiCallservice.handleData_New_python
+  //   ('commoninformation', 1, obj, 0)
+  //   .subscribe((res: any) => {
+  //     alert(res.Status);
+  //     this.saveArray=[]
+  //     this.selectedPaymentAmount=0;
+  //     this.selectedPaymentDate=''
+  //     this.defaultAmt=0;
+  //   });
+  // }
+
   sendDatatoUpdate(){
-    let obj={}
-    let saveArray2=[]
-    this.saveArray.forEach(r=>{saveArray2.push(r._id)})
-    obj['ids']=saveArray2;
-    obj['paymentDate']=this.selectedPaymentDate;
-    obj['paymentAmt']=this.selectedPaymentAmount;
-    obj['statusOfPoch']=this.statusOfPoch;
-    obj['tablename']='';
-    obj['method']='updateActualPaymentDetails'
+    let bigArray=[]
+    let tempObj={}
+    for(let i=0;i<this.fullpendingPayment.length;i++){
+      if((<HTMLInputElement>document.getElementById('amt_'+i)).value===''){}
+      else{
+        let obj={}
+        obj['ids']=this.fullpendingPayment[i]['_id'];
+        obj['paymentDate']=(<HTMLInputElement>document.getElementById('date_'+i)).value;
+        obj['paymentAmt']=parseInt((<HTMLInputElement>document.getElementById('amt_'+i)).value);
+        obj['statusOfPoch']=(<HTMLInputElement>document.getElementById('status_'+i)).value;
+
+        bigArray.push(obj)
+          }
+      }
+      tempObj['array']=bigArray;
+      tempObj['tablename']='';
+      tempObj['method']='updateActualPaymentDetailsSingly'
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, obj, 0)
+    ('commoninformation', 1, tempObj, 0)
     .subscribe((res: any) => {
       alert(res.Status);
-      this.saveArray=[]
-      this.selectedPaymentAmount=0;
-      this.selectedPaymentDate=''
-      this.defaultAmt=0;
+      alert('Please Refresh!')
     });
   }
 
@@ -1188,9 +1214,9 @@ if(newpage===1){
     doc.setLineWidth(0.5);
     doc.line(37, i + 6 - 16, 37, i + 12 - 16);
     doc.line(61, i + 6 - 16, 61, i + 12 - 16);
-    doc.line(72, i + 6 - 16, 72, i + 12 - 16);
-    doc.line(92, i + 6 - 16, 92, i + 12 - 16);
-    doc.line(155, i + 6 - 16, 155, i + 12 - 16);
+    // doc.line(72, i + 6 - 16, 72, i + 12 - 16);
+    doc.line(83, i + 6 - 16, 83, i + 12 - 16);
+    doc.line(146, i + 6 - 16, 146, i + 12 - 16);
 
 
     //vertical line after date till headers
@@ -1200,14 +1226,14 @@ if(newpage===1){
     doc.setTextColor(0, 0, 0);
     doc.text('Amount', 16, i + 10 - 16)
     doc.text('Comments', 38, i + 10 - 16)
-    doc.text('Pg', 63, i + 10 - 16)
-    doc.text('Date', 72.5, i + 10 - 16)
-    doc.text('TruckNo', 92.5, i + 10 - 16)
+    // doc.text('Pg', 63, i + 10 - 16)
+    doc.text('Date', 63, i + 10 - 16)
+    doc.text('TruckNo', 83, i + 10 - 16)
     if(!dataTF){
-    doc.text('Payment Details', 120.5, i + 10 - 16)
+    doc.text('Payment Details', 111.5, i + 10 - 16)
     }
 
-    doc.text('Account Details', 155.5, i + 10 - 16)
+    doc.text('Account Details', 146.5, i + 10 - 16)
     //Headers End
     //Line after headers
     doc.setDrawColor(0, 0, 0);
@@ -1249,10 +1275,12 @@ if(newpage===1){
         doc.setDrawColor(0, 0, 0);
         doc.setLineWidth(0.5);
         doc.line(37, 6, 37, 12);
+
         doc.line(61, 6, 61, 12);
-        doc.line(72, 6, 72, 12);
-        doc.line(92, 6, 92, 12);
-        doc.line(155, 6, 155, 12);
+        // doc.line(72, 6, 72, 12);
+
+        doc.line(83, 6, 83, 12);
+        doc.line(146, 6, 146, 12);
         //vertical line after date
         //Headers
         doc.setFontSize('10');
@@ -1260,15 +1288,15 @@ if(newpage===1){
         doc.setTextColor(0, 0, 0);
         doc.text('Amount', 16, 10)
         doc.text('Comments', 38, 10)
-        doc.text('Pg', 63, 10)
-        doc.text('Date', 72.5, 10)
-        doc.text('TruckNo', 92.5, 10)
+        // doc.text('Pg', 63, 10)
+        doc.text('Date', 63, 10)
+        doc.text('TruckNo', 83, 10)
 
         if(!dataTF){
-          doc.text('Payment Details', 120.5, 10)
+          doc.text('Payment Details', 111.5, 10)
           }
 
-        doc.text('Account Details', 155.5, 10)
+        doc.text('Account Details', 146.5, 10)
         //Headers End
         //Line after headers
         doc.setDrawColor(0, 0, 0);
@@ -1297,17 +1325,17 @@ if(newpage===1){
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
 
         doc.setFontSize('10');
-        if(dataTF){
-        doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
-        }
+        // if(dataTF){
+        // doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
+        // }
         doc.setFontSize('10');
-        doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 72.5, i);//date
+        doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
         doc.setFontSize('10');
-        doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 92.5, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 83.5, i);//truckno
         doc.setFontSize('8');
         if(dataTF){
-        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 117, i);//truckno
-        doc.text(this.balanceDate[z].truckData[k].Prd, 151, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 108, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].Prd, 142, i);//truckno
         }        
 
         doc.setFontSize('10');
@@ -1323,7 +1351,7 @@ if(newpage===1){
       for (let k = 0; k < this.balanceDate[z].commentToTruck2.length; k++) {
         if(k==0){
         doc.setLineDash([0.5, 1], 10);
-        doc.line(37, i-4, 155, i-4);
+        doc.line(37, i-4, 146, i-4);
         doc.setLineDash([1, 0], 10);
         }
         doc.setFontSize('8')
@@ -1352,10 +1380,12 @@ if(newpage===1){
 
       doc.line(0, i + 7-(bigK*2)+adder, 210, i + 7-(bigK*2)+adder);
       doc.line(37, i - (data.length * 6) -11-(bigK*2), 37, i + 7-(bigK*2)+adder);
+
       doc.line(61, i - (data.length * 6) -11-(bigK*2), 61, i + 7-(bigK*2)+adder);
-      doc.line(72, i - (data.length * 6) -11-(bigK*2), 72, i + 7-(bigK*2)+adder);
-      doc.line(92, i - (data.length * 6) -11-(bigK*2), 92, i + 7-(bigK*2)+adder);
-      doc.line(155, i - (data.length * 6) -11-(bigK*2), 155, i + 7-(bigK*2)+adder);
+      // doc.line(72, i - (data.length * 6) -11-(bigK*2), 72, i + 7-(bigK*2)+adder);
+
+      doc.line(83, i - (data.length * 6) -11-(bigK*2), 83, i + 7-(bigK*2)+adder);
+      doc.line(146, i - (data.length * 6) -11-(bigK*2), 146, i + 7-(bigK*2)+adder);
 
   
       doc.setFontSize('10');
@@ -1363,16 +1393,16 @@ if(newpage===1){
       // doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
       // doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
       // doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
-      doc.text(this.balanceDate[z].accountName, 156.5, accountI);//accno
-      doc.text(String(this.balanceDate[z].accountNumber), 156.5, accountI+6);//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, accountI+12);//ifsc-bankname
+      doc.text(this.balanceDate[z].accountName, 147.5, accountI);//accno
+      doc.text(String(this.balanceDate[z].accountNumber), 147.5, accountI+6);//accname
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 147.5, accountI+12);//ifsc-bankname
       }
       if(!dataTF){
-        doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 124, accountI);//truckno
-        doc.text(String(this.balanceDate[z].apm), 124, accountI+6);//truckno
+        doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 115, accountI);//truckno
+        doc.text(String(this.balanceDate[z].apm), 115, accountI+6);//truckno
       }
       // doc.text(this.balanceDate[z]['available'], 200, i + 6 - (data.length * 6));//accno
-      doc.text(this.balanceDate[z]['available'], 200, accountI+6);//accno
+      doc.text(this.balanceDate[z]['available'], 191, accountI+6);//accno
       doc.setFontSize('8');
       
       i = i + 12-(bigK*2);

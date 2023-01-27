@@ -75,6 +75,10 @@
     </div>
 </div>
 <div class="well" *ngIf="pantable">
+
+  <button class="btn btn-warning" (click)="updatePan()">Update</button>
+
+
     <table class="table">
       <thead>
         <tr>
@@ -83,7 +87,6 @@
           <th>Truck No</th>
           <th>Name</th>
           <th>PAN</th>
-          <th>Update</th>
         </tr>
       </thead>
       <tbody>
@@ -93,7 +96,6 @@
           <td>{{ii.truckno}}</td>
           <td><input type="text" placeholder="Name" id="name_{{jj}}"></td>
           <td><input type="text" placeholder="PAN" id="pan_{{jj}}"></td>
-          <td><button class="btn btn-warning" (click)="updatePan(ii,jj)">Update</button></td>
         </tr>
       </tbody>
     </table>
@@ -364,6 +366,11 @@
   </div>
 
 <div class="well" *ngIf="accounttableUF">
+
+  <button class="btn btn-warning" (click)="updateaccountDetails()">Update</button>
+
+
+
   <table class="table">
     <thead>
       <tr>
@@ -373,7 +380,6 @@
         <th>Number</th>
         <th>IFSC</th>
         <th>Bank</th>
-        <th>Update</th>
       </tr>
     </thead>
     <tbody>
@@ -384,7 +390,6 @@
         <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
         <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>
         <td><input type="text" placeholder="BankName" id="bname_{{jj}}"></td>
-        <td><button class="btn btn-warning" (click)="updateaccountDetails(ii,jj)">Update</button></td>
       </tr>
     </tbody>
   </table>
