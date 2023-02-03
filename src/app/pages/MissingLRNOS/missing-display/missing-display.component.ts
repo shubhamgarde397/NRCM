@@ -73,7 +73,7 @@ showDatabyid = function (data) {
 };
 getInformationData() {
   this.spinnerService.show();
-  let tempObj = { "method": "displaynew", "consider": this.considerArray };
+  let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
   this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
     .subscribe((res: any) => {
       this.sec.commonArray['lrlist'] = Object.keys(res.lrlist[0]).length > 0 ? res.lrlist : this.sec.commonArray['lrlist'];;

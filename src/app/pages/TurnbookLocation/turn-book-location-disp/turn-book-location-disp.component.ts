@@ -57,7 +57,7 @@ export class TurnBookLocationDispComponent implements OnInit {
 
   getInformationData() {
     this.spinnerService.show();
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;

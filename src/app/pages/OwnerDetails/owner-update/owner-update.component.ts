@@ -103,7 +103,7 @@ public nativeArray=[]
   }
 
   getInformationData() {
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];
@@ -123,7 +123,7 @@ public nativeArray=[]
 
   getTransports(){
     this.considerArray = this.handledata.createConsiderArray('infotpt')
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.sec.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.sec.commonArray['transport'];;

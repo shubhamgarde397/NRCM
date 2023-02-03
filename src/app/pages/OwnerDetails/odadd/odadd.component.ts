@@ -73,7 +73,7 @@ export class OdaddComponent implements OnInit {
   }
   getInformationData() {
     this.spinnerService.show();
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.securityCheck.commonArray['ownerdetails'];

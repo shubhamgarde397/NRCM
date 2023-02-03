@@ -15,6 +15,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 export class GstdisplayComponent implements OnInit {
   public objectKeys = Object.keys;
+  public notall=false;
   public gstdetailslist;
   public show = false;
   public found;
@@ -77,7 +78,7 @@ export class GstdisplayComponent implements OnInit {
   };
   getInformationData() {
     this.spinnerService.show();
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    let tempObj = { "method": "displaynew", "consider": this.considerArray ,'notall':this.notall};
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.sec.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.sec.commonArray['gstdetails'];;

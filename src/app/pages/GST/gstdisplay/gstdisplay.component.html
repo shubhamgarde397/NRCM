@@ -1,5 +1,6 @@
 <div class="well" *ngIf="!show">
     <button class="btn btn-danger" (click)="refresh()"><i class="material-icons">undo</i></button>
+    <input type="checkbox" id="contact" class="form-control" [(ngModel)]="notall">
     <table class="table" style="width:100%" align="center">
 
         <thead class="table-header">

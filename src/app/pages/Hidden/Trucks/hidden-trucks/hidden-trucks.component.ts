@@ -110,7 +110,7 @@ export class HiddenTrucksComponent implements OnInit {
 
   getInformationData() {
     this.spinnerService.show();
-    let tempObj = { "method": "displaynew", "consider": this.considerArray };
+    let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
       .subscribe((res: any) => {
         this.sec.commonArray['hiddenownerdetails'] = Object.keys(res.hiddenownerdetails[0]).length > 0 ? res.hiddenownerdetails : this.sec.commonArray['hiddenownerdetails'];;

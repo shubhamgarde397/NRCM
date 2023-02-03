@@ -75,7 +75,7 @@ export class NavigationComponent implements OnInit {
 
   getInformationData() {
     // this.spin.show();
-    // let tempObj = { "method": "displaynew", "username": this.username, "consider": this.handledata.createConsiderArray('default') };
+    // let tempObj = { "method": "displaynew",'notall':false, "username": this.username, "consider": this.handledata.createConsiderArray('default') };
     // this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
     //   .subscribe((res: any) => {
     //     this.securityCheck.commonArray = res;
