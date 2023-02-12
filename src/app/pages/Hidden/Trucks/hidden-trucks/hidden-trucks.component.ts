@@ -55,7 +55,7 @@ export class HiddenTrucksComponent implements OnInit {
       formbody['find']=false;
       formbody['tablename'] = 'ownerdetails';
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response:any) => {
           alert(response.Status)
           let bb;
@@ -111,7 +111,7 @@ export class HiddenTrucksComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.sec.commonArray['hiddenownerdetails'] = Object.keys(res.hiddenownerdetails[0]).length > 0 ? res.hiddenownerdetails : this.sec.commonArray['hiddenownerdetails'];;
         this.fetchBasic();

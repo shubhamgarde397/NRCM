@@ -47,7 +47,7 @@ export class TransportAddComponent implements OnInit {
     data.value['tablename'] = 'transport';
     this.apiCallservice.handleData_New_python
       ('commoninformation',
-       1, data.value, 0)
+       1, data.value, true)
       .subscribe((res: any) => {
         alert(res['Status']);
         this.location.back()

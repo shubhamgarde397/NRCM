@@ -80,7 +80,7 @@ export class PersonalDetailsComponent implements OnInit {
     tempObj['method']='getPDetails';
     tempObj['tablename']='';
     tempObj['uid']=this.sec.userid;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.pD=res.Data[0];
         this.contactA=this.pD.contact[0]?this.pD.contact[0]:'';
@@ -101,7 +101,7 @@ export class PersonalDetailsComponent implements OnInit {
     tempObj['ouname']=this.ouname;
     tempObj['opword']=this.opword;
     tempObj['dname']=this.dname;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         alert('You will now be signed out! Login in Again.')
@@ -121,7 +121,7 @@ export class PersonalDetailsComponent implements OnInit {
     tempObj['tablename']='';
     tempObj['contact']=[this.contactA];
     tempObj['uid']=this.sec.userid;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status);
     });

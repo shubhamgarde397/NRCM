@@ -31,7 +31,7 @@ export class PaymentPendingDisplayComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "pendingPaymentJustDisplay", "tablename": ''};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tblShow=true;
         this.tbl=res.Data;

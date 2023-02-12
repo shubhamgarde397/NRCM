@@ -52,7 +52,7 @@ export class GstdisplayComponent implements OnInit {
       formbody['method'] = 'delete';
       formbody['tablename'] = 'gstdetails';
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: any) => {
           alert(response.Status)
           let bb;
@@ -79,7 +79,7 @@ export class GstdisplayComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray ,'notall':this.notall};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.sec.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.sec.commonArray['gstdetails'];;
         this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];;

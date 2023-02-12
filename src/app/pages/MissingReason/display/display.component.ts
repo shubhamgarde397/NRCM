@@ -38,7 +38,7 @@ export class DisplayComponent implements OnInit {
       formbody['method'] = 'delete';
       formbody['tablename'] = 'missingLRReason';
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: any) => {
           alert(response.Status)
           let bb;
@@ -69,7 +69,7 @@ export class DisplayComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.sec.commonArray['lrlist'] = Object.keys(res.lrlist[0]).length > 0 ? res.lrlist : this.sec.commonArray['lrlist'];;
         this.fetchData();

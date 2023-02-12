@@ -57,7 +57,7 @@ export class TurnBookAddComponent implements OnInit {
     tempobj['tablename'] = 'turnbook';
     tempobj['method'] = 'bulkTurnTrucks';
     tempobj["user"]= "shubham";
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
         .subscribe((res: any) => {
           alert(res.Status)
           this.myFormGroup.patchValue({ trucknoM: '' })
@@ -69,7 +69,7 @@ export class TurnBookAddComponent implements OnInit {
       tempobj['tablename'] = 'turnbook';
       tempobj['method'] = 'getAvailable';
       tempobj["user"]= "shubham";
-         this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
+         this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
           .subscribe((res: any) => {
             this.turnAdd=res.balanceData
             this.turnAdd.forEach(r=>{r['delete']=false});

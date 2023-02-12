@@ -32,7 +32,6 @@ import {
 } from '@angular/material';
 import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
-import { C2wComponent } from './pages/C2W/c2w/c2w.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
@@ -49,6 +48,7 @@ import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-load
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
 import { DisplayComponent } from './pages/CI/JG/display/display.component';
+import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
 
 
 
@@ -64,7 +64,6 @@ import { DisplayComponent } from './pages/CI/JG/display/display.component';
     MainPageComponent,
     WhatsappTowhysappComponent,
     PDFComponent,
-    C2wComponent,
     TurnBookLocationDispComponent,
     HiddenTrucksComponent,
     WhatsappComponent,
@@ -80,7 +79,8 @@ import { DisplayComponent } from './pages/CI/JG/display/display.component';
     TruckLoadingComponent,
     DuesPageComponent,
     DuesFromAdvanceDisplayComponent,
-    DisplayComponent
+    DisplayComponent,
+    GiftHandlerComponent
   ],
   imports: [
     BrowserModule,

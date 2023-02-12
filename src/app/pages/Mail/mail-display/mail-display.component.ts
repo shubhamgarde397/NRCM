@@ -37,7 +37,7 @@ public paymentData;
     let tempObj={};
     tempObj['method']='displayMail';
     tempObj['tablename']='MailDetails';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {       
         this.data=res.Data;
       });
@@ -49,7 +49,7 @@ public paymentData;
       formbody['method'] = 'delete';
       formbody['tablename'] = 'MailDetails';
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
           alert(response['Status']);
           let bb;
@@ -102,7 +102,7 @@ tempObj['partyid']=[i.partyid];
 
 
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         let balanceFollow={};
         

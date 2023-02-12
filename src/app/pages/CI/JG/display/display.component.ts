@@ -41,7 +41,7 @@ export class DisplayComponent implements OnInit {
             break;
         }
         
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
           .subscribe((res: any) => {
               this.dataArray=res.Data;
               this.new=this.dataArray.length==0?true:false;
@@ -51,7 +51,7 @@ export class DisplayComponent implements OnInit {
 
       addToJG(){
         let tempObj = { "method": "addToJG", "tablename": '','new':this.new,'truckno':this.truckno};
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
           .subscribe((res: any) => {
             alert(res.Status)
             this.truckno='';

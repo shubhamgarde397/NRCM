@@ -104,7 +104,7 @@ public nativeArray=[]
 
   getInformationData() {
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];
         this.fetchBasic();
@@ -124,7 +124,7 @@ public nativeArray=[]
   getTransports(){
     this.considerArray = this.handledata.createConsiderArray('infotpt')
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.sec.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.sec.commonArray['transport'];;
         this.fetchBasic();
@@ -177,7 +177,7 @@ public nativeArray=[]
     formbody['regFee']=this.handledata.Data.regFee;
     formbody['regFeeDate']=this.handledata.Data.regFeeDate;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
       .subscribe((response: Response) => {
         if (response['Status'] === 'Updated') {
           alert(response['Status']);
@@ -302,7 +302,7 @@ public nativeArray=[]
     tempObj['tablename']='';
     tempObj['ownerid']=this.handledata.Data['_id']
     tempObj['newtruckno']=this.myFormGroup1.value.newtruckno;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status)
       this._location.back();

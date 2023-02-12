@@ -59,7 +59,7 @@ export class UpdateSingleComponent implements OnInit {
     tempObj['pageno']=pageno;
     tempObj['amount']=amount;
     tempObj['index']=String(this.index);
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((response: Response) => {
       alert(response['Status']);
       this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/BalanceHireDisp']);
@@ -79,7 +79,7 @@ export class UpdateSingleComponent implements OnInit {
     tempObj['tablename']='BalanceHire';
     tempObj['id']=this.handledata.Data._id;
     tempObj['index']=String(j);
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((response: Response) => {
       alert(response['Status']);
       this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/BalanceHireDisp']);
@@ -106,7 +106,7 @@ export class UpdateSingleComponent implements OnInit {
     tempObj['method']='BalanceHireSingleUpdateToAdd';
     tempObj['tablename']='BalanceHire';
     tempObj['id']=this.handledata.Data._id;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((response: Response) => {
         alert(response['Status']);
     });

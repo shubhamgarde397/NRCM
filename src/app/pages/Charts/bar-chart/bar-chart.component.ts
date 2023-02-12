@@ -64,7 +64,7 @@ export class BarChartComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.security.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.security.commonArray['gstdetails'];;
         this.fetchBasic();
@@ -130,7 +130,7 @@ this.gstdetailslistidList.splice(j,1)
         tempObj['id']=this.gstdetailslistid['_id']
     }
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, tempObj, 0)
+    ('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
         this.data=[];
         this.dataonX=[];

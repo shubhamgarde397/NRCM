@@ -41,7 +41,7 @@ export class UpdateComponent implements OnInit {
       formbody['method'] = 'update';
       formbody['tablename'] = 'missingLRReason';
   
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
           alert(response['Status']);
           this.sec.commonArray['lrlist'].forEach((res) => {

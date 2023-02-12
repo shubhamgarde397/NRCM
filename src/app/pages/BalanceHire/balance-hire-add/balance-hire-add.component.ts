@@ -87,7 +87,7 @@ public dues=[];
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayTB2'
     tempObj['display'] = '6';
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
       .subscribe((res: any) => {
         this.bhTrucks=[];
           this.turnbooklist = res.Data;
@@ -100,7 +100,7 @@ public dues=[];
   fetchBasic(){
     let temp={"method": "DuesDisplay","tablename": ""}
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, temp, 0)
+      ('commoninformation', 1, temp, true)
       .subscribe((res: any) => {
         this.dues=res.Data
       });
@@ -129,7 +129,7 @@ public dues=[];
     tempObj['tablename'] = 'BalanceHire';
     tempObj['bhTrucks']=this.bhTrucks;
     tempObj['todayDate'] = this.uitodayDate;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1,this.uitodayDate)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)
       .subscribe((res: any) => {
         alert(res.Status);
         this.moveToFinalStepReset(action);

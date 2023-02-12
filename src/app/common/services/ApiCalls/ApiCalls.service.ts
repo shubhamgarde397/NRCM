@@ -19,7 +19,7 @@ export class ApiCallsService {
 
   }
 
-  handleData_New_python(api, apiCall, formBody = {}, code,todayDate=this.handlefunction.createDate(new Date())) {
+  handleData_New_python(api, apiCall, formBody = {},shallI=true,todayDate=this.handlefunction.createDate(new Date())) {
     formBody['user'] = this.securityCheck.username;
     formBody['todayDate']=todayDate;
     formBody['website'] = this.securityCheck.getBranch();
@@ -27,13 +27,30 @@ export class ApiCallsService {
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');
     this.URL = this.getfullapi.getFullAPI(api);
-   
+   if(this.shallIGoForward(shallI,formBody)){
     switch (apiCall) {
       case 0: return this.http.get(this.URL).pipe(map((res) => res));
       case 1: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
       case 2: return this.http.delete(this.URL).pipe(map((res) => res));
       case 3: return this.httpClient.put(this.URL, formBody, { headers: this.headerPost }).pipe(map((res) => res));
       case 4: return this.httpClient.post(this.URL, formBody, { headers: this.headerPost, responseType: 'text' }).pipe(map((res) => res));
+    }
+   }
+   else{alert('Request Denied! Some entries are wrong. Correct it or Redo it.')}
+  }
+
+  shallIGoForward(shallI,data){
+    if(shallI){
+    return true;
+    }
+    else{
+      switch (data['method']) {
+        case 'gstinsert':
+          return true;
+
+      
+      }
+      return false;
     }
   }
 

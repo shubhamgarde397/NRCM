@@ -1,0 +1,173 @@
+<div class="row">
+  <div class="col-sm-3">
+      <button class="btn btn-info" (click)="getGifts()">Get All</button>
+  </div>
+  <div class="col-sm-3">
+    <button class="btn btn-info" (click)="addGifts()">Add</button>
+</div>
+<div class="col-sm-3">
+  <button class="btn btn-info" (click)="giveGifts()">Give</button>
+</div>
+</div>
+
+<div class="well" *ngIf="whichType===1">
+ 
+      <table class="table" style="width:100%" align="center" *ngIf="table">
+  
+          <thead>
+              <tr class="table-header">
+                  <th>Srno</th>
+                  <th>Name</th>
+                  <th>Date Decided</th>
+                  <th>Reason</th>
+                  <th>Show</th>
+                  <th>Options</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let i of dataArray;let j = index">
+                  <td>{{j+1}}</td>
+                  <td>{{i.name}}</td>
+                  <td>{{i.date}}</td>
+                  <td>{{i.reason}}</td>
+                  <td><span *ngIf="i.show">Yes</span><span *ngIf="!i.show">No</span></td>
+                  <td><button class="btn btn-info" (click)="update(i)" data-toggle="modal" data-target="#myModal">update</button></td>
+              </tr>
+          </tbody>
+      </table>
+  </div>
+
+  <div class="well" *ngIf="whichType===2">
+    <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="date" id="name" class="form-control" formControlName="date" placeholder="Date">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="gst" class="form-control" formControlName="name" placeholder="Gift Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="gst" class="form-control" formControlName="reason" placeholder="Reason">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="dest" class="form-control" formControlName="show">
+          <option selected>Select Type</option>
+          <option value='true'>Yes</option>
+          <option value='false'>No</option>
+        </select>
+      </div>
+    </div>
+
+   
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<div *ngIf="whichType===3">
+  <div class="well">
+  <div>
+      <input type="text" [(ngModel)]="editTruck">
+      <button class="btn btn-danger" (click)="getSingleTruck()"><i class="material-icons" >send</i></button></div>
+  
+<div class="row">
+  <div class="col-sm-4">
+    <input type="date" [(ngModel)]="selectedDate">
+  </div>
+</div>
+    <select class="form-control" [(ngModel)]="selectedGift">
+      <option *ngFor="let i of dataArray;let j = index;" value={{i._id}}>{{i.name}}</option>
+    </select>
+      
+      <table class="table" style="width:100%" align="center"  *ngIf="tableDate2">
+  
+          <thead>
+              <tr class="table-header">
+                  <th>Srno</th>
+                  <th>Truck</th>
+                  <th>Account Details</th>
+                  <th>Options</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let i of ownerdetailslist;let j = index">
+                  <td>{{j+1}}</td>
+                  <td>{{i.truckno}}</td>
+                  <td>
+                      <ul *ngFor="let k of i.gifts">
+                          <li>{{k.date}}</li>
+                          <li>{{k.name}}</li>
+                          <hr>
+                      </ul>
+                  </td>
+                  <td>
+                      <div class="btn-group-xs">                        
+                          <i class="material-icons" style="color: green;cursor: pointer;" (click)="give(i)">send</i>
+                        </div>
+                  </td>
+                </tr>
+          </tbody>
+      </table>
+  </div>
+  </div>
+
+
+<div class="modal fade" id="myModal" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Due Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Date : <input type="date" class="form-control" [(ngModel)]="date">
+        </div>
+
+        <div class="row">
+          Reason : <input type="text" class="form-control" [(ngModel)]="reason">
+        </div>
+
+        <div class="row">
+          Name : <input type="text" class="form-control" [(ngModel)]="name">
+        </div>
+
+        <div class="row">
+          <select id="dest" class="form-control" [(ngModel)]="show">
+            <option value='true'>Yes</option>
+            <option value='false'>No</option>
+          </select>
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="update2()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>

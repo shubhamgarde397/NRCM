@@ -76,7 +76,7 @@ export class NavigationComponent implements OnInit {
   getInformationData() {
     // this.spin.show();
     // let tempObj = { "method": "displaynew",'notall':false, "username": this.username, "consider": this.handledata.createConsiderArray('default') };
-    // this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    // this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     //   .subscribe((res: any) => {
     //     this.securityCheck.commonArray = res;
     //     this.securityCheck.commonArray['Role'] = res.Role;
@@ -154,7 +154,7 @@ export class NavigationComponent implements OnInit {
     tempObj['method']='receivedReport';
     tempObj['tablename']='turnbook';
     tempObj['date']=last7Days.getFullYear()+'-'+this.hF.generate2DigitNumber(String(last7Days.getMonth()+1))+'-'+this.hF.generate2DigitNumber(String(last7Days.getDate()));
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
 this.reportData=res.chartData;
 this.download(this.reportData);
@@ -168,7 +168,7 @@ this.download(this.reportData);
       "tablename": "",
       "option": 8
     }
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.reportData=res.chartData;
 this.downloadLoaded(this.reportData);
@@ -181,7 +181,7 @@ this.downloadLoaded(this.reportData);
       "method": "fetchnrcmandjgtrucks",
       "tablename": "",
     }
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.reportData=res.chartData;
 this.downloadLoadedNandJ(this.reportData);
@@ -193,7 +193,7 @@ this.downloadLoadedNandJ(this.reportData);
       "method": "fetchjgtrucks",
       "tablename": "",
     }
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.reportData=res.chartData;
 this.downloadLoadedJ(this.reportData);
@@ -830,7 +830,7 @@ doc.addPage()
         "option": 9
       }
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.reportData=res.chartData;
 this.PrdfpReport(this.reportData);
@@ -966,7 +966,7 @@ this.PrdfpReport(this.reportData);
       "method": "noRCDL",
       "tablename": ""
     }
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.reportData=res.chartData;
 this.noRCDL(this.reportData);

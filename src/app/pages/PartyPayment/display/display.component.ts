@@ -86,7 +86,7 @@ public year;
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray ,'notall':false};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];
         this.fetchBasic();
@@ -173,7 +173,7 @@ public year;
       tempObj['partyid']=this.partyids.map(r=>r._id);
       tempObj['display'] = parseInt('5');
       this.balanceFollowGlobal=balanceFollow;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.paymentData = res.paymentData;
           this.paymentData =  this.pdfJSONForParty(res.paymentData,balanceFollow,'addBalance');
@@ -239,7 +239,7 @@ public year;
       tempObj['partyid']=this.partyids.map(r=>r._id);
       tempObj['display'] = parseInt('5');
       this.balanceFollowGlobal=this.balanceFollowArr;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.paymentData = res.paymentData;
           this.paymentData =  this.pdfJSONForParty(res.paymentData,this.balanceFollowArr,'addBalance');
@@ -278,7 +278,7 @@ public year;
     if (flag) {
       tempObj['tablename'] = ''
       tempObj['partyid']=this.partyids;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.paymentData = res.Data;
           if (this.paymentData.length > 0) {
@@ -310,7 +310,7 @@ public year;
     tempObj['mailSentDate']=this.mailSentDate;
     tempObj['method']='insert';
     tempObj['tablename']='MailDetails';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1).subscribe((res: any) => {alert(res.Status)});
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true).subscribe((res: any) => {alert(res.Status)});
   }
 
   pdfJSON(data, balanceFollow,todo) {
@@ -368,7 +368,7 @@ public year;
       formbody['_id'] = id._id;
       formbody['method'] = 'delete';
       formbody['tablename'] = 'partyPayment';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
           alert(response['Status']);
           this.paymentData.splice(j, 1);
@@ -392,7 +392,7 @@ public year;
       formbody['partyData']['partyid']=i.partyid;
       formbody['partyData']['amount']=parseInt(amt);
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
           alert(response['Status']);
           this.paymentData[j]['amount']=parseInt(amt);

@@ -38,7 +38,7 @@ export class TicketDisplayComponent implements OnInit {
     tempObj['method'] = 'myticket_pending';
     tempObj['type']='truck'
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tickets=[];
           this.tickets = res.Data;
@@ -55,7 +55,7 @@ export class TicketDisplayComponent implements OnInit {
     tempObj['method'] = 'myticket_pending';
     tempObj['type']='transport'
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tickets=[];
           this.tickets = res.Data;
@@ -75,7 +75,7 @@ export class TicketDisplayComponent implements OnInit {
     tempObj['date']=i.date;
     tempObj['truckno']=i.truckno;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
          alert(res.Status);
          this.tickets.splice(j,1)
@@ -95,7 +95,7 @@ export class TicketDisplayComponent implements OnInit {
     tempObj['addr3']=(<HTMLInputElement>document.getElementById('addr3_'+data)).value;
     tempObj['email']=(<HTMLInputElement>document.getElementById('email_'+data)).value;
     tempObj['contact']=[(<HTMLInputElement>document.getElementById('contact_'+data)).value];
- this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
          alert(res.Status);
          this.tickets.splice(data,1)
@@ -107,7 +107,7 @@ export class TicketDisplayComponent implements OnInit {
     tempObj['method']='rejectTptTicket';
     tempObj['tablename']='';
     tempObj['_id']=this.tickets[data]['oid']
- this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
          alert(res.Status);
          this.tickets.splice(data,1)

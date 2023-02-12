@@ -4,6 +4,8 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { Router } from '@angular/router';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-transport-display',
@@ -42,7 +44,7 @@ export class TransportDisplayComponent implements OnInit {
       formbody['method'] = 'delete';
       formbody['tablename'] = 'transport';
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: any) => {
           alert(response.Status)
           let bb;
@@ -65,7 +67,7 @@ export class TransportDisplayComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.sec.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.sec.commonArray['transport'];;
         this.fetchBasic();
@@ -78,4 +80,63 @@ export class TransportDisplayComponent implements OnInit {
     this.transportlist = [];
     this.transportlist = this.commonArray.transport;
   }
+
+  downloadMail(){
+    let data=this.transportlist;
+  
+    
+       var doc = new jsPDF()
+       
+       doc.setFontType('bold')
+       doc.setFontSize('15');
+       doc.line(5,5,205,5)
+       doc.line(5,5,5,292)
+       doc.line(5,292,205,292)
+       doc.line(205,5,205,292)
+
+       let y = 5;
+
+       for (let i = 0; i < data.length; i++) {
+       
+         if(y>276){
+
+           y=5;
+           doc.addPage();
+           doc.setFontType('bold')
+           doc.setFontSize('15');
+           doc.line(5,5,205,5)
+           doc.line(5,5,5,292)
+           doc.line(5,292,205,292)
+           doc.line(205,5,205,292)
+      
+       }
+      
+       doc.line(5,y+35,205,y+35)
+       
+       doc.setFontSize('12');
+       doc.text('To,',7,y+5)
+       doc.text(data[i]['tptName'],7,y+10)
+       doc.text(data[i]['addr1'],7,y+15)
+       doc.text(data[i]['addr2'],7,y+20)
+       doc.text(data[i]['addr3'],7,y+25)
+       doc.text(this.makeCo(data[i]),7,y+32)
+       
+       y=y+35
+       
+       
+       }
+
+       doc.save('Pending Payment Details.pdf')
+     }
+
+     makeCo(data){
+      let str='Mo : '
+for(let i=0;i<data.contact.length;i++){
+    str=str+data.contact[i]
+    if(data.contact[i+1]){str=str+','}
+}
+str=str+'.'
+return str;
+     }
+     
 }

@@ -136,7 +136,7 @@ public numbers=[];
   getRC(data){
 
     let tempObj = { "method": "myrcvehicles", "rc": data,'tablename':''};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
       .subscribe((res: any) => {
         this.tblShow13=true;
         this.myrcData=res.Data;
@@ -229,7 +229,7 @@ switch (this.buttonOption) {
   getInformationDataCC() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.securityCheck.commonArray['transport'];;
         this.fetchBasicCC();
@@ -246,7 +246,7 @@ switch (this.buttonOption) {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "acc12363TF", "tablename": ''};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
       .subscribe((res: any) => {
         this.tblShow=true;
         this.tbl=res.Data;
@@ -257,7 +257,7 @@ switch (this.buttonOption) {
   getInformationData2() {
     this.spinnerService.show();
     let tempObj = { "method": "smartacc12363", "tablename": '','count':this.count};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
       .subscribe((res: any) => {
         this.tblShow=true;
         this.tbl=res.chartData;
@@ -304,7 +304,7 @@ switch (this.buttonOption) {
     tempObj['method']='pipelinePan'
     tempObj['tablename']='';
     tempObj['option']=1;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
     .subscribe((res: any) => {
     this.emptyData=res.chartData;
     });
@@ -317,7 +317,7 @@ switch (this.buttonOption) {
     tempObj['method']='countSumOfParty'
     tempObj['tablename']='';
     tempObj['option']=14;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
     .subscribe((res: any) => {
     this.emptyData14=res.Data;
     this.table14=true;
@@ -330,7 +330,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='missingParentAcc'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
     .subscribe((res: any) => {
     this.emptyData16=res.Data;
     this.table16=true;
@@ -341,7 +341,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='missingtypeofloaad'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
     .subscribe((res: any) => {
     this.emptyData17=res.Data;
     this.table17=true;
@@ -355,7 +355,7 @@ switch (this.buttonOption) {
     tempObj['method']='countSumOfPF'
     tempObj['tablename']='';
     tempObj['option']=15;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
     .subscribe((res: any) => {
     this.emptyData15=res.Data;
     this.table15=true;
@@ -366,7 +366,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartRegFee'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
     this.emptyregData=res.chartData;
     this.emptyregDatatable=true;
@@ -386,7 +386,7 @@ switch (this.buttonOption) {
       tempObj['regFee']=regFee;
       tempObj['tablename']='';
       tempObj['method']='SMARTREGFEEUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.emptyregData.splice(j,1);
@@ -398,7 +398,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='regFeeExpired'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
     alert(res.Status)
     });
@@ -408,7 +408,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartContact'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
     this.contactarray=res.chartData;
     this.contacttable=true;
@@ -419,7 +419,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartAccountUpdateTrue'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {  
     this.accountarrayUF=res.chartData;
     this.accounttableUF=true;
@@ -430,7 +430,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartTruckFormat'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {  
     this.truckformatarray=res.chartData;
     this.truckformattable=true;
@@ -442,7 +442,7 @@ switch (this.buttonOption) {
     tempObj['method']='SmartAccount'
     tempObj['tablename']='';
     tempObj['option']=data;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
     this.accountarray=res.chartData;
     this.accounttable=true;
@@ -451,7 +451,7 @@ switch (this.buttonOption) {
 
   update(type,i,j,yo=''){
     let tempObj = { "method": "updateacc12363TF", "tablename": '','type':type,'id':i._id};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         if(yo===''){
@@ -510,7 +510,7 @@ switch (this.buttonOption) {
     tempObj['method']='pipelinePan'
     tempObj['tablename']='';
     tempObj['option']=this.buttons[parseInt(this.selectedMY)]['option']===2?3:4;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.panarray=res.chartData;
       this.pantable=true;
@@ -543,7 +543,7 @@ switch (this.buttonOption) {
       tempObj['method']='SMARTPANNEW';
       tempObj['array']=bigArray;
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         alert('Please Refresh!')
@@ -564,7 +564,7 @@ switch (this.buttonOption) {
       tempObj['m']=m;
       tempObj['tablename']='';
       tempObj['method']='SMARTCONTACTUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.contactarray.splice(j,1);
@@ -605,7 +605,7 @@ switch (this.buttonOption) {
   tempObj['aD']=aD;
       tempObj['tablename']='';
       tempObj['method']='SMARTACCOUNTUPDATEUFNEW';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.accountarrayUF.splice(j,1);
@@ -625,7 +625,7 @@ switch (this.buttonOption) {
       tempObj['ownerid']=i['_id'];
       tempObj['tablename']='';
       tempObj['method']='SMARTTRUCKFORMATUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.truckformatarray.splice(j,1);
@@ -658,7 +658,7 @@ switch (this.buttonOption) {
       tempObj['ownerid']=i['_id'];
       tempObj['tablename']='';
       tempObj['method']='SMARTACCOUNTUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.panarray.splice(j,1);
@@ -670,7 +670,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartTransport'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.tptarray=res.chartData;
       this.tpttable=true;
@@ -688,7 +688,7 @@ switch (this.buttonOption) {
       tempObj['tablename']='';
       tempObj['typer']=data;
       tempObj['method']='SMARTTRANSPORTUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.tptarray.splice(j,1);
@@ -700,7 +700,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartTruck'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.truckarray=res.chartData;
       this.trucktable=true;
@@ -714,7 +714,7 @@ switch (this.buttonOption) {
     tempObj['method']='SmartTruck6'
     tempObj['loadingDate']=this.loadingDate6;
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.truckarray=res.chartData;
       this.trucktable=true;
@@ -729,7 +729,7 @@ switch (this.buttonOption) {
     tempObj['ownerids']=this.typeDataConsistsArray.map(r=> r._id)
     tempObj['tablename']='';
     tempObj['method']='SMARTTRUCKUPDATE2';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status);
       this.typeDataConsists=false;
@@ -743,7 +743,7 @@ switch (this.buttonOption) {
     tempObj['_id']=i
     tempObj['tablename']='';
     tempObj['method']='SMARTPARENTACCUPDATE';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status);
       this.typeDataConsists=false;
@@ -757,7 +757,7 @@ switch (this.buttonOption) {
     tempObj['_id']=i
     tempObj['tablename']='';
     tempObj['method']='SMARTTYPEUPDATE';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status);
     });
@@ -779,7 +779,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartWeight'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.weightarray=res.chartData;
       this.weighttable=true;
@@ -796,7 +796,7 @@ switch (this.buttonOption) {
       tempObj['ownerid']=i['_id'];
       tempObj['tablename']='';
       tempObj['method']='SMARTWEIGHTUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.weightarray.splice(j,1);
@@ -808,7 +808,7 @@ switch (this.buttonOption) {
     let tempObj={};
     tempObj['method']='SmartDimension'
     tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       this.dimensionarray=res.chartData;
       this.dimensiontable=true;
@@ -827,7 +827,7 @@ switch (this.buttonOption) {
       tempObj['ownerid']=i['_id'];
       tempObj['tablename']='';
       tempObj['method']='SMARTDIMENSIONUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.dimensionarray.splice(j,1);

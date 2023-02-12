@@ -39,7 +39,7 @@ export class VillageaddComponent implements OnInit {
     value['method'] = 'insert';
     value['tablename'] = 'villagenames';
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, value, 0)
+      ('commoninformation', 1, value, true)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['villagenames'].push(res);

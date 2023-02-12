@@ -67,7 +67,7 @@ export class TPTNavigationComponent implements OnInit {
     tempObj['method']='getregisteredtruckstotpt';
     tempObj['tablename']='';
     tempObj['userid']=this.securityCheck.userid;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.securityCheck.setTruckData(res.Data)
       });

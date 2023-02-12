@@ -30,7 +30,7 @@ export class TicketComponent implements OnInit {
     tempObj['type']='tptowner'
     tempObj['id']=this.sec.userid;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tickets=[];
           this.tickets = res.Data;
@@ -43,7 +43,7 @@ export class TicketComponent implements OnInit {
     tempObj['method']='rejectTptTicket';
     tempObj['tablename']='';
     tempObj['_id']=this.tickets[data]['oid']
- this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
          alert(res.Status);
          this.tickets.splice(data,1)

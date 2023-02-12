@@ -162,7 +162,7 @@ formbody['method']='getTrucksWithNoActualPayment';
 formbody['tablename']=''
 formbody['selectedPochDate']=this.selectedPochDate;
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, 0)
+    ('commoninformation', 1, formbody, true)
     .subscribe((res: any) => {
       this.fullpendingPayment=this.addBHAmount(res.Data);
       this.paymentSettings=true;
@@ -216,7 +216,7 @@ formbody['selectedPochDate']=this.selectedPochDate;
   //   obj['tablename']='';
   //   obj['method']='updateActualPaymentDetails'
   //   this.apiCallservice.handleData_New_python
-  //   ('commoninformation', 1, obj, 0)
+  //   ('commoninformation', 1, obj, true)
   //   .subscribe((res: any) => {
   //     alert(res.Status);
   //     this.saveArray=[]
@@ -245,7 +245,7 @@ formbody['selectedPochDate']=this.selectedPochDate;
       tempObj['tablename']='';
       tempObj['method']='updateActualPaymentDetailsSingly'
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, tempObj, 0)
+    ('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status);
       alert('Please Refresh!')
@@ -284,7 +284,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
     formbody['method'] = 'givenEmpty';
     formbody['tablename'] = 't';
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, formbody, 0)
+      ('commoninformation', 1, formbody, true)
       .subscribe((res: any) => {
         this.givenTrucks=res.Data;
       });
@@ -299,7 +299,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
       formbody['method'] = 'addGivenEmpty';
       formbody['tablename'] = 't';
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, 0)
+        ('commoninformation', 1, formbody, true)
         .subscribe((res: any) => {
           alert(res.Status);
           this.givenTrucks.splice(j,1);
@@ -357,7 +357,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
     formbody['method'] = 'givenPaymentPending';
     formbody['tablename'] = 't';
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, formbody, 0)
+      ('commoninformation', 1, formbody, true)
       .subscribe((res: any) => {
         this.givenTrucksPayment=res.Data;
         this.givenPaymentTable=res.Data.length>0?true:false;
@@ -377,7 +377,7 @@ this.actualPayment=this.buttonOption == '5'?true:false;
     tempObj['method'] = 'BalanceHireDisplay';
     tempObj['tablename'] = 'BalanceHire';
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, tempObj, 0)
+      ('commoninformation', 1, tempObj, true)
       .subscribe((res:any) => {
         this.showPDFButton=true;
         this.printInfo = true;
@@ -460,7 +460,7 @@ let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
     }
 
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, tempObj, 0)
+    ('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status)
     });
@@ -506,7 +506,7 @@ let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
     tempObj['createdDate'] = type === 'year' ? '^' + data + '.*' : type === 'month' ? this.createdDate : type === 'day' ? this.createdDate : null;
     tempObj['type'] = type;
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, tempObj, 0)
+      ('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         if (type === 'year') {
           res.balanceData.forEach((res) => {
@@ -535,7 +535,7 @@ let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
       data['method'] = 'update';
       data['tablename'] = 'BalanceHire';
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, 0)
+        ('commoninformation', 1, data, true)
         .subscribe((res: any) => {
           this.balanceDate.find(r => r._id == data._id)['comments'] = data['comments'];
         });
@@ -556,7 +556,7 @@ if(confirm('Do you want to temporary delete it?')){
       data['print'] = true;
       data['part'] = 0;
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, 0)
+        ('commoninformation', 1, data, true)
         .subscribe((res: any) => {
           alert(res.Status);
           this.printed = !this.printed;
@@ -570,7 +570,7 @@ if(confirm('Do you want to temporary delete it?')){
       data['tablename'] = '';
 
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, 0)
+        ('commoninformation', 1, data, true)
         .subscribe((res: any) => {
           this.fullPaymentDone=res.chartData;
           this.actualPaymentTable = true;
@@ -582,7 +582,7 @@ if(confirm('Do you want to temporary delete it?')){
       data['tablename'] = '';
 
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, 0)
+        ('commoninformation', 1, data, true)
         .subscribe((res: any) => {
           this.fullAdvDone=res.chartData;
           this.advancePaymenttoTruck = true;
@@ -595,7 +595,7 @@ if(confirm('Do you want to temporary delete it?')){
       data['tablename'] = '';
 
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, 0)
+        ('commoninformation', 1, data, true)
         .subscribe((res: any) => {
           this.currentLoadedParty=res.chartData;
           this.fetchLoadedTruckTF = true;
@@ -612,7 +612,7 @@ if(confirm('Do you want to temporary delete it?')){
       formbody['tablename'] = '';
 
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, 0)
+        ('commoninformation', 1, formbody, true)
         .subscribe((res: any) => {
           alert(res.Status);
           this.currentLoadedParty.splice(index,1);
@@ -761,7 +761,7 @@ if(newpage===1){
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
@@ -800,7 +800,7 @@ if(newpage===1){
     temp['truckno']=(<HTMLInputElement>document.getElementById('truck_000')).value;
     temp['tablename']='';
     temp['method']='getTruckContact';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
       .subscribe((res: any) => {
         (<HTMLInputElement>document.getElementById('contact_000')).value=res.Data[0]
       });
@@ -932,7 +932,7 @@ if(newpage===1){
       formbody['typeOfMessage'] = this.updateMsgType;
 
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, 0)
+        ('commoninformation', 1, formbody, true)
         .subscribe((res: any) => {
           alert(res.Status);
           this.fullPaymentDone[index][this.updateMsgType]=true;
@@ -955,7 +955,7 @@ if(newpage===1){
       formbody['advanceMsg'] = this.updateMsgTypeA;
 
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, 0)
+        ('commoninformation', 1, formbody, true)
         .subscribe((res: any) => {
           alert(res.Status);
           this.fullAdvDone[index][this.updateMsgTypeA]=true;
@@ -971,7 +971,7 @@ if(newpage===1){
       formbody['method'] = 'delete';
       formbody['tablename'] = 'BalanceHire';
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, 0)
+        ('commoninformation', 1, formbody, true)
         .subscribe((res: any) => {
           this.balanceDate.splice(j, 1);
         });
@@ -1008,7 +1008,7 @@ if(newpage===1){
     formbody['commentToTruck2']={'msg':msg1,'no':no1,'tsrno':tsrno1,'type':'balance'};
 
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, 0)
+    ('commoninformation', 1, formbody, true)
     .subscribe((res: any) => {
       alert(res.Status)
     });
@@ -1026,7 +1026,7 @@ if(newpage===1){
     formbody['tablename'] = 'BalanceHire';
 
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, 0)
+    ('commoninformation', 1, formbody, true)
     .subscribe((res: any) => {
       alert(res.Status)
       alert('Please refresh!')
@@ -1467,7 +1467,7 @@ if(newpage===1){
     data['tablename'] = '';
 
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, data, 0)
+      ('commoninformation', 1, data, true)
       .subscribe((res: any) => {
         this.alltrucks=res.chartData;
         this.advancePayment = true;
@@ -1491,7 +1491,7 @@ if(newpage===1){
       
       
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, 0)
+        ('commoninformation', 1, formbody, true)
         .subscribe((res: any) => {
           alert(res.Status);
           this.alltrucks[j]['advanceAmt']=(<HTMLInputElement>document.getElementById('advAmt_' + j)).value

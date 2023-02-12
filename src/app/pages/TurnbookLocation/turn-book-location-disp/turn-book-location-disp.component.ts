@@ -58,7 +58,7 @@ export class TurnBookLocationDispComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
         this.fetchBasic();
@@ -68,7 +68,7 @@ export class TurnBookLocationDispComponent implements OnInit {
 
   fetchBasicData(){
     let tempObj= {"turnbookDate":"2021-04-01","tablename":"turnbook","method":"displayTB","display":"14"}
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
     .subscribe((res: any) => {
       this.tbl=res.Data;
       this.show=this.tbl.length>0?true:false;
@@ -101,7 +101,7 @@ export class TurnBookLocationDispComponent implements OnInit {
     tempObj['_id'] = this.data._id;
     tempObj['method'] = 'updatetbl';
     tempObj['tbltype'] = 'update';
-    this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , 0)
+    this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , true)
     .subscribe((res: any) => {
       alert(res.Status);
       this.tbl[this.id]['locationData'].push({'location':this.tempVNAME,'date':data.value.date})
@@ -127,7 +127,7 @@ export class TurnBookLocationDispComponent implements OnInit {
     tempObj['ownerid']=i['oD']['_id'];
 
 
-    this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , 0)
+    this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , true)
     .subscribe((res: any) => {
       res['Data'].length>0?alert('Updated'):alert('Failed');
       this.tbl.splice(j,1);
@@ -145,7 +145,7 @@ export class TurnBookLocationDispComponent implements OnInit {
     tempObj['show']=true;
     tempObj['ownerid']=i['oD']['_id'];
     
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
     .subscribe((res: any) => {
       alert('Updated');
       this.tbl.splice(index,1);
@@ -168,7 +168,7 @@ export class TurnBookLocationDispComponent implements OnInit {
     tempObj['_id'] = i;
     tempObj['method'] = 'updatetbl';
     tempObj['tbltype'] = 'delete';
-    this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , 0)
+    this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , true)
     .subscribe((res: any) => {
       alert(res.Status);
       this.tbl[j]['locationData'].splice(p, 1);

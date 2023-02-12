@@ -106,7 +106,7 @@ export class UpdateComponent implements OnInit {
     tempObj['comments'] = this.handledata.Data.comments;
     tempObj['commentToTruck'] = this.handledata.Data.commentToTruck;
     tempObj['_id'] = this.handledata.Data._id;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((response: Response) => {
         alert(response['Status'])
         let tempObj = this.sec.commonBalanceHire[this.handledata.Data.index];

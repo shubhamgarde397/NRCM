@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit {
       value['consider']=[1,0,0,0,0,0,0,1]
       
       this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, value, 0)
+        ('commoninformation', 1, value, true)
         .subscribe((res: any) => {
           if(res['Login']){
             this.security.setDisplayname(res['Data'][0]['displayName']);

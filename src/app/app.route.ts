@@ -7,7 +7,6 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
-import { C2wComponent } from './pages/C2W/c2w/c2w.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
@@ -23,6 +22,7 @@ import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-load
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
 import { DisplayComponent } from './pages/CI/JG/display/display.component';
+import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
 
 export const routes: Routes =
     [
@@ -107,6 +107,10 @@ export const routes: Routes =
                         component:DuesFromAdvanceDisplayComponent
                     },
                     {
+                        path: 'GIFTS',
+                        component:GiftHandlerComponent
+                    },
+                    {
                         path: 'JG',
                         component:DisplayComponent
                     },
@@ -172,16 +176,8 @@ export const routes: Routes =
                         loadChildren: './pages/PartyPayment/app.module#AppModule'
                     },
                     {
-                        path: 'Email_Handler',
-                        loadChildren: './pages/Email/app.module#AppModule'
-                    },
-                    {
                         path: 'PDF',
                         component: PDFComponent
-                    },
-                    {
-                        path: 'C2W',
-                        component: C2wComponent
                     }
                 ]
         },

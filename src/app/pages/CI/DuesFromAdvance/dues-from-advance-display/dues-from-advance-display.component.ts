@@ -53,7 +53,7 @@ export class DuesFromAdvanceDisplayComponent implements OnInit {
         }
     
         this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, tempObj, 0)
+        ('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           alert(res.Status)
         });
@@ -61,7 +61,7 @@ export class DuesFromAdvanceDisplayComponent implements OnInit {
       }
       getInformationData() {
         let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
           .subscribe((res: any) => {
             this.sec.commonArray['dues'] = Object.keys(res.dues[0]).length > 0 ? res.dues : this.sec.commonArray['dues'];;
             this.fetchData();

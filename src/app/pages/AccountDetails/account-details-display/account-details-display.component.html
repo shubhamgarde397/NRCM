@@ -375,7 +375,7 @@
     <thead>
       <tr>
         <th>Srno</th>
-        <th>Truck No</th>
+        <th>Truck No-Date</th>
         <th>Name</th>
         <th>Number</th>
         <th>IFSC</th>
@@ -385,7 +385,7 @@
     <tbody>
       <tr *ngFor="let ii of accountarrayUF;let jj=index;">
         <td>{{jj+1}}</td>
-        <td>{{ii.truckno}}</td>
+        <td>{{ii.truckno}}<br>{{ii.currentDate|date:'dd-MM-yyyy'}}</td>
         <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
         <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
         <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>

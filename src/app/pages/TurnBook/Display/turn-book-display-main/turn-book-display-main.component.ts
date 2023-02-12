@@ -145,7 +145,7 @@ public changeTextA=false;
 public paymentDate='';
 public paymentAmount=0;
 public statusOfPoch='';
-public updateTruck:any={};
+public updateTruck:any={'truckName':{'truckno':''}};
 
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
@@ -179,7 +179,7 @@ public updateTruck:any={};
     tempObj['method']='turn18amt';
     tempObj['tablename']='';
     tempObj['data']=arr;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status)
       });
@@ -239,7 +239,7 @@ public updateTruck:any={};
 
   getInformationData() {
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
@@ -494,7 +494,7 @@ let buttons=[]
 
 if(this.buttonOption !== '11'){
 
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
       .subscribe((res: any) => {
         if(this.buttonOption!=='8'&&this.buttonOption!=='16'&&this.buttonOption!=='18'){
         this.types={'None':0,'Open':0,'Container':0}
@@ -577,7 +577,7 @@ let tempObj1={};
     tempObj1['method'] = 'singleTruck'
     tempObj1['display'] = this.buttonOption;
     tempObj1['truckno'] = this.truckVar;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
       .subscribe((res: any) => {
         
         this.byTruckName=true;
@@ -599,7 +599,7 @@ let tempObj1={};
     tempObj1['tablename'] = ''
     tempObj1['method'] = 'uncheckActualPayment'
     tempObj1['_id']=i._id;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
       .subscribe((res: any) => {
         alert(res.Status);
       });
@@ -612,7 +612,7 @@ let tempObj1={};
     tempObj1['tablename'] = ''
     tempObj1['method'] = 'uncheckBalanceAdded'
     tempObj1['_id']=i._id;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
       .subscribe((res: any) => {
         alert(res.Status);
       });
@@ -756,7 +756,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempData['method'] = 'update'
     tempData['part'] = 2;
     
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempData, 1)
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempData, true)
       .subscribe((res: any) => {
         alert(res.Status);
         let newData = this.turnbooklistnew.filter(r => r._id !== this.toSendid);
@@ -780,7 +780,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempData['method'] = 'update'
     tempData['part'] = 5;
     
-    this.apiCallservice.handleData_New_python('turnbook1', 1, tempData, 1)
+    this.apiCallservice.handleData_New_python('turnbook1', 1, tempData, true)
       .subscribe((res: any) => {
         alert(res.Status);
         let newData = this.turnbooklistnew.filter(r => r._id !== this.toSendid);
@@ -798,7 +798,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempObj['method'] = 'updatePoch';
     tempObj['tablename'] = 'turnbook';
     tempObj['_id'] = data['_id'];
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
       .subscribe((res: any) => {
         alert('Moved to Balance Hire!')
         this.turnbooklist.splice(j, 1);
@@ -885,7 +885,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       tempObj["givenDate"] = newgivenDate;
       tempObj["pgno"] = pgno;
       tempObj['number'] = 2;
-      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
         .subscribe((res: any) => {
           alert(res.Status);
           alert('Please Refresh!')
@@ -915,7 +915,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       formbody['tablename'] = 'turnbook';
       formbody['turnbookDate'] = id.turnbookDate;
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
           alert(response['Status'])
           this.turnbooklist.splice(j, 1);
@@ -975,7 +975,7 @@ this.updateTruck['index']=j;
     obj['tablename']='';
     obj['method']='updateActualPaymentDetailsSingly'
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, obj, 0)
+    ('commoninformation', 1, obj, true)
     .subscribe((res: any) => {
       alert(res.Status);
       this.statusOfPoch='';
@@ -1085,7 +1085,7 @@ this.updateTruck['index']=j;
     tempObj1['tablename'] = 'turnbook'
     tempObj1['method'] = 'deepDetails'
     tempObj1['ownerid'] = this.truckid['_id'];
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
     .subscribe((res: any) => {
     //  this.downloadDeepData2(res)
     });

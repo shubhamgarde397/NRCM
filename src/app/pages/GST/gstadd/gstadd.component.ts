@@ -83,7 +83,7 @@ export class GstaddComponent implements OnInit {
     //   }
     // ]
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, value, 0)
+      ('commoninformation', 1, value, true)
       .subscribe((res: any) => {
         alert(res['Status']);
         this.securityCheck.commonArray['gstdetails'].push(res);
@@ -94,7 +94,7 @@ export class GstaddComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;

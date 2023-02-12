@@ -57,7 +57,7 @@ export class AddComponent implements OnInit {
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];
         this.fetchBasic();
@@ -105,7 +105,7 @@ export class AddComponent implements OnInit {
     tempobj['method'] = 'partyPaymentInsert';
     tempobj['partyData'].map(r=>delete r['partyName']);
     this.submitted = true;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
       .subscribe((res: any) => {
         alert(res.Status);
         this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER']);

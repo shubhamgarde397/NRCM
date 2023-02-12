@@ -15,8 +15,8 @@ import { handleFunction } from '../../common/services/functions/handleFunctions'
   providers: [ApiCallsService]
 })
 export class MainPageComponent implements OnInit {
-  data='2022-09-06:NR:Other'
-  public jsonData=[
+  data=[]
+    public jsonData=[
     {
         "Pipe": {
             "Hire": 0,

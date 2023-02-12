@@ -36,7 +36,7 @@ export class UpdateComponent implements OnInit {
       tempobj["method"]= "pendingPayment",
       tempobj["tablename"]= "partyPayment",
       tempobj["user"]= "shubham",
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
       .subscribe((response: Response) => {
         this.pendingTrucks=response['Data'];
         
@@ -64,7 +64,7 @@ export class UpdateComponent implements OnInit {
     tempobj['id']=this.allData[0]['_id'];
     tempobj['method']='addIdsToPartyAndTB';
     tempobj['tablename']='partyPayment';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
         .subscribe((response: Response) => {
           alert(response['Status']);
         });
@@ -91,7 +91,7 @@ tempObj['data']=i['date']+'_'+i['entryDate']+'_'+i['truckno']+'_'+i['id']
     tempobj['id']=this.allData[0]['_id'];
     tempobj['method']='PartyDeleteSingleId';
     tempobj['tablename']='partyPayment';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
         .subscribe((response: Response) => {
           alert(response['Status']);
           this.loadingDate.splice(index,1);

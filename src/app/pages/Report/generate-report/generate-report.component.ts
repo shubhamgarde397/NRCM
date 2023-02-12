@@ -233,7 +233,7 @@ public acknowledgement=false;
       'to':this.tdate
     }
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, temp, 0)
+    ('commoninformation', 1, temp, true)
     .subscribe((res: any) => {
       this.truckAllData=res.Data;
       this.showTable=true;
@@ -246,7 +246,7 @@ public acknowledgement=false;
       'tablename':''
     }
     this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, temp, 0)
+    ('commoninformation', 1, temp, true)
     .subscribe((res: any) => {
       this.trucks=res.Data
     });
@@ -277,7 +277,7 @@ public acknowledgement=false;
         tempObj['method']='pipelinePan'
         tempObj['tablename']='';
         tempObj['option']=987;
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
         this.formatDate=res.chartData;
         });
@@ -315,7 +315,7 @@ public acknowledgement=false;
         tempObj['method']='pipelinePan'
         tempObj['tablename']='';
         tempObj['option']=this.buttonOption==='1'?this.buttons[parseInt(this.selectedMY)]['option']:option;
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
         this.emptyData=res.chartData;
         });
@@ -328,7 +328,7 @@ public acknowledgement=false;
         tempObj['method']='pipelinePan'
         tempObj['tablename']='';
         tempObj['option']=this.buttonOption==='1'?(this.buttons[parseInt(this.selectedMY)]['option']===2?3:4):option;
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.toFillData=res.chartData;
           if(this.buttonOption==='1'){
@@ -347,7 +347,7 @@ public acknowledgement=false;
         tempObj['method']='pipelineContact'
         tempObj['tablename']='';
         tempObj['option']=986;
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.toFillData=res.chartData;
           this.generateReportContact(this.toFillData)
@@ -358,7 +358,7 @@ public acknowledgement=false;
         let tempObj={};
         tempObj['method']='DuePDFforTransport'
         tempObj['tablename']='';
-        this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 1)
+        this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
         .subscribe((res: any) => {
           this.generateDuesReportPDF(res.Data)
         });

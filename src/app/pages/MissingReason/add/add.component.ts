@@ -32,7 +32,7 @@ export class AddComponent implements OnInit {
     value['method'] = 'insert';
     value['tablename'] = 'missingLRReason';
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, value, 0)
+      ('commoninformation', 1, value, true)
       .subscribe((res: any) => {
         alert('Added Successfully');
         this.securityCheck.commonArray['lrlist'].push({'reason':value['reason'],'_id':res._id});

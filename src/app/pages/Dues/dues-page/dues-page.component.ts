@@ -40,7 +40,7 @@ public whichData=false;
     value['tablename'] = 'dues';
     
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, value, 0)
+      ('commoninformation', 1, value, true)
       .subscribe((res: any) => {
         alert(res['Status']);
       });
@@ -49,7 +49,7 @@ public whichData=false;
   fetchBasic(){
     let temp={"method": "DuesDisplay","tablename": ""}
     this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, temp, 0)
+      ('commoninformation', 1, temp, true)
       .subscribe((res: any) => {
         this.dues=res.Data
         this.showdues=true;
@@ -63,7 +63,7 @@ public whichData=false;
       formbody['method'] = 'delete';
       formbody['tablename'] = 'dues';
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: any) => {
           alert(response.Status);
           this.dues.splice(j, 1);
@@ -82,7 +82,7 @@ public whichData=false;
       'tbid':i['info'][j]['tbid'],
       'bhid':i['info'][j]['bhid']
     }
-    this.apiCallservice.handleData_New_python('turnbook', 1, temp, 0)
+    this.apiCallservice.handleData_New_python('turnbook', 1, temp, true)
         .subscribe((response: any) => {
           this.bhdata=response.Data[0]
           this.tbdata=response.Data2[0]

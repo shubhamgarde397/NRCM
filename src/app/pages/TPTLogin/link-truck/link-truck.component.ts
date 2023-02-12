@@ -39,7 +39,7 @@ public tpts2;
     let tempObj = {};
     tempObj['method']='getTptUsers'
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tpts=res.Data;
       });
@@ -48,7 +48,7 @@ public tpts2;
     let tempObj = {};
     tempObj['method']='getTptUsers2'
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tpts2=res.Data;
       });
@@ -57,7 +57,7 @@ public tpts2;
     let tempObj = {};
     tempObj['method']='getTptUsersLogin'
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tptusers=res.Data;
       });
@@ -66,7 +66,7 @@ public tpts2;
     let tempObj = {};
     tempObj['method']='getTptUsersLoginWhoDidNot'
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.tptusers=res.Data;
       });
@@ -88,7 +88,7 @@ public tpts2;
     tempObj['tptid']=this.tptId
     tempObj['truckno']=this.truckNo;
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status)
         this.truckNo=''
@@ -101,7 +101,7 @@ public tpts2;
     tempObj['tptid']=this.tptId
     tempObj['userid']=this.tptIdU;
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status)
       });
@@ -116,7 +116,7 @@ public tpts2;
     tempObj['dname']=this.dname;
     tempObj['type']=this.type;
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status)
         this.truckNo=''
@@ -129,7 +129,7 @@ public tpts2;
     tempObj['username']=this.usernameU;
     tempObj['_id']=this.tptIdU;
     tempObj['tablename']=''
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status)
       });

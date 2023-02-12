@@ -54,10 +54,10 @@ export class TransportUpdateComponent implements OnInit {
     formbody['addr3'] = data.value.addr3;
     formbody['email'] = data.value.email;
     formbody['_id'] = this.handledata.Data._id;
-    formbody['method'] = 'update';
+    formbody['method'] = 'updateTpt';
     formbody['tablename'] = 'transport';
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
       .subscribe((response: Response) => {
         alert(response['Status']);
         this.sec.commonArray['transport'].forEach((res) => {

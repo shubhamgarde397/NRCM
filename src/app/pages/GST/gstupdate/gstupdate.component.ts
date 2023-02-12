@@ -114,7 +114,7 @@ export class GstupdateComponent implements OnInit {
     formbody['method'] = 'updategst';
     formbody['tablename'] = 'gstdetails';
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
       .subscribe((response: Response) => {
         alert(response['Status']);
         this.sec.commonArray['gstdetails'].forEach((res) => {

@@ -41,7 +41,7 @@ export class TruckLoadingComponent implements OnInit {
     tempObj['method'] = 'getTruckDetailsbyoid';
     tempObj['id']=this.sec.userid;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.alltrucks=[];
           this.alltrucks = res.Data;
@@ -66,7 +66,7 @@ export class TruckLoadingComponent implements OnInit {
     tempObj['tptPochDate']=this.alltrucks3[0]['pochDate'];
     tempObj['tptPochAmount']=this.alltrucks3[0]['actualPaymentAmount'];
     tempObj['accNo']=this.alltrucks3[0]['accNumber']
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 1)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       
         res.chartData.length>0?this.downloadPDF(res.chartData):alert('Cannot fetch Data!');

@@ -145,7 +145,7 @@ switch(data){
     tempObj['method'] = 'displayEditTruck'
     tempObj['truckno'] = this.editTruck;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.ownerdetailslist2=res.Data;
         this.spinnerService.hide();
@@ -161,7 +161,7 @@ switch(data){
     tempObj['method'] = 'displayEditTruckAcc'
     tempObj['accNo'] = this.editTruckAcc;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.ownerdetailslist2=res.Data;
         this.spinnerService.hide();
@@ -176,7 +176,7 @@ switch(data){
     tempObj['method'] = 'displayTruckbyAccName'
     tempObj['accName'] = this.editname;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.ownerdetailslist7=res.Data;
         this.selected7=true;
@@ -192,7 +192,7 @@ switch(data){
     tempObj['method'] = 'displaybyTPT'
     tempObj['tptid'] = this.tptlist.find(r=>r.tptName==this.editTruckTPT)['_id']
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.ownerdetailslist4=res.chartData;
         this.spinnerService.hide();
@@ -207,7 +207,7 @@ switch(data){
     tempObj['method'] = 'displaybyTPTTB'
     tempObj['tptid'] = this.tptlist.find(r=>r.tptName==this.editTruckTPT)['_id']
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.ownerdetailslist5=res.chartData;
         this.tableDate5=true;
@@ -223,7 +223,7 @@ switch(data){
     tempObj['method'] = 'displaybyTPTLoc'
     tempObj['placeid'] = this.editTrucklocation;
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.ownerdetailslist6=res.chartData;
         this.tableDate6=true;
@@ -242,7 +242,7 @@ switch(data){
       formbody['find']=false;
       formbody['tablename'] = 'ownerdetails';
 
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, 0)
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response:any) => {
           alert(response.Status)
           let bb;
@@ -369,7 +369,7 @@ switch(data){
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, 0)
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.sec.commonArray['ownerdetails'] = Object.keys(res.ownerdetails[0]).length > 0 ? res.ownerdetails : this.sec.commonArray['ownerdetails'];
         this.sec.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.sec.commonArray['villagenames'];
