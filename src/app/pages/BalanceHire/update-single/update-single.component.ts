@@ -43,6 +43,9 @@ export class UpdateSingleComponent implements OnInit {
     this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;  
     this.truckArray2=this.handledata.giveBHData()
+    console.log(this.truckArray);
+    console.log(this.truckArray2);
+    
   };
 
   submit(){
@@ -54,6 +57,7 @@ export class UpdateSingleComponent implements OnInit {
     tempObj['method']='BalanceHireSingleUpdate';
     tempObj['tablename']='BalanceHire';
     tempObj['id']=this.handledata.Data._id;
+    tempObj['tbid']=this.handledata.Data.tbid;
     tempObj['date']=date;
     tempObj['truckno']=truckno;
     tempObj['pageno']=pageno;
