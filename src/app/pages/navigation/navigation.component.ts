@@ -38,6 +38,8 @@ export class NavigationComponent implements OnInit {
   public arr=[];
   public from;
   public to;
+  public noti=[]
+  public notiC=0;
   public acknowledgement=false;
   constructor(
     public router: Router,
@@ -95,6 +97,8 @@ export class NavigationComponent implements OnInit {
     //     this.router.navigate(['Navigation/NRCM_HOME'])
     //   });
       this.arr=this.handledata.getLRStatus()
+      this.noti=this.securit.getNoti();
+      this.notiC=this.noti.length;
         this.router.navigate(['Navigation/NRCM_HOME'])
   }
 

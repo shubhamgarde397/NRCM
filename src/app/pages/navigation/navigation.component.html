@@ -60,10 +60,6 @@
       </li>
 
       <li class="dropdown">
-        <a routerLink="GIFTS">Gifts</a>
-      </li>
-
-      <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown">Daily Truck Details
           <span class="caret"></span>
         </a>
@@ -148,6 +144,20 @@
         <ul class="dropdown-menu">
           <li>
             <a routerLink="PDF">PDF</a>
+          </li>
+        </ul>
+
+
+      </li>
+
+      <li class="dropdown">
+
+        <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell"></span>
+          <span [ngStyle]="{'color': notiC.length>0 ? 'red' : 'white' }">{{notiC}}</span>
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngFor="let i of noti;">
+            <a>{{i.forUsers}}-{{i.taskName}}-{{i.apprxExpiryDate|date:'dd-MM-yyyy'}}</a>
           </li>
         </ul>
 

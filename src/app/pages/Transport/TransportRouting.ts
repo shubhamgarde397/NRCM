@@ -16,7 +16,7 @@ export const TransportRouting: Routes =
             children: [
                 {
                     path: '',
-                    component: TransportDisplayComponent
+                    component: TransportAddComponent
                 },
                 {
                     path: 'TRANSPORTAdd',

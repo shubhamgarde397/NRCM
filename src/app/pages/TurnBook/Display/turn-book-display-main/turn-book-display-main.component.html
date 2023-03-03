@@ -143,8 +143,8 @@
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.C}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">C</div>
                 </div>
                 <div class="row" *ngIf="changeTextA">
-                  <div class="col-sm-3" style="color: black;">{{i.ownerDetails[0]['accountDetails'][0]['accountName']}}</div>
-                  <div class="col-sm-3"  style="color: black;">{{i.ownerDetails[0]['accountDetails'][0]['accountNumber']}}</div>
+                  <div class="col-sm-3" style="color: black;">{{i.truckName.accountDetails[0].accountName}}</div>
+                  <div class="col-sm-3"  style="color: black;">{{i.truckName.accountDetails[0].accountNumber}}</div>
                 </div>
               
               </div>
@@ -710,7 +710,7 @@
             <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
             <td>{{i.lrno}}</td>
             <td>{{i.hamt}}<br>{{i.rent}}</td>
-            <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
+            <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}<br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
             <td [ngStyle]="{'background-color': i.colors[1]}">{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
             <td>
               <button class="btn btn-warning" (click)="sendBalanceData(i,j,'truck')">Send</button>
