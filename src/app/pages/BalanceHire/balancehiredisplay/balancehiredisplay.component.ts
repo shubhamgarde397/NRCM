@@ -968,11 +968,12 @@ if(newpage===1){
     if (confirm('Are you sure?')) {
       let formbody = {}
       formbody['_id'] = data._id;
-      formbody['method'] = 'delete';
+      formbody['method'] = 'deleteBH';
       formbody['tablename'] = 'BalanceHire';
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, formbody, true)
         .subscribe((res: any) => {
+          alert(res.Status);
           this.balanceDate.splice(j, 1);
         });
     }
@@ -1317,7 +1318,7 @@ if(newpage===1){
       let accountI=i;
       doc.setFontSize('10');
       if(dataTF){
-        doc.text(String(this.balanceDate[z].commentToTruck).split(' ')[0], 38.5, i);//comments
+        doc.text(String(parseInt(this.balanceDate[z].commentToTruck)).split(' ')[0], 38.5, i);//comments
 
       }
       for (let k = 0; k < data.length; k++) {

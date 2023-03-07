@@ -153,7 +153,7 @@
       <li class="dropdown">
 
         <a class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-bell"></span>
-          <span [ngStyle]="{'color': notiC.length>0 ? 'red' : 'white' }">{{notiC}}</span>
+          <span [ngStyle]="{'color': notiC>0 ? 'red' : 'white' }">{{notiC}}</span>
         </a>
         <ul class="dropdown-menu">
           <li *ngFor="let i of noti;">
