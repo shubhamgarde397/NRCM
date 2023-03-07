@@ -127,5 +127,6 @@ public todaysDate;
         });
     }
   }
+  updateComments(){}
 
 }
