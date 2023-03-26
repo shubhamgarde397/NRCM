@@ -1,0 +1,40 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" routerLink="NRCM_HOME">Nitin Roadways Quick</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li>
+        <a routerLink="ACCOUNT_DETAILS_DISPLAY">SMART UPDATE</a>
+      </li>
+      <li>
+        <a (click)="getData()">Available Trucks</a>
+      </li>
+
+      <li>
+        <a routerLink="NRCM_ACCOUNT" (click)="makeAllFalse()">Account Number 135</a>
+      </li>
+
+      <li>
+        <a routerLink="NRCM_TRANSPORT_ENVELOPE" (click)="makeAllFalse()">Envelope Entries</a>
+      </li>
+
+      <li class="dropdown">
+        <a (click)="logout()">Logout
+          <span class="caret"></span>
+        </a>
+      </li>
+      <li class="time">
+        {{day}}-{{month}}-{{year}}
+      </li>
+      <li style="color: white;font-size: 20px;margin-top: 10px;margin-left: 15px;">Welcome {{username}}
+      </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+<div>
+  <router-outlet></router-outlet>
+</div>

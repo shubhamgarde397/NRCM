@@ -1,0 +1,507 @@
+<div class="well">
+  <div class="row">
+    <div class="col-sm-5">
+      <select class="form-control" [(ngModel)]="displayType" (change)="findOption()">
+        <option *ngFor="let i of options;let j = index;" value={{i.value}} [hidden]="!i.disabled">{{i.viewValue}}</option>
+      </select>
+    </div>
+    <div class="col-sm-5">
+      <h3>{{buttonValue}}</h3>
+      <button class="btn btn-danger" (click)="callOptionAPI()" *ngIf="showButton">Click to Get!</button>
+    </div>
+  </div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='1'">
+  <button class="btn btn-danger" (click)="generateReportAccount()">Download 12/363 Acc</button>
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="tblShow">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Account</th>
+        <th>12</th>
+        <th>363</th>
+        <!-- <th>65</th> -->
+        <th>Options</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of tbl;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.truckno}}</td>
+        <td>
+          <ul>
+            <li>{{i.accountDetails[0]['accountName']}}</li>
+            <li>{{i.accountDetails[0]['accountNumber']}}</li>
+            <li>{{i.accountDetails[0]['ifsc']}}</li>
+          </ul>
+        </td>
+        <td>{{i.accountDetails[0]['acc12']}}</td>
+        <td>{{i.accountDetails[0]['acc363']}}</td>
+        <!-- <td>{{i.accountDetails[0]['acc65']}}</td> -->
+        <td>
+          <button mat-raised-button type="button" *ngIf="!i.accountDetails[0]['acc12']" (click)="update('12',i,j)" class="btn-danger btn-sm btn-just-icon">
+            12
+          </button>
+          <button mat-raised-button type="button" *ngIf="!i.accountDetails[0]['acc363']" (click)="update('363',i,j)" class="btn-warning btn-sm btn-just-icon">
+            363
+          </button>
+          <!-- <button mat-raised-button type="button" *ngIf="!i.accountDetails[0]['acc65']" (click)="update('65',i,j)" class="btn-danger btn-sm btn-just-icon">
+            65
+          </button> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="well" *ngIf="buttonOption==='2'">
+    <div class="row">
+        <div class="col-sm-4">
+    <select class="form-control" [(ngModel)]="selectedMY" (change)="getData('')">
+        <option disabled>Select Option</option>
+        <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+      </select>
+    </div>
+</div>
+<div class="well">
+    <div class="row">
+        <div class="col-sm-2" *ngFor="let i of emptyData">
+<button class="btn btn-warning" (click)="downloadPan(i)">{{i._id}} : {{i.sum}}</button>
+        </div>
+    </div>
+</div>
+<div class="well" *ngIf="pantable">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Srno</th>
+          <th>Date</th>
+          <th>Truck No</th>
+          <th>Name</th>
+          <th>PAN</th>
+          <th>Update</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ii of panarray;let jj=index;">
+          <td>{{jj+1}}</td>
+          <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+          <td>{{ii.truckno}}</td>
+          <td><input type="text" placeholder="Name" id="name_{{jj}}"></td>
+          <td><input type="text" placeholder="PAN" id="pan_{{jj}}"></td>
+          <td><button class="btn btn-warning" (click)="updatePan(ii,jj)">Update</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='3'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getContacts()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="contacttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Number</th>
+        <th>Mobile</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of contactarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="number" value={{ii.contact[0]}} placeholder="" id="contact_{{jj}}"></td>
+        <td><input type="checkbox" value={{ii.m}} id="m_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updateContact(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='4'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAccount('empty')">Get Empty!</button>
+<button class="btn btn-warning" (click)="getAccount('all')">Get All!</button>
+<button class="btn btn-warning" (click)="generateReportAccount2()">Download</button>
+  </div>
+
+<div class="well" *ngIf="accounttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>AccName</th>
+        <th>AccNumber</th>
+        <th>Bank Name</th>
+        <th>IFSC</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of accountarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+
+        <td *ngIf="ii.accountDetails.length!==0">
+          <input type="text" value={{ii.accountDetails[0].accountName}} placeholder="Account Name" id="accname_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+          <input type="text" placeholder="Account Name" id="accname_{{jj}}">
+        </td>
+
+        <td *ngIf="ii.accountDetails.length!==0">
+          <input type="text" value={{ii.accountDetails[0].accountNumber}} placeholder="Account Number" id="accno_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+            <input type="text" placeholder="Account Number" id="accno_{{jj}}">
+          </td>
+
+          <td *ngIf="ii.accountDetails.length!==0">
+          <input type="text" value={{ii.accountDetails[0].bankName}} placeholder="Bank Name" id="bname_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+          <input type="text" placeholder="Bank Name" id="bname_{{jj}}">
+        </td>
+
+        <td *ngIf="ii.accountDetails.length!==0">
+          <input type="text" value={{ii.accountDetails[0].ifsc}} placeholder="IFSC" id="ifsc_{{jj}}">
+        </td>
+        <td *ngIf="ii.accountDetails.length===0">
+          <input type="text" placeholder="IFSC" id="ifsc_{{jj}}">
+        </td>
+
+        <td><button class="btn btn-warning" (click)="updateAccount(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='5'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getTransports()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="tpttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Transport</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of tptarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+          <select [(ngModel)]="selectedTransporter" class="form-control">
+            <option *ngFor="let i of transportlist;let k = index" value={{i._id}}>{{i.tptName}}</option>
+          </select>
+
+        </td>
+        <td>
+          <button class="btn btn-warning" (click)="updatetpt(ii,jj,'diff')">Update</button>
+          <br>
+          <button class="btn btn-warning" (click)="updatetpt(ii,jj,'self')">Self</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='6'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAllTrucks()">None Type All</button>
+  </div>
+  <div class="row">
+  <div class="col-sm-3">
+    <input type="date" [(ngModel)]="loadingDate6">
+  </div>
+  <div class="col-sm-3">
+    <button class="btn btn-danger" (click)="getAllTrucksByDate()">Specific</button>
+  </div>
+  </div>
+
+  <div class="well" *ngIf="typeDataConsists">
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Srno</th>
+          <th>Truck No</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ii of typeDataConsistsArray;let jj=index;">
+          <td>{{jj+1}}</td>
+          <td (click)="deleteTotypeDataConsists(ii,jj)">{{ii.truckno}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button mat-raised-button type="button" (click)="updatetruck2('Container')" class="btn-success btn-sm btn-just-icon">
+      Container
+    </button>
+    <button mat-raised-button type="button" (click)="updatetruck2('Open')" class="btn-danger btn-sm btn-just-icon">
+      Open
+    </button>
+    <button mat-raised-button type="button" (click)="updatetruck2('Taurus')" class="btn-warning btn-sm btn-just-icon">
+      Taurus
+    </button>
+  </div>
+
+<div class="well" *ngIf="trucktable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of truckarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td (click)="addTotypeDataConsists(ii,jj)">{{ii.truckno}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='7'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAllWeights()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="weighttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Weight</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of weightarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+         <input type="number" [(ngModel)]="selectedWeight">
+        </td>
+        <td><button class="btn btn-warning" (click)="updateWeight(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='8'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAllDimensions()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="dimensiontable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Height</th>
+        <th>Width</th>
+        <th>Length</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of dimensionarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+         <input type="number" [(ngModel)]="selectedDimensionH">
+        </td>
+         <td>
+         <input type="number" [(ngModel)]="selectedDimensionB">
+        </td>
+         <td>
+         <input type="number" [(ngModel)]="selectedDimensionL">
+        </td>
+        <td><button class="btn btn-warning" (click)="updatedimension(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='9'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getAccountsUpdateTrue()">Get Data!</button>
+<button class="btn btn-warning" (click)="generateReportAccount2()">Download</button>
+  </div>
+
+<div class="well" *ngIf="accounttableUF">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Name</th>
+        <th>Number</th>
+        <th>IFSC</th>
+        <th>Bank</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of accountarrayUF;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
+        <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
+        <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>
+        <td><input type="text" placeholder="BankName" id="bname_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updateaccountDetails(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='10'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="gettruckFormat()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="truckformattable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>New TruckNo</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of truckformatarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.tno}}</td>
+        <td><input type="text" placeholder="TN12 TN 1212" id="truckno_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updatetruckformat(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='11'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getEmptyRegFee()">Get Reg Data!</button>
+<button class="btn btn-warning" (click)="doRegExpiry()">Registration Expire</button>
+
+  </div>
+
+<div class="well" *ngIf="emptyregDatatable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Date</th>
+        <th>Check</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of emptyregData;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="date" placeholder="" value={{ii.regFeeDate}} id="regFeeDate_{{jj}}"></td>
+        <td><input type="checkbox" id="regFee_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updateRegFee(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='12'">
+  <input type="number" class="form-control" [(ngModel)]="count">
+  <button class="btn btn-danger" (click)="generateReportAccount('123')">Download 12/363 Acc</button>
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="tblShow">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Date</th>
+        <th>Party</th>
+        <th>Account</th>
+        <th>12</th>
+        <th>363</th>
+        <!-- <th>65</th> -->
+        <th>Options</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of tbl;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.truckno}}</td>
+        <td><ul><li *ngFor="let k of i.date">{{k}}</li></ul></td>
+        <td><ul><li *ngFor="let k of i.party">{{k}}</li></ul></td>
+        <td>
+          <ul>
+            <li>{{i.acc['accountName']}}</li>
+            <li>{{i.acc['accountNumber']}}</li>
+            <li>{{i.acc['ifsc']}}</li>
+          </ul>
+        </td>
+        <td>{{i.a12}}</td>
+        <td>{{i.a363}}</td>
+        <!-- <td>{{i.a65}}</td> -->
+        <td>
+          <button mat-raised-button type="button" *ngIf="!i.a12" (click)="update('12',i,j,'4')" class="btn-danger btn-sm btn-just-icon">
+            12
+          </button>
+          <button mat-raised-button type="button" *ngIf="!i.a363" (click)="update('363',i,j,'4')" class="btn-warning btn-sm btn-just-icon">
+            363
+          </button>
+          <!-- <button mat-raised-button type="button" *ngIf="!i.a65" (click)="update('65',i,j,'4')" class="btn-warning btn-sm btn-just-icon">
+            65
+          </button> -->
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
