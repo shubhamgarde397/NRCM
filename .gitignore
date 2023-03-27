@@ -7,7 +7,7 @@
 
 # dependencies
 /node_modules
-/NRCM_QUICK
+/NRCM_FAST
 
 # IDEs and editors
 /.idea
