@@ -3,6 +3,9 @@
         <button class="btn btn-info" (click)="getWhichType('1')">All Truck</button>
     </div> -->
     <div class="col-sm-2">
+        <button class="btn btn-info" (click)="getWhichType('1')">14 days Ago</button>
+    </div>
+    <div class="col-sm-2">
         <button class="btn btn-info" (click)="getWhichType('2')">Single</button>
     </div>
     <div class="col-sm-2">
@@ -38,110 +41,46 @@
 </div>
 
 <div *ngIf="whichType==='1'">
-
-<div class="well" *ngIf="!show">
-
-    <input type="text" [(ngModel)]="data" (input)="newData()" *ngIf="tableDate">
-    <button class="btn btn-danger" (click)="refresh()" *ngIf="tableDate"><i class="material-icons">undo</i></button>
-    <table class="table" style="width:100%" align="center" *ngIf="tableDate">
-
-        <thead>
-            <tr class="table-header">
-                <th>Srno</th>
-                <th>TruckNumber-Type-pdr</th>
-                <th>Owner Name<br>Pan<br>Aadhar</th>
-                <th>License</th>
-                <th>Contact</th>
-                <th>ContactO</th>
-                <th>Account Details</th>
-                <th>Prefer</th>
-                <th>Native</th>
-                <th>Delete<br>Update</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let i of ownerdetailslist;let j = index">
-                <td>{{j+1}}</td>
-                <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}<br>
-                    <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i>
-
-                    <i class="material-icons" *ngIf="i.d" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.d" style="color: red;">close</i>
-
-                    <i class="material-icons" *ngIf="i.r" style="color: green;">done</i>
-                    <i class="material-icons" *ngIf="!i.r" style="color: red;">close</i>
-
-                    
-
-
-                    <br>{{i.h}}-{{i.b}}-{{i.l}}-{{i.weight}}
-                    <br><span *ngIf="i.transports.length>0">{{i.transports[0].tptName}}</span>
-                
-                </td>
-                <td>
-                    <ul>
-                        <li>{{i.oname}}</li>
-                        <li>{{i.pan}}</li>
-                        <li>{{i.aadhar}}</li>
+    <div class="well">
+    <div>
+        <button class="btn btn-danger" (click)="f14daysago()"><i class="material-icons" >send</i></button></div>
+    
+        <table class="table" style="width:100%" align="center"  *ngIf="tableDate1">
+    
+            <thead>
+                <tr class="table-header">
+                    <th>Srno</th>
+                    <th>Truck</th>
+                    <th>Last Details</th>
+                    <th>Score</th>
+                    <th>Contact</th>
+                    <th>Prefer</th>
+                    <th>JG</th>
+                    <th>Option</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let i of ownerdetailslist2;let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}</td>
+                    <td>{{i.currentDate|date:'dd-MM-yyyy'}}-{{i.currentLoc}}</td>
+                    <td>{{i.load}}/{{i.total}}={{i.score}}</td>
+                    <td>
+                        <ul *ngFor="let k of i.contact">
+                            <li>{{k}}</li>
                         </ul>
                     </td>
-                <td>
-                    <ul>
-                    <li>RC : <i class="material-icons" *ngIf="i.r" style="color: green;">
-                        done
-                        </i><i class="material-icons" *ngIf="!i.r" style="color: red;">
-                          close
-                          </i></li>
-                    <li>LC : <i class="material-icons" *ngIf="i.d" style="color: green;">
-                        done
-                        </i><i class="material-icons" *ngIf="!i.d" style="color: red;">
-                          close
-                          </i></li>
-                    </ul>
-                </td>
-                <td>
-                    <ul *ngFor="let k of i.contact">
-                        <li>{{k}}</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul *ngFor="let kk of i.contactO">
-                        <li>{{kk}}</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul *ngFor="let k of i.accountDetails">
-                        <li>{{k.accountName}} : {{k.bankName}}</li>
-                        <li>{{k.accountNumber}}</li>
-                        <li>{{k.ifsc}}</li>
-                        <li>12 : {{k.acc12}}</li>
-                        <li>363 : {{k.acc363}}</li>
-                        <li>65 : {{k.acc65}}</li>
-                        <hr>
-                    </ul>
-                </td>
-                <td>
-                    <ul *ngFor="let j of i.preferences;">
-                        <li>{{j}}</li>
-                    </ul>
-                </td>
-                <td>
-                    <ul *ngFor="let j of i.nativeplaces;">
-                        <li>{{j}}</li>
-                    </ul>
-                    <button class="btn btn-danger" (click)="shownative(i._id,j,'all')">Show Native</button>
-                    
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div *ngIf="show">
-    <router-outlet></router-outlet>
-</div>
-
-</div>
+                    <td>
+                        <ul *ngFor="let j of i.preferences;">
+                            <li>{{j}}</li>
+                        </ul>
+                    </td>
+                    <td>{{i.jg}}</td>        
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
 
 <div *ngIf="whichType==='2'">
 <div class="well">

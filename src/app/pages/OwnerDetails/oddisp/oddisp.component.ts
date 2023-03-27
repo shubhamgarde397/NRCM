@@ -59,6 +59,7 @@ export class OddispComponent implements OnInit {
   public ownerdetailslist7=[]
   public fromsrno=0;
   public selected7=false;
+  public tableDate1=false;
   // 
 
   constructor(
@@ -82,12 +83,6 @@ export class OddispComponent implements OnInit {
 this.whichType=data;
 this.selected7=false;
 switch(data){
-  case '1':
-    
-    this.tableDate2=false;
-    this.tableDate=false;
-    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    break;
     case '2':
       this.tableDate=false;
       this.fetchBasic();
@@ -117,7 +112,17 @@ switch(data){
         
 }
   }
+  f14daysago(){
+    this.tableDate1=true;
+    let tempObj = {}
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'getLastLoaded14daysago'
 
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.ownerdetailslist2=res.Data;
+      });
+  }
   copyAcc(data){
     console.log(data);
     

@@ -164,25 +164,13 @@ formbody['selectedPochDate']=this.selectedPochDate;
     this.apiCallservice.handleData_New_python
     ('commoninformation', 1, formbody, true)
     .subscribe((res: any) => {
-      this.fullpendingPayment=this.addBHAmount(res.Data);
+      this.fullpendingPayment=res.Data;
       this.paymentSettings=true;
     });
     
   }
   copyAmount(){
     this.selectedPaymentAmount=this.defaultAmt;
-  }
-
-  addBHAmount(data){
-    data.forEach(r=>{
-      let arr=r['advanceArray']
-      for(let i=0;i<arr.length;i++){
-          if(arr[i]['reason']==='Balance'){
-              r['BHAmount']=arr[i]['advanceAmt']
-          }   
-      }
-  })
-    return data
   }
 
   paymentDateAmount(){
@@ -193,64 +181,66 @@ formbody['selectedPochDate']=this.selectedPochDate;
 
   addtosavearray(i,j){
     this.saveArray.push(i)
+    console.log(i);
+    
     this.saveArrayData=true;
     this.fullpendingPayment.splice(j,1)
-    this.defaultAmt=this.defaultAmt+parseInt((i['BHAmount']))
+    this.defaultAmt=this.defaultAmt+parseInt((i['pochAmount']))
   }
 
   deletetosavearray(i,j){
     this.saveArray.splice(j,1)
     this.saveArrayData=this.saveArray.length>0?true:false;
     this.fullpendingPayment.push(i)
-    this.defaultAmt=this.defaultAmt-parseInt((i['BHAmount']))
+    this.defaultAmt=this.defaultAmt-parseInt((i['pochAmount']))
+  }
+
+  sendDatatoUpdate(){
+    let obj={}
+    let saveArray2=[]
+    this.saveArray.forEach(r=>{saveArray2.push(r._id)})
+    obj['ids']=saveArray2;
+    obj['paymentDate']=this.selectedPaymentDate;
+    obj['paymentAmt']=this.selectedPaymentAmount;
+    obj['statusOfPoch']=this.statusOfPoch;
+    obj['tablename']='';
+    obj['method']='updateActualPaymentDetails'
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, obj, true)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.saveArray=[]
+      this.selectedPaymentAmount=0;
+      this.selectedPaymentDate=''
+      this.defaultAmt=0;
+    });
   }
 
   // sendDatatoUpdate(){
-  //   let obj={}
-  //   let saveArray2=[]
-  //   this.saveArray.forEach(r=>{saveArray2.push(r._id)})
-  //   obj['ids']=saveArray2;
-  //   obj['paymentDate']=this.selectedPaymentDate;
-  //   obj['paymentAmt']=this.selectedPaymentAmount;
-  //   obj['statusOfPoch']=this.statusOfPoch;
-  //   obj['tablename']='';
-  //   obj['method']='updateActualPaymentDetails'
+  //   let bigArray=[]
+  //   let tempObj={}
+  //   for(let i=0;i<this.fullpendingPayment.length;i++){
+  //     if((<HTMLInputElement>document.getElementById('amt_'+i)).value===''){}
+  //     else{
+  //       let obj={}
+  //       obj['ids']=this.fullpendingPayment[i]['_id'];
+  //       obj['paymentDate']=(<HTMLInputElement>document.getElementById('date_'+i)).value;
+  //       obj['paymentAmt']=parseInt((<HTMLInputElement>document.getElementById('amt_'+i)).value);
+  //       obj['statusOfPoch']=(<HTMLInputElement>document.getElementById('status_'+i)).value;
+
+  //       bigArray.push(obj)
+  //         }
+  //     }
+  //     tempObj['array']=bigArray;
+  //     tempObj['tablename']='';
+  //     tempObj['method']='updateActualPaymentDetailsSingly'
   //   this.apiCallservice.handleData_New_python
-  //   ('commoninformation', 1, obj, true)
+  //   ('commoninformation', 1, tempObj, true)
   //   .subscribe((res: any) => {
   //     alert(res.Status);
-  //     this.saveArray=[]
-  //     this.selectedPaymentAmount=0;
-  //     this.selectedPaymentDate=''
-  //     this.defaultAmt=0;
+  //     alert('Please Refresh!')
   //   });
   // }
-
-  sendDatatoUpdate(){
-    let bigArray=[]
-    let tempObj={}
-    for(let i=0;i<this.fullpendingPayment.length;i++){
-      if((<HTMLInputElement>document.getElementById('amt_'+i)).value===''){}
-      else{
-        let obj={}
-        obj['ids']=this.fullpendingPayment[i]['_id'];
-        obj['paymentDate']=(<HTMLInputElement>document.getElementById('date_'+i)).value;
-        obj['paymentAmt']=parseInt((<HTMLInputElement>document.getElementById('amt_'+i)).value);
-        obj['statusOfPoch']=(<HTMLInputElement>document.getElementById('status_'+i)).value;
-
-        bigArray.push(obj)
-          }
-      }
-      tempObj['array']=bigArray;
-      tempObj['tablename']='';
-      tempObj['method']='updateActualPaymentDetailsSingly'
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      alert('Please Refresh!')
-    });
-  }
 
  
 
@@ -1506,5 +1496,3 @@ if(newpage===1){
     }
   }
 }
-
-
