@@ -58,7 +58,7 @@ public acknowledgement=false;
   }
 
   PochBill(){//threshhold is 295
-    var doc = new jsPDF()
+    var doc = new jsPDF('p','mm',[298 , 210])//Print from phone on a5 page
       for(let i=this.from;i<=this.to;i++)
       {
         this.pdfData(doc,false,i);
