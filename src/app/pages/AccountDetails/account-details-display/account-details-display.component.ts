@@ -32,7 +32,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Count Partywise','value':'14'},
     {'viewValue':'Count Loadwise','value':'15'},
     {'viewValue':'Missing Parent','value':'16'},
-    {'viewValue':'Missing Type Of Loan','value':'17'},
+    {'viewValue':'Missing Type Of Load','value':'17'},
   ]
   public displayType;
   public buttonOption;

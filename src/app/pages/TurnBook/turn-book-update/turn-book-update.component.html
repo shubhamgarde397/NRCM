@@ -1,365 +1,125 @@
-<div class="well" *ngIf="updateOption!==3">
+<div class="well">
 
-  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
-    action="/" name="myform" id="myform">
-    <!-- turnbookDate-->
-    <div class="form-group row">
-      <div class="col-xs-3">
-        Truck No : <input type="text" id="text" class="form-control" formControlName="truckno" disabled>
+
+
+<div class="well">
+  <div class="row">
+    <div class="col-sm-3">
+      <button class="btn btn-danger" (click)="getDoubts()">Get Doubts TB</button>
       </div>
-
-      <div class="col-xs-3">
-       Turnbook Date :  <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate" disabled>
-      </div>
-
-      <div class="col-xs-3">
-        Invoice : <input type="text" class="form-control" formControlName="invoice"/>
-       </div>
-
-      <div class="col-xs-2">
-       Complete :  <input type="checkbox" id="complete" class="form-control" formControlName="complete">
-      </div>
-
-
+      <div class="col-sm-3">
+        <button class="btn btn-danger" (click)="getDoubtsOD()">Get Doubts OD</button>
     </div>
-    <!--turnbookDate -->
-
-    <!-- loadingDate-->
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        Loading Date - <input type="date" id="loadingDate" class="form-control" formControlName="loadingDate">
-      </div>
-
-      <div class="col-xs-2">
-        Party Type:
-        <select id="partyType" class="form-control" formControlName="partyType" (change)="findParentAccNo()">
-          <option>NRCM</option>
-          <option>NR</option>
-          <option>SNL</option>
-        </select>
-      </div>
-
-
-      <div class="col-sm-2">
-        Party : {{partyToUI}}
-      <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
-        <option selected disabled value={{partyid}}>{{party}}</option>
-        <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
+    <div class="col-sm-3">
+      <select class="form-control" [(ngModel)]="displayType" (change)="findOption()">
+        <option *ngFor="let i of options;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
       </select>
     </div>
-    <div class="col-sm-2">
-      Old Party : 
-      <input type="text" id="partyName" class="form-control" formControlName="partyName" disabled>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <button class="btn btn-danger" (click)="getData()">Get Places</button>
       </div>
+  </div>
+</div>
+</div>
 
-
-
-
-      <div class="col-xs-2">
-        Load Type : {{typeToUI}}
-        <select class="form-control" formControlName="typeOfLoad" (change)="infoFromtypeOfLoad()">
-          <option value="Blank">Blank</option>
-          <option *ngFor="let i of Loadarr;"value={{i.loadSingle}}+{{i.loadHire}}+{{i.loadAdvance}}>{{i.loadSingle}}</option>
-        </select>
-      </div>
-    </div>
-    <!--loadingDate -->
-
-
-
-    <!--Place-->
-    <div class="form-group row">
-   
-
-
-      <div class="col-sm-2">
-        Place : 
-        <select id="place" class="form-control" formControlName="place" (blur)="setPlaceName()">
-          <option disabled value="{{placeid}}" selected>{{place}}</option>
-          <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
-        </select>
-        </div>
-        <div class="col-sm-2">
-          Old Place : 
-        <input type="text" id="place" class="form-control" formControlName="place" disabled>
-        </div>
-
-        <div class="col-sm-2">
-          Place 2 : 
-          <select id="place2" class="form-control" formControlName="place2" (blur)="setPlaceName2()">
-            <option disabled value="{{placeid2}}" selected>{{place2}}</option>
-            <option *ngFor="let own of villagelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
-          </select>
-          </div>
-          <div class="col-sm-2">
-            Old Place 2 : 
-          <input type="text" id="place" class="form-control" formControlName="place2" disabled>
-          </div>
-
-
-
-        <div class="col-xs-2">
-          Lrno : <input type="number" id="lrno" class="form-control" formControlName="lrno">
-         </div>
-         <div class="col-sm-2">
-          Acc No : 
-        <input type="number" id="parentAccNo" class="form-control" formControlName="parentAccNo">
-        </div>
-    </div>
-    <!--place-->
-
-    <div class="well">
-      <h2>Payment Details</h2>
-      <div class="form-group row">
-        <div class="col-sm-3">
-          Hire Amount : 
-          <input type="number" class="form-control" formControlName="hamt" (change)="balance()" />
-          </div>
-          <div class="col-sm-3">
-            Truck Amount : 
-            <input type="number" class="form-control" formControlName="rent" (change)="balance()" />
-          </div>
-          <div class="col-sm-3">
-            Balance : 
-            <input type="number" class="form-control" formControlName="balance" disabled/>
-          </div>
-          
-      </div>
 <div class="well">
-  
-
-      <div class="row">
+  <button class="btn btn-warning" (click)="updatetruckformat()">Update</button>
+  <table class="table" *ngIf="mainTable">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Date</th>
+        <th>{{buttonValue}}</th>
+        <th>New-{{buttonValue}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of data;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.datetruck.split('_')[1]}}</td>
+        <td *ngIf="buttonOption==='2'">{{ii.typeOfLoad}}</td>
+        <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+        <td *ngIf="buttonOption==='1'">{{ii.lrno}}</td>
+        <td *ngIf="buttonOption==='2'">{{ii.typeOfLoad}}</td>
+        <td *ngIf="buttonOption==='3'">{{ii.place1}}</td>
+        <td *ngIf="buttonOption==='4'">{{ii.place2}}</td>
         
+        <td *ngIf="buttonOption==='1'"><input type="number" placeholder="1234" id="lrno_{{jj}}"></td>
 
-        <div class="col-sm-2">
-          <input type="number" class="form-control" formControlName="advanceAmt"/>
-        </div>
-        <div class="col-sm-2">
-          <input type="date" class="form-control" formControlName="advanceDate"/>
-        </div>
-        <div class="col-sm-2">
-          <select class="form-control" formControlName="reason">
-            <option value="Advance">Advance</option>
-            <option value="Diesel">Diesel</option>
-            <option value="Balance">Balance</option>
-            <option value="Other">Other</option>
+        <td *ngIf="buttonOption==='2'">
+          <select id="typeOfLoad_{{jj}}" class="form-control">
+            <option selected disabled>Select</option>
+            <option value='Pipe'>Pipe</option>
+            <option value='Fittings'>Fittings</option>
+            <option value='Other'>Other</option>
           </select>
-        </div>
-        <div class="col-sm-2">
-          <select class="form-control" formControlName="typeOfTransfer">
-            <option value="NEFT-12">NEFT-12</option>
-            <option value="NEFT-363">NEFT-363</option>
-            <option value="NEFT-65">NEFT-65</option>
-            <option value="IMPS">IMPS</option>
-            <option value="Cash">Cash</option>
+        </td>
+
+        <td *ngIf="buttonOption==='3'">
+          <select id="placeName1_{{jj}}" class="form-control">
+            <option selected disabled>Select</option>
+            <option *ngFor="let i of places;let j = index;" value={{i._id}}>{{i.village_name}}</option>
           </select>
-        </div>
-        <div class="col-sm-3">
-          <div class="row">
-            <div class="col-sm-12"><button class="btn btn-warning" style="width: 100%;" type="button" (click)="addAccountDetails()">Get Account Details</button></div>
-            <div class="col-sm-12"><input type="number" class="form-control" formControlName="BHAccNo"/></div>
-            <div class="col-sm-12"><input type="text" class="form-control" formControlName="BHAccname"/></div>
-            <div class="col-sm-12"><input type="text" class="form-control" formControlName="BHIFSC"/></div>
-          </div>
-        </div>
-          <div class="col-sm-3">
-            <button type="button" style="width: 100%;" class="btn btn-warning" (click)="addPaymentDetails()">Add Payment</button>
-          </div>
-
-        <div class="row">
-          
-          <table class="table table-bordered">
-            <tr>
-              <th>Srno</th>
-              <th>Date</th>
-              <th>Amount</th>
-              <th>Reason</th>
-              <th>Type</th>
-              <th>Account</th>
-              <th>Delete</th>
-            </tr>
-            <tr *ngFor="let i of advanceArray;let j = index;">
-              <td>{{j+1}}</td>
-              <td>{{i.advanceDate}}</td>
-              <td>{{i.advanceAmt}}</td>
-              <td>{{i.reason}}</td>
-              <td>{{i.typeOfTransfer}}</td>
-              <td>
-                <ul>
-                  <li>{{i.BHAccname}}</li>
-                  <li>{{i.BHAccNo}}</li>
-                  <li>{{i.BHIFSC}}</li>
-                </ul>
-              </td>
-              <td><button style="width: 100%;" type="button" class="btn btn-danger" (click)="deleteOneA(i,j)">Delete</button></td>
-            </tr>
-          </table>
-        </div>
-
-      </div>
-    </div>
-    </div>
-
-    <!-- DATE-->
-    <div class="form-group row">
-<h4>Poch Details</h4>
-      <div class="col-xs-2">
-        Date : 
-        <input type="date" id="pochDate" class="form-control" formControlName="pochDate" disabled>
-      </div>
-      <div class="col-xs-2">
-        Pgno : 
-        <input type="text" id="pgno" class="form-control" formControlName="pgno" disabled>
-      </div>
-      <div class="col-xs-2">
-        Poch Payment :
-        <input type="checkbox" id="pochPayment" class="form-control" formControlName="pochPayment" [attr.disabled]="paymentDisabled? true : null">
-      </div>
-      <div class="col-xs-2">
-        Given Date :
-        <input type="date" id="givenDate" class="form-control" formControlName="givenDate">
-      </div>
-      <div class="col-xs-2">
-        Poch Amount :
-        <input type="number" id="pochAmount" class="form-control" formControlName="pochAmount">
-      </div>
-
-
-      <div class="col-xs-2">
-        Wait Location : 
-        <select class="form-control" formControlName="waitLocation">
-          <option value="Shivapur">Shivapur</option>
-          <option value="Dhaba">Dhaba</option>
-          <option value="None">None</option>
-        </select>
-      </div>
-
-
-    </div>
-
-    
-    <div class="form-group row">
-      <div class="col-xs-6">
-        <div class="row">
-          <div class="col-sm-6">
-            Party Payment : 
-            <select id="partyPayment" class="form-control" formControlName="partyPayment" [(ngModel)]="partyPayment" (change)="setPaymentName()" [attr.disabled]="paymentDisabled? null : null">
-              <option selected disabled>{{paymentName}}</option>
-              <option *ngFor="let i of newPayment;let j = index;" value={{i._id}}+{{j}}>{{i.date}}_{{i.amount}}</option>
-            </select>
-          </div>
-          <div class="col-sm-6">
-            <input type="text" id="paymentName" class="form-control" formControlName="paymentName" disabled>
-          </div>
-        </div>
-      </div>
-
-    </div>
-    <!--DATE -->
-
-
-
-
-    <!--  partyPayment-->
-
-    <div class="row">
-      <div class="form-group" class="col-xs-2"></div>
-      <div class="form-group" class="col-xs-1">
-        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-          <i class="material-icons">send</i>
-        </button>
-      </div>
-    </div>
-
-  </form>
-
-
-
+        </td>
+        <td *ngIf="buttonOption==='4'">
+          <select id="placeName2_{{jj}}" class="form-control">
+            <option selected disabled>Select</option>
+            <option *ngFor="let i of places;let j = index;" value={{i._id}}>{{i.village_name}}</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div class="well" *ngIf="updateOption==3">
-
-  <form [formGroup]="myFormGroup1" (ngSubmit)="change2(myFormGroup1)" submitted=true enctype="multipart/form data"
-    action="/" name="myform" id="myform">
-
-
-
-
-    <!--OldTruckNo-->
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="OldTruckNo"> Old TruckNo </label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="text" id="text" class="form-control" [(ngModel)]="oldTruckNo" [ngModelOptions]="{standalone: true}"
-          disabled>
-      </div>
-
-    </div>
-    <!--OldTruckNo-->
+<div class="well">
+  <button class="btn btn-warning" (click)="updatetruckformat1()">Update</button>
+  <table class="table" *ngIf="mainTable2">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>To Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of data;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="text" placeholder="TN10 BR 1212" id="truck_{{jj}}"></td>
 
 
-    <!-- turnbookDate-->
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="turnbookDate"> Turn Book Date</label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="date" id="turnbookDate" class="form-control" formControlName="turnbookDate" disabled>
-      </div>
-
-
-    </div>
-    <!--turnbookDate -->
-    <!-- entryDate-->
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="entryDate"> entryDate</label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="date" id="entryDate" class="form-control" formControlName="entryDate" disabled>
-      </div>
-
-
-    </div>
-    <!--entryDate -->
-
-
-
-    <div class="form-group row">
-
-      <div class="col-xs-2">
-        <label for="truckNo"> Truckno </label>
-      </div>
-
-      <div class="col-xs-3">
-        <select class="form-control" id="partyType" formControlName="truckNo" [(ngModel)]="trucknoid"
-          (change)="findtruckdetails()" id="truckNoone">
-          <option *ngFor="let i of truckdetailslist;let j = index;" value={{i._id}}+{{i.truckno}}>{{i.truckno}}</option>
-        </select>
-      </div>
-
-    </div>
-
-
-    <div class="row">
-      <div class="form-group" class="col-xs-2"></div>
-      <div class="form-group" class="col-xs-1">
-        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-          <i class="material-icons">send</i>
-        </button>
-      </div>
-    </div>
-
-  </form>
-
-
-
+      </tr>
+    </tbody>
+  </table>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

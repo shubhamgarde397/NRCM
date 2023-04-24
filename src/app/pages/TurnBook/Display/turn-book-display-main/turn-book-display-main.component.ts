@@ -10,6 +10,7 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { range } from 'rxjs';
+import { log } from 'console';
 
 @Component({
   selector: 'app-turn-book-display-main',
@@ -71,6 +72,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
     { 'value': '17', 'viewvalue': 'Double Loading' ,'disabled':false},
     { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
+    { 'value': '19', 'viewvalue': 'Party Name' ,'disabled':false},
   ]
   // 18
   public inProgress=true;
@@ -81,7 +83,13 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public oldIndex;
   public bigData;
   public partyVar18;
+  public partyVar19;
   // 18
+  // 19
+  public showbuttonOption19=false;
+  public show19Msg
+  public lrnos=[];
+  // 19
   public changeText=false;
   public trucknoid11;
   public years = []
@@ -104,6 +112,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public selectedmy;
   public turnbooklist_trucks = [];
   public myFormGroup: FormGroup;
+  public myFormGroup9: FormGroup;
   public considerArray;
   public villagelist: any;
   public parties: any;
@@ -390,17 +399,41 @@ let buttons=[]
   }
   findgst18() {
     this.turn18=this.turn18show;
-    console.log(this.turn18);
-    
-    this.turn18=this.turn18.filter(r=>{return r.partyid===(this.handleF.findgst(this.partyVar18, this.parties))['_id']})
+     this.turn18=this.turn18.filter(r=>{return r.partyid===(this.handleF.findgst(this.partyVar18, this.parties))['_id']})
+
   }
+
 
   removegst(){
 
   }
 
+  sendToSet(){
+    let temp={
+      "lrnos":this.lrnos,
+      "tablename":"",
+      "method":"lrtoparty",
+      "partyid":this.partyVar19
+    }
+
+    this.apiCallservice.handleData_New_python('turnbook', 1, temp, true)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.lrnos=[];
+    })
+  }
+
   findtruck() {
     this.truckid = this.handleF.findowner(this.truckVar, this.trucks,'Select Truck No');
+  }
+
+  addlrno(data){
+    this.lrnos.push(data.value.lrno);
+    this.myFormGroup9.patchValue({'lrno':''})
+  }
+
+  delLR(i){
+    this.lrnos.splice(i, 1);
   }
 
   findOption() {
@@ -491,8 +524,14 @@ let buttons=[]
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayTB'
     tempObj['display'] = this.buttonOption;
-
-if(this.buttonOption !== '11'){
+    if (this.buttonOption == '19') {
+      this.showbuttonOption19=true;
+      this.myFormGroup9 = this.formBuilder.group({
+        lrno: ''
+      });
+      this.parties = this.parties.filter(r=>{return r.partyType===this.buttonOptionPartyType})
+    }
+else if(this.buttonOption !== '11'){
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
       .subscribe((res: any) => {
