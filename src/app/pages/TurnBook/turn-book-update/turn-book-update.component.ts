@@ -70,7 +70,7 @@ export class TurnBookUpdateComponent implements OnInit {
     this.caller = this.options[parseInt(this.displayType) - 1].caller;
   }
 
-  getData(data) {
+  getData() {
     let tempobj = {};
         this.considerArray = [0, 0, 0, 1, 0, 0, 0, 0]
         tempobj = { "method": "displaynew", "consider": this.considerArray, 'notall': false };
