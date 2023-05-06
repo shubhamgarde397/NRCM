@@ -20,6 +20,9 @@
     <div class="col-sm-2">
       <button class="btn btn-info" (click)="getWhichType('3')">Truck Details</button>
   </div>
+  <div class="col-sm-2">
+    <button class="btn btn-info" (click)="getWhichType('4')">Load Truck Details</button>
+</div>
 </div>
 
 <div *ngIf="whichType==='1'">
@@ -64,6 +67,12 @@
                   </select>
                 </div>
               </div>  
+
+              <div class="form-group row">
+                <div class="col-xs-3">
+                 Tons :  <input type="number" id="value" class="form-control" formControlName="ton">
+                </div>
+              </div>
 
               <div class="form-group row">
                 <div class="col-xs-3">
@@ -154,3 +163,68 @@
 
       </div>
       </div>
+
+      <div *ngIf="whichType==='4'">
+        <div class="well">
+        <div class="row">
+
+          <div class="col-sm-3">
+             <select class="form-control" [(ngModel)]="rc">
+                <option>Default</option>
+                <option value="AP">AP</option>
+                <option value="MH">MH</option>
+                <option value="KA">KA</option>
+                <option value="TN">TN</option>
+              </select>
+          </div>
+
+         <div class="col-sm-3">
+          <select class="form-control" [(ngModel)]="load">
+             <option>Default</option>
+             <option value="Pipe">Pipe</option>
+             <option value="Fittings">Fittings</option>
+             <option value="Other">Other</option>
+           </select>
+       </div>
+
+          <div class="col-sm-3">
+            <button class="btn btn-warning col-sm-3" (click)="find4()">Find</button>
+          </div>
+
+        </div>
+            
+        <div class="col-sm-12">
+  
+              <table class="table" style="width:100%" align="center" *ngIf="table4">
+                    <thead align="center" style="font-weight: bold">
+                      <tr class=table-header>
+                        <th>Srno</th>
+                        <th>TruckNo</th>
+                        <th>Type-Party-Place</th>
+                        <th>LRNO</th>
+                        <th>Amount</th>
+                        <th>Poch : Amt : Acc</th>
+                        <th>Payment Details</th>
+                      </tr>
+                    </thead>
+                    <tbody align="center">
+                      <tr *ngFor="let i of turn11;let j = index">
+                        <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+                          done
+                          </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+                            close
+                            </i></td>
+                        <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                        <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
+                        <td>{{i.lrno}}</td>
+                        <td>{{i.hamt}}<br>{{i.rent}}</td>
+                        <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
+                        <td [ngStyle]="{'background-color': i.colors[1]}">{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+           
+  
+        </div>
+        </div>

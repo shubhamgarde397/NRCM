@@ -49,7 +49,8 @@ export class MainPageComponent implements OnInit {
     this.myFormGroup = this.formBuilder.group({
       location: '',
       typeOfLoad: '',
-      value:''
+      value:'',
+      ton:7
     });
   }
 
