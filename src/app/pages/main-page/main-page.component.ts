@@ -18,19 +18,25 @@ export class MainPageComponent implements OnInit {
   public date3month;
   public unique11turnbooklist=[];
   public todayDate;
+  public placeidto;
+  public partyidto;
   public data=[];
   public trucknoid11=''
   public selectDate=false;
   public byTruckName=false;
   public villagenamelist=[];
   public whichType='0';
+  public parties=[]
+  public places=[]
   public tableDate=false;
   public turnbooklist=[]
   public turn11=[];
   public myFormGroup: FormGroup;
+  public unique5turnbooklist=[];
   public commonArray;
   public considerArray;
   public truckVar;
+  public wala11=false;
 
   constructor(
     public apiCallservice: ApiCallsService,
@@ -81,13 +87,17 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         }
       });
   }
-find(){
-
-
+find(event){
+  if(event==='11'){
+    this.wala11=true;
+  }
+  else{
+    this.wala11=false;
+  }
         let tempObj1={};
     tempObj1['tablename'] = 'turnbook'
     tempObj1['method'] = 'singleTruck'
-    tempObj1['display'] = "11";
+    tempObj1['display'] = event;
     tempObj1['truckno'] = this.truckVar;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true,this.handleF.createDate(new Date()),'nrcm')
       .subscribe((res: any) => {
@@ -95,7 +105,10 @@ find(){
         this.byTruckName=true;
         this.turnbooklist = res.Data;
         this.unique11turnbooklist= res.Data.map(r=>r.truckName.truckno).filter(function(item, pos) {return res.Data.map(r=>r.truckName.truckno).indexOf(item) == pos;})
-
+        if(event==='11new'){
+          this.trucknoid11=res.Data[0].truckName.truckno
+          this.find11UniqueTruck();
+        }
       });
 
 }
@@ -131,6 +144,44 @@ find(){
   })
     
     }
+  }
+
+  getVillages(){
+    let value={}
+    value['method'] = 'display';
+    value['code'] = 'v';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, true)
+      .subscribe((res: any) => {
+        this.places=res.Data;
+        this.sec.commonArray['places'] = res.Data.length > 0 ? res.Data : this.sec.commonArray['places'];
+      });
+  }
+  getparties(){
+    let value={}
+    value['method'] = 'display';
+    value['code'] = 'p';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, true)
+      .subscribe((res: any) => {
+        this.parties=res.Data;
+        this.sec.commonArray['parties'] = res.Data.length > 0 ? res.Data : this.sec.commonArray['parties'];
+      });
+  }
+
+  getVPData(){
+    let tempObj1={};
+    tempObj1['method'] = 'villagerent'
+    tempObj1['tablename'] = ''
+    tempObj1['partyid'] = this.partyidto;
+    tempObj1['placeid'] = this.placeidto;
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true,this.handleF.createDate(new Date()),'nrcm_f')
+      .subscribe((res: any) => {
+        this.turnbooklist = res.Data;
+      })
+
+    
+
   }
 }
 
