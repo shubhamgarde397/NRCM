@@ -291,7 +291,7 @@
                     <tbody align="center">
                       <tr *ngFor="let i of turnbooklist;let j = index">
                         <td>{{j+1}}</td>
-                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}=>{{i.datetruck}}</td>
                         <td>{{i.lrno}}</td>
                         <td>{{i.hamt}}<br>{{i.rent}}</td>
                         <td>{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}</td>
