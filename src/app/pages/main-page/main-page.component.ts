@@ -37,6 +37,7 @@ export class MainPageComponent implements OnInit {
   public considerArray;
   public truckVar;
   public wala11=false;
+  public data6=[];
 
   constructor(
     public apiCallservice: ApiCallsService,
@@ -68,10 +69,6 @@ switch(data){
       this.tableDate=false;
       tempObj['tablename'] = ''
     tempObj['method'] = 'getRent'
-      break;
-      case '2':
-        tempObj['tablename'] = ''
-        tempObj['method'] = 'getVillages'
       break;
 }
 this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
@@ -179,9 +176,30 @@ find(event){
       .subscribe((res: any) => {
         this.turnbooklist = res.Data;
       })
+  }
+  find6(){
+  let tempObj1={};
+    tempObj1['method'] = 'getTeBa';
+    tempObj1['tablename'] = '';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true,this.handleF.createDate(new Date()),'nrcm_f')
+      .subscribe((res: any) => {
+        this.data6 = res.Data;
+      })
+}
+  setTB(){
+    let arr=[]
+    for (let i = 0; i < this.data6.length; i++) {
+        if (((<HTMLInputElement>document.getElementById('tb_' + i + '_' + i)).value.length == 0)) {
+          break;
+        }
+        else {
+          arr.push(this.data6[i])
+        }
 
+    }
+
+    console.log(this.data6);
     
-
   }
 }
 

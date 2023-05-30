@@ -11,20 +11,20 @@
 
 
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-1">
         <button class="btn btn-info" (click)="getWhichType('1')">Rent</button>
     </div>
-    <div class="col-sm-2">
-        <button class="btn btn-info" (click)="getWhichType('2')">Rent Add</button>
-    </div>
-    <div class="col-sm-2">
-      <button class="btn btn-info" (click)="getWhichType('3')">Truck Details</button>
+    <div class="col-sm-1">
+      <button class="btn btn-info" (click)="getWhichType('2')">Truck Data</button>
   </div>
-  <div class="col-sm-2">
-    <button class="btn btn-info" (click)="getWhichType('4')">Load Truck Details</button>
+  <div class="col-sm-1">
+    <button class="btn btn-info" (click)="getWhichType('3')">By Load</button>
 </div>
-<div class="col-sm-2">
-  <button class="btn btn-info" (click)="getWhichType('5')">Find village</button>
+<div class="col-sm-1">
+  <button class="btn btn-info" (click)="getWhichType('4')">VillageParty</button>
+</div>
+<div class="col-sm-1">
+  <button class="btn btn-info" (click)="getWhichType('5')">Tentative</button>
 </div>
 </div>
 
@@ -55,64 +55,65 @@
             </tbody>
         </table>
     </div>
+
+    <div class="well">
+      <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+        enctype="multipart/form data" action="/">
+    
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <select id="location" class="form-control" formControlName="location">
+              <option selected>Select Place</option>
+              <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
+            </select>
+          </div>
+          <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
+            <i class="material-icons" (click)="getVillages()">autorenew</i>
+          </div>
+        </div>  
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+           Tons :  <input type="number" id="value" class="form-control" formControlName="ton">
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <select id="typeOfLoad" class="form-control" formControlName="typeOfLoad">
+              <option selected>Select Type</option>
+              <option value="Pipe">Pipe</option>
+              <option value="Fittings">Fittings</option>
+            </select>
+          </div>
+        </div>  
+    
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <input type="number" id="value" class="form-control" formControlName="value" placeholder="Value">
+          </div>
+        </div>
+    
+                
+    
+        <div class="row">
+          <div class="form-group" class="col-xs-2"></div>
+          <div class="form-group" class="col-xs-1">
+            <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+              <i class="material-icons">send</i>
+            </button>
+          </div>
+    
+    
+        </div>
+      </form>
+    
+    
+    
+    </div>
     </div>
 
     <div *ngIf="whichType==='2'">
-        <div class="well">
-            <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
-              enctype="multipart/form data" action="/">
-          
-              <div class="form-group row">
-                <div class="col-xs-3">
-                  <select id="location" class="form-control" formControlName="location">
-                    <option selected>Select Place</option>
-                    <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
-                  </select>
-                </div>
-              </div>  
-
-              <div class="form-group row">
-                <div class="col-xs-3">
-                 Tons :  <input type="number" id="value" class="form-control" formControlName="ton">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="col-xs-3">
-                  <select id="typeOfLoad" class="form-control" formControlName="typeOfLoad">
-                    <option selected>Select Type</option>
-                    <option value="Pipe">Pipe</option>
-                    <option value="Fittings">Fittings</option>
-                  </select>
-                </div>
-              </div>  
-          
-              <div class="form-group row">
-                <div class="col-xs-3">
-                  <input type="number" id="value" class="form-control" formControlName="value" placeholder="Value">
-                </div>
-              </div>
-          
-                      
-          
-              <div class="row">
-                <div class="form-group" class="col-xs-2"></div>
-                <div class="form-group" class="col-xs-1">
-                  <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-                    <i class="material-icons">send</i>
-                  </button>
-                </div>
-          
-          
-              </div>
-            </form>
-          
-          
-          
-          </div>
-    </div>
-
-    <div *ngIf="whichType==='3'">
       <div class="well">
       <div class="row">
         <div class="col-sm-3">
@@ -173,7 +174,7 @@
       </div>
       </div>
 
-      <div *ngIf="whichType==='4'">
+      <div *ngIf="whichType==='3'">
         <div class="well">
         <div class="row">
 
@@ -238,7 +239,7 @@
         </div>
         </div>
 
-        <div *ngIf="whichType==='5'">
+        <div *ngIf="whichType==='4'">
           <div class="well">
             <div class="form-group row">
               <div class="col-xs-4">
@@ -304,3 +305,46 @@
     
           </div>
           </div>
+
+          <div *ngIf="whichType==='5'">
+            <div class="well">
+            <div class="row">
+
+    
+              <div class="col-sm-3">
+                <button class="btn btn-warning col-sm-3" (click)="find6()">Find</button>
+              </div>
+    
+            </div>
+                
+            <div class="col-sm-12">
+      
+                  <table class="table" style="width:100%" align="center">
+                        <thead align="center" style="font-weight: bold">
+                          <tr class=table-header>
+                            <th>Srno</th>
+                            <th>Date</th>
+                            <th>TruckNo</th>
+                            <th>Party</th>
+                            <th>Place</th>
+                            <th>Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody align="center">
+                          <tr *ngFor="let i of data6;let j = index">
+                            <td>{{j+1}}</td>
+                            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                            <td>{{i.truckno}}</td>
+                            <td>{{i.party}}</td>
+                            <td>{{i.place}}</td>
+                            <td><input type="number" id="tb_{{j}}"></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                </div>
+               
+                <button mat-raised-button type="button" (click)="setTB()" class="btn-success btn-sm btn-just-icon">
+                  <i class="material-icons">arrow_forward</i>
+                </button>
+            </div>
+            </div>
