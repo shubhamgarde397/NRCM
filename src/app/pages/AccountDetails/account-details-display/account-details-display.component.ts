@@ -16,23 +16,23 @@ import 'jspdf-autotable';
 export class AccountDetailsDisplayComponent implements OnInit {
   // $BASIC $
   public options = [
-    {'viewValue':'Account Number','value':'1'},
-    {'viewValue':'Pan','value':'2'},
-    {'viewValue':'Contact','value':'3'},
-    {'viewValue':'Account','value':'4'},
-    {'viewValue':'Transport Name','value':'5'},
-    {'viewValue':'Vehicle Type','value':'6'},
-    {'viewValue':'Weight','value':'7'},
-    {'viewValue':'Dimensions','value':'8'},
-    {'viewValue':'Update Account Details','value':'9'},
-    {'viewValue':'Truck Format','value':'10'},
-    {'viewValue':'Truck Registration Fee','value':'11'},
-    {'viewValue':'Account 12/363','value':'12'},
-    {'viewValue':'My RC','value':'13'},
-    {'viewValue':'Count Partywise','value':'14'},
-    {'viewValue':'Count Loadwise','value':'15'},
-    {'viewValue':'Missing Parent','value':'16'},
-    {'viewValue':'Missing Type Of Load','value':'17'},
+    {'viewValue':'Account Number','value':'1','disabled':false},
+    {'viewValue':'Pan','value':'2','disabled':false},
+    {'viewValue':'Contact','value':'3','disabled':false},
+    {'viewValue':'Account','value':'4','disabled':false},
+    {'viewValue':'Transport Name','value':'5','disabled':false},
+    {'viewValue':'Vehicle Type','value':'6','disabled':false},
+    {'viewValue':'Weight','value':'7','disabled':false},
+    {'viewValue':'Dimensions','value':'8','disabled':false},
+    {'viewValue':'Update Account Details','value':'9','disabled':false},
+    {'viewValue':'Truck Format','value':'10','disabled':false},
+    {'viewValue':'Truck Registration Fee','value':'11','disabled':false},
+    {'viewValue':'Account 12/363','value':'12','disabled':false},
+    {'viewValue':'My RC','value':'13','disabled':false},
+    {'viewValue':'Count Partywise','value':'14','disabled':false},
+    {'viewValue':'Count Loadwise','value':'15','disabled':false},
+    {'viewValue':'Missing Parent','value':'16','disabled':false},
+    {'viewValue':'Missing Type Of Load','value':'17','disabled':false},
   ]
   public displayType;
   public buttonOption;
@@ -121,7 +121,8 @@ public emptyregDatatable=false;
 // 
 public myrcData=[];
 public loadingDate6;
-
+public tabs=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+public nrcmid=0;
 public numbers=[];
   constructor(
     public apiCallservice: ApiCallsService, 
@@ -131,6 +132,29 @@ public numbers=[];
      public spinnerService: Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
+    this.nrcmid=this.securityCheck.nrcmid;
+    switch (this.nrcmid) {
+      case 7:
+        this.tabs=[1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0];
+        this.tabs.forEach((r,i) => {
+          if(r===1){
+            this.options[i]['disabled']=false;
+          }else{
+            this.options[i]['disabled']=true;
+          }
+        });
+        break;
+      case 1:
+        this.tabs=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+        this.tabs.forEach((r,i) => {
+          if(r===1){
+            this.options[i]['disabled']=false;
+          }else{
+            this.options[i]['disabled']=true;
+          }
+        });
+        break;
+    }
   }
 
   getRC(data){

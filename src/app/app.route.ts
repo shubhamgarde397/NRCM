@@ -23,7 +23,9 @@ import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
 import { DisplayComponent } from './pages/CI/JG/display/display.component';
 import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
-
+import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
+import { LRDisplayComponent } from './pages/LRsend/lrdisplay/lrdisplay.component';
+ 
 export const routes: Routes =
     [
         {
@@ -160,6 +162,10 @@ export const routes: Routes =
                         loadChildren: './pages/TurnBook/turn-book.module#TurnBookModule'
                     },
                     {
+                        path:'Load_HANDLER',
+                        loadChildren:'./pages/LorryLoadDetails/app.module#AppModule'
+                    },
+                    {
                         path: 'TURN_BOOK_LOCATION_DISP',
                         component:TurnBookLocationDispComponent
                     },
@@ -178,6 +184,14 @@ export const routes: Routes =
                     {
                         path: 'PDF',
                         component: PDFComponent
+                    },
+                    {
+                        path:'NRCM_TRANSPORT_ENVELOPE',
+                        component:AddComponent
+                    },
+                    {
+                        path:'LR_Display',
+                        component:LRDisplayComponent
                     }
                 ]
         },

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 
 @Component({
   selector: 'app-turn-book-handler',
@@ -8,10 +9,11 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
   styleUrls: ['./turn-book-handler.component.css']
 })
 export class TurnBookHandlerComponent implements OnInit {
-
-  constructor(public sec: HandleDataService, public router: Router) { }
+public nrcmid=0;
+  constructor(public sec: HandleDataService, public router: Router,public securit:SecurityCheckService) { }
 
   ngOnInit() {
+    this.nrcmid=this.securit.nrcmid;
   }
 
   reset() {

@@ -4,6 +4,7 @@ import { TurnBookHandlerComponent } from './turn-book-handler/turn-book-handler.
 import { TurnBookDisplayHandlerComponent } from './Display/turn-book-display-handler/turn-book-display-handler.component';
 import { TurnBookDisplayMainComponent } from './Display/turn-book-display-main/turn-book-display-main.component';
 import { TurnBookUpdateComponent } from './turn-book-update/turn-book-update.component';
+import { TurnBookAddComponent } from './turn-book-add/turn-book-add.component';
 
 export const TurnBookRouting: Routes =
     [
@@ -35,6 +36,10 @@ export const TurnBookRouting: Routes =
                                     component: TurnBookDisplayMainComponent
                                 }
                             ]
+                    },
+                    {
+                        path: 'TurnBookAdd',
+                        component: TurnBookAddComponent
                     },
                     {
                         path: 'TurnBookUpdate',

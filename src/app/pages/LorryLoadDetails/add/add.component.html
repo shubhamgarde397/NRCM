@@ -1,0 +1,367 @@
+<div class="well" style="width:100%;">
+
+  <div class="form-group row">
+    <div class="col-sm-5">
+      <select class="form-control" [(ngModel)]="displayType" (change)="findOption()">
+        <option *ngFor="let i of displayoptions;let j = index;" value={{i.value}} [hidden]="i.disabled">{{i.viewvalue}}</option>
+      </select>
+    </div>
+  </div>
+
+
+
+
+<div class="row" *ngIf="buttonOption=='1'">
+  <div class="well">
+    <button class="btn btn-danger" (click)="getInformationData()">Get Data</button>
+  </div>
+
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="!showForm">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>Truckno</th>
+        <th>Loading Date</th>
+        <th>Check</th>
+        <th>Rent</th>
+        <th>Advance</th>
+        <th>Advance Date</th>
+        <th>Hamali</th>
+        <th>Less</th>
+        <th>Cash</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of data;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.truckno}}</td>
+        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+        <td><input type="checkbox" id="name" class="form-control" id="checkbox_{{j}}"></td>
+        <td><input type="number" id="name" class="form-control" id="rent_{{j}}"></td>
+        <td><input type="number" id="name" class="form-control" id="advanceamt_{{j}}"></td>
+        <td><input type="date" id="name" class="form-control" id="advancedate_{{j}}"></td>
+        <td><input type="number" id="name" class="form-control" id="hamali_{{j}}"></td>
+        <td><input type="number" id="name" class="form-control" id="less_{{j}}"></td>
+        <td><input type="number" id="name" class="form-control" id="cash_{{j}}"></td>
+        <td>
+          <button mat-raised-button type="button" (click)="store1(i,j)" class="btn-primary btn-sm btn-just-icon">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row" *ngIf="buttonOption=='2'">
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-sm-4">
+      Party Type : <select class="form-control" [(ngModel)]="partyType2">
+        <option value="NR">NR</option>
+        <option value="NRCM">NRCM</option>
+        <option value="SNL">SNL</option>
+        <option value="None" selected>None</option>
+      </select> 
+    </div>
+
+    <div class="col-sm-4">
+      Party : 
+        <select id="partyName" class="form-control" [(ngModel)]="partyName2"  (change)="setPartyNameMS(2)">
+          <option selected disabled value={{partyid}}>{{party}}</option>
+          <option *ngFor="let i of parties;let j = index;" value={{i.name}}>{{i.name}}</option>
+        </select>
+      </div>
+
+      <div class="col-sm-4">
+        <select class="form-control" [(ngModel)]="selectedMY" (change)="getData()">
+            <option disabled>Select Option</option>
+            <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+          </select>
+        </div>
+
+        <div class="well">
+          <button class="btn btn-danger" (click)="getInformationDataB2()">Get Data</button>
+        </div>
+  </div>
+  <div class="col-sm-6">
+    <select class="form-control" [(ngModel)]="loadingDate">
+      <option value="0">0</option>
+      <option *ngFor="let i of data;let j = index;" value={{j}}>{{i.loadingDate|date:'dd-MM-yyyy'}}</option>
+    </select> 
+  </div>
+
+  <div class="col-sm-6">
+    <button class="btn btn-danger" (click)="CollectionMemo()">Get CollectionMemo</button>
+  </div>
+
+
+</div>
+</div>
+
+
+
+<div class="row" *ngIf="buttonOption=='3'">
+  <div class="row">
+    <div class="col-sm-6">
+      <input type="number" class="form-control" [(ngModel)]="billNo">
+    </div>
+    <div class="col-sm-6">
+      <select class="form-control" [(ngModel)]="billParty">
+        <option value="NRCM">NRCM</option>
+        <option value="NR">NR</option>
+        <option value="SNL">SNL</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <button class="btn btn-danger" (click)="getInformationData()">Get Data</button>
+  </div>
+
+  <form [formGroup]="myFormGroup" *ngIf="showForm2" submitted=true enctype="multipart/form data" action="/">
+
+    <div class="container">
+      <h2>BASE DETAILS</h2>
+  
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Date -  <input type="text" id="name" class="form-control" formControlName="loadingDate" disabled>
+        </div>
+  
+        <div class="col-xs-3">
+          Truck No - <input type="text" id="name" class="form-control" formControlName="truckno" disabled>
+        </div>
+  
+        <div class="col-xs-3">
+          Party Type - <input type="text" id="name" class="form-control" formControlName="partyType" disabled>
+        </div>
+  
+        <div class="col-xs-3">
+          Bill No - <input type="text" id="name" class="form-control" formControlName="billno" disabled>
+        </div>
+      </div>
+  
+      <div class="form-group row">
+      
+        <div class="col-sm-3">
+            Party - <input type="text" id="name" class="form-control" formControlName="partyName" disabled>
+        </div>
+
+        <div class="col-sm-3">
+            Place - <input type="text" id="name" class="form-control" formControlName="placeName" disabled>
+        </div>
+  
+        <div class="col-xs-3">
+          Rent - <input type="number" id="name" class="form-control" formControlName="rent" disabled>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="container">
+      <h3>Extra Rent Details</h3>
+
+      <div class="row">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Msg</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let i of extraRent;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.extraAdvanceMsg}}</td>
+            <td>{{i.extraAdvanceAmt}}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-group row">
+        <div class="col-xs-4">
+          Total Rent - <input type="number" id="name" class="form-control" formControlName="totalRent" disabled>
+        </div>
+      </div>
+    </div>
+    <hr>
+    
+  
+  
+    <div class="container">
+      <h3>Miscellenous</h3>
+  
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Commision - <input type="number" id="name" class="form-control" formControlName="billamt"  disabled>
+        </div>
+  
+        <div class="col-xs-3">
+          Advance - <input type="number" id="name" class="form-control" formControlName="advanceAmt" disabled>
+        </div>
+        
+        <div class="col-xs-3">
+          Advance Date - <input type="date" id="name" class="form-control" formControlName="advanceDate" disabled>
+        </div>
+      </div>
+      
+        
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Hamali - <input type="number" id="name" class="form-control" formControlName="extra_hamali" disabled>
+        </div>
+      
+        <div class="col-xs-3">
+          Less - <input type="number" id="name" class="form-control" formControlName="less"  disabled>
+        </div>
+  
+        <div class="col-xs-3">
+          Cash - <input type="number" id="name" class="form-control" formControlName="cash"  disabled>
+        </div>
+  
+        <div class="col-xs-3">
+          Total Balance - <input type="number" id="name" class="form-control" formControlName="totalBalance" disabled>
+        </div>
+      </div>
+    </div>
+  
+    
+    <div class="row">
+      <div class="col-xs-4">
+  
+        <button type="button" (click)="pdfData()" class="btn btn-warning">
+          <i class="material-icons">download</i>
+        </button>
+      </div>
+      <div class="col-xs-4">
+  
+        <button type="button" (click)="changeForm2()" class="btn btn-danger">
+          <i class="material-icons">undo</i>
+        </button>
+      </div>
+  
+    </div>
+  </form>
+</div>
+
+<div class="row" *ngIf="buttonOption=='8'">
+  <div class="well">
+    <button class="btn btn-danger" (click)="getInformationData()">Get Data</button>
+  </div>
+
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="!showForm8">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>Truckno</th>
+        <th>Party Name</th>
+        <th>Hire</th>
+        <th>Bill</th>
+        <th>Advance</th>
+        <th>Advance</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of data;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.truckno}}-{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+        <td>{{i.partyType}}-{{i.partyDetails[0]['name']}}-{{i.villageDetails[0]['village_name']}}</td>
+        <td><input type="number" id="name" class="form-control" id="hamt_{{j}}" (change)="calBill(j)"></td>
+        <td><input type="number" id="name" class="form-control" id="bill_{{j}}"></td>
+        <td><input type="number" id="name" class="form-control" id="advanceamt_{{j}}"></td>
+        <td><input type="date" id="name" class="form-control" id="advancedate_{{j}}"></td>
+        <td>
+          <button mat-raised-button type="button" (click)="store8()" class="btn-primary btn-sm btn-just-icon">
+            <i class="material-icons">edit</i>
+          </button>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="row" *ngIf="buttonOption=='9'">
+
+  <button class="btn btn-warning" (click)="getInformationDataB()">Get Data</button>
+
+  <div class="container">
+
+    <div class="row">
+      <div class="col-sm-4">
+      Party Type : <select class="form-control" [(ngModel)]="partyType2">
+        <option value="NR">NR</option>
+        <option value="NRCM">NRCM</option>
+        <option value="SNL">SNL</option>
+        <option value="None" selected>None</option>
+      </select> 
+    </div>
+  </div>
+    <div class="row">
+      <div class="col-sm-4">
+      Party : 
+      <select id="partyName" class="form-control" [(ngModel)]="partyName"  (change)="setPartyNameMS(2)">
+        <option selected disabled value={{partyid}}>{{party}}</option>
+        <option *ngFor="let i of parties;let j = index;" value={{i.name}}>{{i.name}}</option>
+      </select>
+    </div>
+</div>
+    <div class="row">
+      <div class="col-sm-4">
+      Place : 
+      <select id="placeName" class="form-control" [(ngModel)]="placeName"  (change)="setPlaceNameMS(2)">
+        <option selected disabled value={{villageid}}>{{village_name}}</option>
+        <option *ngFor="let i of places;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
+      </select>
+    </div>
+</div>
+    <div class="row">
+      <div class="col-sm-4">
+      Place 2: 
+      <input type="text" [(ngModel)]="placeName2">
+    </div>
+</div>
+    <div class="row">
+      <div class="col-sm-4">
+      Date : <input type="date" class="form-control" [(ngModel)]="loadingDate">
+      </div>
+</div>
+    <div class="row">
+      <div class="col-sm-4">
+      Truck No : <input type="text" class="form-control" [(ngModel)]="truckNo">
+      </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+  LRNO : <input type="text" class="form-control" [(ngModel)]="lrno">
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+  Rent : <input type="number" class="form-control" [(ngModel)]="rent">
+  </div>
+</div>
+  <div class="row">
+    <div class="col-sm-4">
+    Advance : <input type="number" class="form-control" [(ngModel)]="advance">
+    </div>
+</div>
+    <div class="row">
+      <div class="col-sm-4">
+      Balance : <input type="number" class="form-control" [(ngModel)]="balance">
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <button class="btn btn-danger" (click)="CollectionMemoC()">Get CollectionMemo</button>
+    </div>
+  
+  
+  </div>
+  </div>
+
+</div>

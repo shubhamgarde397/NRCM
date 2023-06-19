@@ -8,9 +8,6 @@ import { HandleDataService } from '../../../../common/services/Data/handle-data.
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ValueTransformer } from '@angular/compiler/src/util';
-import { range } from 'rxjs';
-import { log } from 'console';
 
 @Component({
   selector: 'app-turn-book-display-main',
@@ -19,8 +16,19 @@ import { log } from 'console';
   providers: [ApiCallsService]
 })
 export class TurnBookDisplayMainComponent implements OnInit {
+  public place;
+    public place2;
+    public placeid;
+    public placeid2;
+    public party;
+    public partyType;
+    public partyid;
+      public showbuttonOption8211=false;
+  public showbuttonOption82111=false;
+public showbuttonOption821HA=true;
   public isAvailable=false;
-  public tp1='tp1';
+  public indexBig;
+  public showEditOtherDiv=false;
   public loadingDateDynamic;
   public showbuttonOption8 = false;
   public showbuttonOption82 = false;
@@ -53,6 +61,9 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public tableSelected=false; 
   public sum=0;
   public advanceArray=[];
+  public displayoptionsarray=[
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+  ]
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' ,'disabled':false},
     { 'value': '2', 'viewvalue': 'Truck Arrival' ,'disabled':false},
@@ -112,13 +123,13 @@ export class TurnBookDisplayMainComponent implements OnInit {
   public selectedmy;
   public turnbooklist_trucks = [];
   public myFormGroup: FormGroup;
+  public myFormGroupTB : FormGroup;
   public myFormGroup9: FormGroup;
+  public myFormGroup1 : FormGroup;
   public considerArray;
   public villagelist: any;
   public parties: any;
   public tempVNAME;
-  public placeid;
-  public partyid;
   public tempPNAME;
   public toSendid;
   public show8Msg = "";
@@ -141,7 +152,6 @@ public types={'None':0,'Open':0,'Container':0}
 public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
 public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','hamt':''}
 public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
-public whatActionGotSelected='2';
 public performActionButton='2';
 public selectDate=false;
 public reportPDF=false;
@@ -155,8 +165,8 @@ public paymentDate='';
 public paymentAmount=0;
 public statusOfPoch='';
 public updateTruck:any={'truckName':{'truckno':''}};
-
-
+public updateTruckTB:any={'truckno':''};
+public nrcmid;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -170,10 +180,46 @@ public updateTruck:any={'truckName':{'truckno':''}};
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.turnbooklist = [];
     this.turnbooklist = this.handleData.giveTurn(); 
- 
+    this.nrcmid=this.securityCheck.nrcmid;
     this.tableSelected=this.turnbooklist.length>0?true:false;
-    this.getTrucks()
+    this.tabsetter();
+    this.getTrucks();
+    this.myFormGroupTB = this.formBuilder.group({
+      truckno: '',
+      place: '',
+      place2: '',
+      partyName: '',
+      loadingDate: '',
+      partyType: '',
+    });
   }
+
+  tabsetter(){
+    // this is for anil
+    console.log(this.nrcmid);
+    
+    switch (this.nrcmid) {
+      case 1:
+        this.displayoptionsarray=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        break;
+        case 7:
+          this.displayoptionsarray=[1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0]
+        break;
+    
+      default:
+        break;
+    }
+    
+    this.setTabData(this.displayoptionsarray);
+      }
+    
+      setTabData(data){
+       for(let i =0;i<data.length;i++){
+        this.displayoptions[i]['disabled']=data[i]===0?true:false
+    }
+     
+      
+      }
 
   submitAmt(){
     let arr=[]
@@ -221,30 +267,6 @@ public updateTruck:any={'truckName':{'truckno':''}};
     }
   }
 
-  performActionSetter(data4){
-// 0 : delete forever
-// 1 : cancel
-// 2 : Edit
-// 3 : Change Truck
-      this.performActionButton=String(this.whatActionGotSelected);
-  }
-
-  performAction(i,j){
-    switch (this.performActionButton) {
-      case '0':
-        this.delete(i,j);
-      break;
-      case '1':
-        this.showDatabyid2(i,'cancel');
-      break;
-      case '2':
-        this.showDatabyid(i,j,1);
-      break;
-      // case '3':
-      //   this.showDatabyid(i,j,3);
-      // break;
-  }
-  }
 
   getInformationData() {
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
@@ -555,17 +577,25 @@ else if(this.buttonOption !== '11'){
           if (res.Data.length > 0) {
             this.showbuttonOption8 = true;
             this.turnbooklistnew = res.Data;
-            this.myFormGroup = this.formBuilder.group({
+            this.myFormGroup1 = this.formBuilder.group({
               loadingDateDynamic: '',
               typeOfLoad:'',
               turnbookDate: '',
               truckno: '',
-              place: '',
-              partyName: '',
               loadingDate: '',
-              lrno: '',
-              hamt: '',
+              lrno: 0
             });
+            if(this.buttonOptionPartyType==='NRCM'){
+              this.showbuttonOption821HA=false;
+              this.showbuttonOption8211=true;
+              this.typeofloads=['Pipe','Fittings']
+            }else{
+                
+                  this.typeofloads=['Others']
+                
+              this.showbuttonOption821HA=true;
+              this.showbuttonOption8211=false;
+            }
           } else {
             this.showbuttonOption8 = false;
             this.show8Msg = "All set for this month.";
@@ -725,10 +755,10 @@ let tempObj1={};
 
   getOtherDetails() {
     this.showbuttonOption82 = true;
-    this.turnbooklist_trucks = this.turnbooklistnew.filter(r => r.loadingDate == this.myFormGroup.value.loadingDateDynamic)
+    this.turnbooklist_trucks = this.turnbooklistnew.filter(r => r.loadingDate == this.myFormGroup1.value.loadingDateDynamic)
   }
   getOtherDetails2() {
-    this.tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup.value.truckno);
+    this.tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup1.value.truckno);
     
     this.monthlybyseriesData['hamt']=this.tempDate[0].hamt;
     this.monthlybyseriesData['typeOfLoad']=this.tempDate[0].typeOfLoad;
@@ -741,11 +771,11 @@ this.partyid=this.tempDate[0]['party']['_id']
 
     this.toSendid = this.tempDate[0]._id;
     this.showbuttonOption821 = true;
-    this.myFormGroup.patchValue({ turnbookDate: this.tempDate[0]['turnbookDate'] })
-    this.myFormGroup.patchValue({ place: this.tempDate[0][''] })
-    this.myFormGroup.patchValue({ partyName: this.tempDate[0][''] })
-    this.myFormGroup.patchValue({ lrno: this.tempDate[0]['lrno'] })
-    this.myFormGroup.patchValue({ hamt: this.tempDate[0]['hamt'] })
+    this.myFormGroup1.patchValue({ turnbookDate: this.tempDate[0]['turnbookDate'] })
+    this.myFormGroup1.patchValue({ place: this.tempDate[0][''] })
+    this.myFormGroup1.patchValue({ partyName: this.tempDate[0][''] })
+    this.myFormGroup1.patchValue({ lrno: this.tempDate[0]['lrno'] })
+    this.myFormGroup1.patchValue({ hamt: this.tempDate[0]['hamt'] })
   }
 
 
@@ -776,24 +806,24 @@ this.placeid=this.tempDate[0]['place']['_id']
   }
 
   setPartyName() {
-    let filteredList=this.parties.filter(r=>{return r.name==this.myFormGroup.value.partyName})
-    this.partyid=filteredList[0]['_id']
-    this.tempPNAME=filteredList[0]['name']
+    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
+    this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
     this.myFormGroup.value.partyName = this.tempPNAME;
+    this.villagelist=this.parties.filter(r=>r['_id']==this.partyid)[0]['cities']
+
+    
   }
 
 
   change(data) {
     let tempData = {}
-    tempData['placeid'] = this.placeid;
-    tempData['partyid'] = this.partyid;
+
     tempData['lrno'] = data.value.lrno===0?this.tempDate[0]['lrno']:data.value.lrno;
-    tempData['hamt'] = data.value.hamt===0?this.tempDate[0]['hamt']:data.value.hamt;
-    tempData['typeOfLoad'] = data.value.typeOfLoad===''?this.tempDate[0]['typeOfLoad']:data.value.typeOfLoad;
+    tempData['partyType']=this.buttonOptionPartyType;
+    tempData['typeOfLoad'] = data.value.typeOfLoad;
     tempData['_id'] = this.toSendid;
     tempData['tablename'] = 'turnbook'
-    tempData['method'] = 'update'
-    tempData['part'] = 2;
+    tempData['method'] = 'updateSeries1'
     
     this.apiCallservice.handleData_New_python('turnbook', 1, tempData, true)
       .subscribe((res: any) => {
@@ -803,10 +833,8 @@ this.placeid=this.tempDate[0]['place']['_id']
         this.handleData.saveTurn(newData);
         this.turnbooklistnew = newData;
         this.myFormGroup.patchValue({ turnbookDate: '' })
-        this.myFormGroup.patchValue({ place: '' })
-        this.myFormGroup.patchValue({ partyName: '' })
-        this.myFormGroup.patchValue({ lrno: '' })
-        this.myFormGroup.patchValue({ hamt: '' })
+        this.myFormGroup.patchValue({ partyType: '' })
+
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;
       });
@@ -845,50 +873,56 @@ this.placeid=this.tempDate[0]['place']['_id']
   }
 
   showDatabyid = function (data, j, number) {
-    this.show = true;
-    let tempObj = {};
-    tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
-    tempObj['place2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0].village_name;
-    tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
-    tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
-    tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
-    tempObj['accountDetails'] = data.ownerDetails[0]['accountDetails'];
-    tempObj['parentAccNo'] = data.parentAccNo;
-    tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0]._id;
-    tempObj['placeid2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0]._id;
-    tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
-    tempObj['entryDate'] = data.entryDate;
-    tempObj['_id'] = data._id;
-    tempObj['partyType'] = data.partyType;
-    tempObj['turnbookDate'] = data.turnbookDate;
-    tempObj['loadingDate'] = data.loadingDate;
-    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
-    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
-    tempObj['rent'] = data.rent === undefined ? 0 : data.rent;
-    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
-    tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
-    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
-    tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
-    tempObj['payment'] = data.paymentDetails;
-    tempObj['index'] = j;
-    tempObj['number'] = number;
-    tempObj['invoice'] = data.invoice;
-    tempObj['locations'] = data.locations;
-    tempObj['locationDate'] = data.locationDate;
-    tempObj['complete'] = data.complete;
-    tempObj['typeOfLoad'] = data.typeOfLoad;
-    tempObj['waitLocation'] = data.waitLocation;
-    tempObj['advanceArray'] = data.advanceArray;
-    tempObj['paymentDisabled']=true;
-    tempObj['pochAmount']=data.pochAmount;
-    this.handleData.saveupdateTurn(true);
+ 
 
+      this.show = true;
+      let tempObj = {};
+      tempObj['place'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
+      tempObj['place2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0].village_name;
+      tempObj['truckno'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0].truckno;
+      tempObj['partyName'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0].name;
+      tempObj['ownerid'] = data.ownerDetails[0] === undefined ? '' : data.ownerDetails[0]._id;
+      tempObj['placeid'] = data.villageDetails[0] === undefined ? '' : data.villageDetails[0].village_name;
+      tempObj['placeid2'] = data.villageDetails2[0] === undefined ? '' : data.villageDetails2[0].village_name;
+      tempObj['partyid'] = data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
+      tempObj['entryDate'] = data.entryDate;
+      tempObj['_id'] = data._id;
+      tempObj['partyType'] = data.partyType;
+      tempObj['turnbookDate'] = data.turnbookDate;
+      tempObj['loadingDate'] = data.loadingDate;
+      tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
+      tempObj['index'] = j;
+      this.indexBig=j;
+      tempObj['number'] = number;
+      tempObj['typeOfLoad'] = data.typeOfLoad;
+      this.updateTruckTB=tempObj;
+      this.partyid=data.partyDetails[0] === undefined ? '' : data.partyDetails[0]._id;
+      this.SpartyType=data.partyType
+      this.getForm();
+    
 
-    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
-    this.handleData.saveData(tempObj);
   };
 
-  showDatabyid2 = function (data, type) {
+  getForm(){
+    this.place = this.updateTruckTB.place;
+    this.place2 = this.updateTruckTB.place2;
+    this.placeid = this.updateTruckTB.placeid;
+    this.placeid2 = this.updateTruckTB.placeid2;
+    this.party = this.updateTruckTB.partyName;
+    this.partyType = this.updateTruckTB.partyType;
+    this.partyid = this.updateTruckTB.partyid;
+    
+    this.myFormGroupTB.patchValue({
+      truckno: this.updateTruckTB.truckno,
+      place: this.updateTruckTB.place,
+      place2: this.updateTruckTB.place2,
+      partyName: this.updateTruckTB.partyName,
+      loadingDate: this.updateTruckTB.loadingDate,
+      partyType: this.updateTruckTB.partyType,
+    });    
+  }
+
+  showDatabyid2 = function (type,data=this.updateTruckTB) {
     let newdate;
     let newtype;
     let newpochDate;
@@ -916,7 +950,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       let tempObj = {};
       tempObj['_id'] = data._id;
       tempObj['loadingDate'] = newdate;
-      
+      tempObj['ownerid']=this.updateTruckTB.ownerid;
       tempObj['method'] = 'canuncanel';
       tempObj['tablename'] = 'turnbook';
       tempObj["partyType"] = newtype;
@@ -924,25 +958,11 @@ this.placeid=this.tempDate[0]['place']['_id']
       tempObj["givenDate"] = newgivenDate;
       tempObj["pgno"] = pgno;
       tempObj['number'] = 2;
-      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
+      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
         .subscribe((res: any) => {
           alert(res.Status);
-          alert('Please Refresh!')
-          // this.handleData.turnData[j]['loadingDate'] = newdate;
-          // this.handleData.turnData[j]["partyType"] = newtype;
-          // this.handleData.turnData[j]['index'] = j;
-          // let tempData = this.handleData.giveTurn();
-          // this.handleData.saveTurn([]);
-          // let tempArray = []
-          // tempArray = tempData;
-          // tempArray.splice(j, 1)
-          // this.handleData.saveTurn(tempArray)
-          // this.turnbooklist = [];
-          // this.turnbooklist = this.handleData.giveTurn();
+          this.turnbooklist.splice(this.indexBig, 1);
         });
-    }
-    else {
-
     }
   };
 
@@ -960,6 +980,59 @@ this.placeid=this.tempDate[0]['place']['_id']
           this.turnbooklist.splice(j, 1);
         });
     }
+  }
+  deleteTB() {
+    let data=this.updateTruckTB;
+    let id=data;
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = id._id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'turnbook';
+      formbody['turnbookDate'] = id.turnbookDate;
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
+        .subscribe((response: Response) => {
+          alert(response['Status'])
+          this.turnbooklist.splice(this.updateTruck['index'], 1);
+        });
+    }
+  }
+  edit2() {
+    this.show = true;
+    let tempObj={}    
+    tempObj['_id']=this.updateTruckTB._id;
+    tempObj['ownerid']=this.updateTruckTB.ownerid;
+    tempObj['loadingDate']=this.myFormGroupTB.value.loadingDate;
+    tempObj['partyid']=this.partyid;//send name
+    tempObj['placeid']=this.myFormGroupTB.value.place;//send name
+    tempObj['placeid2']=this.myFormGroupTB.value.place2;//send name
+    tempObj['method'] = 'updateTurnSingle';
+    tempObj['tablename'] = '';
+    tempObj['partyType'] = this.myFormGroupTB.value.partyType;
+    tempObj['number']=0
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((response: Response) => {
+      alert(response['Status'])
+      this.turnbooklist.splice(this.indexBig, 1);
+    });
+  }
+
+  changeDivPartyWise(){
+    if(this.myFormGroupTB.value.partyType==='NRCM'){
+      this.showEditOtherDiv=false;
+      this.villagelist = [];
+    this.commonArray.villagenames.forEach(r=>{this.villagelist.push(r.village_name)})
+    }else{
+      this.showEditOtherDiv=true;
+      this.villagelist=[];
+
+    }
+    this.parties = this.commonArray.gstdetails;
+    
+
+
+    this.parties=this.parties.filter(r=>r.partyType==this.myFormGroupTB.value.partyType)
   }
 
   edit(data) {

@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   selector: 'app-navigation',
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css'],
+  styles:['.hide{display:none}'],
   providers: [ApiCallsService, HandleDataService],
 })
 @Input()
@@ -28,6 +29,7 @@ export class NavigationComponent implements OnInit {
   public dbName = 'NRCM_Information';
   public AUTH;
   public date = new Date();
+  public nrcmid=0;
   public todayDate;
   public username;
   public nameOfUser = 'Guest';
@@ -41,6 +43,117 @@ export class NavigationComponent implements OnInit {
   public noti=[]
   public notiC=0;
   public acknowledgement=false;
+public tabsarray=[
+  [0,[0,0,0,0,0,0,0,0,0,0,0,0,0]],
+  [0,[0,0,0,0,0]],
+  [0,[]],
+  [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
+  [0,[0,0]],
+  [0,[]],
+  [0,[]],
+  [0,[]],
+  [0,[]],
+]
+  public tabs=[
+    {
+      parent:'Information',
+      link:'',
+      hideFlag:true,
+      children:[
+        {name:'GST',link:'GST_HANDLER',hideFlag:true},
+        {name:'Truck',link:'OWNER_HANDLER',hideFlag:true},
+        {name:'Transport',link:'TRANSPORT_HANDLER',hideFlag:true},
+        {name:'Dues',link:'DUES_PAGE',hideFlag:true,},
+        {name:'Dues Advance',link:'DUES_PAGE_ADVANCE',hideFlag:true,},
+        {name:'Gifts',link:'GIFTS',hideFlag:true,},
+        {name:'JG',link:'JG',hideFlag:true,},
+        {name:'Village',link:'VILLAGE_HANDLER',hideFlag:true,},
+        {name:'LR Reason',link:'REASON_HANDLER',hideFlag:true,},
+        {name:'Party GST',link:'IMP_GST_HANDLER',hideFlag:true,},
+        {name:'Hidden Trucks',link:'HIDDEN_OWNER_HANDLER',hideFlag:true,},
+        {name:'SMART UPDATE',link:'ACCOUNT_DETAILS_DISPLAY',hideFlag:true,},
+        {name:'Pending Payment Display',link:'PENDING_PAYMENT_DISPLAY',hideFlag:true,}]
+    },
+    {
+      parent:'Daily Truck Details',
+      link:'',
+      hideFlag:true,
+      children:[
+        {name:'Turn Book',link:'TURN_BOOK_HANDLER',hideFlag:true},
+        {name:'Balance Hire',link:'BALANCE_HIRE_HANDLER',hideFlag:true},
+        {name:'Load Details',link:'Load_HANDLER',hideFlag:true},
+        {name:'Payment',link:'PARTY_PAYMENT_HANDLER',hideFlag:true,},
+        {name:'Turnbook Location',link:'TURN_BOOK_LOCATION_DISP',hideFlag:true}]
+    },
+    {
+      parent:'Link Truck',
+      hideFlag:true,
+      link:'LINK_TRUCK',
+      children:[]
+    },
+    {
+      parent:'Reports',
+      hideFlag:true,
+      link:'',
+      children:[
+        {name:'Charts',link:'CHART',hideFlag:true},
+        {name:'Received Report',link:'F1',hideFlag:true},
+        {name:'RC DL Expiry',link:'F2',hideFlag:true},
+        {name:'Task Page',link:'F3',hideFlag:true},
+        {name:'Last Loaded Trucks',link:'F4',hideFlag:true},
+        {name:'Last Loaded NRCM & JG',link:'F5',hideFlag:true},
+        {name:'Last Loaded JG',link:'F6',hideFlag:true},
+        {name:'Missing Prdfp',link:'F7',hideFlag:true},
+        {name:'Rent Slip',link:'F8',hideFlag:true},
+        {name:'Other Report',link:'OTHER_REPORT',hideFlag:true},
+        {name:'Mail Display',link:'MAIL_DISPLAY',hideFlag:true},
+        {name:'Missing Lrno',link:'MISSING_LR',hideFlag:true}
+      ]
+    },
+    {
+      parent:'Details',
+      hideFlag:true,
+      link:'',
+      children:[
+        {
+          name:'PDF',
+          link:'PDF',
+          hideFlag:true
+        },
+        {
+          name:'Envelope Entries',
+          link:'NRCM_TRANSPORT_ENVELOPE',
+          hideFlag:true
+        }
+      ]
+    },
+    {
+      parent:'Load Details',
+      hideFlag:true,
+      link:'Load_HANDLER',
+      children:[]
+    },
+    {
+      parent:'LR Send',
+      hideFlag:true,
+      link:'LR_Display',
+      children:[]
+    },
+    {
+      parent:'Logout',
+      hideFlag:true,
+      link:'F9',
+      children:[]
+    },
+    {
+      parent:'Welcome'+this.nameOfUser,
+      hideFlag:true,
+      link:'',
+      children:[]
+    },
+
+  ]
+
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
@@ -58,13 +171,15 @@ export class NavigationComponent implements OnInit {
     this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.dname;
-    this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
+    this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length);
+    this.tabs[this.tabs.length-1]['parent']='Welcome '+this.nameOfUser;
     this.getInformationData();
     this.AUTH = this.securit.AUTH;
-
+    this.nrcmid=this.securit.nrcmid;
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();
-    
+    console.log(this.nrcmid);
+    this.tabsetter();
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
 
     this.myFormGroup = this.formBuilder.group({
@@ -72,9 +187,167 @@ export class NavigationComponent implements OnInit {
     });
   }
 
-  amount(data){
+  routeR(data){
+    if(data==''){}
+    else if(data.slice(0,1)==='F'){
+      switch(data.slice(1)){
+        case '1':
+          this.receivedReport();
+          break;
+          case '2':
+          this.expiredRCDL();
+          break;
+          case '3':
+          this.tasks();
+          break;
+          case '4':
+          this.latestLoadedTrucks();
+          break;
+          case '5':
+          this.latestLoadedTrucksNRCMandJG();
+          break;
+          case '6':
+          this.latestLoadedTrucksJG();
+          break;
+          case '7':
+          this.Prdfp();
+          break;
+          case '8':
+          this.rentslip();
+          break;
+          case '9':
+          this.logout();
+          break;
+      }
+    }
+    else{
+      this.router.navigate(['Navigation/'+data])
+    }
   }
 
+  tabsetter(){
+// this is for anil
+console.log(this.nrcmid);
+
+switch (this.nrcmid) {
+  case 1:
+    this.tabsarray=[
+      [1,[1,1,1,1,1,1,1,1,1,1,1,1,1]],
+      [1,[1,1,1,1,1]],
+      [1,[]],
+      [1,[1,1,1,1,1,1,1,1,1,1,1,1]],
+      [1,[1,1]],
+      [1,[]],
+      [1,[]],
+      [1,[]],
+      [1,[]],
+    ]
+    break;
+    case 7:
+      this.tabsarray=[
+        [1,[0,0,0,0,0,0,0,1,0,0,0,1,0]],
+        [1,[1,1,0,0,0]],
+        [0,[]],
+        [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
+        [1,[0,1]],
+        [1,[]],
+        [1,[]],
+        [1,[]],
+        [1,[]],
+      ]    
+    break;
+
+  default:
+    break;
+}
+
+this.setTabData(this.tabsarray);
+  }
+
+  setTabData(data){
+   for(let i =0;i<data.length;i++){
+    this.tabs[i]['hideFlag']=data[i][0]===0?true:false
+    for(let j=0;j<this.tabs[i]['children'].length;j++){
+      this.tabs[i]['children'][j]['hideFlag']=data[i][1][j]===0?true:false
+    }
+}
+ 
+  
+  }
+
+  amount(data){
+  }
+  rentslip(){//threshhold is 295
+
+    var doc = new jsPDF()
+    doc.setFontType('bold');
+    doc.setFontSize('15');
+    doc.setLineWidth(0.5);
+    let yaxis=0
+    let xaxis=0
+    //headers
+   //  ṣtart side
+ 
+
+    doc.line(70+yaxis, 0+xaxis, 70+yaxis, 300+xaxis);//mid line
+    doc.line(140+yaxis, 0+xaxis, 140+yaxis, 300+xaxis);//mid line
+    
+
+    doc.line(0, 75, 210, 75);//line after main header
+    doc.line(0, 150, 210, 150);//line after main header
+    doc.line(0, 225, 210, 225);//line after main header
+
+    let pluser=0;
+    for(let i=0;i<3;i++){
+      
+      let plusers=0;
+      for(let j=0;j<4;j++){
+        let adder=8;
+      doc.text('NITIN ROADWAYS',12+pluser,6+plusers)
+      doc.line(0+pluser, 8+plusers, 70+pluser, 8+plusers);//line after main header
+  
+      doc.text('Date',2+pluser,(adder*2)-1+plusers)
+      doc.text('___/___/2023',28+pluser,(adder*2)-2+plusers)
+      doc.line(0+pluser, (adder*2)+plusers, 70+pluser, (adder*2)+plusers);//line after main header
+  
+      doc.text('TruckNo',2+pluser,(adder*3)-1+plusers)
+      doc.line(0+pluser, (adder*3)+plusers, 70+pluser, (adder*3)+plusers);//line after main header
+  
+      doc.text('Party',2+pluser,(adder*4)-1+plusers)
+      doc.line(0+pluser, (adder*4)+plusers, 70+pluser, (adder*4)+plusers);//line after main header
+      
+      doc.text('Place',2+pluser,(adder*5)-1+plusers)
+      doc.line(0+pluser, (adder*5)+plusers, 70+pluser, (adder*5)+plusers);//line after main header
+      
+      doc.text('Rent',2+pluser,(adder*6)-1+plusers)
+      doc.line(0+pluser, (adder*6)+plusers, 70+pluser, (adder*6)+plusers);//line after main header
+      
+      doc.text('Extra',2+pluser,(adder*7)-1+plusers)
+      doc.line(0+pluser, (adder*7)+plusers, 70+pluser, (adder*7)+plusers);//line after main header
+      
+      doc.text('Total',2+pluser,(adder*8)-1+plusers)
+      doc.line(0+pluser, (adder*8)+plusers, 70+pluser, (adder*8)+plusers);//line after main header
+  
+      doc.line(25+pluser, 8+plusers, 25+pluser, 75+plusers);//line after main header
+      doc.line(48+pluser, (adder*8)+plusers, 48+pluser, (adder*8)+11+plusers);//line after main header
+      doc.text('Book',28+pluser,(adder*8)+8+plusers)
+      doc.text('PC',50+pluser,(adder*8)+8+plusers)
+      plusers=plusers+75
+      
+      }
+      pluser=pluser+70
+    }
+    
+    // 
+    // All Box
+    doc.line(0,0,210,0)
+    doc.line(210,0,210,297)
+    doc.line(0,0,0,297)
+    doc.line(0,297,210,297)
+
+    // 
+    doc.save('Rent.pdf')//partyname
+  }
   getInformationData() {
     // this.spin.show();
     // let tempObj = { "method": "displaynew",'notall':false, "username": this.username, "consider": this.handledata.createConsiderArray('default') };

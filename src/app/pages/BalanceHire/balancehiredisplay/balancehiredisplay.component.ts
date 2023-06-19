@@ -37,7 +37,8 @@ export class BalancehiredisplayComponent implements OnInit {
     { 'value': '6', 'viewvalue': 'Balance Message To Driver' },
     { 'value': '7', 'viewvalue': 'Update Advance Payments' },
     { 'value': '8', 'viewvalue': 'Advance Message To Driver' },
-    { 'value': '9', 'viewvalue': 'Party Msg' }
+    { 'value': '9', 'viewvalue': 'Party Msg' },
+    { 'value': '10', 'viewvalue': 'Update Actual All Payments' },
   ]
   public months = [
     { '1': 'Jan' },
@@ -169,6 +170,28 @@ formbody['selectedPochDate']=this.selectedPochDate;
     });
     
   }
+  fetchPendinAllActualPayments(){
+    this.fullpendingPayment=[];
+    this.saveArray=[]
+    this.selectedPaymentAmount=0;
+    this.selectedPaymentDate=''
+    this.paymentSettings=false;
+    this.showpaymentButton=false;
+    this.saveArrayData=false;
+    this.defaultAmt=0;
+
+let formbody={}
+formbody['method']='getAllTrucksWithNoActualPayment';
+formbody['tablename']=''
+formbody['selectedPochDate']=this.selectedPochDate;
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, true)
+    .subscribe((res: any) => {
+      this.fullpendingPayment=res.Data;
+      this.paymentSettings=true;
+    });
+    
+  }
   copyAmount(){
     this.selectedPaymentAmount=this.defaultAmt;
   }
@@ -255,6 +278,7 @@ formbody['selectedPochDate']=this.selectedPochDate;
     this.buttonOption == '3'?this.getGivenDateTrucks():undefined;
     this.buttonOption == '4'?this.getGivenTrucksPayment():undefined;
 this.actualPayment=this.buttonOption == '5'?true:false;
+this.actualPayment=this.buttonOption == '10'?true:false;
     
   }
   refresh(data){

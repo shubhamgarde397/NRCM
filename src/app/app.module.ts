@@ -49,8 +49,8 @@ import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
 import { DisplayComponent } from './pages/CI/JG/display/display.component';
 import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
-
-
+import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
+import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component'
 
 @NgModule({
   declarations: [
@@ -75,12 +75,14 @@ import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler
     TruckDetailsComponent,
     PersonalDetailsComponent,
     PendingPaymentComponent,
+    LRDisplayComponent,
     TicketComponent,
     TruckLoadingComponent,
     DuesPageComponent,
     DuesFromAdvanceDisplayComponent,
     DisplayComponent,
-    GiftHandlerComponent
+    GiftHandlerComponent,
+    AddComponent
   ],
   imports: [
     BrowserModule,

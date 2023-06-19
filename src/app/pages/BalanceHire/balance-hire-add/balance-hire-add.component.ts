@@ -68,6 +68,7 @@ export class BalanceHireAddComponent implements OnInit {
   public ownerdetailslist;
   public showPDFButton=false;
   public sentComments=[];
+  public nrcmid=0;
 public bigI;
 public todaysDate;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
@@ -77,7 +78,7 @@ public todaysDate;
   }
 
   ngOnInit() {
-  
+    this.nrcmid = this.securityCheck.nrcmid;
     this.uitodayDate = this.handleF.getDate(this.handleF.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.role = this.securityCheck.role;
@@ -127,6 +128,18 @@ public todaysDate;
         });
     }
   }
-  updateComments(){}
+
+  showDatabyidEditForm(data, j) {
+    this.show = true;
+    this.found = data;
+    data['index'] = j;
+    data['editOption'] = 1;
+    data['truckData'].map(r=>{r.field=true;})
+    data['commentToTruck']=data['commentToTruck']
+
+    
+    this.handledata.saveData(data);
+    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/UpdateSingle']);
+  }
 
 }

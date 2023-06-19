@@ -13,7 +13,7 @@
   <div style="text-align: center">
     <h3>{{selectedDate|date:'dd-MM-yyyy'}}</h3>
     <table class="table" style="width:100%" align="center">
-<button class="btn btn-danger" (click)="addtoBH()">Add</button>
+<button class="btn btn-danger" (click)="addtoBH()" *ngIf="nrcmid===1">Add</button><!--extra-->
       <thead class="table-header">
         <tr>
           <th>Srno</th>

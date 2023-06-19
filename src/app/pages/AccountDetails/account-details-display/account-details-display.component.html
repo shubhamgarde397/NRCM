@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-5">
       <select class="form-control" [(ngModel)]="displayType" (change)="findOption()">
-        <option *ngFor="let i of options;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
+        <option *ngFor="let i of options;let j = index;" value={{i.value}} [hidden]="i.disabled">{{i.viewValue}}</option>
       </select>
     </div>
     <div class="col-sm-5">

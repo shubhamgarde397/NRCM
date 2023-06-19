@@ -26,6 +26,7 @@ export class HandleDataService {
   public PaymentData=[]
   public updateTurnData=false;
   public arr=[]
+  public AnilData=[]
 
   constructor(public securityCheck: SecurityCheckService) { }
 
@@ -71,6 +72,9 @@ this.updateTurnData=data;
 
   saveData(data) {
     this.Data = data;
+  }
+  saveAnilsWorkData(data) {
+    this.AnilData = data;
   }
   giveBHData(){
     return this.Data;
@@ -122,9 +126,9 @@ this.updateTurnData=data;
       case 'infovillage':
         return [Consts.VILLAGE_INDEX];
       case 'turnbook':
-        return [Consts.VILLAGE_INDEX, Consts.GST_INDEX,Consts.OWNER_INDEX];
+        return [Consts.VILLAGE_INDEX, Consts.GST_INDEX];
       case 'turnbookadd':
-        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.OWNER_INDEX]
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
       case 'infolrlist':
         return [Consts.LRLIST_INDEX]
       case 'infohiddenlist':

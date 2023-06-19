@@ -8,6 +8,7 @@ import { UpdateComponent } from './update/update.component';
 import { UpdateSingleComponent } from './update-single/update-single.component';
 import { BalanceHireAddComponent } from './balance-hire-add/balance-hire-add.component';
 import { BalanceHireHandlerComponent } from './balance-hire-handler/balance-hire-handler.component';
+import { BalanceHireAddComponentA } from './balance-hire-add-a/balance-hire-add.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { BalanceHireHandlerComponent } from './balance-hire-handler/balance-hire
         UpdateComponent,
         UpdateSingleComponent,
         BalanceHireAddComponent,
-        BalanceHireHandlerComponent
+        BalanceHireHandlerComponent,
+        BalanceHireAddComponentA
     ],
     imports: [
         CommonModule,

@@ -11,8 +11,17 @@
         <button class="btn btn-danger" (click)="getDoubtsOD()">Get Doubts OD</button>
     </div>
     <div class="col-sm-3">
-      <select class="form-control" [(ngModel)]="displayType" (change)="findOption()">
+      <select class="form-control" [(ngModel)]="displayType">
         <option *ngFor="let i of options;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
+      </select>
+    </div>
+
+    <div class="col-sm-3">
+      <select class="form-control" [(ngModel)]="partyType">
+        <option value="">All</option>
+        <option value="NRCM">NRCM</option>
+        <option value="NR">NR</option>
+        <option value="SNL">SNL</option>
       </select>
     </div>
   </div>
@@ -20,26 +29,34 @@
     <div class="col-sm-3">
       <button class="btn btn-danger" (click)="getData()">Get Places</button>
       </div>
+
+      <div class="col-sm-3">
+        <button class="btn btn-danger" (click)="findData()">Get Data!</button>
+        </div>
   </div>
 </div>
 </div>
 
-<div class="well">
-  <button class="btn btn-warning" (click)="updatetruckformat()">Update</button>
-  <table class="table" *ngIf="mainTable">
+<div class="well" *ngIf="mainTable">
+  <button class="btn btn-warning" (click)="updatetruckformat()">Update TD</button>
+  <button class="btn btn-warning" (click)="updateAllOKAY()">All OK</button>
+
+  <table class="table" >
     <thead>
       <tr>
         <th>Srno</th>
         <th>TruckNo</th>
+        <th>Party Name</th>
         <th>Date</th>
         <th>{{buttonValue}}</th>
         <th>New-{{buttonValue}}</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let ii of data;let jj=index;">
-        <td>{{jj+1}}</td>
+      <tr *ngFor="let ii of showData;let jj=index;">
+        <td>{{jj+1}}-{{ii.partyType}}</td>
         <td>{{ii.datetruck.split('_')[1]}}</td>
+        <td>{{ii.party}}</td>
         <td *ngIf="buttonOption==='2'">{{ii.typeOfLoad}}</td>
         <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
         <td *ngIf="buttonOption==='1'">{{ii.lrno}}</td>
@@ -55,6 +72,8 @@
             <option value='Pipe'>Pipe</option>
             <option value='Fittings'>Fittings</option>
             <option value='Other'>Other</option>
+            <option value='Bundle'>Bundle</option>
+            <option value='FX'>FX</option>
           </select>
         </td>
 
@@ -75,9 +94,10 @@
   </table>
 </div>
 
-<div class="well">
-  <button class="btn btn-warning" (click)="updatetruckformat1()">Update</button>
-  <table class="table" *ngIf="mainTable2">
+<div class="well" *ngIf="mainTable2">
+  <button class="btn btn-warning" (click)="updatetruckformat1()">Update OD</button>
+  <table class="table" >
+    
     <thead>
       <tr>
         <th>Srno</th>

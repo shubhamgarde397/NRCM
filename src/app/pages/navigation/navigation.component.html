@@ -6,14 +6,11 @@
       <a class="navbar-brand" routerLink="NRCM_HOME">NRCM</a>
     </div>
 
-    <ul class="nav navbar-nav">
+    <!-- <ul class="nav navbar-nav">
 
       <li class="dropdown">
-        <!-- <a routerLink="Information"> -->
-          <a class="dropdown-toggle" data-toggle="dropdown">Information
-          <span class="caret"></span>
-        </a>
 
+         
 
         <ul class="dropdown-menu">
           <li>
@@ -70,7 +67,9 @@
           <li>
             <a routerLink="BALANCE_HIRE_HANDLER">Balance Hire</a>
           </li>
-
+          <li>
+            <a routerLink="Load_HANDLER">Load Details</a>
+          </li>
           <li>
             <a routerLink="PARTY_PAYMENT_HANDLER">Payment</a>
           </li>
@@ -119,6 +118,9 @@
           <li>
             <a (click)="Prdfp()">Missing Prdfp</a>
           </li>
+          <li>
+            <a (click)="rentslip()">Rent Slip</a>
+          </li>
 
           <li>
             <a routerLink="OTHER_REPORT">Other Report</a>
@@ -129,11 +131,6 @@
           <li>
             <a routerLink="MISSING_LR">Missing LRNO</a>
           </li>
-          <!-- <li>
-            <form [formGroup]="myFormGroup">
-            <input type="checkbox" (change)="amount(myFormGroup)" id="amountShow" class="form-control" formControlName="amountShow">
-            </form>
-          </li> -->
         </ul>
       </li>
       <li class="dropdown">
@@ -178,7 +175,30 @@
       font-size: 20px;
       margin-top: 10px;
       margin-left: 15px;">Welcome {{nameOfUser}}</li>
+    </ul> -->
+
+
+    <ul class="nav navbar-nav" *ngFor="let i of tabs;">
+
+      <li class="dropdown" [ngClass]="{'hide':i.hideFlag}">
+
+          <a class="dropdown-toggle" data-toggle="dropdown" (click)="routeR(i.link)">{{i.parent}}
+          <span class="caret"></span>
+        </a>
+
+
+        <ul class="dropdown-menu">
+          <li *ngFor="let k of i.children;">
+            <a (click)="routeR(k.link)" [ngClass]="{'hide':k.hideFlag}">{{k.name}}</a>
+          </li>
+        </ul>
+
+      </li>
+
+
     </ul>
+
+    
 
   </div>
 

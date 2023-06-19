@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 
 @Component({
   selector: 'app-balance-hire-handler',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./balance-hire-handler.component.css']
 })
 export class BalanceHireHandlerComponent implements OnInit {
-
-  constructor() { }
+public nrcmid=0;
+  constructor(
+    public sec:SecurityCheckService
+  ) { }
 
   ngOnInit() {
+this.nrcmid=this.sec.nrcmid;
   }
 
 }
