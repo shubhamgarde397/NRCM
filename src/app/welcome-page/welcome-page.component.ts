@@ -19,12 +19,12 @@ export class WelcomePageComponent implements OnInit {
   public arr=[];
   public commonArray;
 public dues;
+public nrcmid=0;
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService,public hF:handleFunction,
     public securityCheck: SecurityCheckService, public spin: Ng4LoadingSpinnerService, public sec: SecurityCheckService) { }
 
   ngOnInit() {
-    console.log(this.handledata.getLRStatus);
-    
+    this.nrcmid=this.sec.nrcmid;
 this.arr=this.handledata.getLRStatus();
 this.fetchData();
   }

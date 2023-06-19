@@ -5,21 +5,21 @@
 </div>
 
 
-<div class="well">
+<div class="well" *ngIf="nrcmid===1">
     <div class="row" style="height: 10vh;">
         <button class="btn btn-warning col-sm-3 inheritedHeight" (click)="moveTo('partyAdd')">Payment Add</button>
         <button class="btn btn-warning col-sm-3 inheritedHeight" (click)="moveTo('partyDisplay')">Payment
             Display</button>
     </div>
 </div>
-<div class="well">
+<div class="well" *ngIf="nrcmid!=3">
     <div class="row" style="height: 10vh;">
         <button class="btn btn-warning col-sm-3 inheritedHeight" (click)="moveTo('turnAdd')">TurnBook Add</button>
         <button class="btn btn-warning col-sm-3 inheritedHeight" (click)="moveTo('turnDisplay')">TurnBook
             Display</button>
     </div>
 </div>
-<div class="well">
+<div class="well" *ngIf="nrcmid===1">
     <div class="row" style="height: 10vh;">
 
         <button class="btn btn-warning col-sm-3 inheritedHeight" (click)="moveTo('truckdetails')">Truck Details</button>
@@ -34,7 +34,7 @@
         </ul>
       </div>
 
-      <div class="row">
+      <div class="row" *ngIf="nrcmid===1">
         <h3>Dues</h3>
         <table class="table table-bordered" style="width:100%" align="center">
 

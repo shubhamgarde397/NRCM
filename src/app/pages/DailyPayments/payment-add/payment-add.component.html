@@ -1,0 +1,73 @@
+<div class="well">
+  <form [formGroup]="myFormGroup" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="row" style="display: flex;">
+
+      <div class="col-sm-4">
+        <button type="button" (click)="leftRight('back')"class="btn btn-danger">Back</button>
+      </div>
+      
+      <div class="col-sm-4">
+        <input type="date" id="cashFlowDate" class="form-control" [(ngModel)]="cashFlowDate" formControlName="cashFlowDate" style="display: none;">
+        <h5>{{cashFlowDate|date:'dd-MM-yyyy'}}</h5>
+      </div>
+      
+      <div class="col-sm-4">
+        <button type="button" (click)="leftRight('ahead')"class="btn btn-primary">Ahead</button>
+      </div>
+</div>
+
+
+
+    <!--Truckno-->
+
+    <div class="form-group row">
+      <div class="col-xs-12">
+        Reason : 
+        <input type="text" class="form-control" formControlName="cashFlowReason">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.cashFlowReason.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--Truckno-->
+    <div class="form-group row">
+      <div class="col-xs-12">
+        Amount : 
+        <input type="number" class="form-control" formControlName="cashFlowAmount">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.cashFlowAmount.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+   
+
+    <div class="row">
+      <div class="form-group" class="col-xs-6">
+        <button type="submit" class="btn btn-primary" (click)="store('add')">
+          <i class="material-icons">add</i>
+        </button>
+      </div>
+
+      <div class="form-group" class="col-xs-6">
+        <button type="submit" class="btn btn-primary" (click)="store('subtract')">
+          -
+        </button>
+      </div>
+
+    
+    </div>
+  </form>
+
+</div>

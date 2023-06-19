@@ -53,6 +53,7 @@ public tabsarray=[
   [0,[]],
   [0,[]],
   [0,[]],
+  [0,[]],
 ]
   public tabs=[
     {
@@ -137,6 +138,12 @@ public tabsarray=[
       parent:'LR Send',
       hideFlag:true,
       link:'LR_Display',
+      children:[]
+    },
+    {
+      parent:'Payment',
+      hideFlag:true,
+      link:'PAYMENT_HANDLER',
       children:[]
     },
     {
@@ -251,6 +258,21 @@ switch (this.nrcmid) {
         [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
         [1,[0,1]],
         [1,[]],
+        [1,[]],
+        [1,[]],
+        [1,[]],
+        [1,[]],
+      ]    
+    break;
+    case 3:
+      this.tabsarray=[
+        [0,[0,0,0,0,0,0,0,0,0,0,0,0,0]],
+        [0,[0,0,0,0,0]],
+        [0,[]],
+        [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
+        [0,[0,0]],
+        [0,[]],
+        [0,[]],
         [1,[]],
         [1,[]],
         [1,[]],

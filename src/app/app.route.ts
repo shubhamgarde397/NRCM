@@ -192,6 +192,10 @@ export const routes: Routes =
                     {
                         path:'LR_Display',
                         component:LRDisplayComponent
+                    },
+                    {
+                        path: 'PAYMENT_HANDLER',
+                        loadChildren: './pages/DailyPayments/payment.module#PaymentModule'
                     }
                 ]
         },
