@@ -248,7 +248,7 @@
                 <select id="loadingDateDynamic" class="form-control " formControlName="loadingDateDynamic"
                   (change)="getOtherDetails()">
                   <option>Blank</option>
-                  <option *ngFor="let i of turnbooklistnew;let j = index;" value={{i.loadingDate}}>{{i.loadingDate}}
+                  <option *ngFor="let i of turnbooklistnew;let j = index;" value={{i.loadingDate}}>{{i.loadingDate|date:'dd'}}
                   </option>
                 </select>
               </div>
@@ -829,7 +829,7 @@
         </button>
       </div>
       <div class="col-sm-4">
-        <button type="button" class="btn btn-warning" (click)="showDatabyid2('cancel')" *ngIf="nrcmid===1">
+        <button type="button" class="btn btn-warning" (click)="showDatabyid2('cancel')">
           Cancel
         </button>
       </div>

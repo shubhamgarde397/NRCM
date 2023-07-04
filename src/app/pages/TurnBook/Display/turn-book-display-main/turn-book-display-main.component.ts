@@ -279,6 +279,7 @@ public nrcmid;
   }
 
   fetchBasic() {
+    console.log(this.securityCheck.commonArray)
     this.commonArray = this.securityCheck.commonArray;
     this.parties = [];
     this.trucks=[]
@@ -286,6 +287,7 @@ public nrcmid;
     this.parties = this.commonArray.gstdetails;
     this.trucks = this.commonArray.ownerdetails;
     this.villagelist = this.commonArray.villagenames;
+    console.log(this.villagelist)
   }
 
 
@@ -806,9 +808,9 @@ this.placeid=this.tempDate[0]['place']['_id']
   }
 
   setPartyName() {
-    this.partyid = this.parties[this.myFormGroup.value.partyName.split('+')[1]]._id;
-    this.tempPNAME = this.parties[this.myFormGroup.value.partyName.split('+')[1]].name;
-    this.myFormGroup.value.partyName = this.tempPNAME;
+    this.partyid = this.parties[this.myFormGroupTB.value.partyName.split('+')[1]]._id;
+    this.tempPNAME = this.parties[this.myFormGroupTB.value.partyName.split('+')[1]].name;
+    this.myFormGroupTB.value.partyName = this.tempPNAME;
     this.villagelist=this.parties.filter(r=>r['_id']==this.partyid)[0]['cities']
 
     
@@ -958,7 +960,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       tempObj["givenDate"] = newgivenDate;
       tempObj["pgno"] = pgno;
       tempObj['number'] = 2;
-      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, 0)
+      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
         .subscribe((res: any) => {
           alert(res.Status);
           this.turnbooklist.splice(this.indexBig, 1);
@@ -1783,6 +1785,7 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
          index=index+1;
         doc.text(this.handleF.getDateddmmyy(this.turn12[i]['loadingDate']), 32, y)//partyname
           doc.text(this.turn12[i]['truckName']['truckno'], 57, y)//truckno
+          doc.text(this.turn12[i]['placeName']['village_name'], 57, y+5)//truckno
           doc.text(String(this.turn12[i]['pochAmount']), 88, y)//truckno
           doc.text(this.handleF.getDateddmmyy(this.turn12[i]['actualPaymentDate']), 101, y)//truckno
           doc.text(this.turn12[i]['actualPaymentDate']!=''?String(this.turn12[i]['actualPaymentAmount']):'', 129, y)//truckno
