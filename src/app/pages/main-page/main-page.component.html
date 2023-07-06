@@ -145,6 +145,7 @@
                     <tr class=table-header>
                       <th>Srno</th>
                       <th>Entry-Loading</th>
+                      <th>TruckNo</th>
                       <th>Type-Party-Place</th>
                       <th>LRNO</th>
                       <th>Amount</th>
@@ -154,17 +155,15 @@
                   </thead>
                   <tbody align="center">
                     <tr *ngFor="let i of turn11;let j = index">
-                      <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
-                        done
-                        </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
-                          close
-                          </i></td>
+                      <td>{{j+1}}</td>
                       <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                      <td>{{i.truckName['truckno']}}</td>
                       <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
                       <td>{{i.lrno}}</td>
                       <td>{{i.hamt}}<br>{{i.rent}}</td>
                       <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
-                      <td [ngStyle]="{'background-color': i.colors[1]}">{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
+                      <td [ngStyle]="{'background-color': i.colors[1]}">
+                        {{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.truckName['pan']}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -242,7 +241,7 @@
         <div *ngIf="whichType==='4'">
           <div class="well">
             <div class="form-group row">
-              <div class="col-xs-4">
+              <div class="col-xs-2">
                 <label>Place</label>
                 <select class="form-control" [(ngModel)]="placeidto" (change)="getDA()">
                   <option selected>Select Place</option>
@@ -254,7 +253,7 @@
               </div>
             
 
-              <div class="col-xs-4">
+              <div class="col-xs-2">
                 <label>Party</label>
                 <select class="form-control" [(ngModel)]="partyidto" (change)="getPA()">
                   <option selected>Select Place</option>
@@ -265,15 +264,24 @@
                 <i class="material-icons" (click)="getparties()">autorenew</i>
               </div>
 
-              
-                <div class="col-sm-4">
-                  <button class="btn btn-danger" (click)="getVPData()">Get</button>
-                </div>
-              
+              <div class="col-xs-3">
+                <label>From</label>
+                <input type="date" class="form-control" [(ngModel)]="fromDate">
+              </div>
+
+              <div class="col-xs-3">
+                <label>To</label>
+                <input type="date" class="form-control" [(ngModel)]="toDate">
+              </div>
+                
 
 
             </div>
-
+            <div class="row">
+              <div class="col-sm-4">
+                  <button class="btn btn-danger" (click)="getVPData()">Get</button>
+                </div>
+            </div>
               
 
             <div class="col-sm-12">
@@ -314,6 +322,15 @@
               <div class="col-sm-3">
                 <button class="btn btn-warning col-sm-3" (click)="find6()">Find</button>
               </div>
+              <div class="col-sm-3">
+                <button class="btn btn-warning col-sm-3" (click)="show(0)">0</button>
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-warning col-sm-3" (click)="show(1)">1</button>
+              </div>
+              <div class="col-sm-3">
+                <button class="btn btn-warning col-sm-3" (click)="show(2950)">2950</button>
+              </div>
     
             </div>
                 
@@ -337,7 +354,7 @@
                             <td>{{i.truckno}}</td>
                             <td>{{i.party}}</td>
                             <td>{{i.place}}</td>
-                            <td><input type="number" id="tb_{{j}}"></td>
+                            <td><input type="number" id="tb_{{j}}" value={{i.tentativeBalance}}></td>
                           </tr>
                         </tbody>
                       </table>
@@ -346,5 +363,6 @@
                 <button mat-raised-button type="button" (click)="setTB()" class="btn-success btn-sm btn-just-icon">
                   <i class="material-icons">arrow_forward</i>
                 </button>
+            </div>
             </div>
             </div>
