@@ -250,13 +250,13 @@ var doc = new jsPDF('l','mm',[230,110])
     doc.text('To , ',38,20)
     doc.setTextColor(224,0,0);
     doc.setFontType('bold');
-    doc.text('Pragati Logistics,',40,22)
+    doc.text('Tirumala Pipe Distributors,',40,22)
     doc.setFontType('normal');
     doc.setTextColor(0,0,0);
-    doc.text('Swaraj Capital, Ofc No. 410,',40,24)
-    doc.text('4th Floor, Moshi Chikhli Rd, Behind D-Mart,',40,26)
-    doc.text('Pune - 412105',40,28)
-    doc.text('Co : 9371194376',40,30)
+    doc.text('S.D-491/2A, Warehouse No.4,',40,24)
+    doc.text('Canal Road, Korattur,',40,26)
+    doc.text('Chennai - 6000076',40,28)
+    doc.text('Co : +91 8870808877',40,30)
 // for loop
 
 
