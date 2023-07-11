@@ -86,6 +86,7 @@ public showbuttonOption821HA=true;
     { 'value': '19', 'viewvalue': 'Party Name' ,'disabled':false},
   ]
   // 18
+  public lrStarter=0;
   public inProgress=true;
   public showbuttonOption18=false;
   public turn18;
@@ -452,7 +453,8 @@ let buttons=[]
   }
 
   addlrno(data){
-    this.lrnos.push(data.value.lrno);
+
+    this.lrnos.push(parseInt(String(this.lrStarter)+String(data.value.lrno)));
     this.myFormGroup9.patchValue({'lrno':''})
   }
 

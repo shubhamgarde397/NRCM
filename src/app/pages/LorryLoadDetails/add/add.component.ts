@@ -30,7 +30,8 @@ export class AddComponent implements OnInit {
 public buttonValue='Create Bill';
 public buttonOption='1';
 public displayType;
-public lrno;
+public lrno=0;
+public showPan=false;
 public displayoptions = [
   { 'value': '1', 'viewvalue': 'Create Bill','disabled':false },
   { 'value': '2', 'viewvalue': 'Collection Memo','disabled':false },
@@ -480,7 +481,7 @@ public partyType;
       this.placeName=this.placeName+this.placeName2;
     }
     let d=new Date()
-let billno=String(d.getDate())+String(d.getMonth()+1)+String(d.getHours())+String(d.getMinutes());
+let billno=String(d.getDate())+String(d.getMonth()+1)+String(d.getHours())+String(d.getMinutes())+String(d.getSeconds());
     let data={
       'partyType':this.partyType2,
       'loadingDate':this.loadingDate,
@@ -557,7 +558,12 @@ let billno=String(d.getDate())+String(d.getMonth()+1)+String(d.getHours())+Strin
     
     doc.text('Lorry Hire : ',10,mainY+53)
     doc.setTextColor(224,0,0);
-    doc.text('LRNO : ',67, mainY+53)
+    if(data.lrno===0){
+    doc.text('TON : ',67, mainY+53)
+    }
+    else{
+      doc.text('LRNO : ',67, mainY+53)
+    }
     doc.setTextColor(12,139,173);
     doc.text('Height or Length Extra Rs     : ',10,mainY+60)
     doc.setFontSize('10')
@@ -573,7 +579,11 @@ let billno=String(d.getDate())+String(d.getMonth()+1)+String(d.getHours())+Strin
     doc.text(data.partyDetails,35,mainY+37)
     doc.text(data.truckno,35,mainY+44)
     doc.text(String(data.hamt),35,mainY+53)
-    doc.text(this.lrno,100,mainY+53)
+    if(data.lrno===0){
+      doc.text('Fixed',100,mainY+53)
+    }else{
+      doc.text(String(data.lrno),100,mainY+53)  
+    }
     doc.text(String('-'),75,mainY+60)
     doc.setFontSize('10')
     doc.text(String(data.partyAdvanceAmt),100,mainY+67)
@@ -603,7 +613,9 @@ let billno=String(d.getDate())+String(d.getMonth()+1)+String(d.getHours())+Strin
     if(data.partyType==='NR'){
       doc.text('For Nitin Roadways',105, mainY+84)
       doc.setTextColor(0,0,0);
+      if(this.showPan){
       doc.text('PAN : AFGPG0575D',105, mainY+92)
+      }
       
     }
     if(data.partyType==='SNL'){

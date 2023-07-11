@@ -629,7 +629,9 @@
     <div class="form-group row">
 
       <div class="col-xs-3">
-        LRNO : <input type="number" id="lrno" class="form-control" formControlName="lrno" (keyup.enter)="addlrno(myFormGroup9)">
+        LRNO : 
+        <input type="number" class="form-control" [(ngModel)]="lrStarter" [(ngModel)]="showMoreControls" [ngModelOptions]="{standalone: true}">
+        <input type="number" id="lrno" class="form-control" formControlName="lrno" (keyup.enter)="addlrno(myFormGroup9)">
       </div>
     </div>
 
