@@ -67,13 +67,16 @@ export class MainPageComponent implements OnInit {
       ton:7
     });
     this.myFormGroupR = this.formBuilder.group({
-      from: '',
-      to: ''
+      from: 0,
+      to: 0,
+      qty:0
     });
   }
 
-  getWhichType(data){
+
+  getWhichType(data,yn){
 this.whichType=data;
+if(yn){
 let tempObj={}
 switch(data){
     case '1':
@@ -94,7 +97,10 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
           break;
         }
       });
+    }
   }
+
+
 find(event){
   if(event==='11'){
     this.wala11=true;
@@ -139,16 +145,20 @@ find(event){
   }
 
   generate(){
+    if(this.myFormGroupR.value.to-this.myFormGroupR.value.from+1>=this.myFormGroupR.value.qty){
     this.randomarray = []
     
-      while(this.randomarray.length < 5){
-          var r = Math.floor(Math.random() * (this.myFormGroupR.value.from - this.myFormGroupR.value.to + 1)) + this.myFormGroupR.value.to;
+      while(this.randomarray.length < this.myFormGroupR.value.qty){
+          var r = Math.floor(Math.random() * (this.myFormGroupR.value.to - this.myFormGroupR.value.from + 1)) + this.myFormGroupR.value.from;
           if(this.randomarray.indexOf(r) === -1) this.randomarray.push(r);
       }
-          return this.randomarray;
-      
-    
+    }
+    else{
+      alert('Range Warning!')
+    }
   }
+
+
   find11UniqueTruck(){
     if(this.trucknoid11!=='Default'){
       this.selectDate=false;
@@ -252,8 +262,10 @@ const imgContact="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/8AAAP/CAYAAACW
     
 var doc = new jsPDF('l','mm',[230,110])      
 for(let i=0;i<data.length;i++){
-  console.log('Hi')
+console.log(i);
 
+  if(data[i]['addr2']!==''&&data[i]['addr2']!==null){
+    if(data[i]['addr3']!==''&&data[i]['addr3']!==null){
     doc.setFontSize('5');
     doc.setFontType('bold');
     doc.setTextColor(224,0,0);
@@ -296,6 +308,8 @@ doc.addImage(imgContact,'PNG',15,25,10,10)
     
  
 doc.addPage()
+  }
+}
 }
 doc.save('TPT.pdf')
     // 3 Info

@@ -12,22 +12,22 @@
 
   <div class="row">
     <div class="col-sm-1">
-        <button class="btn btn-info" (click)="getWhichType('1')">Rent</button>
+        <button class="btn btn-info" (click)="getWhichType('1',true)">Rent</button>
     </div>
     <div class="col-sm-1">
-      <button class="btn btn-info" (click)="getWhichType('2')">Truck Data</button>
+      <button class="btn btn-info" (click)="getWhichType('2',false)">Truck Data</button>
   </div>
   <div class="col-sm-1">
-    <button class="btn btn-info" (click)="getWhichType('3')">By Load</button>
+    <button class="btn btn-info" (click)="getWhichType('3',false)">By Load</button>
 </div>
 <div class="col-sm-1">
-  <button class="btn btn-info" (click)="getWhichType('4')">VillageParty</button>
+  <button class="btn btn-info" (click)="getWhichType('4',false)">VillageParty</button>
 </div>
 <div class="col-sm-1">
-  <button class="btn btn-info" (click)="getWhichType('5')">Tentative</button>
+  <button class="btn btn-info" (click)="getWhichType('5',false)">Tentative</button>
 </div>
 <div class="col-sm-1">
-  <button class="btn btn-info" (click)="getWhichType('6')">Generate Random</button>
+  <button class="btn btn-info" (click)="getWhichType('6',false)">Generate Random</button>
 </div>
 <div class="col-sm-1">
   <button class="btn btn-info" (click)="getTpt()">All Envelopes</button>
@@ -379,7 +379,11 @@
                 <form [formGroup]="myFormGroupR" (ngSubmit)="generate(myFormGroupR)" submitted=true
                   enctype="multipart/form data" action="/">
               
-                 
+                  <div class="form-group row">
+                    <div class="col-xs-3">
+                     Qty :  <input type="number" id="value" class="form-control" formControlName="qty">
+                    </div>
+                  </div>
           
                   <div class="form-group row">
                     <div class="col-xs-3">
