@@ -481,7 +481,7 @@ public partyType;
       this.placeName=this.placeName+this.placeName2;
     }
     let d=new Date()
-let billno=String(d.getDate())+String(d.getMonth()+1)+String(d.getHours())+String(d.getMinutes())+String(d.getSeconds());
+let billno=String(d.getMinutes())+String(d.getSeconds());
     let data={
       'partyType':this.partyType2,
       'loadingDate':this.loadingDate,

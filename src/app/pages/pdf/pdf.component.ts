@@ -71,6 +71,11 @@ export class PDFComponent implements OnInit {
     this.amt = '';
   }
   downloadBank() {
+    for(let i=0;i<this.bankArray.length;i++){
+      this.bankArray[i].Amount=parseInt((<HTMLInputElement>document.getElementById( String(i) )).value)
+    }
+
+
     this.max = this.bankArray[0].Amount;
     this.bankArray.forEach(r => { if (r.Amount > this.max) { this.max = r.Amount; } })
     var doc = new jsPDF()
@@ -156,6 +161,11 @@ export class PDFComponent implements OnInit {
     }
     doc.save(this.timeLog.toString() + '.pdf')
   }
+  // downloadBankNew(){
+  //   for(let i=0;i<this.bankArray.length;i++){
+  //     this.bankArray[i].Amount=parseInt((<HTMLInputElement>document.getElementById( String(i) )).value)
+  //   }
+  // }
 
   spaceToLeave(totalAmt, max) {
     let spaces = String(totalAmt).length - String(max).length;

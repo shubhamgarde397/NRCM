@@ -149,6 +149,7 @@
       </div>
     </div>
     <div class="col-sm-3"><button class="btn btn-warning" (click)="downloadBank()">Bank</button></div>
+    <!-- <div class="col-sm-3"><button class="btn btn-warning" (click)="downloadBankNew()">BankNew</button></div> -->
 
     <div class="col-xs-5">
       <table>
@@ -159,7 +160,8 @@
         </tr>
         <tr *ngFor="let data of bankArray;let j=index;">
           <td>{{data.Name}}</td>
-          <td>{{data.Amount}}</td>
+          <!-- <td>{{data.Amount}}</td> -->
+          <td><input type="number" value={{data.Amount}} id={{j}}> </td>
           <td><button class="btn btn-danger" (click)="delete(data,j)">D</button></td>
         </tr>
       </table>
