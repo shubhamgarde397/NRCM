@@ -1795,7 +1795,7 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
           // doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})?String(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})['BHAccNo']):''):'', 146, y+5)//truckno
           doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'':this.turn12[i]['statusOfPoch'],185,y);
           let pmtx=this.turn12[i]['statusOfPoch']==='Okay'?'185':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'178':'178'):'185')
-          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'Payment Done':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'Received Pending':'Payment Pending'):'No Payment'),pmtx,y+5);
+          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'பணம் பொட்டச்சி':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'Received வரலியா':'பணம் போட் இல்லை'):'No Payment'),pmtx,y+5);
       
     
            y = y + 12;

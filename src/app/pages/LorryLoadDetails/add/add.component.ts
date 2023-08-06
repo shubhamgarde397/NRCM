@@ -32,6 +32,10 @@ public buttonOption='1';
 public displayType;
 public lrno=0;
 public showPan=false;
+public ratnagiri=false;
+public showTon=false;
+public showLrno=false;
+public showQR=false;
 public displayoptions = [
   { 'value': '1', 'viewvalue': 'Create Bill','disabled':false },
   { 'value': '2', 'viewvalue': 'Collection Memo','disabled':false },
@@ -551,18 +555,27 @@ let billno=String(d.getMinutes())+String(d.getSeconds());
     doc.setFontType('bold');
     doc.setTextColor(12,139,173);
     doc.text('Bill No. : ',10,mainY+30)
-    doc.text('From : ',67,mainY+44)
+    if(this.ratnagiri){
+      doc.text('From : ',67,mainY+44)
+    }
+    else{
+      doc.text('To : ',67,mainY+44)
+    }
     doc.text('Date : ',75,mainY+30)
-    doc.text('M/s :              ',10,mainY+37)
+    doc.text('M/s :              ',10,mainY+37)  
     doc.text('Truck No : ',10,mainY+44)
     
     doc.text('Lorry Hire : ',10,mainY+53)
     doc.setTextColor(224,0,0);
-    if(data.lrno===0){
-    doc.text('QR : 12295913',67, mainY+53)
+
+    if(this.showTon){
+    doc.text('TON',67, mainY+53)
     }
-    else{
-      doc.text('QR : ',67, mainY+53)
+    else if(this.showLrno){
+      doc.text('LRNO',67, mainY+53)
+    }
+    else if(this.showQR){
+      doc.text('QR',67, mainY+53)
     }
     doc.setTextColor(12,139,173);
     doc.text('Height or Length Extra Rs     : ',10,mainY+60)
@@ -574,17 +587,31 @@ let billno=String(d.getMinutes())+String(d.getSeconds());
     doc.setTextColor(0,0,0);
     doc.setDrawColor(0,0,0);
     doc.text(String(billno),30,mainY+30)
-    doc.text(' '+data.villageDetails,80,mainY+44)
+    if(this.ratnagiri){
+      doc.text(' To '+data.villageDetails,80,mainY+44)
+    }else{
+    doc.text(data.villageDetails,80,mainY+44)
+    }
     doc.text(this.handleF.getDateddmmyy(data.loadingDate),95,mainY+30)
-    doc.text('Finolex Industries Pvt. Ltd. Ratanagiri',35,mainY+37)
+    if(this.ratnagiri){
+      doc.text('Finolex Industries Pvt. Ltd. Ratanagiri',35,mainY+37)
+      
+    }
+    else{
+    doc.text(data.partyDetails,35,mainY+37)
+    }
     // data.partyDetails
     doc.text(data.truckno,35,mainY+44)
-    doc.text(String('-'),35,mainY+53)
-    if(data.lrno===0){
+    doc.text(String(data.hamt),35,mainY+53)
+    if(this.showTon){
       doc.text('Fixed',100,mainY+53)
-    }else{
-      doc.text(String(data.lrno),100,mainY+53)  
-    }
+      }
+      else if(this.showLrno){
+        doc.text(String(data.lrno),100,mainY+53)  
+      }
+      else if(this.showQR){
+        doc.text(String(data.lrno),100,mainY+53)  
+      }
     doc.text(String('-'),75,mainY+60)
     doc.setFontSize('10')
     doc.text(String(data.partyAdvanceAmt),100,mainY+67)

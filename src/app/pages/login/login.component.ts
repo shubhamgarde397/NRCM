@@ -107,8 +107,8 @@ export class LoginComponent implements OnInit {
             this.security.commonArray = resNew;
             this.security.commonArray['Role'] = resNew.Role;
             this.security.role = resNew.Role;
-            let k=Object.keys(resNew['lrsend'][0])
-            let v=Object.values(resNew['lrsend'][0])
+            let k=Object.keys(resNew['lrlist'][0])//lrsend
+            let v=Object.values(resNew['lrlist'][0])//lrsend
             for(let i=0;i<2;i++){
               let obj={}
               obj['location']=k[i]

@@ -45,14 +45,6 @@
 </div>
 
 
-<!-- <div class="row">
-  <button mat-raised-button type="button" (click)="find()"
-      class="btn btn-primary btn-sm btn-just-icon delete">
-      Get Data
-    </button>
-</div> -->
-  <!--DATE -->
-
   
 </div>
   <table class="table" style="width:100%" align="center" *ngIf="tableSelected">
@@ -60,12 +52,10 @@
       <tr class=table-header>
         <th>Srno</th>
         <th>Loading Date</th>
-        <th>Truck No-Type</th>
         <th>Place</th>
         <th>Party-Type</th>
         <th>LRNO</th>
         <th>Account</th>
-        <th>Select</th>
       </tr>
     </thead>
 
@@ -76,9 +66,14 @@
           </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
             close
             </i></td>
-        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
-        <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}
-        </td>
+
+        <td (click)="addToCheckArray(i,j,1)" >
+          {{i.loadingDate|date:'dd-MM-yyyy'}}
+          <br>
+          {{i.truckno}}
+          <br>
+          {{i.typeOfLoad}}</td>
+
         <td>{{i.place}}</td>
         <td>{{i.partyType}}<br>{{i.snameparty}}</td>
         <td>{{i.lrno}}</td>
@@ -90,18 +85,7 @@
         </span>
         <span *ngIf="i.accountNo.length===0"></span>
         </td>
-        <td *ngIf='i.checker===0'>
-          <button mat-raised-button type="button" (click)="addToCheckArray(i,j,1)"
-            class="btn-primary btn-sm btn-just-icon" [disabled]="balanceHireArrray.length>0">
-            <i class="material-icons">add</i>
-          </button>
-        </td>
-        <td *ngIf='i.checker===1'>
-          <button mat-raised-button type="button" (click)="addToCheckArray(i,j,0)"
-            class="btn-danger btn-sm btn-just-icon" disabled>
-            <i class="material-icons">remove</i>
-          </button>
-        </td>
+
       </tr>
     </tbody>
   </table>
@@ -122,20 +106,22 @@
   <div *ngIf="finalCheckDone">
     <div *ngFor="let k of balanceHireArrray;let kk=index;">
       <table class="table">
-        <thead>
+        <thead align="center">
           <tr>
             <th>Srno</th>
             <th>Loading Date</th>
+            <th>LRNO</th>
             <th>Truck No</th>
             <th>Party Name</th>
             <th>Party Type</th>
             <th>Place</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody align="center">
           <tr *ngFor="let ii of k;let jj=index;">
             <td>{{jj+1}}</td>
             <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{ii.lrno}}</td>
             <td>{{ii.truckno}}</td>
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
@@ -162,6 +148,7 @@
             <th>Place</th>
             <th>Balance</th>
             <th>Pageno</th>
+            <th>LRNO</th>
           </tr>
         </thead>
         <tbody>
@@ -175,6 +162,8 @@
             <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}>
             </td>
             <td><input type="text" placeholder="Page no" id="pageno_{{kk}}_{{jj}}">
+            </td>
+            <td><input type="text" placeholder="LRNO" id="lrno_{{kk}}_{{jj}}" value={{ii.lrno}}>
             </td>
           </tr>
         </tbody>

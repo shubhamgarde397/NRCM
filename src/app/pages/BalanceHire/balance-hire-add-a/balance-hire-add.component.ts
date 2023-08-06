@@ -81,7 +81,6 @@ public forceBackButton=false;
     'turnbookDate', 
     'tentativeBalance',
     'entryDate', 
-    'lrno', 
     'hamt', 
     'pochDate', 
     'pochPayment', 
@@ -116,6 +115,8 @@ public forceBackButton=false;
   }
 
     addToCheckArray(i, j, c) {
+      if(i['checker']===0){
+      
     this.nextStepButton=true;
     i['balance']=this.balance(i);
     if (i['loadingDate'] == "") {
@@ -130,6 +131,10 @@ public forceBackButton=false;
         this.tempArray.splice(j, 1);
       }
     }
+  }
+  else{
+alert('Selected!')
+  }
   }
 
   reduceArray() {
@@ -168,6 +173,8 @@ public forceBackButton=false;
   }
 
   moveToFinalStep() {
+    console.log(this.balanceHireArrray);
+    
     this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
   }
   moveToFinalStep2() {
@@ -191,7 +198,13 @@ public forceBackButton=false;
       if (breaker) { break; }
       for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
         if (breaker) { break; }
-        if (((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) || ((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value.length == 0)) {
+        if (
+          ((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) 
+          ||
+          ((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value.length == 0)
+          ||
+          ((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value.length == 0)
+          ) {
           alert('Please fill in all the fields.');
           breaker = true;
           break;
@@ -201,6 +214,7 @@ public forceBackButton=false;
             if(r._id==this.balanceHireArrray[i][j]['_id']){
               this.bhTrucks[index]['pgno']=parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value)
               this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value)
+              this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value
               return true
             }
           })

@@ -517,7 +517,7 @@ switch(data){
 
         doc.text(data[i]['advanceArray'][0]?String(data[i]['advanceArray'][0]['advanceAmt']):'', 88, y)//truckno
 
-        doc.text(data[i]['statusOfPoch']==='Okay'?'Okay':(data[i]['statusOfPoch']===''?(data[i]['pochDate']===''?'Received Pending':'Payment Pending'):data[i]['statusOfPoch']),101,y);
+        doc.text(data[i]['statusOfPoch']==='Okay'?'Okay':(data[i]['statusOfPoch']===''?(data[i]['pochDate']===''?'Received வரலியா':'பணம் போட் இல்லை'):data[i]['statusOfPoch']),101,y);
 
         doc.text(this.handleF.getDateddmmyy(data[i]['pochDate']),135,y);
         doc.text(String(data[i]['pgno']),135,y+6);
