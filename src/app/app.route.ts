@@ -158,6 +158,10 @@ export const routes: Routes =
                         loadChildren: './pages/BalanceHire/app.module#AppModule'
                     },
                     {
+                        path: 'POCH_COLLECTION_HANDLER',
+                        loadChildren: './pages/PochCollection/app.module#AppModule'
+                    },
+                    {
                         path: 'TURN_BOOK_HANDLER',
                         loadChildren: './pages/TurnBook/turn-book.module#TurnBookModule'
                     },

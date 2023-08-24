@@ -72,9 +72,6 @@ public whichData=false;
   };
 
   details(type,i,j){
-    console.log(type);
-    console.log(i);
-    console.log(j);
     this.whichData=type;
     let temp={
       'method':'displayDueDeepDetails',

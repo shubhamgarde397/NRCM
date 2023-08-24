@@ -113,8 +113,6 @@ export class GiftHandlerComponent implements OnInit {
       
       give(data){
         this.selectedGift;
-        console.log(data);
-        
         let temp={}
         temp['_id']=data._id;
         temp['gifts']=[{'giftid':this.selectedGift,'date':this.selectedDate}]

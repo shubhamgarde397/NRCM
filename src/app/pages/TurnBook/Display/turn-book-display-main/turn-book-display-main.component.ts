@@ -21,6 +21,7 @@ export class TurnBookDisplayMainComponent implements OnInit {
     public placeid;
     public placeid2;
     public party;
+    public addis19=true;
     public partyType;
     public partyid;
       public showbuttonOption8211=false;
@@ -37,6 +38,7 @@ public showbuttonOption821HA=true;
   public show = false;
   public tabledata: false;
   public today;
+  public packetNo=0;
   public todaysDate;
   public name: string;
   public dbName = 1;
@@ -83,7 +85,7 @@ public showbuttonOption821HA=true;
     { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
     { 'value': '17', 'viewvalue': 'Double Loading' ,'disabled':false},
     { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
-    { 'value': '19', 'viewvalue': 'Party Name' ,'disabled':false},
+    { 'value': '19', 'viewvalue': 'Packet' ,'disabled':false},
   ]
   // 18
   public lrStarter=0;
@@ -194,17 +196,28 @@ public nrcmid;
       partyType: '',
     });
   }
+  show19(data){
+    switch (data) {
+      case 'add':
+        this.addis19=true;
+        break;
+        case 'display':
+          this.addis19=false;
+        break;
+    
+      default:
+        break;
+    }
+  }
 
   tabsetter(){
     // this is for anil
-    console.log(this.nrcmid);
-    
     switch (this.nrcmid) {
       case 1:
         this.displayoptionsarray=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
         break;
         case 7:
-          this.displayoptionsarray=[1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0]
+          this.displayoptionsarray=[1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1]
         break;
     
       default:
@@ -243,8 +256,7 @@ public nrcmid;
 
   aF(){ // remove by entry by partyid from turn18
     let arr=this.turn18show;
-    console.log(arr);
-    
+
     while(arr.length--){
       if (arr[arr.length] && arr[arr.length].hasOwnProperty('partyid') && (arguments.length > 2 && arr[arr.length]['partyid'] === (this.handleF.findgst(this.partyVar18, this.parties))['_id'] ) )
       {
@@ -280,7 +292,6 @@ public nrcmid;
   }
 
   fetchBasic() {
-    console.log(this.securityCheck.commonArray)
     this.commonArray = this.securityCheck.commonArray;
     this.parties = [];
     this.trucks=[]
@@ -288,7 +299,6 @@ public nrcmid;
     this.parties = this.commonArray.gstdetails;
     this.trucks = this.commonArray.ownerdetails;
     this.villagelist = this.commonArray.villagenames;
-    console.log(this.villagelist)
   }
 
 
@@ -437,8 +447,10 @@ let buttons=[]
     let temp={
       "lrnos":this.lrnos,
       "tablename":"",
-      "method":"lrtoparty",
-      "partyid":this.partyVar19
+      "method":"lrtopartyAnil",
+      "packetNo":this.packetNo
+      // "method":"lrtoparty",
+      // "partyid":this.partyVar19
     }
 
     this.apiCallservice.handleData_New_python('turnbook', 1, temp, true)
@@ -447,6 +459,21 @@ let buttons=[]
       this.lrnos=[];
     })
   }
+  sendToSetMain(i){
+    let temp={
+      "lrnos":i.lrno,
+      "_id":i._id,
+      "tablename":"",
+      "packetNo":i.packetNo,
+      "method":"lrtoparty",
+      "partyid":this.partyVar19
+    }
+
+    this.apiCallservice.handleData_New_python('turnbook', 1, temp, true)
+    .subscribe((res: any) => {
+      alert(res.Status);
+    })  
+  }
 
   findtruck() {
     this.truckid = this.handleF.findowner(this.truckVar, this.trucks,'Select Truck No');
@@ -454,12 +481,25 @@ let buttons=[]
 
   addlrno(data){
 
-    this.lrnos.push(parseInt(String(this.lrStarter)+String(data.value.lrno)));
+    this.lrnos.push(parseInt(String(data.value.lrno)));
     this.myFormGroup9.patchValue({'lrno':''})
   }
 
-  delLR(i){
-    this.lrnos.splice(i, 1);
+  delLR(i,index){
+    if (confirm('Are you sure?')) {
+      let formbody = {}
+      formbody['_id'] = i._id;
+      formbody['method'] = 'deletePacket';
+      formbody['tablename'] = '';
+      formbody['index'] = index;
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
+        .subscribe((response: Response) => {
+          alert(response['Status'])
+          this.findPackets();
+        });
+    }
+    // this.lrnos.splice(i, 1);
   }
 
   findOption() {
@@ -555,7 +595,7 @@ let buttons=[]
       this.myFormGroup9 = this.formBuilder.group({
         lrno: ''
       });
-      this.parties = this.parties.filter(r=>{return r.partyType===this.buttonOptionPartyType})
+      this.parties = this.parties.filter(r=>{return r.partyType==='NRCM'})
     }
 else if(this.buttonOption !== '11'){
 
@@ -665,6 +705,16 @@ let tempObj1={};
     }
 
   };
+
+  findPackets(){
+    let tempObj1={};
+    tempObj1['tablename'] = ''
+    tempObj1['method'] = 'lrtopartyAnilDisplay'
+      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj1, true)
+      .subscribe((res: any) => {
+        this.turnbooklist = res.Data;
+      });
+  }
 
   clearData(i,j){
     if(confirm('Do you want to clear the payment?')){

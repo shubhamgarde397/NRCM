@@ -82,6 +82,7 @@ public tabsarray=[
       children:[
         {name:'Turn Book',link:'TURN_BOOK_HANDLER',hideFlag:true},
         {name:'Balance Hire',link:'BALANCE_HIRE_HANDLER',hideFlag:true},
+        {name:'Poch Collection',link:'POCH_COLLECTION_HANDLER',hideFlag:true},
         {name:'Load Details',link:'Load_HANDLER',hideFlag:true},
         {name:'Payment',link:'PARTY_PAYMENT_HANDLER',hideFlag:true,},
         {name:'Turnbook Location',link:'TURN_BOOK_LOCATION_DISP',hideFlag:true}]
@@ -185,7 +186,6 @@ public tabsarray=[
     this.nrcmid=this.securit.nrcmid;
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();
-    console.log(this.nrcmid);
     this.tabsetter();
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
 
@@ -234,13 +234,11 @@ public tabsarray=[
 
   tabsetter(){
 // this is for anil
-console.log(this.nrcmid);
-
 switch (this.nrcmid) {
   case 1:
     this.tabsarray=[
       [1,[1,1,1,1,1,1,1,1,1,1,1,1,1]],
-      [1,[1,1,1,1,1]],
+      [1,[1,1,1,1,1,1]],
       [1,[]],
       [1,[1,1,1,1,1,1,1,1,1,1,1,1]],
       [1,[1,1]],
@@ -253,7 +251,7 @@ switch (this.nrcmid) {
     case 7:
       this.tabsarray=[
         [1,[0,0,0,0,0,0,0,1,0,0,0,1,0]],
-        [1,[1,1,0,0,0]],
+        [1,[1,1,1,0,0,0]],
         [0,[]],
         [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
         [1,[0,1]],
@@ -267,7 +265,7 @@ switch (this.nrcmid) {
     case 3:
       this.tabsarray=[
         [0,[0,0,0,0,0,0,0,0,0,0,0,0,0]],
-        [0,[0,0,0,0,0]],
+        [0,[0,0,0,0,0,0]],
         [0,[]],
         [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
         [0,[0,0]],

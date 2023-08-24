@@ -50,7 +50,7 @@ import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues
 import { DisplayComponent } from './pages/CI/JG/display/display.component';
 import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
 import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
-import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component'
+import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component';
 
 @NgModule({
   declarations: [

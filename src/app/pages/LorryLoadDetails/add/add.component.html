@@ -293,7 +293,8 @@
   <div class="container">
 
     <div class="row">
-      <div class="col-sm-4">
+
+      <div class="col-sm-3">
       Party Type : <select class="form-control" [(ngModel)]="partyType2">
         <option value="NR">NR</option>
         <option value="NRCM">NRCM</option>
@@ -301,17 +302,18 @@
         <option value="None" selected>None</option>
       </select> 
     </div>
-  </div>
-    <div class="row">
-      <div class="col-sm-4">
+
+    <div class="col-sm-4">
       Party : 
       <select id="partyName" class="form-control" [(ngModel)]="partyName"  (change)="setPartyNameMS(2)">
         <option selected disabled value={{partyid}}>{{party}}</option>
         <option *ngFor="let i of parties;let j = index;" value={{i.name}}>{{i.name}}</option>
       </select>
     </div>
-</div>
-    <div class="row">
+
+  </div>
+
+    <div class="container">
       <div class="col-sm-4">
       Place : 
       <select id="placeName" class="form-control" [(ngModel)]="placeName"  (change)="setPlaceNameMS(2)">
@@ -319,66 +321,77 @@
         <option *ngFor="let i of places;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
       </select>
     </div>
-</div>
-    <div class="row">
-      <div class="col-sm-4">
+    <div class="col-sm-4">
       Place 2: 
-      <input type="text" [(ngModel)]="placeName2">
+      <input type="text" class="form-control" [(ngModel)]="placeName2">
     </div>
 </div>
-    <div class="row">
+   
+    <div class="container">
       <div class="col-sm-4">
       Date : <input type="date" class="form-control" [(ngModel)]="loadingDate">
       </div>
-</div>
-    <div class="row">
+
       <div class="col-sm-4">
       Truck No : <input type="text" class="form-control" [(ngModel)]="truckNo">
       </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-4">
-  LRNO : <input type="checkbox" class="form-control" [(ngModel)]="showLrno">
+<div class="container">
+  <div class="col-sm-2">
+    <label>
+      <input type="radio" name="color" class="form-control" value="TON" (change)="selectedColor('TON')"> TON
+    </label>
   </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-  QR : <input type="checkbox" class="form-control" [(ngModel)]="showQR">
+  <div class="col-sm-2">
+    <label>
+      <input type="radio" name="color" class="form-control" value="QR" (change)="selectedColor('QR')"> QR
+    </label>
   </div>
+  <div class="col-sm-2">
+    <label>
+      <input type="radio" name="color" class="form-control" value="Ton" (change)="selectedColor('LRNO')"> LRNO
+    </label>
+  </div>
+  <div class="col-sm-3">
+    {{radio}} : <input type="text" class="form-control" [(ngModel)]="lrno">
+    </div>
+    
 </div>
-<div class="row">
-  <div class="col-sm-4">
-  TON : <input type="checkbox" class="form-control" [(ngModel)]="showTon">
+
+<div class="container">
+  <div class="col-sm-2">
+    <label>
+      <input type="checkbox" class="form-control" [(ngModel)]="ratnagiri">Ratnagiri
+    </label>
+  </div>
+  <div class="col-sm-2">
+    <label>
+      <input type="checkbox" class="form-control" [(ngModel)]="showPan">Pan
+    </label>
+  </div>
+  <div class="col-sm-2">
+    <label>
+      <input type="checkbox" class="form-control" [(ngModel)]="showsignstamp">Stamp
+    </label>
   </div>
 </div>
 
-<div class="row">
-  <div class="col-sm-4">
-  LRNO : <input type="text" class="form-control" [(ngModel)]="lrno">
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
-  PAN : <input type="checkbox" class="form-control" [(ngModel)]="showPan">
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm-4">
+
+
+<div class="container">
+  <div class="col-sm-3">
   Rent : <input type="number" class="form-control" [(ngModel)]="rent">
   </div>
-</div>
-  <div class="row">
-    <div class="col-sm-4">
+  <div class="col-sm-3">
     Advance : <input type="number" class="form-control" [(ngModel)]="advance">
     </div>
-</div>
-    <div class="row">
-      <div class="col-sm-4">
+    <div class="col-sm-3">
       Balance : <input type="number" class="form-control" [(ngModel)]="balance">
       </div>
-    </div>
-    <div class="col-sm-6">
+</div>
+
+    <div class="col-sm-12">
       <button class="btn btn-danger" (click)="CollectionMemoC()">Get CollectionMemo</button>
     </div>
   

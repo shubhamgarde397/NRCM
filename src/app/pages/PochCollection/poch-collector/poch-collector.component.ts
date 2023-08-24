@@ -6,11 +6,11 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 
 @Component({
-  selector: 'app-balance-hire-add',
-  templateUrl: './balance-hire-add.component.html',
-  styleUrls: ['./balance-hire-add.component.css']
+  selector: 'app-poch-collector',
+  templateUrl: './poch-collector.component.html',
+  styleUrls: ['./poch-collector.component.css']
 })
-export class BalanceHireAddComponentA implements OnInit {
+export class PochCollectorComponent implements OnInit {
   public saveToCheckArrayBoolean = true;
   public turnbooklist;
 public tempArray=[];
@@ -19,7 +19,6 @@ public todaysDate;
 public date=new Date();
 public sum=0;
 public finalCheckDone = true;
-public comment='';
 public bhTrucks=[];
 public uitodayDate=''
 public tableSelected=false;
@@ -43,9 +42,8 @@ public forceBackButton=false;
   find = function () {
     this.spinnerService.show();
     let tempObj = {};
-    tempObj['tablename'] = 'turnbook'
-    tempObj['method'] = 'getBalances'
-    tempObj['display'] = '6';
+    tempObj['tablename'] = ''
+    tempObj['method'] = 'getPochToSendData'
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
       .subscribe((res: any) => {
         this.bhTrucks=[];
@@ -56,60 +54,30 @@ public forceBackButton=false;
 
   };
 
-  finalFunction(action) {
+  finalFunction() {
     let tempObj = {}
-    tempObj['method'] = 'BHInserttoProcessing';
-    tempObj['tablename'] = 'BalanceHire';
+    tempObj['method'] = 'PochGivenProcessing';
+    tempObj['tablename'] = '';
+    tempObj['givenDate']=this.uitodayDate;
     tempObj['bhTrucks']=this.reducebhTrucks(this.bhTrucks);
     tempObj['todayDate'] = this.uitodayDate;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)//check this function
       .subscribe((res: any) => {
         alert(res.Status);
-        this.moveToFinalStepReset(action);
+        this.moveToFinalStepReset();
       });
   }
 
   reducebhTrucks(data){
-    let rkeys=[
-    'advanceArray', 
-    'balanceArray',
-    'locations',  
-    'locationDate', 
-    'complete', 
-    'completeDate', 
-    'typeOfLoad', 
-    'turnbookDate', 
-    'tentativeBalance',
-    'entryDate', 
-    'hamt', 
-    'pochDate', 
-    'pochPayment', 
-    'checker', 
-    'villageDetails2', 
-    'paymentDetails', 
-    'truckname', 
-    'invoice', 
-    'typeOfVehiclefirst', 
-    'Pf', 
+    let rkeys=[, 
+    'checker',
         "place",
     "party",
-    "snameparty",
+    "loadingDate",
     "truckno",
-    'accountNo',
-    'rf', 
-    'df', 
-    'C', 
-    'A', 
-    'P', 
-    'balance', 
-    'truckName',
-  'transports']
+  "nrlrno"]
     for(let i=0;i<data.length;i++){
       for(let j=0;j<rkeys.length;j++){delete data[i][rkeys[j]]}
-        delete data[i]['ownerDetails']
-        delete data[i]['villageDetails']
-        delete data[i]['partyDetails']
-        delete data[i]['loadingDate']
   }
   return data;
   }
@@ -118,11 +86,6 @@ public forceBackButton=false;
       if(i['checker']===0){
       
     this.nextStepButton=true;
-    i['balance']=this.balance(i);
-    if (i['loadingDate'] == "") {
-      alert('Loading Date cant be empty.')
-    }
-    else {
       this.turnbooklist[j]['checker'] = c;
       if (c == 1) {
         this.tempArray.push(i);
@@ -130,7 +93,7 @@ public forceBackButton=false;
       } else if (c == 0) {
         this.tempArray.splice(j, 1);
       }
-    }
+    
   }
   else{
 alert('Selected!')
@@ -147,80 +110,23 @@ alert('Selected!')
     return tempArray;
   }
 
-  addToCheckArray2(i, j, c) {
-    this.balanceHireArrray[i][j]['checker'] = c;
-    this.balanceHireArrray[i].splice(j, 1)
-  }
-
   saveToCheckArray() {
     this.balanceHireArrray.push(this.tempArray);
     this.tempArray = []
     this.turnbooklist = this.reduceArray();
   }
 
-  balance(i) {
-    return i.hamt -this.getAdvances(i)
-  }
-
-  getAdvances(i){
-    this.sum=0;
-    i.advanceArray.forEach(r=>{
-      if(r.consider){
-      this.sum = r.advanceAmt + this.sum
-      }
-    })
-    return this.sum===(NaN||undefined)?0:this.sum;
-  }
-
   moveToFinalStep() {
+
     this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
   }
-  moveToFinalStep2() {
-    this.finalCheckDone = !this.finalCheckDone;
-  }
-  moveToFinalStepReset(action) {
-    
+
+  moveToFinalStepReset() {
+    this.saveToCheckArrayBoolean=!this.saveToCheckArrayBoolean;
     this.balanceHireArrray = [];
+    this.turnbooklist=[];
     this.tempArray = [];
-    this.comment='';
     this.bhTrucks=[];
-    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/BalanceHireDisp']);
-  }
-
-  setBalPage() {
-    this.firstTime=false;
-    let breaker = false;
-    this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
-    this.tableSelected=false;
-    for (let i = 0; i < this.balanceHireArrray.length; i++) {
-      if (breaker) { break; }
-      for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
-        if (breaker) { break; }
-        if (
-          ((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) 
-          ||
-          ((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value.length == 0)
-          ||
-          ((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value.length == 0)
-          ) {
-          alert('Please fill in all the fields.');
-          breaker = true;
-          break;
-        }
-        else {
-          this.bhTrucks.find((r,index)=>{
-            if(r._id==this.balanceHireArrray[i][j]['_id']){
-              this.bhTrucks[index]['pgno']=parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value)
-              this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value)
-              this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value
-              return true
-            }
-          })
-        }
-
-      }
-    }
-    this.finalFunction('do');
   }
 
   leftRight(LR) {

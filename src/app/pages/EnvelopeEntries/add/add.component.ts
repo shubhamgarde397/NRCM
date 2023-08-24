@@ -132,8 +132,6 @@ switch(data){
 
 
   newData() {
-    console.log(this.data);
-    
     if (this.data === '' || this.data === null || this.data === undefined) {
       this.tableData = [];
       this.tableData = this.alltransports;
@@ -155,7 +153,6 @@ switch(data){
 
   attachToList(i,j){
     this.attachToListA.push(i);
-    console.log(this.attachToListA);
 
     this.alltransports.filter((res, index) => {
       if (res['tptName'].includes(i.tptName)) {

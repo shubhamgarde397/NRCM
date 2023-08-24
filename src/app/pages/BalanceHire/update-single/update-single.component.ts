@@ -43,9 +43,6 @@ export class UpdateSingleComponent implements OnInit {
     this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;  
     this.truckArray2=this.handledata.giveBHData()
-    console.log(this.truckArray);
-    console.log(this.truckArray2);
-    
   };
 
   submit(){

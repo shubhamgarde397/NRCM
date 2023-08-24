@@ -204,8 +204,6 @@ formbody['selectedPochDate']=this.selectedPochDate;
 
   addtosavearray(i,j){
     this.saveArray.push(i)
-    console.log(i);
-    
     this.saveArrayData=true;
     this.fullpendingPayment.splice(j,1)
     this.defaultAmt=this.defaultAmt+parseInt((i['pochAmount']))

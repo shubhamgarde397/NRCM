@@ -1,0 +1,20 @@
+<div class="well" style="width:100%;">
+
+    <div class="row">
+
+      <div class="col-xs-3" align="center">
+        <input type="date" [(ngModel)]="pochDate">
+      </div>
+
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-warning" (click)="find()">Find</button>
+      </div>
+      
+    </div>
+    
+      <div class="row">
+        <div class="col-xs-2" align="center">
+          <button class="btn btn-danger" (click)="PochBill()" *ngIf="showPDFButton">PDF</button>
+        </div>
+    </div>
+</div>

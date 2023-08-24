@@ -336,9 +336,6 @@ public year;
     return data;
   }
   pdfJSONForParty(data, balanceFollow,todo) {
-    console.log(balanceFollow)
-    console.log(data);
-    
     let val = 0
     if(todo=='addBalance'){
       for(let i=0;i<balanceFollow.length;i++){
@@ -661,8 +658,6 @@ public year;
      doc.line(145, starty, 145, bigValueofY+1);//debit
      doc.line(171, starty, 171, bigValueofY+1);//balance
      doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
-
-console.log(this.detailedPrint);
 
      if(this.detailedPrint){
      doc.addPage();
