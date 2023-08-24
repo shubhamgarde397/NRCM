@@ -47,10 +47,15 @@ export class PochPdfComponent implements OnInit {
     this.apiCallservice.handleData_New_python
       ('turnbook', 1, tempObj, true)
       .subscribe((res:any) => {
+        if(res.Data.length>0){
         this.showPDFButton=true;
         this.printInfo = true;
         this.balanceDate = [];
         this.balanceDate = res.Data;
+        }else{
+          this.showPDFButton=false;
+          alert('No Data Present')
+        }
       });
   };
 
