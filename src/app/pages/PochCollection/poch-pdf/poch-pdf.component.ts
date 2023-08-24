@@ -19,6 +19,7 @@ import { templateSourceUrl } from '@angular/compiler';
 })
 export class PochPdfComponent implements OnInit {
   public show = false;
+  public showPDFButton=false;
   public found;
   public date = new Date();
   public balanceDate = [];
