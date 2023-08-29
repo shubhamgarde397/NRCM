@@ -16,18 +16,18 @@ import 'jspdf-autotable';
 export class AccountDetailsDisplayComponent implements OnInit {
   // $BASIC $
   public options = [
-    {'viewValue':'Account Number','value':'1','disabled':false},
-    {'viewValue':'Pan','value':'2','disabled':false},
-    {'viewValue':'Contact','value':'3','disabled':false},
-    {'viewValue':'Account','value':'4','disabled':false},
-    {'viewValue':'Transport Name','value':'5','disabled':false},
-    {'viewValue':'Vehicle Type','value':'6','disabled':false},
-    {'viewValue':'Weight','value':'7','disabled':false},
-    {'viewValue':'Dimensions','value':'8','disabled':false},
-    {'viewValue':'Update Account Details','value':'9','disabled':false},
+    {'viewValue':'Account Number','value':'1','disabled':false},//
+    {'viewValue':'Pan','value':'2','disabled':false},//
+    {'viewValue':'Contact','value':'3','disabled':false},//
+    {'viewValue':'Account','value':'4','disabled':false},//
+    {'viewValue':'Transport Name','value':'5','disabled':false},//
+    {'viewValue':'Vehicle Type','value':'6','disabled':false},//
+    {'viewValue':'Weight','value':'7','disabled':false},//
+    {'viewValue':'Dimensions','value':'8','disabled':false},//
+    {'viewValue':'Update Account Details','value':'9','disabled':false},//
     {'viewValue':'Truck Format','value':'10','disabled':false},
     {'viewValue':'Truck Registration Fee','value':'11','disabled':false},
-    {'viewValue':'Account 12/363','value':'12','disabled':false},
+    {'viewValue':'Account 12/363','value':'12','disabled':false},//
     {'viewValue':'My RC','value':'13','disabled':false},
     {'viewValue':'Count Partywise','value':'14','disabled':false},
     {'viewValue':'Count Loadwise','value':'15','disabled':false},

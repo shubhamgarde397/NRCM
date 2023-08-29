@@ -41,7 +41,26 @@
         </div>
       </div>
     </div>
+
     <!--Truckno-->
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Type : 
+        <select class="form-control" formControlName="type">
+          <option value="Open">Open</option>
+          <option value="Container">Container</option>
+        </select>
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.type.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
 
 
     <div class="row">
@@ -60,6 +79,7 @@
   <th>Srno</th>
   <th>TurnBook Date</th>
   <th>Truckno</th>
+  <th>Type</th>
   <th>Options</th>
 </tr>
       </thead>
@@ -68,6 +88,7 @@
   <td>{{j+1}}</td>
   <td>{{i.turnbookDate}}</td>
   <td><input type="checkbox">&nbsp;{{i.truckno}}</td>
+  <td>{{i.type}}</td>
   <td *ngIf="i.delete"><button class="btn btn-danger" (click)="deleteFromTurn(j)">Delete</button></td>
 </tr>
       </tbody>

@@ -21,7 +21,6 @@ export class TurnBookDisplayMainComponent implements OnInit {
     public placeid;
     public placeid2;
     public party;
-    public addis19=true;
     public partyType;
     public partyid;
       public showbuttonOption8211=false;
@@ -64,46 +63,35 @@ public showbuttonOption821HA=true;
   public sum=0;
   public advanceArray=[];
   public displayoptionsarray=[
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    0,0,0,0,
+    0,0,0,0,
+    0,0,0
   ]
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' ,'disabled':false},
     { 'value': '2', 'viewvalue': 'Truck Arrival' ,'disabled':false},
     { 'value': '3', 'viewvalue': 'Truck Dispatched' ,'disabled':false},
     { 'value': '4', 'viewvalue': 'To From' ,'disabled':true},
-    { 'value': '5', 'viewvalue': 'Monthly Data' ,'disabled':false},
-    { 'value': '6', 'viewvalue': 'Balance Hire' ,'disabled':true},
-    { 'value': '7', 'viewvalue': 'Update Poch Check' ,'disabled':false},
     { 'value': '8', 'viewvalue': 'Monthly By Series' ,'disabled':false},
     { 'value': '9', 'viewvalue': 'Cancelled Vehicles' ,'disabled':false},
     { 'value': '10', 'viewvalue': 'By Party' ,'disabled':false},
     { 'value': '11', 'viewvalue': 'Details By Truck' ,'disabled':false},
-    { 'value': '12', 'viewvalue': 'Invoice' ,'disabled':true},
     { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
-    { 'value': '14', 'viewvalue': 'Dont Use' ,'disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:LRNO
-    { 'value': '15', 'viewvalue': 'Dont Use','disabled':true},//present in turnbooklocation dont use 14 use 15 onwards dont use:Pending Payment
-    { 'value': '16', 'viewvalue': 'Poch Update Series' ,'disabled':false},
     { 'value': '17', 'viewvalue': 'Double Loading' ,'disabled':false},
     { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
-    { 'value': '19', 'viewvalue': 'Packet' ,'disabled':false},
   ]
   // 18
   public lrStarter=0;
   public inProgress=true;
   public showbuttonOption18=false;
+  public partyVar8='';
   public turn18;
   public turn18show;
   public index;
   public oldIndex;
   public bigData;
   public partyVar18;
-  public partyVar19;
   // 18
-  // 19
-  public showbuttonOption19=false;
-  public show19Msg
-  public lrnos=[];
-  // 19
   public changeText=false;
   public trucknoid11;
   public years = []
@@ -196,28 +184,21 @@ public nrcmid;
       partyType: '',
     });
   }
-  show19(data){
-    switch (data) {
-      case 'add':
-        this.addis19=true;
-        break;
-        case 'display':
-          this.addis19=false;
-        break;
-    
-      default:
-        break;
-    }
-  }
 
   tabsetter(){
     // this is for anil
     switch (this.nrcmid) {
       case 1:
-        this.displayoptionsarray=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        this.displayoptionsarray=[
+          1,1,1,1,
+          1,1,1,1,
+          1,1,1]
         break;
         case 7:
-          this.displayoptionsarray=[1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1]
+          this.displayoptionsarray=[
+            1,0,0,0,
+            1,0,0,1,
+            1,0,0]
         break;
     
       default:
@@ -320,113 +301,9 @@ let buttons=[]
     }
     return buttons.reverse();
   }
-  filter(sh) {
-    switch (sh) {
-      case 'date':
-        if (this.dateFilter === '' || this.dateFilter === null || this.dateFilter === undefined) {
-          this.turnbooklist = [];
-          this.turnbooklist = this.handleData.giveBH();
-        }
-        else {
-          let tempList = this.handleData.giveBH();
-          this.turnbooklist = this.handleData.giveBH();
-          this.turnbooklist = [];
-          let tempData = [];
-          tempList.filter((res, index) => {
-            if (res['loadingDate'].includes(this.dateFilter)) {
-              tempData.push(res);
-            }
-          })
-          this.turnbooklist = tempData;
-          this.handleData.saveBH(this.turnbooklist)
-          this.dateFilterB = !this.dateFilterB;
-          this.truckFilterB = !this.truckFilterB;
-        }
-        break;
-      case 'truck':
-        if (this.truckFilter === '' || this.truckFilter === null || this.truckFilter === undefined) {
-          this.turnbooklist = [];
-          this.turnbooklist = this.handleData.giveBH();
-        }
-        else {
-          let tempList = this.handleData.giveBH();
-          this.turnbooklist = this.handleData.giveBH();
-          this.turnbooklist = [];
-          let tempData = [];
-          tempList.filter((res, index) => {
-            if (res['truckno'].includes(this.truckFilter)) {
-              tempData.push(res);
-            }
-          })
-          this.turnbooklist = tempData;
-          this.dateFilterB = !this.dateFilterB;
-          this.truckFilterB = !this.truckFilterB;
-        }
-        break;
-      case 'skipDate':
-        this.dateFilterB = !this.dateFilterB;
-        this.truckFilterB = !this.truckFilterB;
-        break;
-
-      case '':
-        this.dateFilterB = true;
-        this.truckFilterB = false;
-        this.turnbooklist = this.handleData.giveBH();
-        break;
-    }
-  }
-  filter2(sh) {
-    switch (sh) {
-      case 'truck':
-        if (this.truckFilter2 === '' || this.truckFilter2 === null || this.truckFilter2 === undefined) {
-          this.turnbooklist = [];
-          this.turnbooklist = this.handleData.giveBH();
-        }
-        else {
-          let tempList = this.handleData.giveBH();
-          this.turnbooklist = this.handleData.giveBH();
-          this.turnbooklist = [];
-          let tempData = [];
-          tempList.filter((res, index) => {
-            if (res['ownerDetails'][0]['truckno'].includes(this.truckFilter2)) {
-              tempData.push(res);
-            }
-          })
-          this.turnbooklist = tempData;
-          this.handleData.saveBH(this.turnbooklist)
-        }
-        break;
-      case 'back':
-        this.pochDiv = true;
-        break;
-      case '':
-        this.turnbooklist = this.handleData.giveBH();
-        break;
-    }
-  }
+  
   getAdminAccess() {
     this.adminAccess = !this.adminAccess;
-  }
-
-  newData() {
-    if (this.dataTruck === '' || this.dataTruck === null || this.dataTruck === undefined) {
-      this.turnbooklist = [];
-      this.turnbooklist = this.handleData.giveTurn();
-    }
-    else {
-      let tempList = this.handleData.giveTurn();
-      this.turnbooklist = this.handleData.giveTurn();
-      this.turnbooklist = [];
-      let tempData = [];
-      tempList.filter((res, index) => {
-        if (res.ownerDetails[0]['truckno'].includes(this.dataTruck.toUpperCase())) {
-          tempData.push(res);
-        }
-
-      })
-      this.turnbooklist = tempData;
-
-    }
   }
 
   findgst() {
@@ -435,80 +312,23 @@ let buttons=[]
   findgst18() {
     this.turn18=this.turn18show;
      this.turn18=this.turn18.filter(r=>{return r.partyid===(this.handleF.findgst(this.partyVar18, this.parties))['_id']})
-
   }
 
-
-  removegst(){
-
-  }
-
-  sendToSet(){
-    let temp={
-      "lrnos":this.lrnos,
-      "tablename":"",
-      "method":"lrtopartyAnil",
-      "packetNo":this.packetNo
-      // "method":"lrtoparty",
-      // "partyid":this.partyVar19
-    }
-
-    this.apiCallservice.handleData_New_python('turnbook', 1, temp, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      this.lrnos=[];
-    })
-  }
-  sendToSetMain(i){
-    let temp={
-      "lrnos":i.lrno,
-      "_id":i._id,
-      "tablename":"",
-      "packetNo":i.packetNo,
-      "method":"lrtoparty",
-      "partyid":this.partyVar19
-    }
-
-    this.apiCallservice.handleData_New_python('turnbook', 1, temp, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-    })  
+  findgst8(){
+     this.myFormGroup1.patchValue({partyid:this.myFormGroup1.value.partyid})
   }
 
   findtruck() {
     this.truckid = this.handleF.findowner(this.truckVar, this.trucks,'Select Truck No');
   }
 
-  addlrno(data){
-
-    this.lrnos.push(parseInt(String(data.value.lrno)));
-    this.myFormGroup9.patchValue({'lrno':''})
-  }
-
-  delLR(i,index){
-    if (confirm('Are you sure?')) {
-      let formbody = {}
-      formbody['_id'] = i._id;
-      formbody['method'] = 'deletePacket';
-      formbody['tablename'] = '';
-      formbody['index'] = index;
-
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
-        .subscribe((response: Response) => {
-          alert(response['Status'])
-          this.findPackets();
-        });
-    }
-    // this.lrnos.splice(i, 1);
-  }
-
   findOption() {
+
     this.pochDiv = true;
-    this.buttonOption = this.trucknoid;
-    this.buttonValue = this.displayoptions[parseInt(this.trucknoid) - 1].viewvalue;
+    this.buttonOption =this.displayoptions[parseInt(this.trucknoid) ].value;
+    this.buttonValue = this.displayoptions[parseInt(this.trucknoid) ].viewvalue;
     this.tableSelected=false;
   }
-  downloadpdfMonthly(){}
 
   showDatabyidTurn = function (data) {
     this.show = true;
@@ -536,22 +356,11 @@ let buttons=[]
         tempObj['turnbookDate'] = this.dynDate;
         tempObj['turnbookDateFrom'] = this.dynDate2;
         break;
-      case '5':
-        tempObj['turnbookDate'] = this.dynDate.slice(0, 7);
-        tempObj['partyType']=this.buttonOptionPartyType;
-        break;
-      case '7':
-        tempObj['date'] = data;
-        break;
       case '8':
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
         break;
         case '18':
-        tempObj['date'] = this.selectedmy;
-        tempObj['partyType']=this.buttonOptionPartyType;
-        break;
-        case '16':
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
         break;
@@ -566,9 +375,6 @@ let buttons=[]
         else {
           tempObj['truckno'] = this.truckVar;
         }
-        case '12':
-          tempObj['invoice']=this.byInvoice;
-        break;
         case '13':
           tempObj['lrno']=this.bylrno;
         break;
@@ -582,26 +388,15 @@ let buttons=[]
       this.showbuttonOption8 = false;
       this.showbuttonOption18 = true;
     }
-    if (this.buttonOption !== '16') {
-      this.showbuttonOption8 = false;
-    }
-
 
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayTB'
-    tempObj['display'] = this.buttonOption;
-    if (this.buttonOption == '19') {
-      this.showbuttonOption19=true;
-      this.myFormGroup9 = this.formBuilder.group({
-        lrno: ''
-      });
-      this.parties = this.parties.filter(r=>{return r.partyType==='NRCM'})
-    }
-else if(this.buttonOption !== '11'){
+    tempObj['display'] = this.displayoptions[parseInt(this.trucknoid) ].value;
+if(this.buttonOption !== '11'){
 
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
       .subscribe((res: any) => {
-        if(this.buttonOption!=='8'&&this.buttonOption!=='16'&&this.buttonOption!=='18'){
+        if(this.buttonOption!=='8'&&this.buttonOption!=='18'){
         this.types={'None':0,'Open':0,'Container':0}
         this.Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
         res.Data.forEach(r=>{
@@ -610,14 +405,7 @@ else if(this.buttonOption !== '11'){
           r['typeOfVehiclefirst']=r.ownerDetails[0].typeOfVehicle.slice(0,1)
           });
         }
-        
-         if (this.buttonOption == '7') {
-          this.pochDiv = false;
-          this.turnbooklist = res.Data;
-          this.handleData.saveBH(this.turnbooklist);
-          this.tableSelected=true;
-        }
-        else if (this.buttonOption == '8') {
+        if (this.buttonOption == '8') {
           if (res.Data.length > 0) {
             this.showbuttonOption8 = true;
             this.turnbooklistnew = res.Data;
@@ -627,7 +415,8 @@ else if(this.buttonOption !== '11'){
               turnbookDate: '',
               truckno: '',
               loadingDate: '',
-              lrno: 0
+              lrno: 0,
+              partyid:''
             });
             if(this.buttonOptionPartyType==='NRCM'){
               this.showbuttonOption821HA=false;
@@ -655,24 +444,6 @@ else if(this.buttonOption !== '11'){
           } else {
             this.showbuttonOption18 = false;
             this.show18Msg = "All set for this month.";
-          }
-        }
-        else if (this.buttonOption == '16') {
-          if (res.Data.length > 0) {
-            this.showbuttonOption8 = true;
-            this.turnbooklistnew = res.Data;
-            this.myFormGroup = this.formBuilder.group({
-              loadingDateDynamic: '',
-              turnbookDate: '',
-              truckno: '',
-              place: '',
-              partyName: '',
-              loadingDate: '',
-              pochAmount:''
-            });
-          } else {
-            this.showbuttonOption8 = false;
-            this.show8Msg = "All set for this month.";
           }
         }
         else {
@@ -705,16 +476,6 @@ let tempObj1={};
     }
 
   };
-
-  findPackets(){
-    let tempObj1={};
-    tempObj1['tablename'] = ''
-    tempObj1['method'] = 'lrtopartyAnilDisplay'
-      this.apiCallservice.handleData_New_python('turnbook', 1, tempObj1, true)
-      .subscribe((res: any) => {
-        this.turnbooklist = res.Data;
-      });
-  }
 
   clearData(i,j){
     if(confirm('Do you want to clear the payment?')){
@@ -875,6 +636,7 @@ this.placeid=this.tempDate[0]['place']['_id']
     tempData['lrno'] = data.value.lrno===0?this.tempDate[0]['lrno']:data.value.lrno;
     tempData['partyType']=this.buttonOptionPartyType;
     tempData['typeOfLoad'] = data.value.typeOfLoad;
+    tempData['partyid'] = data.value.partyid;
     tempData['_id'] = this.toSendid;
     tempData['tablename'] = 'turnbook'
     tempData['method'] = 'updateSeries1'
@@ -891,38 +653,6 @@ this.placeid=this.tempDate[0]['place']['_id']
 
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;
-      });
-  }
-  changeU(data) {
-    let tempData = {}
-    tempData['pochAmount'] = data.value.pochAmount===0?this.tempDate[0]['pochAmount']:data.value.pochAmount;
-    tempData['_id'] = this.toSendid;
-    tempData['tablename'] = 'turnbook'
-    tempData['method'] = 'update'
-    tempData['part'] = 5;
-    
-    this.apiCallservice.handleData_New_python('turnbook1', 1, tempData, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        let newData = this.turnbooklistnew.filter(r => r._id !== this.toSendid);
-        this.handleData.saveTurn([]);
-        this.handleData.saveTurn(newData);
-        this.turnbooklistnew = newData;
-        this.myFormGroup.patchValue({ pochAmount: '' })
-        this.showbuttonOption82 = false;
-        this.showbuttonOption821 = false;
-      });
-  }
-
-  uncheckPoch(data, j) {
-    let tempObj = {};
-    tempObj['method'] = 'updatePoch';
-    tempObj['tablename'] = 'turnbook';
-    tempObj['_id'] = data['_id'];
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
-      .subscribe((res: any) => {
-        alert('Moved to Balance Hire!')
-        this.turnbooklist.splice(j, 1);
       });
   }
 
@@ -1094,31 +824,6 @@ this.placeid=this.tempDate[0]['place']['_id']
     data['index'] = 0;
     this.handleData.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
-  }
-
-  reduceArray() {
-    let tempArray = []
-    for (let i = 0; i < this.turnbooklist.length; i++) {
-      if (this.turnbooklist[i].checker == 0) {
-        tempArray.push(this.turnbooklist[i])
-      }
-    }
-    return tempArray;
-  }
-
-  moveToFinalStepReset() {
-    this.tempArray = [];
-    this.finalObject = {};
-    this.finalArray = [];
-    this.ids=[];
-    this.partyTypes=[];
-    this.oids=[];
-    this.comment='';
-    this.find()
-  }
-
-  comments(){
-    this.comment = prompt('Enter Comment'); 
   }
 
   getTrucks() {

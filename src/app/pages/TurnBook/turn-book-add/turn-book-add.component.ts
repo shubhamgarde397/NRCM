@@ -44,7 +44,8 @@ export class TurnBookAddComponent implements OnInit {
     this.getAvailable();
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: ['', Validators.required],
-      trucknoM: ['', [Validators.required]]
+      trucknoM: ['', [Validators.required]],
+      type:['None',[Validators.required]],
     });
     this.role = this.securityCheck.role;
   }
@@ -91,13 +92,16 @@ export class TurnBookAddComponent implements OnInit {
     if(this.checkValidity(this.myFormGroup.value.trucknoM)){
     let temp={}
     temp['turnbookDate']=this.turnbookDate;
-    temp['truckno']=this.myFormGroup.value.trucknoM
+    temp['truckno']=this.myFormGroup.value.trucknoM;
+    temp['type']=this.myFormGroup.value.type;
     temp['delete']=true
     this.turnAdd.push(temp);
     this.toAdd.push(temp)
     this.myFormGroup.patchValue({trucknoM:''})
     }else{
       alert('Truck already present!')
+      this.myFormGroup.patchValue({trucknoM:''})
+      this.myFormGroup.patchValue({type:'None'})
     }
   }
 
