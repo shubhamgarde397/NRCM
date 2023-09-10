@@ -58,6 +58,38 @@
   </table>
 </div>
 
+<div class="well" *ngIf="buttonOption==='18'">
+  <div class="row">
+      <div class="col-sm-4">
+        <input type="text" class="form-control" [(ngModel)]='truckVar' placeholder="Truck No">
+  </div>
+  <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+    Find
+  </button>
+</div>
+
+
+    <div class="col-sm-12">
+      <select class="form-control" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+        <option>Default</option>
+        <option *ngFor="let i of turnbooklist;let j = index;" value={{i}}>{{i.truckno}}</option>
+      </select>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-12">
+        
+      </div>
+
+<!-- //work here -->
+
+    </div>
+
+
+</div>
+
+
 <div class="well" *ngIf="buttonOption==='2'">
     <div class="row">
         <div class="col-sm-4">

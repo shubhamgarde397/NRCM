@@ -1,4 +1,4 @@
-<div class="well">
+<!-- <div class="well">
 
 
 
@@ -115,14 +115,107 @@
       </tr>
     </tbody>
   </table>
-</div>
+</div> -->
 
 
+<div class="well">
 
+      <div class="row">
+        <div class="col-sm-3">
+          <input type="text" class="form-control col-sm-3" [(ngModel)]='truckVar' placeholder="Truck No">
+        </div>
+        <div class="col-sm-3">
+          <select class="form-control" *ngIf="wala11" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+            <option>Default</option>
+            <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i._id}}>{{i.truckName.truckno}}-{{i.loadingDate|date:'dd-MM-yyyy'}}</option>
+          </select>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
+            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11')">Truck No</button>
+            
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11new')">LRNO</button></div>
+            
+          
+        </div>
+        
+        
+    <div class="row">
+      <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data" action="/">
 
+        <div class="form-group row">
 
+          <div class="col-xs-3">
+           Truck No : <input type="text" id="name" class="form-control" formControlName="truckno" placeholder="Truck No" disabled>
+          </div>
+          <div class="col-xs-3">
+            Date: <input type="text" id="name" class="form-control" formControlName="loadingDate" placeholder="Truck No" disabled>
+           </div>
+           <div class="col-sm-3">
+            Place : 
+         <input type="text" id="place" class="form-control" formControlName="place" disabled>
+         </div>
+         <div class="col-sm-3">
+          Place 2 : 
+        <input type="text" id="place" class="form-control" formControlName="place2" disabled>
+        </div>
+        </div>
 
+        <div class="row form-group">
+          <div class="col-sm-6">
+            Party : {{partyToUI}}
+          <select id="partyName" class="form-control " formControlName="partyName">
+            <option selected disabled value={{partyid}}>{{party}}</option>
+            <option *ngFor="let i of parties;let j = index;" value={{i._id}}>{{i.name}}</option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          Old Party : 
+          <input type="text" id="partyName" class="form-control" formControlName="partyName" disabled>
+          </div>
+          </div>
 
+    
+   
+    <h3>LRNO</h3>
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <input type="text" id="addr2" class="form-control" formControlName="lrno" placeholder="LRNO">
+          </div>
+        </div>
+    
+   
+  
+         
+    
+        <div class="row">
+          <div class="form-group" class="col-xs-2"></div>
+          <div class="form-group" class="col-xs-1">
+            <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+              <i class="material-icons">send</i>
+            </button>
+          </div>
+    
+          <div *ngIf="!submitted" class="col-xs-1">
+    
+            <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+              <i class="material-icons">undo</i>
+            </button>
+          </div>
+    
+          <div *ngIf="submitted" class="col-xs-1">
+            <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+    
+        </div>
+      </form>
+    </div> 
+   </div>
 
 
 

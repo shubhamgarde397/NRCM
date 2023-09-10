@@ -44,6 +44,7 @@ export class TurnBookAddComponent implements OnInit {
     this.getAvailable();
     this.myFormGroup = this.formBuilder.group({
       turnbookDate: ['', Validators.required],
+      // trucknoM: ['', [Validators.required]],
       trucknoM: ['', [Validators.required]],
       type:['None',[Validators.required]],
     });
@@ -88,11 +89,40 @@ export class TurnBookAddComponent implements OnInit {
     return c?false:true;
   }
 
+ formatTruckNo(a){
+  a=a.toUpperCase();
+	let newtruck=[]
+	let raw=a.replace(/ /g, "");
+	newtruck.push(raw.slice(0,2))
+	newtruck.push(raw.slice(2,4))
+	
+	if(raw.length==10){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,6))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(6,10))	
+	}
+	if(raw.length==9){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,5))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(5,9))	
+	}
+	if(raw.length==8){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,8))	
+	}
+	return newtruck.join('')
+}
+
+
   addToTurn(){
-    if(this.checkValidity(this.myFormGroup.value.trucknoM)){
+    let truckNo='';
+    truckNo=this.formatTruckNo(this.myFormGroup.value.trucknoM)
+    if(this.checkValidity(truckNo)){
     let temp={}
     temp['turnbookDate']=this.turnbookDate;
-    temp['truckno']=this.myFormGroup.value.trucknoM;
+    temp['truckno']=truckNo;
     temp['type']=this.myFormGroup.value.type;
     temp['delete']=true
     this.turnAdd.push(temp);

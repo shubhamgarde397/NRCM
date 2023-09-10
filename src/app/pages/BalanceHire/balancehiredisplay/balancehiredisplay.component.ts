@@ -31,8 +31,6 @@ export class BalancehiredisplayComponent implements OnInit {
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Balance Hire' },
     { 'value': '2', 'viewvalue': 'Check Prints' },
-    { 'value': '3', 'viewvalue': 'Given Date' },
-    { 'value': '4', 'viewvalue': 'Given Payment Pending' },
     { 'value': '5', 'viewvalue': 'Update Actual Payments' },
     { 'value': '6', 'viewvalue': 'Balance Message To Driver' },
     { 'value': '7', 'viewvalue': 'Update Advance Payments' },
@@ -273,108 +271,9 @@ formbody['selectedPochDate']=this.selectedPochDate;
     this.daydiv = false;
     this.printInfo = this.buttonOption == '1' ? true : false;
     this.createdDate = '';
-    this.buttonOption == '3'?this.getGivenDateTrucks():undefined;
-    this.buttonOption == '4'?this.getGivenTrucksPayment():undefined;
 this.actualPayment=this.buttonOption == '5'?true:false;
 this.actualPayment=this.buttonOption == '10'?true:false;
     
-  }
-  refresh(data){
-    switch (data) {
-      case '3':
-        this.getGivenDateTrucks();    
-        break;
-    case '4':
-      this.getGivenTrucksPayment();
-      break;
-      
-    }
-    
-  }
-  getGivenDateTrucks(){
-    let formbody = {}
-    formbody['method'] = 'givenEmpty';
-    formbody['tablename'] = 't';
-    this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, formbody, true)
-      .subscribe((res: any) => {
-        this.givenTrucks=res.Data;
-      });
-  
-  }
-
-  addtoGiven(id,j){
-    if (confirm('Add to Given Date?')) {
-      let formbody = {}
-      formbody['_id'] = id;
-      formbody['givenDate']=this.givenDate;
-      formbody['method'] = 'addGivenEmpty';
-      formbody['tablename'] = 't';
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, true)
-        .subscribe((res: any) => {
-          alert(res.Status);
-          this.givenTrucks.splice(j,1);
-        });
-    }
-  }
-
-  showDatabyidTBEdit(data,j){
-  
-    this.show = true;
-    let tempObj = {};
-
-    tempObj['place'] = data.places[0] === undefined ? '' : data.places[0].village_name;
-    tempObj['place2'] = data.places2[0] === undefined ? '' : data.places2[0].village_name;
-    tempObj['truckno'] = data.trucks[0] === undefined ? '' : data.trucks[0].truckno;
-    tempObj['partyName'] = data.parties[0] === undefined ? '' : data.parties[0].name;
-    tempObj['ownerid'] = data.trucks[0] === undefined ? '' : data.trucks[0]._id;
-    tempObj['accountDetails'] = data.trucks[0]['accountDetails'];
-    tempObj['placeid'] = data.places[0] === undefined ? '' : data.places[0]._id;
-    tempObj['placeid2'] = data.places2[0] === undefined ? '' : data.places2[0]._id;
-    tempObj['partyid'] = data.parties[0] === undefined ? '' : data.parties[0]._id;
-    tempObj['entryDate'] = data.entryDate;
-    tempObj['_id'] = data._id;
-    tempObj['partyType'] = data.partyType;
-    tempObj['turnbookDate'] = data.turnbookDate;
-    tempObj['loadingDate'] = data.loadingDate;
-    tempObj['lrno'] = data.lrno === undefined ? '' : data.lrno;
-    tempObj['hamt'] = data.hamt === undefined ? 0 : data.hamt;
-    tempObj['pochDate'] = data.pochDate === undefined ? '' : data.pochDate;
-    tempObj['givenDate'] = data.givenDate === undefined ? '' : data.givenDate;
-    tempObj['pochPayment'] = data.pochPayment === undefined ? '' : data.pochPayment;
-    tempObj['pgno'] = data.pgno === undefined ? '' : data.pgno;
-    tempObj['payment'] = data.paymentDetails;
-    tempObj['paymentDisabled']=false;
-    tempObj['index'] = j;
-    tempObj['number'] = '1';
-    tempObj['invoice'] = data.invoice;
-    tempObj['locations'] = data.locations;
-    tempObj['locationDate'] = data.locationDate;
-    tempObj['complete'] = data.complete;
-    tempObj['typeOfLoad'] = data.typeOfLoad;
-    tempObj['waitLocation'] = data.waitLocation;
-    tempObj['advanceArray'] = data.advanceArray;
-    tempObj['qr'] = data.qr;
-    this.handledata.saveupdateTurn(false)
-
-
-    this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookUpdate']);
-    this.handledata.saveData(tempObj);
-  };
-
-  
-  getGivenTrucksPayment(){
-    let formbody = {}
-    formbody['method'] = 'givenPaymentPending';
-    formbody['tablename'] = 't';
-    this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, formbody, true)
-      .subscribe((res: any) => {
-        this.givenTrucksPayment=res.Data;
-        this.givenPaymentTable=res.Data.length>0?true:false;
-        this.GPPMsg=res.Data.length>0?'':'No Pending Payments'
-      });
   }
 
   find = function () {
@@ -1331,16 +1230,11 @@ if(newpage===1){
       doc.setFontSize('10');
       if(dataTF){
         doc.text(String(parseInt(this.balanceDate[z].commentToTruck)).split(' ')[0], 38.5, i);//comments
-
       }
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
 
-        doc.setFontSize('10');
-        // if(dataTF){
-        // doc.text(String(this.balanceDate[z].truckData[k].pageno), 61.5, i);//pgno
-        // }
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
         doc.setFontSize('10');

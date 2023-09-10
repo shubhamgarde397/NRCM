@@ -18,21 +18,22 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public options = [
     {'viewValue':'Account Number','value':'1','disabled':false},//
     {'viewValue':'Pan','value':'2','disabled':false},//
-    {'viewValue':'Contact','value':'3','disabled':false},//
+    {'viewValue':'Contact','value':'3','disabled':false},
     {'viewValue':'Account','value':'4','disabled':false},//
-    {'viewValue':'Transport Name','value':'5','disabled':false},//
+    {'viewValue':'Transport Name','value':'5','disabled':false},
     {'viewValue':'Vehicle Type','value':'6','disabled':false},//
     {'viewValue':'Weight','value':'7','disabled':false},//
     {'viewValue':'Dimensions','value':'8','disabled':false},//
-    {'viewValue':'Update Account Details','value':'9','disabled':false},//
+    {'viewValue':'Update Account Details','value':'9','disabled':false},
     {'viewValue':'Truck Format','value':'10','disabled':false},
     {'viewValue':'Truck Registration Fee','value':'11','disabled':false},
-    {'viewValue':'Account 12/363','value':'12','disabled':false},//
+    {'viewValue':'Account 12/363/1818','value':'12','disabled':false},//
     {'viewValue':'My RC','value':'13','disabled':false},
     {'viewValue':'Count Partywise','value':'14','disabled':false},
     {'viewValue':'Count Loadwise','value':'15','disabled':false},
     {'viewValue':'Missing Parent','value':'16','disabled':false},
     {'viewValue':'Missing Type Of Load','value':'17','disabled':false},
+    {'viewValue':'By Anil All','value':'18','disabled':false},
   ]
   public displayType;
   public buttonOption;
@@ -64,6 +65,9 @@ export class AccountDetailsDisplayComponent implements OnInit {
 // $Contact$
 public contacttable=false;
 public contactarray=[]
+public trucknoid11;
+public turn11=[];
+public turnbooklist=[];
 // #Contact#
 // $Account$
 public accounttable=false;
@@ -85,6 +89,7 @@ public dimensiontable=false;
 public dimensionarray=[];
 public selectedDimensionH;
 public selectedDimensionB;
+public unique11turnbooklist=[];
 public selectedDimensionL;
 // #DEIMENSIONS
 
@@ -109,7 +114,7 @@ public emptyData14=[];
 
 public table15=false;
 public emptyData15=[];
-
+public truckVar='';
 public table16=false;
 public emptyData16=[];
 
@@ -135,7 +140,7 @@ public numbers=[];
     this.nrcmid=this.securityCheck.nrcmid;
     switch (this.nrcmid) {
       case 7:
-        this.tabs=[1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0];
+        this.tabs=[1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -145,7 +150,7 @@ public numbers=[];
         });
         break;
       case 1:
-        this.tabs=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+        this.tabs=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -154,6 +159,33 @@ public numbers=[];
           }
         });
         break;
+    }
+  }
+
+
+  find(){
+    let tempObj = {}
+    if (this.truckVar === '') { alert('Select a Truck');  }
+        else {
+          tempObj['truckno'] = this.truckVar;
+        
+   
+    tempObj['tablename'] = 'ownerdetails'
+    tempObj['method'] = 'displayEditTruck'
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.turnbooklist = res.Data;
+      });
+    }
+
+  }
+
+  find11UniqueTruck(){
+    if(this.trucknoid11!=='Default'){
+    this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11}); 
+    console.log(this.turn11);
+    
     }
   }
 

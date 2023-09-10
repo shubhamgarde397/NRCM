@@ -4,6 +4,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { log } from 'console';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-turn-book-update',
@@ -29,20 +30,126 @@ export class TurnBookUpdateComponent implements OnInit {
   public buttonOption = '';
   public displayType = '';
   public buttonValue = '';
+  public truckVar='';
+  public unique11turnbooklist=[];
+  public byTruckName=false;
+  public turnbooklist=[];
+  public villagelist=[];
+  public trucknoid11;
+  public wala11;
   public places = [];
   public parties=[];
   public caller='';
   public mainTable=false;
   public mainTable2=false;
+  public selectDate=false;
+  public turn11=[];
+  public myFormGroup: FormGroup;
   constructor(
     public handledata: HandleDataService,
     public apiCallservice: ApiCallsService,
-    public securityCheck: SecurityCheckService, public handlefunction: handleFunction) {
+    public securityCheck: SecurityCheckService, public handlefunction: handleFunction,
+    public formBuilder:FormBuilder) {
   }
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
+    this.myFormGroup = this.formBuilder.group({
+      truckno: '',
+      place: '',
+      place2: '',
+      partyName: '',
+      loadingDate: '',
+      lrno:0,
+      _id:''
+    });
   }
+
+  find(event){
+    if(event==='11'){
+      this.wala11=true;
+    }
+    else{
+      this.wala11=false;
+    }
+          let tempObj1={};
+      tempObj1['tablename'] = 'turnbook'
+      tempObj1['method'] = 'singleTruck'
+      tempObj1['display'] = event;
+      tempObj1['truckno'] = this.truckVar;
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
+        .subscribe((res: any) => {
+          if(res.Data.length>0){
+          this.unique11turnbooklist=res.Data;
+          this.byTruckName=true;
+          this.turnbooklist = res.Data;
+          // this.unique11turnbooklist= res.Data.map(r=>r.truckName.truckno).filter(function(item, pos) {return res.Data.map(r=>r.truckName.truckno).indexOf(item) == pos;})
+          if(event==='11new'){
+            this.trucknoid11=res.Data[0].truckName.truckno
+            this.myFormGroup.patchValue({
+              truckno: res.Data[0].truckName.truckno,
+              place: res.Data[0].placeName.village_name,
+              place2: res.Data[0].placeName2?res.Data[0].placeName2.village_name:'',
+              partyName: res.Data[0].partyName.name,
+              loadingDate: res.Data[0].loadingDate,
+              lrno: res.Data[0].lrno,
+              _id:res.Data[0]._id
+            })
+          }
+          this.considerArray = this.handledata.createConsiderArray('infogstonly')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+         
+        }
+        });
+  
+  }
+  find11UniqueTruck(){
+    if(this.trucknoid11!=='Default'){
+      this.selectDate=false;
+      this.byTruckName=true;
+    this.turn11=this.turnbooklist.filter(r=>{return r._id==this.trucknoid11});
+    this.myFormGroup.patchValue({
+      truckno: this.turn11[0]['truckName'].truckno,
+      place: this.turn11[0]['placeName'].village_name,
+      place2: this.turn11[0]['placeName2']?this.turn11[0]['placeName2'].village_name:'',
+      partyName: this.turn11[0]['partyName'].name,
+      loadingDate: this.turn11[0]['loadingDate'],
+      lrno: this.turn11[0]['lrno'],
+      _id:this.turn11[0]['_id']
+    })
+    }
+  }
+
+  getInformationData() {
+    let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];
+        this.fetchBasic();
+      });
+  }
+
+  fetchBasic() {
+    this.commonArray = this.securityCheck.commonArray;
+    this.parties = [];
+    this.parties = this.commonArray.gstdetails;
+  }
+
+  change(data){
+    console.log(data);
+    let tempObj1={};
+    tempObj1['tablename'] = ''
+    tempObj1['method'] = 'updatelrparty'
+    tempObj1['partyid'] = data.value.partyName;
+    tempObj1['lrno'] = data.value.lrno;
+    tempObj1['_id'] = data.value._id;
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+      });
+  }
+
+
   getDoubts() {
     let tempObj1 = {};
     tempObj1['tablename'] = ''
@@ -68,7 +175,6 @@ export class TurnBookUpdateComponent implements OnInit {
   findOption() {
 
   }
-
   findData(){
     this.showButton = true;
     this.buttonOption = this.displayType;
@@ -77,7 +183,6 @@ export class TurnBookUpdateComponent implements OnInit {
     this.showData=this.handledata.AnilData;
     this.showData=this.showData.filter(r=>{if((!r.check[parseInt(this.buttonOption)-1])&&(r.partyType==this.partyType)){return r}})
   }
-
   getData() {
     let tempobj = {};
         this.considerArray = [0, 0, 0, 1, 0, 0, 0, 0]
@@ -88,17 +193,11 @@ export class TurnBookUpdateComponent implements OnInit {
 
           });
             }
-
- 
-
-
   fetchData = function (res) {
         this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];;
         this.commonArray = this.securityCheck.commonArray;
         this.places = this.commonArray.villagenames;
     }
-
-
   updatetruckformat(){
     let tempo=[]
     for(let i=0;i<this.showData.length;i++){
@@ -135,7 +234,6 @@ export class TurnBookUpdateComponent implements OnInit {
       });
 
   }
-
   updateAllOKAY(){
     let tempo=[]
     for(let i=0;i<this.showData.length;i++){
@@ -156,7 +254,6 @@ export class TurnBookUpdateComponent implements OnInit {
       });
 
   }
-
   updatetruckformat1(){
     for(let i=0;i<this.data.length;i++){
       let dataaa=(<HTMLInputElement>document.getElementById(this.caller+'_' + i)).value;
@@ -176,5 +273,6 @@ export class TurnBookUpdateComponent implements OnInit {
 
       });
   }
+ 
 
 }

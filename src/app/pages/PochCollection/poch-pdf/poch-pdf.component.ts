@@ -216,7 +216,7 @@ export class PochPdfComponent implements OnInit {
      doc.text(this.handleF.getDateddmmyy(data['loadingDate'][k]),27,start-9+7)
      doc.text(data['truckno'][k],50,start-9+7)
      doc.text(data['place'][k],84,start-9+7)
-     doc.text(data['nrlrno'][k],115,start-9+7)
+     doc.text(String(data['nrlrno'][k]),115,start-9+7)
 
        start=start+7;
        // Table rows

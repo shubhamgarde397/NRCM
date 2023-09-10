@@ -43,11 +43,13 @@ public showbuttonOption821HA=true;
   public dbName = 1;
   public commonArray;
   public date = new Date();
+  public partyVar19='';
   public turnbooklist: any;
   public dateFromUI;
   public buttonValue: any = 'Avaliable Trucks';
   public buttonOption = '1';
   public trucknoid;
+  public lrnos=[];
   public dynDate;
   public dynDate2;
   public dataTruck;
@@ -65,8 +67,9 @@ public showbuttonOption821HA=true;
   public displayoptionsarray=[
     0,0,0,0,
     0,0,0,0,
-    0,0,0
+    0,0,0,1
   ]
+  public addis19=true;
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' ,'disabled':false},
     { 'value': '2', 'viewvalue': 'Truck Arrival' ,'disabled':false},
@@ -79,6 +82,7 @@ public showbuttonOption821HA=true;
     { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
     { 'value': '17', 'viewvalue': 'Double Loading' ,'disabled':false},
     { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
+    { 'value': '19', 'viewvalue': 'Packet' ,'disabled':false},
   ]
   // 18
   public lrStarter=0;
@@ -115,6 +119,7 @@ public showbuttonOption821HA=true;
   public turnbooklist_trucks = [];
   public myFormGroup: FormGroup;
   public myFormGroupTB : FormGroup;
+  public showbuttonOption19=false;
   public myFormGroup9: FormGroup;
   public myFormGroup1 : FormGroup;
   public considerArray;
@@ -183,7 +188,11 @@ public nrcmid;
       loadingDate: '',
       partyType: '',
     });
+    this.myFormGroup9 = this.formBuilder.group({
+      lrno:0
+    })
   }
+
 
   tabsetter(){
     // this is for anil
@@ -192,20 +201,61 @@ public nrcmid;
         this.displayoptionsarray=[
           1,1,1,1,
           1,1,1,1,
-          1,1,1]
+          1,1,1,1]
         break;
         case 7:
           this.displayoptionsarray=[
             1,0,0,0,
             1,0,0,1,
-            1,0,0]
+            1,0,0,1]
         break;
     
       default:
         break;
     }
+
+    
     
     this.setTabData(this.displayoptionsarray);
+      }
+
+      sendToSetMain(i){
+        let temp={
+          "lrnos":this.lrnos,
+          "tablename":"",
+          "method":"lrtoparty",
+          "partyid":this.partyVar19
+        }
+    
+        this.apiCallservice.handleData_New_python('turnbook', 1, temp, true)
+        .subscribe((res: any) => {
+          alert(res.Status);
+          this.myFormGroup9.patchValue({'lrno':''});
+          this.lrnos=[];
+        })  
+      }
+
+      addlrno(data){
+        this.lrnos.push(parseInt(String(data.value.lrno)));
+        this.myFormGroup9.patchValue({'lrno':0})
+      }
+
+      delLR(index){
+        if (confirm('Are you sure?')) {
+
+          this.lrnos.splice(index,1);
+          
+      }
+    }
+
+      findPackets(){
+        let tempObj1={};
+        tempObj1['tablename'] = ''
+        tempObj1['method'] = 'lrtopartyAnilDisplay'
+          this.apiCallservice.handleData_New_python('turnbook', 1, tempObj1, true)
+          .subscribe((res: any) => {
+            this.turnbooklist = res.Data;
+          });
       }
     
       setTabData(data){
@@ -377,6 +427,10 @@ let buttons=[]
         }
         case '13':
           tempObj['lrno']=this.bylrno;
+        break;
+        case '19':
+          this.showbuttonOption19=true;
+          
         break;
       default:
         break;
@@ -633,7 +687,7 @@ this.placeid=this.tempDate[0]['place']['_id']
   change(data) {
     let tempData = {}
 
-    tempData['lrno'] = data.value.lrno===0?this.tempDate[0]['lrno']:data.value.lrno;
+    tempData['lrno'] = data.value.lrno===0?parseInt(this.tempDate[0]['lrno']):parseInt(data.value.lrno);
     tempData['partyType']=this.buttonOptionPartyType;
     tempData['typeOfLoad'] = data.value.typeOfLoad;
     tempData['partyid'] = data.value.partyid;
@@ -648,8 +702,8 @@ this.placeid=this.tempDate[0]['place']['_id']
         this.handleData.saveTurn([]);
         this.handleData.saveTurn(newData);
         this.turnbooklistnew = newData;
-        this.myFormGroup.patchValue({ turnbookDate: '' })
-        this.myFormGroup.patchValue({ partyType: '' })
+        // this.myFormGroup.patchValue({ turnbookDate: '' })
+        // this.myFormGroup.patchValue({ partyType: '' })
 
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;
@@ -1540,6 +1594,8 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
       if(this.turn12[i]['considerForPayment']==true){
          doc.text(String(index+1), 23, y)//partyname
          index=index+1;
+         console.log(this.turn12[i]['pochAmount'])
+         console.log(this.turn12[i]['loadingDate'])
         doc.text(this.handleF.getDateddmmyy(this.turn12[i]['loadingDate']), 32, y)//partyname
           doc.text(this.turn12[i]['truckName']['truckno'], 57, y)//truckno
           doc.text(this.turn12[i]['placeName']['village_name'], 57, y+5)//truckno
@@ -1550,8 +1606,28 @@ doc.text(String(parseInt(this.totalLorryHire()))+'-'+String(parseInt(this.totatP
           // doc.text(this.turn12[i]['actualPaymentDate']!=''?(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})?String(this.turn12[i]['advanceArray'].find(r=>{return r.reason=='Balance'})['BHAccNo']):''):'', 146, y+5)//truckno
           doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'':this.turn12[i]['statusOfPoch'],185,y);
           let pmtx=this.turn12[i]['statusOfPoch']==='Okay'?'185':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'178':'178'):'185')
-          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'பணம் பொட்டச்சி':(this.turn12[i]['statusOfPoch']===''?(this.turn12[i]['pochDate']===''?'Received வரலியா':'பணம் போட் இல்லை'):'No Payment'),pmtx,y+5);
-      
+
+          if(this.turn12[i]['statusOfPoch']==='Okay'){
+            doc.setTextColor(92,184,92);//green
+          }
+          else if(this.turn12[i]['statusOfPoch']===''){
+            if(this.turn12[i]['pochDate']===''){
+              doc.setTextColor(217,83,79);//red
+            }
+            
+            else{
+              doc.setTextColor(240,173,78);//orage
+            }
+          }
+          else{
+            doc.setTextColor(91,192,222);//blue
+          }
+
+          
+          doc.text(this.turn12[i]['statusOfPoch']==='Okay'?'Balance Paid':(
+            this.turn12[i]['statusOfPoch']===''?(
+              this.turn12[i]['pochDate']===''?'PoD Not Received':'Payment Pending'):'No Payment'),pmtx,y+5);
+              doc.setTextColor(0,0,0);
     
            y = y + 12;
            doc.line(20, y-5 , 210, y-5 );//line after header
