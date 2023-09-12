@@ -87,13 +87,9 @@
             <th>Today Date</th>
             <th>Date</th>
             <th>Truckno</th>
-            <th>Amount:Pgno:Acc</th>
+            <th>Amount:Acc</th>
             <th>Comments</th>
-            <!-- <th>Dues</th> -->
             <th>AccountNo-IFSC</th>
-            <th>Account Name</th>
-            <th *ngIf="!admin">Delete</th>
-            <th *ngIf="!admin">Edit</th>
             <th *ngIf="admin">Delete Admin</th>
             <th *ngIf="admin">Edit Admin</th>
           </tr>
@@ -126,32 +122,15 @@
 
             <td>
               <ul *ngFor="let k of i.truckData">
-                <li>{{k.amount}}:{{k.pageno}}</li>
+                <li>{{k.amount}}:{{k.parentAccNo}}:{{k.remark}}</li>
               </ul>
-              {{i.commentToTruck}}
+              
             </td>
 
             <td>
-              <button class="btn btn-warning" [ngStyle]="{'background-color': i.commentToTruck2[0]===undefined ? '#5CB85C' : '#F0AD4E' }" data-toggle="modal" data-target="#myModal" (click)="setComments(i)">Comments</button>
+              <button class="btn btn-warning" [ngStyle]="{'background-color': i.remark===undefined ? '#5CB85C' : '#F0AD4E' }" data-toggle="modal" data-target="#myModal" (click)="setComments(i)">Comments</button>
             </td>
-            <td>{{i.accountNumber}}-{{i.ifsc}}</td>
-            <td>{{i.accountName}}</td>
-            <td *ngIf="(i.comments==='')&&(!admin)">
-              <button mat-raised-button (click)="deleteBH(i)" class="btn-danger btn-sm btn-just-icon">
-                <i class="material-icons">delete_forever</i>
-              </button>
-            </td>
-            <td *ngIf="(i.comments==='cancel')&&(!admin)">
-              <button mat-raised-button type="button" (click)="deleteBH(i)" class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">add</i>
-              </button>
-            </td>
-            <td *ngIf="!admin">
-              <button mat-raised-button type="button" (click)="showDatabyid(i,j)"
-                class="btn-primary btn-sm btn-just-icon" *ngIf="!admin">
-                <i class="material-icons">edit</i>
-              </button>
-            </td>
+            <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
             <td *ngIf="admin">
               <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
                 class="btn-danger btn-sm btn-just-icon" *ngIf="admin">

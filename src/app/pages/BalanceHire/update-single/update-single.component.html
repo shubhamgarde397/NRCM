@@ -3,24 +3,21 @@
     action="/">
     <div class="form-group row">
       <div class="col-sm-6">
-        <button type=" button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" [disabled]='inProgress===false'>
-          Add Here
-        </button>
         <table class="table table-bordered">
           <tr>
             <th>Srno</th>
             <th>Date</th>
             <th>TruckNo</th>
-            <th>Page No</th>
+            <th>Remark</th>
             <th>Amount</th>
             <th>Update</th>
             <th>Delete</th>
           </tr>
           <tr *ngFor="let i of truckArray;let j = index;">
             <td>{{j+1}}</td>
-            <td><input  [disabled]='i.field===true' value={{i.date}} id="{{ 'date' + j }}"></td>
-            <td><input  [disabled]='i.field===true' value={{i.truckno}} id="{{ 'truckno' + j }}"></td>
-            <td><input  [disabled]='i.field===true' value={{i.pageno}} id="{{ 'pageno' + j }}"></td>
+            <td><input  value={{i.date}} id="{{ 'date' + j }}" disabled></td>
+            <td><input  value={{i.truckno}} id="{{ 'truckno' + j }}" disabled></td>
+            <td><input  [disabled]='i.field===true' value={{i.remark}} id="{{ 'remark' + j }}"></td>
             <td><input  [disabled]='i.field===true' value={{i.amount}} id="{{ 'amount' + j }}"></td>
             <td><button type="button" class="btn btn-info" (click)="enableInternalAddition(i,j)" [disabled]='inProgress===false'>
               <i class="material-icons">edit</i>
@@ -39,62 +36,4 @@
       </div>
     </div>
   </form>
-</div>
-
-<div class="container">
-  
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-  
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Balance Hire</h4>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="myFormGroup"submitted=true (ngSubmit)="addInternalAddition(myFormGroup)" enctype="multipart/form data" 
-    action="/">
-    <div class="well">
-      <div class="row form-group">
-        <div class="col-sm-8">
-          <input type="date" class="form-control" formControlName="date" placeholder="Date">
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-sm-8">
-            <input type="text" list="cars" class="form-control" formControlName="truckno"
-              placeholder="TN02 AB 2045" />
-            <datalist id="cars">
-              <option *ngFor="let i of truckdetailslist">{{i.truckno}}</option>
-            </datalist>
-
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-sm-8">
-          <input type="number" class="form-control" formControlName="pageno" placeholder="Page No">
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-sm-8">
-          <input type="number" class="form-control" formControlName="amount" placeholder="Amount">
-        </div>
-      </div>
-      <div class="row form-group">
-        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-          <i class="material-icons">send</i>
-        </button>
-      </div>
-    </div>
-    </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
 </div>

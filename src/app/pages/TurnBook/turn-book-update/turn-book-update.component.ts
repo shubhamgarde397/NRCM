@@ -17,6 +17,10 @@ export class TurnBookUpdateComponent implements OnInit {
   public considerArray;
   public data = [];
   public data2=[];
+  public partyid='';
+  public party='';
+  public partyToUI=''
+  public submitted=false;
   public selectedDate='';
   public options = [
     { 'viewValue': 'LRNO', 'value': '1', 'caller': 'lrno' },

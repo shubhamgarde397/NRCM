@@ -212,7 +212,7 @@ alert('Selected!')
             if(r._id==this.balanceHireArrray[i][j]['_id']){
               this.bhTrucks[index]['pgno']=parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value);
               this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
-              this.bhTrucks[index]['lrno']=parseInt((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value);
+              this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value;
               this.bhTrucks[index]['remark']=(<HTMLInputElement>document.getElementById('remark_' + i + '_' + j)).value;
               return true
             }
@@ -221,7 +221,10 @@ alert('Selected!')
 
       }
     }
+    if (!breaker) { 
     this.finalFunction('do');
+    }
+
   }
 
   leftRight(LR) {

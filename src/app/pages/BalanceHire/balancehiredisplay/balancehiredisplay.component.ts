@@ -380,9 +380,13 @@ let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
 
   
   accE(data){
-    data.forEach(r=>{r['available']=r['acc'+String(r.commentToTruck.split(' ')[0])]?'':'X'})
+    data.forEach(r=>{r['available']=r['acc'+String(r.parentAccNo)]?'':'X'})
       return data
     }
+    // accE(data){
+    //   data.forEach(r=>{r['available']=r['acc'+String(r.commentToTruck.split(' ')[0])]?'':'X'})
+    //     return data
+    //   }
 
     setComments(i){
       this.sentComments=i.commentToTruck2;
@@ -876,10 +880,15 @@ if(newpage===1){
   }
 
   deleteBHComplete(data, j) {
+    let ids=[]
+    for(let i=0;i<data.truckData.length;i++){
+      ids.push(data.truckData[i]['tbid'])
+    }
+    
     if (confirm('Are you sure?')) {
       let formbody = {}
-      formbody['_id'] = data._id;
-      formbody['method'] = 'deleteBH';
+      formbody['_ids'] = ids;
+      formbody['method'] = 'deleteBHNew';
       formbody['tablename'] = 'BalanceHire';
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, formbody, true)
@@ -1229,7 +1238,7 @@ if(newpage===1){
       let accountI=i;
       doc.setFontSize('10');
       if(dataTF){
-        doc.text(String(parseInt(this.balanceDate[z].commentToTruck)).split(' ')[0], 38.5, i);//comments
+        doc.text(String(parseInt(this.balanceDate[z].parentAccNo)).split(' ')[0], 38.5, i);//comments
       }
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
@@ -1239,9 +1248,10 @@ if(newpage===1){
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 83.5, i);//truckno
-        // if(dataTF){
-        //   doc.text(String(parseInt(this.balanceDate[z].commentToTruck)).split(' ')[0], 38.5, i);//comments
-        // }
+        if(dataTF){
+          doc.text(this.balanceDate[z].truckData[k].remark, 50, i);//truckno
+          // doc.text(String(parseInt(this.balanceDate[z].truckData[k].parentAccNo)).split(' ')[0], 38.5, i);//comments
+        }
         doc.setFontSize('8');
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 108, i);//truckno
@@ -1258,35 +1268,36 @@ if(newpage===1){
       doc.text(String(totalAmount),16,i)
       }
       let bigK=0
-      for (let k = 0; k < this.balanceDate[z].commentToTruck2.length; k++) {
-        if(k==0){
-        doc.setLineDash([0.5, 1], 10);
-        doc.line(37, i-4, 146, i-4);
-        doc.setLineDash([1, 0], 10);
-        }
-        doc.setFontSize('8')
-        if(dataTF){
-        if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='balance'){
-          doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg']), 38.5, i+k+1);//comments
-          doc.text('How many : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
-          doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno']), 92.5, i+k+1);//comments
-        }
-        else if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='due'){
-          doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg'])+' -Total Due -', 38.5, i+k+1);//comments
-          doc.text(String(this.balanceDate[z].commentToTruck2[k]['totalDue']),61.5,i+k+1)
-          doc.text('Due : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
-          doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno'])+'  Due Date : '+String(this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(8, 10) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(5, 7) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(0, 4)), 92.5, i+k+1);//comments
-        } 
-        }
+      // for (let k = 0; k < this.balanceDate[z].commentToTruck2.length; k++) {
+      //   if(k==0){
+      //   doc.setLineDash([0.5, 1], 10);
+      //   doc.line(37, i-4, 146, i-4);
+      //   doc.setLineDash([1, 0], 10);
+      //   }
+      //   doc.setFontSize('8')
+      //   if(dataTF){
+      //   if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='balance'){
+      //     doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg']), 38.5, i+k+1);//comments
+      //     doc.text('How many : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
+      //     doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno']), 92.5, i+k+1);//comments
+      //   }
+      //   else 
+      //   if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='due'){
+      //     doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg'])+' -Total Due -', 38.5, i+k+1);//comments
+      //     doc.text(String(this.balanceDate[z].commentToTruck2[k]['totalDue']),61.5,i+k+1)
+      //     doc.text('Due : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
+      //     doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno'])+'  Due Date : '+String(this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(8, 10) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(5, 7) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(0, 4)), 92.5, i+k+1);//comments
+      //   } 
+      //   }
 
-        i = i + 2;
-        bigK=k;
-      }
+      //   i = i + 2;
+      //   bigK=k;
+      // }
 
       let adder=0
-      if(this.balanceDate[z].commentToTruck2.length>5){
-        adder=this.balanceDate[z].truckData.length===1?0:this.balanceDate[z].truckData.length+this.ls(this.balanceDate[z].commentToTruck2.length);
-      }
+      // if(this.balanceDate[z].commentToTruck2.length>5){
+      //   adder=this.balanceDate[z].truckData.length===1?0:this.balanceDate[z].truckData.length+this.ls(this.balanceDate[z].commentToTruck2.length);
+      // }
 
       doc.line(0, i + 7-(bigK*2)+adder, 210, i + 7-(bigK*2)+adder);
       doc.line(37, i - (data.length * 6) -11-(bigK*2), 37, i + 7-(bigK*2)+adder);
@@ -1330,17 +1341,6 @@ if(newpage===1){
       return no-5+this.ls(no-1);
     }
   }
-
-  showDatabyid = function (data, j) {
-    this.show = true;
-    this.found = data;
-    data['index'] = j;
-    data['editOption'] = 0;
-    data['commentToTruck']=data['commentToTruck']
-
-    this.handledata.saveData(data);
-    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/Update']);
-  };
   back(type) {
     switch (type) {
       case 'year':

@@ -31,8 +31,6 @@ export class UpdateSingleComponent implements OnInit {
 
   ngOnInit() {
     this.myFormGroup = this.formBuilder.group({
-      date: ['',[Validators.required]],
-      truckno: ['', [Validators.required, Validators.pattern('^[A-Z]{2}[0-9]{2}[ ]{0,1}[A-Z]{0,2}[ ][0-9]{4}')]],
       pageno: ['',[Validators.required]],
       amount: ['',[Validators.required]]
     });
@@ -42,22 +40,24 @@ export class UpdateSingleComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;  
+    console.log(this.truckArray);
+    
     this.truckArray2=this.handledata.giveBHData()
   };
 
   submit(){
-    let date=(<HTMLInputElement>document.getElementById('date'+this.index)).value;
-    let truckno=(<HTMLInputElement>document.getElementById('truckno'+this.index)).value;
-    let pageno=(<HTMLInputElement>document.getElementById('pageno'+this.index)).value;
+    let remark=(<HTMLInputElement>document.getElementById('remark'+this.index)).value;
     let amount=(<HTMLInputElement>document.getElementById('amount'+this.index)).value;
+
+    console.log(this.truckArray);
+    console.log(this.index);
+      console.log(this.oldIndex);
+
     let tempObj={}
-    tempObj['method']='BalanceHireSingleUpdate';
+    tempObj['method']='BalanceHireSingleUpdateNew';
     tempObj['tablename']='BalanceHire';
-    tempObj['id']=this.handledata.Data._id;
-    tempObj['tbid']=this.handledata.Data.tbid;
-    tempObj['date']=date;
-    tempObj['truckno']=truckno;
-    tempObj['pageno']=pageno;
+    tempObj['id']=this.truckArray[this.index]['tbid'];
+    tempObj['remark']=remark;
     tempObj['amount']=amount;
     tempObj['index']=String(this.index);
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
@@ -78,8 +78,8 @@ export class UpdateSingleComponent implements OnInit {
     let tempObj={}
     tempObj['method']='BalanceHireSingleUpdateToDelete';
     tempObj['tablename']='BalanceHire';
-    tempObj['id']=this.handledata.Data._id;
-    tempObj['index']=String(j);
+    tempObj['id']=this.truckArray[j]['tbid'];
+    // tempObj['index']=String(j);
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     .subscribe((response: Response) => {
       alert(response['Status']);
@@ -97,21 +97,5 @@ export class UpdateSingleComponent implements OnInit {
       alert('Submit or Cancel the edit field.')
     }
   }
-
-  addInternalAddition(data){
-    let tempObj={}
-    tempObj['date']=data.value.date;
-    tempObj['truckno']=data.value.truckno;
-    tempObj['amount']=data.value.amount;
-    tempObj['pageno']=data.value.pageno;
-    tempObj['method']='BalanceHireSingleUpdateToAdd';
-    tempObj['tablename']='BalanceHire';
-    tempObj['id']=this.handledata.Data._id;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((response: Response) => {
-        alert(response['Status']);
-    });
-  }
-
 
 }
