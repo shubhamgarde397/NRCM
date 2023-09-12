@@ -14,6 +14,12 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 export class BalanceHireAddComponentA implements OnInit {
   public saveToCheckArrayBoolean = true;
   public turnbooklist;
+  public remarks=[
+    {value:'',viewValue:'Okay'},
+    {value:'Short',viewValue:'Shortage'},
+    {value:'Late',viewValue:'Late'},
+    {value:'Dmge',viewValue:'Damage'},
+  ]
 public tempArray=[];
 public balanceHireArrray=[];
 public todaysDate;

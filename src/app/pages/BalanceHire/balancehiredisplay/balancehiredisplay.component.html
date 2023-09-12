@@ -110,6 +110,8 @@
             <td>
               <ul *ngFor="let k of i.truckData;let o = index;">
                 <li>{{k.truckno}}<br>
+                  <span style="color:red;">{{k.remark}}</span>
+                  <br>
                   <select [(ngModel)]="dueChangeValue" (change)="dueChange()">
                     <option *ngFor="let jj of k.dues;let z = index;" value={{j}}_{{o}}_{{z}}_{{jj._id}}>
                       {{jj.date}}-{{jj.amt}},{{jj.pending}}->{{jj.reason}}

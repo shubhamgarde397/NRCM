@@ -35,7 +35,8 @@
         <tr *ngFor="let i of balanceDate;let j = index">
           <td >{{j+1}}</td>
           <td>{{i.loadingDate}}</td>
-          <td>{{i.truckno}}<input type="checkbox"></td>
+          <td>{{i.truckno}}<input type="checkbox">
+          <br><span style="color: red;">{{i.remark}}</span></td>
           <td>{{i.party}}</td>
           <td>{{i.partyType}}</td>
           <td>{{i.place}}</td>

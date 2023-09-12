@@ -148,6 +148,7 @@
             <th>Place</th>
             <th>Balance</th>
             <th>LRNO</th>
+            <th>Remark</th>
           </tr>
         </thead>
         <tbody>
@@ -162,8 +163,13 @@
             </td>
             <td><input type="text" placeholder="LRNO" id="lrno_{{kk}}_{{jj}}" value={{ii.lrno}}>
             </td>
-            <td><input type="text" placeholder="Remark" id="remark_{{kk}}_{{jj}}" value={{ii.remark}}>
+            <td>
+              <select class="form-control" id="remark_{{kk}}_{{jj}}">
+                <option *ngFor="let i of remarks;" value={{i.value}}>{{i.viewValue}}</option>
+              </select>
             </td>
+            <!-- <td><input type="text" placeholder="Remark" id="remark_{{kk}}_{{jj}}" value={{ii.remark}}> -->
+            <!-- </td> -->
           </tr>
         </tbody>
       </table>
