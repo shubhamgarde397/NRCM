@@ -89,6 +89,9 @@ this.amountShow=data;
   setNRCMid(data){
     this.nrcmid=data;
   }
+  getNRCMid(){
+    return this.nrcmid;
+  }
   setTruckData(data){
     this.arr=data;
   }

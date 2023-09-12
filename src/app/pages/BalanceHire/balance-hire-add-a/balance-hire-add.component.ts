@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 
 @Component({
@@ -27,12 +28,16 @@ public nextStepButton=false;
 public firstTime=true;
 public back=false;
 public forceBackButton=false;
-
-  constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { }
+public nrcmid;
+  constructor(
+    public securityCheck: SecurityCheckService,public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { }
 
   ngOnInit() {
     this.uitodayDate = this.handleF.getDate(this.handleF.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
+    this.nrcmid=this.securityCheck.nrcmid;
+    console.log(this.securityCheck.nrcmid);
+    
     // this.find();
   }
 
@@ -199,8 +204,6 @@ alert('Selected!')
         if (
           ((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) 
           ||
-          ((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value.length == 0)
-          ||
           ((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value.length == 0)
           ) {
           alert('Please fill in all the fields.');
@@ -210,10 +213,11 @@ alert('Selected!')
         else {
           this.bhTrucks.find((r,index)=>{
             if(r._id==this.balanceHireArrray[i][j]['_id']){
-              this.bhTrucks[index]['pgno']=parseInt((<HTMLInputElement>document.getElementById('pageno_' + i + '_' + j)).value);
               this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
               this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value;
               this.bhTrucks[index]['remark']=(<HTMLInputElement>document.getElementById('remark_' + i + '_' + j)).value;
+              this.bhTrucks[index]['pageno']=this.securityCheck.nrcmid;
+              
               return true
             }
           })
