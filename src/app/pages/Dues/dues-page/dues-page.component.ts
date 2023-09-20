@@ -19,6 +19,11 @@ export class DuesPageComponent implements OnInit {
 public tbdata={"advanceArray": [{"advanceAmt": '',"advanceDate": "",}],"loadingDate": "2023-10-31","dueInfo": [{"dueWholeAmt": 0,"dueAmtTaken": 0,"date": ""}]};
 public bhdata={"truckData": [],"commentToTruck2": []};
 public whichData=false;
+public truckVar='';
+public turnbooklist=[];
+public trucknoid11;
+public turn11=[];
+public gotData18=false;
 
   constructor(public apiCallservice: ApiCallsService,public formBuilder: FormBuilder,public handledata: HandleDataService) { }
 
@@ -32,12 +37,45 @@ public whichData=false;
       reason:'',
       from:''
     });
-    this.fetchBasic();
+  }
+
+  find(){
+    let tempObj = {}
+
+  if(this.myFormGroup.value.from === 'Truck'){
+    if (this.myFormGroup.value.truckno === '') { alert('Select a '+this.myFormGroup.value.from);  }
+        else {
+          tempObj['truckno'] = this.myFormGroup.value.truckno;
+          tempObj['method'] = 'displayEditTruckD'
+    }
+  }
+  else{
+    if (this.myFormGroup.value.truckno === '') { alert('Select a '+this.myFormGroup.value.from);  }
+        else {
+          tempObj['truckno'] = this.myFormGroup.value.truckno;
+          tempObj['method'] = 'displayEditTruckDT'
+    }
+  }
+
+  tempObj['tablename'] = ''
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.turnbooklist = res.Data;
+      });
+  }
+
+  find11UniqueTruck(){
+    if(this.trucknoid11!=='Default'){
+    this.turn11=this.turnbooklist.filter(r=>{return r.truckno==this.trucknoid11})[0]; 
+          this.gotData18=true;
+
+    }
   }
 
   store({ value, valid }: { value: [{}], valid: boolean }) {
     value['method'] = 'DuesInsert';
     value['tablename'] = 'dues';
+    value['truckno'] = this.trucknoid11;
     
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, value, true)

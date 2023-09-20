@@ -18,3 +18,7 @@ a:hover{
     cursor: pointer;
 }
 
+.well .container{
+    background-color: black;
+}
+

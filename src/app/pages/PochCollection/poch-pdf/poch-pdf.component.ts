@@ -62,20 +62,39 @@ export class PochPdfComponent implements OnInit {
 
   PochBill(){//threshhold is 295
     let data=this.balanceDate;
-    var doc = new jsPDF({
-      orientation: 'p',
-      unit: 'mm',
-      format: 'a5',
-      putOnlyUsedFonts:true
-     })
+    
     for(let i=0;i<data.length;i++){
-     
+      var doc = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a5',
+        putOnlyUsedFonts:true
+       }) 
        this.pdfData(doc,data[i]);
-       doc.addPage();
+      //  doc.addPage();
+      doc.save(this.pochDate)
     }
-    this.pdfDataCount(doc,data)
-    doc.save(this.pochDate)
+    // this.pdfDataCount(doc,data)
+    
  }
+
+ PochBillAll(){//threshhold is 295
+  let data=this.balanceDate;
+  var doc = new jsPDF({
+    orientation: 'p',
+    unit: 'mm',
+    format: 'a5',
+    putOnlyUsedFonts:true
+   }) 
+  for(let i=0;i<data.length;i++){
+   
+     this.pdfData(doc,data[i]);
+     doc.addPage();
+    
+  }
+  this.pdfDataCount(doc,data)
+  doc.save(this.pochDate)
+}
 
  pdfDataCount(doc,data){
 

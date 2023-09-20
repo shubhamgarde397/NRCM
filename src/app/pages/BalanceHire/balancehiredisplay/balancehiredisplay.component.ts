@@ -8,9 +8,6 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { ExcelService } from '../../../common/services/sharedServices/excel.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
-import { Button } from 'protractor';
-import { DuesPageComponent } from '../../Dues/dues-page/dues-page.component';
-import { templateSourceUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-balancehiredisplay',
@@ -30,13 +27,12 @@ export class BalancehiredisplayComponent implements OnInit {
   public createdDate = '';
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Balance Hire' },
-    { 'value': '2', 'viewvalue': 'Check Prints' },
-    { 'value': '5', 'viewvalue': 'Update Actual Payments' },
-    { 'value': '6', 'viewvalue': 'Balance Message To Driver' },
-    { 'value': '7', 'viewvalue': 'Update Advance Payments' },
-    { 'value': '8', 'viewvalue': 'Advance Message To Driver' },
-    { 'value': '9', 'viewvalue': 'Party Msg' },
-    { 'value': '10', 'viewvalue': 'Update Actual All Payments' },
+    { 'value': '2', 'viewvalue': 'Update Actual Payments' },
+    { 'value': '3', 'viewvalue': 'Balance Message To Driver' },
+    { 'value': '4', 'viewvalue': 'Update Advance Payments' },
+    { 'value': '5', 'viewvalue': 'Advance Message To Driver' },
+    { 'value': '6', 'viewvalue': 'Party Msg' },
+    { 'value': '7', 'viewvalue': 'Update Actual All Payments' },
   ]
   public months = [
     { '1': 'Jan' },
@@ -264,15 +260,15 @@ formbody['selectedPochDate']=this.selectedPochDate;
  
 
   findOption() {
-    this.buttonOption = this.displayType;
+    this.buttonOption = this.displayType;    
     this.buttonValue = this.displayoptions[parseInt(this.displayType) - 1].viewvalue;
     this.yeardiv = true;
     this.monthdiv = false;
     this.daydiv = false;
     this.printInfo = this.buttonOption == '1' ? true : false;
     this.createdDate = '';
-this.actualPayment=this.buttonOption == '5'?true:false;
-this.actualPayment=this.buttonOption == '10'?true:false;
+this.actualPayment=this.buttonOption == '2'?true:false;
+this.actualPayment=this.buttonOption == '7'?true:false;
     
   }
 

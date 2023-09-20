@@ -3,29 +3,42 @@
     enctype="multipart/form data" action="/">
 
 
+   
+
+
     <div class="form-group row">
-      <div class="col-xs-3">
-        <input type="date" class="form-control" formControlName="date">
+        <div class="col-xs-3">
+          <select id="from" class="form-control" formControlName="from">
+            <option selected disabled>Select Type</option>
+            <option value="Truck">Truck</option>
+            <option value="Transport">Transport</option>
+          </select>
       </div>
-    </div>
-
-
-    <div class="form-group row">
       <div class="col-xs-3">
         <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN11 TN 1111">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.truckno.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
+      <div class="col-xs-3">
+        <button mat-raised-button type="button" (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+          Find
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <select class="form-control" [(ngModel)]="trucknoid11" [ngModelOptions]="{standalone: true}" (change)="find11UniqueTruck()" id="truckNoone11">
+          <option>Default</option>
+          <option *ngFor="let i of turnbooklist;let j = index;" value={{i.truckno}}>{{i.truckno}}</option>
+        </select>
       </div>
     </div>
 
-    <div class="form-group row">
+    <div class="form-group row" *ngIf="gotData18">
       <div class="col-xs-3">
-        <input type="number" id="amt" class="form-control" formControlName="amt">
+        Date : <input type="date" class="form-control" formControlName="date">
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="gotData18">
+      <div class="col-xs-3">
+        Amount : <input type="number" id="amt" class="form-control" formControlName="amt">
       </div>
       <div class="col-xs-2">
         <div [hidden]="myFormGroup.controls.amt.valid">
@@ -37,9 +50,9 @@
     </div>
 
 
-    <div class="form-group row">
+    <div class="form-group row" *ngIf="gotData18">
       <div class="col-xs-3">
-        <input type="text" id="reason" class="form-control" formControlName="reason" placeholder="Reason">
+        Reason : <input type="text" id="reason" class="form-control" value='Loan' formControlName="reason" placeholder="Reason">
       </div>
       <div class="col-xs-2">
         <div [hidden]="myFormGroup.controls.reason.valid">
@@ -50,19 +63,7 @@
       </div>
     </div>
 
-
-    <div class="form-group row">
-      <div class="col-xs-3">
-        <select id="from" class="form-control" formControlName="from">
-          <option selected disabled>Select Type</option>
-          <option value="Truck">Truck</option>
-          <option value="Transport">Transport</option>
-        </select>
-      </div>
-    </div>
-
-
-    <div class="row">
+    <div class="row" *ngIf="gotData18">
       <div class="form-group" class="col-xs-2"></div>
       <div class="form-group" class="col-xs-1">
         <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
@@ -15,25 +15,19 @@ import 'jspdf-autotable';
 })
 export class AccountDetailsDisplayComponent implements OnInit {
   // $BASIC $
+  
+  public myFormGroup18: FormGroup;
   public options = [
-    {'viewValue':'Account Number','value':'1','disabled':false},//
-    {'viewValue':'Pan','value':'2','disabled':false},//
+    {'viewValue':'Pan','value':'2','disabled':false},//remove
     {'viewValue':'Contact','value':'3','disabled':false},
-    {'viewValue':'Account','value':'4','disabled':false},//
     {'viewValue':'Transport Name','value':'5','disabled':false},
-    {'viewValue':'Vehicle Type','value':'6','disabled':false},//
-    {'viewValue':'Weight','value':'7','disabled':false},//
-    {'viewValue':'Dimensions','value':'8','disabled':false},//
     {'viewValue':'Update Account Details','value':'9','disabled':false},
     {'viewValue':'Truck Format','value':'10','disabled':false},
     {'viewValue':'Truck Registration Fee','value':'11','disabled':false},
-    {'viewValue':'Account 12/363/1818','value':'12','disabled':false},//
     {'viewValue':'My RC','value':'13','disabled':false},
     {'viewValue':'Count Partywise','value':'14','disabled':false},
     {'viewValue':'Count Loadwise','value':'15','disabled':false},
-    {'viewValue':'Missing Parent','value':'16','disabled':false},
-    {'viewValue':'Missing Type Of Load','value':'17','disabled':false},
-    {'viewValue':'By Anil All','value':'18','disabled':false},
+    {'viewValue':'Update Truck Details','value':'18','disabled':false},
   ]
   public displayType;
   public buttonOption;
@@ -79,20 +73,7 @@ public tptarray=[];
 public transportlist=[];
 public selectedTransporter='';
 // #TPT
-// $WEIGHT
-public weighttable=false;
-public weightarray=[];
-public selectedWeight=0;
-// #WEIGHT
-// $DEIMENSIONS
-public dimensiontable=false;
-public dimensionarray=[];
-public selectedDimensionH;
-public selectedDimensionB;
-public unique11turnbooklist=[];
-public selectedDimensionL;
-// #DEIMENSIONS
-
+public accountArray=[]
 // 
 public truckarray=[];
 public trucktable=false;
@@ -111,22 +92,16 @@ public truckformattable=false;
 // 
 public table14=false;
 public emptyData14=[];
-
+public gotData18=false;
 public table15=false;
 public emptyData15=[];
 public truckVar='';
-public table16=false;
-public emptyData16=[];
-
-public table17=false;
-public emptyData17=[];
-// 
 public emptyregData=[];
 public emptyregDatatable=false;
 // 
 public myrcData=[];
 public loadingDate6;
-public tabs=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+public tabs=[0,0,0,0,0,0,0,0,0]
 public nrcmid=0;
 public numbers=[];
   constructor(
@@ -134,13 +109,14 @@ public numbers=[];
     public securityCheck: SecurityCheckService,
      public handledata: HandleDataService,
      public handleF:handleFunction,
-     public spinnerService: Ng4LoadingSpinnerService) { }
+     public spinnerService: Ng4LoadingSpinnerService,
+     public formBuilder: FormBuilder) { }
 
   ngOnInit() {
     this.nrcmid=this.securityCheck.nrcmid;
     switch (this.nrcmid) {
       case 7:
-        this.tabs=[1,1,0,1,0,1,1,1,1,0,0,0,0,0,0,0,0,0];
+        this.tabs=[1,0,0,1,0,0,0,0,1];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -150,7 +126,7 @@ public numbers=[];
         });
         break;
       case 1:
-        this.tabs=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1];
+        this.tabs=[1,1,1,1,1,1,1,1,1];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -181,11 +157,63 @@ public numbers=[];
 
   }
 
+  addaccount() {
+    if (
+      this.myFormGroup18.value.accountNumber === '' ||
+       this.myFormGroup18.value.accountName === '' ||
+       this.myFormGroup18.value.bankName === '' ||
+       this.myFormGroup18.value.ifsc === '') { alert('Cant enter empt entries!') } else {
+      let tempObj = {};
+      tempObj['accountName'] = this.myFormGroup18.value.accountName;
+      tempObj['accountNumber'] = this.myFormGroup18.value.accountNumber;
+      tempObj['bankName'] = this.myFormGroup18.value.bankName;
+      tempObj['ifsc'] = this.myFormGroup18.value.ifsc;
+      tempObj['delete'] = true;
+      tempObj['acc12'] = false;
+      tempObj['acc363'] = false;
+      tempObj['acc65'] = false;
+      this.accountArray.push(tempObj);
+      this.turn11['accountDetails'].push(tempObj)
+      this.myFormGroup18.patchValue({ accountName: '' });
+      this.myFormGroup18.patchValue({ accountNumber: '' });
+      this.myFormGroup18.patchValue({ bankName: '' });
+      this.myFormGroup18.patchValue({ ifsc: '' });
+    }
+
+  }
+
+  deleteOneA(i, j) {
+    if (confirm('Are you sure?')) {
+      this.accountArray.splice(j, 1);
+      this.turn11['accountDetails'].splice(j, 1);
+    }
+  }
+
+  getBankName(){
+    this.myFormGroup18.patchValue({'bankName':this.myFormGroup18.value.ifsc.slice(0,4)})
+  }
+
   find11UniqueTruck(){
     if(this.trucknoid11!=='Default'){
-    this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11}); 
-    console.log(this.turn11);
+    this.turn11=this.turnbooklist.filter(r=>{return r.truckno==this.trucknoid11})[0]; 
     
+    this.showButton=false;
+          this.myFormGroup18 = this.formBuilder.group({
+            truckNo: this.turn11['truckno'],
+            pan:this.turn11['pan'],
+            name:this.turn11['oname'],
+            weight:this.turn11['weight'],
+            h:this.turn11['h'],
+            b:this.turn11['b'],
+            l:this.turn11['l'],
+            typeOfVehicle:this.turn11['typeOfVehicle'],
+            bankName:'',
+            ifsc:'',
+            accountNumber:'',
+            accountName:''
+          });
+          this.gotData18=true;
+
     }
   }
 
@@ -200,22 +228,42 @@ public numbers=[];
   }
 
   findOption() {
+    if(this.buttonOption=='18'){
+      this.showButton=false;
+    }
     this.showButton=true;
+    let temp=this.options.filter(r=>{return r.value==this.displayType})[0]
     this.buttonOption = this.displayType;
-    this.buttonValue = this.options[parseInt(this.displayType) - 1].viewValue;
+    this.buttonValue = temp.viewValue;
+
+  }
+  change(data){
+    let temp={
+      'pan':data.value.pan,
+      'oname':data.value.name,
+      'h':data.value.h,
+      'b':data.value.b,
+      'l':data.value.l,
+      'weight':data.value.weight,
+      'typeOfVehicle':data.value.typeOfVehicle,
+      'accountDetails':this.turn11['accountDetails'],
+      '_id':this.turn11['_id']
+    }
+   
+    let tempObj={};
+    tempObj['data']=temp
+    tempObj['method']='allAnilUpdate'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
+    .subscribe((res: any) => {
+    alert(res.Data)
+    });
+    
   }
 
   callOptionAPI(){
     this.resetAllDivs();
 switch (this.buttonOption) {
-    case '1':
-      this.getInformationData()
-    break;
-
-    case '12':
-      this.getInformationData2()
-    break;
-
     case '2':
       this.getPanInfoData();
     break;
@@ -228,20 +276,8 @@ switch (this.buttonOption) {
       this.getPanInfoData();
     break;
 
-    case '16':
-      this.getData16();
-    break;
-
-    case '17':
-      this.getData17();
-    break;
-
     case '3':
       this.buttonOption='3';
-    break;
-
-    case '4':
-    this.buttonOption='4';
     break;
 
     case '5':
@@ -250,22 +286,6 @@ switch (this.buttonOption) {
       this.considerArray = this.handledata.createConsiderArray('infotpt')
       this.handledata.goAhead(this.considerArray) ? this.getInformationDataCC() : this.fetchBasicCC();
       this.transportlist = this.commonArray.transport;
-    break;
-
-    case '6':
-      this.buttonOption='6';
-    break;
-
-    case '7':
-      this.buttonOption='7';
-    break;
-
-    case '8':
-      this.buttonOption='8';
-    break;
-
-    case '9':
-      this.buttonOption='9';
     break;
   
     case '10':
@@ -297,29 +317,6 @@ switch (this.buttonOption) {
     this.commonArray = this.securityCheck.commonArray;
     this.transportlist = [];
     this.transportlist = this.commonArray.transport;
-  }
-
-  getInformationData() {
-    this.spinnerService.show();
-    let tempObj = { "method": "acc12363TF", "tablename": ''};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
-      .subscribe((res: any) => {
-        this.tblShow=true;
-        this.tbl=res.Data;
-        this.spinnerService.hide();
-        
-      });
-  }
-  getInformationData2() {
-    this.spinnerService.show();
-    let tempObj = { "method": "smartacc12363", "tablename": '','count':this.count};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
-      .subscribe((res: any) => {
-        this.tblShow=true;
-        this.tbl=res.chartData;
-        this.spinnerService.hide();
-        
-      });
   }
 
   getPanInfoData(){
@@ -380,31 +377,7 @@ switch (this.buttonOption) {
     });
   }
 
-  
-
-  getData16(){
-    let tempObj={};
-    tempObj['method']='missingParentAcc'
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
-    .subscribe((res: any) => {
-    this.emptyData16=res.Data;
-    this.table16=true;
-    });
-  }
-
-  getData17(){
-    let tempObj={};
-    tempObj['method']='missingtypeofloaad'
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
-    .subscribe((res: any) => {
-    this.emptyData17=res.Data;
-    this.table17=true;
-    });
-  }
-
-  getData15(){
+    getData15(){
     let tempObj={};
     tempObj['from']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[0];
     tempObj['to']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[1];
@@ -493,71 +466,6 @@ switch (this.buttonOption) {
     });
   }
 
-  getAccount(data){
-    let tempObj={};
-    tempObj['method']='SmartAccount'
-    tempObj['tablename']='';
-    tempObj['option']=data;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-    this.accountarray=res.chartData;
-    this.accounttable=true;
-    });
-  }
-
-  update(type,i,j,yo=''){
-    let tempObj = { "method": "updateacc12363TF", "tablename": '','type':type,'id':i._id};
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        if(yo===''){
-        switch (type) {
-            case '12':
-            this.tbl[j]['accountDetails'][0]['acc12']=true;
-            this.tbl[j]['accountDetails'][0]['acc363']?this.tbl.splice(j,1):null;
-            // this.tbl[j]['accountDetails'][0]['acc65']?this.tbl.splice(j,1):null;
-            break;
-            // case '65':
-            // this.tbl[j]['accountDetails'][0]['acc65']=true;
-            // this.tbl[j]['accountDetails'][0]['acc363']?this.tbl.splice(j,1):null;
-            // this.tbl[j]['accountDetails'][0]['acc12']?this.tbl.splice(j,1):null;
-            // break;
-            case '363':
-              this.tbl[j]['accountDetails'][0]['acc363']=true;
-              this.tbl[j]['accountDetails'][0]['acc12']?this.tbl.splice(j,1):null;
-              // this.tbl[j]['accountDetails'][0]['acc65']?this.tbl.splice(j,1):null;
-            break;
-        
-          default:
-            break;
-        }
-      }
-      else{
-        switch (type) {
-            case '12':
-            this.tbl[j]['acc']['acc12']=true;
-            this.tbl[j]['acc']['acc363']?this.tbl.splice(j,1):null;
-            // this.tbl[j]['acc']['acc65']?this.tbl.splice(j,1):null;
-            break;
-            case '363':
-              this.tbl[j]['acc']['acc363']=true;
-              this.tbl[j]['acc']['acc12']?this.tbl.splice(j,1):null;
-              // this.tbl[j]['acc']['acc65']?this.tbl.splice(j,1):null;
-            break;
-            // case '65':
-            // this.tbl[j]['acc']['acc65']=true;
-            // this.tbl[j]['acc']['acc12']?this.tbl.splice(j,1):null;
-            // this.tbl[j]['acc']['acc363']?this.tbl.splice(j,1):null;
-            
-            // break;
-        
-          default:
-            break;
-        }
-      }
-      });
-  }
-
   downloadPan(data,option){
     let tempObj={};
     tempObj['from']=this.buttons[parseInt(this.selectedMY)]['option']===1?this.buttons[parseInt(this.selectedMY)]['value'].split('_')[0]:null;
@@ -628,47 +536,6 @@ switch (this.buttonOption) {
     }
   }
 
-  updateifscCode(j){
-    (<HTMLInputElement>document.getElementById('bname_' + j)).value=(<HTMLInputElement>document.getElementById('ifsc_' + j)).value.slice(0,4)
-  }
-
-  updateaccountDetails(i,j){
-
-    let aD=[]
-    let tempObj={};
-    
-
-    for(let i=0;i<this.accountarrayUF.length;i++){
-    let accname=(<HTMLInputElement>document.getElementById('accname_' + i)).value;
-    let accno=(<HTMLInputElement>document.getElementById('accno_' + i)).value;
-    let bname=(<HTMLInputElement>document.getElementById('bname_' + i)).value;
-    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + i)).value;
-    if(accname===''||accno===''||bname===''||ifsc===''){}
-    else{
-      let itempObj={}
-      itempObj['accountName']=accname;
-      itempObj['accountNumber']=accno;
-      itempObj['bankName']=bname;
-      itempObj['ifsc']=ifsc;
-      itempObj['acc12']=false;
-      itempObj['acc363']=false;
-      itempObj['acc65']=false;
-      itempObj['_id']=this.accountarrayUF[i]['_id'];
-      aD.push(itempObj)
-      
-    }
-  }
-  tempObj['aD']=aD;
-      tempObj['tablename']='';
-      tempObj['method']='SMARTACCOUNTUPDATEUFNEW';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.accountarrayUF.splice(j,1);
-      });
-  }
-
-
   updatetruckformat(i,j){
     
     let truckno=(<HTMLInputElement>document.getElementById('truckno_' + j)).value;
@@ -685,39 +552,6 @@ switch (this.buttonOption) {
       .subscribe((res: any) => {
         alert(res.Status);
         this.truckformatarray.splice(j,1);
-      });
-    }
-  }
-
-  updateAccount(i,j){
-    
-    let accname=(<HTMLInputElement>document.getElementById('accname_' + j)).value;
-    let accno=(<HTMLInputElement>document.getElementById('accno_' + j)).value;
-    let bname=(<HTMLInputElement>document.getElementById('bname_' + j)).value;
-    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + j)).value;
-    if(accname===''||accno===''||bname===''||ifsc===''){
-      alert('Cannot add empty fields')
-    }
-    else{
-      let tempObj={}
-      let itempObj={}
-      itempObj['accountName']=accname;
-      itempObj['accountNumber']=accno;
-      itempObj['bankName']=bname;
-      itempObj['ifsc']=ifsc;
-      itempObj['acc12']=false;
-      itempObj['acc65']=false;
-      itempObj['acc363']=false;
-      tempObj['aD']=[
-        itempObj
-      ]
-      tempObj['ownerid']=i['_id'];
-      tempObj['tablename']='';
-      tempObj['method']='SMARTACCOUNTUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.panarray.splice(j,1);
       });
     }
   }
@@ -748,145 +582,6 @@ switch (this.buttonOption) {
       .subscribe((res: any) => {
         alert(res.Status);
         this.tptarray.splice(j,1);
-      });
-    }
-  }
-
-  getAllTrucks(){
-    let tempObj={};
-    tempObj['method']='SmartTruck'
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      this.truckarray=res.chartData;
-      this.trucktable=true;
-      this.typeDataConsists=false;
-      this.typeDataConsistsArray=[];
-    });
-  }
-
-  getAllTrucksByDate(){
-    let tempObj={};
-    tempObj['method']='SmartTruck6'
-    tempObj['loadingDate']=this.loadingDate6;
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      this.truckarray=res.chartData;
-      this.trucktable=true;
-      this.typeDataConsists=false;
-      this.typeDataConsistsArray=[];
-    });
-  }
-
-  updatetruck2(data){
-    let tempObj={}
-    tempObj['truckType']=data;
-    tempObj['ownerids']=this.typeDataConsistsArray.map(r=> r._id)
-    tempObj['tablename']='';
-    tempObj['method']='SMARTTRUCKUPDATE2';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      this.typeDataConsists=false;
-      this.typeDataConsistsArray=[];
-    });
-  }
-
-  updateparent(data,i){
-    let tempObj={}
-    tempObj['parentAccNo']=data;
-    tempObj['_id']=i
-    tempObj['tablename']='';
-    tempObj['method']='SMARTPARENTACCUPDATE';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      this.typeDataConsists=false;
-      this.typeDataConsistsArray=[];
-    });
-  }
-
-  updatetype(data,i){
-    let tempObj={}
-    tempObj['typeOfLoad']=data;
-    tempObj['_id']=i
-    tempObj['tablename']='';
-    tempObj['method']='SMARTTYPEUPDATE';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-    });
-  }
-
-  addTotypeDataConsists(i,j){
-    this.typeDataConsistsArray.push(i);
-    this.typeDataConsists=true;
-    this.truckarray.splice(j,1);
-  }
-
-  deleteTotypeDataConsists(i,j){
-    this.truckarray.push(i);
-    this.typeDataConsists=this.typeDataConsistsArray.length===0?false:true;
-    this.typeDataConsistsArray.splice(j,1);
-  }
-
-  getAllWeights(){
-    let tempObj={};
-    tempObj['method']='SmartWeight'
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      this.weightarray=res.chartData;
-      this.weighttable=true;
-    });
-  }
-
-  updateWeight(i,j){
-    if(this.selectedWeight===0){
-      alert('Cannot add empty fields')
-    }
-    else{
-      let tempObj={}
-      tempObj['weight']=this.selectedWeight;
-      tempObj['ownerid']=i['_id'];
-      tempObj['tablename']='';
-      tempObj['method']='SMARTWEIGHTUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.weightarray.splice(j,1);
-      });
-    }
-  }
-
-  getAllDimensions(){
-    let tempObj={};
-    tempObj['method']='SmartDimension'
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      this.dimensionarray=res.chartData;
-      this.dimensiontable=true;
-    });
-  }
-
-  updatedimension(i,j){
-    if(this.selectedDimensionH===0||this.selectedDimensionB===0||this.selectedDimensionL===0){
-      alert('Cannot add empty fields')
-    }
-    else{
-      let tempObj={}
-      tempObj['h']=parseFloat(this.selectedDimensionH);
-      tempObj['b']=parseFloat(this.selectedDimensionB);
-      tempObj['l']=parseFloat(this.selectedDimensionL);
-      tempObj['ownerid']=i['_id'];
-      tempObj['tablename']='';
-      tempObj['method']='SMARTDIMENSIONUPDATE';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.dimensionarray.splice(j,1);
       });
     }
   }
