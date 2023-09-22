@@ -39,6 +39,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public commonArray;
   public typeDataConsists=false;
   public count=0;
+  public bigI='';
 // #BASIC #
 
   //$ Account $
@@ -55,7 +56,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public selectedMY;
   public emptyData;
 // #PAN #
-
+public index=0;
 // $Contact$
 public contacttable=false;
 public contactarray=[]
@@ -116,7 +117,7 @@ public numbers=[];
     this.nrcmid=this.securityCheck.nrcmid;
     switch (this.nrcmid) {
       case 7:
-        this.tabs=[1,0,0,1,0,0,0,0,1];
+        this.tabs=[1,0,0,1,0,0,0,0,0,1];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -126,7 +127,7 @@ public numbers=[];
         });
         break;
       case 1:
-        this.tabs=[1,1,1,1,1,1,1,1,1];
+        this.tabs=[1,1,1,1,1,1,1,1,1,1];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -137,24 +138,92 @@ public numbers=[];
         break;
     }
   }
+  updateifscCode(index){
+    (<HTMLInputElement>document.getElementById('bname_'+index)).value=(<HTMLInputElement>document.getElementById('ifsc_'+index)).value.slice(0,4)
+  }
 
+  updateaccountDetails(i,j){
+
+    let aD=[]
+    let tempObj={};
+
+
+    for(let i=0;i<this.accountarrayUF.length;i++){
+    let accname=(<HTMLInputElement>document.getElementById('accname_' + i)).value;
+    let accno=(<HTMLInputElement>document.getElementById('accno_' + i)).value;
+    let bname=(<HTMLInputElement>document.getElementById('bname_' + i)).value;
+    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + i)).value;
+    if(accname===''||accno===''||bname===''||ifsc===''){}
+    else{
+      let itempObj={}
+      itempObj['accountName']=accname;
+      itempObj['accountNumber']=accno;
+      itempObj['bankName']=bname;
+      itempObj['ifsc']=ifsc;
+      itempObj['acc12']=false;
+      itempObj['acc363']=false;
+      itempObj['acc65']=false;
+      itempObj['_id']=this.accountarrayUF[i]['_id'];
+      aD.push(itempObj)
+
+    }
+  }
+
+
+  tempObj['aD']=aD;
+      tempObj['tablename']='';
+      tempObj['method']='SMARTACCOUNTUPDATEUFNEW';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.accountarrayUF.splice(j,1);
+      });
+  }
 
   find(){
     let tempObj = {}
-    if (this.truckVar === '') { alert('Select a Truck');  }
-        else {
-          tempObj['truckno'] = this.truckVar;
+    // if (this.truckVar === '') { alert('Select a Truck');  }
+    //     else {
+    //       tempObj['truckno'] = this.truckVar;
         
    
     tempObj['tablename'] = 'ownerdetails'
-    tempObj['method'] = 'displayEditTruck'
+    tempObj['method'] = 'displayEditTruckTB'
+    // tempObj['method'] = 'displayEditTruck'
+    
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.turnbooklist = res.Data;
       });
-    }
+    // }
 
+  }
+
+
+  back(){
+    this.gotData18=!this.gotData18;
+  }
+  edit(i,j){
+    this.bigI=i;
+    this.index=j;
+    this.gotData18=!this.gotData18;
+
+    this.myFormGroup18 = this.formBuilder.group({
+      truckNo: i['truckno'],
+      pan:i['pan'],
+      name:i['oname'],
+      weight:i['weight'],
+      h:i['h'],
+      b:i['b'],
+      l:i['l'],
+      typeOfVehicle:i['typeOfVehicle'],
+      bankName:'',
+      ifsc:'',
+      accountNumber:'',
+      accountName:''
+    });
+    this.accountArray=i.accountDetails;
   }
 
   addaccount() {
@@ -173,7 +242,6 @@ public numbers=[];
       tempObj['acc363'] = false;
       tempObj['acc65'] = false;
       this.accountArray.push(tempObj);
-      this.turn11['accountDetails'].push(tempObj)
       this.myFormGroup18.patchValue({ accountName: '' });
       this.myFormGroup18.patchValue({ accountNumber: '' });
       this.myFormGroup18.patchValue({ bankName: '' });
@@ -184,8 +252,7 @@ public numbers=[];
 
   deleteOneA(i, j) {
     if (confirm('Are you sure?')) {
-      this.accountArray.splice(j, 1);
-      this.turn11['accountDetails'].splice(j, 1);
+      this.accountArray.splice(j, 1);0
     }
   }
 
@@ -193,29 +260,47 @@ public numbers=[];
     this.myFormGroup18.patchValue({'bankName':this.myFormGroup18.value.ifsc.slice(0,4)})
   }
 
-  find11UniqueTruck(){
-    if(this.trucknoid11!=='Default'){
-    this.turn11=this.turnbooklist.filter(r=>{return r.truckno==this.trucknoid11})[0]; 
-    
-    this.showButton=false;
-          this.myFormGroup18 = this.formBuilder.group({
-            truckNo: this.turn11['truckno'],
-            pan:this.turn11['pan'],
-            name:this.turn11['oname'],
-            weight:this.turn11['weight'],
-            h:this.turn11['h'],
-            b:this.turn11['b'],
-            l:this.turn11['l'],
-            typeOfVehicle:this.turn11['typeOfVehicle'],
-            bankName:'',
-            ifsc:'',
-            accountNumber:'',
-            accountName:''
-          });
-          this.gotData18=true;
-
+  getDimW(){
+    switch (this.myFormGroup18.value.typeOfVehicle) {
+      case 'Container':
+        this.myFormGroup18.patchValue({'weight':6})
+        this.myFormGroup18.patchValue({'h':8})
+        this.myFormGroup18.patchValue({'b':8})
+        this.myFormGroup18.patchValue({'l':20})
+        break;
+    case 'Open':
+      this.myFormGroup18.patchValue({'weight':8})
+        this.myFormGroup18.patchValue({'h':7})
+        this.myFormGroup18.patchValue({'b':7})
+        this.myFormGroup18.patchValue({'l':20})
+        break;
     }
+    
   }
+
+  // find11UniqueTruck(){
+  //   if(this.trucknoid11!=='Default'){
+  //   this.turn11=this.turnbooklist.filter(r=>{return r.truckno==this.trucknoid11})[0]; 
+    
+  //   this.showButton=false;
+  //         this.myFormGroup18 = this.formBuilder.group({
+  //           truckNo: this.turn11['truckno'],
+  //           pan:this.turn11['pan'],
+  //           name:this.turn11['oname'],
+  //           weight:this.turn11['weight'],
+  //           h:this.turn11['h'],
+  //           b:this.turn11['b'],
+  //           l:this.turn11['l'],
+  //           typeOfVehicle:this.turn11['typeOfVehicle'],
+  //           bankName:'',
+  //           ifsc:'',
+  //           accountNumber:'',
+  //           accountName:''
+  //         });
+  //         this.gotData18=true;
+
+  //   }
+  // }
 
   getRC(data){
 
@@ -246,8 +331,9 @@ public numbers=[];
       'l':data.value.l,
       'weight':data.value.weight,
       'typeOfVehicle':data.value.typeOfVehicle,
-      'accountDetails':this.turn11['accountDetails'],
-      '_id':this.turn11['_id']
+      'accountDetails':this.accountArray,
+      'ownerid':this.bigI['ownerid'],
+      '_id':this.bigI['_id'],
     }
    
     let tempObj={};
@@ -256,7 +342,9 @@ public numbers=[];
     tempObj['tablename']='';
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
     .subscribe((res: any) => {
-    alert(res.Data)
+    alert(res.Status)
+    this.turnbooklist.splice(this.index,1)
+    this.gotData18=!this.gotData18;
     });
     
   }

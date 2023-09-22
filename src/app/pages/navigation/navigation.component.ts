@@ -45,7 +45,7 @@ export class NavigationComponent implements OnInit {
   public acknowledgement=false;
 public tabsarray=[
   [0,[0,0,0,0,0,0,0,0,0,0,0,0,0]],
-  [0,[0,0,0,0,0]],
+  [0,[0,0,0,0,0,0,0]],
   [0,[]],
   [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
   [0,[0,0]],
@@ -85,7 +85,9 @@ public tabsarray=[
         {name:'Poch Collection',link:'POCH_COLLECTION_HANDLER',hideFlag:true},
         {name:'Load Details',link:'Load_HANDLER',hideFlag:true},
         {name:'Payment',link:'PARTY_PAYMENT_HANDLER',hideFlag:true,},
-        {name:'Turnbook Location',link:'TURN_BOOK_LOCATION_DISP',hideFlag:true}]
+        {name:'Turnbook Location',link:'TURN_BOOK_LOCATION_DISP',hideFlag:true},
+        {name:'Daily Account Details',link:'DAILY_ACCOUNT_ADDER',hideFlag:true},
+      ]
     },
     {
       parent:'Link Truck',
@@ -238,7 +240,7 @@ switch (this.nrcmid) {
   case 1:
     this.tabsarray=[
       [1,[1,1,1,1,1,1,1,1,1,1,1,1,1]],
-      [1,[1,1,1,1,1,1]],
+      [1,[1,1,1,1,1,0,1]],
       [1,[]],
       [1,[1,1,1,1,1,1,1,1,1,1,1,1]],
       [1,[1,1]],
@@ -251,7 +253,7 @@ switch (this.nrcmid) {
     case 7:
       this.tabsarray=[
         [1,[0,0,0,1,1,0,0,1,0,0,0,1,0]],
-        [1,[1,1,1,0,0,0]],
+        [1,[1,1,1,0,0,0,0]],
         [0,[]],
         [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
         [1,[0,1]],

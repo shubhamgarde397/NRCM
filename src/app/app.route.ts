@@ -25,6 +25,7 @@ import { DisplayComponent } from './pages/CI/JG/display/display.component';
 import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
 import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
 import { LRDisplayComponent } from './pages/LRsend/lrdisplay/lrdisplay.component';
+import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
  
 export const routes: Routes =
     [
@@ -107,6 +108,10 @@ export const routes: Routes =
                     {
                         path: 'DUES_PAGE_ADVANCE',
                         component:DuesFromAdvanceDisplayComponent
+                    },
+                    {
+                        path:'DAILY_ACCOUNT_ADDER',
+                        component:DailyAccountAdderComponent
                     },
                     {
                         path: 'GIFTS',

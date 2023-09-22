@@ -1,0 +1,39 @@
+<table class="table table-bordered" style="width:100%" align="center">
+
+  <thead class="table-header">
+      <tr>
+          <th>Srno</th>
+          <th>Truckno</th>
+          <th>Date</th>
+          <th>Type</th>
+          <th *ngIf="!admin">Account Details</th>
+          <th *ngIf="admin">Rent</th>
+          <th *ngIf="admin">Advance And Date</th>
+          <th *ngIf="admin">Balance</th>
+          <th>Update</th>
+      </tr>
+  </thead>
+
+
+  <tbody>
+      <tr *ngFor="let i of turn;let j = index">
+          <td>{{j+1}}</td>
+          <td>{{i.truckno}}</td>
+          <td>{{i.loadingDate}}</td>
+          <td>{{i.partyType}}</td>
+          <td *ngIf="!admin">
+            <select class="form-control" id="name_{{j}}">
+              <option disabled>Default</option>
+              <option value={{kki}} *ngFor="let kk of i.accountDetails;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
+            </select>
+          </td>
+          <td *ngIf="admin">{{i.rent}}</td>
+          <td *ngIf="admin">{{i.advanceAmt}}-{{i.advanceDate}}</td>
+          <td *ngIf="admin">{{i.tentativeBalance}}</td>
+          <td>
+              <button mat-raised-button (click)='update(i,j)' class="btn-danger btn-sm btn-just-icon">Edit
+              </button>
+          </td>
+      </tr>
+  </tbody>
+</table>

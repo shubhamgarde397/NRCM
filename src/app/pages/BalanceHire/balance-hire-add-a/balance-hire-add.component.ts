@@ -61,6 +61,17 @@ public nrcmid;
       .subscribe((res: any) => {
         this.bhTrucks=[];
           this.turnbooklist = res.Data;
+          this.turnbooklist.forEach(r=>{
+            // if(r.advAccid==-1){
+            // }
+            // else{
+            //   if(r.update){}
+            //   else{
+            r.accounts=r.accountNo[0]//parseInt(r.advAccid)
+            //   }
+            // }
+
+          })
           this.tableSelected=true;
           this.spinnerService.hide();
       });
@@ -188,6 +199,8 @@ alert('Selected!')
   }
   moveToFinalStep2() {
     this.finalCheckDone = !this.finalCheckDone;
+    console.log(this.balanceHireArrray);
+    
   }
   moveToFinalStepReset(action) {
     

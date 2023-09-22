@@ -88,7 +88,6 @@
             <th>Date</th>
             <th>Truckno</th>
             <th>Amount:Acc</th>
-            <th>Comments</th>
             <th>AccountNo-IFSC</th>
             <th *ngIf="admin">Delete Admin</th>
             <th *ngIf="admin">Edit Admin</th>
@@ -125,13 +124,9 @@
             <td>
               <ul *ngFor="let k of i.truckData">
                 <li>{{k.amount}}:{{k.parentAccNo}}:{{k.remark}}</li>
-              </ul>
-              
+              </ul>              
             </td>
 
-            <td>
-              <button class="btn btn-warning" [ngStyle]="{'background-color': i.remark===undefined ? '#5CB85C' : '#F0AD4E' }" data-toggle="modal" data-target="#myModal" (click)="setComments(i)">Comments</button>
-            </td>
             <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
             <td *ngIf="admin">
               <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
@@ -728,102 +723,35 @@
   <router-outlet></router-outlet>
 </div>
 
-
-
-<div class="container">
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
   
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-  
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Current Comments</h4>
-        </div>
-        <div class="modal-body">
 
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                <th>Srno</th>
-                <th>Msg</th>
-                <th>No. of issues</th>
-                <th>TruckNo</th>
-                <th>Clear</th>
-              </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let i of sentComments;let j = index;">
-                  <td>{{j+1}}</td>
-                  <td>{{i.msg}}</td>
-                  <td>{{i.no}}</td>
-                  <td>{{i.tsrno}}</td>
-                  <td><button class="btn btn-danger" (click)="clearComments(i,j)">Clear</button></td>
-                </tr>
-              </tbody>
-            </table>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Due Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Date : <input type="date" class="form-control" [(ngModel)]="dueMDate">
         </div>
 
-        <div class="modal-header">
-          <h4 class="modal-title">Add Comments</h4>
+        <div class="row">
+          Pending Amout : <label class="form-control">{{dueInfoPending}}</label>
         </div>
 
-        <div class="modal-body">
-          <div class="row">
-            Msg : <input type="text" class="form-control" id="msg" >
-          </div>
-          <div class="row">
-            How many damaged/short? : <input type="text" class="form-control" id="no" >
-          </div>
-          <div class="row">
-            Truck Sr No : <input type="text" class="form-control" id="tsrno" >
-          </div>
-          <div class="row">
-            <button class="btn btn-success" (click)="updateComments()">Add Comment</button>
-          </div>
+        <div class="row">
+          Due to Take : <input type="number" class="form-control" [(ngModel)]="dueMAmt">
+        </div>
+       
       </div>
 
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeDue()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
-      
     </div>
-  </div>
-
-  <div class="modal fade" id="myModalDD" role="dialog">
-    <div class="modal-dialog">
     
-  
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Due Details</h4>
-        </div>
-        <div class="modal-body">
-          <div class="row">
-            Date : <input type="date" class="form-control" [(ngModel)]="dueMDate">
-          </div>
-
-          <div class="row">
-            Pending Amout : <label class="form-control">{{dueInfoPending}}</label>
-          </div>
-
-          <div class="row">
-            Due to Take : <input type="number" class="form-control" [(ngModel)]="dueMAmt">
-          </div>
-         
-        </div>
-
-        <div class="modal-footer">
-          <button class="btn btn-warning" (click)="storeDue()">Store</button>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
   </div>
-  
 </div>

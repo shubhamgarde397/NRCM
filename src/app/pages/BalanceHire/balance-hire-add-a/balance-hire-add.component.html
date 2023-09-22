@@ -78,12 +78,13 @@
         <td>{{i.partyType}}<br>{{i.snameparty}}</td>
         <td>{{i.lrno}}</td>
         <td>
-          <span *ngIf="i.accountNo.length!==0">
-          {{i.accountNo[0].accountName}}<br>
-          {{i.accountNo[0].accountNumber}}<br>
-          {{i.accountNo[0].ifsc}}
+          <!-- *ngIf="!i.update&&i.advAccid!==-1" -->
+          
+          <span *ngIf="i.accounts!==undefined">
+          {{i.accounts['accountName']}}<br>
+          {{i.accounts['accountNumber']}}<br>
+          {{i.accounts['ifsc']}}
         </span>
-        <span *ngIf="i.accountNo.length===0"></span>
         </td>
 
       </tr>
@@ -115,6 +116,7 @@
             <th>Party Name</th>
             <th>Party Type</th>
             <th>Place</th>
+            <th>Advance Account</th>
           </tr>
         </thead>
         <tbody align="center">
@@ -126,6 +128,7 @@
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
             <td>{{ii.place}}</td>
+            <td>{{ii.accounts['accountName']}}<br>{{ii.accounts['accountNumber']}}</td>
           </tr>
         </tbody>
       </table>
@@ -149,6 +152,7 @@
             <th>Balance</th>
             <th>LRNO</th>
             <th>Remark</th>
+            <th>Account Details</th>
           </tr>
         </thead>
         <tbody>
@@ -168,8 +172,12 @@
                 <option *ngFor="let i of remarks;" value={{i.value}}>{{i.viewValue}}</option>
               </select>
             </td>
-            <!-- <td><input type="text" placeholder="Remark" id="remark_{{kk}}_{{jj}}" value={{ii.remark}}> -->
-            <!-- </td> -->
+            <td>
+              <select class="form-control" id="name_{{j}}">
+                <option disabled>Default</option>
+                <option value={{kki}} *ngFor="let kk of ii.accountDetails;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
+              </select>
+            </td>
           </tr>
         </tbody>
       </table>
