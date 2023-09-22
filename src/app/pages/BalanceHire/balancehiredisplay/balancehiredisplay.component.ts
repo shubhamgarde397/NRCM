@@ -1246,7 +1246,6 @@ if(newpage===1){
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 83.5, i);//truckno
         if(dataTF){
           doc.text(this.balanceDate[z].truckData[k].remark, 50, i);//truckno
-          // doc.text(String(parseInt(this.balanceDate[z].truckData[k].parentAccNo)).split(' ')[0], 38.5, i);//comments
         }
         doc.setFontSize('8');
         if(dataTF){
@@ -1264,42 +1263,33 @@ if(newpage===1){
       doc.text(String(totalAmount),16,i)
       }
       let bigK=0
-      // for (let k = 0; k < this.balanceDate[z].commentToTruck2.length; k++) {
-      //   if(k==0){
-      //   doc.setLineDash([0.5, 1], 10);
-      //   doc.line(37, i-4, 146, i-4);
-      //   doc.setLineDash([1, 0], 10);
-      //   }
-      //   doc.setFontSize('8')
-      //   if(dataTF){
-      //   if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='balance'){
-      //     doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg']), 38.5, i+k+1);//comments
-      //     doc.text('How many : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
-      //     doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno']), 92.5, i+k+1);//comments
-      //   }
-      //   else 
-      //   if(String(this.balanceDate[z].commentToTruck2[k]['type'])==='due'){
-      //     doc.text(String(this.balanceDate[z].commentToTruck2[k]['msg'])+' -Total Due -', 38.5, i+k+1);//comments
-      //     doc.text(String(this.balanceDate[z].commentToTruck2[k]['totalDue']),61.5,i+k+1)
-      //     doc.text('Due : '+String(this.balanceDate[z].commentToTruck2[k]['no']),72.5,i+k+1);
-      //     doc.text('Truck Sr.'+String(this.balanceDate[z].commentToTruck2[k]['tsrno'])+'  Due Date : '+String(this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(8, 10) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(5, 7) + '/' + this.balanceDate[z].commentToTruck2[k]['dueDate'].slice(0, 4)), 92.5, i+k+1);//comments
-      //   } 
-      //   }
 
-      //   i = i + 2;
-      //   bigK=k;
-      // }
+
+      if(this.balanceDate[z].dueToTake){
+        doc.setFontSize('8');
+        doc.setLineDash([0.5, 1], 10);
+        doc.line(37, i-4, 146, i-4);
+        
+        
+
+          doc.text('*'+String(this.balanceDate[z].due['reason'])+'  *Total Due -', 38.5, i+1);//comments
+          doc.text(String(this.balanceDate[z].due['totalDue']),61.5,i+1)
+          doc.text('* Due : '+String(this.balanceDate[z].due['thiscut'])+'   *Due Date* : '+String(this.balanceDate[z].due['dueTaken'].slice(8, 10) + '/' + this.balanceDate[z].due['dueTaken'].slice(5, 7) + '/' + this.balanceDate[z].due['dueTaken'].slice(0, 4)),83.5,i+1);
+
+        
+
+        doc.setLineDash([1, 0], 10);
+      }
+
+
+      
 
       let adder=0
-      // if(this.balanceDate[z].commentToTruck2.length>5){
-      //   adder=this.balanceDate[z].truckData.length===1?0:this.balanceDate[z].truckData.length+this.ls(this.balanceDate[z].commentToTruck2.length);
-      // }
 
       doc.line(0, i + 7-(bigK*2)+adder, 210, i + 7-(bigK*2)+adder);
       doc.line(37, i - (data.length * 6) -11-(bigK*2), 37, i + 7-(bigK*2)+adder);
 
       doc.line(61, i - (data.length * 6) -11-(bigK*2), 61, i + 7-(bigK*2)+adder);
-      // doc.line(72, i - (data.length * 6) -11-(bigK*2), 72, i + 7-(bigK*2)+adder);
 
       doc.line(83, i - (data.length * 6) -11-(bigK*2), 83, i + 7-(bigK*2)+adder);
       doc.line(146, i - (data.length * 6) -11-(bigK*2), 146, i + 7-(bigK*2)+adder);
@@ -1307,9 +1297,7 @@ if(newpage===1){
   
       doc.setFontSize('10');
       if(this.balanceDate[z].update){}else{
-      // doc.text(this.balanceDate[z].accountName, 156.5, i - (data.length * 6));//accno
-      // doc.text(String(this.balanceDate[z].accountNumber), 156.5, i + 6 - (data.length * 6));//accname
-      // doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 156.5, i + 12 - (data.length * 6));//ifsc-bankname
+  
       doc.text(this.balanceDate[z].accountName, 147.5, accountI);//accno
       doc.text(String(this.balanceDate[z].accountNumber), 147.5, accountI+6);//accname
       doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 147.5, accountI+12);//ifsc-bankname
@@ -1318,7 +1306,6 @@ if(newpage===1){
         doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 115, accountI);//truckno
         doc.text(String(this.balanceDate[z].apm), 115, accountI+6);//truckno
       }
-      // doc.text(this.balanceDate[z]['available'], 200, i + 6 - (data.length * 6));//accno
       doc.text(this.balanceDate[z]['available'], 191, accountI+6);//accno
       doc.setFontSize('8');
       
