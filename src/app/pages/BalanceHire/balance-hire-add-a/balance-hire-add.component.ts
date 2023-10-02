@@ -38,7 +38,7 @@ public accountChecker=false;
 public forceBackButton=false;
 public nrcmid;
 public bigI;
-public accUpdater={};
+public accUpdater={'truckno':''};
 
 public accName;
 public accNo;

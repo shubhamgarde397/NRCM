@@ -41,6 +41,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
   public typeDataConsists=false;
   public count=0;
   public bigI='';
+  public trucks={'truckno':''}
 // #BASIC #
 
   //$ Account $
@@ -241,7 +242,7 @@ public bname;
   }
 
   saveEdit(i,j){
-    this.bigI=i;
+    this.trucks=i;
     this.index=j;
   }
   delLit(j,z){
@@ -249,7 +250,6 @@ public bname;
   }
 
   storeAcc(){
-    this.bigI;
     if(
       (this.accName==='') 
       ||
@@ -277,10 +277,6 @@ public bname;
           "acc363": false
       }
       this.turnbooklist[this.index]['accounts'].push(temp);
-      console.log(this.index);
-      
-      console.log(this.turnbooklist);
-      
       alert('Added, Close the modal!')
   }
   }
