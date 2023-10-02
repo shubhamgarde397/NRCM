@@ -60,6 +60,7 @@ export class OddispComponent implements OnInit {
   public fromsrno=0;
   public selected7=false;
   public tableDate1=false;
+  public nrcmid;
   // 
 
   constructor(
@@ -73,6 +74,7 @@ export class OddispComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.nrcmid=this.sec.nrcmid;
     this.todayDate=this.handleF.createDate(new Date());
     this.commonArray = this.sec.commonArray;
     this.considerArray = this.handledata.createConsiderArray('infoowner')

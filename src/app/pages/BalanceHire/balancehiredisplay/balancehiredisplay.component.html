@@ -38,7 +38,7 @@
   </div>
 
 
-  <div class="row" *ngIf="((buttonOption=='1')||(buttonOption=='2'))">
+  <div class="row" *ngIf="buttonOption=='1'">
     <div class="row" *ngIf="printInfo">
 
       <div class="col-xs-3" align="center">
@@ -84,10 +84,10 @@
         <thead class="table-header">
           <tr>
             <th>Srno</th>
-            <th>Today Date</th>
+            <th>Amount</th>
+            <th>Comments</th>
             <th>Date</th>
             <th>Truckno</th>
-            <th>Amount:Acc</th>
             <th>AccountNo-IFSC</th>
             <th *ngIf="admin">Delete Admin</th>
             <th *ngIf="admin">Edit Admin</th>
@@ -99,7 +99,16 @@
           <tr *ngFor="let i of balanceDate;let j = index"
             [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'black' }">
             <td (click)="tempDelete(j)">{{j+1}}</td>
-            <td>{{i.todayDate|date:'dd-MM-yyyy'}}</td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.amount}}</li>
+              </ul>              
+            </td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.parentAccNo}}:{{k.remark}}</li>
+              </ul>              
+            </td>
             <td>
               <ul *ngFor="let k of i.truckData">
                 <li>{{k.date|date:'dd-MM-yyyy'}}</li>
@@ -108,7 +117,7 @@
 
             <td>
               <ul *ngFor="let k of i.truckData;let o = index;">
-                <li>{{k.truckno}}<br>
+                <li>{{k.truckno}} <input type="checkbox" [checked]="k.pay" id="m_{{j}}_{{o}}"><br>
                   <span style="color:red;">{{k.remark}}</span>
                   <br>
                   <select [(ngModel)]="dueChangeValue" (change)="dueChange()">
@@ -121,14 +130,9 @@
               </ul>
             </td>
 
-            <td>
-              <ul *ngFor="let k of i.truckData">
-                <li>{{k.amount}}:{{k.parentAccNo}}:{{k.remark}}</li>
-              </ul>              
-            </td>
-
+            
             <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
-            <td *ngIf="admin">
+            <td>
               <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
                 class="btn-danger btn-sm btn-just-icon" *ngIf="admin">
                 <i class="material-icons">delete_forever</i>
@@ -144,6 +148,9 @@
           </tr>
         </tbody>
       </table>
+      <div class="col-sm-3" *ngIf="adminA">
+        <button class="btn btn-danger" style="width:100%" (click)="pay()">Pay</button>
+      </div>
     </div>
     <div class="col-sm-3" *ngIf="daydiv">
       <button class="btn btn-danger" style="width:100%" (click)="back('day')">Back</button>

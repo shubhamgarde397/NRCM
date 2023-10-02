@@ -31,10 +31,19 @@ public bhTrucks=[];
 public uitodayDate=''
 public tableSelected=false;
 public nextStepButton=false;
-public firstTime=true;
+public firstTime=false;
 public back=false;
+public checkSign=true;
+public accountChecker=false;
 public forceBackButton=false;
 public nrcmid;
+public bigI;
+public accUpdater={};
+
+public accName;
+public accNo;
+public ifsc;
+public bname
   constructor(
     public securityCheck: SecurityCheckService,public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { }
 
@@ -87,6 +96,7 @@ public nrcmid;
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)//check this function
       .subscribe((res: any) => {
         alert(res.Status);
+        this.firstTime=false;
         this.moveToFinalStepReset(action);
       });
   }
@@ -199,8 +209,36 @@ alert('Selected!')
   }
   moveToFinalStep2() {
     this.finalCheckDone = !this.finalCheckDone;
-    console.log(this.balanceHireArrray);
     
+    let breaker=false;
+    for(let i=0;i<this.balanceHireArrray[0].length;i++){
+      if(this.balanceHireArrray[0][i]['update']){
+        breaker=true;
+      }
+    }
+    if(breaker){
+      this.checkSign=false;
+      this.accountChecker=true;
+    }
+    
+  }
+
+  accountCheckerF(){
+    let breaker=false;
+    console.log(this.balanceHireArrray[0])
+    for(let i=0;i<this.balanceHireArrray[0].length;i++){
+      if(this.balanceHireArrray[0][i]['update']){
+        breaker=true;
+        break;
+      }
+    }
+    if(!breaker){
+      this.checkSign=true;
+      this.accountChecker=false;
+    }
+    else{
+      alert('Update all Acounts!')
+    }
   }
   moveToFinalStepReset(action) {
     
@@ -212,35 +250,36 @@ alert('Selected!')
   }
 
   setBalPage() {
-    this.firstTime=false;
+    // this.firstTime=false;
     let breaker = false;
     this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
     this.tableSelected=false;
     for (let i = 0; i < this.balanceHireArrray.length; i++) {
-      if (breaker) { break; }
+      // if (breaker) { break; }
       for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
-        if (breaker) { break; }
-        if (
-          ((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) 
-          ||
-          ((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value.length == 0)
-          ) {
-          alert('Please fill in all the fields.');
-          breaker = true;
-          break;
-        }
-        else {
+        // if (breaker) { break; }
+        // if (
+        //   ((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) 
+        //   ||
+        //   ((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value.length == 0)
+        //   ) {
+        //   alert('Please fill in all the fields.');
+        //   breaker = true;
+        //   break;
+        // }
+        // else {
           this.bhTrucks.find((r,index)=>{
             if(r._id==this.balanceHireArrray[i][j]['_id']){
               this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
               this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value;
               this.bhTrucks[index]['remark']=(<HTMLInputElement>document.getElementById('remark_' + i + '_' + j)).value;
+              this.bhTrucks[index]['balAccid']=parseInt((<HTMLInputElement>document.getElementById('name_' + j)).value);
               this.bhTrucks[index]['pageno']=this.securityCheck.nrcmid;
               
               return true
             }
           })
-        }
+        // }
 
       }
     }
@@ -248,6 +287,89 @@ alert('Selected!')
     this.finalFunction('do');
     }
 
+  }
+
+  getBankName(){
+    this.bname=this.ifsc.slice(0,4);
+  }
+
+  storeAcc(){
+    this.bigI;
+    if(
+      (this.accName==='') 
+      ||
+      (this.accNo==='') 
+      ||
+      (this.ifsc==='') 
+      ||
+      (this.bname==='') 
+      ){
+      alert('Fields Cannot be empty')
+    }
+    
+    else{
+    let tempObj={
+      'ownerid':this.bhTrucks[this.bigI]['ownerid'],
+      'name':this.accName,
+      'no':this.accNo,
+      'ifsc':this.ifsc,
+      'bname':this.bname,
+      'tablename':'',
+      'method':'updateSimpleAccNo'
+    }
+
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this.bhTrucks[this.bigI]['balAccid']=0
+      let temp=[
+        {
+          "accountName": tempObj.name,
+          "accountNumber":tempObj.no,
+          "bankName":tempObj.bname,
+          "ifsc":tempObj.ifsc,
+          "acc12": false,
+          "acc65": false,
+          "acc363": false
+      }
+    ]
+      this.balanceHireArrray[0][this.bigI]['update']=false;
+      this.balanceHireArrray[0][this.bigI]['accountNo']=temp;
+      
+    });
+  }
+  }
+
+  updateACC(i,j){
+    this.bigI=j;
+    this.accUpdater=i
+  }
+
+  check(){
+    let checker=0;
+    for (let i = 0; i < this.balanceHireArrray.length; i++) {
+      for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
+        if (
+          (parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value) == 1) 
+          ||
+          (parseInt((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value) == 0)
+          ||
+          ((<HTMLInputElement>document.getElementById('name_'  + j)).value == 'Default')
+          ) {
+          
+          checker=checker+1;
+        }
+      }
+    }   
+    if(checker===0){
+    alert('All Fields are Okay, Please Continue');
+          this.firstTime=true;
+          this.checkSign=false;
+    }
+    else{
+      alert('Please fill in all the fields.');
+    }
   }
 
   leftRight(LR) {

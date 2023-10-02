@@ -38,7 +38,25 @@ public gotData18=false;
       from:''
     });
   }
+  deleteOne(j,z){
 
+
+let temp1=this.dues;
+
+let temp={
+  'tbid':temp1[j]['info'][z]['tbid'],
+  '_id':temp1[j]['_id'],
+  'method':'deleteInternalDue',
+  'tablename':'',
+  'deleteIndex':z
+}
+this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        alert('Please Refresh!')
+      });
+
+  }
   find(){
     let tempObj = {}
 

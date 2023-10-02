@@ -28,14 +28,7 @@
   </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm-3">
-    <div class="form-control">
-      
-    </div>
-  </div>
-  <div class="col-sm-9"></div>
-</div>
+<hr>
 <div class="row">
   <button mat-raised-button type="button" (click)="find()" 
       class="btn btn-primary btn-sm btn-just-icon delete">
@@ -159,7 +152,9 @@
           <tr *ngFor="let ii of k;let jj=index;">
             <td>{{jj+1}}</td>
             <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{ii.truckno}}</td>
+            <td>{{ii.truckno}}
+              <button class="btn btn-warning" *ngIf="ii.update" (click)='updateACC(ii,jj)' data-toggle="modal" data-target="#myModalDD">Update</button>
+            </td>
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
             <td>{{ii.place}}</td>
@@ -173,18 +168,62 @@
               </select>
             </td>
             <td>
-              <select class="form-control" id="name_{{j}}">
-                <option disabled>Default</option>
-                <option value={{kki}} *ngFor="let kk of ii.accountDetails;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
+              <select class="form-control" id="name_{{jj}}" [disabled]="ii.update">
+                <option disabled id="option_{{jj}}">Default</option>
+                <option value={{kki}} *ngFor="let kk of ii.accountNo;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
               </select>
             </td>
           </tr>
         </tbody>
       </table>
     </div>
+    <button mat-raised-button type="button" (click)="accountCheckerF()" class="btn-danger btn-sm btn-just-icon" *ngIf="accountChecker">
+      Account Checker
+    </button>
+    <button mat-raised-button type="button" (click)="check()" class="btn-success btn-sm btn-just-icon" *ngIf="checkSign">
+      <i class="material-icons">check</i>
+    </button>
     <button mat-raised-button type="button" (click)="setBalPage()" class="btn-success btn-sm btn-just-icon" *ngIf="firstTime">
       <i class="material-icons">arrow_forward</i>
     </button>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Account Details for {{accUpdater.truckno}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Account Name : <input type="text" class="form-control" [(ngModel)]="accName">
+        </div>
+
+        <div class="row">
+         Account Number : <input type="text" class="form-control" [(ngModel)]="accNo">
+        </div>
+
+        <div class="row">
+          IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc" (change)="getBankName()">
+        </div>
+
+        <div class="row">
+          Bank Name : <input type="text" class="form-control" [(ngModel)]="bname" disabled>
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeAcc()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
   </div>
 </div>
 <!-- Balance Hire -->

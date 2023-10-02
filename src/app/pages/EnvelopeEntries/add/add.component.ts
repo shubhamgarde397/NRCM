@@ -74,6 +74,7 @@ public nrcmid=0;
        1, data.value, true)
       .subscribe((res: any) => {
         alert(res['Status']);
+        this.contactArray=[];
       });
   }
 

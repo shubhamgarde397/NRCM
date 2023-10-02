@@ -1,3 +1,7 @@
+<button mat-raised-button (click)='find()' class="btn-danger btn-sm btn-just-icon">Find
+</button>
+
+<div class="container" *ngIf="showdues">
 <table class="table table-bordered" style="width:100%" align="center">
 
   <thead class="table-header">
@@ -6,11 +10,10 @@
           <th>Truckno</th>
           <th>Date</th>
           <th>Type</th>
-          <th *ngIf="!admin">Account Details</th>
-          <th *ngIf="admin">Rent</th>
-          <th *ngIf="admin">Advance And Date</th>
-          <th *ngIf="admin">Balance</th>
-          <th>Update</th>
+          <th>Rent</th>
+          <th>Advance And Date</th>
+          <th>Tentative Bal</th>
+          <th>Weight</th>
       </tr>
   </thead>
 
@@ -20,20 +23,18 @@
           <td>{{j+1}}</td>
           <td>{{i.truckno}}</td>
           <td>{{i.loadingDate}}</td>
-          <td>{{i.partyType}}</td>
-          <td *ngIf="!admin">
-            <select class="form-control" id="name_{{j}}">
-              <option disabled>Default</option>
-              <option value={{kki}} *ngFor="let kk of i.accountDetails;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
-            </select>
-          </td>
-          <td *ngIf="admin">{{i.rent}}</td>
-          <td *ngIf="admin">{{i.advanceAmt}}-{{i.advanceDate}}</td>
-          <td *ngIf="admin">{{i.tentativeBalance}}</td>
+          <td>{{i.partyType}}-{{i.party}}</td>
+          <td><input class="form-control" type="number" id="rent_{{j}}"></td>
           <td>
-              <button mat-raised-button (click)='update(i,j)' class="btn-danger btn-sm btn-just-icon">Edit
-              </button>
+            <input class="form-control" type="date" id="advDate_{{j}}">
+            <input class="form-control" type="number" id="adv_{{j}}">
           </td>
+          <td><input class="form-control" type="number" id="tBal_{{j}}" value="{{i.tentativeBalance}}"></td>
+          <td><input class="form-control" type="number" id="wgt_{{j}}" value={{i.weight}}></td>
       </tr>
   </tbody>
 </table>
+<button mat-raised-button (click)='update()' class="btn-danger btn-sm btn-just-icon">Edit
+</button>
+
+</div>

@@ -86,7 +86,7 @@
           <th>Pending</th>
           <th>From</th>
           <th>Info</th>
-          <th>Options</th>
+          <!-- <th>Options</th> -->
       </tr>
   </thead>
 
@@ -105,16 +105,17 @@
               <ul>
                 <li>Amt Taken : {{k.dueAmtTaken}}</li>
                 <li>Date Taken : {{k.date}}</li>
-                <li><button class="btn btn-warning" (click)='details("TurnBook",i,z)' data-toggle="modal" data-target="#myModal">TB</button>---<button data-toggle="modal" data-target="#myModal" class="btn btn-warning" (click)='details("Balance",i,z)'>BH</button></li>
+                <li><button class="btn btn-warning" (click)='deleteOne(j,z)'>Delete</button></li>
+                <!-- <li><button class="btn btn-warning" (click)='details("TurnBook",i,z)' data-toggle="modal" data-target="#myModal">TB</button>---<button data-toggle="modal" data-target="#myModal" class="btn btn-warning" (click)='details("Balance",i,z)'>BH</button></li> -->
               </ul>
             </span>            
 
           </td>
-          <td>
+          <!-- <td>
               <button mat-raised-button (click)="delete(i._id,j)" class="btn-danger btn-sm btn-just-icon">
                   <i class="material-icons">delete_forever</i>
               </button>
-          </td>
+          </td> -->
       </tr>
   </tbody>
 </table>

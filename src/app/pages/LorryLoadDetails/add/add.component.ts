@@ -33,7 +33,6 @@ public buttonOption='1';
 public displayType;
 public lrno=0;
 public showPan=false;
-public ratnagiri=false;
 public sstampsign='';
 public showTon=false;
 public showLrno=false;
@@ -159,7 +158,7 @@ public partyType;
 
     switch (this.sec.nrcmid) {
       case 7:
-        this.displayconsider=[1,0,0,0,0,0,0,0,0];
+        this.displayconsider=[1,0,0,0,0,0,0,0,1];
         this.displayconsider.forEach((r,i) => {
           if(r===1){
             this.displayoptions[i]['disabled']=false;
@@ -601,12 +600,9 @@ let billno=String(d.getMinutes())+String(d.getSeconds());
     doc.text(String(billno),30,mainY+30)
     doc.text(data.villageDetails,80,mainY+44)
     doc.text(this.handleF.getDateddmmyy(data.loadingDate),95,mainY+30)
-    if(this.ratnagiri){
-      doc.text('Finolex Industries Ltd. Ratanagiri',35,mainY+37)
-    }
-    else{
+ 
     doc.text(data.partyDetails,35,mainY+37)
-    }
+    
     // data.partyDetails
     doc.text(data.truckno,35,mainY+44)
     doc.text(String(data.hamt),35,mainY+53)

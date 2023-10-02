@@ -28,15 +28,20 @@
     <th>Srno</th>
     <th>TruckNo</th>
     <th>Date</th>
+    <th>Party</th>
     <th>Account</th>
-    <th>Edit</th>
   </tr>
   <tr *ngFor="let i of turnbooklist;let j = index;">
     <td>{{j+1}}</td>
-    <td>{{i.truckno}}</td>
-    <td>{{i.loadingDate}}</td>
+    <td>{{i.truckno}}
+      <button class="btn btn-primary" (click)="edit(i,j)" *ngIf="i.pan===''">P</button>
+      <button class="btn btn-danger" (click)="edit(i,j)" *ngIf="i.update">A</button>
+      <button class="btn btn-success" (click)="edit(i,j)" *ngIf="i.typeOfVehicle==='None'">V</button>
+
+    </td>
+    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+    <td>{{i.partyType}}</td>
     <td>{{i.accountDetails[0]['accountName']}}-{{i.accountDetails[0]['accountNumber']}}</td>
-    <td (click)="edit(i,j)">Edit</td>
   </tr>
 </table>
 
@@ -183,6 +188,48 @@ action="/">
   </div>
  
 </form>
+
+</div>
+
+<div class="well" *ngIf="buttonOption==='19'">
+  <div class="row">
+  
+    <div class="col-sm-4">
+      <input type="date" class="form-control" [(ngModel)]="loadingDate">
+    </div>
+
+  <div class="col-sm-4">
+  <button mat-raised-button (click)="find19()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+    Find
+  </button>
+</div>
+</div>
+<hr>
+
+<table class="table table-bordered" *ngIf="!gotData119">
+  <tr>
+    <th>Srno</th>
+    <th>Date</th>
+    <th>TruckNo</th>
+    <th>AccountDetails</th>
+    <th>Edit</th>
+    <th>Save</th>
+
+  </tr>
+  <tr *ngFor="let i of turnbooklist;let j = index;">
+    <td>{{j+1}}</td>
+    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+    <td>{{i.truckno}}</td>
+    <td>
+      <ul *ngFor="let k of i.accounts;let z = index;">
+        <li>{{k.accountName}}-{{k.accountNumber}}-{{k.ifsc}}-<button class="btn btn-danger" (click)="delLit(j,z)">Delete</button></li>
+      </ul>
+    </td>
+    <td><button class="btn btn-danger" (click)="saveEdit(i,j)"  data-toggle="modal" data-target="#myModalDD">Edit</button></td>
+    <td><button class="btn btn-success" (click)="save(i,j)">Save</button></td>
+  </tr>
+</table>
+
 
 </div>
 
@@ -492,4 +539,42 @@ action="/">
     </tbody>
   </table>
 </div>
+</div>
+
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Account Details for {{bigI.truckno}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Account Name : <input type="text" class="form-control" [(ngModel)]="accName">
+        </div>
+
+        <div class="row">
+         Account Number : <input type="text" class="form-control" [(ngModel)]="accNo">
+        </div>
+
+        <div class="row">
+          IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc" (change)="getBankName1()">
+        </div>
+
+        <div class="row">
+          Bank Name : <input type="text" class="form-control" [(ngModel)]="bname" disabled>
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeAcc()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
 </div>

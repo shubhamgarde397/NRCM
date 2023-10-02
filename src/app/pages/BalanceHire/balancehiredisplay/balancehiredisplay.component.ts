@@ -118,7 +118,8 @@ public dueChangeValue;
 public addDueDetailsTF=false;
 public dueInfo;
 public dueInfoPending;
-
+public nrcmid=0;
+public adminA=false;
 public dueMAmt;
 public dueMDate;
 
@@ -129,13 +130,35 @@ public dueMDate;
   }
 
   ngOnInit() {
-  
+    this.nrcmid=this.securityCheck.nrcmid;
+    this.adminA=this.nrcmid===1?true:false;
     this.printInfo = false;
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
     for (let i = 0; i < new Date().getFullYear() - 2020; i++) {
       this.years.push(i + 2021)
     }
     this.givenDate=this.handleF.createDate(new Date());
+  }
+
+  pay(){
+    let formbody={}
+    let temp=[];
+    for(let i=0;i<this.balanceDate.length;i++){
+      for(let j=0;j<this.balanceDate[i]['truckData'].length;j++){
+        if((<HTMLInputElement>document.getElementById('m_'+i+'_'+j)).checked){
+          temp.push(this.balanceDate[i]['truckData'][j]['tbid'])
+        }
+      }
+    }
+
+formbody['method']='updatewhichtopay';
+formbody['tablename']=''
+formbody['ids']=temp;
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, true)
+    .subscribe((res: any) => {
+      alert(res.Status);
+    });
   }
 
   adminAccess() {
@@ -1106,7 +1129,7 @@ if(newpage===1){
 
 
     let pageno = 1;
-    let dateFormat = this.balanceDate[0].todayDate.slice(8, 10) + '-' + this.balanceDate[0].todayDate.slice(5, 7) + '-' + this.balanceDate[0].todayDate.slice(0, 4);
+    let dateFormat = this.selectedDate.slice(8, 10) + '-' + this.selectedDate.slice(5, 7) + '-' + this.selectedDate.slice(0, 4);
     let totalAmount=0;
     var doc = new jsPDF();
     doc.line(0, 148.2, 5, 148.2);//punching line helper
@@ -1238,6 +1261,22 @@ if(newpage===1){
       }
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
+        if(this.balanceDate[z].truckData[k].pay){
+        doc.text("Pay", 2, i);//amount
+        }
+        // Forward Date
+        if(this.selectedDate==this.balanceDate[z]['todayDate']){
+          if(this.balanceDate[z].truckData[k].forwardDate==''){}else{
+            doc.text('fD:'+this.handleF.getDateddmmyy(this.balanceDate[z].truckData[k].forwardDate), 191, i+12);
+            }
+        }
+        else{
+          if(this.balanceDate[z].truckData[k].forwardDate==this.selectedDate){
+            doc.text('pD:'+this.handleF.getDateddmmyy(this.balanceDate[z]['todayDate']), 191, i+12);
+          }
+        }
+        
+        // Forward Date
         doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
 
         doc.setFontSize('10');

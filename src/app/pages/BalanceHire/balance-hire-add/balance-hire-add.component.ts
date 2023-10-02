@@ -46,6 +46,7 @@ export class BalanceHireAddComponent implements OnInit {
   public buttonOption = '0';
   public displayType;
   public data;
+  public finalAdd=false;
   public dayData;
   public givenTrucks;
   public givenTrucksPayment;
@@ -96,21 +97,30 @@ public todaysDate;
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
+        if(res.balanceData.length>0){
         this.balanceDate = [];
            this.balanceDate = res.balanceData;
+           this.finalAdd=true;
         this.securityCheck.commonBalanceHire = res.balanceData;
+        }
+        else{
+          alert('No Data Available!')
+          this.balanceDate = [];
+        }
       });
   };
 
   addtoBH(){
+    this.finalAdd=false;
       let tempObj = {}
-      tempObj['method'] = 'BHInsert';
+      tempObj['method'] = 'BHInsertNew1';
       tempObj['tablename'] = 'BalanceHire';
       tempObj['bhTrucks']=this.balanceDate
       tempObj['todayDate'] = this.uitodayDate;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)
         .subscribe((res: any) => {
           alert(res.Status);
+          this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/BalanceHireDisp']);
         });
   }
 

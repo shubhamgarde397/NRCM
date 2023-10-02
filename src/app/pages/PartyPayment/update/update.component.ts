@@ -28,6 +28,7 @@ export class UpdateComponent implements OnInit {
   trucks(data){
     data===0?this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Display']):this.show=data;
     data===2?this.getAllTBPendingTrucks():null
+    data===3?this.getAllTBPendingTrucks():null
   }
 
   getAllTBPendingTrucks(){

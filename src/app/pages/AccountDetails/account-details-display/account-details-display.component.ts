@@ -28,6 +28,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Count Partywise','value':'14','disabled':false},
     {'viewValue':'Count Loadwise','value':'15','disabled':false},
     {'viewValue':'Update Truck Details','value':'18','disabled':false},
+    {'viewValue':'Daily Account Details','value':'19','disabled':false},
   ]
   public displayType;
   public buttonOption;
@@ -69,6 +70,7 @@ public accounttable=false;
 public accountarray=[]
 // #Account#
 // $TPT
+public gotData19=false;
 public tpttable=false;
 public tptarray=[];
 public transportlist=[];
@@ -85,6 +87,7 @@ public typeDataConsistsArray=[];
 // 
 public accountarrayUF=[];
 public accounttableUF=false;
+public loadingDate;
 // 
 
 // 
@@ -102,9 +105,16 @@ public emptyregDatatable=false;
 // 
 public myrcData=[];
 public loadingDate6;
-public tabs=[0,0,0,0,0,0,0,0,0]
+public tabs=[0,0,0,0,0,0,0,0,0,0]
 public nrcmid=0;
+
 public numbers=[];
+public accName;
+public accNo;
+public ifsc;
+public bname;
+
+
   constructor(
     public apiCallservice: ApiCallsService, 
     public securityCheck: SecurityCheckService,
@@ -117,7 +127,7 @@ public numbers=[];
     this.nrcmid=this.securityCheck.nrcmid;
     switch (this.nrcmid) {
       case 7:
-        this.tabs=[1,0,0,1,0,0,0,0,0,1];
+        this.tabs=[1,0,0,0,0,0,0,0,0,1,1];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -127,7 +137,7 @@ public numbers=[];
         });
         break;
       case 1:
-        this.tabs=[1,1,1,1,1,1,1,1,1,1];
+        this.tabs=[1,1,1,1,1,1,1,1,1,1,1];
         this.tabs.forEach((r,i) => {
           if(r===1){
             this.options[i]['disabled']=false;
@@ -182,22 +192,26 @@ public numbers=[];
 
   find(){
     let tempObj = {}
-    // if (this.truckVar === '') { alert('Select a Truck');  }
-    //     else {
-    //       tempObj['truckno'] = this.truckVar;
-        
-   
     tempObj['tablename'] = 'ownerdetails'
-    tempObj['method'] = 'displayEditTruckTB'
-    // tempObj['method'] = 'displayEditTruck'
-    
+    tempObj['method'] = 'displayEditTruckTB' 
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         this.turnbooklist = res.Data;
       });
-    // }
+  }
 
+  find19(){
+    let tempObj = {}
+    tempObj['tablename'] = ''
+    tempObj['method'] = 'editTruckAccountsDailyBasis'
+    tempObj['loadingDate']=this.loadingDate; 
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.turnbooklist = res.Data;
+        this.gotData19=true;
+      });
   }
 
 
@@ -224,6 +238,65 @@ public numbers=[];
       accountName:''
     });
     this.accountArray=i.accountDetails;
+  }
+
+  saveEdit(i,j){
+    this.bigI=i;
+    this.index=j;
+  }
+  delLit(j,z){
+    this.turnbooklist[j]['accounts'].splice(z,1);
+  }
+
+  storeAcc(){
+    this.bigI;
+    if(
+      (this.accName==='') 
+      ||
+      (this.accNo==='') 
+      ||
+      (this.ifsc==='') 
+      ||
+      (this.bname==='') 
+      ){
+      alert('Fields Cannot be empty')
+    }
+    
+    else{
+  
+
+  
+      let temp=
+        {
+          "accountName": this.accName,
+          "accountNumber":this.accNo,
+          "bankName":this.bname,
+          "ifsc":this.ifsc,
+          "acc12": false,
+          "acc65": false,
+          "acc363": false
+      }
+      this.turnbooklist[this.index]['accounts'].push(temp);
+      console.log(this.index);
+      
+      console.log(this.turnbooklist);
+      
+      alert('Added, Close the modal!')
+  }
+  }
+
+  save(i,j){
+    
+    let tempObj = {
+       "method": "addtoaccounts", 
+       "id": i['ownerid'],
+       'tablename':'',
+       'accounts':i['accounts']
+      };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+      });
   }
 
   addaccount() {
@@ -258,6 +331,9 @@ public numbers=[];
 
   getBankName(){
     this.myFormGroup18.patchValue({'bankName':this.myFormGroup18.value.ifsc.slice(0,4)})
+  }
+  getBankName1(){
+    this.bname=this.ifsc.slice(0,4)
   }
 
   getDimW(){

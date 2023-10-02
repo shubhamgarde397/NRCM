@@ -52,6 +52,32 @@
     <div class="form-group row">
 
       <div class="col-xs-1">
+        <label for="partyType"> Party Type </label>
+      </div>
+      <div class="col-xs-3">
+        <select id="partyType" class="form-control " formControlName="partyType" [(ngModel)]="partyType"
+          (change)="sortgst()">
+          <option disabled selected>Select Name of The Party</option>
+          <option value="NRCM">NRCM</option>
+          <option value="NR">NR</option>
+          <option value="SNL">SNL</option>
+        </select>
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.partyType.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+    <!--partyName-->
+
+    <!--partyName-->
+    <div class="form-group row">
+
+      <div class="col-xs-1">
         <label for="partyName"> Party Name </label>
       </div>
       <div class="col-xs-3">
@@ -131,6 +157,7 @@
         <th>Srno</th>
         <th>Date</th>
         <th>Party Name</th>
+        <th>Party Type</th>
         <th>Amount</th>
         <th>Delete</th>
       </tr>
@@ -141,6 +168,7 @@
         <td>{{j+1}}</td>
         <td>{{i.date|date: 'dd-MM-yyyy'}}</td>
         <td>{{i.partyName}}</td>
+        <td>{{i.partyType}}</td>
         <td>{{i.amount}}</td>
         <td>
           <button mat-raised-button (click)="delete(j)" class="btn btn-danger btn-sm btn-just-icon delete">

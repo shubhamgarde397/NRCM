@@ -23,6 +23,7 @@ export class AddComponent implements OnInit {
   public paymentDate;
   public alertBoxSuccess = false;
   public dbName = 1;
+  public partyType;
   public truckNamesOwner = [];
   public commonArray;
   public considerArray;
@@ -41,6 +42,7 @@ export class AddComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.myFormGroup = this.formBuilder.group({
       partyName: ['', Validators.required],
+      partyType:['',Validators.required],
       paymentDate: ['', Validators.required],
       amount: ['', Validators.required]
     });
@@ -71,10 +73,16 @@ export class AddComponent implements OnInit {
     this.gstdetailslist = this.commonArray.gstdetails;
   }
 
+  sortgst(){
+    this.fetchBasic();
+    this.gstdetailslist=this.gstdetailslist.filter(r=>{return r.partyType===this.partyType})
+  }
+
   storeTurnBookData({ value, valid }: { value: [{}], valid: boolean }) {
     this.submitted = true;
     let tempobj = {};
     tempobj['partyid'] = this.gstdetailslistid._id;
+    tempobj['partyType']=this.partyType;
     tempobj['date'] = value['paymentDate'];
     tempobj['partyName']=this.gstdetailslistid.name;
     tempobj['done']=false;

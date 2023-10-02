@@ -382,12 +382,10 @@ public year;
     if(amt!==null){
       let formbody = {'partyData':{}}
 
-      formbody['_id'] = i._id;
-      formbody['method'] = 'update';
+      formbody['_id'] = i._id;;
+      formbody['method'] = 'editAmount';
       formbody['tablename'] = 'partyPayment';
-      formbody['partyData']['date']=i.date;
-      formbody['partyData']['partyid']=i.partyid;
-      formbody['partyData']['amount']=parseInt(amt);
+      formbody['amount']=parseInt(amt);
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {

@@ -21,7 +21,6 @@ public admin=false;
   ngOnInit() {
     this.nrcmid=this.sec.nrcmid;
     this.admin=true?this.nrcmid==1:false;
-    this.find();
   }
 
   find(){
@@ -37,25 +36,46 @@ public admin=false;
       this.showdues=true;
     });
   }     
-  update(id,index){
-    if((<HTMLInputElement>document.getElementById('name_'+index)).value==='Default'){
-      alert('Select an account')
-    }
+  update(){
+let temp=[];
+    for(let i=0;i<this.turn.length;i++){
+
+    if(
+      (<HTMLInputElement>document.getElementById('rent_'+i)).value===''
+      ||
+      (<HTMLInputElement>document.getElementById('adv_'+i)).value===''
+      ||
+      (<HTMLInputElement>document.getElementById('advDate_'+i)).value===''
+      ||
+      (<HTMLInputElement>document.getElementById('tBal_'+i)).value===''
+      ||
+      (<HTMLInputElement>document.getElementById('wgt_'+i)).value===''
+      ){}
     else{
+      temp.push(
+        {
+          'ownerid':this.turn[i]['ownerid'],
+          '_id':this.turn[i]['_id'],
+          'rent':(<HTMLInputElement>document.getElementById('rent_'+i)).value,
+          'adv':(<HTMLInputElement>document.getElementById('adv_'+i)).value,
+          'advDate':(<HTMLInputElement>document.getElementById('advDate_'+i)).value,
+          'tBal':(<HTMLInputElement>document.getElementById('tBal_'+i)).value,
+          'w':(<HTMLInputElement>document.getElementById('wgt_'+i)).value,
+        }
+      )
+    }
+  }
     let tempObj={
       'tablename':'',
       'method':'storeDailyAdvanceAccId',
-      '_id':id['_id'],
-      'ownerid':id['newownerid'],
-      'accid':parseInt((<HTMLInputElement>document.getElementById('name_'+index)).value)
+      'data':temp
     }
 
     this.apiCallservice.handleData_New_python
     ('commoninformation', 1, tempObj, true)
     .subscribe((res: any) => {
       alert(res.Status)
-      this.turn.splice(index, 1)
     });
   }
-}
+
 }

@@ -3,26 +3,26 @@
         <button class="btn btn-info" (click)="getWhichType('1')">All Truck</button>
     </div> -->
     <div class="col-sm-2">
-        <button class="btn btn-info" (click)="getWhichType('1')">14 days Ago</button>
+        <button class="btn btn-info" (click)="getWhichType('1')" *ngIf="nrcmid===1">14 days Ago</button>
     </div>
     <div class="col-sm-2">
         <button class="btn btn-info" (click)="getWhichType('2')">Single</button>
     </div>
     <div class="col-sm-2">
-        <button class="btn btn-info" (click)="getWhichType('3')">AccNo</button>
+        <button class="btn btn-info" (click)="getWhichType('3')" *ngIf="nrcmid===1">AccNo</button>
     </div>
     <div class="col-sm-1">
-        <button class="btn btn-info" (click)="getWhichType('4')">By Tpt</button>
+        <button class="btn btn-info" (click)="getWhichType('4')" *ngIf="nrcmid===1">By Tpt</button>
     </div>
 
     <div class="col-sm-1">
-        <button class="btn btn-info" (click)="getWhichType('5')">Tpt TB</button>
+        <button class="btn btn-info" (click)="getWhichType('5')" *ngIf="nrcmid===1">Tpt TB</button>
     </div>
     <div class="col-sm-2">
-        <button class="btn btn-info" (click)="getWhichType('6')">Where?</button>
+        <button class="btn btn-info" (click)="getWhichType('6')" *ngIf="nrcmid===1">Where?</button>
     </div>
     <div class="col-sm-2">
-        <button class="btn btn-info" (click)="getWhichType('7')">Acc Name</button>
+        <button class="btn btn-info" (click)="getWhichType('7')" *ngIf="nrcmid===1">Acc Name</button>
     </div>
 </div>
 <div class="row" *ngIf="selected7">
@@ -99,8 +99,8 @@
                 <th>Contact</th>
                 <th>ContactO</th>
                 <th>Account Details</th>
-                <th>Prefer</th>
-                    <th>Native</th>   
+                <th *ngIf="nrcmid===1">Prefer</th>
+                    <th *ngIf="nrcmid===1">Native</th>   
                     <th>Options</th>
             </tr>
         </thead>
@@ -154,21 +154,21 @@
                         <hr>
                     </ul>
                 </td>
-                <td>
+                <td *ngIf="nrcmid===1">
                     <ul *ngFor="let j of i.preferences;">
                         <li>{{j}}</li>
                     </ul>
                 </td>
-                <td>
+                <td *ngIf="nrcmid===1">
                     <ul *ngFor="let j of i.nativeplaces;">
                         <li>{{j}}</li>
                     </ul>
                 </td>
                 <td >
                     <div class="btn-group-xs">                        
-                        <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)">delete_forever</i>
+                        <i class="material-icons" style="color: red;cursor: pointer;" (click)="deleteOwnerDetails(i._id)" *ngIf="nrcmid===1">delete_forever</i>
                         <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i,true)">edit</i>
-                        <i class="material-icons" style="color: green;cursor: pointer;" (click)="showDatabyid(i,false)">redo</i>
+                        <i class="material-icons" style="color: green;cursor: pointer;" (click)="showDatabyid(i,false)" *ngIf="nrcmid===1">redo</i>
                       </div>
                 </td>            </tr>
         </tbody>
