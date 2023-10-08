@@ -44,7 +44,7 @@ export class NavigationComponent implements OnInit {
   public notiC=0;
   public acknowledgement=false;
 public tabsarray=[
-  [0,[0,0,0,0,0,0,0,0,0,0,0,0,0]],
+  [0,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]],
   [0,[0,0,0,0,0,0,0]],
   [0,[]],
   [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
@@ -55,6 +55,7 @@ public tabsarray=[
   [0,[]],
   [0,[]],
 ]
+public seq=[];
   public tabs=[
     {
       parent:'Information',
@@ -73,7 +74,9 @@ public tabsarray=[
         {name:'Party GST',link:'IMP_GST_HANDLER',hideFlag:true,},
         {name:'Hidden Trucks',link:'HIDDEN_OWNER_HANDLER',hideFlag:true,},
         {name:'SMART UPDATE',link:'ACCOUNT_DETAILS_DISPLAY',hideFlag:true,},
-        {name:'Pending Payment Display',link:'PENDING_PAYMENT_DISPLAY',hideFlag:true,}]
+        {name:'Pending Payment Display',link:'PENDING_PAYMENT_DISPLAY',hideFlag:true,},
+        {name:'Sequence',link:'SEQUENCE',hideFlag:true,}
+      ]
     },
     {
       parent:'Daily Truck Details',
@@ -178,6 +181,7 @@ public tabsarray=[
   ) { }
 
   ngOnInit() {
+    // this.tabs=this.securityCheck.seq
     this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.dname;
@@ -239,7 +243,7 @@ public tabsarray=[
 switch (this.nrcmid) {
   case 1:
     this.tabsarray=[
-      [1,[1,1,1,1,1,1,1,1,1,1,1,1,1]],
+      [1,[1,1,1,1,1,1,1,1,1,1,1,1,1,1]],
       [1,[1,1,1,1,1,0,1]],
       [1,[]],
       [1,[1,1,1,1,1,1,1,1,1,1,1,1]],
@@ -252,7 +256,7 @@ switch (this.nrcmid) {
     break;
     case 7:
       this.tabsarray=[
-        [1,[0,1,0,1,1,0,0,1,0,0,0,1,0]],
+        [1,[0,1,0,1,1,0,0,1,0,0,0,1,0,0]],
         [1,[1,1,1,0,0,0,0]],
         [0,[]],
         [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
@@ -266,7 +270,7 @@ switch (this.nrcmid) {
     break;
     case 4:
       this.tabsarray=[
-        [0,[0,0,0,0,0,0,0,0,0,0,0,0,0]],
+        [0,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]],
         [0,[0,0,0,0,0,0,1]],
         [0,[]],
         [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
@@ -274,6 +278,20 @@ switch (this.nrcmid) {
         [0,[]],
         [0,[]],
         [0,[]],
+        [1,[]],
+        [1,[]],
+      ]    
+    break;
+    case 3:
+      this.tabsarray=[
+        [0,[0,0,0,0,0,0,0,0,0,0,0,0,0,0]],
+        [0,[0,0,0,0,0,0,1]],
+        [0,[]],
+        [0,[0,0,0,0,0,0,0,0,0,0,0,0]],
+        [0,[0,0]],
+        [0,[]],
+        [0,[]],
+        [1,[]],
         [1,[]],
         [1,[]],
       ]    

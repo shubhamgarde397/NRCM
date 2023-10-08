@@ -80,6 +80,7 @@ export class LoginComponent implements OnInit {
         .subscribe((res: any) => {
           if(res['Login']){
             this.security.setDisplayname(res['Data'][0]['displayName']);
+            this.security.setSequence(res['Data'][1]);
             this.security.setNotifications(res['Data1'][7]['notificstions']);
             this.security.setUserid(res['Data'][0]['_id']);
             this.security.setUserName(res['Data'][0]['name']);

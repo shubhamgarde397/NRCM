@@ -52,6 +52,7 @@ import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler
 import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
 import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component';
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
+import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component';
 
 @NgModule({
   declarations: [
@@ -84,7 +85,8 @@ import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-accoun
     DisplayComponent,
     GiftHandlerComponent,
     AddComponent,
-    DailyAccountAdderComponent
+    DailyAccountAdderComponent,
+    DisplaySequenceComponent
   ],
   imports: [
     BrowserModule,

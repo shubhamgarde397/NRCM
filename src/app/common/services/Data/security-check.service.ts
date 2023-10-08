@@ -30,6 +30,7 @@ export class SecurityCheckService {
   public arr;
   public nrcmid;
   public firstTime;
+  public seq=[];
   public noti=[];
   constructor() {
     this.yearNames = this.generateYears();
@@ -73,6 +74,9 @@ this.amountShow=data;
   }
   setDisplayname(name){
     this.dname = name;
+  }
+  setSequence(data){
+    this.seq=data;
   }
   setNotifications(data){
     this.noti=data;
