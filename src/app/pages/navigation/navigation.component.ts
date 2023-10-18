@@ -56,116 +56,107 @@ public tabsarray=[
   [0,[]],
 ]
 public seq=[];
-  public tabs=[
-    {
-      parent:'Information',
-      link:'',
-      hideFlag:true,
-      children:[
-        {name:'GST',link:'GST_HANDLER',hideFlag:true},
-        {name:'Truck',link:'OWNER_HANDLER',hideFlag:true},
-        {name:'Transport',link:'TRANSPORT_HANDLER',hideFlag:true},
-        {name:'Dues',link:'DUES_PAGE',hideFlag:true,},
-        {name:'Dues Advance',link:'DUES_PAGE_ADVANCE',hideFlag:true,},
-        {name:'Gifts',link:'GIFTS',hideFlag:true,},
-        {name:'JG',link:'JG',hideFlag:true,},
-        {name:'Village',link:'VILLAGE_HANDLER',hideFlag:true,},
-        {name:'LR Reason',link:'REASON_HANDLER',hideFlag:true,},
-        {name:'Party GST',link:'IMP_GST_HANDLER',hideFlag:true,},
-        {name:'Hidden Trucks',link:'HIDDEN_OWNER_HANDLER',hideFlag:true,},
-        {name:'SMART UPDATE',link:'ACCOUNT_DETAILS_DISPLAY',hideFlag:true,},
-        {name:'Pending Payment Display',link:'PENDING_PAYMENT_DISPLAY',hideFlag:true,},
-        {name:'Sequence',link:'SEQUENCE',hideFlag:true,}
-      ]
-    },
-    {
-      parent:'Daily Truck Details',
-      link:'',
-      hideFlag:true,
-      children:[
-        {name:'Turn Book',link:'TURN_BOOK_HANDLER',hideFlag:true},
-        {name:'Balance Hire',link:'BALANCE_HIRE_HANDLER',hideFlag:true},
-        {name:'Poch Collection',link:'POCH_COLLECTION_HANDLER',hideFlag:true},
-        {name:'Load Details',link:'Load_HANDLER',hideFlag:true},
-        {name:'Payment',link:'PARTY_PAYMENT_HANDLER',hideFlag:true,},
-        {name:'Turnbook Location',link:'TURN_BOOK_LOCATION_DISP',hideFlag:true},
-        {name:'Daily Account Details',link:'DAILY_ACCOUNT_ADDER',hideFlag:true},
-      ]
-    },
-    {
-      parent:'Link Truck',
-      hideFlag:true,
-      link:'LINK_TRUCK',
-      children:[]
-    },
-    {
-      parent:'Reports',
-      hideFlag:true,
-      link:'',
-      children:[
-        {name:'Charts',link:'CHART',hideFlag:true},
-        {name:'Received Report',link:'F1',hideFlag:true},
-        {name:'RC DL Expiry',link:'F2',hideFlag:true},
-        {name:'Task Page',link:'F3',hideFlag:true},
-        {name:'Last Loaded Trucks',link:'F4',hideFlag:true},
-        {name:'Last Loaded NRCM & JG',link:'F5',hideFlag:true},
-        {name:'Last Loaded JG',link:'F6',hideFlag:true},
-        {name:'Missing Prdfp',link:'F7',hideFlag:true},
-        {name:'Rent Slip',link:'F8',hideFlag:true},
-        {name:'Other Report',link:'OTHER_REPORT',hideFlag:true},
-        {name:'Mail Display',link:'MAIL_DISPLAY',hideFlag:true},
-        {name:'Missing Lrno',link:'MISSING_LR',hideFlag:true}
-      ]
-    },
-    {
-      parent:'Details',
-      hideFlag:true,
-      link:'',
-      children:[
-        {
-          name:'PDF',
-          link:'PDF',
-          hideFlag:true
-        },
-        {
-          name:'Envelope Entries',
-          link:'NRCM_TRANSPORT_ENVELOPE',
-          hideFlag:true
-        }
-      ]
-    },
-    {
-      parent:'Load Details',
-      hideFlag:true,
-      link:'Load_HANDLER',
-      children:[]
-    },
-    {
-      parent:'LR Send',
-      hideFlag:true,
-      link:'LR_Display',
-      children:[]
-    },
-    {
-      parent:'Payment',
-      hideFlag:true,
-      link:'PAYMENT_HANDLER',
-      children:[]
-    },
-    {
-      parent:'Logout',
-      hideFlag:true,
-      link:'F9',
-      children:[]
-    },
-    {
-      parent:'Welcome'+this.nameOfUser,
-      hideFlag:true,
-      link:'',
-      children:[]
-    },
+  public tabs=[]
+  //   {
+  //     parent:'Information',
+  //     link:'',
+    
+  //     children:[
+  //       {name:'GST',link:'GST_HANDLER'},
+  //       {name:'Truck',link:'OWNER_HANDLER'},
+  //       {name:'Transport',link:'TRANSPORT_HANDLER'},
+  //       {name:'Dues',link:'DUES_PAGE'},
+  //       {name:'Dues Advance',link:'DUES_PAGE_ADVANCE'},
+  //       {name:'Gifts',link:'GIFTS'},
+  //       {name:'JG',link:'JG'},
+  //       {name:'Village',link:'VILLAGE_HANDLER'},
+  //       {name:'LR Reason',link:'REASON_HANDLER'},
+  //       {name:'Party GST',link:'IMP_GST_HANDLER'},
+  //       {name:'Hidden Trucks',link:'HIDDEN_OWNER_HANDLER'},
+  //       {name:'SMART UPDATE',link:'ACCOUNT_DETAILS_DISPLAY'},
+  //       {name:'Pending Payment Display',link:'PENDING_PAYMENT_DISPLAY'},
+  //       {name:'Sequence',link:'SEQUENCE'}
+  //     ]
+  //   },
+  //   {
+  //     parent:'Daily Truck Details',
+  //     link:'',
+  //     children:[
+  //       {name:'Turn Book',link:'TURN_BOOK_HANDLER'},
+  //       {name:'Balance Hire',link:'BALANCE_HIRE_HANDLER'},
+  //       {name:'Poch Collection',link:'POCH_COLLECTION_HANDLER'},
+  //       {name:'Load Details',link:'Load_HANDLER'},
+  //       {name:'Payment',link:'PARTY_PAYMENT_HANDLER',},
+  //       {name:'Turnbook Location',link:'TURN_BOOK_LOCATION_DISP'},
+  //       {name:'Daily Account Details',link:'DAILY_ACCOUNT_ADDER'},
+  //     ]
+  //   },
+  //   {
+  //     parent:'Link Truck',
+  //     link:'LINK_TRUCK',
+  //     children:[]
+  //   },
+  //   {
+  //     parent:'Reports',
+  //     link:'',
+  //     children:[
+  //       {name:'Charts',link:'CHART'},
+  //       {name:'Received Report',link:'F1'},
+  //       {name:'RC DL Expiry',link:'F2'},
+  //       {name:'Task Page',link:'F3'},
+  //       {name:'Last Loaded Trucks',link:'F4'},
+  //       {name:'Last Loaded NRCM & JG',link:'F5'},
+  //       {name:'Last Loaded JG',link:'F6'},
+  //       {name:'Missing Prdfp',link:'F7'},
+  //       {name:'Rent Slip',link:'F8'},
+  //       {name:'Other Report',link:'OTHER_REPORT'},
+  //       {name:'Mail Display',link:'MAIL_DISPLAY'},
+  //       {name:'Missing Lrno',link:'MISSING_LR'}
+  //     ]
+  //   },
+  //   {
+  //     parent:'Details',
+  //     link:'',
+  //     children:[
+  //       {
+  //         name:'PDF',
+  //         link:'PDF',
+  //         },
+  //       {
+  //         name:'Envelope Entries',
+  //         link:'NRCM_TRANSPORT_ENVELOPE',
+  //         }
+  //     ]
+  //   },
+  //   {
+  //     parent:'Load Details',
 
-  ]
+  //     link:'Load_HANDLER',
+  //     children:[]
+  //   },
+  //   {
+  //     parent:'LR Send',
+
+  //     link:'LR_Display',
+  //     children:[]
+  //   },
+  //   {
+  //     parent:'Payment',
+  //     link:'PAYMENT_HANDLER',
+  //     children:[]
+  //   },
+  //   {
+  //     parent:'Logout',
+  //     link:'F9',
+  //     children:[]
+  //   },
+  //   {
+  //     parent:'Welcome'+this.nameOfUser,
+  //     link:'',
+  //     children:[]
+  //   },
+
+  // ]
 
   constructor(
     public router: Router,
@@ -181,7 +172,9 @@ public seq=[];
   ) { }
 
   ngOnInit() {
-    // this.tabs=this.securityCheck.seq
+    this.tabs=this.securityCheck.seq
+    console.log(this.tabs);
+    
     this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.dname;
@@ -192,7 +185,7 @@ public seq=[];
     this.nrcmid=this.securit.nrcmid;
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();
-    this.tabsetter();
+    // this.tabsetter();
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
 
     this.myFormGroup = this.formBuilder.group({
@@ -201,6 +194,10 @@ public seq=[];
   }
 
   routeR(data){
+    // document.getElementsByClassName('navbar-brand')[0].setAttribute("data-toggle","modal")
+    // undefined
+    // document.getElementsByClassName('navbar-brand')[0].setAttribute("data-target","#myModalDD")
+
     if(data==''){}
     else if(data.slice(0,1)==='F'){
       switch(data.slice(1)){
@@ -301,7 +298,7 @@ switch (this.nrcmid) {
     break;
 }
 
-this.setTabData(this.tabsarray);
+// this.setTabData(this.tabsarray);
   }
 
   setTabData(data){

@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class TurnBookUpdateComponent implements OnInit {
   public commonArray;
   public considerArray;
+  public methoddisplay='';
   public data = [];
   public data2=[];
   public partyid='';
@@ -63,6 +64,7 @@ export class TurnBookUpdateComponent implements OnInit {
       place: '',
       place2: '',
       partyName: '',
+      partyid:'',
       loadingDate: '',
       lrno:0,
       _id:''
@@ -75,6 +77,12 @@ export class TurnBookUpdateComponent implements OnInit {
     }
     else{
       this.wala11=false;
+      if(event==='11new'){
+        this.methoddisplay='11new'
+      }
+      else if(event==='11newnr'){
+        this.methoddisplay='11newnr'
+      }
     }
           let tempObj1={};
       tempObj1['tablename'] = 'turnbook'
@@ -95,8 +103,22 @@ export class TurnBookUpdateComponent implements OnInit {
               place: res.Data[0].placeName.village_name,
               place2: res.Data[0].placeName2?res.Data[0].placeName2.village_name:'',
               partyName: res.Data[0].partyName.name,
+              partyid: res.Data[0].partyName._id,
               loadingDate: res.Data[0].loadingDate,
               lrno: res.Data[0].lrno,
+              _id:res.Data[0]._id
+            })
+          }
+          else if(event==='11newnr'){
+            this.trucknoid11=res.Data[0].truckName.truckno
+            this.myFormGroup.patchValue({
+              truckno: res.Data[0].truckName.truckno,
+              place: res.Data[0].placeName.village_name,
+              place2: res.Data[0].placeName2?res.Data[0].placeName2.village_name:'',
+              partyid: res.Data[0].partyName._id,
+              partyName: res.Data[0].partyName.name,
+              loadingDate: res.Data[0].loadingDate,
+              lrno: res.Data[0].nrlrno,
               _id:res.Data[0]._id
             })
           }
@@ -143,14 +165,19 @@ export class TurnBookUpdateComponent implements OnInit {
     console.log(data);
     let tempObj1={};
     tempObj1['tablename'] = ''
+    tempObj1['methoddisplay']=this.methoddisplay
     tempObj1['method'] = 'updatelrparty'
-    tempObj1['partyid'] = data.value.partyName;
+    tempObj1['partyid'] = data.value._id;
     tempObj1['lrno'] = data.value.lrno;
     tempObj1['_id'] = data.value._id;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
       .subscribe((res: any) => {
         alert(res.Status)
       });
+  }
+
+  setPartyid(){
+    this.myFormGroup.patchValue({partyid:this.myFormGroup.value.partyName});
   }
 
 

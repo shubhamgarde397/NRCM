@@ -33,7 +33,7 @@
         <td>{{i.place}}</td>
         <td>{{i.party}}</td>
         <td>{{i.pochDate}}</td>
-        <td>{{i.lrno}}</td>
+        <td>{{i.nrlrno}}</td>
       </tr>
     </tbody>
   </table>
@@ -61,7 +61,6 @@
             <th>LRNO</th>
             <th>Truck No</th>
             <th>Party Name</th>
-            <th>Party Type</th>
             <th>Place</th>
           </tr>
         </thead>
@@ -69,10 +68,9 @@
           <tr *ngFor="let ii of k;let jj=index;">
             <td>{{jj+1}}</td>
             <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{ii.lrno}}</td>
+            <td>{{ii.nrlrno}}</td>
             <td>{{ii.truckno}}</td>
-            <td>{{ii.snameparty}}</td>
-            <td>{{ii.partyType}}</td>
+            <td>{{ii.party}}</td>
             <td>{{ii.place}}</td>
           </tr>
         </tbody>

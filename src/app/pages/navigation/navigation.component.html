@@ -8,7 +8,7 @@
 
     <ul class="nav navbar-nav" *ngFor="let i of tabs;">
 
-      <li class="dropdown" [ngClass]="{'hide':i.hideFlag}">
+      <li class="dropdown">
 
           <a class="dropdown-toggle" data-toggle="dropdown" (click)="routeR(i.link)">{{i.parent}}
           <span class="caret"></span>
@@ -17,7 +17,7 @@
 
         <ul class="dropdown-menu">
           <li *ngFor="let k of i.children;">
-            <a (click)="routeR(k.link)" [ngClass]="{'hide':k.hideFlag}">{{k.name}}</a>
+            <a (click)="routeR(k.link)">{{k.name}}</a>
           </li>
         </ul>
 
@@ -35,3 +35,26 @@
 <div>
   <router-outlet></router-outlet>
 </div>
+
+
+<!-- <div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Account Details for </h4>
+      </div>
+      <div class="modal-body">
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeAcc()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div> -->

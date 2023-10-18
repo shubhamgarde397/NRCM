@@ -138,6 +138,9 @@
           </div>
           <div class="col-sm-2">
             <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11new')">LRNO</button></div>
+
+            <div class="col-sm-2">
+              <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11newnr')">NRLRNO</button></div>
             
           
         </div>
@@ -167,7 +170,7 @@
         <div class="row form-group">
           <div class="col-sm-6">
             Party : {{partyToUI}}
-          <select id="partyName" class="form-control " formControlName="partyName">
+          <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyid()">
             <option selected disabled value={{partyid}}>{{party}}</option>
             <option *ngFor="let i of parties;let j = index;" value={{i._id}}>{{i.name}}</option>
           </select>

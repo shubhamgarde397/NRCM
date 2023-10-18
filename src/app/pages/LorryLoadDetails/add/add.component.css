@@ -13,3 +13,17 @@
       box-shadow: none;
   }
   
+  .container{
+    color: white;
+  }
+
+  
+
+  select,input,.well{
+    color: white;
+    background-color: black;
+  }
+
+  button{
+    color: black;
+  }

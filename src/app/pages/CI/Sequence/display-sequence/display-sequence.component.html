@@ -100,12 +100,12 @@
 </div>
 
 <div class="well" *ngIf="display=='display'">
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-3">
       <button class="btn btn-info" (click)="getUsers()">Get Users</button>
-  </div>
+  </div>  -->
   
-    <div class="col-sm-4">
+    <!-- <div class="col-sm-4">
       <select class="form-control" [(ngModel)]="tptIdU">
         <option value="Default">Default</option>
         <option *ngFor="let i of usersArray" value={{i._id}}>{{i.name}}</option>
@@ -114,36 +114,59 @@
 
       <div class="col-sm-4">
         <button class="btn btn-warning" (click)="getseq()">Get Sequence</button>
-      </div>
+      </div> -->
 
 
-</div>
+ <!-- </div>  -->
 
-<div class="well" *ngIf="show">
+<div class="well">
  
-      <table class="table" style="width:100%" align="center" *ngIf="table">
-  
-          <thead>
-              <tr class="table-header">
-                  <th>Srno</th>
+      <ul>
+        <hr>
+        <li *ngFor="let i of sacha">
+          <div class="row">
+            <div class="col-sm-3">
+              <input type="text" value={{i.parent}} class="form-control col-sm-3">
+            </div>
+            <div class="col-sm-3">
+              <input type="text" value={{i.link}} class="form-control col-sm-3">
+            </div>
+            <div class="col-sm-3">
+              <div class="row">
+              <select class="form control" (change)="addPid()">
+                <option *ngFor="let u of usersArray">{{u}}</option>
+              </select>
+              </div>
+              <div class="row">
+                <table>
+                  <tr>
+                  <th>Sr</th>
                   <th>Name</th>
-                  <th>Date Decided</th>
-                  <th>Reason</th>
-                  <th>Show</th>
-                  <th>Options</th>
-              </tr>
-          </thead>
-          <tbody>
-              <tr *ngFor="let i of dataArray;let j = index">
-                  <td>{{j+1}}</td>
-                  <td>{{i.name}}</td>
-                  <td>{{i.date}}</td>
-                  <td>{{i.reason}}</td>
-                  <td><span *ngIf="i.show">Yes</span><span *ngIf="!i.show">No</span></td>
-                  <td><button class="btn btn-info" (click)="update(i)" data-toggle="modal" data-target="#myModal">update</button></td>
-              </tr>
-          </tbody>
-      </table>
+                  <th>Delete</th>
+                </tr>
+                <tr *ngFor="let ii of i.nrcmids;let iij=index;">
+                  <td>{{iij+1}}</td>
+                  <td>{{ii}}</td>
+                  <td><button class="btn btn-danger" (click)="deletePid(i.parentid,ij,iij,'parent')">Delete</button></td>
+                </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <hr>
+          
+              <ul *ngFor="let j of i.children">
+                <li>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <input type="text" value={{j.name}} class="form-control col-sm-3">
+                    </div>
+                  </div>
+                </li>
+              </ul>
+        </li>
+        
+      </ul>
   </div>
 
 </div>

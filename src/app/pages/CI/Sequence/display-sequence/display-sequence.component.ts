@@ -18,6 +18,7 @@ export class DisplaySequenceComponent implements OnInit {
   public nrcmids=[];
   public seqArray=[];
   public display;
+  public sacha=[];
 
   constructor(public apiCallservice: ApiCallsService,public handledata: HandleDataService,public sec:SecurityCheckService,public formBuilder: FormBuilder) { }
 
@@ -65,8 +66,20 @@ this.nrcmids.splice(j,1);
           
         break;
         // getSequenceSacha
-    
-      default:
+        case 'display':
+          this.getUsers();
+          let tempObj1={}
+
+          tempObj1 = { "method": "getSequenceSacha", "tablename": ''};    
+  
+          
+          this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
+            .subscribe((res: any) => {
+                this.sacha=res.Data;
+                this.display=data;
+            });
+
+            
         break;
     }
   }
@@ -94,29 +107,16 @@ this.nrcmids.splice(j,1);
 
  
   getUsers(){
-        let tempObj={}
+    let tempObj={}
 
-        tempObj = { "method": "getTptUsersLogin", "tablename": ''};    
+    tempObj = { "method": "getTptUsersLogin", "tablename": ''};    
 
-        
-        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-          .subscribe((res: any) => {
-              this.usersArray=res.Data;
-              this.show=this.usersArray.length==0?true:false;
-          });
-      }
-
-      getseq()
-        {
-          let tempObj = {};
-          tempObj['method']='getSeqData'
-          tempObj['userid']=this.tptIdU;
-          tempObj['tablename']=''
-          this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-            .subscribe((res: any) => {
-              alert(res.Status)
-            });
-        
-      }
+    
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+          this.usersArray=res.Data;
+          this.show=this.usersArray.length==0?true:false;
+      });
+  }
 }
 
