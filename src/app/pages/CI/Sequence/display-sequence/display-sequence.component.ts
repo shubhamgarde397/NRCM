@@ -83,6 +83,167 @@ this.nrcmids.splice(j,1);
         break;
     }
   }
+//   {
+//     "parent": "Daily Truck Details",
+//     "link": "",
+//     "children": [
+//         {
+//             "name": "Turn Book",
+//             "link": "TURN_BOOK_HANDLER",
+//             "childid": "6522b0ace703b28599cf0744",
+//             "nrcmids": [
+//                 "Shubham",
+//                 "Anil Jamadar"
+//             ],
+//             "position": 21,
+//             "isParent": false,
+//             "hasChildren": false,
+//             "children": 0
+//         },
+//         {
+//             "name": "Balance Hire",
+//             "link": "BALANCE_HIRE_HANDLER",
+//             "childid": "6522b0bde703b28599cf0748",
+//             "nrcmids": [
+//                 "Shubham",
+//                 "Anil Jamadar"
+//             ],
+//             "position": 22,
+//             "isParent": false,
+//             "hasChildren": false,
+//             "children": 0
+//         },
+//         {
+//             "name": "Poch Collection",
+//             "link": "POCH_COLLECTION_HANDLER",
+//             "childid": "6522b0c8e703b28599cf074c",
+//             "nrcmids": [
+//                 "Shubham",
+//                 "Anil Jamadar"
+//             ],
+//             "position": 23,
+//             "isParent": false,
+//             "hasChildren": false,
+//             "children": 0
+//         },
+//         {
+//             "name": "Payment",
+//             "link": "PARTY_PAYMENT_HANDLER",
+//             "childid": "6522b0e1e703b28599cf0754",
+//             "nrcmids": [
+//                 "Shubham"
+//             ],
+//             "position": 25,
+//             "isParent": false,
+//             "hasChildren": false,
+//             "children": 0
+//         },
+//         {
+//             "name": "Turnbook Location",
+//             "link": "TURN_BOOK_LOCATION_DISP",
+//             "childid": "6522b0eee703b28599cf0758",
+//             "nrcmids": [
+//                 "Shubham"
+//             ],
+//             "position": 26,
+//             "isParent": false,
+//             "hasChildren": false,
+//             "children": 0
+//         },
+//         {
+//             "name": "Daily Account Details",
+//             "link": "DAILY_ACCOUNT_ADDER",
+//             "childid": "6522b0f8e703b28599cf075c",
+//             "nrcmids": [
+//                 "Shubham",
+//                 "Jyoti Garde"
+//             ],
+//             "position": 27,
+//             "isParent": false,
+//             "hasChildren": false,
+//             "children": 0
+//         }
+//     ],
+//     "parentid": "6522afc9e703b28599cf071d",
+//     "nrcmids": [
+//         "Shubham",
+//         "Anil Jamadar",
+//         "Jyoti Garde"
+//     ],
+//     "position": 2,
+//     "isParent": true,
+//     "hasChildren": true,
+//     "nochildren": 7
+// }
+  check(){
+    let newsacha=[]
+   
+    for(let i=0;i<this.sacha.length;i++){
+      let tempPS={}
+      tempPS['parent']=(<HTMLInputElement>document.getElementById('parent_'+i)).value
+      tempPS['link']=(<HTMLInputElement>document.getElementById('link_'+i)).value
+      tempPS['children']=[]
+      tempPS['parentid']=this.sacha[i]['parentid']
+      tempPS['nrcmids']=this.sacha[i]['nrcmids']
+      tempPS['position']=(<HTMLInputElement>document.getElementById('position_'+i)).value
+      tempPS['isParent']=(<HTMLInputElement>document.getElementById('isParent_'+i)).checked
+      tempPS['hasChildren']=(<HTMLInputElement>document.getElementById('hasChildren_'+i)).checked
+      tempPS['nochildren']=parseInt((<HTMLInputElement>document.getElementById('children_'+i)).value);
+      console.log(tempPS);
+      
+      let carr=[]
+      for(let j=0;j<this.sacha[i]['children'].length;j++){
+        let tempCS={}
+        tempCS['name']=(<HTMLInputElement>document.getElementById('name_'+i+'_'+j)).value
+        tempCS['link']=(<HTMLInputElement>document.getElementById('link_'+i+'_'+j)).value
+        tempCS['childid']=this.sacha[i]['children'][j]['childid'];
+        tempCS['nrcmids']=this.sacha[i]['children'][j]['nrcmids'];
+        tempCS['position']=(<HTMLInputElement>document.getElementById('position_'+i+'_'+j)).value
+        console.log(tempCS);
+        console.log(i);
+        console.log(j);
+        console.log('isParent'+i+'_'+j);
+        
+        
+        
+        tempCS['isParent']=(<HTMLInputElement>document.getElementById('isParent_'+i+'_'+j)).checked
+        tempCS['hasChildren']=(<HTMLInputElement>document.getElementById('hasChildren_'+i+'_'+j)).checked
+        tempCS['children']=parseInt((<HTMLInputElement>document.getElementById('children_'+i+'_'+j)).value)
+        tempPS['children'].push(tempCS);
+      }
+      newsacha.push(tempPS);
+    }
+
+    console.log(newsacha);
+    let temp={
+      Data:newsacha,
+      method:'updatesequencesacha',
+      tablename:''
+  
+      }
+      this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
+      .subscribe((res: any) => {
+          alert(res.Status)
+      });
+  }
+
+  addPid(indexParent,rev,y){
+    if(rev==='parent'){
+    this.sacha[indexParent]['nrcmids'].push((<HTMLInputElement>document.getElementById('nrcmid_'+indexParent)).value);
+    }
+    else if(rev==='child'){
+      this.sacha[indexParent]['children'][y]['nrcmids'].push((<HTMLInputElement>document.getElementById('nrcmid_'+indexParent+'_'+y)).value);
+    }
+  }
+
+  deletePid(j,s,rev,y){
+    if(rev==='parent'){
+    this.sacha[s]['nrcmids'].splice(j,1);
+    }
+    else if(rev==='child'){
+      this.sacha[s]['children'][y]['nrcmids'].splice(j,1);
+      }
+  }
 
   store(){
     let temp={
