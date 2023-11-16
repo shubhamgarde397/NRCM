@@ -5,3 +5,19 @@ body
     font-family: sans-serif;
 }
 
+select,input{
+    background-color: black;
+    color:wheat;
+}
+
+button{
+    color:black
+}
+
+table,label{
+    color:wheat;
+}
+
+.wadhiw{
+    color:black;
+}

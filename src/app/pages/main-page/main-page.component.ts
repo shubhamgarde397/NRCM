@@ -159,24 +159,24 @@ find(event){
   }
 
 
-  find11UniqueTruck(){
-    if(this.trucknoid11!=='Default'){
-      this.selectDate=false;
-      this.byTruckName=true;
-    this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
-    this.turn11.forEach(r=>{
-      let ad=r.advanceArray
-      for(let i=0;i<ad.length;i++){
-          if(ad[i]['reason']==='Balance'){
-              r['BHamt']=ad[i]['advanceAmt']
-              r['BHAccNo']=ad[i]['BHAccNo']
-              r['BHAccName']=ad[i]['BHAccname']
-          }
+    find11UniqueTruck(){
+      if(this.trucknoid11!=='Default'){
+        this.selectDate=false;
+        this.byTruckName=true;
+      this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
+      this.turn11.forEach(r=>{
+        let ad=r.advanceArray
+        for(let i=0;i<ad.length;i++){
+            if(ad[i]['reason']==='Balance'){
+                r['BHamt']=ad[i]['advanceAmt']
+                r['BHAccNo']=ad[i]['BHAccNo']
+                r['BHAccName']=ad[i]['BHAccname']
+            }
+        }
+    })
+      
       }
-  })
-    
     }
-  }
 
   getVillages(){
     let value={}
@@ -237,7 +237,6 @@ find(event){
 
     }
 
-    console.log(arr);
     let temp={}
     temp['method'] = 'setTeBa';
     temp['data'] = arr;
@@ -262,7 +261,6 @@ const imgContact="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA/8AAAP/CAYAAACW
     
 var doc = new jsPDF('l','mm',[230,110])      
 for(let i=0;i<data.length;i++){
-console.log(i);
 
   if(data[i]['addr2']!==''&&data[i]['addr2']!==null){
     if(data[i]['addr3']!==''&&data[i]['addr3']!==null){
