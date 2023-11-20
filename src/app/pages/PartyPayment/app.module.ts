@@ -7,6 +7,8 @@ import { AddComponent } from './add/add.component';
 import { DisplayComponent } from './display/display.component';
 import { UpdateComponent } from './update/update.component';
 import { HandlerComponent } from './handler/handler.component';
+import { PaymentsComponent } from './payments/payments.component';
+import { PendingComponent } from './pending/pending.component';
 
 
 @NgModule({
@@ -14,7 +16,9 @@ import { HandlerComponent } from './handler/handler.component';
         AddComponent,
         DisplayComponent,
         UpdateComponent,
-        HandlerComponent
+        HandlerComponent,
+        PaymentsComponent,
+        PendingComponent
     ],
     imports: [
         CommonModule,

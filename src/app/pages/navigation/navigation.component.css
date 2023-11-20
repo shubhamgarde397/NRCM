@@ -11,3 +11,8 @@ button{
 .NotificationBell{
     margin-top: 10px;
 }
+
+.dropdown-menu{
+    background-color: black;
+    color: wheat;
+}

@@ -1,4 +1,4 @@
-<div class="well" style="width:100%;" *ngIf="!show">
+<div class="well" style="width:100%;background-color: balck;color: wheat;" *ngIf="!show">
 
   <div class="form-group row">
     <div class="col-sm-5">
@@ -73,7 +73,7 @@
       </div>
       <div class="col-xs-2" align="center">
         <button class="btn btn-danger" (click)="printUpdate()"*ngIf="showPDFButton"
-          [ngStyle]="{'background-color': !printed ? 'red' : 'black' }" [disabled]="printed">Print</button>
+          [ngStyle]="{'background-color': !printed ? 'red' : 'wheat' }" [disabled]="printed">Print</button>
       </div>
     </div>
 
@@ -97,7 +97,7 @@
 
         <tbody>
           <tr *ngFor="let i of balanceDate;let j = index"
-            [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'black' }">
+            [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'wheat' }">
             <td (click)="tempDelete(j)">{{j+1}}</td>
             <td>
               <ul *ngFor="let k of i.truckData">

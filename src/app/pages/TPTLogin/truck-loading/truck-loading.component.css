@@ -26,4 +26,18 @@ button{
 
 .vh2{
   font-size: 20px;
+}input,select,table{
+  background-color: black;
+  color: wheat;
+}
+.well{
+  background-color: black;
+  color: wheat;
+}
+button{
+  color: black;
+}
+
+thead>tr{
+  color: black;
 }

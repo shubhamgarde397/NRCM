@@ -10,7 +10,8 @@ width: 100%;;
 }
 
 .backgroundWhite{
-    background-color: white;
+    background-color: black;
+    color: wheat;
 }
 .fonthead{
     font-weight: 700;

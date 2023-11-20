@@ -1,4 +1,18 @@
 .btnBig{
     width: 100%;
     height: 45vh;
-}
+}input,select,table{
+    background-color: black;
+    color: wheat;
+  }
+  .well{
+    background-color: black;
+    color: wheat;
+  }
+  button{
+    color: black;
+  }
+  
+  thead>tr{
+    color: black;
+  }

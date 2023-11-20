@@ -1,8 +1,14 @@
+<div class="col-sm-3">
 <button mat-raised-button (click)='find()' class="btn-danger btn-sm btn-just-icon">Find
 </button>
+</div>
 
-<div class="container" *ngIf="showdues">
-<table class="table table-bordered" style="width:100%" align="center">
+<div class="col-xs-2" align="center" *ngIf="!duesButton">
+  <button class="btn btn-warning" (click)="getDues()">Dues</button>
+</div>
+
+<div class="well" *ngIf="showdues" style="background-color: black;border-color: black;">
+<table class="table table-bordered" style="width:100%;color: wheat;" align="center">
 
   <thead class="table-header">
       <tr>
@@ -11,9 +17,18 @@
           <th>Date</th>
           <th>Type</th>
           <th>Rent</th>
-          <th>Advance And Date</th>
+          <th>Extra Advance</th>
+          <th>Total Rent</th>
+          <th>AdvDate</th>
+          <th>Adv</th>
+          <!-- add Loan Cut From Dues here as well, and cut in from dues for loan/transport -->
+          <th>Cash</th>
+          <th>Less</th>
+          <th>Hamali</th>
+          <th>Bill Amt</th>
           <th>Tentative Bal</th>
           <th>Weight</th>
+          <th>Loan Cut</th>
       </tr>
   </thead>
 
@@ -22,19 +37,86 @@
       <tr *ngFor="let i of turn;let j = index">
           <td>{{j+1}}</td>
           <td>{{i.truckno}}</td>
-          <td>{{i.loadingDate}}</td>
+          <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
           <td>{{i.partyType}}-{{i.party}}</td>
-          <td><input class="form-control" type="number" id="rent_{{j}}"></td>
+          <td><input class="form-control" type="number" id="rent_{{j}}" (change)='calcTotalRent(j)'></td>
           <td>
-            <input class="form-control" type="date" id="advDate_{{j}}">
-            <input class="form-control" type="number" id="adv_{{j}}">
+            <ul *ngFor="let kk of i.extra;let jj = index;">
+              <li><span id="amt_{{j}}_{{jj}}">{{kk.extraAdvanceamt}}</span></li>
+              <li><span id="remark_{{j}}_{{j}}">{{kk.extraAdvancemsg}}</span></li>
+            </ul>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" (click)="toModal(j)">Add Extra</button>
           </td>
+          <td><input class="form-control" type="number" value={{i.totalRent}} disabled></td>
+          <td><input class="form-control" type="date" id="advDate_{{j}}"></td>
+          <td><input class="form-control" type="number" id="adv_{{j}}" (change)='calcTent(j)'></td>
+          <td><input class="form-control" type="number" id="cash_{{j}}"></td>
+          <td><input class="form-control" type="number" id="less_{{j}}"></td>
+          <td><input class="form-control" type="number" id="hamali_{{j}}"></td>
+          <td><input class="form-control" type="number" id="comm_{{j}}"></td>
+
           <td><input class="form-control" type="number" id="tBal_{{j}}" value="{{i.tentativeBalance}}"></td>
           <td><input class="form-control" type="number" id="wgt_{{j}}" value={{i.weight}}></td>
+          <td>
+            <select class="form-control">
+              <option *ngFor="let jj of DuesT;">
+                {{jj.date}}-{{jj.amt}},{{jj.pending}}->{{jj.reason}}->{{jj.truckno}}
+              </option>
+            </select>
+          </td>
       </tr>
   </tbody>
 </table>
 <button mat-raised-button (click)='update()' class="btn-danger btn-sm btn-just-icon">Edit
 </button>
 
+</div>
+
+<div class="container">
+    
+  <div class="modal fade" id="myModal" role="dialog" style="background-color: black;">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit for {{truckno}}</h4>
+        </div>
+        <div class="modal-body" style="background-color: black;">
+    <div class="well" style="background-color: black;">
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Extra Amount : 
+          <input type="number" class="form-control" [(ngModel)]="amount">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Remark : 
+          <input type="text" class="form-control" [(ngModel)]="remark">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        
+        
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-warning" (click)="addToArray()">
+          Submit
+        </button>
+      </div>
+      </div>
+    </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
 </div>

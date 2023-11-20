@@ -1,0 +1,40 @@
+button{
+    border-radius: 100px;
+}
+
+h1,h6,h4{
+    color:white;
+}
+
+.well,.container{
+    background-color: black;
+}
+
+button{
+    color:black;
+}
+
+input,table{
+    background-color: black;
+    color: white;
+}
+
+input:disabled,.form-control[disabled]{
+    background-color:black;
+    color:White;
+}
+
+.modal{
+    background-color: black;
+}
+
+
+.doneF{
+    background-color: black;
+    color: red;
+}
+
+.doneT{
+    background-color: black;
+    color: green;
+}

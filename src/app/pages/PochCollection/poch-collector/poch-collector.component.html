@@ -23,7 +23,7 @@
     </thead>
 
     <tbody align="center">
-      <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'black' }">
+      <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'wheat' }">
         <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
           done
           </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">

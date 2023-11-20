@@ -10,12 +10,21 @@
       border-radius: 100px;
       margin-left: 5px;
       margin-right: 5px;
+      color: black;
   }
   
   .well{
       border-color:#f5f5f5;
       box-shadow: none;
+      background-color: black;
+      color: wheat;
   }
+
+  input,select{
+    background-color: black;
+    color: wheat;
+  }
+  
   
   
   

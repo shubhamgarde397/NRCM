@@ -1,0 +1,345 @@
+<div class="container">
+  <button class="btn btn-warning" (click)="accounting('adv')">Advance</button>
+  <button class="btn btn-warning" (click)="accounting('bal')">Balance</button>
+</div>
+
+<div class="container" *ngIf="bigger">
+<div class="container">
+  <div class="row">
+      <h1>Accounting of Advance Payments</h1>
+      <h6>Please select Party Name and a date range to fetch required data.</h6>
+  </div>
+</div>
+
+<div class="well" style="border-color: black;">
+  
+  <div class="form-group row">
+
+    <div class="col-sm-3">
+      <select id="nop" class="form-control black" [(ngModel)]="nopid" (change)="findgst()" style="background-color: black;color: wheat;">
+        <option disabled selected>Select Name of The Party</option>
+        <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+          {{gst.name}}
+        </option>
+      </select>
+    </div>
+    <div class="col-sm-3">
+      <input type="date" class="form-control"  [(ngModel)]="from">
+    </div>
+    <div class="col-sm-3">
+      <input type="date" class="form-control"  [(ngModel)]="to">
+    </div>
+    <div class="col-sm-3">
+      <button class="btn btn-warning" (click)="getPartyPayments()">Get Party Payments</button>
+    </div>
+   
+  </div>
+
+<!-- 'color':{'$cond':{'if':{'$eq':['$done',False]},'then':'red','else':'green'}} -->
+  <div class="form-group row">
+      <div class="col-xs-6">
+        <select id="pp" class="form-control" [(ngModel)]="pp1" (change)="setAllData()" [disabled]="selectDisable" style="background-color: black;color: wheat;">
+          <option selected>Select Trucks</option>
+          <option *ngFor="let own of paymentData; let j = index;" value={{own._id}} [ngClass]="own.done==true ? 'doneT':'doneF'">
+              {{own.date}}:{{own.amount}}
+          </option>
+        </select>
+      </div>
+
+      <div class="col-xs-6">
+        <select id="pp" class="form-control black" [(ngModel)]="pp" (change)="onChange()"  style="background-color: black;color: wheat;">
+          <option selected>Select Trucks</option>
+          <option *ngFor="let own of pendingTrucks; let j = index;" value={{own._id+j}}>
+              {{own.data.split('_')[0]|date: 'dd-MM-yyyy'}}:{{own.data.split('_')[2]}}:{{own.partyName}}
+          </option>
+        </select>
+      </div>
+      <div class="col-sm-6">
+        <button class="btn btn-warning" data-toggle="modal" data-target="#myModal" *ngIf="modalButtonA">Add Pyments</button>
+      </div>
+      <div class="col-sm-6">
+          
+  <table class="table" style="width:100%" align="center">
+
+      <thead class="table-header">
+          <tr>
+              <th>Srno</th>
+              <th>Date</th>
+              <th>TruckNo</th>
+              <th>LRNO</th>
+              <th>Amount</th>
+              <th>Remark</th>
+              <th>Delete</th>
+          </tr>
+      </thead>
+
+
+      <tbody>
+          <tr *ngFor="let i of addToArrayVar;let j = index;">
+              <td>{{j+1}}</td>
+              <td>{{i.date|date: 'dd-MM-yyyy'}}</td>
+              <td>{{i.truckno}}</td>
+              <td>{{i.lrno}}</td>
+              <td>{{i.amount}}</td>
+              <td>{{i.remark}}</td>
+              <td><button class="btn btn-danger" (click)="tempDelete(j,i)">Delete</button></td>
+          </tr>
+      </tbody>
+  </table>
+  <button class="btn btn-success" (click)="addToSave()">Add</button>
+      </div>
+    </div>
+
+  <button class="btn btn-success" (click)="trucks(1)">Back</button>
+</div>
+
+<div class="container">
+  
+  <div class="modal fade" id="myModal" role="dialog" style="background-color: black;">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: white;border-color: white;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit for {{updateTruck.truckno}} and Payment of {{updateTruck.paymentof}} : You Can Add up to :{{youcanaddinarray}}</h4>
+        </div>
+        <div class="modal-body">
+    <div class="well">
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Rent : 
+          <input type="number" class="form-control" value={{updateTruck.hamt}} disabled>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Total Received : 
+          <input type="number" class="form-control" value={{updateTruck.totalRec}} disabled>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-4">
+          Balance : 
+          <input type="number" class="form-control" value={{updateTruck.hamt-updateTruck.totalRec}} disabled>
+        </div>
+        <div class="col-sm-4">
+          Hamali To Come : 
+          <input type="number" class="form-control" value={{updateTruck.partyhamali}} disabled>
+        </div>
+        <div class="col-sm-4">
+          Total Pending : 
+          <input type="number" class="form-control" value={{updateTruck.balanceToCome}} disabled>
+        </div>
+      </div>
+
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Advance Received : 
+          <input type="number" class="form-control" [(ngModel)]="amtRec">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Remark : 
+          <input type="text" class="form-control" [(ngModel)]="remark">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        
+        
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-warning" (click)="addToArray()">
+          Submit
+        </button>
+      </div>
+      </div>
+    </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+</div>
+
+<div class="container" *ngIf="!bigger">
+  <div class="container">
+    <div class="row">
+        <h1>Accounting of Balance Payments</h1>
+        <h6>Please select Party Name and a date range to fetch required data.</h6>
+    </div>
+  </div>
+  
+  <div class="well" style="border-color: black;">
+    
+    <div class="form-group row">
+  
+      <div class="col-sm-3">
+        <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()" style="background-color: black;color: wheat;">
+          <option disabled selected>Select Name of The Party</option>
+          <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+            {{gst.name}}
+          </option>
+        </select>
+      </div>
+      <div class="col-sm-3">
+        <input type="date" class="form-control"  [(ngModel)]="from">
+      </div>
+      <div class="col-sm-3">
+        <input type="date" class="form-control"  [(ngModel)]="to">
+      </div>
+      <div class="col-sm-3">
+        <button class="btn btn-warning" (click)="getPartyPayments()">Get Party Payments</button>
+      </div>
+     
+    </div>
+  
+  
+    <div class="form-group row">
+        <div class="col-xs-6">
+          <select id="pp" class="form-control" [(ngModel)]="pp1" (change)="setAllDataBalance()" [disabled]="selectDisable" style="background-color: black;color: wheat;">
+            <option selected>Select Trucks</option>
+            <option *ngFor="let own of paymentData; let j = index;" value={{own._id}}  [ngClass]="own.done==true ? 'doneT':'doneF'">
+                {{own.date}}:{{own.amount}}
+            </option>
+          </select>
+        </div>
+  
+        <div class="col-xs-6">
+          <select id="pp" class="form-control" [(ngModel)]="pp" (change)="onChange()"   style="background-color: black;color: wheat;">
+            <option selected>Select Trucks</option>
+            <option *ngFor="let own of pendingTrucks; let j = index;" value={{own._id+j}}>
+                {{own.data.split('_')[0]|date: 'dd-MM-yyyy'}}:{{own.data.split('_')[2]}}:{{own.partyName}}
+            </option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          <button class="btn btn-warning" data-toggle="modal" data-target="#myModalB" *ngIf="modalButtonA">Add Pyments</button>
+        </div>
+        <div class="col-sm-6">
+            
+    <table class="table" style="width:100%" align="center">
+  
+        <thead class="table-header">
+            <tr>
+                <th>Srno</th>
+                <th>Date</th>
+                <th>TruckNo</th>
+                <th>LRNO</th>
+                <th>Amount</th>
+                <th>Remark</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+  
+  
+        <tbody>
+            <tr *ngFor="let i of addToArrayVar;let j = index;">
+                <td>{{j+1}}</td>
+                <td>{{i.date|date: 'dd-MM-yyyy'}}</td>
+                <td>{{i.truckno}}</td>
+                <td>{{i.lrno}}</td>
+                <td>{{i.amount}}</td>
+                <td>{{i.remark}}</td>
+                <td><button class="btn btn-danger" (click)="tempDeleteB(j,i)">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success" (click)="addToSaveBalance()">Add</button>
+        </div>
+      </div>
+  
+    <button class="btn btn-success" (click)="trucks(1)">Back</button>
+  </div>
+  
+  <div class="container">
+    
+    <div class="modal fade" id="myModalB" role="dialog" style="background-color: black;">
+      <div class="modal-dialog">
+      
+    
+        <div class="modal-content" style="background-color: black;color: white;border-color: white;">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit for {{updateTruck.truckno}} and Payment of {{updateTruck.paymentof}} : You Can Add up to :{{youcanaddinarray}}</h4>
+          </div>
+          <div class="modal-body">
+      <div class="well">
+  
+        <div class="row form-group">
+          <div class="col-sm-12">
+            Rent : 
+            <input type="number" class="form-control" value={{updateTruck.hamt}} disabled>
+          </div>
+        </div>
+  
+        <div class="row form-group">
+          <div class="col-sm-12">
+            Total Received : 
+            <input type="number" class="form-control" value={{updateTruck.totalRec}} disabled>
+          </div>
+        </div>
+  
+        <div class="row form-group">
+          <div class="col-sm-4">
+            Balance : 
+            <input type="number" class="form-control" value={{updateTruck.hamt-updateTruck.totalRec}} disabled>
+          </div>
+          <div class="col-sm-4">
+            Hamali To Come : 
+            <input type="number" class="form-control" value={{updateTruck.partyhamali}} disabled>
+          </div>
+          <div class="col-sm-4">
+            Total Pending : 
+            <input type="number" class="form-control" value={{updateTruck.balanceToCome}} disabled>
+          </div>
+        </div>
+  
+        <div class="row form-group">
+          <div class="col-sm-12">
+            Balance Received : 
+            <input type="number" class="form-control" [(ngModel)]="amtRec">
+          </div>
+        </div>
+  
+        <div class="row form-group">
+          <div class="col-sm-12">
+            Remark : 
+            <input type="text" class="form-control" [(ngModel)]="remark">
+          </div>
+        </div>
+  
+        <div class="row form-group">
+          
+          
+        <div class="col-sm-4">
+          <button type="button" class="btn btn-warning" (click)="addToArray()">
+            Submit
+          </button>
+        </div>
+        </div>
+      </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+  </div>
+  
+  </div>

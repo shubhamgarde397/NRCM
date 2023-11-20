@@ -1,0 +1,15 @@
+button{
+    border-radius: 100px;
+    color: black;
+}
+
+.well,.container{
+    background-color: black;
+    color: wheat;
+  }
+
+.form-control{
+    background-color: black;
+    color: wheat;
+  }
+

@@ -120,7 +120,6 @@ public todaysDate;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)
         .subscribe((res: any) => {
           alert(res.Status);
-          this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/BalanceHireDisp']);
         });
   }
 

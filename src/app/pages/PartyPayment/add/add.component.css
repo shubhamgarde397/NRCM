@@ -10,3 +10,21 @@ button{
         text-align: center;
   }
   
+  .wellNormal{
+    background-color: black;
+    border-color: black;
+  }
+
+  .wellbutton{
+    color: white;
+  background-color: black;
+  }
+
+  label,h3,thead,tbody{
+    color: white;
+  }
+
+  select,input{
+    background-color: black;
+    color:white;
+  }

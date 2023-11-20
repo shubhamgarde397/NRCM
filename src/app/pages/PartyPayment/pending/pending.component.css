@@ -1,0 +1,42 @@
+button{
+    border-radius: 100px;
+}
+
+h1,h6,h4{
+    color:white;
+}
+
+.well,.container{
+    background-color: black;
+}
+
+button{
+    color:black;
+}
+
+select,input,table{
+    background-color: black;
+    color: wheat;
+}
+
+select,input:disabled,.form-control[disabled]{
+    background-color:black;
+    color:White;
+}
+
+.modal{
+    background-color: black;
+}
+
+.red{
+    color:red;
+}
+.green{
+    color:green;
+}
+.yellow{
+    color:yellow;
+}
+.orange{
+    color:orange;
+}

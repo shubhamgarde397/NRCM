@@ -1283,9 +1283,8 @@ if(newpage===1){
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 83.5, i);//truckno
-        if(dataTF){
           doc.text(this.balanceDate[z].truckData[k].remark, 50, i);//truckno
-        }
+        
         doc.setFontSize('8');
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 108, i);//truckno

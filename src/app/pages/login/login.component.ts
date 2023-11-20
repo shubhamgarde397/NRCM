@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit {
       value['username']=value.username
       value['password']=value.password
       value['tablename']=''
-      value['consider']=[1,0,0,0,0,0,0,1]
+      value['consider']=[1,0,0,0,0,0,0,0]
       
       this.apiCallservice.handleData_New_python
         ('commoninformation', 1, value, true)

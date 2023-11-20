@@ -34,3 +34,21 @@ button{
   color: white;
   border-radius: 4px;
 }
+
+
+select,input{
+  background-color: black;
+  color: white;
+}
+
+h4,table,label{
+  color:white;
+}
+
+button,th{
+  color:black
+}
+
+tbody{
+  color:white
+}

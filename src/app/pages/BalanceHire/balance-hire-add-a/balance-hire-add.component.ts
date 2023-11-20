@@ -270,7 +270,8 @@ alert('Selected!')
         // else {
           this.bhTrucks.find((r,index)=>{
             if(r._id==this.balanceHireArrray[i][j]['_id']){
-              this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
+              this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value)+parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
+              this.bhTrucks[index]['return_hamali']=parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
               this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value;
               this.bhTrucks[index]['remark']=(<HTMLInputElement>document.getElementById('remark_' + i + '_' + j)).value;
               this.bhTrucks[index]['balAccid']=parseInt((<HTMLInputElement>document.getElementById('name_' + j)).value);
@@ -291,6 +292,12 @@ alert('Selected!')
 
   getBankName(){
     this.bname=this.ifsc.slice(0,4);
+  }
+
+  addhamali(i,j){
+    let bal=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
+    let ham=parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
+    (<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value=String(bal+ham);
   }
 
   storeAcc(){
@@ -345,6 +352,8 @@ alert('Selected!')
     this.bigI=j;
     this.accUpdater=i
   }
+
+  
 
   check(){
     let checker=0;

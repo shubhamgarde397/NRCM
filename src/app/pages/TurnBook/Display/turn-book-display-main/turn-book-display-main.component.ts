@@ -270,10 +270,13 @@ public nrcmid;
     let arr=[]
     let obj={}
     for(let j=0;j<this.turn18.length;j++){
-      obj['id']=this.turn18[j]['_id'];
-      obj['amt']=parseInt((<HTMLInputElement>document.getElementById('hamt_'+j)).value)
-      arr.push(obj)
-      obj={};
+      if(parseInt((<HTMLInputElement>document.getElementById('hamt_'+j)).value)!==0){
+        obj['id']=this.turn18[j]['_id'];
+        obj['amt']=parseInt((<HTMLInputElement>document.getElementById('hamt_'+j)).value)
+        obj['partyhamali']=parseInt((<HTMLInputElement>document.getElementById('partyhamali_'+j)).value)
+        arr.push(obj)
+        obj={};
+      }
     }
     let tempObj={}
     tempObj['method']='turn18amt';

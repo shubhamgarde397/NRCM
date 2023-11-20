@@ -1,4 +1,9 @@
 button{
     border-radius: 100px;
+    color: black;
 }
 
+.well,.container,input,select{
+    background-color: black;
+    color: wheat;
+  }

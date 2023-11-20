@@ -185,7 +185,7 @@
             <th *ngIf="adminAccess">Delete</th>
             <th *ngIf="adminAccess">Edit</th>
             <th *ngIf="!adminAccess">Temp Delete</th>
-            <th *ngIf="!adminAccess">Edit Trucks</th>
+            <!-- <th *ngIf="!adminAccess">Edit Trucks</th> -->
           </tr>
         </thead>
 
@@ -217,11 +217,11 @@
                 <i class="material-icons">delete</i>
               </button>
             </td>
-            <td *ngIf="!adminAccess">
+            <!-- <td *ngIf="!adminAccess">
               <button mat-raised-button type="button" (click)="deleteTrucks(i,j)" class="btn-warning btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>

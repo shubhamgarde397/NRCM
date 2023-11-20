@@ -120,7 +120,7 @@
                 <option *ngFor="let k of villagenamelist">{{k.village_name}}</option>
               </select></td>
             <td>
-              <button type="button" (click)="addCity()">Add</button>
+              <button type="button" class="btn btn-success" (click)="addCity()">Add</button>
             </td>
           </tr>
         </table>
@@ -158,7 +158,7 @@
             <td>
               <input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"></td>
             <td>
-              <button type="button" (click)="addEmail()">Add</button>
+              <button type="button" class="btn btn-success" (click)="addEmail()">Add</button>
             </td>
           </tr>
         </table>

@@ -53,7 +53,7 @@
     </thead>
 
     <tbody align="center">
-      <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'black' }">
+      <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'wheat' }">
         <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
           done
           </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
@@ -142,6 +142,7 @@
             <th>Party Name</th>
             <th>Party Type</th>
             <th>Place</th>
+            <th>Hamali</th>
             <th>Balance</th>
             <th>LRNO</th>
             <th>Remark</th>
@@ -158,8 +159,11 @@
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
             <td>{{ii.place}}</td>
-            <td><input type="text" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}>
+            <td><input type="number" placeholder="Hamali" id="hamali_{{kk}}_{{jj}}" value={{ii.returnhamali}} (change)="addhamali(kk,jj)">
             </td>
+            <td><input type="number" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}>
+            </td>
+            
             <td><input type="text" placeholder="LRNO" id="lrno_{{kk}}_{{jj}}" value={{ii.lrno}}>
             </td>
             <td>
