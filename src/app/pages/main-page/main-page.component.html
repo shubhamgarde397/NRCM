@@ -162,7 +162,7 @@
                   <tbody align="center">
                     <tr *ngFor="let i of turn11;let j = index">
                       <td>{{j+1}}</td>
-                      <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                      <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.billno}}</td>
                       <td>{{i.truckName['truckno']}}</td>
                       <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
                       <td>{{i.lrno}}</td>
