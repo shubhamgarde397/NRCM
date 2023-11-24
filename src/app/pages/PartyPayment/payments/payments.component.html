@@ -35,15 +35,18 @@
    
   </div>
 
-<!-- 'color':{'$cond':{'if':{'$eq':['$done',False]},'then':'red','else':'green'}} -->
   <div class="form-group row">
-      <div class="col-xs-6">
+      <div class="col-xs-4">
         <select id="pp" class="form-control" [(ngModel)]="pp1" (change)="setAllData()" [disabled]="selectDisable" style="background-color: black;color: wheat;">
-          <option selected>Select Trucks</option>
+          <option selected>Select Payent</option>
           <option *ngFor="let own of paymentData; let j = index;" value={{own._id}} [ngClass]="own.done==true ? 'doneT':'doneF'">
               {{own.date}}:{{own.amount}}
           </option>
         </select>
+      </div>
+
+      <div class="col-xs-2">
+        <input type="checkbox" id="paymentCheck" (change)="checkPayment()" [checked]="paymentCheck">
       </div>
 
       <div class="col-xs-6">
@@ -208,13 +211,17 @@
   
   
     <div class="form-group row">
-        <div class="col-xs-6">
+        <div class="col-xs-4">
           <select id="pp" class="form-control" [(ngModel)]="pp1" (change)="setAllDataBalance()" [disabled]="selectDisable" style="background-color: black;color: wheat;">
             <option selected>Select Trucks</option>
             <option *ngFor="let own of paymentData; let j = index;" value={{own._id}}  [ngClass]="own.done==true ? 'doneT':'doneF'">
                 {{own.date}}:{{own.amount}}
             </option>
           </select>
+        </div>
+
+        <div class="col-xs-2">
+          <input type="checkbox" id="paymentCheck" (change)="checkPayment()" [checked]="paymentCheck">
         </div>
   
         <div class="col-xs-6">

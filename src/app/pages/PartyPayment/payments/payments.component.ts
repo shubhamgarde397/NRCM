@@ -69,11 +69,12 @@ export class PaymentsComponent implements OnInit {
   public partyids=[];
   public mailSendButton=false;
 public balanceFollowGlobal=[];
+public paymentCheck=false;
 public balanceFollowArr=[]
 public typeOfColsB=false;
 public month;
 public selectDisable=false;
-public bigger:Boolean;
+public bigger=true;
 public year;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public handleF: handleFunction,
@@ -123,13 +124,12 @@ public year;
 
   findgst() {
     this.partyid = this.handleF.findgst(this.nopid, this.gstdetailslist);
-    this.partyids.push(this.handleF.findgst(this.nopid, this.gstdetailslist))
   }
 
   getPartyPayments(){
     let tempObj={};
     tempObj['method'] = 'partyPayment';
-    tempObj['partyid']=this.partyids[0]['_id'];
+    tempObj['partyid']=this.partyid['_id'];
     tempObj['from']=this.from;
     tempObj['to']=this.to;
     tempObj['tablename'] = ''
@@ -142,10 +142,12 @@ public year;
   }
 
   setAllData(){
+    this.paymentCheck = this.paymentData.find(r=>{return r._id===this.pp1})['done']
+    
     let tempObj={};
     tempObj['method'] = 'pendingPayment';
     tempObj['date'] = this.paymentData.find(r=>{return r._id===this.pp1})['date']
-    tempObj['partyid']=this.partyids[0]['_id'];
+    tempObj['partyid']=this.partyid['_id'];
     tempObj['paymentid'] = this.pp1;
     tempObj['tablename'] = ''
 
@@ -159,10 +161,11 @@ public year;
   }
 
   setAllDataBalance(){
+    this.paymentCheck = this.paymentData.find(r=>{return r._id===this.pp1})['done']
     let tempObj={};
     tempObj['method'] = 'pendingPaymentBalance';
     tempObj['date'] = this.paymentData.find(r=>{return r._id===this.pp1})['date']
-    tempObj['partyid']=this.partyids[0]['_id'];
+    tempObj['partyid']=this.partyid['_id'];
     tempObj['paymentid'] = this.pp1;
     tempObj['tablename'] = ''
 
@@ -237,7 +240,6 @@ public year;
   }
 
 
-
   addToSave(){
     let tempobj={}
     tempobj['tbids']=[]
@@ -266,9 +268,21 @@ public year;
     
   }
 
+  checkPayment(){
+    let temp={
+      'method':'makepartypaymenttrueorfalse',
+      'check':(<HTMLInputElement>document.getElementById('paymentCheck')).checked,
+      'tablename':''
+    }
+    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
+    .subscribe((response: Response) => {
+      alert(response['Status']);
+    });
+  }
+
   addToSaveBalance(){
-    let tempobj={}
-    tempobj['tbids']=[]
+    let tempobj={};
+    tempobj['tbids']=[];
     for(let i=0;i<this.addToArrayVar.length;i++){
       let t={}
       // this.addToArrayVar.map(r=>r.id);

@@ -19,9 +19,7 @@
           <th>Rent</th>
           <th>Extra Advance</th>
           <th>Total Rent</th>
-          <th>AdvDate</th>
-          <th>Adv</th>
-          <!-- add Loan Cut From Dues here as well, and cut in from dues for loan/transport -->
+          <th>Advance</th>
           <th>Cash</th>
           <th>Less</th>
           <th>Hamali</th>
@@ -47,9 +45,16 @@
             </ul>
             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" (click)="toModal(j)">Add Extra</button>
           </td>
-          <td><input class="form-control" type="number" value={{i.totalRent}} disabled></td>
-          <td><input class="form-control" type="date" id="advDate_{{j}}"></td>
-          <td><input class="form-control" type="number" id="adv_{{j}}" (change)='calcTent(j)'></td>
+          <td><input class="form-control" style="background-color: black;color: wheat;" type="number" value={{i.totalRent}} disabled></td>
+          <td>
+            <ul *ngFor="let kk of i.advanceArray;let jj = index;">
+              <li><span id="advamt_{{j}}_{{jj}}">{{kk.amount}}</span></li>
+              <li><span id="advdate_{{j}}_{{j}}">{{kk.date}}</span></li>
+            </ul>
+            <input type="checkbox" id="check_{{j}}">
+            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal1" (click)="toModal(j)">Add Advance</button>
+          </td>
+
           <td><input class="form-control" type="number" id="cash_{{j}}"></td>
           <td><input class="form-control" type="number" id="less_{{j}}"></td>
           <td><input class="form-control" type="number" id="hamali_{{j}}"></td>
@@ -58,11 +63,13 @@
           <td><input class="form-control" type="number" id="tBal_{{j}}" value="{{i.tentativeBalance}}"></td>
           <td><input class="form-control" type="number" id="wgt_{{j}}" value={{i.weight}}></td>
           <td>
-            <select class="form-control">
-              <option *ngFor="let jj of DuesT;">
-                {{jj.date}}-{{jj.amt}},{{jj.pending}}->{{jj.reason}}->{{jj.truckno}}
+            <select [(ngModel)]="dueChangeValue" (change)="dueChange()">
+              <option *ngFor="let jj of i.dues;let z = index;" value={{j}}_{{z}}_{{jj._id}}>
+                {{jj.date}}-{{jj.amt}},{{jj.pending}}->{{jj.reason}}
               </option>
             </select>
+            <button class="btn btn-danger" *ngIf="addDueDetailsTF" data-toggle="modal" data-target="#myModalDD">Due Details</button>
+          
           </td>
       </tr>
   </tbody>
@@ -119,4 +126,87 @@
     </div>
   </div>
   
+</div>
+
+<div class="container">
+    
+  <div class="modal fade" id="myModal1" role="dialog" style="background-color: black;">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Advance for {{truckno}}</h4>
+        </div>
+        <div class="modal-body" style="background-color: black;">
+    <div class="well" style="background-color: black;">
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Amount : 
+          <input type="number" class="form-control" [(ngModel)]="advamt">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Date : 
+          <input type="date" class="form-control" [(ngModel)]="advdate">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        
+        
+      <div class="col-sm-4">
+        <button type="button" class="btn btn-warning" (click)="addToArrayAdv()">
+          Submit
+        </button>
+      </div>
+      </div>
+    </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>
+
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Due Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Date : <input type="date" class="form-control" [(ngModel)]="dueMDate">
+        </div>
+
+        <div class="row">
+          Pending Amout : <label class="form-control">{{dueInfoPending}}</label>
+        </div>
+
+        <div class="row">
+          Due to Take : <input type="number" class="form-control" [(ngModel)]="dueMAmt">
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeDue()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
 </div>

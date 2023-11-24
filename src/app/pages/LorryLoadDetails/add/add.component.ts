@@ -93,6 +93,7 @@ public advance;
 public balance;
 public truckNo;
 public partyType;
+public advanceArray=[];
 // 0 nothing 1 add 2 display by billno 3 display by date 4 display by vehicle no 5 display by lrno
 
   constructor(
@@ -126,6 +127,9 @@ public partyType;
       cash:0,
       billamt:0,
       totalBalance:0,
+      totalAdvance:0,
+      totalAdvancePaid:0,
+      totalCut:0,
       billno:''
     });
     this.myFormGroup8 = this.formBuilder.group({
@@ -268,24 +272,32 @@ public partyType;
 
   changeFormStatus2(){
     this.extraRent=this.formData.extra;
+    this.advanceArray=this.formData.advanceArray;
+    
     this.myFormGroup.patchValue({
       loadingDate:this.formData.loadingDate,
       truckno:this.formData.truckno,
       partyType:this.formData.partyType,
-      partyName:this.formData.partyDetails[0]['name'],
-      placeName:this.formData.villageDetails[0]['village_name'],
+      partyName:this.formData.partyname,
+      placeName:this.formData.village1,
       rent:this.formData.rent,
-      advanceAmt:this.formData.advanceAmt,
-      advanceDate:this.formData.advanceDate,
-      totalRent:this.formData.rent+this.getAdvances2(this.extraRent,'extraAdvanceAmt'),
+      totalRent:this.formData.rent+this.getAdvances2(this.extraRent,'extraAdvanceamt'),
       extra_hamali:this.formData.extra_hamali,
       less:this.formData.less,
       cash:this.formData.cash,
       billamt:this.formData.billamt,
-      totalBalance:this.formData.rent+this.getAdvances2(this.extraRent,'extraAdvanceAmt')-this.formData.advanceAmt-this.formData.extra_hamali-this.formData.less-this.formData.cash-this.formData.billamt,
+      totalAdvancePaid:this.getAdvances2(this.advanceArray,'amount'),
+      totalBalance:(this.getAdvances2(this.formData.extra,'extraAdvanceamt')+this.formData.rent-(this.formData.billamt+this.formData.extra_hamali+this.formData.less+this.formData.cash)-this.getAdvances2(this.formData.dueInfo,'dueAmtTaken'))-this.getAdvances2(this.formData.advanceArray,'amount'),
+      totalAdvance:this.getAdvances2(this.advanceArray,'amount'),
+      totalCut:Math.abs(this.formData.extra_hamali-this.formData.less-this.formData.cash-this.formData.billamt),
       billno:this.formData.billno
     });
+
     
+  }
+
+  getAdvances2(d,c){
+    return d.reduce((partialSum, a) => partialSum + a[c], 0);
   }
 
   addExtraRent (){
@@ -315,11 +327,7 @@ public partyType;
     return this.myFormGroup.value.rent+sum;
   }
 
-  getAdvances2(d,c){
-    let sum=0;
-    d.forEach(r=>{sum=sum+r[c]})
-    return sum;
-  }
+
 
   totalBal(){
     this.myFormGroup.patchValue({
@@ -1102,8 +1110,11 @@ doc.setFontType('bold');
   }
 
   pdfData(){
+    
+ 
+    // let data=this.data[0];
+    let data=this.formData;
     let imgdata=Consts.imgData;
-    let data=this.data[0];
     var doc = new jsPDF({
       orientation: 'p',
       unit: 'mm',
@@ -1169,190 +1180,238 @@ doc.setFontType('bold');
     doc.text('Date : '+this.handleF.getDateddmmyy(data.loadingDate),105,mainY+39)
 
     // Consignee consigner box
-    doc.line(10, mainY+48, 140,mainY+48);
-    doc.line(10, mainY+55, 140,mainY+55);
+    doc.line(10, mainY+44, 140,mainY+44);
+    doc.line(10, mainY+58, 140,mainY+58);
 
-    doc.line(10, mainY+48, 10,mainY+55);
-    doc.line(140, mainY+48, 140,mainY+55);
+    doc.line(10, mainY+44, 10,mainY+58);
+    doc.line(140, mainY+44, 140,mainY+58);
 
-    doc.line(83, mainY+48, 83,mainY+55);
+    doc.line(83, mainY+44, 83,mainY+58);
+
+
     doc.setFontSize('10');  
     if(data.partyType==='NRCM'){
-      doc.text('Consigner :',12,mainY+53)
-      doc.text('NRCM',40,mainY+53)
-
-      doc.text('Consignee :',85,mainY+53)
-      doc.text('As Per Bill',110,mainY+53)
+      doc.text('Consigner : NRCM',12,mainY+49)
+      doc.text('Consignee : As Per Bill',85,mainY+49)
     }
     else{
-      doc.text('Consigner :',12,mainY+53)
-      doc.text(data.partyDetails[0]['name'],35,mainY+53)
-
-      doc.text('Consignee :',85,mainY+53)
-      doc.text('As Per Bill',110,mainY+53)
+      doc.text('Consigner : '+data['partyname'],12,mainY+49)
+      doc.text('Consignee : As Per Bill',85,mainY+49)
     }
-    
-    // 
-
-    // Location From To box
-    doc.line(10, mainY+60, 140,mainY+60);
-    doc.line(10, mainY+67, 140,mainY+67);
-
-    doc.line(10, mainY+60, 10,mainY+67);
-    doc.line(140, mainY+60, 140,mainY+67);
-
-    doc.line(75, mainY+60, 75,mainY+67);
-    doc.setFontSize('10');  
-
-      doc.text('From :',12,mainY+65)
-      doc.text('Pune',40,mainY+65)
-
-      doc.text('To :',mainY+65,mainY+65)
-      doc.text(data.villageDetails[0]['village_name'],90,mainY+65)
+// From To Text 
+      doc.text('From : Pune',12,mainY+56)
+      doc.text('To : '+data['village1'],85,mainY+56)
+      doc.line(10, mainY+51, 140,mainY+51);
     // 
 
     // Money Box
-    doc.line(10, mainY+75, 140,mainY+75); //top line
-    doc.line(10, mainY+150, 140,mainY+150); //bottom line
+    doc.line(10, mainY+65, 140,mainY+65); //top line
+    doc.line(10, mainY+140, 140,mainY+140); //bottom line
 
-    doc.line(10, mainY+75, 10,mainY+150); //left vertical
-    doc.line(140, mainY+75, 140,mainY+150); // right vertical
+    doc.line(10, mainY+65, 10,mainY+140); //left vertical
+    doc.line(140, mainY+65, 140,mainY+140); // right vertical
 // 5 horizontal
-    doc.line(10, mainY+85, 140,mainY+85);
-    doc.line(10, mainY+97, 140,mainY+97);
-    doc.line(10, mainY+109, 140,mainY+109);
+    doc.line(10, mainY+75, 113,mainY+75);
+    doc.line(53, mainY+87, 113,mainY+87);
+    doc.line(10, mainY+99, 53,mainY+99);
 
-    doc.line(10, mainY+121, 50,mainY+121);
-    doc.line(93, mainY+121, 140,mainY+121);
+    doc.line(10, mainY+111, 53,mainY+111);//line after total freight
+    doc.line(113, mainY+92, 140,mainY+92);//line after total reduction
 
-    doc.line(10, mainY+133, 140,mainY+133);
+    doc.line(10, mainY+123, 140,mainY+123);
 // 5 horizontal
-    doc.text('Freight',12,mainY+81)
-    doc.text('Extra',12,mainY+91)
-    doc.text('Total',12,mainY+102);doc.text('Freight',12,mainY+107)
-    doc.text('Advance',12,mainY+115)
-    doc.text('Balance',12,mainY+126);doc.text('Freight',12,mainY+131)
+    doc.text('Freight',11,mainY+71)
+    doc.text('Extra',11,mainY+81)
+    doc.text('Total',11,mainY+92);doc.text('Freight',11,mainY+97)
+    doc.setTextColor(189,143,5)
+    doc.text('Advance',11,mainY+105)
+    doc.setTextColor(0,0,0)
+    doc.text('Balance',11,mainY+116);doc.text('Freight',11,mainY+121)
     // 
-    doc.line(28, mainY+75, 28,mainY+133);//line after first info
+    doc.line(26, mainY+65, 26,mainY+123);//line after first info
     // 
     // Second Info
-    doc.text(String(data.rent),32,mainY+81)
-    doc.text(data.extra[0]?String(data.extra[0]['extraAdvanceMsg']):'',29,mainY+89);
-    doc.text(data.extra[0]?String(data.extra[0]['extraAdvanceAmt']):'',32,mainY+94)//1
-
-    doc.text(data.extra[1]?String(data.extra[1]['extraAdvanceMsg']):'',51,mainY+89);
-    doc.text(data.extra[1]?String(data.extra[1]['extraAdvanceAmt']):'',57,mainY+94)//2
-
-    doc.text(data.extra[2]?String(data.extra[2]['extraAdvanceMsg']):'',73,mainY+89);
-    doc.text(data.extra[2]?String(data.extra[2]['extraAdvanceAmt']):'',79,mainY+94)//3
-    this.extraRent=data.extra;
-    doc.text(String(this.getAdvances2(this.extraRent,'extraAdvanceAmt')+data.rent),32,mainY+105);
-    if(data.from==='advance'){
-    doc.text(String(data.advanceAmt-data.extra_hamali-data.less-data.cash),32,mainY+114);
+    doc.setFontSize('10');
+    doc.text(String(data.rent),32,mainY+71)
+    doc.text(data.extra[0]?String(data.extra[0]['extraAdvancemsg'])+' : '+String(data.extra[0]['extraAdvanceamt']):'',29,mainY+79);
+    doc.text(data.extra[1]?String(data.extra[1]['extraAdvancemsg'])+' : '+String(data.extra[1]['extraAdvanceamt']):'',29,mainY+84);
+    doc.text(data.extra[2]?String(data.extra[2]['extraAdvancemsg'])+' : '+String(data.extra[2]['extraAdvanceamt']):'',29,mainY+89);
+    doc.line(30, mainY+91, 45,mainY+91);
+    doc.setTextColor(49,94,168)
+    doc.text(String(this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent),32,mainY+95);
+    doc.setTextColor(0, 0, 0);
+    doc.setFontSize('9');
+    for(let i=0;i<data.advanceArray.length;i++)
+    {
+      doc.text(String(data.advanceArray[i]['amount'])+' : '+String(this.handleF.getDateddmmyy(data.advanceArray[i]['date'],'ddmmyy')),28,mainY+104+(i*3));
     }
-    else{
-      doc.text(String(data.advanceAmt),32,mainY+114);
-    }
-    doc.text(this.handleF.getDateddmmyy(data.advanceDate),29,mainY+119)
-    doc.text(String(this.getAdvances2(this.extraRent,'extraAdvanceAmt')+data.rent-data.advanceAmt),32,mainY+128);
-    // Second Info
-    // 
-    doc.line(50, mainY+75, 50,mainY+133);//line after second info
-    doc.line(71, mainY+85, 71,mainY+97);//line after second info////////////////
+    doc.text(
+      String(this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent)+'-'+
+      String((this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent) - ((this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent-(data.billamt+data.extra_hamali+data.less+data.cash)-this.getAdvances2(data.dueInfo,'dueAmtTaken'))-this.getAdvances2(data.advanceArray,'amount')))+'=',28,mainY+116);
+    doc.text(String((this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent-(data.billamt+data.extra_hamali+data.less+data.cash)-this.getAdvances2(data.dueInfo,'dueAmtTaken'))-this.getAdvances2(data.advanceArray,'amount')),28,mainY+120);
+    doc.setFontSize('10');
+    doc.line(53, mainY+65, 53,mainY+123);//line after second info
     // 
     // 3 Info
-    doc.text('Do not cross the goods',52,mainY+80)
+    doc.setTextColor(224,0,0);
+    doc.text('Do not cross the goods',63,mainY+70)
+    doc.setTextColor(0,0,0);
     doc.setFontSize('15');
     doc.setFontType('bold');
-    doc.text(data.truckno,51,mainY+122)
+    doc.text(data.truckno,62,mainY+83)
     doc.setFontSize('12');
     doc.setFontType('normal');
-    // 
-    doc.line(93, mainY+75,93,mainY+150);//line after 3 info
     // 
 // 4 info
 doc.setFontSize('10'); 
 doc.setFontType('bold');
-    doc.text('Bill',95,mainY+81)
-    doc.text('Hamali',95,mainY+91)
-    doc.text('Misc',95,mainY+102);
-    doc.text('Cash',95,mainY+115)
-    doc.text('Balance',94,mainY+126);
+    doc.text('Misc',114,mainY+70)
+    doc.text('Hamali',114,mainY+75)
+    doc.text('Less',114,mainY+80);
+    doc.text('Cash',114,mainY+85)
+    doc.text('Total',114,mainY+90);
     // 
-    doc.line(115, mainY+75, 115,mainY+133);//line after 4 info
+    doc.line(113, mainY+65, 113,mainY+123);//line after 4 info vertical
     // 
 
-    doc.text(String(data.billamt),120,mainY+81)
-    doc.text(String(data.extra_hamali),120,mainY+91)
-    doc.text(String(data.less),120,mainY+102);
-    doc.text(String(data.cash),120,mainY+115)
-    this.extraRent=data.extra;
-    if(data.from==='balance'){
-    doc.text(String(this.getAdvances2(this.extraRent,'extraAdvanceAmt')+data.rent-data.advanceAmt-data.extra_hamali-data.less-data.cash),120,mainY+126);
-    }
-    else{
-      doc.text(String(this.getAdvances2(this.extraRent,'extraAdvanceAmt')+data.rent-data.advanceAmt-data.extra_hamali-data.less-data.cash),120,mainY+126);
-    }
+    doc.text(String(data.billamt),128,mainY+71)
+    doc.text('+'+String(data.extra_hamali),128,mainY+75)
+    doc.text('+'+String(data.less),128,mainY+80);
+    doc.text('+'+String(data.cash),128,mainY+85)
+    doc.line(125, mainY+86, 138,mainY+86);//line after 4 info
+    doc.setTextColor(220, 76, 100)
+    doc.text(String(data.billamt+data.extra_hamali+data.less+data.cash),128,mainY+90)
+    doc.setTextColor(0,0,0)
 // 
 
-    doc.text('For,',94,mainY+138)
+// 
+// Payment Details how:
+doc.setFontSize('9'); 
+doc.setFontType('bold');
+    doc.text('Freight',114,mainY+97)
+    doc.text('Advance',114,mainY+102)
+    doc.text('Total Bill',114,mainY+107);
+    doc.text('Dues',114,mainY+112)
+    doc.text('Advance',114,mainY+117);
+    doc.text('Paid',114,mainY+120);
+    doc.setTextColor(49,94,168)
+    doc.text(String(this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent),130,mainY+97)
+    doc.setTextColor(0,0,0)
+    doc.line(113, mainY+98, 140,mainY+98);//line after 4 info
+    doc.setTextColor(0,0,0)
+    doc.text(String((this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent) - ((this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent-(data.billamt+data.extra_hamali+data.less+data.cash)-this.getAdvances2(data.dueInfo,'dueAmtTaken'))-this.getAdvances2(data.advanceArray,'amount')) ),130,mainY+102)
+    doc.setTextColor(220, 76, 100)
+    doc.text('-'+String(data.billamt+data.extra_hamali+data.less+data.cash),130,mainY+107);
+    doc.setTextColor(191,115,16)
+    doc.text('-'+String(this.getAdvances2(data.dueInfo,'dueAmtTaken')),130,mainY+112)
+    doc.line(129, mainY+114, 139,mainY+114);//line after 4 info
+    doc.line(mainY+116, mainY+92, mainY+116,mainY+123);//line after 4 info
+    doc.setTextColor(189,143,5)
+    doc.text(String(this.getAdvances2(data.advanceArray,'amount')),130,mainY+117)
+    doc.setTextColor(0,0,0)
+    // (this.getAdvances2(data.extra,'extraAdvanceamt')+data.rent-(data.billamt+data.extra_hamali+data.less+data.cash)-this.getAdvances2(data.dueInfo,'dueAmtTaken'))-this.getAdvances2(data.advanceArray,'amount')
+
+// 
+// Dues Data
+      if(data.due.length>0){
+        let yer=0
+        for(let i=0;i<data.due.length;i++){
+          doc.text(String('Due'+(i+1))+' : '+data.due[i]['reason']+' : '+String(data.due[i]['amt'])+' : '+String(this.handleF.getDateddmmyy(data.due[i]['date'],'ddmmyyyy')),55,mainY+90+(i*5))  
+          yer=i;
+        }
+        yer=yer+1
+        doc.setTextColor(191,115,16)
+        doc.text('Total Due : '+String(this.getAdvances2(data.due,'amt')),55,mainY+90+(yer*5))  
+        doc.setTextColor(0,0,0)
+        doc.line(53, mainY+92+(yer*5), 113,mainY+92+(yer*5));//line after 4 info
+
+        doc.line(53, mainY+92+(yer*5)+5, 113,mainY+92+(yer*5)+5);
+        doc.text('Sr',55,mainY+90+(yer*5)+5)
+        doc.text('Date',60,mainY+90+(yer*5)+5)
+        doc.text('Amount',80,mainY+90+(yer*5)+5)
+        yer=mainY+90+(yer*5)+10;
+        let yyer=0
+        for(let i=0;i<data.dueInfo.length;i++){
+          if(data.dueInfo[i]['fromWhere']==='AD'){
+          doc.text(String(i+1),55,yer+(i*5))
+          doc.text(String(this.handleF.getDateddmmyy(data.dueInfo[i]['date'],'ddmmyyyy')),60,yer+(i*5))
+          doc.text(String(data.dueInfo[i]['dueAmtTaken']),80,yer+(i*5))
+          yyer=i;
+          }
+        }
+        doc.setTextColor(191,115,16)
+        doc.text('Total Due Cut : '+String(this.getAdvances2(data.dueInfo,'dueAmtTaken')),55,yer+(yyer*5)+5)  
+        doc.setTextColor(0,0,0)
+      }
+// 
+
+    doc.text('For,',94,mainY+128)
     if(data.partyType==='NRCM'){
-      doc.text('Nitin Roadways And',100,mainY+138+5)
-      doc.text('Cargo Movers',104,mainY+138+10)
+      doc.text('Nitin Roadways And',100,mainY+128+5)
+      doc.text('Cargo Movers',104,mainY+128+10)
       
     }
     if(data.partyType==='NR'){
-      doc.text('Nitin Roadways',100, mainY+138+5)
+      doc.text('Nitin Roadways',100, mainY+128+5)
     }
     if(data.partyType==='SNL'){
-        doc.text('Shri Nitin Logistics',100, mainY+138+5)
+        doc.text('Shri Nitin Logistics',100, mainY+128+5)
     }
+    doc.line(90,mainY+123,90,mainY+140)
     doc.setFontSize('8')
-    doc.text('I agree with the terms and conditions overleaf and abide',12, mainY+138)
-    doc.text('by that the goods are received in good condition.',12, mainY+138+3)
+    doc.text('I agree with the terms and conditions overleaf and abide',12, mainY+128)
+    doc.text('by that the goods are received in good condition.',12, mainY+128+3)
     // Box complete
 
     // Account Details// 
     doc.setFontSize('8')
-    if(data.ownerDetails[0].update){
-      doc.text('*Note : Please send your Account details with Truck No. on Mo:-9822288257',12, mainY+153)
+    if(data['update']){
+      doc.text('*Note : Please send your Account details with Truck No. on Mo:-9766707061',12, mainY+148)
     }else{
-    doc.text('*Note : Advance and Balance payment will be done on this account.',12, mainY+153)
-    doc.text('Please update your Account Details if necessary.',22, mainY+156)
+    doc.text('*Note : Advance and Balance payment will be done on this account.',12, mainY+148)
+    doc.text('Please update your Account Details if necessary.',22, mainY+151)
     }
     // 
      // Account
+     
   // Account square
   doc.setFontSize('10')
   
-  doc.line(10,175,115,175)
-  doc.line(10,196,115,196)
-  doc.line(10,175,10,196)
-  doc.line(115,175,115,196)
-
-  doc.line(50,175,50,196)
-
-  doc.line(10,181,115,181)
+  doc.line(10,165,115,165)
   doc.line(10,186,115,186)
-  doc.line(10,191,115,191)
+  doc.line(10,165,10,186)
+  doc.line(115,165,115,186)
+
+  doc.line(50,165,50,186)
+
+  doc.line(10,171,115,171)
+  doc.line(10,176,115,176)
+  doc.line(10,181,115,181)
 
 
 
-  doc.text('Account Name ',12,180)
-  doc.text('Account Number ',12,185)
-  doc.text('Bank Name ',12,190)
-  doc.text('IFSC ',12,195)
-    if(data.ownerDetails[0].update){}else{
-  doc.text(data.ownerDetails[0].accountDetails[0]['accountName'],mainY+40,180)
-  doc.text(String(data.ownerDetails[0].accountDetails[0]['accountNumber']),mainY+40,185)
-  doc.text(data.ownerDetails[0].accountDetails[0]['bankName'],mainY+40,190)
-  doc.text(data.ownerDetails[0].accountDetails[0]['ifsc'],mainY+40,195)
+  doc.text('Account Name ',12,170)
+  doc.text('Account Number ',12,175)
+  doc.text('Bank Name ',12,180)
+  doc.text('IFSC ',12,185)
+    if(data['update']){}else{
+  doc.text(data['account']['accountName'],mainY+40,170)
+  doc.text(String(data['account']['accountNumber']),mainY+40,175)
+  doc.text(data['account']['bankName'],mainY+40,180)
+  doc.text(data['account']['ifsc'],mainY+40,185)
     }
-  doc.addImage(imgdata, 'PNG', 118, 174, 25, 28);//add if else
-  doc.setFontSize('8')
-  doc.text('Scan QR code to contact us.',76,200)
+    if(data.due.length==0){
+      doc.addImage(imgdata, 'PNG', 70, 101, 25, 28);//add if else
+      doc.setFontSize('8')
+      doc.text('Scan QR code to contact us.',65,132)
+    }
+    else{
+      doc.addImage(imgdata, 'PNG', 118, 160, 25, 28);//add if else
+      doc.setFontSize('8')
+      doc.text('Scan QR code to contact us.',76,190)
+    }
+  
   doc.save('Bills.pdf')
     // 3 Info
   }
-
 }
