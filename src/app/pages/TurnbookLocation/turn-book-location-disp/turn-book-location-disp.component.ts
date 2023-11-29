@@ -76,11 +76,11 @@ export class TurnBookLocationDispComponent implements OnInit {
         let temp=[]
         for(let i=0;i<r.locationsArray.length;i++){
             let tempObj={};
-            tempObj['location']=r.locationsArray[i];
-            tempObj['date']=r.locationDate[i];
+            tempObj['locations']=r.locationsArray[i];
+            tempObj['locationDate']=r.locationDate[i];
             temp.push(tempObj)
         }
-        r['locationData']=temp;
+        r['currentVehicleStatus']=temp;
     })
       this.tblShow=this.tbl.length>0?true:false;
     });
@@ -104,9 +104,9 @@ export class TurnBookLocationDispComponent implements OnInit {
     this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , true)
     .subscribe((res: any) => {
       alert(res.Status);
-      this.tbl[this.id]['locationData'].push({'location':this.tempVNAME,'date':data.value.date})
+      this.tbl[this.id]['currentVehicleStatus'].push({'location':this.tempVNAME,'date':data.value.date})
       let a = this.tbl.filter(r=>{return r._id==this.data._id})[0]
-      a['updateTBL']=a.locationData.at(-1).location===a.destination?true:false
+      a['updateTBL']=a.currentVehicleStatus.at(-1).location===a.destination?true:false
     });
   }
 
@@ -115,8 +115,8 @@ export class TurnBookLocationDispComponent implements OnInit {
     
     let tempObj={}
     tempObj['tablename'] = 'turnbook';
-    tempObj['location'] = this.tempVNAME;
-    tempObj['date'] = this.locationDate;
+    tempObj['locations'] = this.tempVNAME;
+    tempObj['locationDate'] = this.locationDate;
     tempObj['_id'] = i._id;
     tempObj['method'] = 'updatetblnew';
     tempObj['tbltype'] = 'update';
@@ -171,9 +171,9 @@ export class TurnBookLocationDispComponent implements OnInit {
     this.apiCallservice.handleData_New_python('turnbook', 1,tempObj , true)
     .subscribe((res: any) => {
       alert(res.Status);
-      this.tbl[j]['locationData'].splice(p, 1);
+      this.tbl[j]['currentVehicleStatus'].splice(p, 1);
       let a = this.tbl.filter(r=>{return r._id==i})[0]
-      a['updateTBL']=a.locationData.at(-1).location===a.destination?true:false
+      a['updateTBL']=a.currentVehicleStatus.at(-1).location===a.destination?true:false
     });
     }else{}
   }

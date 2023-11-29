@@ -27,6 +27,9 @@ import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component'
 import { LRDisplayComponent } from './pages/LRsend/lrdisplay/lrdisplay.component';
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
+import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
+import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
+import { AddqrComponent } from './pages/Track/addqr/addqr.component';
  
 export const routes: Routes =
     [
@@ -41,6 +44,14 @@ export const routes: Routes =
         {
             path: 'Login',
             component: LoginComponent
+        },
+        {
+            path: 'TRACK',
+            component: TrackLoginComponent
+        },
+        {
+            path: 'TRACKQR',
+            component: TrackDisplayComponent
         },
         {
             path: 'Whatsapp',
@@ -85,6 +96,10 @@ export const routes: Routes =
                     {
                         path: 'NRCM_HOME',
                         component: WelcomePageComponent
+                    },
+                    {
+                        path: 'QR',
+                        component: AddqrComponent
                     },
                     {
                         path: 'GST_HANDLER',

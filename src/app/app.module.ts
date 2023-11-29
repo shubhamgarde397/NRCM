@@ -53,6 +53,10 @@ import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
 import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component';
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component';
+import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
+import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
+import { AddqrComponent } from './pages/Track/addqr/addqr.component';
+import { QrstatusComponent } from './pages/Track/qrstatus/qrstatus.component';
 
 @NgModule({
   declarations: [
@@ -86,7 +90,11 @@ import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/d
     GiftHandlerComponent,
     AddComponent,
     DailyAccountAdderComponent,
-    DisplaySequenceComponent
+    DisplaySequenceComponent,
+    TrackDisplayComponent,
+    TrackLoginComponent,
+    AddqrComponent,
+    QrstatusComponent
   ],
   imports: [
     BrowserModule,

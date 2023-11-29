@@ -172,7 +172,7 @@
               </select>
             </td>
             <td>
-              <select class="form-control" id="name_{{jj}}" [disabled]="ii.update">
+              <select class="form-control" id="name_{{jj}}" [disabled]="ii.update"  style="background-color: black;color: wheat;">
                 <option disabled id="option_{{jj}}">Default</option>
                 <option value={{kki}} *ngFor="let kk of ii.accountNo;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
               </select>
@@ -198,12 +198,12 @@
   <div class="modal-dialog">
   
 
-    <div class="modal-content">
-      <div class="modal-header">
+    <div class="modal-content" style="background-color: black;color: wheat;">
+      <div class="modal-header" style="background-color: black;color: wheat;">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Account Details for {{accUpdater.truckno}}</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" style="background-color: black;color: wheat;">
         <div class="row">
           Account Name : <input type="text" class="form-control" [(ngModel)]="accName">
         </div>
@@ -222,9 +222,9 @@
        
       </div>
 
-      <div class="modal-footer">
+      <div class="modal-footer" style="background-color: black;color: wheat;">
         <button class="btn btn-warning" (click)="storeAcc()">Store</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
     

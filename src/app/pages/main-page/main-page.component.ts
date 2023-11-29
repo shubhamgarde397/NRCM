@@ -58,6 +58,12 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
     this.loginV = true;
     
   }
+
+  track(){
+    this.security.setBranch('nrcm');
+    this.router.navigate(['TRACK']);
+    this.loginV = true;
+  }
   sendMsg(type,typo){
 
     switch (typo) {
