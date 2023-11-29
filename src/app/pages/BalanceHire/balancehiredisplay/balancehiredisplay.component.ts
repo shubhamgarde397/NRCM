@@ -1300,27 +1300,27 @@ if(newpage===1){
       doc.line(5, i-4, 32, i-4);
       doc.text(String(totalAmount),16,i)
       }
-      let bigK=0
+      let bigKK=0
+      // let data = this.balanceDate[z].truckData;
+      for (let kk = 0; kk < this.balanceDate[z].dueToTake.length; kk++) {
+        if(this.balanceDate[z].dueToTake[kk]){
+          doc.setFontSize('8');
+          doc.setLineDash([0.5, 1], 10);
+          doc.line(37, i-4, 146, i-4);
+          
+          
 
+            doc.text('*'+String(this.balanceDate[z].due[kk]['reason'])+'  *Total Due -'+String(this.balanceDate[z].due[kk]['totalDue']), 38.5, i+1+bigKK);//comments
+            doc.text('* Due : '+String(this.balanceDate[z].due[kk]['thiscut'])+'   *Due Date* : '+String(this.balanceDate[z].due[kk]['dueTaken'].slice(8, 10) + '/' + this.balanceDate[z].due[kk]['dueTaken'].slice(5, 7) + '/' + this.balanceDate[z].due[kk]['dueTaken'].slice(0, 4)),83.5,i+1)+bigKK;
+            bigKK=bigKK+5
 
-      if(this.balanceDate[z].dueToTake){
-        doc.setFontSize('8');
-        doc.setLineDash([0.5, 1], 10);
-        doc.line(37, i-4, 146, i-4);
-        
-        
-
-          doc.text('*'+String(this.balanceDate[z].due['reason'])+'  *Total Due -', 38.5, i+1);//comments
-          doc.text(String(this.balanceDate[z].due['totalDue']),61.5,i+1)
-          doc.text('* Due : '+String(this.balanceDate[z].due['thiscut'])+'   *Due Date* : '+String(this.balanceDate[z].due['dueTaken'].slice(8, 10) + '/' + this.balanceDate[z].due['dueTaken'].slice(5, 7) + '/' + this.balanceDate[z].due['dueTaken'].slice(0, 4)),83.5,i+1);
-
-        
-
+        }
         doc.setLineDash([1, 0], 10);
       }
+      bigKK=bigKK==0?5:bigKK;
 
 
-      
+      let bigK=0
 
       let adder=0
 
@@ -1347,7 +1347,7 @@ if(newpage===1){
       doc.text(this.balanceDate[z]['available'], 191, accountI+6);//accno
       doc.setFontSize('8');
       
-      i = i + 12-(bigK*2);
+      i = i + 12-(bigK*2)+(bigKK-5);
     }
     doc.text('#', 192, pageStopper)
     //Dynamic Part End
