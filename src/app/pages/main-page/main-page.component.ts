@@ -124,6 +124,10 @@ find(event){
           this.trucknoid11=res.Data[0].truckName.truckno
           this.find11UniqueTruck();
         }
+        if(event==='qr'){
+          this.trucknoid11=res.Data[0].truckName.truckno
+          this.find11UniqueTruck();
+        }
       }
       });
 
