@@ -88,7 +88,11 @@
           <li *ngFor="let ii of i.qr">{{ii}}</li>
         </ul>
     </td>
-      <td><button class="btn btn-danger" (click)="copyAcc(i)">Copy</button></td>
+      <td>
+        <textarea value={{i.textMsg}} style="    width: 384px;height: 190px;color: wheat;background-color: black;"></textarea>
+        <!-- <button class="btn btn-danger" (click)="copyAcc(i)">Copy</button>
+        {{msg}} -->
+      </td>
     </tr>
   </tbody>
 </table>

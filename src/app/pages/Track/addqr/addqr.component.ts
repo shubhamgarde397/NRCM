@@ -32,6 +32,7 @@ export class AddqrComponent implements OnInit {
   public dataDispatch=[];
   public dataT=0;
   public locationData=[];
+  public msg= '';
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
@@ -100,29 +101,22 @@ getData(data){
             this.data=res.Data;
           break;
           case 3:
-            this.dataDispatch=res.Data;
+          this.dataDispatch=this.setMsg(res.Data);
           break;
       }
       
     });
 }
-// Nitin Roadways and Cargo Movers
 
-// TruckNo : TN29 CW 7895
-// Destination : Mayavaram
-// Contact :   91 9597137742
-// QR : 12230202
-
-// The above truck has been dispatched from Urse Plant.
-
-// Nitin Roadways and Cargo Movers
-// Pune
-// 9822288257
-// 9766707061
+setMsg(data){
+  data.forEach(r => {
+    r['textMsg']=this.copyAcc(r)
+  });
+return data;
+}
 
 copyAcc(data){
   let msg=''
-  msg=msg+'*Nitin Roadways*\n\n';
   msg=msg+'*TruckNo*-'+(data.truckno)+'\n';
   msg=msg+'*Destination*-'+(data.v1)+'\n';
   msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
@@ -130,8 +124,8 @@ copyAcc(data){
   msg=msg+'*The above truck has been dispatched from '+ this.typeOfLoad(data.typeOfLoad) +' Plant.*\n\n';
   msg=msg+'*Nitin Roadways*\n';
   msg=msg+'*Pune*\n';
-
-  window.navigator['clipboard'].writeText(msg)
+  return msg;
+  // window.navigator['clipboard'].writeText(this.msg)
 }
 
 typeOfLoad(data){
