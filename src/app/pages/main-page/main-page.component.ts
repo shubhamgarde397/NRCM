@@ -33,6 +33,8 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   public newAuthor: any;
   public paymentData;
 
+  public data1=[9822288257,9766707061]
+
   public selectedFile = null;
   public imageFolder = ''
   public panCardFile: any;

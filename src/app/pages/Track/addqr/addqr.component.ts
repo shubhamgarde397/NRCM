@@ -27,6 +27,7 @@ export class AddqrComponent implements OnInit {
   public contacts=[];
   public nrcmid;
   public partys=[];
+  public village=[];
   public data=[];
   public dataDispatch=[];
   public dataT=0;
@@ -44,6 +45,7 @@ export class AddqrComponent implements OnInit {
       tbid:'',
       type:'',
       pid:'',
+      vid:'',
       contact:''
     });
     this.myFormGroup1 = this.formBuilder.group({
@@ -52,8 +54,7 @@ export class AddqrComponent implements OnInit {
     });
     this.myFormGroup2 = this.formBuilder.group({
       tbid:'',
-      location:'',
-      locDate:''
+      status:''
     });
 
   }
@@ -80,7 +81,7 @@ getData(data){
         tempObj['method']='findbyqrforLoadingStatus';
       break;
       case 3:
-        tempObj['method']='findbyqrforDispatchStatus';
+        tempObj['method']='findbyqrforMessageSend';
       break;
   }
   
@@ -93,6 +94,7 @@ getData(data){
         case 1:
           this.trucks=res.Data[0]['trucks'];
       this.partys=res.Data[1]['party'];
+      this.village=res.Data[2]['village'];
           break;
           case 2:
             this.data=res.Data;
@@ -103,6 +105,39 @@ getData(data){
       }
       
     });
+}
+// Nitin Roadways and Cargo Movers
+
+// TruckNo : TN29 CW 7895
+// Destination : Mayavaram
+// Contact :   91 9597137742
+// QR : 12230202
+
+// The above truck has been dispatched from Urse Plant.
+
+// Nitin Roadways and Cargo Movers
+// Pune
+// 9822288257
+// 9766707061
+
+copyAcc(data){
+  let msg=''
+  msg=msg+'*Nitin Roadways*\n\n';
+  msg=msg+'*TruckNo*-'+(data.truckno)+'\n';
+  msg=msg+'*Destination*-'+(data.v1)+'\n';
+  msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
+  msg=msg+'*QR*-'+(data.qr[0])+'\n\n'
+  msg=msg+'*The above truck has been dispatched from '+ this.typeOfLoad(data.typeOfLoad) +' Plant.*\n\n';
+  msg=msg+'*Nitin Roadways*\n';
+  msg=msg+'*Pune*\n';
+
+  window.navigator['clipboard'].writeText(msg)
+}
+
+typeOfLoad(data){
+  if(data==='Pipe'){return 'Urse';}
+  else if(data==='Fittings'){return 'Talegaon';}
+  else if(data==='Ratnagiri'){return 'Ratnagiri';}
 }
 
 addlrno(){
@@ -124,6 +159,7 @@ deleteContact(i,j){
     'tablename':'',
     'id':this.myFormGroup.value.tbid,
     'pid':this.myFormGroup.value.pid,
+    'vid':this.myFormGroup.value.vid,
     'oid':this.trucks.find(r=>{return r._id===this.myFormGroup.value.tbid})['ownerid'],
     'qrs':this.qrs,
     'contacts':this.contacts,
@@ -156,6 +192,8 @@ deleteContact(i,j){
 
     }
 
+  
+
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
@@ -166,6 +204,24 @@ deleteContact(i,j){
           status:''
         })
       });
+  }
+
+  submitLoadingStatus2(){
+    let tempObj={
+    'method':'addloadingstatustotruck',
+    'tablename':'',
+    'id':this.myFormGroup2.value.tbid,
+    'status':this.myFormGroup2.value.status
+
+    }
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this.myFormGroup1.patchValue({
+        tbid:'',
+        status:''
+      })
+    });
   }
 
   submitDispatchStatus(){
