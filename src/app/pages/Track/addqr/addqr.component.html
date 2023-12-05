@@ -12,58 +12,7 @@
       <button class="btn btn-danger" (click)="getData(3)">Get Data</button>
     </div>
   </div>
-  <div class="well">
-  
-  <div class="col-sm-8">
-  <form [formGroup]="myFormGroup2" name="myform" id="myform">
-    
 
-
-
-    <div class="form-group row" >
-
-      <div class="col-xs-2">
-        <label for="truckNo"> Truckno </label>
-      </div>
-
-      <div class="form-group row">
-        <div class="col-xs-3">
-          TruckNo : <select id="dest" class="form-control" formControlName="tbid" (change)="getDataaa()">
-            <option *ngFor="let own of dataDispatch" value={{own._id}}>{{own.truckno}}</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="form-group row" >
-
-      <div class="col-xs-2">
-        <label for="truckNo"> Loading Status </label>
-      </div>
-
-      <div class="form-group row">
-        <div class="col-xs-3">
-          Loading Status : <select id="dest" class="form-control" formControlName="status">
-            <option value="Message Sent_blue">Message Sent</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-
-
-    <div class="row">
-      
-      <div class="form-group" class="col-xs-3">
-        <button class="btn btn-warning" (click)="submitLoadingStatus2()">Send to Set</button>
-      </div>
-    </div>
-
-  </form>
-</div>
-
-</div>
 <div class="well">
 <table class="table table-bordered">
   <thead>
@@ -72,6 +21,7 @@
     <th>TruckNo-Contact</th>
     <th>QR</th>
     <th>Message</th>
+    <th>Send</th>
   </tr>
   </thead>
   <tbody>
@@ -90,8 +40,9 @@
     </td>
       <td>
         <textarea value={{i.textMsg}} style="    width: 384px;height: 190px;color: wheat;background-color: black;"></textarea>
-        <!-- <button class="btn btn-danger" (click)="copyAcc(i)">Copy</button>
-        {{msg}} -->
+      </td>
+      <td>
+        <button class="btn btn-danger" (click)="submitLoadingStatus2(i,j)">Send</button>
       </td>
     </tr>
   </tbody>
@@ -107,80 +58,7 @@
         <button class="btn btn-danger" (click)="getData(2)">Get Data</button>
       </div>
     </div>
-    <div class="well">
-    
-    <div class="col-sm-8">
-    <form [formGroup]="myFormGroup1" name="myform" id="myform">
-      
-
-
-
-      <div class="form-group row" >
-
-        <div class="col-xs-2">
-          <label for="truckNo"> Truckno </label>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-xs-3">
-            TruckNo : <select id="dest" class="form-control" formControlName="tbid" (change)="getDataaa()">
-              <option *ngFor="let own of data" value={{own._id}}>{{own.truckno}}</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="form-group row" >
-
-        <div class="col-xs-2">
-          <label for="truckNo"> Loading Status </label>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-xs-3">
-            Loading Status : <select id="dest" class="form-control" formControlName="status">
-              <option value="In Parking_wheat">In Parking</option>
-              <option value="Loading_yellow">Loading</option>
-              <option value="Counting_purple">Counting</option>
-              <option value="Waiting For Bill_blue">Waiting For Bill</option>
-              <option value="Overweight_orange">Overweight</option>
-              <option value="Additional Order Required_red">Additional Order Required</option>
-              <option value="Waiting To Dispatch_orange">Waiting To Dispatch</option>
-              <option value="Dispatched_green">Dispatched</option>
-            </select>
-          </div>
-        </div>
-      </div>
-
-
-
-      <div class="row">
-        
-        <div class="form-group" class="col-xs-3">
-          <button class="btn btn-warning" (click)="submitLoadingStatus()">Send to Set</button>
-        </div>
-      </div>
-
-    </form>
-  </div>
-  <div class="col-sm-4">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-        <th>Sr</th>
-        <th>Status</th>
-      </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let i of locationData;let j=index;">
-          <td>{{j+1}}</td>
-          <td [ngStyle]="{'color': i.split('_')[1] }">{{i.split('_')[0]}}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
+ 
 <div class="well">
   <table class="table table-bordered">
     <thead>
@@ -190,6 +68,7 @@
       <th>Status</th>
       <th>QR</th>
       <th>Account</th>
+      <th>Message</th>
     </tr>
     </thead>
     <tbody>
@@ -199,6 +78,7 @@
             <ul>
               <li *ngFor="let ii of i.contacttb"><a href="tel:+91 {{ii}}">{{ii}}</a></li>
             </ul>
+            <button class="btn btn-warning" *ngIf="i.pan==='red'" (click)="accAdder(i,j)" data-toggle="modal" data-target="#myModalPan">Pan</button>
         </td>
         <td>
           <ul *ngFor="let ii of i.currentVehicleStatusforLoading">
@@ -211,11 +91,27 @@
           </ul>
         </td>
         <td>
-          <ul>
+          <ul *ngIf="!i.update">
             <li>{{i.account[0].accountName}}</li>
             <li>{{i.account[0].accountNumber}}</li>
             <li>{{i.account[0].ifsc}}</li>
           </ul>
+          <button class="btn btn-warning" *ngIf="i.update" (click)="accAdder(i,j)" data-toggle="modal" data-target="#myModalAccount">Account</button>
+        </td>
+        <td>
+          <div class="col-sm-4">
+          <textarea value={{i.textMsg}} style="width: 200px;height: 130px;color: wheat;background-color: black;"></textarea>
+        </div>
+        <div class="col-sm-8">
+          <button class="btn btn-primary" (click)="submitLoadingStatus(j,'In Parking_wheat')">In Parking</button>
+          <button class="btn btn-info" (click)="submitLoadingStatus(j,'Loading_yellow')">Loading</button>
+          <button class="btn btn-success" (click)="submitLoadingStatus(j,'Counting_purple')">Counting</button>
+          <button class="btn btn-primary" (click)="submitLoadingStatus(j,'Waiting for Bill_blue')">Waiting for Bill</button>
+          <button class="btn btn-warning" (click)="submitLoadingStatus(j,'Overweight_orange')">Overweight</button>
+          <button class="btn btn-danger" (click)="submitLoadingStatus(j,'Additional Order Required_red')">Additional Order</button>
+          <button class="btn btn-warning" (click)="submitLoadingStatus(j,'Waiting To Dispatch_orange')">Waiting To Dispatch</button>
+          <button class="btn btn-success" (click)="submitLoadingStatus(j,'Dispatched_green')">Dispatched</button>
+        </div>
         </td>
       </tr>
     </tbody>
@@ -231,21 +127,25 @@
     </div>
     <form [formGroup]="myFormGroup" name="myform" id="myform">
       
-      <div class="form-group row" >
+      <div class="form-group row">
 
         <div class="col-xs-2">
-          <label for="truckNo"> Truckno </label>
-        </div>
-
-        <div class="form-group row">
+          Truckno : 
+          </div>
           <div class="col-xs-3">
-            TruckNo : <select id="dest" class="form-control" formControlName="tbid">
-              <option *ngFor="let own of trucks" value={{own._id}}>{{own.datetruck.split('_')[1]}}</option>
-            </select>
+          <input type="text" list="cars" class="form-control" formControlName="tbid" />
+          <datalist id="cars">
+            <option *ngFor="let own of trucks" value={{own.truckno}}>{{own.truckno}}</option>
+          </datalist>
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.tbid.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
           </div>
         </div>
       </div>
-
 
       <div class="form-group row" >
 
@@ -256,6 +156,13 @@
         <div class="col-xs-3">
           <input type="number" class="form-control" formControlName="qr">
           <button class="btn btn-success" (click)="addlrno()">Add</button>
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.qr.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
         </div>
 
         <div class="col-xs-3">
@@ -287,6 +194,13 @@
               <option *ngFor="let own of partys" value={{own._id}}>{{own.name}}</option>
             </select>
           </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.pid.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -301,6 +215,13 @@
             Village : <select id="dest" class="form-control" formControlName="vid">
               <option *ngFor="let own of village" value={{own._id}}>{{own.village_name}}</option>
             </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.vid.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
           </div>
         </div>
       </div>
@@ -319,6 +240,13 @@
               <option value="Ratanagiri">Ratanagiri</option>
             </select>
           </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.type.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -331,6 +259,13 @@
         <div class="col-xs-3">
           <input type="number" class="form-control" formControlName="contact">
           <button class="btn btn-success" (click)="addcontact()">Add</button>
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.contact.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
         </div>
 
         <div class="col-xs-3">
@@ -354,12 +289,80 @@
       <div class="row">
         
         <div class="form-group" class="col-xs-3">
-          <button class="btn btn-warning" (click)="submitAmt()">Send to Set</button>
+          <button class="btn btn-warning" (click)="submitAmt()" [disabled]='!myFormGroup.valid'>Send to Set</button>
         </div>
       </div>
 
     </form>
   </div>
+
+
+<div class="modal fade" id="myModalAccount" role="dialog">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: wheat;">
+        <div class="modal-header" style="background-color: black;color: wheat;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Account Details for {{bigI.truckno}}</h4>
+        </div>
+        <div class="modal-body" style="background-color: black;color: wheat;">
+          <div class="row">
+            Account Name : <input type="text" class="form-control" [(ngModel)]="accName">
+          </div>
+  
+          <div class="row">
+           Account Number : <input type="text" class="form-control" [(ngModel)]="accNo">
+          </div>
+  
+          <div class="row">
+            IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc" (change)="getBankName()">
+          </div>
+  
+          <div class="row">
+            Bank Name : <input type="text" class="form-control" [(ngModel)]="bname" disabled>
+          </div>
+         
+        </div>
+  
+        <div class="modal-footer" style="background-color: black;color: wheat;">
+          <button class="btn btn-warning" (click)="storeAcc()">Store</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+ 
+  <div class="modal fade" id="myModalPan" role="dialog">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: wheat;">
+        <div class="modal-header" style="background-color: black;color: wheat;">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">PAN Details for {{bigI.truckno}}</h4>
+        </div>
+        <div class="modal-body" style="background-color: black;color: wheat;">
+          <div class="row">
+            Name : <input type="text" class="form-control" [(ngModel)]="name">
+          </div>
+  
+          <div class="row">
+           PAN : <input type="text" class="form-control" [(ngModel)]="pan">
+          </div>
+  
+        </div>
+  
+        <div class="modal-footer" style="background-color: black;color: wheat;">
+          <button class="btn btn-warning" (click)="storePan()">Store</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div> 
 
 
 

@@ -835,7 +835,7 @@ this.placeid=this.tempDate[0]['place']['_id']
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
           alert(response['Status'])
-          this.turnbooklist.splice(this.updateTruck['index'], 1);
+          this.turnbooklist.splice(this.indexBig, 1);
         });
     }
   }
