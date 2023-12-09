@@ -32,6 +32,9 @@
 <div class="col-sm-1" style="margin-left: 2vh;">
   <button class="btn btn-info" (click)="getTpt()">All Envelopes</button>
 </div>
+<div class="col-sm-1" style="margin-left: 2vh;">
+  <button class="btn btn-info" (click)="getAmitDetails('7',false)">Amit Urse</button>
+</div>
 </div>
 
 <div *ngIf="whichType==='1'" style="background-color: black">
@@ -426,5 +429,16 @@
                 </ul>
               </div>
               </div>
+              
+              <div *ngIf="whichType==='7'">
+             
+          
+                <div class="well"  style="background-color: black;border-color: black;">
+                
+                  <textarea value={{dataT}} style="width: 200px;height: 500px;color: wheat;background-color: black;"></textarea>
+                
+                </div>
+                </div>
+                
 
             </div>

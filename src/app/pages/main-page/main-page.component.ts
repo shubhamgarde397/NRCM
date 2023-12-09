@@ -45,7 +45,7 @@ export class MainPageComponent implements OnInit {
   public data6=[];
   public fromDate='';
   public toDate = '';
-
+public dataT='';
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -73,6 +73,38 @@ export class MainPageComponent implements OnInit {
     });
   }
 
+  getAmitDetails(){
+    let tempObj={}
+          tempObj['method']='findbyqrforLoadingStatus';  
+    tempObj['tablename']='';
+  
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+
+              this.dataT=this.setMsg1(res.Data);
+        this.whichType='7';    
+        
+      });
+  }
+
+  littleDetail(data,msg){
+    if(data.typeOfLoad==='Pipe'){
+    msg=msg+(data.truckno)+'\n';
+    msg=msg+(data.party)+'\n';
+    msg=msg+(data.v1)+'\n';
+    msg=msg+'\n\n';
+    return msg;
+    }
+  }
+  
+  
+  setMsg1(data){
+    let msg='';
+    data.forEach(r => {
+      msg=this.littleDetail(r,msg)
+    });
+  return msg;
+  }
 
   getWhichType(data,yn){
 this.whichType=data;
