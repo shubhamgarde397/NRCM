@@ -3,8 +3,60 @@
     <button class="btn btn-success" (click)="changer(1)">Add QR</button></div>
   <div class="col-sm-3"><button class="btn btn-success" (click)="changer(2)">Track Loading Status</button></div>
   <div class="col-sm-3"><button class="btn btn-success" (click)="changer(3)">Send Message</button></div>
+  <div class="col-sm-3"><button class="btn btn-success" (click)="changer(4)">Search by QR/Truck</button></div>
 </div>
 
+<div class="well" *ngIf="dataT===4" style="background-color: black;border-color: black;">
+    <div class="row">
+      <div class="col-sm-3">
+        <input type="text" class="form-control col-sm-3" [(ngModel)]='truckVar' placeholder="Truck No">
+      </div>
+      <div class="col-sm-3">
+        <select class="form-control" *ngIf="wala11" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+          <option>Default</option>
+          <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
+        </select>
+      </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11')">Truck No</button>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('qr')">QR</button>
+        </div>
+          
+        
+      </div>
+
+        
+            <div class="col-sm-12">
+
+          <table class="table" style="width:100%" align="center" *ngIf="byTruckName">
+                <thead align="center" style="font-weight: bold">
+                  <tr class=table-header>
+                    <th>Srno</th>
+                    <th>Loading</th>
+                    <th>TruckNo</th>
+                    <th>Type-Party-Place</th>
+                    <th>Text</th>
+                  </tr>
+                </thead>
+                <tbody align="center">
+                  <tr *ngFor="let i of turn11;let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.billno}}</td>
+                    <td>{{i.truckName['truckno']}}</td>
+                    <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}-{{i.typeOfLoad}}</td>
+                    <td>
+                      <textarea value={{i.textMsg}} style="width: 384px;height: 190px;color: wheat;background-color: black;"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+</div>
 
 <div class="well" *ngIf="dataT===3">
   <div class="row">

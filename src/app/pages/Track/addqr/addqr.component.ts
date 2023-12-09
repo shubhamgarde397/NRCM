@@ -20,6 +20,7 @@ export class AddqrComponent implements OnInit {
   public today;
   public todaysDate;
   public myFormGroup: FormGroup;
+  public byTruckName=false;
   public myFormGroup2: FormGroup;
   public trucks=[];
   public qrs=[];
@@ -27,18 +28,24 @@ export class AddqrComponent implements OnInit {
   public nrcmid;
   public partys=[];
   public village=[];
+  public wala11=false;
+  public trucknoid11=''
   public data=[];
   public dataDispatch=[];
   public dataT=0;
+  public unique11turnbooklist=[];
   public locationData=[];
   public msg= '';
   public accName;
 public accNo;
+public truckVar;
 public ifsc;
 public bname;
 public name;
 public bigI={'truckno':''};
 public bigJ;
+public turn11=[];
+public turnbooklist=[];
 public pan;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
@@ -121,24 +128,27 @@ setMsg1(data){
 return data;
 }
 
+
+
 copyAcc(data){
   let msg=''
-  msg=msg+'*Nitin Roadways*\n\n';
   msg=msg+'*TruckNo*-'+(data.truckno)+'\n';
   msg=msg+'*Destination*-'+(data.v1)+'\n';
   msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
   msg=msg+'*QR*-'+(data.qr[0])+'\n\n'
-  msg=msg+'*The above truck has been dispatched from '+ this.typeOfLoad(data.typeOfLoad) +' Plant.*\n\n';
+  msg=msg+'*Vehicle dispatched from '+ this.typeOfLoad(data.typeOfLoad) +' Plant.*\n\n';
+  msg=msg+'*Nitin Roadways*';
   return msg;
 }
 
 littleDetail(data){
   let msg=''
   msg=msg+'*TruckNo*-'+(data.truckno)+'\n';
+  msg=msg+'*Destination*-'+(data.v1)+'\n';
   msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
   msg=msg+'*QR*-'+(data.qr[0])+'\n\n'
   msg=msg+''+(data.v1)+'-'+this.typeOfLoad(data.typeOfLoad)+'\n';
-  msg=msg+'*Nitin Roadways*\n\n';
+  msg=msg+'*Nitin Roadways*';
   return msg;
 }
 
@@ -328,5 +338,65 @@ deleteContact(i,j){
       this.data[this.bigJ]['pan']='green';
     });
   }
+  }
+
+  setMsg2(data){
+    data.forEach(r => {
+      r['textMsg']=this.littleDetail2(r)
+    });
+  return data;
+  }
+  
+  littleDetail2(data){
+    let msg=''
+    msg=msg+'*TruckNo*-'+(data.truckName.truckno)+'\n';
+    msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
+    msg=msg+'*QR*-'+(data.qr[0])+'\n\n'
+    msg=msg+''+(data.placeName.village_name)+'-'+this.typeOfLoad(data.typeOfLoad)+'\n';
+    msg=msg+'*Nitin Roadways*';
+    console.log(msg)
+    return msg;
+  }
+
+  find11UniqueTruck(){
+    if(this.trucknoid11!=='Default'){
+      this.byTruckName=true;
+    this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});  
+    }
+  }
+
+  find(event){
+    if(event==='11'){
+      this.wala11=true;
+    }
+    else{
+      this.wala11=false;
+    }
+          let tempObj1={};
+      tempObj1['tablename'] = 'turnbook'
+      tempObj1['method'] = 'singleTruck'
+      tempObj1['display'] = event;
+      tempObj1['truckno'] = this.truckVar;
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
+        .subscribe((res: any) => {
+          if(res.Data.length>0){
+          this.unique11turnbooklist=res.Data;
+          this.byTruckName=true;
+          this.turnbooklist = res.Data;
+          this.unique11turnbooklist= res.Data.map(r=>r.truckName.truckno).filter(function(item, pos) {return res.Data.map(r=>r.truckName.truckno).indexOf(item) == pos;})
+          this.data=this.setMsg2(res.Data);
+          if(event==='11new'){
+            this.trucknoid11=res.Data[0].truckName.truckno
+            this.find11UniqueTruck();
+            this.data=this.setMsg2(res.Data);
+          }
+          if(event==='qr'){
+            this.trucknoid11=res.Data[0].truckName.truckno
+            this.find11UniqueTruck();
+            this.data=this.setMsg2(res.Data);
+          }
+        }
+        });
+  
   }
 }
