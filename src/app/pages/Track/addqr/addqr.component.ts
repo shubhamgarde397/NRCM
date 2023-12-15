@@ -299,10 +299,7 @@ deleteContact(i,j){
           "accountName": tempObj.name,
           "accountNumber":tempObj.no,
           "bankName":tempObj.bname,
-          "ifsc":tempObj.ifsc,
-          "acc12": false,
-          "acc65": false,
-          "acc363": false
+          "ifsc":tempObj.ifsc
       }
     ]
       this.data[this.bigJ]['update']=false;

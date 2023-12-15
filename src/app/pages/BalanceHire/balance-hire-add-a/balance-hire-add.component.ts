@@ -250,37 +250,22 @@ alert('Selected!')
   }
 
   setBalPage() {
-    // this.firstTime=false;
     let breaker = false;
     this.saveToCheckArrayBoolean = !this.saveToCheckArrayBoolean;
     this.tableSelected=false;
     for (let i = 0; i < this.balanceHireArrray.length; i++) {
-      // if (breaker) { break; }
       for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
-        // if (breaker) { break; }
-        // if (
-        //   ((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value.length == 0) 
-        //   ||
-        //   ((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value.length == 0)
-        //   ) {
-        //   alert('Please fill in all the fields.');
-        //   breaker = true;
-        //   break;
-        // }
-        // else {
           this.bhTrucks.find((r,index)=>{
             if(r._id==this.balanceHireArrray[i][j]['_id']){
-              this.bhTrucks[index]['amount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value)+parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
+              this.bhTrucks[index]['pochAmount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
               this.bhTrucks[index]['return_hamali']=parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
               this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value;
               this.bhTrucks[index]['remark']=(<HTMLInputElement>document.getElementById('remark_' + i + '_' + j)).value;
               this.bhTrucks[index]['balAccid']=parseInt((<HTMLInputElement>document.getElementById('name_' + j)).value);
-              this.bhTrucks[index]['pageno']=this.securityCheck.nrcmid;
-              
+              this.bhTrucks[index]['pageno']=this.securityCheck.nrcmid;  
               return true
             }
           })
-        // }
 
       }
     }
@@ -297,7 +282,7 @@ alert('Selected!')
   addhamali(i,j){
     let bal=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
     let ham=parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
-    (<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value=String(bal+ham);
+    (<HTMLInputElement>document.getElementById('total_' + i + '_' + j)).value=String(bal+ham);
   }
 
   storeAcc(){
@@ -335,10 +320,7 @@ alert('Selected!')
           "accountName": tempObj.name,
           "accountNumber":tempObj.no,
           "bankName":tempObj.bname,
-          "ifsc":tempObj.ifsc,
-          "acc12": false,
-          "acc65": false,
-          "acc363": false
+          "ifsc":tempObj.ifsc
       }
     ]
       this.balanceHireArrray[0][this.bigI]['update']=false;

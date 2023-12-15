@@ -171,9 +171,6 @@ public bname;
       itempObj['accountNumber']=accno;
       itempObj['bankName']=bname;
       itempObj['ifsc']=ifsc;
-      itempObj['acc12']=false;
-      itempObj['acc363']=false;
-      itempObj['acc65']=false;
       itempObj['_id']=this.accountarrayUF[i]['_id'];
       aD.push(itempObj)
 
@@ -272,9 +269,6 @@ public bname;
           "accountNumber":this.accNo,
           "bankName":this.bname,
           "ifsc":this.ifsc,
-          "acc12": false,
-          "acc65": false,
-          "acc363": false
       }
       this.turnbooklist[this.index]['accounts'].push(temp);
       alert('Added, Close the modal!')
@@ -307,9 +301,6 @@ public bname;
       tempObj['bankName'] = this.myFormGroup18.value.bankName;
       tempObj['ifsc'] = this.myFormGroup18.value.ifsc;
       tempObj['delete'] = true;
-      tempObj['acc12'] = false;
-      tempObj['acc363'] = false;
-      tempObj['acc65'] = false;
       this.accountArray.push(tempObj);
       this.myFormGroup18.patchValue({ accountName: '' });
       this.myFormGroup18.patchValue({ accountNumber: '' });
@@ -772,8 +763,6 @@ switch (this.buttonOption) {
            doc.text('Sr', 3, y)//partyname
            doc.text('TruckNo', 12, y)//partyname
            doc.text('Account', 39, y)//partyname
-           doc.text('12', 92, y)//partyname
-           doc.text('363', 114, y)//partyname
            doc.text('Account Number', 150, y)//partyname
            //headers
            doc.line(0, 25, 210, 25);//line after header
@@ -821,8 +810,6 @@ switch (this.buttonOption) {
            doc.text('Sr', 3, y-6)//partyname
            doc.text('TruckNo', 12, y-6)//partyname
            doc.text('Account', 39, y-6)//partyname
-           doc.text('12', 92, y-6)//partyname
-           doc.text('363', 114, y-6)//partyname
            doc.text('Account Number', 150, y-6)//partyname
            //headers
            doc.line(0, 25, 210, 25);//line after header
@@ -847,8 +834,6 @@ switch (this.buttonOption) {
            doc.text(data[i].acc.accountName, 39, y)//partyname
            doc.text(String(data[i].acc.accountNumber), 39, y+4)//partyname
            doc.text(data[i].acc.ifsc, 39, y+8)//partyname
-           doc.text(data[i].a12?'okay':'', 92, y+4)//partyname
-           doc.text(data[i].a363?'okay':'', 114, y+4)//partyname
            }
                       
              doc.line(0, y + 11, 210, y + 11);//line after header

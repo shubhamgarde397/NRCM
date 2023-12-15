@@ -402,11 +402,6 @@ let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
     data.forEach(r=>{r['available']=r['acc'+String(r.parentAccNo)]?'':'X'})
       return data
     }
-    // accE(data){
-    //   data.forEach(r=>{r['available']=r['acc'+String(r.commentToTruck.split(' ')[0])]?'':'X'})
-    //     return data
-    //   }
-
     setComments(i){
       this.sentComments=i.commentToTruck2;
       this.bigI=i;
@@ -1277,7 +1272,7 @@ if(newpage===1){
         }
         
         // Forward Date
-        doc.text(String(this.balanceDate[z].truckData[k].amount), 16, i);//amount
+        doc.text(String(this.balanceDate[z].truckData[k].total), 16, i);//amount
 
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
@@ -1294,7 +1289,7 @@ if(newpage===1){
         doc.setFontSize('10');
         K = k;
         i = i + 6;
-        totalAmount=totalAmount+this.balanceDate[z].truckData[k].amount;
+        totalAmount=totalAmount+this.balanceDate[z].truckData[k].total;
       }
       if(data.length>1){
       doc.line(5, i-4, 32, i-4);
@@ -1344,7 +1339,7 @@ if(newpage===1){
         doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 115, accountI);//truckno
         doc.text(String(this.balanceDate[z].apm), 115, accountI+6);//truckno
       }
-      doc.text(this.balanceDate[z]['available'], 191, accountI+6);//accno
+      // doc.text(this.balanceDate[z]['available'], 191, accountI+6);//accno
       doc.setFontSize('8');
       
       i = i + 12-(bigK*2)+(bigKK-5);

@@ -14,16 +14,9 @@
       <tr>
           <th>Srno</th>
           <th>Truckno</th>
-          <th>Date</th>
-          <th>Type</th>
           <th>Rent</th>
-          <th>Extra Advance</th>
-          <th>Total Rent</th>
           <th>Advance</th>
-          <th>Cash</th>
-          <th>Less</th>
-          <th>Hamali</th>
-          <th>Bill Amt</th>
+          <th>Billing</th>
           <th>Tentative Bal</th>
           <th>Weight</th>
           <th>Loan Cut</th>
@@ -34,18 +27,16 @@
   <tbody>
       <tr *ngFor="let i of turn;let j = index">
           <td>{{j+1}}</td>
-          <td>{{i.truckno}}</td>
-          <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-          <td>{{i.partyType}}-{{i.party}}</td>
-          <td><input class="form-control" type="number" id="rent_{{j}}" (change)='calcTotalRent(j)'></td>
+          <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.truckno}}<br>{{i.partyType}}-{{i.party}}</td>
           <td>
+            <input class="form-control" style="background-color: black;color: wheat;" type="number" value={{i.totalRent}} disabled><br>
+            <input class="form-control" type="number" id="rent_{{j}}" (change)='calcTotalRent(j)'><br>
             <ul *ngFor="let kk of i.extra;let jj = index;">
               <li><span id="amt_{{j}}_{{jj}}">{{kk.extraAdvanceamt}}</span></li>
               <li><span id="remark_{{j}}_{{j}}">{{kk.extraAdvancemsg}}</span></li>
-            </ul>
+            </ul><br>
             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" (click)="toModal(j)">Add Extra</button>
           </td>
-          <td><input class="form-control" style="background-color: black;color: wheat;" type="number" value={{i.totalRent}} disabled></td>
           <td>
             <ul *ngFor="let kk of i.advanceArray;let jj = index;">
               <li><span id="advamt_{{j}}_{{jj}}">{{kk.amount}}</span></li>
@@ -55,19 +46,21 @@
             <button class="btn btn-danger" data-toggle="modal" data-target="#myModal1" (click)="toModal(j)">Add Advance</button>
           </td>
 
-          <td><input class="form-control" type="number" id="cash_{{j}}"></td>
-          <td><input class="form-control" type="number" id="less_{{j}}"></td>
-          <td><input class="form-control" type="number" id="hamali_{{j}}"></td>
-          <td><input class="form-control" type="number" id="comm_{{j}}"></td>
+          <td>
+            Cash:<input class="form-control" type="number" id="cash_{{j}}" value=0><br>
+            Less:<input class="form-control" type="number" id="less_{{j}}" value=0><br>
+            Hamali:<input class="form-control" type="number" id="hamali_{{j}}" value=0><br>
+            Bill Amt:<input class="form-control" type="number" id="comm_{{j}}" value=0>
+          </td>
 
           <td><input class="form-control" type="number" id="tBal_{{j}}" value="{{i.tentativeBalance}}"></td>
           <td><input class="form-control" type="number" id="wgt_{{j}}" value={{i.weight}}></td>
           <td>
-            <select [(ngModel)]="dueChangeValue" (change)="dueChange()">
+            <select [(ngModel)]="dueChangeValue" (change)="dueChange()" style="color: wheat;background-color: black;">
               <option *ngFor="let jj of i.dues;let z = index;" value={{j}}_{{z}}_{{jj._id}}>
                 {{jj.date}}-{{jj.amt}},{{jj.pending}}->{{jj.reason}}
               </option>
-            </select>
+            </select><br>
             <button class="btn btn-danger" *ngIf="addDueDetailsTF" data-toggle="modal" data-target="#myModalDD">Due Details</button>
           
           </td>

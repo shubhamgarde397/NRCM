@@ -101,7 +101,7 @@
             <td (click)="tempDelete(j)">{{j+1}}</td>
             <td>
               <ul *ngFor="let k of i.truckData">
-                <li>{{k.amount}}</li>
+                <li>{{k.pochAmount}}+{{k.return_hamali}}={{k.total}}</li>
               </ul>              
             </td>
             <td>

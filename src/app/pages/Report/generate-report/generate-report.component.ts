@@ -810,8 +810,6 @@ public acknowledgement=false;
       //      doc.text('Sr', 2, y)//partyname
       //      doc.text('TruckNo', 8, y)//partyname
       //      doc.text('Account Details', 36, y)//partyname
-      //      doc.text('12', 166, y)//partyname
-      //      doc.text('363', 188, y)//partyname
       //      //headers
       //      doc.line(0, 25, 210, 25);//line after header
        
@@ -851,8 +849,6 @@ public acknowledgement=false;
       //      doc.text('Sr', 2, y-6)//partyname
       //      doc.text('TruckNo', 8, y-6)//partyname
       //      doc.text('Account Details', 36, y-6)//partyname
-      //      doc.text('12', 166, y-6)//partyname
-      //      doc.text('363', 188, y-6)//partyname
       //      //headers
       //      doc.line(0, 25, 210, 25);//line after header
        

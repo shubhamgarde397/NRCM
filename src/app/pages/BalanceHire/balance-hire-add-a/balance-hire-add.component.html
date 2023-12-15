@@ -142,7 +142,6 @@
             <th>Party Name</th>
             <th>Party Type</th>
             <th>Place</th>
-            <th>Hamali</th>
             <th>Balance</th>
             <th>LRNO</th>
             <th>Remark</th>
@@ -159,11 +158,10 @@
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
             <td>{{ii.place}}</td>
-            <td><input type="number" placeholder="Hamali" id="hamali_{{kk}}_{{jj}}" value={{ii.returnhamali}} (change)="addhamali(kk,jj)">
+            <td>Hamali:<input type="number" placeholder="Hamali" id="hamali_{{kk}}_{{jj}}" value={{ii.returnhamali}} (change)="addhamali(kk,jj)">
+              Balance:<input type="number" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}>
+              Total<input type="number" placeholder="Balance" id="total_{{kk}}_{{jj}}" value={{ii.tentativeBalance}} disabled>
             </td>
-            <td><input type="number" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}>
-            </td>
-            
             <td><input type="text" placeholder="LRNO" id="lrno_{{kk}}_{{jj}}" value={{ii.lrno}}>
             </td>
             <td>
