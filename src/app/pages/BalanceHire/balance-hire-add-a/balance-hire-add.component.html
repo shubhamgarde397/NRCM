@@ -158,9 +158,19 @@
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
             <td>{{ii.place}}</td>
-            <td>Hamali:<input type="number" placeholder="Hamali" id="hamali_{{kk}}_{{jj}}" value={{ii.returnhamali}} (change)="addhamali(kk,jj)">
-              Balance:<input type="number" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}>
-              Total<input type="number" placeholder="Balance" id="total_{{kk}}_{{jj}}" value={{ii.tentativeBalance}} disabled>
+            <td>
+              <div class="row">
+                <div class="col-sm-2">Hamali</div>
+                <div class="col-sm-2"><input type="number" placeholder="Hamali" id="hamali_{{kk}}_{{jj}}" value={{ii.returnhamali}} (change)="addhamali(kk,jj)"></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">Balance</div>
+                <div class="col-sm-2"><input type="number" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">Total</div>
+                <div class="col-sm-2"><input type="number" style="cursor: no-drop;" placeholder="Balance" id="total_{{kk}}_{{jj}}" value={{ii.tentativeBalance}} disabled></div>
+              </div>
             </td>
             <td><input type="text" placeholder="LRNO" id="lrno_{{kk}}_{{jj}}" value={{ii.lrno}}>
             </td>
