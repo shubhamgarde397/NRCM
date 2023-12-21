@@ -281,6 +281,28 @@
       <div class="form-group row" >
 
         <div class="col-xs-2">
+          <label for="truckNo"> Village 2 </label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Village : <select id="dest" class="form-control" formControlName="vid2">
+              <option *ngFor="let own of village" value={{own._id}}>{{own.village_name}}</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.vid2.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
           <label for="truckNo"> Type Of Load </label>
         </div>
 

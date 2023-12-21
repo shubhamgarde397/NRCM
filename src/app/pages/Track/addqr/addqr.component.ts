@@ -60,6 +60,7 @@ public pan;
       type:['',Validators.required],
       pid:['',Validators.required],
       vid:['',Validators.required],
+      vid2:[''],
       contact:['',Validators.required]
     });
     this.myFormGroup2 = this.formBuilder.group({
@@ -136,7 +137,7 @@ copyAcc(data){
   msg=msg+'*Destination*-'+(data.v1)+'\n';
   msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
   msg=msg+'*QR*-'+(data.qr[0])+'\n\n'
-  msg=msg+'*Vehicle dispatched from '+ this.typeOfLoad(data.typeOfLoad) +' Plant.*\n\n';
+  msg=msg+'*Vehicle dispatched.*\n\n';
   msg=msg+'*Nitin Roadways*';
   return msg;
 }
@@ -147,11 +148,10 @@ littleDetail(data){
   msg=msg+'*Destination*-'+(data.v1)+'\n';
   msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
   msg=msg+'*QR*-'+(data.qr[0])+'\n\n'
-  msg=msg+''+(data.v1)+'-'+this.typeOfLoad(data.typeOfLoad)+'\n';
+  msg=msg+''+(data.v1)+'-'+data.typeOfLoad+'\n';
   msg=msg+'*Nitin Roadways*';
   return msg;
 }
-
 typeOfLoad(data){
   if(data==='Pipe'){return 'Urse';}
   else if(data==='Fittings'){return 'Talegaon';}
@@ -180,6 +180,7 @@ deleteContact(i,j){
     'id': truckss['_id'],
     'pid':this.myFormGroup.value.pid,
     'vid':this.myFormGroup.value.vid,
+    'vid2':this.myFormGroup.value.vid2,
     'oid':truckss['ownerid'],
     'qrs':this.qrs,
     'contacts':this.contacts,
@@ -199,6 +200,7 @@ deleteContact(i,j){
           type:'',
           pid:'',
           vid:'',
+          vid2:'',
           contact:''
         });
         this.qrs=[];
