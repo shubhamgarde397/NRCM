@@ -57,6 +57,8 @@ import { TrackDisplayComponent } from './pages/Track/track-display/track-display
 import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
 import { AddqrComponent } from './pages/Track/addqr/addqr.component';
 import { QrstatusComponent } from './pages/Track/qrstatus/qrstatus.component';
+import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
+import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
 
 @NgModule({
   declarations: [
@@ -94,7 +96,9 @@ import { QrstatusComponent } from './pages/Track/qrstatus/qrstatus.component';
     TrackDisplayComponent,
     TrackLoginComponent,
     AddqrComponent,
-    QrstatusComponent
+    QrstatusComponent,
+    RentdisplayComponent,
+    ComdisplayComponent
   ],
   imports: [
     BrowserModule,

@@ -30,6 +30,7 @@ import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-accoun
 import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
 import { AddqrComponent } from './pages/Track/addqr/addqr.component';
+import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
  
 export const routes: Routes =
     [
@@ -124,6 +125,10 @@ export const routes: Routes =
                     {
                         path: 'SEQUENCE',
                         component:DisplaySequenceComponent
+                    },
+                    {
+                        path: 'RENT_HANDLER',
+                        component:RentdisplayComponent
                     },
                     {
                         path: 'DUES_PAGE_ADVANCE',

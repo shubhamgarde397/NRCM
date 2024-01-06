@@ -63,6 +63,9 @@
     <div class="col-sm-4">
       <button class="btn btn-danger" (click)="getData(3)">Get Data</button>
     </div>
+    <div class="col-sm-4" *ngIf="table3">
+      <button class="btn btn-danger" (click)="clearSendAll()">Send All</button>
+    </div>
   </div>
 
 <div class="well">

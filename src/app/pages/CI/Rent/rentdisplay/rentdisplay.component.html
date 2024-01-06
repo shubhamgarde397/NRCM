@@ -1,0 +1,154 @@
+<div class="row">
+  <div class="col-sm-3">
+      <button class="btn btn-info" (click)="switcher('add')">Add</button>
+  </div>
+
+  <div class="col-sm-3">
+    <button class="btn btn-info" (click)="switcher('display')">Display</button>
+</div>
+</div>
+
+<div *ngIf="whichType==='add'" style="background-color: black">
+  <div class="well" style="background-color: black">
+  
+      <table class="table" style="width:100%" align="center"  *ngIf="tableDate" style="color:wheat;">
+  
+          <thead>
+              <tr class="table-header">
+                  <th>Srno</th>
+                  <th>Location</th>
+                  <th>Value</th>
+                  <th>Update</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let i of data;let j = index">
+                  <td>{{j+1}}</td>
+                  <td>{{i._id}}</td>
+                  <td><ul *ngFor="let j of i.data">
+                      <li>{{j}}</li>
+                  </ul></td>
+                  
+                  
+                  <td><button class="btn btn-danger" (click)="update(i)"><i class="material-icons" >send</i></button></td>        
+              </tr>
+          </tbody>
+      </table>
+  </div>
+
+  <div class="well" style="background-color: black">
+    <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+      enctype="multipart/form data" action="/">
+  
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <select id="location" class="form-control" formControlName="party">
+            <option selected>Select Party</option>
+            <option *ngFor="let own of parties">{{own.name}}</option>
+          </select>
+        </div>
+        <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
+          <i class="material-icons" (click)="getparties()">autorenew</i>
+        </div>
+      </div>  
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <select id="location" class="form-control" formControlName="location">
+            <option selected>Select Place</option>
+            <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
+          </select>
+        </div>
+        <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
+          <i class="material-icons" (click)="getVillages()">autorenew</i>
+        </div>
+      </div>  
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <select id="location" class="form-control" formControlName="location2">
+            <option selected>Select Place 2</option>
+            <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
+          </select>
+        </div>
+      </div>  
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+         Tons :  <input type="number" id="value" class="form-control" formControlName="ton">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <select id="typeOfLoad" class="form-control" formControlName="typeOfLoad">
+            <option selected>Select Type</option>
+            <option value="Pipe">Pipe</option>
+            <option value="Fittings">Fittings</option>
+          </select>
+        </div>
+      </div>  
+  
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Rent : <input type="number" id="value" class="form-control" formControlName="rent" placeholder="Value">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Hire : <input type="number" id="value" class="form-control" formControlName="hamt" placeholder="Value">
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group" class="col-xs-2"></div>
+        <div class="form-group" class="col-xs-1">
+          <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+            <i class="material-icons">send</i>
+          </button>
+        </div>
+  
+  
+      </div>
+    </form>
+  
+  
+  
+  </div>
+  </div>
+
+<div class="well" *ngIf="whichType=='display'">
+  <table class="table" style="width:100%" align="center">
+  
+    <thead>
+        <tr class="table-header">
+            <th>Srno</th>
+            <th>Party</th>
+            <th>Place</th>
+            <th>Place2</th>
+            <th>Ton</th>
+            <th>Type Of Load</th>
+            <th>Hire Amount</th>
+            <th>Rent</th>
+            <th>Options</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let i of display;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.party}}</td>
+            <td>{{i.location}}</td>
+            <td>{{i.location2}}</td>
+            <td>{{i.ton}}</td>
+            <td>{{i.typeOfLoad}}</td>
+            <td>{{i.hamt}}</td>
+            <td>{{i.rent}}</td>
+            <td><button class="btn btn-info" (click)="delete(i,j)">Delete</button></td>
+        </tr>
+    </tbody>
+</table>
+
+
+</div>
+

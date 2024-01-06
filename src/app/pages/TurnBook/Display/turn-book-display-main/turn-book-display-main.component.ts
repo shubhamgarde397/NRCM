@@ -101,6 +101,7 @@ public showbuttonOption821HA=true;
   public years = []
   public buttons = []
   public balanceHireArrray = [];
+  public tempPlaceid='';
   public tempArray = [];
   public finalObject = {};
   public finalArray = [];
@@ -146,7 +147,7 @@ public showbuttonOption821HA=true;
   public buttonOptionPartyType;
 public types={'None':0,'Open':0,'Container':0}
 public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
-public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','hamt':''}
+public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','place2':''}
 public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
 public performActionButton='2';
 public selectDate=false;
@@ -473,7 +474,9 @@ if(this.buttonOption !== '11'){
               truckno: '',
               loadingDate: '',
               lrno: 0,
-              partyid:''
+              partyid:'',
+              placeid:'',
+              placeid2:''
             });
             if(this.buttonOptionPartyType==='NRCM'){
               this.showbuttonOption821HA=false;
@@ -631,23 +634,26 @@ let tempObj1={};
   }
   getOtherDetails2() {
     this.tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup1.value.truckno);
+    console.log(this.tempDate);
     
-    this.monthlybyseriesData['hamt']=this.tempDate[0].hamt;
     this.monthlybyseriesData['typeOfLoad']=this.tempDate[0].typeOfLoad;
     this.monthlybyseriesData['lrno']=this.tempDate[0].lrno;
     this.monthlybyseriesData['party']=this.tempDate[0].party['name'];
     this.monthlybyseriesData['place']=this.tempDate[0].place['village_name'];
+    this.monthlybyseriesData['place2']=this.tempDate[0].place2?this.tempDate[0].place2['village_name']:'';
 
-this.placeid=this.tempDate[0]['place']['_id']
-this.partyid=this.tempDate[0]['party']['_id']
+    this.placeid=this.tempDate[0]['place']['_id'];
+    this.placeid2=this.tempDate[0]['place2']?this.tempDate[0]['place2']['_id']:'';
+    this.tempPlaceid=this.tempDate[0]['place2']?this.tempDate[0]['place2']['_id']:'';
+    this.partyid=this.tempDate[0]['party']['_id'];
 
     this.toSendid = this.tempDate[0]._id;
     this.showbuttonOption821 = true;
     this.myFormGroup1.patchValue({ turnbookDate: this.tempDate[0]['turnbookDate'] })
     this.myFormGroup1.patchValue({ place: this.tempDate[0][''] })
+    this.myFormGroup1.patchValue({ place2: this.tempDate[0][''] })
     this.myFormGroup1.patchValue({ partyName: this.tempDate[0][''] })
     this.myFormGroup1.patchValue({ lrno: this.tempDate[0]['lrno'] })
-    this.myFormGroup1.patchValue({ hamt: this.tempDate[0]['hamt'] })
   }
 
 
@@ -689,11 +695,14 @@ this.placeid=this.tempDate[0]['place']['_id']
 
   change(data) {
     let tempData = {}
-
+    console.log(data.value);
+    tempData['rc'] = this.tempDate[0].truckno.slice(0,2);
     tempData['lrno'] = data.value.lrno===0?parseInt(this.tempDate[0]['lrno']):parseInt(data.value.lrno);
     tempData['partyType']=this.buttonOptionPartyType;
-    tempData['typeOfLoad'] = data.value.typeOfLoad;
-    tempData['partyid'] = data.value.partyid;
+    tempData['typeOfLoad'] = data.value.typeOfLoad===''?this.tempDate[0]['typeOfLoad']:data.value.typeOfLoad;
+    tempData['partyid'] = data.value.partyid===''?this.tempDate[0].party['_id']:data.value.partyid;
+    tempData['placeid'] = data.value.placeid===''?this.tempDate[0].place['_id']:data.value.placeid;
+    tempData['placeid2'] = data.value.placeid2===''?this.tempPlaceid:data.value.placeid2;
     tempData['_id'] = this.toSendid;
     tempData['tablename'] = 'turnbook'
     tempData['method'] = 'updateSeries1'

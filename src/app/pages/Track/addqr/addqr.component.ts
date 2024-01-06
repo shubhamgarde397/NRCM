@@ -47,6 +47,7 @@ public bigJ;
 public turn11=[];
 public turnbooklist=[];
 public pan;
+public table3=false;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
@@ -109,6 +110,7 @@ getData(data){
           break;
           case 3:
           this.dataDispatch=this.setMsg(res.Data);
+          this.table3=true;
           break;
       }
       
@@ -221,7 +223,6 @@ deleteContact(i,j){
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
-        alert(res.Status)
         this.data[j]['currentVehicleStatusforLoading'].push(data)
       });
   }
@@ -240,6 +241,19 @@ deleteContact(i,j){
     });
   }
 
+  clearSendAll(){
+    let tempObj={
+      'method':'adddispatchtoAll',
+      'tablename':'',
+      'status':'Message Sent_blue'
+      }
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.dataDispatch=[];
+      });
+  }
+
   submitDispatchStatus(){
     let tempObj={
       'method':'adddispatchstatustotruck',
@@ -255,7 +269,6 @@ deleteContact(i,j){
         .subscribe((res: any) => {
           let temp={'locations':this.myFormGroup.value.locDate,'locationDate':this.myFormGroup.value.location}
           this.dataDispatch[this.dataDispatch.findIndex(r=>r._id==this.myFormGroup.value.tbid)]['currentVehicleStatus'].push(temp)
-          alert(res.Status)
         });
   }
   accAdder(i,j){
