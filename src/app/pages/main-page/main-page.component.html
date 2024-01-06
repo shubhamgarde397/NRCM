@@ -3,7 +3,7 @@
   <nav class="navbar navbar-inverse" style="background-color: black">
     <div class="container row">
       <div class="navbar-header">
-        <a class="navbar-brand" routerLink="NRCM_HOME"><b>Nitin Roadways FAST</b></a>
+        <a class="navbar-brand" (click)="adminP()"><b>Nitin Roadways FAST</b></a>
       </div>
     </div>
 
@@ -12,115 +12,27 @@
 
   <div class="row">
     <div class="col-sm-1" style="margin-left: 2vh;">
-        <button class="btn btn-info" (click)="getWhichType('1' ,true)">Rent</button>
-    </div>
-    <div class="col-sm-1" style="margin-left: 2vh;">
       <button class="btn btn-info" (click)="getWhichType('2',false)">Truck Data</button>
   </div>
-  <div class="col-sm-1" style="margin-left: 2vh;">
-    <button class="btn btn-info" (click)="getWhichType('3',false)">By Load</button>
+  <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
+    <button class="btn btn-info" (click)="getWhichType('3',false)">Other</button>
 </div>
-<div class="col-sm-1" style="margin-left: 2vh;">
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
   <button class="btn btn-info" (click)="getWhichType('4',false)">VillageParty</button>
 </div>
-<div class="col-sm-1" style="margin-left: 2vh;">
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
   <button class="btn btn-info" (click)="getWhichType('5',false)">Tentative</button>
 </div>
-<div class="col-sm-1" style="margin-left: 2vh;">
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
   <button class="btn btn-info" (click)="getWhichType('6',false)">Random</button>
 </div>
-<div class="col-sm-1" style="margin-left: 2vh;">
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
   <button class="btn btn-info" (click)="getTpt()">All Envelopes</button>
 </div>
-<div class="col-sm-1" style="margin-left: 2vh;">
-  <button class="btn btn-info" (click)="getAmitDetails('7',false)">Amit Urse</button>
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
+  <button class="btn btn-info" (click)="getAmitDetails()">Amit Urse</button>
 </div>
 </div>
-
-<div *ngIf="whichType==='1'" style="background-color: black">
-    <div class="well" style="background-color: black">
-    
-        <table class="table" style="width:100%" align="center"  *ngIf="tableDate" style="color:wheat;">
-    
-            <thead>
-                <tr class="table-header">
-                    <th>Srno</th>
-                    <th>Location</th>
-                    <th>Value</th>
-                    <th>Update</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let i of data;let j = index">
-                    <td>{{j+1}}</td>
-                    <td>{{i._id}}</td>
-                    <td><ul *ngFor="let j of i.data">
-                        <li>{{j}}</li>
-                    </ul></td>
-                    
-                    
-                    <td><button class="btn btn-danger" (click)="update(i)"><i class="material-icons" >send</i></button></td>        
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="well" style="background-color: black">
-      <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
-        enctype="multipart/form data" action="/">
-    
-        <div class="form-group row">
-          <div class="col-xs-3">
-            <select id="location" class="form-control" formControlName="location">
-              <option selected>Select Place</option>
-              <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
-            </select>
-          </div>
-          <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
-            <i class="material-icons" (click)="getVillages()">autorenew</i>
-          </div>
-        </div>  
-
-        <div class="form-group row">
-          <div class="col-xs-3">
-           Tons :  <input type="number" id="value" class="form-control" formControlName="ton">
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <div class="col-xs-3">
-            <select id="typeOfLoad" class="form-control" formControlName="typeOfLoad">
-              <option selected>Select Type</option>
-              <option value="Pipe">Pipe</option>
-              <option value="Fittings">Fittings</option>
-            </select>
-          </div>
-        </div>  
-    
-        <div class="form-group row">
-          <div class="col-xs-3">
-            <input type="number" id="value" class="form-control" formControlName="value" placeholder="Value">
-          </div>
-        </div>
-    
-                
-    
-        <div class="row">
-          <div class="form-group" class="col-xs-2"></div>
-          <div class="form-group" class="col-xs-1">
-            <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-              <i class="material-icons">send</i>
-            </button>
-          </div>
-    
-    
-        </div>
-      </form>
-    
-    
-    
-    </div>
-    </div>
 
     <div *ngIf="whichType==='2'">
       <div class="well" style="background-color: black;border-color: black;">
@@ -170,7 +82,8 @@
                     <tr *ngFor="let i of turn11;let j = index">
                       <td>{{j+1}}</td>
                       <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.billno}}</td>
-                      <td>{{i.truckName['truckno']}}</td>
+                      <td>{{i.truckName['truckno']}}<br>
+                      <button class="btn btn-warning" (click)="saveData(j)" data-toggle="modal" data-target="#myModalPan">Copy!</button></td>
                       <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
                       <td>{{i.lrno}}</td>
                       <td *ngIf="amount">{{i.hamt}}<br>{{i.rent}}</td>
@@ -188,6 +101,11 @@
 
       <div *ngIf="whichType==='3'">
         <div class="well" style="background-color: black;border-color: black;">
+          <select class="form-control">
+            <option disabled>Select Option</option>
+            <option value="By RC"></option>
+            <option value=""></option>
+          </select>
         <div class="row" style="background-color: black;border-color: black;">
 
           <div class="col-sm-3">
@@ -225,8 +143,6 @@
                         <th>Type-Party-Place</th>
                         <th>LRNO</th>
                         <th>Amount</th>
-                        <th>Poch : Amt : Acc</th>
-                        <th>Payment Details</th>
                       </tr>
                     </thead>
                     <tbody align="center">
@@ -240,8 +156,6 @@
                         <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
                         <td>{{i.lrno}}</td>
                         <td>{{i.hamt}}<br>{{i.rent}}</td>
-                        <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
-                        <td [ngStyle]="{'background-color': i.colors[1]}">{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -442,3 +356,29 @@
                 
 
             </div>
+
+            <div class="modal fade" id="myModalPan" role="dialog">
+              <div class="modal-dialog">
+              
+            
+                <div class="modal-content" style="background-color: black;color: wheat;">
+                  <div class="modal-header" style="background-color: black;color: wheat;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">{{truckNo}}</h4>
+                  </div>
+                  <div class="modal-body" style="background-color: black;color: wheat;">
+                  
+            
+                    <div class="row">
+                      <textarea value={{dataTT}} style="width: 200px;height: 500px;color: wheat;background-color: black;"></textarea>
+                    </div>
+            
+                  </div>
+            
+                  <div class="modal-footer" style="background-color: black;color: wheat;">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div> 

@@ -22,7 +22,6 @@ export class MainPageComponent implements OnInit {
   public todayDate;
   public placeidto;
   public partyidto;
-  public data=[];
   public trucknoid11=''
   public selectDate=false;
   public byTruckName=false;
@@ -33,8 +32,8 @@ export class MainPageComponent implements OnInit {
   public places=[]
   public tableDate=false;
   public turnbooklist=[]
+  public data=[];
   public turn11=[];
-  public myFormGroup: FormGroup;
   public myFormGroupR: FormGroup;
   public unique5turnbooklist=[];
   public commonArray;
@@ -46,6 +45,11 @@ export class MainPageComponent implements OnInit {
   public fromDate='';
   public toDate = '';
 public dataT='';
+public bigI;
+public dataTT='';
+public truckNo='';
+public admin=0;
+public secretDoor=false;
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -60,18 +64,44 @@ public dataT='';
     // this.getTpt()
 
     this.todayDate=this.handleF.createDate(new Date());
-    this.myFormGroup = this.formBuilder.group({
-      location: '',
-      typeOfLoad: '',
-      value:'',
-      ton:7
-    });
     this.myFormGroupR = this.formBuilder.group({
       from: 0,
       to: 0,
       qty:0
     });
   }
+  adminP(){
+let pwd=prompt('Enter password!')
+    if(pwd==='GOLDENLEO'){
+      this.secretDoor=true
+    }
+  }
+
+  littleDetail1(data){
+    console.log(data);
+    
+    let msg=''
+    msg=msg+'*TruckNo*-'+(data.truckName.truckno)+'\n';
+    msg=msg+'*Contact*-'+(data.contacttb[0])+'\n'
+    msg=msg+'*QR*-'+(data.qr[0])+'\n'
+    msg=msg+''+(data.placeName.village_name)+'-'+data.typeOfLoad+'\n\n';
+    msg=msg+'*Nitin Roadways*';
+    return msg;
+  }
+
+  typeOfLoad(data){
+    if(data==='Pipe'){return 'Urse';}
+    else if(data==='Fittings'){return 'Talegaon';}
+    else if(data==='Ratnagiri'){return 'Ratnagiri';}
+  }
+
+  saveData(index){
+    this.bigI=index;
+    console.log(this.data[this.bigI]);
+    
+    this.truckNo=this.turnbooklist[this.bigI]['truckName']['truckno'];
+    this.dataTT=this.littleDetail1(this.turnbooklist[this.bigI])
+      }
 
   getAmitDetails(){
     let tempObj={}
@@ -95,6 +125,7 @@ public dataT='';
     msg=msg+'\n\n';
     return msg;
     }
+    return msg;
   }
   
   
@@ -102,8 +133,10 @@ public dataT='';
     let msg='';
     data.forEach(r => {
       msg=this.littleDetail(r,msg)
+      console.log(msg);
+      
     });
-  return msg;
+    return msg;
   }
 
   getWhichType(data,yn){
@@ -165,21 +198,6 @@ find(event){
 
 }
 
-  store(data) {
-    data.value['method'] = 'insert';
-    this.apiCallservice.handleData_New_python
-      ('commoninformation',
-       1, data.value, true)
-      .subscribe((res: any) => {
-        alert(res['Status']);
-        this.myFormGroup.patchValue({
-          location:'',
-          typeOfLoad:'',
-          value:''
-        })
-      });
-  }
-
   generate(){
     if(this.myFormGroupR.value.to-this.myFormGroupR.value.from+1>=this.myFormGroupR.value.qty){
     this.randomarray = []
@@ -221,7 +239,7 @@ find(event){
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, value, true)
       .subscribe((res: any) => {
-        this.places=res.Data;
+        this.villagenamelist=res.Data;
         this.sec.commonArray['places'] = res.Data.length > 0 ? res.Data : this.sec.commonArray['places'];
       });
   }
