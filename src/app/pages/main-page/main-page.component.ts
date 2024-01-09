@@ -19,6 +19,9 @@ import 'jspdf-autotable';
 export class MainPageComponent implements OnInit {
   public date3month;
   public unique11turnbooklist=[];
+  public tempObj = {};
+  public years = []
+  public buttons = []
   public todayDate;
   public placeidto;
   public partyidto;
@@ -49,7 +52,26 @@ public bigI;
 public dataTT='';
 public truckNo='';
 public admin=0;
+public paymentAmt=0;
+public paymentDate='';
+public statusOfPoch='Okay';
+public bigII;
+public bigJJ;
+public selectedPochDate='';public fullpendingPayment=[];
+public saveArray=[]
+public selectedPaymentAmount=0;
+public selectedPaymentDate=''
+public paymentSettings=false;
+public showpaymentButton=false;
+public saveArrayData=false;
+public defaultAmt=0;
+public secretDoorForAnil=false;
+public actualPayment=true;
 public secretDoor=false;
+public selectedmy;
+public data3='0';
+public data3value='';
+
   constructor(
     public apiCallservice: ApiCallsService,
     public router: Router,
@@ -70,12 +92,114 @@ public secretDoor=false;
       qty:0
     });
   }
+
+  savePayment(i,j){
+    this.bigII=i;
+    this.bigJJ=j;
+  }
+
+  fetchPendinActualPayments(){
+    this.fullpendingPayment=[];
+    this.saveArray=[]
+    this.selectedPaymentAmount=0;
+    this.selectedPaymentDate=''
+    this.paymentSettings=false;
+    this.showpaymentButton=false;
+    this.saveArrayData=false;
+    this.defaultAmt=0;
+
+let formbody={}
+formbody['method']='getTrucksWithNoActualPayment';
+formbody['tablename']=''
+formbody['selectedPochDate']=this.selectedPochDate;
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, true)
+    .subscribe((res: any) => {
+      this.fullpendingPayment=res.Data;
+      this.actualPayment=true;
+      this.paymentSettings=true;
+    });
+    
+  }
+
+  paymentDateAmount(){
+    this.showpaymentButton=this.selectedPaymentDate==''?false:true;
+    this.showpaymentButton=this.selectedPaymentAmount==0?false:true;
+    this.showpaymentButton=this.statusOfPoch==''?false:true;
+  }
+
+
+  sendDatatoUpdate1(){
+    let obj={}
+    let saveArray2=[]
+    this.saveArray.forEach(r=>{saveArray2.push(r._id)})
+    obj['ids']=saveArray2;
+    obj['paymentDate']=this.paymentDate;
+    obj['paymentAmt']=this.paymentAmt;
+    obj['statusOfPoch']=this.statusOfPoch;
+    obj['tablename']='';
+    obj['method']='updateActualPaymentDetailsAll'
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, obj, true)
+    .subscribe((res: any) => {
+      alert(res.Status);
+      this.saveArray=[]
+      this.paymentAmt=0;
+      this.paymentDate=''
+      this.defaultAmt=0;
+    });
+  }
+
+  sendDatatoUpdate(){
+    let arr=[]
+    for (let i = 0; i < this.fullpendingPayment.length; i++) {
+      if ((Number.isNaN(parseInt((<HTMLInputElement>document.getElementById('bhamt_' + i)).value)))) {}
+      else if ((<HTMLInputElement>document.getElementById('bhdate_' + i)).value=='') {}
+        else {
+          let temp={}
+          temp['_id']=this.fullpendingPayment[i]['_id'];
+          temp['date']=(<HTMLInputElement>document.getElementById('bhdate_' + i )).value;
+          temp['amt']=parseInt((<HTMLInputElement>document.getElementById('bhamt_' + i )).value);
+          temp['status']=(<HTMLInputElement>document.getElementById('bhstatus_' + i )).value;
+          arr.push(temp)
+        }
+
+    }
+
+    let temp={}
+    temp['method'] = 'updateActualPaymentDetailsAll';
+    temp['data'] = arr;
+    this.apiCallservice.handleData_New_python('commoninformation',1, temp, true)
+      .subscribe((res: any) => {
+        alert(res['Status']);
+      });
+    
+  }
+
+  addPayment(){
+    let tempObj={}
+    tempObj['method']='updateActualPaymentDetails';  
+    tempObj['tablename']='';
+    tempObj['_id']=this.bigII['_id']
+    tempObj['paymentAmt']=this.paymentAmt;
+    tempObj['paymentDate']=this.paymentDate;
+    tempObj['statusOfPoch']=this.statusOfPoch;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+      });
+  }
   adminP(){
-let pwd=prompt('Enter password!')
+let pwd=prompt('Enter code!')
     if(pwd==='GOLDENLEO'){
       this.secretDoor=true
     }
+    else if(pwd==='NRCM'){
+      // let a=prompt('')
+      this.secretDoorForAnil=true
+    }
   }
+
 
   littleDetail1(data){
     console.log(data);
@@ -165,6 +289,64 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     }
   }
 
+  getdata3(){
+    this.data3=this.data3value;
+console.log(this.data3value);
+
+    if(this.data3value==='2'){
+    this.buttons=this.getButtons();
+    }
+      }
+
+      getButtons() {
+        console.log('hi');
+        
+        let buttons=[]
+            for (let i = 0; i < new Date().getFullYear() - 2019; i++) {
+              this.years.push(i + 2020)
+            }
+            for (let i = 0; i < this.years.length; i++) {
+              let months = new Date().getFullYear() - this.years[i] == 0 ? new Date().getMonth() + 1 : 12;
+              for (let j = 0; j < months; j++) {
+                let date = new Date(String(i + 2020) + '-' + this.handleF.generate2DigitNumber(String(j + 1)) + '-01');
+                let month = date.toLocaleString('default', { month: 'short' });
+                this.tempObj['value'] = "^" + String(i + 2020) + "-" + this.handleF.generate2DigitNumber(String(j + 1)) + ".*";
+                this.tempObj['viewValue'] = month + '-' + String(i + 2020).slice(-2);
+                buttons.push(this.tempObj);
+                this.tempObj = {}
+              }
+            }
+            return buttons.reverse();
+          }
+
+      download(){
+
+        let tempObj1={};
+        tempObj1['tablename'] = ''
+        tempObj1['method'] = 'downloadRentSheet'
+        tempObj1['date'] = this.selectedmy;
+          this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
+          .subscribe((res: any) => {
+            this.turnbooklist=res.Data;
+          //  this.pdfrent(res.Data)
+          
+          });
+
+      }
+      changeRC(data,i){
+        alert('Changing data for '+data+'\nCurrent '+i[data]);
+        let value=prompt('Enter new value for '+data)
+
+        let tempObj1={};
+        tempObj1['tablename'] = ''
+        tempObj1['method'] = 'changeRC'
+        tempObj1['value'] = value;
+        tempObj1['what']=data;
+          this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
+          .subscribe((res: any) => {
+            alert('res.Status')
+          });
+      }
 
 find(event){
   if(event==='11'){

@@ -14,6 +14,9 @@
     <div class="col-sm-1" style="margin-left: 2vh;">
       <button class="btn btn-info" (click)="getWhichType('2',false)">Truck Data</button>
   </div>
+  <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
+    <button class="btn btn-info" (click)="getWhichType('7',false)">Balance Hire</button>
+</div>
   <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
     <button class="btn btn-info" (click)="getWhichType('3',false)">Other</button>
 </div>
@@ -33,6 +36,75 @@
   <button class="btn btn-info" (click)="getAmitDetails()">Amit Urse</button>
 </div>
 </div>
+
+
+<div class="well" *ngIf="whichType=='7'" style="background-color: black;color: wheat;">  
+  <div class="row"  *ngIf="secretDoorForAnil||secretDoor">
+    <h3>Update Actual Payment</h3>
+   
+    <div class="well"  *ngIf="actualPayment" style="background-color: black;color: wheat;">  
+     
+      <div class="row" style="background-color: black;color: wheat;">  
+        <div class="col-sm-2">
+          Select Poch Date To Procees :
+          <input type="date" class="form-control" [(ngModel)]="selectedPochDate">
+        </div> 
+      <div class="col-sm-2">
+        <button class="btn btn-warning" (click)="fetchPendinActualPayments()">Get</button>
+      </div> 
+      
+    </div>
+      
+        <div class="row" *ngIf="paymentSettings">
+
+
+
+          <h4>Select Trucks to update the payment Date</h4>
+          <table class="table" style="width:100%" align="center">
+            <thead class="table-header">
+                <tr>
+                    <th>Srno</th>
+                    <th>Date</th>
+                    <th>Truckno</th>
+                    <th>Party:Type:Place</th>
+                    <th>Payment Date</th>
+                    <th>Payment Amount</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+    
+    
+            <tbody style="text-align: center;">
+                <tr *ngFor="let i of fullpendingPayment;let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                    <td>{{i.truckno}}<br>{{i.pochAmount}}</td>
+                    <td>{{i.party}}<br>{{i.place}}</td>
+                    <td><input type="date" id="bhdate_{{j}}"></td>
+                    <td><input type="number" id="bhamt_{{j}}"></td>
+                    <td>
+                      <select class="form-control" id="bhstatus_{{j}}">
+                        <option>Okay</option>
+                        <option>Damage</option>
+                        <option>Shortage</option>
+                        <option>Loan</option>
+                        <option>Late</option>
+                        <option>To Pay</option>
+                      </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>  
+
+        <div class="col-sm-2">
+          <button class="btn btn-success" (click)="sendDatatoUpdate()">Send</button>
+        </div>
+
+        </div>
+    </div>
+  </div>
+  </div>
+
 
     <div *ngIf="whichType==='2'">
       <div class="well" style="background-color: black;border-color: black;">
@@ -88,7 +160,7 @@
                       <td>{{i.lrno}}</td>
                       <td *ngIf="amount">{{i.hamt}}<br>{{i.rent}}</td>
                       <td [ngStyle]="{'background-color': i.colors[0]}" class="wadhiw">{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
-                      <td [ngStyle]="{'background-color': i.colors[1]}"  class="wadhiw">
+                      <td [ngStyle]="{'background-color': i.colors[1]}"  class="wadhiw" (click)="savePayment(i,j)" data-toggle="modal" data-target="#myModalPay">
                         {{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.truckName['pan']}}</td>
                     </tr>
                   </tbody>
@@ -101,12 +173,13 @@
 
       <div *ngIf="whichType==='3'">
         <div class="well" style="background-color: black;border-color: black;">
-          <select class="form-control">
+
+          <select class="form-control" (change)="getdata3()" [(ngModel)]="data3value">
             <option disabled>Select Option</option>
-            <option value="By RC"></option>
-            <option value=""></option>
+            <option value="1">By RC</option>
+            <option value="2">Rent Sheet</option>
           </select>
-        <div class="row" style="background-color: black;border-color: black;">
+        <div *ngIf="data3==='1'" class="row" style="background-color: black;border-color: black;">
 
           <div class="col-sm-3">
              <select class="form-control" [(ngModel)]="rc">
@@ -131,7 +204,7 @@
             <button class="btn btn-warning col-sm-3" (click)="find4()">Find</button>
           </div>
 
-        </div>
+      
             
         <div class="col-sm-12">
   
@@ -161,7 +234,37 @@
                   </table>
             </div>
            
-  
+          </div>
+          <div *ngIf="data3==='2'" class="row" style="background-color: black;border-color: black;">
+            <div class="col-sm-4">
+              <select class="form-control" [(ngModel)]="selectedmy">
+                <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
+              </select>
+            </div>
+            <div class="col-sm-4">
+              <button class="btn btn-danger" (click)="download()">Download</button>
+            </div>
+              <table class="table" style="width:100%" align="center">
+                <thead align="center" style="font-weight: bold">
+                  <tr class=table-header>
+                    <th>Srno</th>
+                    <th>Loading-Truck</th>
+                    <th>Party-Place-Type</th>
+                    <th>Rent</th>
+                    <th>Comm</th>
+                  </tr>
+                </thead>
+                <tbody align="center">
+                  <tr *ngFor="let i of turnbooklist;let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}=>{{i.truckno}}</td>
+                    <td>{{i.party}}=>{{i.palce}}=>{{i.type}}</td>
+                    <td (click)="changeRC('rent',i)">{{i.rent}}</td>
+                    <td (click)="changeRC('billamt',i)">{{i.billamt}}</td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
         </div>
         </div>
 
@@ -172,7 +275,7 @@
                 <label>Place</label>
                 <select class="form-control" [(ngModel)]="placeidto">
                   <option selected>Select Place</option>
-                  <option *ngFor="let i of places" value={{i._id}}>{{i.village_name}}</option>
+                  <option *ngFor="let i of villagenamelist" value={{i._id}}>{{i.village_name}}</option>
                 </select>
               </div>
               <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
@@ -344,16 +447,7 @@
               </div>
               </div>
               
-              <div *ngIf="whichType==='7'">
-             
-          
-                <div class="well"  style="background-color: black;border-color: black;">
-                
-                  <textarea value={{dataT}} style="width: 200px;height: 500px;color: wheat;background-color: black;"></textarea>
-                
-                </div>
-                </div>
-                
+              
 
             </div>
 
@@ -382,3 +476,45 @@
                 
               </div>
             </div> 
+
+
+
+            <div class="modal fade" id="myModalPay" role="dialog">
+              <div class="modal-dialog">
+              
+            
+                <div class="modal-content" style="background-color: black;color: wheat;">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Actual Payment Details</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      Date : <input type="date" class="form-control" [(ngModel)]="paymentDate">
+                    </div>
+            
+                    <div class="row">
+                      Amount : <input type="number" class="form-control" [(ngModel)]="paymentAmt">
+                    </div>
+                    <div class="row">
+                      <select class="form-control" [(ngModel)]="statusOfPoch">
+                        <option>Okay</option>
+                        <option>Damage</option>
+                        <option>Shortage</option>
+                        <option>Diesel</option>
+                        <option>Loan</option>
+                        <option>Double Load</option>
+                        <option>Late</option>
+                        <option>To Pay</option>
+                      </select>
+                    </div>
+                  </div>
+            
+                  <div class="modal-footer">
+                    <button class="btn btn-warning" (click)="addPayment()">Store</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
