@@ -27,12 +27,7 @@ export class BalancehiredisplayComponent implements OnInit {
   public createdDate = '';
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Balance Hire' },
-    { 'value': '2', 'viewvalue': 'Update Actual Payments' },
-    { 'value': '3', 'viewvalue': 'Balance Message To Driver' },
-    { 'value': '4', 'viewvalue': 'Update Advance Payments' },
-    { 'value': '5', 'viewvalue': 'Advance Message To Driver' },
-    { 'value': '6', 'viewvalue': 'Party Msg' },
-    { 'value': '7', 'viewvalue': 'Update Actual All Payments' },
+    { 'value': '2', 'viewvalue': 'Update Actual Payments' }
   ]
   public months = [
     { '1': 'Jan' },
@@ -71,7 +66,6 @@ export class BalancehiredisplayComponent implements OnInit {
   public paymentSettings=false;
   public saveArray=[
   ]
-  public saveArrayData=false;
   public selectedPaymentDate='';
   public selectedPaymentAmount=0;
   public statusOfPoch='';
@@ -163,136 +157,6 @@ formbody['ids']=temp;
 
   adminAccess() {
     this.admin = !this.admin;
-  }
-
-  fetchPendinActualPayments(){
-    this.fullpendingPayment=[];
-    this.saveArray=[]
-    this.selectedPaymentAmount=0;
-    this.selectedPaymentDate=''
-    this.paymentSettings=false;
-    this.showpaymentButton=false;
-    this.saveArrayData=false;
-    this.defaultAmt=0;
-
-let formbody={}
-formbody['method']='getTrucksWithNoActualPayment';
-formbody['tablename']=''
-formbody['selectedPochDate']=this.selectedPochDate;
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, true)
-    .subscribe((res: any) => {
-      this.fullpendingPayment=res.Data;
-      this.paymentSettings=true;
-    });
-    
-  }
-  fetchPendinAllActualPayments(){
-    this.fullpendingPayment=[];
-    this.saveArray=[]
-    this.selectedPaymentAmount=0;
-    this.selectedPaymentDate=''
-    this.paymentSettings=false;
-    this.showpaymentButton=false;
-    this.saveArrayData=false;
-    this.defaultAmt=0;
-
-let formbody={}
-formbody['method']='getAllTrucksWithNoActualPayment';
-formbody['tablename']=''
-formbody['selectedPochDate']=this.selectedPochDate;
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, true)
-    .subscribe((res: any) => {
-      this.fullpendingPayment=res.Data;
-      this.paymentSettings=true;
-    });
-    
-  }
-  copyAmount(){
-    this.selectedPaymentAmount=this.defaultAmt;
-  }
-
-  paymentDateAmount(){
-    this.showpaymentButton=this.selectedPaymentDate==''?false:true;
-    this.showpaymentButton=this.selectedPaymentAmount==0?false:true;
-    this.showpaymentButton=this.statusOfPoch==''?false:true;
-  }
-
-  addtosavearray(i,j){
-    this.saveArray.push(i)
-    this.saveArrayData=true;
-    this.fullpendingPayment.splice(j,1)
-    this.defaultAmt=this.defaultAmt+parseInt((i['pochAmount']))
-  }
-
-  deletetosavearray(i,j){
-    this.saveArray.splice(j,1)
-    this.saveArrayData=this.saveArray.length>0?true:false;
-    this.fullpendingPayment.push(i)
-    this.defaultAmt=this.defaultAmt-parseInt((i['pochAmount']))
-  }
-
-  sendDatatoUpdate(){
-    let obj={}
-    let saveArray2=[]
-    this.saveArray.forEach(r=>{saveArray2.push(r._id)})
-    obj['ids']=saveArray2;
-    obj['paymentDate']=this.selectedPaymentDate;
-    obj['paymentAmt']=this.selectedPaymentAmount;
-    obj['statusOfPoch']=this.statusOfPoch;
-    obj['tablename']='';
-    obj['method']='updateActualPaymentDetails'
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, obj, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      this.saveArray=[]
-      this.selectedPaymentAmount=0;
-      this.selectedPaymentDate=''
-      this.defaultAmt=0;
-    });
-  }
-
-  // sendDatatoUpdate(){
-  //   let bigArray=[]
-  //   let tempObj={}
-  //   for(let i=0;i<this.fullpendingPayment.length;i++){
-  //     if((<HTMLInputElement>document.getElementById('amt_'+i)).value===''){}
-  //     else{
-  //       let obj={}
-  //       obj['ids']=this.fullpendingPayment[i]['_id'];
-  //       obj['paymentDate']=(<HTMLInputElement>document.getElementById('date_'+i)).value;
-  //       obj['paymentAmt']=parseInt((<HTMLInputElement>document.getElementById('amt_'+i)).value);
-  //       obj['statusOfPoch']=(<HTMLInputElement>document.getElementById('status_'+i)).value;
-
-  //       bigArray.push(obj)
-  //         }
-  //     }
-  //     tempObj['array']=bigArray;
-  //     tempObj['tablename']='';
-  //     tempObj['method']='updateActualPaymentDetailsSingly'
-  //   this.apiCallservice.handleData_New_python
-  //   ('commoninformation', 1, tempObj, true)
-  //   .subscribe((res: any) => {
-  //     alert(res.Status);
-  //     alert('Please Refresh!')
-  //   });
-  // }
-
- 
-
-  findOption() {
-    this.buttonOption = this.displayType;    
-    this.buttonValue = this.displayoptions[parseInt(this.displayType) - 1].viewvalue;
-    this.yeardiv = true;
-    this.monthdiv = false;
-    this.daydiv = false;
-    this.printInfo = this.buttonOption == '1' ? true : false;
-    this.createdDate = '';
-this.actualPayment=this.buttonOption == '2'?true:false;
-this.actualPayment=this.buttonOption == '7'?true:false;
-    
   }
 
   find = function () {
@@ -402,11 +266,6 @@ let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
     data.forEach(r=>{r['available']=r['acc'+String(r.parentAccNo)]?'':'X'})
       return data
     }
-    setComments(i){
-      this.sentComments=i.commentToTruck2;
-      this.bigI=i;
-    }
-
   find2(data, type, set = true) {
     if (set) {
       switch (type) {
@@ -493,154 +352,7 @@ if(confirm('Do you want to temporary delete it?')){
     } else { }
   }
 
-  fetchDonePayments(){
-    let data = {};
-      data['method'] = 'bhMessageData';
-      data['tablename'] = '';
-
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, true)
-        .subscribe((res: any) => {
-          this.fullPaymentDone=res.chartData;
-          this.actualPaymentTable = true;
-        });
-  }
-  fetchDonePaymentsAdv(){
-    let data = {};
-      data['method'] = 'displayTruckstoSendAdvanceMsg';
-      data['tablename'] = '';
-
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, true)
-        .subscribe((res: any) => {
-          this.fullAdvDone=res.chartData;
-          this.advancePaymenttoTruck = true;
-        });
-  }
-  
-  fetchLoadedTruck(){
-    let data = {};
-      data['method'] = 'displayTruckstoSendPartyMsg';
-      data['tablename'] = '';
-
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, data, true)
-        .subscribe((res: any) => {
-          this.currentLoadedParty=res.chartData;
-          this.fetchLoadedTruckTF = true;
-          this.fetchPartyTF=false;
-          this.pasteAndSend=false;
-        });
-  }
-
-  updatePaymentMsgParty(i,index){
-    if (confirm('Are you sure?')) {
-      let formbody = {}
-      formbody['_id'] = i._id;
-      formbody['method'] = 'updateMsgTypeForParty';
-      formbody['tablename'] = '';
-
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, true)
-        .subscribe((res: any) => {
-          alert(res.Status);
-          this.currentLoadedParty.splice(index,1);
-        });
-    }
-  }
-
-  downloadEmptyContacts(){//threshhold is 295
-    var doc = new jsPDF()
-    let data=this.fullPaymentDone.filter(r=>{return r.contact.length==0});
-    doc.setFontType('bold');
-    doc.setFontSize('10');
-    doc.setLineWidth(0.5);
-    //headers
-    let y = 4;
-    doc.text('Sr', 0.5, y)//partyname
-    doc.text('Date', 10.5, y)//partyname
-    doc.text('TruckNo', 10.5, y+4)//partyname
-    doc.text('Name', 45, y)//partyname
-    doc.text('Contact', 78, y)//partyname
-
-    doc.text('Sr', 105.5, y)//partyname
-    doc.text('Date', 115.5, y)//partyname
-    doc.text('TruckNo', 115.5, y+4)//partyname
-    doc.text('Name', 150, y)//partyname
-    doc.text('Contact', 183, y)//partyname
-
-    doc.line(0, 9, 210, 9);//line after main header
-    //headers
-
-    y=10
-    let newpage=0;
-    for (let i = 0; i < data.length; i++) {
-
-     if(y>290){
-       newpage=newpage+1;
-       doc.line(105, 0, 105, 300);//mid line
-       doc.line(8, 0, 8, 300);//mid line
-       doc.line(40, 0, 40, 300);//mid line
-       doc.line(75, 0, 75, 300);//mid line
-       doc.line(113, 0, 113, 300);//mid line
-       doc.line(145, 0, 145, 300);//mid line
-       doc.line(180, 0, 180, 300);//mid line
-       if(newpage===2){
-       doc.addPage();
-       newpage=0;
-       doc.setFontType('bold');
-       doc.setFontSize('10');
-       doc.setLineWidth(0.5);
-       //headers
-       y = 4;
-       doc.text('Sr', 0.5, y)//partyname
-       doc.text('Date', 10.5, y)//partyname
-       doc.text('TruckNo', 10.5, y+4)//partyname
-       doc.text('Name', 45, y)//partyname
-       doc.text('Contact', 78, y)//partyname
-
-       doc.text('Sr', 105.5, y)//partyname
-       doc.text('Date', 115.5, y)//partyname
-       doc.text('TruckNo', 115.5, y+4)//partyname
-       doc.text('Name', 150, y)//partyname
-       doc.text('Contact', 183, y)//partyname
-
-       doc.line(0, 9, 210, 9);//line after main header
-       //headers
-       y=10
-       //vertical lines
-       }
-y=10
-   }
-   if(newpage===0){
-    doc.text(this.handleF.generate2DigitNumber(String(i+1)), 0.5, y+4)//partyname
-    doc.text(data[i].truckno, 10.5, y+4)//partyname
-     doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 10.5, y+8)//partyname
-       
-     doc.line(0, y+9, 105, y+9);//line after main header
-     y = y + 9;
-   }
-if(newpage===1){
-  doc.text(this.handleF.generate2DigitNumber(String(i+1)), 105.5, y+4)//partyname
-  doc.text(data[i].truckno, 115.5, y+4)//partyname
-  doc.text(this.handleF.getDateddmmyy(data[i].loadingDate),115.5 , y+8)//partyname
-    
-  doc.line(105, y+9, 210, y+9);//line after main header
-  y = y + 9;
-}
-  
-    }
-
-    doc.line(105, 0, 105, y);//mid line
-    doc.line(8, 0, 8, y);//mid line
-    doc.line(40, 0, 40, y);//mid line
-    doc.line(75, 0, 75, y);//mid line
-    doc.line(113, 0, 113, y);//mid line
-    doc.line(145, 0, 145, y);//mid line
-    doc.line(180, 0, 180, y);//mid line
-    doc.save('Contact-Details.pdf')
-  }
-  sendMsg(no,type,data){
+   sendMsg(no,type,data){
     let bal=data.advanceArray.find(r=>{return r.reason==='Balance'})
   let msg=''
   msg=msg+'*****%20%20*Balance%20Payment%20Details*%20%20*****%0A%0A'
@@ -681,12 +393,6 @@ if(newpage===1){
     this.pasteAndSend=false;
   }
 
-  fetchpasteAndSend(){
-    this.fetchPartyTF=false;
-    this.fetchLoadedTruckTF=false;
-    this.pasteAndSend=true;
-  }
-
   getInformationData() {
     this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
@@ -708,31 +414,6 @@ if(newpage===1){
   setPartyName() {
     this.partyDetails=this.gstdetailslist[this.partyName.split('+')[1]]
     this.contactP=this.partyDetails.contact[0];
-  }
-
-  Whatsapp(){
-    let data={}
-    data['truckno']=(<HTMLInputElement>document.getElementById('truck_000')).value;
-    data['dest1']=this.dest1;
-    data['dest2']=this.dest2;
-    data['contact']=(<HTMLInputElement>document.getElementById('contact_000')).value
-    data['typeOfLoad']=this.typeOfLoad;
-    data['qr']=this.qr;
-
-    this.sendMsgP(this.contactP,'',data,0,2)
-  }
-
-
-
-  getTruckDetails(){
-    let temp={}
-    temp['truckno']=(<HTMLInputElement>document.getElementById('truck_000')).value;
-    temp['tablename']='';
-    temp['method']='getTruckContact';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
-      .subscribe((res: any) => {
-        (<HTMLInputElement>document.getElementById('contact_000')).value=res.Data[0]
-      });
   }
 
   sendMsgA(no,type,data){
@@ -770,128 +451,8 @@ if(newpage===1){
       }
     }
 
-    sendMsgP(no,type,data,j,option){
-      let contactD;
-      let qr;
-      if(option===1){
-        contactD=(<HTMLInputElement>document.getElementById('contact_'+j)).value+'%0A'
-        qr=(<HTMLInputElement>document.getElementById('qr_'+j)).value+'%0A%0A';
-      }else if(option===2){
-        contactD=data['contact']+'%0A'
-        qr=data['qr']+'%0A%0A';
-      }
-      let msg=''
-      msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A%0A'
-      msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
-      msg=msg+'*Destination*%20:%20'+data.dest1;
-      msg=msg+(data.dest2?('/'+data.dest2+'%0A'):'%0A');
-      msg=msg+'*Contact*%20:+%20+91%20'+contactD
-      
-      
-      switch (data.typeOfLoad) {
-        case 'Other':
-          msg=msg+'%0AThe above truck has been dispatched.'
-          break;
-          case 'Pipe':
-            msg=msg+'*QR*%20:%20'+qr;
-            msg=msg+'The above truck has been dispatched from Urse Plant.'
-          break;
-          case 'Fittings':
-            msg=msg+'*QR*%20:%20'+qr
-            msg=msg+'The above truck has been dispatched from Talegaon Fittings Plant.'
-          break;
-      }
-      msg=msg+'%0A%0A';
-      msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
-      msg=msg+'*Pune*%0A'
-      msg=msg+'9822288257%0A'
-      msg=msg+'9766707061%0A'
-      window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
-            
-      }
 
-      Whatsapp2(){
-        let a =this.pasteAndSendV.split('\t');
-        let data={}
-        data['truckno']=a[1];
-        data['dest1']=a[5];
-        data['dest2']=a[6];
-        data['contact']=a[2]
-        data['typeOfLoad']=a[3];
-        data['qr']=a[7];
-        this.sendMsgPT(a[8],data)
-      }
-
-      sendMsgPT(no,data){
-        let contactD=data['contact']+'%0A'
-        let qr=data['qr']+'%0A%0A';
-        let msg=''
-        msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A%0A'
-        msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
-        msg=msg+'*Destination*%20:%20'+data.dest1;
-        msg=msg+(data.dest2?('/'+data.dest2+'%0A'):'%0A');
-        msg=msg+'*Contact*%20:+%20+91%20'+contactD
-        
-        
-        switch (data.typeOfLoad) {
-            case 'Pipe':
-              msg=msg+'*QR*%20:%20'+qr;
-              msg=msg+'The above truck has been dispatched from Urse Plant.'
-            break;
-            case 'Fittings':
-              msg=msg+'*QR*%20:%20'+qr
-              msg=msg+'The above truck has been dispatched from Talegaon Fittings Plant.'
-            break;
-        }
-        msg=msg+'%0A%0A';
-        msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
-        msg=msg+'*Pune*%0A'
-        msg=msg+'9822288257%0A'
-        msg=msg+'9766707061%0A'
-        window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');
-              
-        }
-
-  updatePaymentMsg(i,index){
-    if (confirm('Are you sure?')) {
-      let formbody = {}
-      formbody['_id'] = i._id;
-      formbody['method'] = 'updateMsgTypeForBalance';
-      formbody['tablename'] = '';
-      formbody['typeOfMessage'] = this.updateMsgType;
-
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, true)
-        .subscribe((res: any) => {
-          alert(res.Status);
-          this.fullPaymentDone[index][this.updateMsgType]=true;
-          this.fullPaymentDone.splice(index,1);
-        });
-    }
-  }
-
-  forse(i,index){
-    this.updateMsgType='pmtMsgText';
-    this.updatePaymentMsg(i,index);
-    
-  }
-  updatePaymentMsgAdv(i,index){
-    if (confirm('Are you sure?')) {
-      let formbody = {}
-      formbody['_id'] = i._id;
-      formbody['method'] = 'updateMsgTypeForAdvance';
-      formbody['tablename'] = '';
-      formbody['advanceMsg'] = this.updateMsgTypeA;
-
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, true)
-        .subscribe((res: any) => {
-          alert(res.Status);
-          this.fullAdvDone[index][this.updateMsgTypeA]=true;
-          this.fullAdvDone.splice(index,1);
-        });
-    }
-  }
+  
 
   deleteBHComplete(data, j) {
     let ids=[]
@@ -926,48 +487,6 @@ if(newpage===1){
     this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/UpdateSingle']);
   }
 
-  updateComments(){
-    let msg1=(<HTMLInputElement>document.getElementById('msg')).value;
-    let no1=(<HTMLInputElement>document.getElementById('no')).value;
-    let tsrno1=(<HTMLInputElement>document.getElementById('tsrno')).value;
-    let letsgo=false;
-      if(msg1!==''&&no1!==''&&tsrno1!==''){
-        letsgo=true;
-      }
-
-    if(letsgo){
-    let formbody = {}
-    formbody['_id'] = this.bigI._id;
-    formbody['method'] = 'BalanceHireCommentUpdate';
-    formbody['tablename'] = 'BalanceHire';
-    formbody['commentToTruck2']={'msg':msg1,'no':no1,'tsrno':tsrno1,'type':'balance'};
-
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, true)
-    .subscribe((res: any) => {
-      alert(res.Status)
-    });
-  }
-  else{
-    alert('Update cancelled.')
-  }
-  }
-
-  clearComments(i,j){
-    let formbody = {}
-    formbody['_id'] = this.bigI._id;
-    formbody['index'] = j;
-    formbody['method'] = 'BalanceHireClearComment';
-    formbody['tablename'] = 'BalanceHire';
-
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, true)
-    .subscribe((res: any) => {
-      alert(res.Status)
-      alert('Please refresh!')
-    });
-  }
-
   getValueofI(a) {
     let I = 16;
     let l;
@@ -989,111 +508,6 @@ if(newpage===1){
     return I;
   }
 
-  downloadGPP()
-  {//threshhold is 295
- 
-    
-    
-    let data=this.givenTrucksPayment;
- 
-    let pager=1;
-     let bigValueofY=0;
-     var doc = new jsPDF()
-     doc.line(0, 148.2, 5, 148.2);//punching line helper
-     doc.setFontSize('25');
-     doc.setFontType('bold');
-     doc.text('Payment Pending', 15, 15)//partyname
-     doc.setFontSize('10');
-     doc.text(String(pager), 180, 5)//pageno
-     pager=pager+1;
-     doc.setFontSize('25');
-     doc.setLineWidth(0.5);
-     doc.line(0, 20, 210, 20);//line after main header
-     //headers
-     doc.setFontSize('10');
-     let y = 24;
-     let starty = 25;
-     doc.text('Sr', 2, y)//partyname
-     doc.text('TruckNo', 8, y)//partyname
-     doc.text('Date', 34, y)//partyname
-     doc.text('Party', 56, y)//partyname
-     doc.text('Place', 95, y)//partyname
-     doc.text('Notes', 145, y)//partyname
-     //headers
-     doc.line(0, 25, 210, 25);//line after header
- 
-     //vertical lines
-     doc.line(7, 20, 7, 25);//srno
-     doc.line(33, 20, 33, 25);//truck
-     doc.line(55, 20, 55, 25);//date
-     doc.line(94, 20, 94, 25);//village
-     doc.line(144, 20, 144, 25);//village
-     //vertical lines
-     let startforI=0;
-     y = y + 6;
-     startforI=0;
-     for (let i = startforI; i < data.length; i++) {
- 
-       if(y>290){
-        
-         y=30;
-     starty = 25;
-     doc.line(7, starty, 7, 292);//date
-        doc.line(33, starty,33, 292);//truckno
-        doc.line(55, starty, 55, 292);//credit
-        doc.line(94, starty, 94, 292);//village
-        doc.line(144, starty, 144, 292);//village
-         doc.addPage();
-         doc.line(0, 148.2, 5, 148.2);//punching line helper
-         doc.setFontSize('25');
-     doc.setFontType('bold');
-     doc.text('Payment Pending', 15, 15)//partyname
-     doc.setFontSize('10');
-     doc.text(String(pager), 180, 5)//pageno
-     pager=pager+1;
-     doc.setFontSize('25');
-     doc.setLineWidth(0.5);
-     doc.line(0, 20, 210, 20);//line after main header
-     //headers
-     doc.setFontSize('10');
-     doc.text('Sr', 2, y-6)//partyname
-     doc.text('TruckNo', 8, y-6)//partyname
-     doc.text('Date', 34, y-6)//partyname
-     doc.text('Party', 56, y-6)//partyname
-     doc.text('Place', 95, y-6)//partyname
-     doc.text('Notes', 145, y-6)//partyname
-     //headers
-     //vertical lines
-     doc.line(7, 20, 7, 25);//srno
-     doc.line(33, 20, 33, 25);//truck
-     doc.line(55, 20, 55, 25);//date
-     doc.line(94, 20, 94, 25);//village
-     doc.line(144, 20, 144, 25);//village
-     //vertical lines
-     doc.line(0, 25, 210, 25);//line after header
-     }
-     
-    doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
-    doc.text(data[i].trucks[0].truckno, 8, y-1)//partyname
-    doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 34, y-1)//Date  
-    doc.text(this.handleF.getDateddmmyy(data[i].givenDate), 34, y+2)//Date              
-    doc.text(data[i].parties[0].name.slice(0,16), 56, y-1)//Destination
-    doc.text(data[i].places[0].village_name.slice(0,16), 95, y-1)//Destination
-    doc.line(0, y +4, 210, y +4);//line after header
-       y = y + 8;
-       
-     }
-        //vertical lines//getting applied for every loop, make it happen once only
-        doc.line(7, starty, 7, y-4);//date
-        doc.line(33, starty,33, y-4);//truckno
-        doc.line(55, starty, 55, y-4);//credit
-        doc.line(94, starty, 94, y-4);//village
-        doc.line(144, starty, 144, y-4);//village
-        //vertical lines
-
-    //  doc.save('Available-Data.pdf')
-     doc.save('GPP.pdf')//partyname
-   }
    download(dataTF) {//threshhold is 295
 
     let i;
@@ -1333,7 +747,7 @@ if(newpage===1){
   
       doc.text(this.balanceDate[z].accountName, 147.5, accountI);//accno
       doc.text(String(this.balanceDate[z].accountNumber), 147.5, accountI+6);//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].bankName, 147.5, accountI+12);//ifsc-bankname
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].contacttb, 147.5, accountI+12);//ifsc-bankname
       }
       if(!dataTF){
         doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 115, accountI);//truckno
@@ -1385,49 +799,4 @@ if(newpage===1){
     }
   }
 
-
-  getTrucks(){
-
-    let data = {};
-    data['method'] = 'displayEmptyTrucks';
-    data['tablename'] = '';
-
-    this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, data, true)
-      .subscribe((res: any) => {
-        this.alltrucks=res.chartData;
-        this.advancePayment = true;
-      });
-      
-  }
-
-  advancePaymentDone(i,j){
-    
-    if (confirm('Are you sure?')) {
-      let formbody = {}
-      formbody['_id'] = i._id;
-      formbody['ownerid'] = i.ownerid;
-      formbody['account'] = i.account;
-      formbody['method'] = 'updateadvanceamtdate';
-      formbody['tablename'] = '';
-      formbody['advAmt']=parseInt((<HTMLInputElement>document.getElementById('advAmt_' + j)).value)
-      formbody['advDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
-      formbody['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
-      formbody['contactO']=(<HTMLInputElement>document.getElementById('advContactO_' + j))?[(<HTMLInputElement>document.getElementById('advContactO_' + j)).value]:this.alltrucks[j]['contactO'];
-      
-      
-      this.apiCallservice.handleData_New_python
-        ('commoninformation', 1, formbody, true)
-        .subscribe((res: any) => {
-          alert(res.Status);
-          this.alltrucks[j]['advanceAmt']=(<HTMLInputElement>document.getElementById('advAmt_' + j)).value
-          this.alltrucks[j]['advanceDate']=(<HTMLInputElement>document.getElementById('advDate_' + j)).value
-          this.alltrucks[j]['contact']=(<HTMLInputElement>document.getElementById('advContact_' + j))?[(<HTMLInputElement>document.getElementById('advContact_' + j)).value]:this.alltrucks[j]['contact'];
-          this.alltrucks[j]['contactO']=(<HTMLInputElement>document.getElementById('advContactO_' + j))?[(<HTMLInputElement>document.getElementById('advContactO_' + j)).value]:this.alltrucks[j]['contactO'];
-          this.advAmt=0;
-          this.advDate='';
-          this.alltrucks.splice(j,1);
-        });
-    }
-  }
 }

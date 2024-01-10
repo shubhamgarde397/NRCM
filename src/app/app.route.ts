@@ -31,6 +31,7 @@ import { TrackLoginComponent } from './pages/Track/track-login/track-login.compo
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
 import { AddqrComponent } from './pages/Track/addqr/addqr.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
+import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
  
 export const routes: Routes =
     [
@@ -129,6 +130,10 @@ export const routes: Routes =
                     {
                         path: 'RENT_HANDLER',
                         component:RentdisplayComponent
+                    },
+                    {
+                        path: 'Comm',
+                        component:ComdisplayComponent
                     },
                     {
                         path: 'DUES_PAGE_ADVANCE',

@@ -57,7 +57,7 @@ public billamt=0;
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
-        alert(res.Data);
+        alert(res.Status);
       });
   }
 

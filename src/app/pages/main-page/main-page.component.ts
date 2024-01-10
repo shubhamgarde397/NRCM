@@ -31,6 +31,7 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   public fileFormDataPython = new FormData();
   public newAuthor: any;
   public paymentData;
+  public selectedDate = '2024-01-06'
   public selectedFile = null;
   public imageFolder = ''
   public panCardFile: any;
@@ -124,18 +125,6 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
   clueCall() {
     this.clue = true;
   }
-  getValueofI(a) {
-    let I = 16;
-    for (let i = 0; i < a.length; i) {
-      let x = parseInt(a[i]);
-      let l = parseInt(a[i + 1]);
-      let X = parseInt(a.slice(i + 2, i + 2 + l));
-      I = I + ((6 * X) * (x + 2))
-      i = i + l + 2
-    }
-    return I;
-  }
-
   ngOnInit() {
     setInterval(() => {
       this.now = new Date();
@@ -146,6 +135,18 @@ public items = { keyOne: 'value 1', keyTwo: 'value 2', keyThree: 'value 3' };
       }
     }, 1000);
     }
+
+
+
+
+  ls(no){
+    if(no<6){
+      return 3;
+    }
+    else if(no>=6){
+      return no-5+this.ls(no-1);
+    }
+  }
  
 }
 
