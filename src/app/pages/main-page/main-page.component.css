@@ -21,3 +21,10 @@ table,label{
 .wadhiw{
     color:black;
 }
+
+.well{
+    background-color: black;
+    color: wheat;
+    border-radius: 100px;
+    text-align: center;
+}

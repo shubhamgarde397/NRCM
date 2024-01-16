@@ -17,6 +17,10 @@
   <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
     <button class="btn btn-info" (click)="getWhichType('7',false)">Balance Hire</button>
 </div>
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="personalshubham">
+  <button class="btn btn-info" (click)="getWhichType('8',false)">Personal</button>
+</div>
+
   <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
     <button class="btn btn-info" (click)="getWhichType('3',false)">Other</button>
 </div>
@@ -105,6 +109,65 @@
   </div>
   </div>
 
+  <div *ngIf="whichType==='8'" style="background-color: black;border-color: black;">
+    <div class="row">
+      <button class="btn btn-success" (click)="changeDiv()">Change</button>
+    </div>
+            <div class="container" *ngIf="display8">
+        
+              <div class="col-sm-4">
+              Type1 : <select class="form-control" [(ngModel)]="type1">
+                <option value="Self">Self</option>
+                <option value="Both">Both</option>
+              </select> 
+            </div>
+        
+            <div class="col-sm-4">
+              Type2 : <select class="form-control" [(ngModel)]="type2">
+                <option value="Protected">Protected</option>
+                <option value="Unprotected">Unprotected</option>
+                <option value="Nil">Nil</option>
+              </select> 
+            </div>
+
+            <div class="col-sm-4">
+              Date : <input type="date" class="form-control" [(ngModel)]="date">
+            </div>
+        
+         
+        
+                 
+            <div class="container">
+              <button class="btn btn-danger" (click)="storePersonal()">Store</button>
+            </div>
+          </div>
+
+          <div class="container" *ngIf="!display8">
+            <button class="btn btn-success" (click)="get8()">Get</button>
+            <table class="table" style="width:100%;background-color: black;color: wheat;" align="center">
+              <thead align="center" style="font-weight: bold">
+                <tr class=table-header>
+                  <th>Srno</th>
+                  <th>Date</th>
+                  <th>Type</th>
+                  <th>Type1</th>
+                  <th>Type2</th>
+                </tr>
+              </thead>
+              <tbody align="center">
+                <tr *ngFor="let i of data8;let j = index">
+                  <td>{{j+1}}</td>
+                  <td>{{i.date|date:'dd-MM-yyyy'}}</td>
+                  <td>{{i.type}}</td>
+                  <td>{{i.type1}}</td>
+                  <td>{{i.type2}}</td>
+                </tr>
+              </tbody>
+            </table>
+     
+    </div>
+    </div>
+
 
     <div *ngIf="whichType==='2'">
       <div class="well" style="background-color: black;border-color: black;">
@@ -137,7 +200,7 @@
           
               <div class="col-sm-12">
 
-            <table class="table" style="width:100%" align="center" *ngIf="byTruckName">
+            <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="byTruckName">
                   <thead align="center" style="font-weight: bold">
                     <tr class=table-header>
                       <th>Srno</th>
@@ -173,12 +236,18 @@
 
       <div *ngIf="whichType==='3'">
         <div class="well" style="background-color: black;border-color: black;">
-
+          <div class="col-sm-3">
           <select class="form-control" (change)="getdata3()" [(ngModel)]="data3value">
             <option disabled>Select Option</option>
             <option value="1">By RC</option>
             <option value="2">Rent Sheet</option>
+            <option value="3">Memo-Custom</option>
+            <option value="4">Memo-BillNo</option>
+            <option value="5">Bill-Custom</option>
+            <option value="6">Bill-BillNo</option>
           </select>
+        </div>
+        </div>
         <div *ngIf="data3==='1'" class="row" style="background-color: black;border-color: black;">
 
           <div class="col-sm-3">
@@ -250,22 +319,283 @@
                     <th>Srno</th>
                     <th>Loading-Truck</th>
                     <th>Party-Place-Type</th>
+                    <th>Hire</th>
                     <th>Rent</th>
                     <th>Comm</th>
                   </tr>
                 </thead>
                 <tbody align="center">
                   <tr *ngFor="let i of turnbooklist;let j = index">
-                    <td>{{j+1}}</td>
+                    <td>{{j+1}}<br>{{i.billno}}</td>
                     <td>{{i.loadingDate|date:'dd-MM-yyyy'}}=>{{i.truckno}}</td>
-                    <td>{{i.party}}=>{{i.palce}}=>{{i.type}}</td>
+                    <td>{{i.party}}=>{{i.place}}=>{{i.typeOfLoad}}</td>
+                    <td (click)="changeRC('hamt',i)">{{i.hamt}}</td>
                     <td (click)="changeRC('rent',i)">{{i.rent}}</td>
                     <td (click)="changeRC('billamt',i)">{{i.billamt}}</td>
                   </tr>
                 </tbody>
               </table>
           </div>
+
+          <div *ngIf="data3==='3'" class="row" style="background-color: black;border-color: black;">
+
+              <button class="btn btn-warning" (click)="getInformationDataB()">Get Data</button>
+            
+                <div class="container">
+            
+                  <div class="col-sm-4">
+                  Party Type : <select class="form-control" [(ngModel)]="partyType2">
+                    <option value="NR">NR</option>
+                    <option value="NRCM">NRCM</option>
+                    <option value="SNL">SNL</option>
+                    <option value="None" selected>None</option>
+                  </select> 
+                </div>
+            
+                <div class="col-sm-4">
+                  Party : <i class="material-icons" (click)="getparties()">autorenew</i>
+                  <select id="partyName" class="form-control" [(ngModel)]="partyName"  (change)="setPartyNameMS(2)">
+                    <option selected disabled value={{partyid}}>{{party}}</option>
+                    <option *ngFor="let i of parties;let j = index;" value={{i.name}}>{{i.name}}</option>
+                  </select>
+                </div>
+            
+              </div>
+            
+                <div class="container">
+                  <div class="col-sm-4">
+                  Place : <i class="material-icons" (click)="getVillages()">autorenew</i>
+                  <select id="placeName" class="form-control" [(ngModel)]="placeName"  (change)="setPlaceNameMS(2)">
+                    <option selected disabled value={{villageid}}>{{village_name}}</option>
+                    <option *ngFor="let i of villagenamelist;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  Place 2: 
+                  <input type="text" class="form-control" [(ngModel)]="placeName2">
+                </div>
+            </div>
+               
+                <div class="container">
+                  <div class="col-sm-4">
+                  Date : <input type="date" class="form-control" [(ngModel)]="loadingDate">
+                  </div>
+            
+                  <div class="col-sm-4">
+                  Truck No : <input type="text" class="form-control" [(ngModel)]="truckNo">
+                  </div>
+            </div>
+            
+            <div class="container">
+              <div class="col-sm-1">
+                <label>
+                  <input type="radio" name="color" class="form-control" value="TON" (change)="selectedColor('TON')"> TON
+                </label>
+              </div>
+              <div class="col-sm-1">
+                <label>
+                  <input type="radio" name="color" class="form-control" value="QR" (change)="selectedColor('QR')"> QR
+                </label>
+              </div>
+              <div class="col-sm-2">
+                <label>
+                  <input type="radio" name="color" class="form-control" value="Ton" (change)="selectedColor('LRNO')"> LRNO
+                </label>
+              </div>
+              <div class="col-sm-4">
+                {{radio}} : <input type="text" class="form-control" [(ngModel)]="lrno">
+                </div>
+                
+            </div>
+            
+            <div class="container">
+              <div class="col-sm-1">
+                <label>
+                  <input type="checkbox" class="form-control" [(ngModel)]="showPan">Pan
+                </label>
+              </div>
+              <div class="col-sm-1">
+                <label>
+                  <input type="checkbox" class="form-control" [(ngModel)]="showsignstamp">Stamp
+                </label>
+              </div>
+              <div class="col-sm-2">
+                <label>
+                  <input type="checkbox" class="form-control" [(ngModel)]="showshubhamsign">Sign and Stamp
+                </label>
+              </div>
+            </div>
+            
+            
+            
+            <div class="container">
+              <div class="col-sm-3">
+              Rent : <input type="number" class="form-control" [(ngModel)]="rent">
+              </div>
+              <div class="col-sm-3">
+                Advance : <input type="number" class="form-control" [(ngModel)]="advance">
+                </div>
+                <div class="col-sm-3">
+                  Balance : <input type="number" class="form-control" [(ngModel)]="balance">
+                  </div>
+            </div>
+            
+                <div class="container">
+                  <button class="btn btn-danger" (click)="CollectionMemoC()">Get CollectionMemo</button>
+                </div>
+              
+              
+          </div>
+
+          <div *ngIf="data3==='5'" class="row" style="background-color: black;border-color: black;">
+                     
+            <form submitted=true enctype="multipart/form data" action="/">
+          <div class="row">
+
+            <div class="col-sm-2">
+              <div class="well">
+              <h3>Basic</h3>
+              Date : <input type='date' [ngModelOptions]="{standalone: true}" [(ngModel)]="date5b"> <br>
+              Truck No : <input type='text' [ngModelOptions]="{standalone: true}" [(ngModel)]="truckno5b"> <br>
+              PartyType : 
+                  <select id="partyName" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="partyType5b">
+                    <option value='NRCM'>NRCM</option>
+                    <option value='NR'>NR</option>
+                    <option value='SNL'>SNL</option>
+                  </select><br>
+              Party : <i class="material-icons" (click)="getparties()">autorenew</i>
+                  <select id="partyName" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="partyName5b">
+                    <option selected disabled value={{partyid}}>{{party}}</option>
+                    <option *ngFor="let i of parties;let j = index;" value={{i.name}}>{{i.name}}</option>
+                  </select><br>
+                Place : <i class="material-icons" (click)="getVillages()">autorenew</i>
+                <select id="placeName" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="placeName5b">
+                  <option selected disabled value={{villageid}}>{{village_name}}</option>
+                  <option *ngFor="let i of villagenamelist;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
+                </select>
+              <br>
+                Place 2: 
+                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="placeName25b">
+          </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="well">
+            <h3>Rent</h3>
+            Rent : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="rent5b" (change)='calcTotalRent()'><br>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" (click)="toModal(j)">Add Extra</button>
+            Extra :<ul><li *ngFor="let i of extraRent;let j=index;" (click)="delRent(j)">{{i.extraAdvancemsg}}->{{i.extraAdvanceamt}}</li></ul><br>
+            Total  : {{totalRentb5}}
+          </div>
         </div>
+
+        <div class="col-sm-2">
+          <div class="well">
+          <h3>Advance</h3>
+          <button class="btn btn-danger" data-toggle="modal" data-target="#myModal1" (click)="toModal(j)">Add Advance</button>
+        <ul><li *ngFor="let i of advanceArray;let j=index;"><label (click)="deladv(j)">{{i.date|date:'dd-MM-yyyy'}}->{{i.amount}}</label></li></ul>
+          Total Paid : {{totalAdvanceb5}}
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="well">
+        <h3>Billing</h3>
+        Bill : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="billamt5b" (change)="calcTotalBill()"><br>
+        Coolie : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="coolie5b" (change)="calcTotalBill()"><br>
+        Less : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="less5b" (change)="calcTotalBill()"><br>
+        Cash : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="cash5b" (change)="calcTotalBill()"><br>
+        Total : {{totalcut5b}}
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="well">
+      <h3>Balance</h3>
+      Total Balance : <input type='text' [ngModelOptions]="{standalone: true}" [(ngModel)]="balance5b">
+    </div>
+  </div> 
+  <div class="col-sm-3">
+    <div class="well">
+      <button type="button" (click)="pdfData('custom')" class="btn btn-warning">
+        <i class="material-icons">download</i>
+      </button>
+  </div>
+</div> 
+
+          </div>
+            </form>
+          </div>
+
+          <div *ngIf="data3==='6'" class="row" style="background-color: black;border-color: black;">
+            <div class="row">
+              <div class="col-sm-2">
+                <input type="text" class="form-control" [(ngModel)]="billNo">
+              </div>
+            </div>
+            <div class="row">
+              <button class="btn btn-danger" (click)="getInformationData()">Get Data</button>
+            </div>
+          
+            <form [formGroup]="myFormGroup" *ngIf="showForm2" submitted=true enctype="multipart/form data" action="/">
+          <div class="row">
+
+            <div class="col-sm-2">
+              <div class="well">
+              <h3>Basic</h3>
+              Date : {{myFormGroup.value.loadingDate|date:'dd-MM-yyyy'}}<br>
+              Truck No : {{myFormGroup.value.truckno}}<br>
+              Party : {{myFormGroup.value.partyName}}<br>
+              Place  : {{myFormGroup.value.placeName}}
+            </div>
+          </div>
+
+          <div class="col-sm-2">
+            <div class="well">
+            <h3>Rent</h3>
+            Rent : {{myFormGroup.value.rent}}<br>
+            Extra :<ul><li *ngFor="let i of extraRent">{{i.extraAdvancemsg}}->{{i.extraAdvanceamt}}</li></ul><br>
+            Total  : {{myFormGroup.value.totalRent}}
+          </div>
+        </div>
+
+        <div class="col-sm-2">
+          <div class="well">
+          <h3>Advance</h3>
+        <ul><li *ngFor="let i of advanceArray;let j=index;">{{i.date|date:'dd-MM-yyyy'}}->{{i.amount}}</li></ul>
+          Total Paid : {{myFormGroup.value.totalAdvance}}
+        </div>
+      </div>
+
+      <div class="col-sm-2">
+        <div class="well">
+        <h3>Billing</h3>
+        Bill : {{myFormGroup.value.billamt}}<br>
+        Coolie : {{myFormGroup.value.extra_hamali}}<br>
+        Less : {{myFormGroup.value.less}}<br>
+        Cash : {{myFormGroup.value.cash}}<br>
+        Total : {{myFormGroup.value.totalCut}}
+      </div>
+    </div>
+
+    <div class="col-sm-2">
+      <div class="well">
+      <h3>Balance</h3>
+      Total Balance : {{myFormGroup.value.totalBalance}}
+    </div>
+  </div> 
+  <div class="col-sm-3">
+    <div class="well">
+      <button type="button" (click)="pdfData('simple')" class="btn btn-warning">
+        <i class="material-icons">download</i>
+      </button>
+  </div>
+</div> 
+
+          </div>
+            </form>
+          </div>
+          
         </div>
 
         <div *ngIf="whichType==='4'">
@@ -518,3 +848,103 @@
                 
               </div>
             </div>
+
+
+            <div class="container">
+    
+              <div class="modal fade" id="myModal" role="dialog" style="background-color: black;">
+                <div class="modal-dialog">
+                
+              
+                  <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Edit for {{truckno5b}}</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: black;">
+                <div class="well" style="background-color: black;">
+            
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Extra Amount : 
+                      <input type="number" class="form-control" [(ngModel)]="amount">
+                    </div>
+                  </div>
+            
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Remark : 
+                      <input type="text" class="form-control" [(ngModel)]="remark">
+                    </div>
+                  </div>
+            
+                  <div class="row form-group">
+                    
+                    
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-warning" (click)="addToArray()">
+                      Submit
+                    </button>
+                  </div>
+                  </div>
+                </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
+            </div>
+
+            <div class="container">
+    
+              <div class="modal fade" id="myModal1" role="dialog" style="background-color: black;">
+                <div class="modal-dialog">
+                
+              
+                  <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Advance for {{truckno5b}}</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: black;">
+                <div class="well" style="background-color: black;">
+            
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Amount : 
+                      <input type="number" class="form-control" [(ngModel)]="advamt">
+                    </div>
+                  </div>
+            
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Date : 
+                      <input type="date" class="form-control" [(ngModel)]="advdate">
+                    </div>
+                  </div>
+            
+                  <div class="row form-group">
+                    
+                    
+                  <div class="col-sm-4">
+                    <button type="button" class="btn btn-warning" (click)="addToArrayAdv()">
+                      Submit
+                    </button>
+                  </div>
+                  </div>
+                </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
+            </div>
+            

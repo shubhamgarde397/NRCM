@@ -127,11 +127,24 @@ export class handleFunction {
     }
 
 
-    getDateddmmyy(date) {
+     getDateddmmyy(date,format='ddmmyyyy') {
+        let year;
+        if(date===undefined){
+            return ''
+        }else if(date===''){
+            return ''
+        }else{
+            if(date==='9999-12-31'){return 'NA'}else{
         let day=date.slice(8);
         let monthno=date.slice(5,7);
-        let year=date.slice(0,4);
+        if(format=='ddmmyy'){
+            year=date.slice(2,4);
+        }else if(format == 'ddmmyyyy'){
+            year=date.slice(0,4);
+        }
        return day+'-'+monthno+'-'+year;
+        }
+    }
     }
 
     getDateyyyymmdd(date) {
