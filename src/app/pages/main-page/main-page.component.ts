@@ -104,6 +104,8 @@ public showForm2=false;
 public date;
 public type1;
 public type2;
+public documentNos=[];
+public documentNo='';
 public date5b=''
 public truckno5b=''
 public partyName5b=''
@@ -138,7 +140,6 @@ public personalshubham=false;
   ) { }
 
   ngOnInit() {
-    // this.getTpt()
     this.myFormGroup = this.formBuilder.group({
       loadingDate:'',
       truckno: '',
@@ -176,6 +177,12 @@ public personalshubham=false;
   savePayment(i,j){
     this.bigII=i;
     this.bigJJ=j;
+  }
+
+  saveDoc(i,j){
+    this.bigII=i;
+    this.bigJJ=j;
+    this.documentNos=this.turn11[this.bigJJ]['documentNo'];
   }
 
   fetchPendinActualPayments(){
@@ -269,6 +276,21 @@ formbody['selectedPochDate']=this.selectedPochDate;
         alert(res.Status)
       });
   }
+  saveDocData(){
+    let tempObj={}
+    tempObj['method']='saveDocumentNo';  //work from here
+    tempObj['tablename']='';
+    tempObj['_id']=this.bigII['_id']
+    tempObj['documentNo']=this.documentNos;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+      });
+  }
+  addDoc(){
+    this.turn11[this.bigJJ].documentNo.push(this.documentNo);
+    this.documentNos=this.turn11[this.bigJJ]['documentNo'];
+  }
 
   toModal(index){
     this.bigI=index;
@@ -290,6 +312,10 @@ formbody['selectedPochDate']=this.selectedPochDate;
   delRent(j){
       this.extraRent.slice(j,1)
   }
+  delDoc(j){
+    this.documentNos.splice(j,1)
+    this.turn11[this.bigJJ].documentNo.splice(j,1)
+}
   deladv(j){
     this.advanceArray.splice(j,1);
 }
@@ -376,8 +402,6 @@ let pwd=prompt('Enter code!')
   }
 
   getWhichType(data,yn){
-    console.log(data,yn);
-    
 this.whichType=data;
 if(yn){
 let tempObj={}
@@ -514,6 +538,16 @@ find(event){
           this.trucknoid11=res.Data[0].truckName.truckno
           this.find11UniqueTruck();
         }
+        if(event==='bill'){
+          this.trucknoid11=res.Data[0].truckName.truckno
+          this.find11UniqueTruck();
+        }
+      }
+      else{
+        this.unique11turnbooklist=[];
+        this.turn11=[];
+        this.turnbooklist=[];
+        this.byTruckName=false;
       }
       });
 
@@ -690,7 +724,7 @@ let tempObj1={};
 
     CollectionMemoC(){
       this.sstampsign=Consts.sstampsign;
-      this.imgData2=Consts.imgData2;
+      this.imgData2=Consts.imgData2;//jyoti garde
       this.ssign=Consts.ssign;
       if(this.placeName2===''){}else{
         this.placeName=this.placeName+this.placeName2;

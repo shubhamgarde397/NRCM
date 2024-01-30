@@ -17,6 +17,9 @@
   <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
     <button class="btn btn-info" (click)="getWhichType('7',false)">Balance Hire</button>
 </div>
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
+  <button class="btn btn-info" (click)="getWhichType('9',false)">Document No</button>
+</div>
 <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="personalshubham">
   <button class="btn btn-info" (click)="getWhichType('8',false)">Personal</button>
 </div>
@@ -233,6 +236,67 @@
 
       </div>
       </div>
+    
+      <div *ngIf="whichType==='9'">
+        <div class="well" style="background-color: black;border-color: black;">
+        <div class="row">
+          <div class="col-sm-3">
+            <input type="text" class="form-control col-sm-3" [(ngModel)]='truckVar' placeholder="Truck No">
+          </div>
+          <div class="col-sm-3">
+            <select class="form-control" *ngIf="wala11" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+              <option>Default</option>
+              <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
+            </select>
+          </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2">
+              <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11')">Truck No</button>
+            </div>
+            <div class="col-sm-2">
+              <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('bill')">BillNo</button>
+            </div>
+           
+          </div>
+  
+            
+                <div class="col-sm-12">
+  
+              <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="byTruckName">
+                    <thead align="center" style="font-weight: bold">
+                      <tr class=table-header>
+                        <th>Srno</th>
+                        <th>Loading</th>
+                        <th>TruckNo</th>
+                        <th>Type-Party-Place</th>
+                        <th>LRNO</th>
+                        <th>Document</th>
+                        <th>Option</th>
+                      </tr>
+                    </thead>
+                    <tbody align="center">
+                      <tr *ngFor="let i of turn11;let j = index">
+                        <td>{{j+1}}</td>
+                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                        <td>{{i.truckName['truckno']}}<br>{{i.billno}}</td>
+                        <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
+                        <td>{{i.lrno}}</td>
+                        <td>
+                          <ul><li *ngFor="let ii of i.documentNo;let k = index">{{ii}}</li></ul>
+                        </td>
+                        <td>
+                          <button (click)="saveDoc(i,j)" data-toggle="modal" data-target="#myModalDoc">Add Document</button>
+                          <button (click)="saveDocData(i,j)">Save Document</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+            </div>
+           
+  
+        </div>
+        </div>
 
       <div *ngIf="whichType==='3'">
         <div class="well" style="background-color: black;border-color: black;">
@@ -399,7 +463,7 @@
               </div>
               <div class="col-sm-2">
                 <label>
-                  <input type="radio" name="color" class="form-control" value="Ton" (change)="selectedColor('LRNO')"> LRNO
+                  <input type="radio" name="color" class="form-control" value="LRNO" (change)="selectedColor('LRNO')"> LRNO
                 </label>
               </div>
               <div class="col-sm-4">
@@ -842,6 +906,42 @@
             
                   <div class="modal-footer">
                     <button class="btn btn-warning" (click)="addPayment()">Store</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+
+            <div class="modal fade" id="myModalDoc" role="dialog">
+              <div class="modal-dialog">
+              
+            
+                <div class="modal-content" style="background-color: black;color: wheat;">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Document No</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      Document No : <input type="text" class="form-control" [(ngModel)]="documentNo">
+                    </div>
+
+                    <table>
+                      <tr>
+                        <th>DocumentNo</th>
+                        <th>Delete</th>
+                      </tr>
+                      <tr *ngFor="let i of documentNos;let j = index;">
+                        <td>{{i}}</td>
+                        <td><button (click)="delDoc(j,1)">Delete</button></td>
+                      </tr>
+            
+                    </table>
+=                 </div>
+            
+                  <div class="modal-footer">
+                    <button class="btn btn-warning" (click)="addDoc()">Store</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   </div>
                 </div>
