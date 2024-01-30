@@ -32,6 +32,9 @@ export class GstupdateComponent implements OnInit {
   public contact=[]
   public contactA;
   public contactArray=[]
+  public flexid=0;
+  public village='';
+  public flexids=[];
   public objectKeys = Object.keys;
   constructor(
     public handledata: HandleDataService,
@@ -48,6 +51,7 @@ export class GstupdateComponent implements OnInit {
       addr1: this.handledata.Data.addr1,
       addr2: this.handledata.Data.addr2,
       cities:[],
+      flexids:this.handledata.Data.flexids,
       accNo:this. handledata.Data.accNo,
       partyType:this.handledata.Data.partyType,
       shortName:this.handledata.Data.shortName,
@@ -62,6 +66,7 @@ export class GstupdateComponent implements OnInit {
     this.cities=this.handledata.Data.cities;
     this.Email=this.handledata.Data.email;
     this.contact=this.handledata.Data.contact;
+    this.flexids=this.handledata.Data.flexids;
   }
 
   // addLoad(){
@@ -75,6 +80,15 @@ export class GstupdateComponent implements OnInit {
 
   addEmail(){
     this.Email.push(this.email);
+  }
+
+  addFlex(){
+let temp={flexid:this.flexid,village:this.village}
+    this.flexids.push(temp);
+  }
+
+  deleteFlex(i,j){
+    this.flexids.splice(j,1);
   }
 
   addMore() {
@@ -111,6 +125,7 @@ export class GstupdateComponent implements OnInit {
     formbody['_id'] = this.handledata.Data._id;
     // formbody['load'] = this.load;
     formbody['contact']=this.contactArray;
+    formbody['flexids']=this.flexids;
     formbody['method'] = 'updategst';
     formbody['tablename'] = 'gstdetails';
 

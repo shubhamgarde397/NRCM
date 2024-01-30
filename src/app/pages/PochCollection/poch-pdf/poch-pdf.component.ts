@@ -8,10 +8,7 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { ExcelService } from '../../../common/services/sharedServices/excel.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
-import { Button } from 'protractor';
-import { DuesPageComponent } from '../../Dues/dues-page/dues-page.component';
-import { templateSourceUrl } from '@angular/compiler';
-
+import { Consts } from '../../../common/constants/const';
 @Component({
   selector: 'app-poch-pdf',
   templateUrl: './poch-pdf.component.html',
@@ -25,6 +22,8 @@ export class PochPdfComponent implements OnInit {
   public balanceDate = [];
   public pochDate='';
   public printInfo = false;
+  public sstampsign='';
+  public ssign='';
 
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
@@ -62,7 +61,7 @@ export class PochPdfComponent implements OnInit {
 
   PochBill(){//threshhold is 295
     let data=this.balanceDate;
-    
+    let threshhold=this.threshholdCalculator(data[0]['sum']);
     for(let i=0;i<data.length;i++){
       var doc = new jsPDF({
         orientation: 'p',
@@ -70,35 +69,64 @@ export class PochPdfComponent implements OnInit {
         format: 'a5',
         putOnlyUsedFonts:true
        }) 
-       this.pdfData(doc,data[i]);
-      //  doc.addPage();
+       this.pdfData(doc,data[i],false);
+       doc.addPage();
+       this.pdfData(doc,data[i],true);
       doc.save(this.pochDate)
     }
-    // this.pdfDataCount(doc,data)
     
  }
 
- PochBillAll(){//threshhold is 295
-  let data=this.balanceDate;
-  var doc = new jsPDF({
-    orientation: 'p',
-    unit: 'mm',
-    format: 'a5',
-    putOnlyUsedFonts:true
-   }) 
-  for(let i=0;i<data.length;i++){
-   
-     this.pdfData(doc,data[i]);
-     doc.addPage();
-    
+
+threshholdCalculator(data){//16
+
+  let t=15
+  let oe = data%2==0?4:5//4
+  if(data>15){
+    if(data%15==0){
+      return 15;
+    }
+    else{
+      if(data>18){
+        return 15;
+      }
+      else{
+    return t=t-oe;//11
+      }
+    }
   }
-  this.pdfDataCount(doc,data)
-  doc.save(this.pochDate)
+  else{
+    return t;
+  }
 }
 
- pdfDataCount(doc,data){
+pageCalculator(data){
+  let t=this.threshholdCalculator(data);
+  let arr=[];    
+  if(data<15){
+    return 1
+  }
+  else{
+    arr.push(t);
+    data=data-t;
+    while(data>0){  
+      if(data<t){
+        arr.push(data);
+        data=0;
+      }
+      else{
+        arr.push(t)
+        data=data-t
+      }
+  }
+  return arr.length
+  }
+}
 
-  
+pdfData(doc,data,ack){
+  let threshhold=this.threshholdCalculator(data.sum);
+  let pager=1;
+  let pagerMax=this.pageCalculator(data.sum);
   let d=new Date()
   let billno=String(d.getMinutes())+String(d.getSeconds());
   doc.setLineDash([1, 0], 10);
@@ -106,7 +134,7 @@ export class PochPdfComponent implements OnInit {
   doc.setFontType('bold');
   doc.setTextColor(224,0,0);
   doc.text('NITIN ROADWAYS',28, 18)
-  doc.line(0, 86, 5, 86);//punching line helper
+  doc.line(0, 106, 5, 106);//punching line helper
   doc.setDrawColor(163,0,0);
   doc.setLineWidth(0.5);
   doc.line(3, 23, 146, 23);
@@ -149,24 +177,81 @@ export class PochPdfComponent implements OnInit {
   doc.text('Bill No. :    '+billno,10,55)
   doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,55)
   
+  doc.text("We Nitin Roadways are submitting "+data['sum']+" PODs to",15,66)
+  doc.text(data['_id'],15,72.5)
+  doc.setTextColor(224,0,0);
+  doc.setFontSize('10');
+  doc.text('PAN No. : AFGPG0575D',15,80)
+  doc.setFontSize('12');
+  doc.setTextColor(0, 0, 0);
+// 
+// Signature box
+doc.line(110, 58, 143, 58);
+doc.line(110, 58, 110, 80);
+doc.line(143, 58, 143, 80);
+doc.line(110, 80, 143, 80);
+doc.setFontSize('8');
+doc.setTextColor(132,132,132);
+doc.text('Sign & Stamp',118,69)
+// 
+doc.setTextColor(0, 0, 0);
+  
   doc.setFontType('bold');
   doc.setFontSize('10');
 
-  doc.text("A Total of "+data.length+" PODs have been submitted today.",20,66)
-  
-}
+  doc.text('Sr.',12,88)
+  doc.text('Load Date',20,88)
+  doc.text('Truck No',46,88)
+  doc.text('Dest.',71,88)
+  doc.text('LRNO',85,88)
+  doc.text('Rent',108,88)
+  doc.text('Adv',122,88)
+  doc.text('Bal',134,88)
+  doc.line(10, 90, 143, 90);
+  // Table heading
+  // Need a for loop here
+  let start=97
+  let tsum=0
+  for(let k=0;k<data.sum;k++){
+    // IF LOOP
+    if(tsum==threshhold){
+      tsum=0;
+      doc.setTextColor(132,132,132);
+      doc.text('Page '+pager+' of '+pagerMax,120,205)
+      if(ack){
+        doc.setFontType('bold');
+        doc.setFontSize('20');
+        doc.setTextColor(132,132,132);
+      doc.text('Acknowledgement Slip',21,205)
+      doc.setTextColor(0,0,0);
+      doc.setFontType('normal');
+      }
+      pager=pager+1;
+      doc.setTextColor(0,0,0);
+      // Table square
+  doc.line(10, 83, 143, 83);
+  doc.line(10, 83, 10, start-7);
+  doc.line(143, 83, 143, start-7);
+  // Table square
 
-pdfData(doc,data){
+      // Table heading
+      doc.line(18, 83, 18, start-7);//srno
+      doc.line(40, 83, 40, start-7);//date
+      doc.line(68, 83, 68, start-7);//truckno
+      doc.line(83, 83, 83, start-7);//destination145
+      doc.line(107, 83, 107, start-7);//destination145
+      doc.line(120, 83, 120, start-7);//destination145
+      doc.line(133, 83, 133, start-7);//destination145
 
-  
-  let d=new Date()
+       doc.addPage();
+      let d=new Date()
   let billno=String(d.getMinutes())+String(d.getSeconds());
   doc.setLineDash([1, 0], 10);
   doc.setFontSize('30');
   doc.setFontType('bold');
   doc.setTextColor(224,0,0);
   doc.text('NITIN ROADWAYS',28, 18)
-  doc.line(0, 86, 5, 86);//punching line helper
+  doc.line(0, 106, 5, 106);//punching line helper
   doc.setDrawColor(163,0,0);
   doc.setLineWidth(0.5);
   doc.line(3, 23, 146, 23);
@@ -207,11 +292,15 @@ pdfData(doc,data){
   doc.setFontType('bold');
   doc.setDrawColor(0,0,0);
   doc.text('Bill No. :    '+billno,10,55)
-  doc.text('Date : '+this.handleF.getDateddmmyy('2023-12-16'),110,55)
+  doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,55)
   
   doc.text("We Nitin Roadways are submitting "+data['sum']+" PODs to",15,66)
   doc.text(data['_id'],15,72.5)
-  
+  doc.setTextColor(224,0,0);
+  doc.setFontSize('10');
+  doc.text('PAN No. : AFGPG0575D',15,80)
+  doc.setFontSize('12');
+  doc.setTextColor(0, 0, 0);
 // 
 // Signature box
 doc.line(110, 58, 143, 58);
@@ -237,9 +326,9 @@ doc.setTextColor(0, 0, 0);
   doc.text('Bal',134,88)
   doc.line(10, 90, 143, 90);
   // Table heading
-  // Need a for loop here
-  let start=97
-  for(let k=0;k<data.sum;k++){
+  start=97
+    }
+    // IF LOOP
     // Table rows
     doc.line(10, start, 143, start);
 
@@ -249,12 +338,15 @@ doc.setTextColor(0, 0, 0);
   doc.text(data['place'][k],71,start-9+7)
   doc.text(String(data['nrlrno'][k]),85,start-9+7)
 
-  doc.text(String(data['hamt'][k]),108,start-9+7)
-  doc.text(String(data['partyAdvance'][k]),122,start-9+7)
-  doc.text(String(data['partyAdvance'][k]),134,start-9+7)
+  doc.text(String(data['hamt'][k]==0?'':data['hamt'][k]),108,start-9+7)
+  doc.text(this.amountSettler(data['partyAdvance'][k],'amount')===0?'':String(this.amountSettler(data['partyAdvance'][k],'amount')),122,start-9+7)
+  doc.text(this.amountSettler(data['partyBalance'][k],'amount')===0?'':String(this.amountSettler(data['partyBalance'][k],'amount')),134,start-9+7)
 
     start=start+7;
-    // Table rows
+    tsum = tsum + 1;
+    // Paging
+    
+    // Paging
   }
   // Table square
   doc.line(10, 83, 143, 83);
@@ -270,47 +362,196 @@ doc.setTextColor(0, 0, 0);
       doc.line(107, 83, 107, start-7);//destination145
       doc.line(120, 83, 120, start-7);//destination145
       doc.line(133, 83, 133, start-7);//destination145
-
+      doc.setTextColor(132,132,132);
+      doc.text('Page '+pager+' of '+pagerMax,120,205)
+      doc.setTextColor(0,0,0);
+      if(ack){
+        doc.setTextColor(132,132,132);
+        doc.setFontType('bold');
+        doc.setFontSize('20');
+      doc.text('Acknowledgement Slip',21,205)
+      doc.setFontType('normal');
+      doc.setTextColor(0,0,0);
+      }
 
   // Need a for loop here
-  // Signature
-  doc.setFontSize('10');
+}
 
-  doc.text("Signature ___________________",87,start-7+18)//165
-  // Signature
-  doc.setFontSize('10');
+amountSettler(d,c){return d.reduce((partialSum, a) => partialSum + a[c], 0);}
+
+CollectionMemoC(dataa,j,sign){
+  var doc = new jsPDF({
+    orientation: 'l',
+    unit: 'mm',
+    format: 'a6',
+    putOnlyUsedFonts:true
+   })
+   
+  
+  for(let index=0;index<dataa.sum;index++){
+    
+  let data={
+    'partyType':dataa.partyType,
+    'loadingDate':dataa['loadingDate'][index],
+    'party':dataa['party'][index],
+    'place':dataa['place'][index],
+    'hamt':dataa['hamt'][index]===0?'':dataa['hamt'][index],
+    'partyAdvanceAmt':this.amountSettler(dataa['partyAdvance'][index],'amount')===0?'':this.amountSettler(dataa['partyAdvance'][index],'amount'),
+    'balance':this.amountSettler(dataa['partyBalance'][index],'amount')===0?'':this.amountSettler(dataa['partyBalance'][index],'amount'),
+    'truckno':dataa['truckno'][index],
+    'nrlrno':dataa['nrlrno'][index],
+    'billno':dataa['billno'][index].split('_')[1],
+    'lrnoTF':dataa['lrnoTF']
+  };
+
+  this.sstampsign=Consts.sstampsign;//showsignstamp
+  this.ssign=Consts.ssign;//showshubhamsign
+
+  let mainY=6
+  doc.setFontSize('20');
   doc.setFontType('bold');
-  doc.text('Please check and pay the pending balance to : ',35,start-7+30)//158
+  doc.setTextColor(224,0,0);
+  if(data.partyType==='NRCM'){
+    doc.text('Nitin Roadways And Cargo Movers',15, mainY+2)
+  }
+  if(data.partyType==='NR'){
+    doc.text('Nitin Roadways',48, mainY+2)
+  }
+  if(data.partyType==='SNL'){
+      doc.text('Shri Nitin Logistics',40, mainY+2)
+  }
+
+  doc.setDrawColor(163,0,0);
+  doc.setLineWidth(0.5);
+  doc.line(3, mainY+4, 146, mainY+4);
   
-  // Account
-// Account square
-doc.line(17, start-7+34, 140, start-7+34);
-doc.line(17, start-7+34, 17, start-7+48);
-doc.line(140, start-7+34, 140, start-7+48);
-doc.line(17, start-7+48, 140, start-7+48);
-// Account square
-// Account rows
-doc.line(17, start-7+41, 140, start-7+41);
-// Account rows
-// Account heading
-doc.line(47, start-7+34, 47, start-7+48);//date
-doc.line(79, start-7+34, 79, start-7+48);//truckno
-doc.line(109, start-7+34, 109, start-7+48);//truckno
+  doc.setFontSize('9');
+  doc.setFontType('bold');
+  doc.setTextColor(224,0,0);
+  doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY',18,mainY+8)
+  doc.setDrawColor(163,0,0);
+  doc.setLineWidth(0.5);
+  doc.line(3, mainY+9, 146, mainY+9);
 
-doc.setFontSize('10');
-doc.setFontType('bold');
+  doc.setDrawColor(224,0,0);
+  doc.setLineWidth(0.8);
+  doc.line(3, mainY+10, 146, mainY+10);
+  
+  doc.setFontType('normal');
+  doc.setFontSize('9');
+  doc.setTextColor(0, 0, 0);
+  doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, mainY+14)
+  doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
+  
+  doc.setFontType('italic');
+  doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 10, mainY+22)
+  
+  
+  doc.setDrawColor(224,0,0);
+  doc.setLineWidth(0.2);
+  doc.line(3, mainY+24, 146, mainY+24);
+  
+  doc.setFontSize('12');
+  doc.setFontType('normal');
+  doc.setTextColor(0, 0, 0);
+  
+  doc.setFontType('bold');
+  doc.setTextColor(12,139,173);
+  doc.text('Bill No. : ',10,mainY+30)
+  doc.text('To : ',67,mainY+44)
+  doc.text('Date : ',75,mainY+30)
+  doc.text('M/s :              ',10,mainY+37)  
+  doc.text('Truck No : ',10,mainY+44)
+  
+  doc.text('Lorry Hire : ',10,mainY+53)
+  doc.setTextColor(224,0,0);
 
-doc.text('Account Name',19.5,start-7+39)
-doc.text('Account Number',49,start-7+39)
-doc.text('Bank Name',85,start-7+39)
-doc.text('IFSC',120,start-7+39)
+  doc.text(data['lrnoTF']?'LRNO':'TON',67, mainY+53)
 
-doc.text('Nitin Roadways',19,start-7+46)
-doc.text('3265201000363',50,start-7+46)
-doc.text('Canara Bank',83,start-7+46)
-doc.text('CNRB0003265',112,start-7+46)
-// Account heading
-// Table
+  doc.setTextColor(12,139,173);
+  doc.text('Height or Length Extra Rs     : ',10,mainY+60)
+  doc.setFontSize('10')
+  doc.text('Please Load and oblige. Please Pay Advance Rs : ',10,mainY+67)
+  doc.text('Balance Hire : ',10,mainY+73)
+
+  doc.setFontSize('12')
+  doc.setTextColor(0,0,0);
+  doc.setDrawColor(0,0,0);
+  doc.text(String(data.billno),30,mainY+30)
+  doc.text(data.place,80,mainY+44)
+  doc.text(this.handleF.getDateddmmyy(data.loadingDate),95,mainY+30)
+
+  doc.text(data.party,35,mainY+37)
+  
+  // data.partyDetails
+  doc.text(data.truckno,35,mainY+44)
+  doc.text(String(data.hamt),35,mainY+53)
+    doc.text(data['lrnoTF']?data.nrlrno:'TON',100, mainY+53)
+if(sign){
+  doc.addImage(this.sstampsign,'JPEG',100,85,40,20)
+}
+
+  doc.text(String('-'),75,mainY+60)
+  doc.setFontSize('10')
+  doc.text(String(data.partyAdvanceAmt),100,mainY+67)
+  doc.text(String(data.balance),35,mainY+73)
+
+  doc.line(0, mainY+31, 150, mainY+31);
+  doc.line(0, mainY+38, 150, mainY+38);
+  doc.line(65, mainY+38, 65, mainY+46);
+  doc.line(0, mainY+46, 150, mainY+46);
+  doc.line(65, mainY+46, 65, mainY+55);
+  doc.line(0, mainY+55, 150, mainY+55);
+  doc.line(0, mainY+62, 150, mainY+62);
+  doc.line(0, mainY+77, 150, mainY+77);
+
+  
+  
+
+  doc.setFontSize('8')
+  doc.setTextColor(224,0,0);
+  doc.text('Before Loading Please Check All Documents Of The Vehicle.',10,mainY+81)
+  doc.text('We are not responsible for leakage and damage',10,mainY+84)
+
+  // doc.text('For,',95,mainY+88)
+  if(data.partyType==='NR'){
+    doc.text('For Nitin Roadways',105, mainY+81)
+    doc.setTextColor(0,0,0);
+    doc.text('PAN : AFGPG0575D',10, mainY+92)
+    
+  }
+  else if(data.partyType==='SNL'){
+      doc.text('For Shri Nitin Logistics',105, mainY+84)
+  }
+  if(index+1>=dataa.sum){}
+    else{
+    doc.addPage()
+    }
+
+}
+doc.save(dataa._id+'.pdf')
+
+  // 3 Info
 }
   
 }
+
+
+//  PochBillAll(){//threshhold is 295
+  
+//   let data=this.balanceDate;
+//   var doc = new jsPDF({
+//     orientation: 'p',
+//     unit: 'mm',
+//     format: 'a5',
+//     putOnlyUsedFonts:true
+//    }) 
+//   for(let i=0;i<data.length;i++){
+   
+//      this.pdfData(doc,data[i],false);
+//      doc.addPage();
+//      this.pdfData(doc,data[i],true);
+//      doc.addPage();
+//   }
+//   doc.save(this.pochDate)
+// }

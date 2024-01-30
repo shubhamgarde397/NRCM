@@ -182,6 +182,22 @@
     </div>
     <form [formGroup]="myFormGroup" name="myform" id="myform">
       
+    <div class="form-group row">
+      <div class="col-xs-2">
+        Date : 
+        </div>
+        <div class="col-xs-3">
+          <input type="date" id="date" class="form-control" [(ngModel)]="date" formControlName="date">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.date.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
       <div class="form-group row">
 
         <div class="col-xs-2">

@@ -12,13 +12,34 @@
       
     </div>
     
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-xs-3" align="center">
           <button class="btn btn-danger" (click)="PochBill()" *ngIf="showPDFButton">{{pochDate|date:'dd-MM-yyyy'}}</button>
-        </div>
+        </div> -->
 
-        <div class="col-xs-3" align="center">
+        <!-- <div class="col-xs-3" align="center">
           <button class="btn btn-danger" (click)="PochBillAll()" *ngIf="showPDFButton">{{pochDate|date:'dd-MM-yyyy'}}-All</button>
-        </div>
+        </div> -->
+    <!-- </div> -->
+
+    <div class="row" *ngIf="showPDFButton">
+      <table class="table table-bordered">
+        <tr>
+          <th>Srno</th>
+          <th>Party</th>
+          <th>Count</th>
+          <th>Receipt</th>
+          <th>All - Memo</th>
+        </tr>
+        <tr *ngFor="let i of balanceDate;let j = index;">
+          <td>{{j+1}}</td>
+          <td>{{i._id}}</td>
+          <td>{{i.sum}}</td>
+          <td><button class="btn btn-success" (click)="PochBill(i,j)">Receipt</button></td>
+          <td><button class="btn btn-success" (click)="CollectionMemoC(i,j,true)">Sign-Memo</button></td>
+          <td><button class="btn btn-success" (click)="CollectionMemoC(i,j,false)">UnSign-Memo</button></td>
+        </tr>
+      </table>
     </div>
 </div>
+

@@ -8,6 +8,7 @@
                 <th>Srno</th>
                 <th>Name</th>
                 <th>GST Number<br>Email</th>
+                <th>CustomerIds</th>
                 <!-- <th>Rent</th> -->
                 <th>Destination<br>Contact</th>
                 <th>Type</th>
@@ -26,6 +27,11 @@
                 <td>{{i.gst}}<br>
                 <ul>
                     <li *ngFor="let ii of i.email" (click)="copyEmail(ii)">{{ii}}</li>
+                </ul>
+            </td>
+            <td>
+                <ul>
+                    <li *ngFor="let ii of i.flexids">{{ii.village}}->{{ii.flexid}}</li>
                 </ul>
             </td>
                 <!-- <td>

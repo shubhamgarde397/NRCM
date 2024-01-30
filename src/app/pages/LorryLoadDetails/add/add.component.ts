@@ -839,7 +839,7 @@ let billno=String(d.getMinutes())+String(d.getSeconds());
         tempObj = { "method": "loadingDetail",'tablename':''};
         break;
         case '3':
-          tempObj = { "method": "getloadingDetailByBill",'tablename':'','billNo':this.billParty+'_'+this.billNo};
+          tempObj = { "method": "getloadingDetailByBill",'tablename':'','billNo':this.billNo};
           break;
 
           case '8':

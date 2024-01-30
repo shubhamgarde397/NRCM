@@ -56,6 +56,7 @@ public table3=false;
   ngOnInit() {
     this.nrcmid=this.securityCheck.nrcmid;
     this.myFormGroup = this.formBuilder.group({
+      date:['',Validators.required],
       qr:['',Validators.required],
       tbid:['',Validators.required],
       type:['',Validators.required],
@@ -185,6 +186,7 @@ deleteContact(i,j){
     'vid2':this.myFormGroup.value.vid2,
     'oid':truckss['ownerid'],
     'qrs':this.qrs,
+    'date':this.myFormGroup.value.date,
     'contacts':this.contacts,
     'type':this.myFormGroup.value.type,
     'new':truckss['new']

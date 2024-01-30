@@ -27,9 +27,6 @@
       </div>
     </div>
 
-
-
-
     <div class="form-group row">
       <div class="col-xs-3">
         Native Place : <select id="dest" class="form-control" formControlName="dest">
@@ -212,7 +209,51 @@
           </div>
         </div>
         <!--  -->
-
+        <hr>
+        <h3>Customer Flex Ids</h3>
+            <div class="form-group row">
+              <div class="col-xs-5">
+                <table class="table table-border">
+                  <tr>
+                    <th>Village</th>
+                    <th>FlexId</th>
+                  </tr>
+                  <tr>
+                    <td>
+                      <select [(ngModel)]="village" [ngModelOptions]="{standalone: true}">
+                        <option *ngFor="let k of villagenamelist">{{k.village_name}}</option>
+                      </select></td>
+                    <td>
+                      <input type="number" [(ngModel)]="flexid" [ngModelOptions]="{standalone: true}"></td>
+                      
+                  </tr>
+                </table>
+                <button type="button" class="btn btn-success" (click)="addFlex()">Add</button>
+        
+              </div>
+          
+              <div class="col-xs-3">
+              
+                <table class="table table-border">
+                  <tr>
+                  <th>Sr</th>
+                  <th>Village</th>
+                  <th>FlexId</th>
+                  <th>Delete</th>
+                </tr>
+                <tr *ngFor="let i of flexids;let j = index;">
+                  <td>{{j+1}}</td>
+                  <td>{{i.village}}</td>
+                  <td>{{i.flexid}}</td>
+                  <td><button type="button" mat-raised-button (click)="deleteFlex(i,j)" class="btn-danger btn-sm btn-just-icon">
+                    <i class="material-icons">delete_forever</i>
+                </button></td>
+                </tr>
+                </table>
+              </div>
+            </div>
+        
+                <!--  -->
 
     <div class="row">
       <div class="form-group" class="col-xs-2"></div>
