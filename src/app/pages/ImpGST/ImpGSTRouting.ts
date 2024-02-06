@@ -4,7 +4,6 @@ import { Component } from '@angular/core';
 import { ImpgsthandlerComponent } from './impgsthandler/impgsthandler.component';
 import { ImpgstdispComponent } from './impgstdisp/impgstdisp.component';
 import { ImpgstaddComponent } from './impgstadd/impgstadd.component';
-import { ImpgstupdateComponent } from './impgstupdate/impgstupdate.component';
 
 export const ImpGSTRouting: Routes =
     [
@@ -22,16 +21,12 @@ export const ImpGSTRouting: Routes =
                         component: ImpgstdispComponent
                     },
                     {
-                        path: 'ImpGSTAdd',
+                        path: 'IMPAdd',
                         component: ImpgstaddComponent
                     },
                     {
-                        path: 'ImpGSTDisp',
+                        path: 'IMPDisp',
                         component: ImpgstdispComponent
-                    },
-                    {
-                        path: 'ImpGSTUpdate',
-                        component: ImpgstupdateComponent
                     }
                 ]
         }

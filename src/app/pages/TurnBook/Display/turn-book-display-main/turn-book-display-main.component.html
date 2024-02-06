@@ -68,9 +68,6 @@
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
             {{buttonValue}}
           </button>
-          <!-- <button mat-raised-button (click)="changeTextAF()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
-            Account
-          </button> -->
         </div>
       </div>
       <!--DATE -->
@@ -112,11 +109,9 @@
                 <div class="row">
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.P}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">P</div>
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.Pf}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Px</div>
-                  <div class="col-sm-3" [ngStyle]="{'background-color':i.df}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Lx</div>
                 </div>
                 <div class="row">
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.A}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">A</div>
-                  <div class="col-sm-3" [ngStyle]="{'background-color':i.rf}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Rx</div>
                   <div class="col-sm-3" [ngStyle]="{'background-color':i.C}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">C</div>
                 </div>
                 <div class="row" *ngIf="changeTextA">

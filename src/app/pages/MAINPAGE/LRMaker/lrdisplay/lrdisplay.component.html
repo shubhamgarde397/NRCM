@@ -1,0 +1,44 @@
+  <div class="well" style="background-color: black;border-color: black;">
+  <div class="row">
+    <div class="col-sm-3">
+      <input type="text" class="form-control col-sm-3" [(ngModel)]='billno' placeholder="BILLNO">
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find()">BillNo</button>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="DownloadLR()" *ngIf="showdownload">Download</button>
+    </div>
+    </div>
+     
+    <div class="col-sm-12">
+
+        <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="showdownload">
+              <thead align="center" style="font-weight: bold">
+                <tr class=table-header>
+                  <th>Srno</th>
+                  <th>Loading</th>
+                  <th>TruckNo</th>
+                  <th>Type-Party-Place</th>
+                  <th>From Party</th>
+                  <th>LRNO</th>
+                  <th>Document</th>
+                </tr>
+              </thead>
+              <tbody align="center">
+                <tr *ngFor="let i of turn11;let j = index">
+                  <td>{{j+1}}</td>
+                  <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                  <td>{{i.truckName['truckno']}}<br>{{i.billno}}</td>
+                  <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
+                  <td>{{i.billno}}</td>
+                  <td>
+                    <ul><li *ngFor="let ii of i.documentNo;let k = index">{{ii}}</li></ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+     
+
+  </div>

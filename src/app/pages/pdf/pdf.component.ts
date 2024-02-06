@@ -79,10 +79,10 @@ export class PDFComponent implements OnInit {
     this.max = this.bankArray[0].Amount;
     this.bankArray.forEach(r => { if (r.Amount > this.max) { this.max = r.Amount; } })
     var doc = new jsPDF()
-    doc.setFontSize('30');
+    doc.setFontSize('28');
     doc.setFontType('bold');
     doc.setTextColor(224,0,0);
-    doc.text('Nitin Roadways And Cargo Movers',15, 25)
+    doc.text('NITIN ROADWAYS AND CARGO MOVERS',7, 25)
 
     doc.setFontSize('16');
     doc.setFontType('bold');
@@ -207,10 +207,10 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     var doc = new jsPDF()
 
 
-    doc.setFontSize('30');
+    doc.setFontSize('28');
     doc.setFontType('bold');
     doc.setTextColor(234, 1, 0);
-    doc.text(this.branch.split(' ').map(r=>{return r[0].toUpperCase()+r.substr(1)}).join(' '), this.branch==='nitin roadways'?65:15, 25)
+    doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), this.branch==='nitin roadways'?60:7, 25)
 
     doc.setFontSize('16');
     doc.setFontType('bold');
@@ -340,10 +340,10 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     var doc = new jsPDF()
 
 
-    doc.setFontSize('30');
+    doc.setFontSize('28');
     doc.setFontType('bold');
     doc.setTextColor(234, 1, 0);
-    doc.text(this.branch.split(' ').map(r=>{return r[0].toUpperCase()+r.substr(1)}).join(' '), this.branch==='nitin roadways'?65:15, 25)
+    doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), this.branch==='nitin roadways'?60:7, 25)
 
     doc.setFontSize('16');
     doc.setFontType('bold');

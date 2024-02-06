@@ -10,13 +10,10 @@ button{
     border-radius: 100px;
     margin-left: 5px;
     margin-right: 5px;
-    margin-top:5px;
 }
 
-.well{
-    border-color:#f5f5f5;
-    box-shadow: none;
-}
+
+
 .well{
     border-color:#f5f5f5;
     box-shadow: none;
@@ -37,4 +34,3 @@ input,select,table{
   thead>tr{
     color: wheat;
   }
-

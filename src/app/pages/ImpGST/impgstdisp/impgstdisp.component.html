@@ -1,35 +1,34 @@
-<div class="well" *ngIf="!show">
+<div class="well">
+    <button class="btn btn-danger" (click)="getInformationData()"><i class="material-icons">undo</i></button>
     <table class="table" style="width:100%" align="center">
-        <thead>
-            <tr class="table-header">
+  
+        <thead class="table-header">
+            <tr>
                 <th>Srno</th>
                 <th>Name</th>
                 <th>GST Number</th>
+                <th>CustomerId</th>
                 <th>Destination</th>
-                <th>Delete</th>
-                <th>Update</th>
+                <th>Address</th>
+                <th>Options</th>
             </tr>
         </thead>
+  
+  
         <tbody>
-            <tr *ngFor="let i of impgstdetailslist;let j = index">
+            <tr *ngFor="let i of gstdetailslist;let j = index">
                 <td>{{j+1}}</td>
-                <td>{{i.name}}</td>
+                <td>{{i.name}}-{{i.lrshort}}</td>
                 <td>{{i.gst}}</td>
-                <td>{{i.dest}}</td>
+                <td>{{i.custCode}}</td>
+                <td>{{i.destid}}</td>
+                <td>{{i.addr}}</td>
                 <td>
-                    <button mat-raised-button (click)="deleteImpGSTDetails(i._id)" class="btn-danger btn-sm btn-just-icon">
+                    <button mat-raised-button (click)="deleteGSTDetails(i._id,j)" class="btn-danger btn-sm btn-just-icon">
                         <i class="material-icons">delete_forever</i>
-                    </button>
-                </td>
-                <td>
-                    <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
-                        <i class="material-icons">edit</i>
                     </button>
                 </td>
             </tr>
         </tbody>
     </table>
-</div>
-<div *ngIf="show">
-    <router-outlet></router-outlet>
-</div>
+  </div>

@@ -431,13 +431,13 @@ public year;
      doc.setFontSize('20');
      doc.setFontType('bold');
      doc.setTextColor(234, 1, 0);
-     doc.text('Nitin Roadways And Cargo Movers', 38, 8)//partyname
+     doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
      doc.setFontSize('15');
      doc.setTextColor(215, 6, 9);
      doc.text(this.partyids[0]['name'], 60, 15)//partyname
      doc.setFontSize('10');
      doc.setTextColor(0, 0, 0);
-     doc.text('GST No. : '+this.partyids[0]['gst'], 70, 19)//partyname
+     doc.text('GST No. : '+this.partyids[0]['gst'], 60, 19)//partyname
      doc.setFontSize('10');
      doc.text('Details From Date : ', 165, 15)
      doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
@@ -515,13 +515,13 @@ public year;
      doc.setFontType('bold');
 
      doc.setTextColor(234, 1, 0);
-     doc.text('Nitin Roadways And Cargo Movers', 38, 8)//partyname
+     doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
      doc.setFontSize('15');
      doc.setTextColor(215, 6, 9);
      doc.text(this.partyids[0]['name'], 60, 15)//partyname
      doc.setFontSize('10');
      doc.setTextColor(0, 0, 0);
-     doc.text('GST No. : '+this.partyids[0]['gst'], 70, 19)//partyname
+     doc.text('GST No. : '+this.partyids[0]['gst'], 60, 19)//partyname
      doc.setFontSize('10');
      doc.text('Details From Date : ', 165, 15)
      doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
@@ -663,13 +663,13 @@ public year;
      doc.setFontSize('20');
      doc.setFontType('bold');
      doc.setTextColor(234, 1, 0);
-     doc.text('Nitin Roadways And Cargo Movers', 38, 8)//partyname
+     doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
      doc.setFontSize('15');
      doc.setTextColor(215, 6, 9);
      doc.text(this.partyids[0]['name'], 60, 15)//partyname
      doc.setFontSize('10');
      doc.setTextColor(0, 0, 0);
-     doc.text('GST No. : '+this.partyids[0]['gst'], 70, 19)//partyname
+     doc.text('GST No. : '+this.partyids[0]['gst'], 60, 19)//partyname
      doc.setFontSize('10');
      doc.text('Details From Date : ', 165, 15)
      doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date

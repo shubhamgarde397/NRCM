@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
-import { Router } from '@angular/router';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
-import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Router } from '@angular/router';
+import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 
 @Component({
   selector: 'app-impgstdisp',
@@ -11,44 +11,40 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
   providers: [ApiCallsService]
 })
 export class ImpgstdispComponent implements OnInit {
-
-  public impgstdetailslist;
-  public show = false;
-  public found;
-  public arr;
-  public dbName = 'NRCM_Information';
-  public commonArray;
+  public gstdetailslist;
   constructor(
     public apiCallservice: ApiCallsService,
-    public router: Router,
     public handledata: HandleDataService,
-    public sec: SecurityCheckService
-  ) { }
+    public router: Router,
+    public sec: SecurityCheckService,
+  ) {
+  }
 
-  fetchData = function () {
-    this.commonArray = this.sec.commonArray;
-    this.impgstdetailslist = this.commonArray.impgstdetails;
-  };
+  ngOnInit() {
+  }
 
-  deleteImpGSTDetails = function (id) {
+ 
+  deleteGSTDetails = function (id,j) {
     if (confirm('Are you sure?')) {
-      this.apiCallservice.handleData_New(this.dbName, 'impGstDetails/delImpgstdetailsdata', 1, 0, { id: id })
-        .subscribe((response: Response) => {
-          this.sec.commonArray['impgstdetails'] = [];
-          this.sec.commonArray['impgstdetails'] = response;
-          this.impgstdetailslist = response;
+      let formbody = {}
+      formbody['_id'] = id;
+      formbody['method'] = 'delete';
+      formbody['tablename'] = 'impgstdetails';
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
+        .subscribe((response: any) => {
+          alert(response.Status)
+          this.gstdetailslist.splice(j,1)
         });
     }
   };
-
-  showDatabyid = function (data) {
-    this.show = true;
-    this.found = data;
-    this.handledata.saveData(data);
-    this.router.navigate(['Navigation/IMP_GST_HANDLER/ImpGSTUpdate']);
-  };
-
-  ngOnInit() {
-    this.fetchData();
+  
+  getInformationData() {
+    let tempObj = { "method": "getimp",'tablename':''};
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.gstdetailslist=res.Data;
+      });
   }
+
 }

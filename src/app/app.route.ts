@@ -160,6 +160,10 @@ export const routes: Routes =
                         loadChildren: './pages/ImpGST/app.module#AppModule'
                     },
                     {
+                        path: 'DIGILR',
+                        loadChildren: './pages/MAINPAGE/LRMaker/app.module#AppModule'
+                    },
+                    {
                         path: 'VILLAGE_HANDLER',
                         loadChildren: './pages/Village/app.module#AppModule'
                     },

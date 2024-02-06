@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.header='Nitin Roadways And Cargo Movers';
+    this.header='NITIN ROADWAYS AND CARGO MOVERS';
     this.model = new login(this.username, this.password);
     this.myFormGroup = this.formBuilder.group({
       username: [this.model.username, Validators.required],

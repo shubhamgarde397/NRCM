@@ -162,6 +162,7 @@ lr() {
     format: 'a4',
     putOnlyUsedFonts:true
    })
+  
    let data={
     'date':'2024-01-26',
     'billno':'1234',
@@ -172,7 +173,7 @@ lr() {
     'destination':'Pudukottai',
     'flexid':'130564',
     'gstno':'33AFGPG3657Z1Z4',
-    'documentid':[],
+    'fromname':'make this static, fetch address and gstno from db',
     'fromaddress':'Gat No.399, Taluka Maval, Pune, Urse, Maharashtra 410506',
     'fromgstno':'27ASDFG4565A4Z4'
 }
@@ -315,7 +316,13 @@ doc.text('1.',4,96)
 doc.text('2.',4,103)
 doc.text('3.',4,110)
 // 
-// doc.text('F124565879564',5,85)loop this
+let iii = 0
+for(let ii=0;ii<data.documentno.length;ii++){
+  doc.text(data.documentno[ii],12,96+iii)
+  iii = iii + 7;
+}
+
+// doc.text('F124565879564',12,103)
 // Inside box Text
 doc.setFontType('normal')
 doc.text('EWAY BILL ATTACHED WITH INVOICE COPY',115,110)
