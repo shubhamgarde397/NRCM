@@ -18,6 +18,9 @@
     <button class="btn btn-info" (click)="getWhichType('7',false)">Balance Hire</button>
 </div>
 <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
+  <button class="btn btn-info" (click)="getWhichType('10',false)">Pending Payment Entry</button>
+</div>
+<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
   <button class="btn btn-info" (click)="getWhichType('9',false)">Document No</button>
 </div>
 <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="personalshubham">
@@ -44,6 +47,55 @@
 </div>
 </div>
 
+<div class="well" *ngIf="whichType=='10'" style="background-color: black;color: wheat;">  
+  <div class="row"  *ngIf="secretDoorForAnil||secretDoor">
+    <h3>Payment Pending</h3>
+   
+    <div class="well"  *ngIf="actualPayment" style="background-color: black;color: wheat;">  
+     
+      <div class="row" style="background-color: black;color: wheat;">  
+        <div class="col-sm-2">
+          Select Poch Year To Procees :
+          <input type="number" class="form-control" [(ngModel)]="selectedPochDate">
+        </div> 
+      <div class="col-sm-2">
+        <button class="btn btn-warning" (click)="fetchPendinActualPaymentsYear()">Get</button>
+      </div> 
+      
+    </div>
+      
+        <div class="row" *ngIf="paymentSettings">
+
+
+
+          <h4>Select Trucks to update the payment Date</h4>
+          <table class="table" style="width:100%" align="center">
+            <thead class="table-header">
+                <tr>
+                    <th>Srno</th>
+                    <th>Date</th>
+                    <th>Truckno</th>
+                    <th>Poch Date</th>
+                </tr>
+            </thead>
+    
+    
+            <tbody style="text-align: center;">
+                <tr *ngFor="let i of fullpendingPayment;let j = index">
+                    <td>{{j+1}}</td>
+                    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                    <td>{{i.truckno}}<br>{{i.pochAmount}}</td>
+                    <td>{{i.pochDate}}</td>
+                </tr>
+            </tbody>
+        </table>  
+
+    
+
+        </div>
+    </div>
+  </div>
+  </div>
 
 <div class="well" *ngIf="whichType=='7'" style="background-color: black;color: wheat;">  
   <div class="row"  *ngIf="secretDoorForAnil||secretDoor">

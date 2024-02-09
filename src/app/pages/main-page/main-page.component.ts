@@ -93,6 +93,7 @@ public saveArrayData=false;
 public defaultAmt=0;
 public secretDoorForAnil=false;
 public actualPayment=true;
+public actualPaymentData=false;
 public secretDoor=false;
 public selectedmy;
 public data3='0';
@@ -184,7 +185,18 @@ public personalshubham=false;
     this.bigJJ=j;
     this.documentNos=this.turn11[this.bigJJ]['documentNo'];
   }
-
+  fetchPendinActualPaymentsYear(){
+    let formbody={}
+formbody['method']='getTrucksWithNoActualPaymentYear';
+formbody['tablename']=''
+formbody['selectedPochDate']="^"+this.selectedPochDate+".*"
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, true)
+    .subscribe((res: any) => {
+      this.fullpendingPayment=res.Data;
+      this.actualPaymentData=true;
+    });
+  }
   fetchPendinActualPayments(){
     this.fullpendingPayment=[];
     this.saveArray=[]
