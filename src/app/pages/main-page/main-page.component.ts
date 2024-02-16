@@ -88,6 +88,7 @@ public saveArray=[]
 public selectedPaymentAmount=0;
 public selectedPaymentDate=''
 public paymentSettings=false;
+public paymentSettings2=false;
 public showpaymentButton=false;
 public saveArrayData=false;
 public defaultAmt=0;
@@ -99,6 +100,7 @@ public selectedmy;
 public data3='0';
 public data3value='';
 public billNo=''
+public fullpendingPayments=[];
 public showForm2=false;
 
 // custom
@@ -193,9 +195,36 @@ formbody['selectedPochDate']="^"+this.selectedPochDate+".*"
     this.apiCallservice.handleData_New_python
     ('commoninformation', 1, formbody, true)
     .subscribe((res: any) => {
-      this.fullpendingPayment=res.Data;
-      this.actualPaymentData=true;
+      this.fullpendingPayments=res.Data;
+      this.paymentSettings=true;
     });
+  }
+  fetchPendinActualPayments2(i){
+    this.fullpendingPayment=[];
+    this.saveArray=[]
+    this.selectedPaymentAmount=0;
+    this.selectedPaymentDate=''
+    this.paymentSettings=false;
+    this.showpaymentButton=false;
+    this.saveArrayData=false;
+    this.defaultAmt=0;
+
+let formbody={}
+formbody['method']='getTrucksWithNoActualPayment';
+formbody['tablename']=''
+formbody['selectedPochDate']=i._id;
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, formbody, true)
+    .subscribe((res: any) => {
+      this.fullpendingPayment=res.Data;
+      this.actualPayment=true;
+      this.paymentSettings2=true;
+      this.paymentSettings=false;
+    });
+  }
+  back10(){
+    this.paymentSettings2=false;
+      this.paymentSettings=true;
   }
   fetchPendinActualPayments(){
     this.fullpendingPayment=[];

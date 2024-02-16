@@ -54,17 +54,39 @@
     <div class="well"  *ngIf="actualPayment" style="background-color: black;color: wheat;">  
      
       <div class="row" style="background-color: black;color: wheat;">  
-        <div class="col-sm-2">
-          Select Poch Year To Procees :
-          <input type="number" class="form-control" [(ngModel)]="selectedPochDate">
-        </div> 
+        
       <div class="col-sm-2">
-        <button class="btn btn-warning" (click)="fetchPendinActualPaymentsYear()">Get</button>
+        <button class="btn btn-warning" (click)="fetchPendinActualPaymentsYear()">Get Pending Payments</button>
       </div> 
       
     </div>
       
         <div class="row" *ngIf="paymentSettings">
+
+          <table class="table" style="width:100%" align="center">
+            <thead class="table-header">
+                <tr>
+                    <th>Srno</th>
+                    <th>Poch Date</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+    
+    
+            <tbody style="text-align: center;">
+                <tr *ngFor="let i of fullpendingPayments;let j = index">
+                    <td>{{j+1}}</td>
+                    <td (click)="fetchPendinActualPayments2(i)">{{i._id|date:'dd-MM-yyyy'}}</td>
+                    <td>{{i.sum}}</td>
+                </tr>
+            </tbody>
+        </table>  
+
+    
+
+        </div>
+
+        <div class="row" *ngIf="paymentSettings2">
 
 
 
@@ -75,7 +97,10 @@
                     <th>Srno</th>
                     <th>Date</th>
                     <th>Truckno</th>
-                    <th>Poch Date</th>
+                    <th>Party:Type:Place</th>
+                    <th>Payment Date</th>
+                    <th>Payment Amount</th>
+                    <th>Status</th>
                 </tr>
             </thead>
     
@@ -85,14 +110,33 @@
                     <td>{{j+1}}</td>
                     <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
                     <td>{{i.truckno}}<br>{{i.pochAmount}}</td>
-                    <td>{{i.pochDate}}</td>
+                    <td>{{i.party}}<br>{{i.place}}</td>
+                    <td><input type="date" id="bhdate_{{j}}"></td>
+                    <td><input type="number" id="bhamt_{{j}}"></td>
+                    <td>
+                      <select class="form-control" id="bhstatus_{{j}}">
+                        <option>Okay</option>
+                        <option>Damage</option>
+                        <option>Shortage</option>
+                        <option>Loan</option>
+                        <option>Late</option>
+                        <option>To Pay</option>
+                      </select>
+                    </td>
                 </tr>
             </tbody>
         </table>  
 
-    
+        <div class="col-sm-2">
+          <button class="btn btn-success" (click)="sendDatatoUpdate()">Send2</button>
+        </div>
+
+        <div class="col-sm-2">
+          <button class="btn btn-success" (click)="back10()">Back</button>
+        </div>
 
         </div>
+
     </div>
   </div>
   </div>
@@ -266,6 +310,7 @@
                       <th *ngIf="amount">Amount</th>
                       <th>Poch : Amt : Acc</th>
                       <th>Payment Details</th>
+                      <th>Given Date</th>
                     </tr>
                   </thead>
                   <tbody align="center">
@@ -280,6 +325,7 @@
                       <td [ngStyle]="{'background-color': i.colors[0]}" class="wadhiw">{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
                       <td [ngStyle]="{'background-color': i.colors[1]}"  class="wadhiw" (click)="savePayment(i,j)" data-toggle="modal" data-target="#myModalPay">
                         {{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.truckName['pan']}}</td>
+                        <td [ngStyle]="{'background-color': i.colors[2]}" class="wadhiw">{{i.givenDate}}</td>
                     </tr>
                   </tbody>
                 </table>
