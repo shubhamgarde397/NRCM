@@ -17,6 +17,7 @@ import { Consts } from '../../../common/constants/const';
 export class PochPdfComponent implements OnInit {
   public show = false;
   public showPDFButton=false;
+  public showPochData=false;
   public found;
   public date = new Date();
   public balanceDate = [];
@@ -24,7 +25,9 @@ export class PochPdfComponent implements OnInit {
   public printInfo = false;
   public sstampsign='';
   public ssign='';
-
+  public admin=false;
+  public data=[];
+  public billno='';
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
@@ -33,11 +36,22 @@ export class PochPdfComponent implements OnInit {
   }
 
   ngOnInit() {
-
   }
 
+  adminF(){
+    let a = prompt('Enter Password');
+    if(a=='NRCM'){
+      this.admin=true;
+    }
+    else{
+      this.admin=false;
+    }
+  }
   
   find = function () {
+    if(this.pochDate===''){
+      this.pochDate=this.handleF.generateDatefromBillno(this.billno);
+    }
     let tempObj = {};
 
     tempObj['method'] = 'PochGivenPDF';
@@ -57,6 +71,25 @@ export class PochPdfComponent implements OnInit {
         }
       });
   };
+
+  showData(i){
+    let temp={
+    }
+    for(let ii=0;ii<i.sum;ii++){
+      temp={
+        truckno:i['truckno'][ii],
+        loadingDate:i['loadingDate'][ii],
+        nrlrno:i['nrlrno'][ii],
+        hamt:i['hamt'][ii],
+        partyAdvance:i['partyAdvance'][ii],
+        partyBalance:i['partyBalance'][ii]
+      }
+      this.data.push(temp)
+    }
+    console.log(this.data);
+    
+    this.showPochData=true;
+  }
 
 
   PochBill(){//threshhold is 295
@@ -128,7 +161,8 @@ pdfData(doc,data,ack){
   let pager=1;
   let pagerMax=this.pageCalculator(data.sum);
   let d=new Date()
-  let billno=String(d.getMinutes())+String(d.getSeconds());
+  // let billno=String(d.getMinutes())+String(d.getSeconds());
+  let billno = this.handleF.generateBillByDate(this.pochDate)
   doc.setLineDash([1, 0], 10);
   doc.setFontSize('30');
   doc.setFontType('bold');
@@ -337,11 +371,11 @@ doc.setTextColor(0, 0, 0);
   doc.text(data['truckno'][k],41,start-9+7)
   doc.text(data['place'][k],71,start-9+7)
   doc.text(String(data['nrlrno'][k]),85,start-9+7)
-
+    if(this.admin){
   doc.text(String(data['hamt'][k]==0?'':data['hamt'][k]),108,start-9+7)
   doc.text(this.amountSettler(data['partyAdvance'][k],'amount')===0?'':String(this.amountSettler(data['partyAdvance'][k],'amount')),122,start-9+7)
   doc.text(this.amountSettler(data['partyBalance'][k],'amount')===0?'':String(this.amountSettler(data['partyBalance'][k],'amount')),134,start-9+7)
-
+    }
     start=start+7;
     tsum = tsum + 1;
     // Paging
@@ -485,7 +519,9 @@ CollectionMemoC(dataa,j,sign){
   
   // data.partyDetails
   doc.text(data.truckno,35,mainY+44)
+  if(this.admin){
   doc.text(String(data.hamt),35,mainY+53)
+  }
     doc.text(data['lrnoTF']?data.nrlrno:'TON',100, mainY+53)
 if(sign){
   doc.addImage(this.sstampsign,'JPEG',100,85,40,20)
@@ -493,9 +529,10 @@ if(sign){
 
   doc.text(String('-'),75,mainY+60)
   doc.setFontSize('10')
+  if(this.admin){
   doc.text(String(data.partyAdvanceAmt),100,mainY+67)
   doc.text(String(data.balance),35,mainY+73)
-
+  }
   doc.line(0, mainY+31, 150, mainY+31);
   doc.line(0, mainY+38, 150, mainY+38);
   doc.line(65, mainY+38, 65, mainY+46);

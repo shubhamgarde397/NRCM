@@ -30,11 +30,14 @@
           <button class="btn btn-danger" (click)="download(false)" *ngIf="showPDFButton">PDF-Mail</button>
         </div>
       <div class="col-xs-2" align="center">
-        <button class="btn btn-danger" (click)="adminAccess()"*ngIf="showPDFButton">Admin</button>
+        <button class="btn btn-danger" (click)="adminAccess()" *ngIf="showPDFButton">Admin</button>
       </div>
       <div class="col-xs-2" align="center">
-        <button class="btn btn-danger" (click)="printUpdate()"*ngIf="showPDFButton"
+        <button class="btn btn-danger" (click)="printUpdate()" *ngIf="showPDFButton"
           [ngStyle]="{'background-color': !printed ? 'red' : 'wheat' }" [disabled]="printed">Print</button>
+      </div>
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-danger" (click)="selectAll()" *ngIf="showPDFButton">Select All</button>
       </div>
     </div>
 

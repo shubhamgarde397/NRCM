@@ -134,6 +134,15 @@ public dueMDate;
     this.givenDate=this.handleF.createDate(new Date());
   }
 
+  selectAll(){
+    let temp=[];
+    for(let i=0;i<this.balanceDate.length;i++){
+      for(let j=0;j<this.balanceDate[i]['truckData'].length;j++){
+        (<HTMLInputElement>document.getElementById('m_'+i+'_'+j)).checked=true;
+      }
+    }
+  }
+
   pay(){
     let formbody={}
     let temp=[];

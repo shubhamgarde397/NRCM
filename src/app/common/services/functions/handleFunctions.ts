@@ -39,6 +39,29 @@ export class handleFunction {
     generateDays2() {
         for (let i = 1; i < 32; i++) { String(i).length > 1 ? this.days.push(i) : this.days.push(parseInt('0' + i)); } return this.days;
     }
+    generateDatefromBillno(data){
+        // 'F020724'
+        let monthNo=data.slice(1,3)//02
+        let day = data.slice(3,5)//04
+        let year = data.slice(5)
+        return '20'+year+'-'+monthNo+'-'+day;
+    }
+
+    generateBillByDate(date){//date format must be dd-mm-yyyy
+        let billno='';
+        let d = this.getDateddmmyy(date);
+        let day = d.slice(0,2)
+        let month = d.slice(3,5)
+        let year = d.slice(8)
+
+        let monthName = this.genaratemonthNames()[parseInt(month)-1].slice(0,1)
+        billno = billno + monthName;
+        billno = billno + month;
+        billno = billno + day;
+        billno = billno + year;
+
+        return billno;
+    }
 
     getMonthNumber(month) {
         switch (month) {
