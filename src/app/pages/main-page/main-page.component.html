@@ -422,14 +422,14 @@
               </select>
           </div>
 
-         <div class="col-sm-3">
-          <select class="form-control" [(ngModel)]="load">
-             <option>Default</option>
-             <option value="Pipe">Pipe</option>
-             <option value="Fittings">Fittings</option>
-             <option value="Other">Other</option>
-           </select>
-       </div>
+          <div class="col-sm-4">
+            <i class="material-icons" (click)="getVillages()">autorenew</i>
+            <select id="placeName" class="form-control" [(ngModel)]="placeName">
+              <option selected disabled value={{villageid}}>{{village_name}}</option>
+              <option *ngFor="let i of villagenamelist;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
+            </select>
+         
+          </div>
 
           <div class="col-sm-3">
             <button class="btn btn-warning col-sm-3" (click)="find4()">Find</button>
@@ -443,22 +443,18 @@
                     <thead align="center" style="font-weight: bold">
                       <tr class=table-header>
                         <th>Srno</th>
+                        <th>Date</th>
                         <th>TruckNo</th>
-                        <th>Type-Party-Place</th>
-                        <th>LRNO</th>
+                        <th>Type</th>
                         <th>Amount</th>
                       </tr>
                     </thead>
                     <tbody align="center">
-                      <tr *ngFor="let i of turn11;let j = index">
-                        <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
-                          done
-                          </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
-                            close
-                            </i></td>
-                        <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                        <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
-                        <td>{{i.lrno}}</td>
+                      <tr *ngFor="let i of turnbooklist;let j = index">
+                        <td>{{j+1}}</td>
+                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+                        <td>{{i.truckno}}</td>
+                        <td>{{i.partyType}}-{{i.typeOfLoad}}</td>
                         <td>{{i.hamt}}<br>{{i.rent}}</td>
                       </tr>
                     </tbody>

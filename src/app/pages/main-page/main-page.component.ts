@@ -58,6 +58,7 @@ public extraRent=[]
 public advanceArray=[];
 public showQR=false;
 public showsignstamp=false;
+public rc='';
 public showshubhamsign=false;
 public showshubhamstamp=false;
 public partyType2='';
@@ -130,6 +131,7 @@ public balance5b=0;
 public advamt=0;
 public advdate='';
 public personalshubham=false;
+public table4=false;
 // 
 
   constructor(
@@ -248,6 +250,19 @@ formbody['selectedPochDate']=this.selectedPochDate;
       this.paymentSettings=true;
     });
     
+  }
+  
+  find4() {
+    let tempObj1={};
+    tempObj1['method'] = 'rcplace'
+    tempObj1['tablename'] = ''
+    tempObj1['placeName'] = this.villagenamelist.find(r=>r.village_name==this.placeName)['_id'];
+    tempObj1['rc'] = this.rc
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true,this.handleF.createDate(new Date()),'nrcm_f')
+      .subscribe((res: any) => {
+        this.turnbooklist = res.Data;
+        this.table4=true;
+      })
   }
 
   paymentDateAmount(){
