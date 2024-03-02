@@ -111,9 +111,17 @@ public todaysDate;
   };
 
   addtoBH(){
+
+    for(let i=0;i<this.balanceDate.length;i++){
+      if(this.balanceDate[i]['lrno'].split('_')[0]==='nrcm'){}
+      else{
+      this.balanceDate[i]['lrno']=parseInt(this.balanceDate[i]['lrno'])
+      }
+  }
+
     this.finalAdd=false;
       let tempObj = {}
-      tempObj['method'] = 'BHInsertNew1';
+      tempObj['method'] = 'BHInsertNew';
       tempObj['tablename'] = 'BalanceHire';
       tempObj['bhTrucks']=this.balanceDate
       tempObj['todayDate'] = this.uitodayDate;

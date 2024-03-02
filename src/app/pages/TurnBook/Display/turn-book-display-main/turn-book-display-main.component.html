@@ -34,7 +34,7 @@
         </div>
 
         <div class="col-sm-3" *ngIf="buttonOption==='13'">
-          <input type="number" class="form-control" [(ngModel)]="bylrno" placeholder="Lrno">
+          <input type="text" class="form-control" [(ngModel)]="bylrno" placeholder="Lrno">
         </div>
 
         <div class="col-sm-3" *ngIf="(buttonOption==='8')||(buttonOption==='18')||(buttonOption==='19')">
@@ -67,6 +67,9 @@
         <div class="col-sm-4">
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
             {{buttonValue}}
+          </button>
+          <button mat-raised-button (click)="findBillNo()" class="btn btn-primary" style="width: 100%;margin-top: 10px;" *ngIf="buttonOption==='13'">
+            Bill No
           </button>
         </div>
       </div>
@@ -209,13 +212,32 @@
               </div>
   
               <div class="col-xs-3">
-                <select class="form-control" formControlName="typeOfLoad">
+                <select class="form-control" formControlName="typeOfLoad" (click)="checkTON()">
                   <option *ngFor="let i of typeofloads;let k = index;" value={{i}}>{{i}}</option>
                 </select>
               </div>
               <div class="col-sm-1"></div>
               <div class="col-sm-3">
                 <input type="text" value={{monthlybyseriesData.typeOfLoad}} class="form-control disF" disabled>
+              </div>
+  
+  
+            </div>
+
+            <div class="form-group row" *ngIf="showbuttonOption821">
+  
+              <div class="col-xs-2">
+                <label for="typeOfLoad"> TONs </label>
+              </div>
+  
+              <div class="col-xs-3">
+                <select class="form-control" formControlName="weight" (change)="checkTON()">
+                  <option *ngFor="let i of tons;let k = index;" value={{i}}>{{i}}</option>
+                </select>
+              </div>
+              <div class="col-sm-1"></div>
+              <div class="col-sm-3">
+                <input type="text" value={{monthlybyseriesData.weight}} class="form-control disF" disabled>
               </div>
   
   
@@ -276,7 +298,7 @@
               <div class="col-xs-3">
                 <select id="nop" class="form-control" formControlName="placeid" (change)="findvillage8(1)">
                   <option disabled selected>Select Name of The Place</option>
-                  <option *ngFor="let gst of parties;let j = index;" value={{gst._id}}>
+                  <option *ngFor="let gst of villagelist;let j = index;" value={{gst._id}}>
                     {{gst.village_name}}
                   </option>
                 </select>
@@ -297,7 +319,7 @@
               <div class="col-xs-3">
                 <select id="nop" class="form-control" formControlName="placeid2" (change)="findvillage8(2)">
                   <option disabled selected>Select Name of The Place</option>
-                  <option *ngFor="let gst of parties;let j = index;" value={{gst._id}}>
+                  <option *ngFor="let gst of villagelist;let j = index;" value={{gst._id}}>
                     {{gst.village_name}}
                   </option>
                 </select>

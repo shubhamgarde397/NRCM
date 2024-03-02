@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 import { HandleDataService } from '../../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-turn-book-display-main',
@@ -70,6 +70,7 @@ public showbuttonOption821HA=true;
     0,0,0,1
   ]
   public addis19=true;
+  public tons=[];
   public displayoptions = [
     { 'value': '1', 'viewvalue': 'Avaliable Trucks' ,'disabled':false},
     { 'value': '2', 'viewvalue': 'Truck Arrival' ,'disabled':false},
@@ -147,7 +148,7 @@ public showbuttonOption821HA=true;
   public buttonOptionPartyType;
 public types={'None':0,'Open':0,'Container':0}
 public Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
-public monthlybyseriesData={'place':'','typeOfLoad':'','party':'','lrno':'','place2':''}
+public monthlybyseriesData={'place':'','typeOfLoad':'','weight':'','party':'','lrno':'','place2':''}
 public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
 public performActionButton='2';
 public selectDate=false;
@@ -372,6 +373,19 @@ let buttons=[]
      this.myFormGroup1.patchValue({partyid:this.myFormGroup1.value.partyid})
   }
 
+  findvillage8(data){
+    switch(data){
+      case 1:
+      this.myFormGroup1.patchValue({placeid:this.myFormGroup1.value.placeid});
+      break;
+      case 2:
+      this.myFormGroup1.patchValue({placeid2:this.myFormGroup1.value.placeid2})
+      break;
+    }
+    console.log(this.myFormGroup1);
+    
+ }
+
   findtruck() {
     this.truckid = this.handleF.findowner(this.truckVar, this.trucks,'Select Truck No');
   }
@@ -390,6 +404,20 @@ let buttons=[]
     data['updateNumber']=true;
     this.handleData.saveData(data);
     this.router.navigate(['Navigation/OWNER_HANDLER/OwnerUpdate']);
+  };
+  findBillNo(){//only for data from 1st april 2021 and loading data is empty
+    let tempObj = {};
+    this.byTruckName=false;
+    tempObj['lrno']=this.bylrno;
+    tempObj['tablename'] = 'turnbook'
+    tempObj['method'] = 'displayTBBill'
+    tempObj['display'] = '20'
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.tableSelected=true;
+        this.turnbooklist=res.Data;
+      });
+
   };
 
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
@@ -476,7 +504,8 @@ if(this.buttonOption !== '11'){
               lrno: 0,
               partyid:'',
               placeid:'',
-              placeid2:''
+              placeid2:'',
+              weight:0
             });
             if(this.buttonOptionPartyType==='NRCM'){
               this.showbuttonOption821HA=false;
@@ -536,6 +565,14 @@ let tempObj1={};
     }
 
   };
+
+  checkTON(){
+    console.log(this.myFormGroup1.value.typeOfLoad);
+    
+    this.tons=this.myFormGroup1.value.typeOfLoad==='Pipe'?[0,8,10]:[0,6,32];
+    console.log(this.tons);
+    
+  }
 
   clearData(i,j){
     if(confirm('Do you want to clear the payment?')){
@@ -634,9 +671,9 @@ let tempObj1={};
   }
   getOtherDetails2() {
     this.tempDate = this.turnbooklist_trucks.filter(r => r.truckno == this.myFormGroup1.value.truckno);
-    console.log(this.tempDate);
     
     this.monthlybyseriesData['typeOfLoad']=this.tempDate[0].typeOfLoad;
+    this.monthlybyseriesData['weight']=this.tempDate[0].weight;
     this.monthlybyseriesData['lrno']=this.tempDate[0].lrno;
     this.monthlybyseriesData['party']=this.tempDate[0].party['name'];
     this.monthlybyseriesData['place']=this.tempDate[0].place['village_name'];
@@ -696,10 +733,18 @@ this.placeid=this.tempDate[0]['place']['_id']
   change(data) {
     let tempData = {}
     console.log(data.value);
+    console.log(this.tempDate[0]);
+    console.log(data.value.weight===0||data.value.lrno===0||data.value.typeOfLoad);
+    console.log(data.value.weight===0,data.value.lrno===0,data.value.typeOfLoad);
+    
+    
+    if(data.value.weight===0||data.value.lrno===0||data.value.typeOfLoad===''){alert('Missing Entries!')}
+    else{
     tempData['rc'] = this.tempDate[0].truckno.slice(0,2);
     tempData['lrno'] = data.value.lrno===0?parseInt(this.tempDate[0]['lrno']):parseInt(data.value.lrno);
     tempData['partyType']=this.buttonOptionPartyType;
     tempData['typeOfLoad'] = data.value.typeOfLoad===''?this.tempDate[0]['typeOfLoad']:data.value.typeOfLoad;
+    tempData['weight'] = data.value.weight;
     tempData['partyid'] = data.value.partyid===''?this.tempDate[0].party['_id']:data.value.partyid;
     tempData['placeid'] = data.value.placeid===''?this.tempDate[0].place['_id']:data.value.placeid;
     tempData['placeid2'] = data.value.placeid2===''?this.tempPlaceid:data.value.placeid2;
@@ -720,6 +765,7 @@ this.placeid=this.tempDate[0]['place']['_id']
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;
       });
+    }
   }
 
   showDatabyid = function (data, j, number) {
