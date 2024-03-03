@@ -567,11 +567,7 @@ let tempObj1={};
   };
 
   checkTON(){
-    console.log(this.myFormGroup1.value.typeOfLoad);
-    
-    this.tons=this.myFormGroup1.value.typeOfLoad==='Pipe'?[0,8,10]:[0,6,32];
-    console.log(this.tons);
-    
+    this.tons=this.myFormGroup1.value.typeOfLoad==='Pipe'?['0','8','10','T']:['0','6','SXL-32','MXL-32'];
   }
 
   clearData(i,j){
@@ -732,13 +728,8 @@ this.placeid=this.tempDate[0]['place']['_id']
 
   change(data) {
     let tempData = {}
-    console.log(data.value);
-    console.log(this.tempDate[0]);
-    console.log(data.value.weight===0||data.value.lrno===0||data.value.typeOfLoad);
-    console.log(data.value.weight===0,data.value.lrno===0,data.value.typeOfLoad);
-    
-    
-    if(data.value.weight===0||data.value.lrno===0||data.value.typeOfLoad===''){alert('Missing Entries!')}
+   
+    if(data.value.weight==='0'||data.value.lrno===0||data.value.typeOfLoad===''){alert('Missing Entries!')}
     else{
     tempData['rc'] = this.tempDate[0].truckno.slice(0,2);
     tempData['lrno'] = data.value.lrno===0?parseInt(this.tempDate[0]['lrno']):parseInt(data.value.lrno);
@@ -759,8 +750,17 @@ this.placeid=this.tempDate[0]['place']['_id']
         this.handleData.saveTurn([]);
         this.handleData.saveTurn(newData);
         this.turnbooklistnew = newData;
-        // this.myFormGroup.patchValue({ turnbookDate: '' })
-        // this.myFormGroup.patchValue({ partyType: '' })
+        
+        this.myFormGroup1.patchValue({loadingDateDynamic: '' })
+        this.myFormGroup1.patchValue({typeOfLoad:'' })
+        this.myFormGroup1.patchValue({turnbookDate: '' })
+        this.myFormGroup1.patchValue({truckno: '' })
+        this.myFormGroup1.patchValue({loadingDate: '' })
+        this.myFormGroup1.patchValue({lrno: 0 })
+        this.myFormGroup1.patchValue({partyid:'' })
+        this.myFormGroup1.patchValue({placeid:'' })
+        this.myFormGroup1.patchValue({placeid2:'' })
+        this.myFormGroup1.patchValue({weight:0 })
 
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;

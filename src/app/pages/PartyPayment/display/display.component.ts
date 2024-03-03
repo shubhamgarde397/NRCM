@@ -254,44 +254,6 @@ public year;
     }
   };
 
-  find2 = function () {
-    this.mailSendButton=false;
-    this.paymentData=[];
-    let flag = false;
-    let tempObj = {};
-    tempObj['from'] = this.date1;
-    tempObj['to'] = this.date2;
-    this.date1=tempObj['from'];
-    this.date2=tempObj['to'];
-    if ( (this.fromloading === undefined)  || (this.toloading === undefined) || (this.partyid === '')) { 
-      alert('Select a Date and Party'); 
-    }
-    else {
-      tempObj['fromloading'] = this.fromloading;
-      tempObj['toloading'] = this.toloading;
-      tempObj['method'] = 'UCGetData';
-      this.fromloading=tempObj['fromloading'];
-      this.toloading=tempObj['toloading'];
-
-      flag = true;
-      }
-    if (flag) {
-      tempObj['tablename'] = ''
-      tempObj['partyid']=this.partyids;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-        .subscribe((res: any) => {
-          this.paymentData = res.Data;
-          if (this.paymentData.length > 0) {
-            this.tableData = true;
-            this.handledata.savePaymentData(this.paymentData);
-          } else {
-            alert('No Data Available.');
-            this.tableData = false;
-          }
-        });
-    }
-  };
-
   deletePartyIds(i,j){
     this.partyids.splice(j,1);
   }
@@ -424,6 +386,8 @@ public year;
   }
 
   downloadForParty1(data) {//threshhold is 295
+    console.log(this.balanceFollowArr);
+    
     this.mailSendButton=true;
     let pager=1;
      let bigValueofY=0;
@@ -456,19 +420,19 @@ public year;
      doc.text('Date', 38, y)//partyname
      doc.text('Truck No.', 60, y)//partyname
      doc.text('LR No.', 86, y)//partyname
-     doc.text('Destination', 101, y)//partyname
-     doc.text('Lorry Bill', 128, y)//partyname
-      doc.text('Payment Rec', 148, y)//partyname
+     doc.text('Destination', 106, y)//partyname
+     doc.text('Lorry Bill', 129, y)//partyname
+      doc.text('Payment', 147, y)//partyname
      if(data=='party'){
-      doc.text('Notes', 172, y)//partyname
+      doc.text('Notes', 174, y)//partyname
       }else if(data=='self'){
-       doc.text('Balance', 172, y)//partyname
+       doc.text('Balance', 174, y)//partyname
       }
 
       doc.line(30, 20, 30, 25);//srno
       doc.line(55, 20, 55, 25);//date
       doc.line(83, 20, 83, 25);//truckno
-      doc.line(100, 20, 100, 25);//lrno
+      doc.line(105, 20, 105, 25);//lrno
       doc.line(127, 20, 127, 25);//credit
       doc.line(145, 20, 145, 25);//debit
       doc.line(171, 20, 171, 25);//balance
@@ -504,7 +468,7 @@ public year;
         doc.line(30, starty, 30, 291);//srno
         doc.line(55, starty, 55, 291);//date
         doc.line(83, starty, 83, 291);//truckno
-        doc.line(100, starty, 100, 291);//lrno
+        doc.line(105, starty, 105, 291);//lrno
         doc.line(127, starty, 127, 291);//credit
         doc.line(145, starty, 145, 291);//debit
         doc.line(171, starty, 171, 291);//balance
@@ -537,13 +501,13 @@ public year;
      doc.text('Date', 38, y-6)//partyname
      doc.text('Truck No.', 60, y-6)//partyname
      doc.text('LR No.', 86, y-6)//partyname
-     doc.text('Destination', 101, y-6)//partyname
-     doc.text('Lorry Bill', 128, y-6)//partyname
-      doc.text('Payment Rec', 148, y-6)//partyname
+     doc.text('Destination', 106, y-6)//partyname
+     doc.text('Lorry Bill', 129, y-6)//partyname
+      doc.text('Payment', 147, y-6)//partyname
       if(data=='party'){
-        doc.text('Notes', 172, y-6)//partyname
+        doc.text('Notes', 174, y-6)//partyname
         }else if(data=='self'){
-         doc.text('Balance', 172, y-6)//partyname
+         doc.text('Balance', 174, y-6)//partyname
         }
 
      
@@ -554,7 +518,7 @@ public year;
      doc.line(30, 20, 30, 25);//srno
      doc.line(55, 20, 55, 25);//date
      doc.line(83, 20, 83, 25);//truckno
-     doc.line(100, 20, 100, 25);//lrno
+     doc.line(105, 20, 105, 25);//lrno
      doc.line(127, 20, 127, 25);//credit
      doc.line(145, 20, 145, 25);//debit
      doc.line(171, 20, 171, 20);//balance
@@ -568,52 +532,61 @@ public year;
        
        doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
        if (this.paymentData[i].type === 'buy') {
-         doc.text(String(this.paymentData[i].lrno), 88, y)//lrno
+        if(this.paymentData[i].lrshort==='BNG'){
+          doc.setTextColor(207,120,18);
+          
+          doc.text(this.paymentData[i].lrshort+'-'+this.paymentData[i].lrno.split('_')[1], 84, y)//lrno
+          doc.setTextColor(0,0,0);
+          
+        }
+        else{
+         doc.text(String(this.paymentData[i].lrno), 84, y)//lrno
+        }
          doc.text(this.paymentData[i].truckNo, 57, y)//truckno
-         doc.text(this.paymentData[i].placeName, 101, y)//truckno
+         doc.text(this.paymentData[i].placeName, 106, y)//truckno
          if(this.paymentData[i].placeName2!==undefined){
-          doc.text(this.paymentData[i].placeName2, 101, y+5)//truckno
+          doc.text(this.paymentData[i].placeName2, 106, y+5)//truckno
          }
        } else {
-         doc.text(String('-'), 88, y)//lrno
-         doc.text(String('-'), 57, y)//truckno
-         doc.text('-', 101, y)//truckno
+         doc.text(String('-'), 73, y)//lrno
+         doc.text(String('-'), 62, y)//truckno
+         doc.text('-', 106, y)//truckno
        }
 
        if(this.typeOfCols==='default'){
             if (this.paymentData[i].type === 'buy') {
-              doc.text(String(this.paymentData[i].amount), 130, y)//partyname
-              doc.text(String('-'), 148, y)//partyname
+              doc.text(String(this.paymentData[i].amount), 132, y)//partyname
+              doc.text(String('-'), 150, y)//partyname
             } else {
-              doc.text(String(this.paymentData[i].amount), 148, y)//partyname
-              doc.text(String('-'), 130, y)//partyname
+              doc.text(String(this.paymentData[i].amount), 150, y)//partyname
+              doc.text(String('-'), 132, y)//partyname
             }
       }else if(this.typeOfCols==='noamount'){
-          doc.text(String('-'), 130, y)//partyname
-          doc.text(String('-'), 148, y)//partyname
+          doc.text(String('-'), 132, y)//partyname
+          doc.text(String('-'), 150, y)//partyname
       }
       else if(this.typeOfCols==='nobalance'){
         if (this.paymentData[i].type === 'buy') {
-          doc.text(String(this.paymentData[i].amount), 130, y)//partyname
-          doc.text(String('-'), 148, y)//partyname
+          doc.text(String(this.paymentData[i].amount), 132, y)//partyname
+          doc.text(String('-'), 150, y)//partyname
         } else {
-          doc.text(String(this.paymentData[i].amount), 148, y)//partyname
-          doc.text(String('-'), 130, y)//partyname
+          doc.text(String(this.paymentData[i].amount), 150, y)//partyname
+          doc.text(String('-'), 132, y)//partyname
         }
     }
  
       if(this.typeOfCols==='default'){
         if(data=='self'){
-          doc.text(String(this.paymentData[i]['value']), 172, y)//partyname
+          doc.text(String(this.paymentData[i]['value']), 174, y)//partyname
            }
       }else if(this.typeOfCols==='noamount'){
         if(data=='self'){
-          doc.text(String('-'), 172, y)//partyname
+          doc.text(String('-'), 174, y)//partyname
            }
       }
       else if(this.typeOfCols==='nobalance'){
         if(data=='self'){
-          doc.text(String('-'), 172, y)//partyname
+          doc.text(String('-'), 174, y)//partyname
            }
       }
 
@@ -651,40 +624,11 @@ public year;
      doc.line(30, starty, 30, bigValueofY+1);//srno
      doc.line(55, starty, 55, bigValueofY+1);//date
      doc.line(83, starty, 83, bigValueofY+1);//truckno
-     doc.line(100, starty, 100, bigValueofY+1);//lrno
+     doc.line(105, starty, 105, bigValueofY+1);//lrno
      doc.line(127, starty, 127, bigValueofY+1);//credit
      doc.line(145, starty, 145, bigValueofY+1);//debit
      doc.line(171, starty, 171, bigValueofY+1);//balance
      doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
-
-     if(this.detailedPrint){
-     doc.addPage();
-     y=30
-     doc.setFontSize('20');
-     doc.setFontType('bold');
-     doc.setTextColor(234, 1, 0);
-     doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
-     doc.setFontSize('15');
-     doc.setTextColor(215, 6, 9);
-     doc.text(this.partyids[0]['name'], 60, 15)//partyname
-     doc.setFontSize('10');
-     doc.setTextColor(0, 0, 0);
-     doc.text('GST No. : '+this.partyids[0]['gst'], 60, 19)//partyname
-     doc.setFontSize('10');
-     doc.text('Details From Date : ', 165, 15)
-     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
-     doc.text(String(pager), 180, 5)//pageno
-     pager=pager+1;
-     doc.setFontSize('25');
-     doc.setLineWidth(0.5);
-     doc.line(0, 20, 210, 20);//line after main header
-     doc.line(20, 20, 20, 300);//punching area line
-     //headers
-      doc.setFontSize('15');
-     doc.text('Please pay Balance Amount : '+String(balance), 23, y)//partyname
-     
-
-     }
 
      doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.fromloading)+'_'+this.handleF.getDateddmmyy(this.toloading)+ '.pdf')
    }
@@ -998,142 +942,6 @@ public year;
 
     //  doc.line(20, y-4, 210, y-4);//line after header
      doc.save('United_Cargo.pdf')
-   }
-
-   deepDetails(){//threshhold is 295
-
-
-
-    this.mailSendButton=true;
-    let pager=1;
-     let bigValueofY=0;
-     var doc = new jsPDF()
-     doc.setFontSize('25');
-     doc.setFontType('bold');
-     doc.text('Details', 15, 15)//partyname
-     doc.setFontSize('10');
-     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
-     doc.text(String(pager), 180, 5)//pageno
-     pager=pager+1;
-     doc.setFontSize('25');
-     doc.setLineWidth(0.5);
-     doc.line(0, 20, 210, 20);//line after main header
-     doc.line(20, 20, 20, 300);//punching area line
-     //headers
-     doc.setFontSize('10');
-     let y = 24;
-     let starty = 24;
-     doc.text('Sr', 23, y)//partyname
-     doc.text('Date', 38, y)//partyname
-     doc.text('Truck No.', 60, y)//partyname
-     doc.text('Destination', 86, y)//partyname
-     doc.text('Amount', 113, y)//partyname
-     doc.text('Dates', 132, y)
-     doc.text('Payment Amount', 157, y)
-
-      doc.line(30, 20, 30, 25);//srno
-      doc.line(55, 20, 55, 25);//date
-      doc.line(83, 20, 83, 25);//truckno
-      doc.line(110, 20, 110, 25);//lrno
-      doc.line(130, 20, 130, 25);//debit
-      doc.line(155, 20, 155, 25);//debit
-
-
-     //headers
-     doc.line(0, 25, 210, 25);//line after header
- 
-     let startforI=0;
-    
-       y = y + 6;
-       startforI=0;
-   
- 
-     for (let i = startforI; i < this.paymentData.length; i++) {
- 
-      
-       if(y>290){
-         
-         y=30;
-        doc.line(30, starty, 30, 296);//srno
-        doc.line(55, starty, 55, 296);//date
-        doc.line(83, starty, 83, 296);//truckno
-        doc.line(110, starty, 110, 296);//lrno
-        doc.line(130, starty, 130, 296);//debit
-        doc.line(155, starty, 155, 296);//debit
-
-
-
-        starty = 20;
-         doc.addPage();
-         doc.setFontSize('25');
-     doc.setFontType('bold');
-     doc.text('United Cargo', 15, 15)//partyname
-     doc.setFontSize('10');
-     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
-     doc.text(String(pager), 180, 5)//pageno
-     pager=pager+1;
-     doc.setFontSize('25');
-     doc.setLineWidth(0.5);
-     doc.line(0, 20, 210, 20);//line after main header
-     doc.line(20, 20, 20, 300);//punching area line
-     //headers
-     doc.setFontSize('10');
-     doc.text('Sr', 23, y-6)//partyname
-     doc.text('Date', 38, y-6)//partyname
-     doc.text('Truck No.', 60, y-6)//partyname
-     doc.text('Destination', 86, y-6)//partyname
-     doc.text('Amount', 113, y-6)//partyname
-     doc.text('Dates', 132, y-6)
-     doc.text('Payment Amount', 157, y-6)
-
-     
-     //headers
-     doc.line(0, 25, 210, 25);//line after header
- 
-     //vertical lines
-     doc.line(30, 20, 30, 25);//srno
-     doc.line(55, 20, 55, 25);//date
-     doc.line(83, 20, 83, 25);//truckno
-     doc.line(110, 20, 110, 25);//lrno
-     doc.line(130, 20, 130, 25);//debit
-     doc.line(155, 20, 155, 25);//debit
-
-
-     //vertical lines
-     }
-
-
-
-
-        doc.text(String(i+1), 23, y)//partyname
-       doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
-         doc.text(this.paymentData[i].truckno, 57, y)//truckno
-         doc.text(this.paymentData[i].places, 84, y)//truckno
-         doc.text(String(this.paymentData[i].hamt), 113, y)//partyname
-         doc.text(String(this.getAdvances(this.paymentData[i].advanceArray)), 113, y+5)//partyname
-         doc.text(String(this.balance(this.paymentData[i])), 113, y+10)//partyname
-
-         doc.text(String(this.handleF.getDateddmmyy(this.paymentData[i].pochDate)), 132, y)//partyname
-         doc.text(String(this.handleF.getDateddmmyy(this.paymentData[i].givenDate)), 132, y+5)//partyname
-         doc.text(String(this.handleF.getDateddmmyy(this.paymentData[i].payment[0]['date'])), 132, y+10)//partyname
-
-         doc.text(String(this.paymentData[i].payment[0]['amount']), 160, y)//partyname
- 
-       doc.line(20, y + 11, 210, y + 11);//line after header
-       y = y + 15;
-     bigValueofY=y;
-     }
-
-
-     doc.line(30, starty, 30, y-4);//srno
-     doc.line(55, starty, 55, y-4);//date
-     doc.line(83, starty, 83, y-4);//truckno
-     doc.line(110, starty, 110, y-4);//lrno
-     doc.line(130, starty, 130, y-4);//debit
-     doc.line(155, starty, 155, y-4);//debit
-
-    //  doc.line(20, y-4, 210, y-4);//line after header
-     doc.save('Details.pdf')
    }
 
    balance(data) {
