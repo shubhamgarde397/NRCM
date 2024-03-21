@@ -934,7 +934,7 @@ this.apiCallservice.handleData_New_python
       ('commoninformation', 1, value, true)
       .subscribe((res: any) => {
         this.linkArray=[];
-        alert(res.Status);
+        this.data14=res.Data;
       });
   }
 
