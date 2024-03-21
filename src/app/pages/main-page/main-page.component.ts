@@ -20,18 +20,26 @@ import { Consts } from '../../common/constants/const';
 export class MainPageComponent implements OnInit {
   public date3month;
   public unique11turnbooklist=[];
+  public linkArray=[];
   public tempObj = {};
+  public linkData=[];
   public years = []
   public buttons = []
+  public accountarrayUF=[];
+  public accounttableUF=false;
   public todayDate;
   public placeidto;
   public partyidto;
   public trucknoid11=''
   public selectDate=false;
+  public pantable=false;
+  public panarray=[];
   public byTruckName=false;
   public villagenamelist=[];
   public whichType='0';
-  public parties=[]
+  public parties=[];
+  public selectedMY='';
+  public emptyData=[];
   public randomarray=[];
   public places=[]
   public tableDate=false;
@@ -39,12 +47,14 @@ export class MainPageComponent implements OnInit {
   public data=[];
   public turn11=[];
   public myFormGroupR: FormGroup;
+  public myFormGroupQR: FormGroup;
   public unique5turnbooklist=[];
   public commonArray;
   public considerArray;
   public truckVar;
   public transports=[];
   public showPan=false;
+  public partyLink=[];
 public sstampsign='';
 public showTon=false;
 public formData;
@@ -97,6 +107,7 @@ public secretDoorForAnil=false;
 public actualPayment=true;
 public actualPaymentData=false;
 public secretDoor=false;
+public data14=[];
 public selectedmy;
 public data3='0';
 public data3value='';
@@ -110,6 +121,7 @@ public type1;
 public type2;
 public documentNos=[];
 public documentNo='';
+public link=[];
 public date5b=''
 public truckno5b=''
 public partyName5b=''
@@ -132,6 +144,10 @@ public advamt=0;
 public advdate='';
 public personalshubham=false;
 public table4=false;
+public allLinks=false;
+public allParties=false;
+public plant='';
+public partyLinkName=''
 // 
 
   constructor(
@@ -173,6 +189,11 @@ public table4=false;
       to: 0,
       qty:0
     });
+    this.myFormGroupQR = this.formBuilder.group({
+      date: this.handleF.createDate(new Date()),
+      link: ''
+    });
+   this.buttons=this.getButtonsN();
   }
 
   getAdvances2(d,c){
@@ -183,6 +204,9 @@ public table4=false;
     this.bigII=i;
     this.bigJJ=j;
   }
+
+
+  
 
   saveDoc(i,j){
     this.bigII=i;
@@ -467,6 +491,16 @@ switch(data){
       tempObj['tablename'] = ''
     tempObj['method'] = 'getRent'
       break;
+      case '13':
+      this.tableDate=false;
+      tempObj['tablename'] = ''
+    tempObj['method'] = 'sameLR'
+      break;
+      case '14':
+      this.tableDate=false;
+      tempObj['tablename'] = ''
+    tempObj['method'] = 'displayLink'
+      break;
 }
 this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
@@ -478,9 +512,267 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
           case '2':
             this.villagenamelist=res.Data;
           break;
+          case '13':
+            this.turn11=res.Data;
+            this.byTruckName=true;
+          break;
+          case '14':
+            this.data14=[];
+            this.linkData=[];
+            this.partyLink=[];
+            this.data14=res.Data;
+            var flags = [];
+            for(let i=0; i<res.Data.length; i++) {
+              if( flags[res.Data[i].place]) continue;
+              flags[res.Data[i].place] = true;
+              this.linkData.push(res.Data[i].place);
+          }
+          break;
         }
       });
     }
+  }
+
+  RefreshLinks(){
+    let tempObj={}
+    this.tableDate=false;
+      tempObj['tablename'] = ''
+    tempObj['method'] = 'displayLink'
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+
+     
+    this.data14=[];
+            this.linkData=[];
+            this.partyLink=[];
+            this.data14=res.Data;
+            var flags = [];
+            for(let i=0; i<res.Data.length; i++) {
+              if( flags[res.Data[i].place]) continue;
+              flags[res.Data[i].place] = true;
+              this.linkData.push(res.Data[i].place);
+          }
+          console.log(this.linkData);
+          
+        })
+  }
+
+  getLinkParties(i){
+    this.plant=i;
+    this.partyLink=[]
+    let a=this.data14; 
+    let aa = a.filter(r=>{return r.place == i})
+
+    var flags = [];
+    for(let i=0; i<aa.length; i++) {
+      if( flags[aa[i].party]) continue;
+      flags[aa[i].party] = true;
+      this.partyLink.push(aa[i].party);
+  }
+  this.allParties=true;
+  this.allLinks=false;
+  
+  }
+  getAllLinks(){
+    this.allLinks=true;
+    this.link=this.data14;
+  }
+  getLinks(i){
+    this.allLinks=true;
+    this.link=[]
+    let a=this.data14; 
+    let aa = a.filter(r=>{return r.place == this.plant})
+    console.log(a);
+    
+    this.link=aa.filter(r=>{return r.party == i})
+  }
+
+  addQR(i,j){
+    var a=prompt('Enter the QRNO.')
+    let tempObj={
+      'qr':a.split(',').map(function (x) { 
+        return parseInt(x); 
+      }),
+      'tablename':'',
+      'method':'updateLinkQR',
+      '_id':i._id
+    }
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
+    .subscribe((res: any) => {
+      this.data14[j]['qr']=a.split(',');
+      alert(res.Status)
+    });
+  }
+  delQR(j,jj){
+//     let formbody={}
+// formbody['method']='delQR';
+// formbody['tablename']=''
+// formbody['qr']=jj;
+//     this.apiCallservice.handleData_New_python
+//     ('commoninformation', 1, formbody, true)
+//     .subscribe((res: any) => {
+//       this.linkData[j].slice(jj,1)
+//       alert(res.Status);
+//     });
+  }
+
+
+
+  doneQR(i,j){
+    let tempObj={'tablename':'','method':'updateLinkDone','_id':i._id}
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
+    .subscribe((res: any) => {
+      this.data14[j]['done']=true;
+      this.data14.splice(j,1);
+    alert(res.Status)
+    });
+  }
+
+  changeLR(i){
+    var a=prompt('Enter the NEW LRNO.')
+    let tempObj={'newlrno':a,'tablename':'','method':'changeDupLR','lrno':i._id}
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
+    .subscribe((res: any) => {
+    alert(res.Status)
+    });
+  }
+
+  getData(){
+    let tempObj={};
+    tempObj['method']='pipelinePan'
+    tempObj['from']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[0];
+    tempObj['to']=this.buttons[parseInt(this.selectedMY)]['value'].split('_')[1];
+    tempObj['tablename']='';
+    tempObj['option']=1;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
+    .subscribe((res: any) => {
+    this.emptyData=res.chartData;
+    });
+  }
+
+  downloadPan(data,option){
+    let tempObj={};
+    tempObj['from']=this.buttons[parseInt(this.selectedMY)]['option']===1?this.buttons[parseInt(this.selectedMY)]['value'].split('_')[0]:null;
+    tempObj['to']=this.buttons[parseInt(this.selectedMY)]['option']===1?this.buttons[parseInt(this.selectedMY)]['value'].split('_')[1]:null;
+    tempObj['partyType']=data['_id'];
+    tempObj['method']='pipelinePan'
+    tempObj['tablename']='';
+    tempObj['option']=this.buttons[parseInt(this.selectedMY)]['option']===2?3:4;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      this.panarray=res.chartData;
+      this.pantable=true;
+    });
+  }
+
+  getButtonsN() {
+    let buttons=[]
+    let index=0;
+        for (let i = 0; i < new Date().getFullYear() - 2019; i++) {
+          this.years.push(i + 2020)
+        }
+        for (let i = 0; i < this.years.length; i++) {
+          let months = new Date().getFullYear() - this.years[i] == 0 ? new Date().getMonth() + 1 : 12;
+          for (let j = 0; j < months; j++) {
+            let date = new Date(String(i + 2020) + '-' + this.handleF.generate2DigitNumber(String(j + 1)) + '-01');
+            let month = date.toLocaleString('default', { month: 'short' });
+            this.tempObj['value'] =  String(i + 2020) + "-" + this.handleF.generate2DigitNumber(String(j + 1)) + "-01_"+String(i + 2020) + "-" + this.handleF.generate2DigitNumber(String(j + 1)) + "-31";
+            this.tempObj['viewValue'] = month + '-' + String(i + 2020).slice(-2);
+            this.tempObj['option']=1;
+            this.tempObj['index']=index;
+            buttons.push(this.tempObj);
+            this.tempObj = {}
+            index=index+1;
+          }
+          
+        }
+        buttons.push({'value':'""_""','viewValue':'All','option':2,'index':index});
+        return buttons;
+      }
+
+  updatePan(){
+
+    let bigArray=[]
+    let tempObj={}
+
+    
+
+    for(let i=0;i<this.panarray.length;i++){
+
+      let pan=(<HTMLInputElement>document.getElementById('pan_' + i)).value;
+      let name=(<HTMLInputElement>document.getElementById('name_' + i)).value;
+
+      if(pan.length<10){}
+
+      else{
+        let obj={}
+        obj['pan']=pan;
+        obj['name']=name;
+        obj['ownerid']=this.panarray[i]['ownerid'];
+        bigArray.push(obj);
+      }
+    }
+      tempObj['tablename']='';
+      tempObj['method']='SMARTPANNEW';
+      tempObj['array']=bigArray;
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        alert('Please Refresh!')
+      });
+    
+
+  }
+
+  getAccountsUpdateTrue(){
+    let tempObj={};
+    tempObj['method']='SmartAccountUpdateTrue'
+    tempObj['tablename']='';
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {  
+    this.accountarrayUF=res.chartData;
+    this.accounttableUF=true;
+    });
+  }
+
+  updateaccountDetails(i,j){
+
+    let aD=[]
+    let tempObj={};
+
+
+    for(let i=0;i<this.accountarrayUF.length;i++){
+    let accname=(<HTMLInputElement>document.getElementById('accname_' + i)).value;
+    let accno=(<HTMLInputElement>document.getElementById('accno_' + i)).value;
+    let bname=(<HTMLInputElement>document.getElementById('bname_' + i)).value;
+    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + i)).value;
+    if(accname===''||accno===''||bname===''||ifsc===''){}
+    else{
+      let itempObj={}
+      itempObj['accountName']=accname;
+      itempObj['accountNumber']=accno;
+      itempObj['bankName']=bname;
+      itempObj['ifsc']=ifsc;
+      itempObj['_id']=this.accountarrayUF[i]['_id'];
+      aD.push(itempObj)
+
+    }
+  }
+
+
+  tempObj['aD']=aD;
+      tempObj['tablename']='';
+      tempObj['method']='SMARTACCOUNTUPDATEUFNEW';
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.accountarrayUF.splice(j,1);
+      });
+  }
+
+  updateifscCode(index){
+    (<HTMLInputElement>document.getElementById('bname_'+index)).value=(<HTMLInputElement>document.getElementById('ifsc_'+index)).value.slice(0,4)
   }
 
   getdata3(){
@@ -623,6 +915,32 @@ find(event){
     }
   }
 
+  storeLink(){
+    let value={}
+
+    
+    value['link'] = this.myFormGroupQR.value.link;
+    value['date'] = this.myFormGroupQR.value.date;
+    this.linkArray.push(value);
+    this.myFormGroupQR.patchValue({'link':''})
+  }
+
+  sendLinkData(){
+    let value={};
+    value['method'] = 'addlink';
+    value['data'] = this.linkArray;
+
+this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, true)
+      .subscribe((res: any) => {
+        this.linkArray=[];
+        alert(res.Status);
+      });
+  }
+
+  deleteLink(j){
+    this.linkArray.splice(j,1);
+  }
 
     find11UniqueTruck(){
       if(this.trucknoid11!=='Default'){
