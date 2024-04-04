@@ -2,6 +2,7 @@
   <div class="col-sm-3">
     <button class="btn btn-success" (click)="changer(1)">Add QR</button></div>
   <div class="col-sm-3"><button class="btn btn-success" (click)="changer(2)">Track Loading Status</button></div>
+  <div class="col-sm-3"><button class="btn btn-success" (click)="changer(5)">Rent Sheet</button></div>
   <div class="col-sm-3"><button class="btn btn-success" (click)="changer(3)">Send Message</button></div>
   <div class="col-sm-3"><button class="btn btn-success" (click)="changer(4)">Search by QR/Truck</button></div>
 </div>
@@ -105,6 +106,69 @@
 </div>
 </div>
 
+<div class="well" *ngIf="dataT===5">
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-danger" (click)="getData(5)">Get Data</button>
+    </div>
+  </div>
+
+<div class="well">
+  <div class="col-sm-4">
+    <button class="btn btn-danger" (click)="downloadRS()">Download Rent Sheet</button>
+  </div>
+<table class="table table-bordered" *ngIf="table5">
+  <thead>
+    <tr>
+    <th>Sr</th>
+    <th>Loading</th>
+    <th>TruckNo-Contact-BillNo</th>
+    <th>Party-Destination-Type</th>
+    <th>Rent-Excess</th>
+    <th>Advance</th>
+    <th>Account Details</th>
+    <th>Option</th>
+
+  </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let i of data;let j=index;">
+      <td>{{j+1}}</td>
+      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      <td [ngStyle]="{'color': i.pan}">{{i.truckno}}
+          <ul>
+            <li>{{i.billno}}</li>
+            <li *ngFor="let ii of i.contacttb"><a href="tel:+91 {{ii}}">{{ii}}</a></li>
+          </ul>
+          <button class="btn btn-warning" *ngIf="i.pan==='red'" (click)="accAdder(i,j)" data-toggle="modal" data-target="#myModalPan">Pan</button>
+      </td>
+      <td>
+        {{i.pvt}}
+        <!-- {{i.party}}-{{i.v1}}-{{i.typeOfLoad}} -->
+      </td>
+      <td>{{i.rent}}</td>
+      <td>{{i.rent-3000}}-{{i.billamt}}={{i.rent-3000-i.billamt}}</td>
+      <td>
+        <ul *ngIf="!i.update">
+          <li>{{i.account[0].accountName}}</li>
+          <li>{{i.account[0].accountNumber}}</li>
+          <li>{{i.account[0].ifsc}}</li>
+        </ul>
+        <button class="btn btn-warning" *ngIf="i.update" (click)="accAdder(i,j)" data-toggle="modal" data-target="#myModalAccount">Account</button>
+      </td>
+      <td>
+      <div class="col-sm-8">
+        <button class="btn btn-primary" (click)="pay(i,j)">Pay</button>
+        <button class="btn btn-info" (click)="tomorrow(i,j)">Set To Tomorrow</button>
+        <button class="btn btn-danger" (click)="unpay(i,j)">Un-Pay</button>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
 
 
   <div class="well" *ngIf="dataT===2">
@@ -130,6 +194,8 @@
       <tr *ngFor="let i of data;let j=index;">
         <td>{{j+1}}</td>
         <td [ngStyle]="{'color': i.pan}">{{i.truckno}}
+          <br>
+          {{i.loadingDate|date:'dd-MM-yyyy'}}
             <ul>
               <li *ngFor="let ii of i.contacttb"><a href="tel:+91 {{ii}}">{{ii}}</a></li>
             </ul>
@@ -165,6 +231,7 @@
           <button class="btn btn-warning" (click)="submitLoadingStatus(j,'Overweight_orange')">Overweight</button>
           <button class="btn btn-danger" (click)="submitLoadingStatus(j,'Additional Order Required_red')">Additional Order</button>
           <button class="btn btn-warning" (click)="submitLoadingStatus(j,'Waiting To Dispatch_orange')">Waiting To Dispatch</button>
+          <button class="btn btn-warning" (click)="submitLoadingStatus(j,'Waiting For Advance_purple')">Waiting For Advance</button>
           <button class="btn btn-success" (click)="submitLoadingStatus(j,'Dispatched_green')">Dispatched</button>
         </div>
         </td>
@@ -250,7 +317,29 @@
             </tr>
           </table>
         </div>
+      </div>
 
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
+          <label for="truckNo"> Party Type</label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Party Type : <select id="dest" class="form-control" formControlName="ptype">
+              <option value='NRCM'>NRCM</option>
+              <option value='NR'>NR</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.pid.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="form-group row" >

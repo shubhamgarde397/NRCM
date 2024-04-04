@@ -298,6 +298,8 @@ public year;
     return data;
   }
   pdfJSONForParty(data, balanceFollow,todo) {
+    console.log(data);
+    
     let val = 0
     if(todo=='addBalance'){
       for(let i=0;i<balanceFollow.length;i++){
@@ -385,9 +387,47 @@ public year;
     this.adminAccess = !this.adminAccess;
   }
 
-  downloadForParty1(data) {//threshhold is 295
-    console.log(this.balanceFollowArr);
-    
+  all(){
+    this.mailSendButton=false;
+    // this.paymentData=[];
+    let flag = false;
+    let tempObj = {};
+    let balanceFollow = {};
+    tempObj['from'] = this.date1;
+    tempObj['to'] = this.date2;
+    this.date1=tempObj['from'];
+    this.date2=tempObj['to'];
+    if ((this.fromloading === undefined)  || (this.toloading === undefined)) { 
+      alert('Select a Date'); 
+    }
+    else {
+      tempObj['fromloading'] = this.fromloading;
+      tempObj['toloading'] = this.toloading;
+      tempObj['method'] = 'partyPaymentPDFForPartyAll';
+      this.fromloading=tempObj['fromloading'];
+      this.toloading=tempObj['toloading'];
+      balanceFollow['bf'] = false;
+      flag = true;
+      }
+    if (flag) {
+      tempObj['tablename'] = ''
+      // this.balanceFollowGlobal=balanceFollow;
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.paymentData = res.Data;
+          this.paymentData =  this.pdfJSONForParty(res.Data,balanceFollow,'addBalance');
+          if (this.paymentData.length > 0) {
+            this.tableData = true;
+            this.handledata.savePaymentData(this.paymentData);
+            this.allpdf()
+          } else {
+            alert('No Data Available.');
+            this.tableData = false;
+          }
+        });
+    }
+  }
+  allpdf(){
     this.mailSendButton=true;
     let pager=1;
      let bigValueofY=0;
@@ -398,10 +438,9 @@ public year;
      doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
      doc.setFontSize('15');
      doc.setTextColor(215, 6, 9);
-     doc.text(this.partyids[0]['name'], 60, 15)//partyname
+     doc.text('ALL DATA', 60, 15)//partyname
      doc.setFontSize('10');
      doc.setTextColor(0, 0, 0);
-     doc.text('GST No. : '+this.partyids[0]['gst'], 60, 19)//partyname
      doc.setFontSize('10');
      doc.text('Details From Date : ', 165, 15)
      doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
@@ -421,21 +460,15 @@ public year;
      doc.text('Truck No.', 60, y)//partyname
      doc.text('LR No.', 86, y)//partyname
      doc.text('Destination', 106, y)//partyname
-     doc.text('Lorry Bill', 129, y)//partyname
-      doc.text('Payment', 147, y)//partyname
-     if(data=='party'){
-      doc.text('Notes', 174, y)//partyname
-      }else if(data=='self'){
-       doc.text('Balance', 174, y)//partyname
-      }
+     doc.text('Lorry Bill', 135, y)//partyname
+      doc.text('Party Name', 152, y)
 
       doc.line(30, 20, 30, 25);//srno
       doc.line(55, 20, 55, 25);//date
       doc.line(83, 20, 83, 25);//truckno
       doc.line(105, 20, 105, 25);//lrno
-      doc.line(127, 20, 127, 25);//credit
-      doc.line(145, 20, 145, 25);//debit
-      doc.line(171, 20, 171, 25);//balance
+      doc.line(134, 20, 134, 25);//credit
+      doc.line(151, 20, 151, 25);//debit
 
 
      //headers
@@ -469,8 +502,186 @@ public year;
         doc.line(55, starty, 55, 291);//date
         doc.line(83, starty, 83, 291);//truckno
         doc.line(105, starty, 105, 291);//lrno
-        doc.line(127, starty, 127, 291);//credit
-        doc.line(145, starty, 145, 291);//debit
+        doc.line(134, starty, 134, 291);//credit
+        doc.line(151, starty, 151, 291);//debit
+
+        starty = 20;
+         doc.addPage();
+         doc.setFontSize('20');
+     doc.setFontType('bold');
+
+     doc.setTextColor(234, 1, 0);
+     doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
+     doc.setFontSize('15');
+     doc.setTextColor(215, 6, 9);
+     doc.text('ALL DATA', 60, 15)//partyname
+     doc.setFontSize('10');
+     doc.setTextColor(0, 0, 0);
+     doc.setFontSize('10');
+     doc.text('Details From Date : ', 165, 15)
+     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     doc.text('Sr', 23, y-6)//partyname
+     doc.text('Date', 38, y-6)//partyname
+     doc.text('Truck No.', 60, y-6)//partyname
+     doc.text('LR No.', 86, y-6)//partyname
+     doc.text('Destination', 106, y-6)//partyname
+     doc.text('Lorry Bill', 135, y-6)//partyname
+      // doc.text('Payment', 147, y-6)//partyname
+      doc.text('Party Name', 151, y-6)//partyname
+        // doc.text('Notes', 174, y-6)
+
+     
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     //vertical lines
+     doc.line(30, 20, 30, 25);//srno
+     doc.line(55, 20, 55, 25);//date
+     doc.line(83, 20, 83, 25);//truckno
+     doc.line(105, 20, 105, 25);//lrno
+     doc.line(134, 20, 134, 25);//credit
+     doc.line(151, 20, 151, 25);//debit
+     //vertical lines
+     }
+     if(this.paymentData[0]['bf'] == true){
+      doc.text(String(i), 25, y)//partyname
+      }else {
+        doc.text(String(i+1), 23, y)//partyname
+      }
+       
+       doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
+        if(this.paymentData[i].lrshort==='BNG'){
+          doc.setTextColor(207,120,18);
+          
+          doc.text(this.paymentData[i].lrshort+'-'+this.paymentData[i].lrno.split('_')[1], 84, y)//lrno
+          doc.setTextColor(0,0,0);
+          
+        }
+        else{
+         doc.text(String(this.paymentData[i].lrno), 87, y)//lrno
+        }
+         doc.text(this.paymentData[i].truckNo, 57, y)//truckno
+         doc.text(this.paymentData[i].placeName, 106, y)//truckno
+         if(this.paymentData[i].placeName2!==undefined){
+          doc.text(this.paymentData[i].placeName2, 106, y+5)//truckno
+         }
+
+              doc.text(String(this.paymentData[i].amount), 135, y)//partyname
+              doc.text(String(this.paymentData[i].partyName), 152, y)//partyname      
+      
+        if(this.paymentData[i].placeName2===undefined){
+          y = y + 5;
+          }else{
+           y = y + 10;
+          }
+          doc.line(20, y -4, 210, y -4);//line after header
+     bigValueofY=y;
+     }
+
+     doc.setFontSize('10');
+     doc.line(30, starty, 30, bigValueofY+1);//srno
+     doc.line(55, starty, 55, bigValueofY+1);//date
+     doc.line(83, starty, 83, bigValueofY+1);//truckno
+     doc.line(105, starty, 105, bigValueofY+1);//lrno
+     doc.line(134, starty, 134, bigValueofY+1);//credit
+     doc.line(151, starty, 151, bigValueofY+1);//debit
+     doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
+
+     doc.save('All.pdf')
+  }
+
+  downloadForParty1(data) {//threshhold is 295
+    this.mailSendButton=true;
+    let pager=1;
+     let bigValueofY=0;
+     var doc = new jsPDF()
+     doc.setFontSize('20');
+     doc.setFontType('bold');
+     doc.setTextColor(234, 1, 0);
+     doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
+     doc.setFontSize('15');
+     doc.setTextColor(215, 6, 9);
+     doc.text(this.partyids[0]['name'], 60, 15)//partyname
+     doc.setFontSize('10');
+     doc.setTextColor(0, 0, 0);
+     doc.text('GST No. : '+this.partyids[0]['gst'], 60, 19)//partyname
+     doc.setFontSize('10');
+     doc.text('Details From Date : ', 165, 15)
+     doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+     doc.text(String(pager), 180, 5)//pageno
+     pager=pager+1;
+     doc.setFontSize('25');
+     doc.setLineWidth(0.5);
+     doc.line(0, 20, 210, 20);//line after main header
+     doc.line(20, 20, 20, 300);//punching area line
+     //headers
+     doc.setFontSize('10');
+     let y = 24;
+     let starty = 24;
+     doc.line(0, 148.2, 5, 148.2);//punching line helper
+     doc.text('Sr', 23, y)//partyname
+     doc.text('Date', 38, y)//partyname
+     doc.text('Truck No.', 60, y)//partyname
+     doc.text('LR No.', 86, y)//partyname
+     doc.text('Destination', 106, y)//partyname
+     doc.text('Lorry Bill', 135, y)//partyname
+      doc.text('Payment', 152, y)//partyname
+     if(data=='party'){
+      doc.text('Notes', 180, y)//partyname
+      }else if(data=='self'){
+       doc.text('Balance', 180, y)//partyname
+      }
+
+      doc.line(30, 20, 30, 25);//srno
+      doc.line(55, 20, 55, 25);//date
+      doc.line(83, 20, 83, 25);//truckno
+      doc.line(105, 20, 105, 25);//lrno
+      doc.line(134, 20, 134, 25);//credit
+      doc.line(151, 20, 151, 25);//debit
+      doc.line(171, 20, 171, 25);//balance
+
+
+     //headers
+     doc.line(0, 25, 210, 25);//line after header
+ 
+     let startforI=0;
+     starty = 31;
+     for(let yy=0;yy<this.balanceFollowArr.length;yy++){
+          y = y + 5;
+          
+          doc.text(this.paymentData[yy].partyName, 30, y)//partyname
+          doc.text(String(this.paymentData[yy].amount), 130, y)//partyname
+          doc.line(20, 31, 210, 31);
+          //  doc.line(151, 25, 151, 31);
+          startforI++;
+          doc.line(20, 31+(yy*5), 210, 31+(yy*5));
+         
+
+      }
+      starty = starty+((this.balanceFollowArr.length-1)*5);
+      y=y+6
+      
+ 
+     for (let i = startforI; i < this.paymentData.length; i++) {
+ 
+      
+       if(y>290){
+         
+         y=30;
+        doc.line(30, starty, 30, 291);//srno
+        doc.line(55, starty, 55, 291);//date
+        doc.line(83, starty, 83, 291);//truckno
+        doc.line(105, starty, 105, 291);//lrno
+        doc.line(134, starty, 134, 291);//credit
+        doc.line(151, starty, 151, 291);//debit
         doc.line(171, starty, 171, 291);//balance
 
         starty = 20;
@@ -502,12 +713,12 @@ public year;
      doc.text('Truck No.', 60, y-6)//partyname
      doc.text('LR No.', 86, y-6)//partyname
      doc.text('Destination', 106, y-6)//partyname
-     doc.text('Lorry Bill', 129, y-6)//partyname
-      doc.text('Payment', 147, y-6)//partyname
+     doc.text('Lorry Bill', 135, y-6)//partyname
+      doc.text('Payment', 151, y-6)//partyname
       if(data=='party'){
-        doc.text('Notes', 174, y-6)//partyname
+        doc.text('Notes', 180, y-6)//partyname
         }else if(data=='self'){
-         doc.text('Balance', 174, y-6)//partyname
+         doc.text('Balance', 180, y-6)//partyname
         }
 
      
@@ -519,8 +730,8 @@ public year;
      doc.line(55, 20, 55, 25);//date
      doc.line(83, 20, 83, 25);//truckno
      doc.line(105, 20, 105, 25);//lrno
-     doc.line(127, 20, 127, 25);//credit
-     doc.line(145, 20, 145, 25);//debit
+     doc.line(134, 20, 134, 25);//credit
+     doc.line(151, 20, 151, 25);//debit
      doc.line(171, 20, 171, 20);//balance
      //vertical lines
      }
@@ -540,7 +751,7 @@ public year;
           
         }
         else{
-         doc.text(String(this.paymentData[i].lrno), 84, y)//lrno
+         doc.text(String(this.paymentData[i].lrno), 87, y)//lrno
         }
          doc.text(this.paymentData[i].truckNo, 57, y)//truckno
          doc.text(this.paymentData[i].placeName, 106, y)//truckno
@@ -555,23 +766,23 @@ public year;
 
        if(this.typeOfCols==='default'){
             if (this.paymentData[i].type === 'buy') {
-              doc.text(String(this.paymentData[i].amount), 132, y)//partyname
-              doc.text(String('-'), 150, y)//partyname
+              doc.text(String(this.paymentData[i].amount), 135, y)//partyname
+              doc.text(String('-'), 152, y)//partyname
             } else {
-              doc.text(String(this.paymentData[i].amount), 150, y)//partyname
-              doc.text(String('-'), 132, y)//partyname
+              doc.text(String(this.paymentData[i].amount), 152, y)//partyname
+              doc.text(String('-'), 135, y)//partyname
             }
       }else if(this.typeOfCols==='noamount'){
-          doc.text(String('-'), 132, y)//partyname
-          doc.text(String('-'), 150, y)//partyname
+          doc.text(String('-'), 135, y)//partyname
+          doc.text(String('-'), 152, y)//partyname
       }
       else if(this.typeOfCols==='nobalance'){
         if (this.paymentData[i].type === 'buy') {
-          doc.text(String(this.paymentData[i].amount), 132, y)//partyname
-          doc.text(String('-'), 150, y)//partyname
+          doc.text(String(this.paymentData[i].amount), 135, y)//partyname
+          doc.text(String('-'), 152, y)//partyname
         } else {
-          doc.text(String(this.paymentData[i].amount), 150, y)//partyname
-          doc.text(String('-'), 132, y)//partyname
+          doc.text(String(this.paymentData[i].amount), 152, y)//partyname
+          doc.text(String('-'), 135, y)//partyname
         }
     }
  
@@ -605,9 +816,9 @@ public year;
      doc.setFontSize('10');
     //  doc.text(String(this.paymentData.length+1), 23, bigValueofY)//partyname
     if(this.typeOfCols==='default'){
-      doc.text('Total', 104, bigValueofY)//partyname
-      doc.text(String(amount), 128, bigValueofY)//partyname
-      doc.text(String(payment), 148, bigValueofY)//partyname
+      doc.text('Total', 106, bigValueofY)//partyname
+      doc.text(String(amount), 135, bigValueofY)//partyname
+      doc.text(String(payment), 151, bigValueofY)//partyname
       if(data=='self'){
       doc.text(String(balance), 172, bigValueofY)//partyname
       }
@@ -620,14 +831,14 @@ public year;
     else if(this.typeOfCols==='nobalance'){
     }
    
-
-     doc.line(30, starty, 30, bigValueofY+1);//srno
-     doc.line(55, starty, 55, bigValueofY+1);//date
-     doc.line(83, starty, 83, bigValueofY+1);//truckno
-     doc.line(105, starty, 105, bigValueofY+1);//lrno
-     doc.line(127, starty, 127, bigValueofY+1);//credit
-     doc.line(145, starty, 145, bigValueofY+1);//debit
-     doc.line(171, starty, 171, bigValueofY+1);//balance
+  
+     doc.line(30, starty, 30, bigValueofY-4);//srno
+     doc.line(55, starty, 55, bigValueofY-4);//date
+     doc.line(83, starty, 83, bigValueofY-4);//truckno
+     doc.line(105, starty, 105, bigValueofY-4);//lrno
+     doc.line(134, starty, 134, bigValueofY-4);//credit
+     doc.line(151, starty, 151, bigValueofY-4);//debit
+     doc.line(171, starty, 171, bigValueofY-4);//balance
      doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
 
      doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.fromloading)+'_'+this.handleF.getDateddmmyy(this.toloading)+ '.pdf')

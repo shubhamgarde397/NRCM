@@ -279,7 +279,7 @@ doc.setTextColor(0, 0, 0);
 
        doc.addPage();
       let d=new Date()
-  let billno=String(d.getMinutes())+String(d.getSeconds());
+  // let billno=String(d.getMinutes())+String(d.getSeconds());
   doc.setLineDash([1, 0], 10);
   doc.setFontSize('30');
   doc.setFontType('bold');

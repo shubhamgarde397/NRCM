@@ -25,6 +25,7 @@ export class AddqrComponent implements OnInit {
   public trucks=[];
   public qrs=[];
   public contacts=[];
+  public table5=false;
   public nrcmid;
   public partys=[];
   public village=[];
@@ -57,10 +58,11 @@ public table3=false;
     this.nrcmid=this.securityCheck.nrcmid;
     this.myFormGroup = this.formBuilder.group({
       date:['',Validators.required],
-      qr:['',Validators.required],
+      qr:[''],
       tbid:['',Validators.required],
       type:['',Validators.required],
       pid:['',Validators.required],
+      ptype:['',Validators.required],
       vid:['',Validators.required],
       vid2:[''],
       contact:['',Validators.required]
@@ -92,6 +94,9 @@ getData(data){
       case 3:
         tempObj['method']='findbyqrforMessageSend';
       break;
+      case 5:
+        tempObj['method']='findtodayloading';
+      break;
   }
   
   
@@ -113,6 +118,10 @@ getData(data){
           this.dataDispatch=this.setMsg(res.Data);
           this.table3=true;
           break;
+          case 5:
+            this.data=res.Data;
+            this.table5=true;
+            break;
       }
       
     });
@@ -182,6 +191,7 @@ deleteContact(i,j){
     'tablename':'',
     'id': truckss['_id'],
     'pid':this.myFormGroup.value.pid,
+    'ptype':this.myFormGroup.value.ptype,
     'vid':this.myFormGroup.value.vid,
     'vid2':this.myFormGroup.value.vid2,
     'oid':truckss['ownerid'],
@@ -190,10 +200,22 @@ deleteContact(i,j){
     'contacts':this.contacts,
     'type':this.myFormGroup.value.type,
     'new':truckss['new']
-
+    }
+let flag=false;
+    if(tempObj['ptype']=='NR'){
+      flag=true
+    }
+    else{
+      if(tempObj['qrs'].length===0){
+        alert('Please add QR Codes!');
+        flag=false;
+      }
+      else{
+        flag=true;
+      }
     }
 
-
+if(flag){
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
@@ -210,6 +232,47 @@ deleteContact(i,j){
         this.qrs=[];
         this.contacts=[];
       });
+    }
+  }
+
+  tomorrow(i,j){
+    let tempObj={
+      'method':'setTomorrow',
+      'tablename':'',
+      'loadingDate':i.loadingDate,
+      'id':i['_id']
+    }
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          alert('Updated');
+        });
+  }
+
+  pay(i,j){
+    let tempObj={
+      'method':'setpay',
+      'tablename':'',
+      'id':i['_id']
+    }
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          alert('Updated');
+        });
+  }
+  unpay(i,j){
+    let tempObj={
+      'method':'setunpay',
+      'tablename':'',
+      'id':i['_id']
+    }
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          alert('Updated');
+        });
+  }
+
+  downloadRS(){
+    
   }
   submitLoadingStatus(j,data){
     let tempObj={

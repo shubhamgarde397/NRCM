@@ -18,6 +18,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class TurnBookDisplayMainComponent implements OnInit {
   public place;
     public place2;
+    public adminAmount=false;
     public placeid;
     public placeid2;
     public party;
@@ -419,6 +420,29 @@ let buttons=[]
       });
 
   };
+  admin(){
+    this.adminAmount=true;
+  }
+
+  changeAmt(data,i){
+alert('Changing value from '+i[data]+' to ___');
+var a= prompt('Enter new value of '+data);
+    if(parseInt(a)>0){
+let tempObj = {};
+    this.byTruckName=false;
+    tempObj['hrpValue']=parseInt(a);
+    tempObj['hrpName']=data;
+    tempObj['tablename'] = ''
+    tempObj['_id'] = i._id;
+    tempObj['method'] = 'changehrp'
+    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+      });
+    }else{
+      alert('Wrong Amount')
+    }
+  }
 
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};

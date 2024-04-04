@@ -28,6 +28,10 @@
         <option value="nobalance">No Balance</option>
       </select>
     </div>
+
+    <div class="col-sm-3">
+      <button class="btn btn-info" (click)="getAdminAccess()">Admin</button>
+    </div>
    
   </div>
 
@@ -72,8 +76,12 @@
             {{buttonValue}}-Many
           </button>
         </div>
-        <div class="col-sm-4"><button class="btn btn-info"
-            (click)="getAdminAccess()">Admin</button></div>
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="all()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            All
+          </button>
+        </div>
+       
             
       </div>
 

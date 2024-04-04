@@ -87,7 +87,7 @@
               <span *ngIf="changeText">Truck-Type-Location-Size-Weight</span></th>
             <th>Party-Place-Name</th>
             <th>LRNO</th>
-            <th>Amount-OAmt-AccNo</th>
+            <th *ngIf="adminAmount">Amount-OAmt-AccNo</th>
             <th>Poch</th>
             <th *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">Undo</th>
             
@@ -143,7 +143,13 @@
 
             <td>{{i.lrno}}</td>
 
-            <td>{{i.hamt}}<br>{{i.rent}}<br>{{i.parentAccNo}}</td>
+            <td *ngIf="adminAmount">
+              <ul>
+              <li (click)="changeAmt('hamt',i)">{{i.hamt}}</li>
+              <li (click)="changeAmt('rent',i)">{{i.rent}}</li>
+              <li (click)="changeAmt('parentAccNo',i)">{{i.parentAccNo}}</li>
+            </ul>
+            </td>
 
             <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
 
