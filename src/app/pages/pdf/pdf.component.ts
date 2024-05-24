@@ -266,7 +266,7 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
 
     doc.setFontType('normal');
     doc.text('To,', 25, 101)
-    doc.text(this.addr1 + ',', 40, 106)
+    doc.text(this.addr1.split('_')[0] + ',', 40, 106)
     doc.text(addr2 , 40, 111)
     doc.text(addr3 , 40, 116)
 

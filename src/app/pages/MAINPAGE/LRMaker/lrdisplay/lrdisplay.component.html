@@ -7,7 +7,10 @@
       <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find()">BillNo</button>
     </div>
     <div class="col-sm-2">
-      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="DownloadLR()" *ngIf="showdownload">Download</button>
+      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="DownloadLR(true)" *ngIf="showdownload">Download Amt</button>
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="DownloadLR(false)" *ngIf="showdownload">Download</button>
     </div>
     </div>
      
