@@ -169,4 +169,7 @@ export class MainPageComponent implements OnInit {
 
 amountSettler(d,c){return d.reduce((partialSum, a) => partialSum + a[c], 0);}
 
+
+
+
 }

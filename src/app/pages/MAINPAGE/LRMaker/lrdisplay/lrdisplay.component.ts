@@ -319,7 +319,7 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
     doc.save(data.truckno+'.pdf')
   }
 
-  DownloadLR(showFrieght) {
+  DownloadLR() {
     let temp=this.data[0];
     console.log(temp);
     
@@ -348,8 +348,7 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
       'fromname':temp['fromname'],
       'fromaddress':temp['fromaddress'],
       'fromgstno':temp['fromgstno'],
-      'lrshort':temp['lrshort'],
-      'hamt':temp['hamt']
+      'lrshort':temp['lrshort']
   }
   // Box on the page
   doc.line(14,14,295,14)
@@ -414,7 +413,7 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
     // outline for outher details hosizontal and vertical line
     doc.setLineWidth(0.1);  
     doc.setDrawColor(0,0,0);
-    doc.line(212,14,212,208)
+    doc.line(212,14,212,126)//standing line
     doc.line(14,50,295,50)
     // outline for outher details hosizontal and vertical line
     // top right box
@@ -459,14 +458,14 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   
   doc.line(14,112,212,112)
   doc.line(14,119,212,119)
-  doc.line(14,126,212,126)
-  doc.line(14,133,212,133)
-  doc.line(14,194,212,194)
-  doc.line(14,201,142,201)
+  doc.line(14,126,295,126)
+  doc.line(14,138,295,138)
+  // doc.line(14,194,212,194)
+  doc.line(14,201,212,201)
   
   doc.line(212,58,295,58)
   doc.line(212,98,295,98)
-  doc.line(212,140,295,140)
+  // doc.line(212,140,295,140)
   
   doc.line(212,194,295,194)
   doc.line(212,201,295,201)
@@ -475,11 +474,11 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   doc.line(22,84,22,112)
   doc.line(63,84,63,112)
   doc.line(122,84,122,112)
-
+  
   doc.line(150,98,150,112)
   doc.line(182,98,182,112)
-
-  doc.line(142,194,142,208)
+  
+  // doc.line(142,194,142,208)
   // Headings
   doc.setFontType('bold')
   doc.text('Sr         Invoice Nos.',16,89)
@@ -492,49 +491,55 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   doc.text('As Per Bill',128,110)
   doc.text('As Per Bill',157,110)
   doc.text('As Per Bill',187,110)
-doc.setFontType('bold')
+  doc.setFontType('bold')
   doc.setFontSize('12')
-
+  
   doc.text('Remarks',17,117)
   
   doc.setFontSize('9')
   doc.setFontType('bold')
-
-  doc.line(63,126,63,180)
-  doc.line(83,126,83,180)
-  doc.line(113,126,113,180)
-  doc.line(153,126,153,180)
-  doc.line(173,126,173,180)
-
-  doc.line(14,180,212,180)
-  doc.line(14,187,212,187)
-
-
-  doc.text('Description',30 ,131)
-  doc.text('Frieght',68,131)
-  doc.text('Delivery Charge',85,131)
-  doc.text('Unloading Charges',118,131)
-  doc.text('Sub Total',155,131)
-  doc.text('Grand Total',183,131)
-
   
-
-
+  doc.line(28,126,28,180)
+  doc.line(113,126,113,180)
+  doc.line(146,126,146,180)
+  
+  doc.line(192,126,192,180)
+  doc.line(237,126,237,180)
+  doc.line(268,126,268,180)
+  
+  doc.line(14,180,295,180)
+  doc.line(14,187,295,187)
+  
+  doc.text('No. of',15 ,131)
+  doc.text('Articles',15 ,135)
+  
+  doc.text('Description',60 ,131)
+  
+  doc.text('Weight',123 ,131)
+  doc.text('Qty.     Kg',123 ,135)
+  
+  doc.text('Total Frieght',158,131)
+  
+  doc.text('Paid Amount',205,131)
+  
+  doc.text('To Pay',245,131)
+  doc.text('Amount',245,135)
+  
+  doc.text('Balance',275,131)
+  doc.text('Amount',275,135)
+  
+  
   doc.text('Amount in Words : ',16,185)
-
+  
   doc.setFontType('normal')
   if(data.typeofload==='Fittings'){
-  doc.text('Fittings Bags and Boxes',17,142)
+    doc.text('1',18,145)
+  doc.text('Fittings Bags and Boxes',50,145)
+  doc.text('FTL',126,145)
   }else if(data.typeofload==='Pipe'){
-    doc.text('PVC Pipes',17,142)
-  }
-
-  if(showFrieght){
-  doc.text(String(data.hamt),68,142)
-  doc.text('0',85,142)
-  doc.text('0',118,142)
-  doc.text(String(data.hamt),155,142)
-  doc.text(String(data.hamt),183,142)
+    doc.text('1',18,145)
+    doc.text('PVC Pipes',50,145)
+    doc.text('FTL',126,145)
   }
   
   doc.setFontType('bold')
@@ -570,39 +575,33 @@ doc.setFontType('bold')
   doc.setTextColor(0,0,0);
   doc.text("Delivered Good's Remarks",215,63)
   doc.text('Acknowledgement Signature & Stamp',215,102)
- 
+  
   // Condition
   doc.setFontSize('7')
   doc.setTextColor(244,0,0)
-  doc.text("Terms and Conditions : ",214,145)
   doc.setTextColor(0,0,0)
-  doc.text("1. Goods will be sent at the owner's risk.",214,149)
-  doc.text("2. If goods are under a permit & if permit is missing,",214,153)
-  doc.text("the owner will be responsible.",217,156)
-  doc.text("3. Any cases of fire, riots or accidents the owner will be responsible.",214,160)
-  doc.text("4. If there is any claim it should be informed within a month.",214,164)
-  doc.text("5. Jurisdiction will be at the Pune Court.",214,168)
-  doc.text("6. Goods must be unloaded within 2 days after arrival of the vehicle,",214,172)
-  doc.text("if not the demurrange will have to be borne by the consignee.",217,175)
-  doc.text("7. Conditions & value of the consignments",214,179)
-  doc.text("are not known to the company.",217,182)
-  doc.text("8. Make proper insurance of the goods,",214,186)
-  doc.text("we are not responsible for damage or shortage of goods.",214,189)
-  
+  doc.text("Condition : 1) Goods will be sent at the owner's risk.2) If goods are under a permit & if permit is missing,the owner will be responsible.3) Any cases of fire,",15,190)
+  doc.text("riots or accidents the owner will be responsible.4) If there is any claim it should be informed within a month.5) Jurisdiction will be at the Pune Court.6) Goods must be",15,193)
+  doc.text("unloaded within 2 days after arrival of the vehicle,if not the demurrange will have to be borne by the consignee.7) Conditions,value of the consignments are",15,196)
+  doc.text("not known to the company.8) Make proper insurance of the goods,we are not responsible for damage or shortage of goods.",15,199)
   // Condition
   
   
   doc.setTextColor(52,65,124)
-  doc.text('GST Payable by : '+data.partyname,215,199)
+  doc.text('GST Payable by Consignor/Consignee',225,191)
   doc.setTextColor(0,0,0)
-  doc.text('This is a computer generated LR Copy',227,206)
+  doc.text('This is a computer generated LR Copy',225,198)
   
   
   doc.setTextColor(255,0,0)
-  doc.text('DO NOT PAY CASH TO LORRY DRIVER ONLY ISSUE CHEQUE',15,199)
-  doc.text('IN FAVOR OF NITIN ROADWAYS AND CARGO MOVERS',15,206)
+  doc.text('ISSUE CHEQUE IN FAVOR OF NITIN ROADWAYS AND CARGO MOVERS ONLY',15,206)
   doc.setTextColor(52,65,124)
-  doc.text('Signature of Consignor',145,199)
+  doc.text('Signature of Consignor',145,206)
+  doc.setTextColor(255,0,0)
+  doc.text('FOR NITIN ROADWAYS AND CARGO MOVERS',222,205)
+  
+  doc.line(212,187,212,208)
+  doc.line(140,201,140,208)
   // Inside box Text
     doc.save(data.truckno+'.pdf')
   }
