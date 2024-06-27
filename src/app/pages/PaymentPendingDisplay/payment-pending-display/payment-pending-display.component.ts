@@ -63,7 +63,7 @@ export class PaymentPendingDisplayComponent implements OnInit {
        doc.text('Sr', 2, y)//partyname
        doc.text('Poch Date', 8, y)//partyname
        doc.text('Truckno', 36, y)//partyname
-       doc.text('Account Details', 81, y)//partyname
+      //  doc.text('Account Details', 81, y)//partyname
        doc.text('AccNo', 166, y)//partyname
        doc.text('LoadingDate', 188, y)//partyname
        //headers
@@ -78,7 +78,7 @@ export class PaymentPendingDisplayComponent implements OnInit {
        doc.line(187, 20, 187, 25);//date
        //vertical lines
        let startforI=0;
-       y = y + 6;
+       y = y + 1;
        startforI=0;
        for (let i = startforI; i < data.length; i++) {
    
@@ -90,8 +90,8 @@ export class PaymentPendingDisplayComponent implements OnInit {
           doc.line(175, starty, 175, y-4);//date
           doc.line(187, starty, 187, y-4);//date
            y=24;
-           y=y+6;
-       starty = 25;
+           y=y+1;
+       starty = 20;
            doc.addPage();
            doc.setFontSize('25');
        doc.setFontType('bold');
@@ -108,7 +108,7 @@ export class PaymentPendingDisplayComponent implements OnInit {
        doc.text('Sr', 2, y-6)//partyname
        doc.text('Poch Date', 8, y-6)//partyname
        doc.text('Truckno', 36, y-6)//partyname
-       doc.text('Account Details', 81, y-6)//partyname
+      //  doc.text('Account Details', 81, y-6)//partyname
        doc.text('AccNo', 166, y-6)//partyname
        doc.text('LoadingDate', 188, y-6)//partyname
        //headers
@@ -126,15 +126,15 @@ export class PaymentPendingDisplayComponent implements OnInit {
        doc.text(this.handleF.generate2DigitNumber(String(i+1)), 2, y-1)//partyname
         doc.text(this.handleF.getDateddmmyy(data[i]['pochDate']), 8, y-1)//partyname
         doc.text(data[i]['truckno'], 34, y)//Name
-        doc.text('Name : '+data[i]['aD'][0]['accountName'], 81, y)//Name
-        doc.text('Number : '+data[i]['aD'][0]['accountNumber'], 81, y+5)//Name
-        doc.text('IFSC : '+data[i]['aD'][0]['ifsc'], 81, y+10)//Name
+        // doc.text('Name : '+data[i]['aD'][0]['accountName'], 81, y)//Name
+        // doc.text('Number : '+data[i]['aD'][0]['accountNumber'], 81, y+5)//Name
+        // doc.text('IFSC : '+data[i]['aD'][0]['ifsc'], 81, y+10)//Name
         doc.text(String(data[i]['parentAccNo']), 166, y)//Name
         doc.text(this.handleF.getDateddmmyy(data[i]['loadingDate']), 188, y)//Name
 
                   
          doc.line(0, y + 11, 210, y + 11);//line after header
-         y = y + 15;
+         y = y + 5;
    
        
        

@@ -32,6 +32,8 @@ import { TrackDisplayComponent } from './pages/Track/track-display/track-display
 import { AddqrComponent } from './pages/Track/addqr/addqr.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
+import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
+import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
  
 export const routes: Routes =
     [
@@ -48,12 +50,12 @@ export const routes: Routes =
             component: LoginComponent
         },
         {
-            path: 'TRACK',
-            component: TrackLoginComponent
+            path: 'QR',
+            component: TrackDisplayComponent
         },
         {
-            path: 'TRACKQR',
-            component: TrackDisplayComponent
+            path: 'TRACK',
+            component: TrackLoginComponent
         },
         {
             path: 'Whatsapp',
@@ -100,7 +102,7 @@ export const routes: Routes =
                         component: WelcomePageComponent
                     },
                     {
-                        path: 'QR',
+                        path: 'QRDATA',
                         component: AddqrComponent
                     },
                     {
@@ -213,6 +215,14 @@ export const routes: Routes =
                         component:TurnBookLocationDispComponent
                     },
                     {
+                        path: 'PODSTATUS',
+                        component:PODSTATComponent
+                    },
+                    {
+                        path: 'MESSAGE',
+                        component:BalMsgComponent
+                    },
+                    {
                         path: 'ACCOUNT_DETAILS_DISPLAY',
                         component:AccountDetailsDisplayComponent
                     },
@@ -242,6 +252,6 @@ export const routes: Routes =
                     }
                 ]
         },
-        { path: '**', redirectTo: '404' },
-        { path: '404', component: PageNotFoundComponent },
+        // { path: '**', redirectTo: '404' },
+        // { path: '404', component: PageNotFoundComponent },
     ];

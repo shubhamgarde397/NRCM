@@ -1,0 +1,30 @@
+<div class="well">
+  <div class="row">
+      
+  <div class="col-sm-4">
+  <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+    Find
+  </button>
+</div>
+</div>
+<hr>
+
+<table class="table table-bordered" *ngIf="!gotData18">
+  <tr>
+    <th>Srno</th>
+    <th>Date</th>
+    <th>TruckNo-Contact</th>
+    <th>Place</th>
+    <th>Account</th>
+    <th>QR</th>
+  </tr>
+  <tr *ngFor="let i of turnbooklist;let j = index;">
+    <td>{{j+1}}</td>
+    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+    <td>{{i.truckno}}<br>{{i.contacttb}}</td>
+    <td>{{i.place}}</td>
+    <td>{{i.acc['accountName']}}-{{i.acc['accountNumber']}}</td>
+    <td><qrcode [scale]='1' [qrdata]=i.qr [width]="150" [errorCorrectionLevel]="'M'"></qrcode></td>
+  </tr>
+</table>
+</div>

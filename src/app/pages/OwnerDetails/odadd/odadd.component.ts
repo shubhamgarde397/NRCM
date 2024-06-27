@@ -59,7 +59,6 @@ export class OdaddComponent implements OnInit {
       typeOfVehicle:'None',
       accountName: '',
       accountNumber: '',
-      bankName: '',
       ifsc: '',
       reference: '',
       h: 0,
@@ -86,10 +85,6 @@ export class OdaddComponent implements OnInit {
     this.commonArray = this.securityCheck.commonArray;
     this.ownerdetailslist = this.commonArray.ownerdetails;
     this.villagedetailslist = this.commonArray.villagenames;
-  }
-
-  getBankName(){
-    this.myFormGroup.patchValue({'bankName':this.myFormGroup.value.ifsc.slice(0,4)})
   }
 
   storeOwnerDetailsData({ value, valid }: { value: odata, valid: boolean }) {
@@ -162,16 +157,14 @@ export class OdaddComponent implements OnInit {
 
   addaccount() {
 
-    if (this.myFormGroup.value.accountNumber === '' || this.myFormGroup.value.accountName === '' || this.myFormGroup.value.bankName === '' || this.myFormGroup.value.ifsc === '') { alert('Cant enter empt entries!') } else {
+    if (this.myFormGroup.value.accountNumber === '' || this.myFormGroup.value.accountName === '' || this.myFormGroup.value.ifsc === '') { alert('Cant enter empt entries!') } else {
       let tempObj = {};
       tempObj['accountName'] = this.myFormGroup.value.accountName;
       tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
-      tempObj['bankName'] = this.myFormGroup.value.bankName;
       tempObj['ifsc'] = this.myFormGroup.value.ifsc;
       this.accountArray.push(tempObj);
       this.myFormGroup.patchValue({ accountName: '' });
       this.myFormGroup.patchValue({ accountNumber: '' });
-      this.myFormGroup.patchValue({ bankName: '' });
       this.myFormGroup.patchValue({ ifsc: '' });
     }
 
@@ -205,7 +198,6 @@ export class OdaddComponent implements OnInit {
     this.myFormGroup.patchValue({ contact: [] });
     this.myFormGroup.patchValue({ accountName: '' });
     this.myFormGroup.patchValue({ accountNumber: '' });
-    this.myFormGroup.patchValue({ bankName: '' });
     this.myFormGroup.patchValue({ ifsc: '' });
     this.myFormGroup.patchValue({ reference: '' });
     this.myFormGroup.patchValue({ preferences: [] });

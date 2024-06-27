@@ -169,7 +169,6 @@ public bname;
       let itempObj={}
       itempObj['accountName']=accname;
       itempObj['accountNumber']=accno;
-      itempObj['bankName']=bname;
       itempObj['ifsc']=ifsc;
       itempObj['_id']=this.accountarrayUF[i]['_id'];
       aD.push(itempObj)
@@ -230,7 +229,6 @@ public bname;
       b:i['b'],
       l:i['l'],
       typeOfVehicle:i['typeOfVehicle'],
-      bankName:'',
       ifsc:'',
       accountNumber:'',
       accountName:''
@@ -267,7 +265,6 @@ public bname;
         {
           "accountName": this.accName,
           "accountNumber":this.accNo,
-          "bankName":this.bname,
           "ifsc":this.ifsc,
       }
       this.turnbooklist[this.index]['accounts'].push(temp);
@@ -293,18 +290,15 @@ public bname;
     if (
       this.myFormGroup18.value.accountNumber === '' ||
        this.myFormGroup18.value.accountName === '' ||
-       this.myFormGroup18.value.bankName === '' ||
        this.myFormGroup18.value.ifsc === '') { alert('Cant enter empt entries!') } else {
       let tempObj = {};
       tempObj['accountName'] = this.myFormGroup18.value.accountName;
       tempObj['accountNumber'] = this.myFormGroup18.value.accountNumber;
-      tempObj['bankName'] = this.myFormGroup18.value.bankName;
       tempObj['ifsc'] = this.myFormGroup18.value.ifsc;
       tempObj['delete'] = true;
       this.accountArray.push(tempObj);
       this.myFormGroup18.patchValue({ accountName: '' });
       this.myFormGroup18.patchValue({ accountNumber: '' });
-      this.myFormGroup18.patchValue({ bankName: '' });
       this.myFormGroup18.patchValue({ ifsc: '' });
     }
 
@@ -314,13 +308,6 @@ public bname;
     if (confirm('Are you sure?')) {
       this.accountArray.splice(j, 1);0
     }
-  }
-
-  getBankName(){
-    this.myFormGroup18.patchValue({'bankName':this.myFormGroup18.value.ifsc.slice(0,4)})
-  }
-  getBankName1(){
-    this.bname=this.ifsc.slice(0,4)
   }
 
   getDimW(){
@@ -355,7 +342,6 @@ public bname;
   //           b:this.turn11['b'],
   //           l:this.turn11['l'],
   //           typeOfVehicle:this.turn11['typeOfVehicle'],
-  //           bankName:'',
   //           ifsc:'',
   //           accountNumber:'',
   //           accountName:''

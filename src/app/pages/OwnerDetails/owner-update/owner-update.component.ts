@@ -67,7 +67,6 @@ public nativeArray=[]
       contact: [this.handledata.Data.contact],
       accountName: '',
       accountNumber: '',
-      bankName: '',
       ifsc: '',
       r: [this.handledata.Data.r],
       d: [this.handledata.Data.d],
@@ -225,17 +224,15 @@ public nativeArray=[]
   }
 
   addaccount() {
-    if (this.myFormGroup.value.accountnumber === '' || this.myFormGroup.value.accountname === '' || this.myFormGroup.value.bankname === '' || this.myFormGroup.value.ifsc === '') { alert('Cant enter empt entries!') } else {
+    if (this.myFormGroup.value.accountnumber === '' || this.myFormGroup.value.accountname === ''  || this.myFormGroup.value.ifsc === '') { alert('Cant enter empt entries!') } else {
 
       let tempObj = {};
       tempObj['accountName'] = this.myFormGroup.value.accountName;
       tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
-      tempObj['bankName'] = this.myFormGroup.value.bankName;
       tempObj['ifsc'] = this.myFormGroup.value.ifsc;
       this.accountArray.push(tempObj);
       this.myFormGroup.patchValue({ accountName: '' });
       this.myFormGroup.patchValue({ accountNumber: '' });
-      this.myFormGroup.patchValue({ bankName: '' });
       this.myFormGroup.patchValue({ ifsc: '' });
     }
   }
@@ -243,7 +240,6 @@ public nativeArray=[]
   copyaccount(){
     this.myFormGroup.patchValue({ accountName: this.accountArray[0]['accountName'] });
       this.myFormGroup.patchValue({ accountNumber: this.accountArray[0]['accountNumber'] });
-      this.myFormGroup.patchValue({ bankName: this.accountArray[0]['bankName'] });
       this.myFormGroup.patchValue({ ifsc: this.accountArray[0]['ifsc'] });
   }
 

@@ -25,6 +25,7 @@ export class PochPdfComponent implements OnInit {
   public printInfo = false;
   public sstampsign='';
   public ssign='';
+  public adminMode='Admin Inactive!'
   public admin=false;
   public data=[];
   public billno='';
@@ -42,9 +43,11 @@ export class PochPdfComponent implements OnInit {
     let a = prompt('Enter Password');
     if(a=='NRCM'){
       this.admin=true;
+      this.adminMode='Admin Activated!'
     }
     else{
       this.admin=false;
+      this.adminMode='Admin Inactive!!'
     }
   }
   
@@ -92,23 +95,22 @@ export class PochPdfComponent implements OnInit {
   }
 
 
-  PochBill(){//threshhold is 295
-    let data=this.balanceDate;
-    let threshhold=this.threshholdCalculator(data[0]['sum']);
-    for(let i=0;i<data.length;i++){
-      var doc = new jsPDF({
-        orientation: 'p',
-        unit: 'mm',
-        format: 'a5',
-        putOnlyUsedFonts:true
-       }) 
-       this.pdfData(doc,data[i],false);
-       doc.addPage();
-       this.pdfData(doc,data[i],true);
-      doc.save(this.pochDate)
-    }
-    
- }
+
+PochBill(i,j){//threshhold is 295
+  let data=this.balanceDate;
+  let threshhold=this.threshholdCalculator(data[0]['sum']);
+    var doc = new jsPDF({
+      orientation: 'p',
+      unit: 'mm',
+      format: 'a5',
+      putOnlyUsedFonts:true
+     }) 
+     this.pdfData(doc,data[j],false);
+     doc.addPage();
+     this.pdfData(doc,data[j],true);
+    doc.save(data[j]['_id'])
+  
+}
 
 
 threshholdCalculator(data){//16

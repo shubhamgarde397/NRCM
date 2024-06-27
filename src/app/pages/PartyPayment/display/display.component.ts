@@ -751,7 +751,14 @@ public year;
           
         }
         else{
+          if(this.paymentData[0].partyType=='NRCM'){
          doc.text(String(this.paymentData[i].lrno), 87, y)//lrno
+         }
+         else if(this.paymentData[0].partyType!='NRCM'){
+          doc.setFontSize('8');
+          doc.text(String(this.paymentData[i].lrno), 86, y)//lrno
+          doc.setFontSize('10');
+         }
         }
          doc.text(this.paymentData[i].truckNo, 57, y)//truckno
          doc.text(this.paymentData[i].placeName, 106, y)//truckno

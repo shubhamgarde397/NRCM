@@ -22,6 +22,7 @@ export class MainPageComponent implements OnInit {
   public now = new Date();
   public changed = false;
   public hehe;
+  public imgdata=Consts.goldennr;
   public morseIS = '';
   public clue = false;
   public fileFormData = new FormData();
@@ -37,30 +38,46 @@ export class MainPageComponent implements OnInit {
   public finalJson = {};
   public pythonVar = '';
   public document = new jsPDF();
-  public data=[
-    {
-        "_id": "664f5d1f1f361a02a1534a12",
-        "truckno": "TN16 H 4338",
-        "date": "2024-05-23",
-        "billno": "nrcm_6934",
-        "partyname": "Finolex Industries Ltd",
-        "typeOfLoad": "Fittings",
-        "documentno": [],
-        "destination": "Pune",
-        "flexid": [
-            {
-                "flexid": 0,
-                "village": "Pune"
-            }
-        ],
-        "lrshort": "",
-        "gstno": "27AAACF2634A1Z9",
-        "fromname": "Shri Vijay Pipe Corporation",
-        "fromflex": 130348,
-        "fromaddress": "Chennai",
-        "fromgstno": "33AABFS4346J1Z8"
-    }
-  ];
+  public data=
+  {
+    "_id": "616e53569d13161123c56556",
+    "name": "Pandian Transport Service",
+    "gst": null,
+    "dest": null,
+    "addr1": "C-508, Mega Center, 4th Floor, Magarpatta,",
+    "addr2": "Hadapsar, Pune - 411028",
+    "destid": "",
+    "shortName": "Pndin",
+    "cities": [
+        "Coimbatore",
+        "Chennai",
+        "Pondicherry",
+        "Erode",
+        "Madurai",
+        "Namagiripette",
+        "Annur",
+        "Viralimalai"
+    ],
+    "accNo": 363,
+    "partyType": "NR",
+    "email": [
+        "email"
+    ],
+    "contact": [
+       9881136907
+    ],
+    "msgidS": "",
+    "insertedby": 1,
+    "updatedby": 0,
+    "insertedOn": "2024-06-20",
+    "updatedOn": "2024-06-20",
+    "show": true,
+    "count": 0,
+    "lastLoginDate": "",
+    "password": "",
+    "username": "",
+    "flexids": []
+}
 
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
@@ -166,10 +183,5 @@ export class MainPageComponent implements OnInit {
       return no-5+this.ls(no-1);
     }
   }
-
-amountSettler(d,c){return d.reduce((partialSum, a) => partialSum + a[c], 0);}
-
-
-
 
 }

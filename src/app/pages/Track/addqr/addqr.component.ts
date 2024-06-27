@@ -340,9 +340,6 @@ if(flag){
     this.bigI=i;
     this.bigJ=j;
   }
-  getBankName(){
-    this.bname=this.ifsc.slice(0,4);
-  }
 
   storeAcc(){
     this.bigI;
@@ -378,7 +375,6 @@ if(flag){
         {
           "accountName": tempObj.name,
           "accountNumber":tempObj.no,
-          "bankName":tempObj.bname,
           "ifsc":tempObj.ifsc
       }
     ]

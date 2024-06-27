@@ -21,6 +21,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ExcelService } from './common/services/sharedServices/excel.service';
 import { HashLocationStrategy, Location, LocationStrategy } from '@angular/common';
+import { QRCodeModule } from 'angularx-qrcode';
 import {
   MatButtonModule,
   MatInputModule,
@@ -59,6 +60,8 @@ import { AddqrComponent } from './pages/Track/addqr/addqr.component';
 import { QrstatusComponent } from './pages/Track/qrstatus/qrstatus.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
+import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
+import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
 
 @NgModule({
   declarations: [
@@ -98,9 +101,12 @@ import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.compo
     AddqrComponent,
     QrstatusComponent,
     RentdisplayComponent,
-    ComdisplayComponent
+    ComdisplayComponent,
+    PODSTATComponent,
+    BalMsgComponent
   ],
   imports: [
+    QRCodeModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

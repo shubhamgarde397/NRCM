@@ -91,11 +91,7 @@
 
 
       <div class="col-xs-3">
-        <input type="text" id="ifsc" class="form-control" (change)="getBankName()" formControlName="ifsc" placeholder="IFSC">
-      </div>
-
-      <div class="col-xs-3">
-        <input type="text" id="bankName" class="form-control" formControlName="bankName" placeholder="Bank Name">
+        <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
       </div>
 
      
@@ -113,7 +109,6 @@
             <th>Srno</th>
             <th>Name</th>
             <th>Number</th>
-            <th>Bank</th>
             <th>IFSC</th>
             <th>Delete</th>
           </tr>
@@ -121,7 +116,6 @@
             <td>{{j+1}}</td>
             <td>{{i.accountName}}</td>
             <td>{{i.accountNumber}}</td>
-            <td>{{i.bankName}}</td>
             <td>{{i.ifsc}}</td>
             <td><button (click)="deleteArray(j,2)">Delete</button></td>
           </tr>

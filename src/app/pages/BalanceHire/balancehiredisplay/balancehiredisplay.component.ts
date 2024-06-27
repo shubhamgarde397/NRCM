@@ -756,7 +756,7 @@ if(confirm('Do you want to temporary delete it?')){
   
       doc.text(this.balanceDate[z].accountName, 147.5, accountI);//accno
       doc.text(String(this.balanceDate[z].accountNumber), 147.5, accountI+6);//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].contacttb, 147.5, accountI+12);//ifsc-bankname
+      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].contacttb, 147.5, accountI+12);//ifsc
       doc.rect( 195, accountI+9,3,3)
       doc.rect( 200, accountI+9,3,3)
       }

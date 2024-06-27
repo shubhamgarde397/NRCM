@@ -275,10 +275,6 @@ alert('Selected!')
 
   }
 
-  getBankName(){
-    this.bname=this.ifsc.slice(0,4);
-  }
-
   addhamali(i,j){
     let bal=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
     let ham=parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
@@ -319,7 +315,6 @@ alert('Selected!')
         {
           "accountName": tempObj.name,
           "accountNumber":tempObj.no,
-          "bankName":tempObj.bname,
           "ifsc":tempObj.ifsc
       }
     ]

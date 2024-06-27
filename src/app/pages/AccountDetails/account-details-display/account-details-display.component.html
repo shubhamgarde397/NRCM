@@ -133,10 +133,7 @@ action="/">
             placeholder="Account Number">
         </div>
         <div class="col-xs-3">
-          <input type="text" id="ifsc" class="form-control" (change)="getBankName()" formControlName="ifsc" placeholder="IFSC Code">
-        </div>
-        <div class="col-xs-3">
-          <input type="text" id="bankName" class="form-control" disabled formControlName="bankName" placeholder="Bank Name">
+          <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC Code">
         </div>
         
   </div>
@@ -150,7 +147,6 @@ action="/">
                 <th>Srno</th>
                 <th>Name</th>
                 <th>Number</th>
-                <th>Bank</th>
                 <th>IFSC</th>
                 <th>Delete</th>
               </tr>
@@ -158,7 +154,6 @@ action="/">
                 <td>{{j+1}}</td>
                 <td>{{i.accountName}}</td>
                 <td>{{i.accountNumber}}</td>
-                <td>{{i.bankName}}</td>
                 <td>{{i.ifsc}}</td>
                 <td *ngIf="i.delete" (click)="deleteOneA(i,j)">Delete</td>
               </tr>
@@ -377,7 +372,6 @@ action="/">
         <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
         <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
         <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>
-        <td><input type="text" placeholder="BankName" id="bname_{{jj}}" disabled></td>
       </tr>
     </tbody>
   </table>
@@ -561,11 +555,7 @@ action="/">
         </div>
 
         <div class="row">
-          IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc" (change)="getBankName1()">
-        </div>
-
-        <div class="row">
-          Bank Name : <input type="text" class="form-control" [(ngModel)]="bname" disabled>
+          IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc">
         </div>
        
       </div>

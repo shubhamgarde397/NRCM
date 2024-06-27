@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit {
   login({ value, valid }: { value: login, valid: boolean }, check) {
     this.handledata.createConsiderArray('default')
 
-    this.spinnerService.show();
+    // this.spinnerService.show();
       this.security.setUsername(value['username']);
 
       value['method'] = 'login';

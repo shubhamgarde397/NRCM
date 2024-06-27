@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
@@ -15,75 +15,50 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class TrackDisplayComponent implements OnInit {
 
-  public now = new Date();
-  public day = this.now.getDate();
-  public month = this.now.getMonth();
-  public year = this.now.getFullYear();
-  public date = new Date();
-  public nrcmid=0;
-  public todayDate;
-  public username;
-  public nameOfUser = 'Guest';
-  public myFormGroup: FormGroup;
-  public qrdata={};
-  public qrs=[];
-  public data=false;
-  public locationData=[];
- 
+  
+  public data=''
+ public list=[];
   constructor(
     public router: Router,
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
-    public securit: SecurityCheckService,
     public spin: Ng4LoadingSpinnerService,
     public hF: handleFunction,
-    public formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    
-    this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
-    this.username = this.securit.dname;
-    this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length);
-    this.month = this.date.getMonth() + 1
-    this.year = this.date.getFullYear();
-
-
-    this.myFormGroup = this.formBuilder.group({
-      qr: ['']
-    });
-  }
-
-  find() {
-    let value={};
-    value['method'] = 'findbyqrforparty';
-    value['qrs']=this.qrs;
-    value['partyid']=this.securit.userid;
-    value['tablename'] = '';
-    this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, value, true)
+    this.activatedRoute.queryParams.subscribe(data=>{
+      let temp={
+        billno:data['i'],
+        tablename:'',
+        method:'getbybillno'
+      }
+      this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
       .subscribe((res: any) => {
-        this.qrdata=res.Data;
-        this.data=true;
-      });
-
+        this.list=res.Data;
+        if(res.Data[0].contacttb=== ''){
+          alert('Contact No. Missing')
+        }
+        else{
+        let qr='';
+      qr=qr+"*Received Payment Done*%0A%0A"
+      qr=qr+'*Date* :'+String(this.hF.getDateddmmyy(res.Data[0]['loadingDate']))+'%0A'
+      qr=qr+'*Truck No* :'+res.Data[0]['truckno']+'%0A'
+      qr=qr+'*Loading To* :'+res.Data[0]['destination']+'%0A'
+      qr=qr+'*Payment Date* :'+String(this.hF.getDateddmmyy(res.Data[0]['actualPaymentDate']))+'%0A'
+      qr=qr+'*Payment Amount* :'+res.Data[0]['actualPaymentAmount']+'%0A'
+      qr=qr+"%0A%0A*Nitin Roadways*%0A*Pune*%0A*Mo : 9766707061*"  
       
+      this.data='https://wa.me/+91'+res.Data[0]['contacttb']+'/?text='+qr
+      if(confirm('Click Ok to open Whatsapp')){
+      window.open(this.data,'_blank');    
+      }else{
+        
+      }
+        }
+      });
+    })
   }
 
- 
-  
-
-  addlrno(){
-    this.qrs.push(parseInt(String(this.myFormGroup.value.qr)));
-    this.myFormGroup.patchValue({qr:''})
-    
-  }
-  
-  deleteQR(i,j){
-    this.qrs.splice(j,1);
-  }
-
-  logout() {
-    this.router.navigate(['']);
-  }
 }

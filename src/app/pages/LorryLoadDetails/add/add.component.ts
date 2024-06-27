@@ -1102,7 +1102,6 @@ doc.setFontType('bold');
 
   doc.text(data.ownerDetails[0].accountDetails[0]['accountName'],mainY+40,180)
   doc.text(String(data.ownerDetails[0].accountDetails[0]['accountNumber']),mainY+40,185)
-  doc.text(data.ownerDetails[0].accountDetails[0]['bankName'],mainY+40,190)
   doc.text(data.ownerDetails[0].accountDetails[0]['ifsc'],mainY+40,195)
 
   doc.save('Bills.pdf')
@@ -1397,7 +1396,6 @@ doc.setFontType('bold');
     if(data['update']){}else{
   doc.text(data['account']['accountName'],mainY+40,170)
   doc.text(String(data['account']['accountNumber']),mainY+40,175)
-  doc.text(data['account']['bankName'],mainY+40,180)
   doc.text(data['account']['ifsc'],mainY+40,185)
     }
     if(data.due.length==0){

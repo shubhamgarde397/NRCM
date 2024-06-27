@@ -34,7 +34,6 @@ export class UpdateComponent implements OnInit {
   public accountid;
   public accountNumber;
   public ifsc;
-  public bankName;
   public editOption;
   constructor(
     public handledata: HandleDataService,
@@ -53,7 +52,6 @@ export class UpdateComponent implements OnInit {
 
     this.myFormGroup = this.formBuilder.group({
       truckNo: '',
-      bankName: this.handledata.Data.bankName,
       ifsc: this.handledata.Data.ifsc,
       accountNumber: this.handledata.Data.accountNumber,
       accountName: this.handledata.Data.accountName
@@ -72,7 +70,6 @@ export class UpdateComponent implements OnInit {
     this.accountdetailslist = this.truckdetailslist.find(r => r.truckno === this.trucknoid).accountDetails;
     this.myFormGroup.patchValue({ accountName: '' });
     this.myFormGroup.patchValue({ accountNumber: '' });
-    this.myFormGroup.patchValue({ bankName: '' });
     this.myFormGroup.patchValue({ ifsc: '' });
   }
   findAccountDetails2() {
@@ -80,7 +77,6 @@ export class UpdateComponent implements OnInit {
     tempData = this.accountdetailslist.find(r => r.accountName === this.accountid);
     this.myFormGroup.patchValue({ accountName: tempData['accountName'] });
     this.myFormGroup.patchValue({ accountNumber: tempData['accountNumber'] });
-    this.myFormGroup.patchValue({ bankName: tempData['bankName'] });
     this.myFormGroup.patchValue({ ifsc: tempData['ifsc'] });
   }
 
@@ -99,7 +95,6 @@ export class UpdateComponent implements OnInit {
     tempObj['todayDateMain'] = this.handledata.Data.todayDate;
     tempObj['print'] = false;
     tempObj['truckData'] = this.handledata.Data.truckData;
-    tempObj['bankName'] = this.myFormGroup.value.bankName;
     tempObj['ifsc'] = this.myFormGroup.value.ifsc;
     tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
     tempObj['accountName'] = this.myFormGroup.value.accountName;
@@ -110,7 +105,6 @@ export class UpdateComponent implements OnInit {
       .subscribe((response: Response) => {
         alert(response['Status'])
         let tempObj = this.sec.commonBalanceHire[this.handledata.Data.index];
-        tempObj['bankName'] = this.myFormGroup.value.bankName;
         tempObj['ifsc'] = this.myFormGroup.value.ifsc;
         tempObj['accountNumber'] = this.myFormGroup.value.accountNumber;
         tempObj['accountName'] = this.myFormGroup.value.accountName;
