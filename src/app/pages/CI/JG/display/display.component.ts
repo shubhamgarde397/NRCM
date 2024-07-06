@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiCallsService } from '../../../../common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-display',
@@ -17,7 +18,9 @@ export class DisplayComponent implements OnInit {
   public new=false;
 
   public whichType='1';
-  constructor(public apiCallservice: ApiCallsService,public handledata: HandleDataService,public sec:SecurityCheckService) { }
+  constructor(public router:Router,public apiCallservice: ApiCallsService,public handledata: HandleDataService,public sec:SecurityCheckService) {if(!this.sec.login){
+    this.router.navigate([''])
+  } }
 
   ngOnInit() {
   }

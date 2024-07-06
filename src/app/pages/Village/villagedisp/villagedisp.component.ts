@@ -23,7 +23,9 @@ export class VillagedispComponent implements OnInit {
   public considerArray;
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,
     public sec: SecurityCheckService
-  ) { }
+  ) { if(!this.sec.login){
+    this.router.navigate([''])
+  }}
  
   deleteVillageDetails = function (id) {
     if (confirm('Are you sure?')) {

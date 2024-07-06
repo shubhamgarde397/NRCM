@@ -31,6 +31,9 @@ export class GstdisplayComponent implements OnInit {
     public sec: SecurityCheckService,
     public spinnerService: Ng4LoadingSpinnerService
   ) {
+    if(!this.sec.login){
+      this.router.navigate([''])
+    }
   }
 
   ngOnInit() {

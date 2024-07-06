@@ -5,6 +5,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { Http, Response } from '@angular/http';
 import { Validators, FormsModule, FormGroup, FormBuilder } from '@angular/forms';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-impgstupdate',
@@ -23,10 +24,13 @@ export class ImpgstupdateComponent implements OnInit {
   public dbName = 'NRCM_Information';
   constructor(
     public handledata: HandleDataService,
+    public router:Router,
     public _location: Location,
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
-    public sec: SecurityCheckService) { }
+    public sec: SecurityCheckService) {if(!this.sec.login){
+      this.router.navigate([''])
+    } }
 
   ngOnInit() {
     this.myFormGroup = this.formBuilder.group({

@@ -47,7 +47,9 @@ export class TPTNavigationComponent implements OnInit {
     public obs: ObsServiceService,
     public hF: handleFunction,
     public formBuilder: FormBuilder,
-  ) { }
+  ) {if(!this.securit.login){
+    this.router.navigate([''])
+  } }
 
   ngOnInit() {
     this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());

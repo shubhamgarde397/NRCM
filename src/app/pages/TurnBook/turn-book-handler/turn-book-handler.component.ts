@@ -10,7 +10,9 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 })
 export class TurnBookHandlerComponent implements OnInit {
 public nrcmid=0;
-  constructor(public sec: HandleDataService, public router: Router,public securit:SecurityCheckService) { }
+  constructor(public sec: HandleDataService, public router: Router,public securit:SecurityCheckService) { if(!this.securit.login){
+    this.router.navigate([''])
+  }}
 
   ngOnInit() {
     this.nrcmid=this.securit.nrcmid;

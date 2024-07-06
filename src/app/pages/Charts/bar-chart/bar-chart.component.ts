@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Chart} from 'chart.js';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Router } from 'node_modules/@angular/router';
 import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
@@ -47,10 +48,13 @@ export class BarChartComponent implements OnInit {
 
   constructor(
       public apiCallservice:ApiCallsService,
+      public router:Router,
       public security:SecurityCheckService,
       public handleFunction:handleFunction,
     public handledata: HandleDataService, 
-    public spinnerService: Ng4LoadingSpinnerService) { }
+    public spinnerService: Ng4LoadingSpinnerService) {if(!this.security.login){
+      this.router.navigate([''])
+    } }
 
   ngOnInit() {
     this.commonArray = this.security.commonArray;

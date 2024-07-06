@@ -79,6 +79,9 @@ public year;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public handleF: handleFunction,
     public securityCheck: SecurityCheckService) {
+      if(!this.securityCheck.login){
+        this.router.navigate([''])
+      }
   }
 
   accounting(data){

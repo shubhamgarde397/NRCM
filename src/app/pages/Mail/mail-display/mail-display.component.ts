@@ -28,7 +28,9 @@ public paymentData;
     public spin: Ng4LoadingSpinnerService,
     public obs: ObsServiceService,
     public hF: handleFunction
-  ) { }
+  ) { if(!this.securit.login){
+    this.router.navigate([''])
+  }}
 
   ngOnInit() {
     this.find()

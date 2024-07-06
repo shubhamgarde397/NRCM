@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { Validators, FormsModule } from '@angular/forms';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-update',
@@ -39,9 +40,12 @@ export class UpdateComponent implements OnInit {
     public handledata: HandleDataService,
     public _location: Location,
     public formBuilder: FormBuilder,
+    public router:Router,
     public apiCallservice: ApiCallsService,
     public sec: SecurityCheckService,
-    public spinnerService: Ng4LoadingSpinnerService) { }
+    public spinnerService: Ng4LoadingSpinnerService) {if(!this.sec.login){
+      this.router.navigate([''])
+    } }
 
   ngOnInit() {
     this.truckdetailslist=this.handledata.getTruckHuge();

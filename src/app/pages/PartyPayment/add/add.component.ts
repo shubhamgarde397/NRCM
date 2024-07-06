@@ -35,6 +35,9 @@ export class AddComponent implements OnInit {
   public partyData = [];
   constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService, public router: Router) {
+      if(!this.securityCheck.login){
+        this.router.navigate([''])
+      }
   }
 
   ngOnInit() {

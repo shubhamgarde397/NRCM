@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 
 @Component({
@@ -27,7 +28,11 @@ public firstTime=true;
 public back=false;
 public forceBackButton=false;
 
-  constructor(public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { }
+  constructor(public sec:SecurityCheckService,public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { 
+    if(!this.sec.login){
+      this.router.navigate([''])
+    }
+  }
 
   ngOnInit() {
     this.uitodayDate = this.handleF.getDate(this.handleF.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());

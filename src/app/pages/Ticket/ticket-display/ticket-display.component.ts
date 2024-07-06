@@ -2,6 +2,7 @@ import { Component, OnInit,  } from '@angular/core';
 import { Router } from '@angular/router';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 
 @Component({
   selector: 'app-ticket-display',
@@ -17,7 +18,10 @@ export class TicketDisplayComponent implements OnInit {
   public msg='Click Get Tickets.'
 
   public tabletransport=false;
-  constructor(public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router) {
+  constructor(public sec:SecurityCheckService,public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router) {
+    if(!this.sec.login){
+      this.router.navigate([''])
+    }
   }
 
   ngOnInit() {

@@ -7,6 +7,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-payment-pending-display',
@@ -21,8 +22,10 @@ export class PaymentPendingDisplayComponent implements OnInit {
 
   public show=false;
 
-  constructor(public apiCallservice: ApiCallsService, public handleF:handleFunction,
-    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { }
+  constructor(public router:Router,public apiCallservice: ApiCallsService, public handleF:handleFunction,
+    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }}
 
   ngOnInit() {
     this.getInformationData();

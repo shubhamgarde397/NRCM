@@ -3,6 +3,7 @@ import { ApiCallsService } from '../../../../common/services/ApiCalls/ApiCalls.s
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-rentdisplay',
@@ -17,7 +18,11 @@ export class RentdisplayComponent implements OnInit {
   public whichType='add';
 public villagenamelist=[];
 public parties=[];
-  constructor(public apiCallservice: ApiCallsService,public handledata: HandleDataService,public sec:SecurityCheckService,public formBuilder: FormBuilder) { }
+  constructor(public router:Router,public apiCallservice: ApiCallsService,public handledata: HandleDataService,public sec:SecurityCheckService,public formBuilder: FormBuilder) { 
+    if(!this.sec.login){
+      this.router.navigate([''])
+    }
+  }
 
   ngOnInit() {
     this.myFormGroup = this.formBuilder.group({

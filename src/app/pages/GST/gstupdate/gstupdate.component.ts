@@ -8,6 +8,7 @@ import { FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-gstupdate',
@@ -41,7 +42,10 @@ export class GstupdateComponent implements OnInit {
     public _location: Location,
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
-    public sec: SecurityCheckService) { }
+    public sec: SecurityCheckService,
+  public router:Router) {if(!this.sec.login){
+      this.router.navigate([''])
+    } }
   public dbName = 'NRCM_Information';
   ngOnInit() {
     this.myFormGroup = this.formBuilder.group({

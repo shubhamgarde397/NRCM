@@ -33,7 +33,9 @@ export class PochPdfComponent implements OnInit {
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
-     
+      if(!this.securityCheck.login){
+        this.router.navigate([''])
+      }
   }
 
   ngOnInit() {
@@ -432,8 +434,8 @@ CollectionMemoC(dataa,j,sign){
     'party':dataa['party'][index],
     'place':dataa['place'][index],
     'hamt':dataa['hamt'][index]===0?'':dataa['hamt'][index],
-    'partyAdvanceAmt':this.amountSettler(dataa['partyAdvance'][index],'amount')===0?'':this.amountSettler(dataa['partyAdvance'][index],'amount'),
-    'balance':this.amountSettler(dataa['partyBalance'][index],'amount')===0?'':this.amountSettler(dataa['partyBalance'][index],'amount'),
+    'partyAdvanceAmt':this.amountSettler(dataa['partyAdvance'][index],'amount')===0?'':this.amountSettler(dataa['partyAdvance'][index],'amt'),
+    'balance':this.amountSettler(dataa['partyBalance'][index],'amount')===0?'':this.amountSettler(dataa['partyBalance'][index],'amt'),
     'truckno':dataa['truckno'][index],
     'nrlrno':dataa['nrlrno'][index],
     'billno':dataa['billno'][index].split('_')[1],

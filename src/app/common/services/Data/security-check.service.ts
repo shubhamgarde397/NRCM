@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class SecurityCheckService {
   public yearNames = [];
   public monthNames;
+  public login=false;
   public IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   public commonArray = {
     "gstdetails": [{}],
@@ -42,7 +43,9 @@ this.amountShow=data;
   getAmountShow(){
     return this.amountShow;
   }
-
+  setLoginTrue(){
+    this.login=true;
+  }
   setBranch(data){
     this.branch=data;
   }

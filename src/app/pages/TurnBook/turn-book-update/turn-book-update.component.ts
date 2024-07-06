@@ -5,6 +5,7 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { log } from 'console';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-turn-book-update',
@@ -50,11 +51,13 @@ export class TurnBookUpdateComponent implements OnInit {
   public selectDate=false;
   public turn11=[];
   public myFormGroup: FormGroup;
-  constructor(
+  constructor(public router:Router,
     public handledata: HandleDataService,
     public apiCallservice: ApiCallsService,
     public securityCheck: SecurityCheckService, public handlefunction: handleFunction,
-    public formBuilder:FormBuilder) {
+    public formBuilder:FormBuilder) {if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }
   }
 
   ngOnInit() {

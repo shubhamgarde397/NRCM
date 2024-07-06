@@ -7,6 +7,7 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Location } from '@angular/common';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-impgstadd',
@@ -16,8 +17,10 @@ import { Location } from '@angular/common';
 })
 export class ImpgstaddComponent implements OnInit {
   public myFormGroup: FormGroup;
-  constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,
-    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { }
+  constructor(public router:Router,public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,
+    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService) { if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }}
 
 
 

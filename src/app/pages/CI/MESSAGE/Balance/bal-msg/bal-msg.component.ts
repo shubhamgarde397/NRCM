@@ -6,6 +6,7 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { ActivatedRoute } from '@angular/router';
 import { P } from '@angular/core/src/render3';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-bal-msg',
@@ -23,7 +24,10 @@ public gotData18=true;
      public handledata: HandleDataService,
      public handleF:handleFunction,
      public formBuilder: FormBuilder,
-     ) { }
+     public router:Router
+     ) {if(!this.securityCheck.login){
+      this.router.navigate([''])
+    } }
 
   ngOnInit() {
     // var qrcode = new QRCode("qrcode",

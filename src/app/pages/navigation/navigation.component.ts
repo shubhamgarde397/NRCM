@@ -169,7 +169,9 @@ public seq=[];
     public obs: ObsServiceService,
     public hF: handleFunction,
     public formBuilder: FormBuilder,
-  ) { }
+  ) { if(!this.securit.login){
+    this.router.navigate([''])
+  }}
 
   ngOnInit() {
     this.tabs=this.securityCheck.seq

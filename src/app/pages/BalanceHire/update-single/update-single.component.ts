@@ -27,7 +27,9 @@ export class UpdateSingleComponent implements OnInit {
     public apiCallservice: ApiCallsService,
     public sec: SecurityCheckService,
     public spinnerService: Ng4LoadingSpinnerService,
-    public router: Router) { }
+    public router: Router) { if(!this.sec.login){
+      this.router.navigate([''])
+    }}
 
   ngOnInit() {
     this.myFormGroup = this.formBuilder.group({

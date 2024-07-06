@@ -26,8 +26,10 @@ public tptIdU;
 public type;
 public dname;
 public tpts2;
-  constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,public sec: SecurityCheckService
-  ) { }
+  constructor(public router:Router,public apiCallservice: ApiCallsService, public handledata: HandleDataService,public sec: SecurityCheckService
+  ) {if(!this.sec.login){
+    this.router.navigate([''])
+  } }
 
 
   ngOnInit() {

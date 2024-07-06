@@ -5,6 +5,7 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { SecurityCheckService } from '../../../common/services/Data/security-check.service';
 import * as  jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { Router } from 'node_modules/@angular/router';
 
 
 @Component({
@@ -46,11 +47,14 @@ public from;
 public to;
 public acknowledgement=false;
   constructor(
+    public router:Router,
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
     public sec: SecurityCheckService,
     public handleF:handleFunction
-  ) {
+  ) {if(!this.sec.login){
+    this.router.navigate([''])
+  }
   }
 
   ngOnInit() {

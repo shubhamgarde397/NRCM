@@ -45,7 +45,9 @@ export class LoginComponent implements OnInit {
     public obs:PassDataService,
     public handledata:HandleDataService
   ) {
-
+    // if(!this.security.login){
+    //   this.router.navigate([''])
+    // }
   }
 
   ngOnInit() {
@@ -85,6 +87,7 @@ export class LoginComponent implements OnInit {
             this.security.setUserid(res['Data'][0]['_id']);
             this.security.setUserName(res['Data'][0]['name']);
             this.security.setNRCMid(res['Data'][0]['nrcmid']);
+            this.security.setLoginTrue();
             if(this.entry(res['Data'],'nrcm')){
             this.isLoginSuccess=true;
             this.obs.updateApprovalMessage(res);

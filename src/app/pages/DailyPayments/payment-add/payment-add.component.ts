@@ -35,6 +35,9 @@ export class PaymentAddComponent implements OnInit {
     public router:Router) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
+    if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }
   }
 
 

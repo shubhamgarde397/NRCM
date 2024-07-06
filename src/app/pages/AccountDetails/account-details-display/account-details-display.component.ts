@@ -6,6 +6,7 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import * as  jsPDF from 'jspdf';
+import {Router} from '@angular/router'
 import 'jspdf-autotable';
 
 @Component({
@@ -121,8 +122,11 @@ public bname;
     public securityCheck: SecurityCheckService,
      public handledata: HandleDataService,
      public handleF:handleFunction,
+     public router:Router,
      public spinnerService: Ng4LoadingSpinnerService,
-     public formBuilder: FormBuilder) { }
+     public formBuilder: FormBuilder) { if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }}
 
   ngOnInit() {
     this.nrcmid=this.securityCheck.nrcmid;

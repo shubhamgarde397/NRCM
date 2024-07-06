@@ -7,6 +7,7 @@ import { SecurityCheckService } from '../Data/security-check.service';
 export class HandleDataService {
 
   public Data;
+  
   public flag = false;
   public commonArray = {
     "gstdetails": [{}],
@@ -29,6 +30,8 @@ export class HandleDataService {
   public AnilData=[]
 
   constructor(public securityCheck: SecurityCheckService) { }
+
+  
 
   saveLRStatus(data){
     this.arr=data;

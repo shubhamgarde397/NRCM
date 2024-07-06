@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('declaration')">Declaration</button></div>
   <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('bank')">Bank</button></div>
+  <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('receipt')">Receipt</button></div>
 </div>
 
 
@@ -168,6 +169,68 @@
         </tr>
       </table>
     </div>
+  </div>
+
+  <div class="form-body" *ngIf="tabber==='receipt'">
+    <form [formGroup]="myFormGroup" (ngSubmit)="bankRec()" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Truck No - <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN02 AB 2045">
+      </div>
+      <div class="col-xs-1">
+        Type - <select  formControlName="type" class="form-control">
+          <option>NEFT</option>
+          <option>IMPS</option>
+          <option>GPAY</option>
+        </select>
+      </div>
+      <div class="col-xs-3">
+        Reference - <input type="text" class="form-control" formControlName="refNo" placeholder="Name">
+      </div>
+      </div>
+
+      <div class="form-group row">
+      <div class="col-xs-3">
+        Acc Name - <input type="text" class="form-control" formControlName="accName" placeholder="ASDFG1234A">
+      </div>
+
+      <div class="col-xs-3">
+        Acc No - <input type="number" class="form-control" formControlName="accNo" placeholder="ASDFG1234A">
+      </div>
+
+      <div class="col-xs-1">
+        Acc Type - <select  formControlName="nrcm" class="form-control">
+          <option>NRCM</option>
+          <option>NR</option>
+          <option>SNL</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Amount- <input type="number" class="form-control" formControlName="amt" placeholder="ASDFG1234A">
+      </div>
+
+      <div class="col-xs-3">
+        Date - <input type="date" class="form-control" formControlName="date" placeholder="ASDFG1234A">
+      </div>
+    </div>
+    
+
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+    </div>
+  </form>
   </div>
   
   <!-- Bank -->

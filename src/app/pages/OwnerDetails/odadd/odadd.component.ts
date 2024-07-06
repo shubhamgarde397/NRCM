@@ -9,6 +9,7 @@ import { HandleDataService } from 'src/app/common/services/Data/handle-data.serv
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { Location } from '@angular/common';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-odadd',
@@ -40,10 +41,12 @@ export class OdaddComponent implements OnInit {
   public villagedetailslist;
   public tdid;
   public vid;
-  constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction, 
+  constructor(public router:Router,public apiCallservice: ApiCallsService, public handlefunction: handleFunction, 
     public spinnerService: Ng4LoadingSpinnerService, public handledata: HandleDataService, public formBuilder: FormBuilder, 
     public securityCheck: SecurityCheckService,
-    public _location:Location) { }
+    public _location:Location) { if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }}
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;

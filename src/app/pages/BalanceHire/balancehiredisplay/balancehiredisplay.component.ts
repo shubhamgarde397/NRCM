@@ -120,7 +120,9 @@ public dueMDate;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
-     
+      if(!this.securityCheck.login){
+        this.router.navigate([''])
+      }
   }
 
   ngOnInit() {

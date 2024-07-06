@@ -7,6 +7,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { Validators, FormsModule } from '@angular/forms';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-owner-update',
@@ -48,11 +49,14 @@ public selectedTransportNo;
 public nativeArrayName=[]
 public nativeArray=[]
   constructor(
+    public router:Router,
     public handledata: HandleDataService,
     public _location: Location,
     public formBuilder: FormBuilder,
     public apiCallservice: ApiCallsService,
-    public sec: SecurityCheckService) { }
+    public sec: SecurityCheckService) {if(!this.sec.login){
+      this.router.navigate([''])
+    } }
 
   ngOnInit() {
     this.commonArray = this.sec.commonArray;

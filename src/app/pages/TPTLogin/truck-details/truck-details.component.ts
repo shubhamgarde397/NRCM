@@ -27,7 +27,9 @@ export class TruckDetailsComponent implements OnInit {
     public spinnerService: Ng4LoadingSpinnerService,
     public handleF:handleFunction
 
-  ) { }
+  ) { if(!this.sec.login){
+    this.router.navigate([''])
+  }}
 
   ngOnInit() {
     this.todayDate=this.handleF.createDate(new Date());

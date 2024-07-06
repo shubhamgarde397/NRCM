@@ -104,7 +104,9 @@ public advanceArray=[];
     public spinnerService: Ng4LoadingSpinnerService,
     public formBuilder: FormBuilder,
     public handleF:handleFunction
-  ) {
+  ) {if(!this.sec.login){
+    this.router.navigate([''])
+  }
   }
 
   ngOnInit() {

@@ -29,7 +29,11 @@ export class TurnBookLocationDispComponent implements OnInit {
   public locationDate='';
 
   constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,public location:Location,
-    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,public router:Router) { }
+    public securityCheck: SecurityCheckService, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,public router:Router) { 
+      if(!this.securityCheck.login){
+        this.router.navigate([''])
+      }
+    }
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;

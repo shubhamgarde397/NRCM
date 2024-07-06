@@ -19,13 +19,16 @@ export class TrackDisplayComponent implements OnInit {
   public data=''
  public list=[];
   constructor(
+    public sec:SecurityCheckService,
     public router: Router,
     public apiCallservice: ApiCallsService,
     public handledata: HandleDataService,
     public spin: Ng4LoadingSpinnerService,
     public hF: handleFunction,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    public activatedRoute: ActivatedRoute
+  ) {if(!this.sec.login){
+    this.router.navigate([''])
+  } }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(data=>{

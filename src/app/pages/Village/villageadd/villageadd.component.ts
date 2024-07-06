@@ -7,6 +7,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { village } from './village';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { Location } from '@angular/common';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-villageadd',
@@ -23,8 +24,10 @@ export class VillageaddComponent implements OnInit {
   public response: any;
   public name: string;
   public dbName = 'NRCM_Information';
-  constructor(public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
-    public securityCheck: SecurityCheckService,public location:Location) { }
+  constructor(public router:Router,public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
+    public securityCheck: SecurityCheckService,public location:Location) {if(!this.securityCheck.login){
+      this.router.navigate([''])
+    } }
 
   ngOnInit() {
     this.model = new village(this.name);

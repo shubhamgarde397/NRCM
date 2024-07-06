@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-payment-display',
@@ -16,7 +17,10 @@ public date = new Date();
 public role = 6;
 public paymentlist;
 
-constructor(public apiCallservice: ApiCallsService,public sec : SecurityCheckService ) {
+constructor(public router:Router,public apiCallservice: ApiCallsService,public sec : SecurityCheckService ) {
+  if(!this.sec.login){
+    this.router.navigate([''])
+  }
 }
 
 ngOnInit() {

@@ -45,7 +45,11 @@ public accNo;
 public ifsc;
 public bname
   constructor(
-    public securityCheck: SecurityCheckService,public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { }
+    public securityCheck: SecurityCheckService,public handleF:handleFunction,public apiCallservice:ApiCallsService,public handleData:HandleDataService,public router:Router,public spinnerService:Ng4LoadingSpinnerService) { 
+      if(!this.securityCheck.login){
+        this.router.navigate([''])
+      }
+    }
 
   ngOnInit() {
     this.uitodayDate = this.handleF.getDate(this.handleF.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());

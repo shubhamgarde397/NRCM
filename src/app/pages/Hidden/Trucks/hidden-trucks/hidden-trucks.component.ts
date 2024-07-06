@@ -31,7 +31,9 @@ export class HiddenTrucksComponent implements OnInit {
     public spinnerService: Ng4LoadingSpinnerService,
     public handleF:handleFunction
 
-  ) { }
+  ) { if(!this.sec.login){
+    this.router.navigate([''])
+  }}
 
   fetchData = function () {
     this.commonArray = this.sec.commonArray;

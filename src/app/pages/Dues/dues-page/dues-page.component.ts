@@ -4,6 +4,7 @@ import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-dues-page',
@@ -25,7 +26,11 @@ public trucknoid11;
 public turn11=[];
 public gotData18=false;
 
-  constructor(public apiCallservice: ApiCallsService,public formBuilder: FormBuilder,public handledata: HandleDataService) { }
+  constructor(public sec:SecurityCheckService,public router:Router,public apiCallservice: ApiCallsService,public formBuilder: FormBuilder,public handledata: HandleDataService) { 
+    if(!this.sec.login){
+      this.router.navigate([''])
+    }
+  }
 
 
 

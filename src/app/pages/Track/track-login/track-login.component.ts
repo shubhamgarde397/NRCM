@@ -36,7 +36,9 @@ export class TrackLoginComponent implements OnInit {
     public obs:PassDataService,
     public handledata:HandleDataService
   ) {
-
+    if(!this.security.login){
+      this.router.navigate([''])
+    }
   }
 
   ngOnInit() {

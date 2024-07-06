@@ -71,7 +71,9 @@ export class OddispComponent implements OnInit {
     public spinnerService: Ng4LoadingSpinnerService,
     public handleF:handleFunction
 
-  ) { }
+  ) {if(!this.sec.login){
+    this.router.navigate([''])
+  } }
 
   ngOnInit() {
     this.nrcmid=this.sec.nrcmid;

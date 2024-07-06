@@ -24,7 +24,9 @@ export class TruckLoadingComponent implements OnInit {
   public ownerdetailslist;
   public selectedDate;
   public selectedTruck;
-  constructor(public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router,public sec:SecurityCheckService) {
+  constructor(public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router,public sec:SecurityCheckService) {if(!this.sec.login){
+    this.router.navigate([''])
+  }
   }
 
   ngOnInit() {

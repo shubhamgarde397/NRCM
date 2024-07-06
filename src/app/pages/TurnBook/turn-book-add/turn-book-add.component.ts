@@ -9,6 +9,7 @@ import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Http } from '@angular/http';
 import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-turn-book-add',
@@ -30,11 +31,14 @@ export class TurnBookAddComponent implements OnInit {
   public turnbookDate;
   public turnAdd=[]
   public toAdd=[]
-  constructor(public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
+  constructor(public router:Router,public apiCallservice: ApiCallsService, public handlefunction: handleFunction,
     public http: Http, public formBuilder: FormBuilder, public spinnerService: Ng4LoadingSpinnerService,
     public securityCheck: SecurityCheckService, public obs: ObsServiceService, public handledata: HandleDataService) {
     this.days = this.handlefunction.generateDays();
     this.yearNames = this.securityCheck.yearNames;
+    if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }
   }
 
 

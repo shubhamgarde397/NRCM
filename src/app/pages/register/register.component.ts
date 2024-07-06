@@ -27,7 +27,9 @@ export class RegisterComponent implements OnInit {
   public name: string;
   public dbName = 1;
   constructor(public router: Router, public apiCallservice: ApiCallsService, public formBuilder: FormBuilder,
-    public securityCheck: SecurityCheckService) {
+    public securityCheck: SecurityCheckService) {if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }
   }
 
   ngOnInit() {

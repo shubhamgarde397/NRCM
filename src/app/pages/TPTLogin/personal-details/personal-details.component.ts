@@ -44,7 +44,9 @@ export class PersonalDetailsComponent implements OnInit {
      public sec: SecurityCheckService,
      public handleF:handleFunction
  
-   ) { }
+   ) { if(!this.sec.login){
+    this.router.navigate([''])
+  }}
  
    ngOnInit() {
      this.todayDate=this.handleF.createDate(new Date());

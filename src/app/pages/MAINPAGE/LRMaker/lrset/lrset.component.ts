@@ -39,7 +39,9 @@ public pan;
 public table3=false;
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handleData: HandleDataService, public handleF: handleFunction,
-    public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {
+    public securityCheck: SecurityCheckService, public formBuilder: FormBuilder,) {if(!this.securityCheck.login){
+      this.router.navigate([''])
+    }
   }
 
   ngOnInit() {

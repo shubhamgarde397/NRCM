@@ -21,7 +21,9 @@ export class DisplayComponent implements OnInit {
   public considerArray;
   constructor(public apiCallservice: ApiCallsService, public router: Router, public handledata: HandleDataService, public spinnerService: Ng4LoadingSpinnerService,
     public sec: SecurityCheckService
-  ) { }
+  ) { if(!this.sec.login){
+    this.router.navigate([''])
+  }}
   fetchData = function () {
     this.commonArray = this.sec.commonArray;
     this.lrlist = this.commonArray.lrlist;

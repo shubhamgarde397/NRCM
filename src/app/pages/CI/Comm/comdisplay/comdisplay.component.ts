@@ -26,7 +26,9 @@ public billamt=0;
     public spinnerService: Ng4LoadingSpinnerService,
     public handleF:handleFunction
 
-  ) { }
+  ) {if(!this.sec.login){
+    this.router.navigate([''])
+  } }
 
   ngOnInit() {
    

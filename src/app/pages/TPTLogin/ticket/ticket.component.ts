@@ -16,7 +16,9 @@ export class TicketComponent implements OnInit {
   public tickets=[];
   public msg='Click Get Tickets.'
   public tabletransport=false;
-  constructor(public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router,public sec:SecurityCheckService) {
+  constructor(public apiCallservice: ApiCallsService,public handledata:HandleDataService,public router:Router,public sec:SecurityCheckService) {if(!this.sec.login){
+    this.router.navigate([''])
+  }
   }
 
   ngOnInit() {

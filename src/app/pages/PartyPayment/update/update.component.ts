@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
+import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 
 @Component({
@@ -17,7 +18,9 @@ export class UpdateComponent implements OnInit {
   public addToArrayVar=[]
   public pp;
   public index;
-  constructor(public hd:HandleDataService,public apiCallservice:ApiCallsService,public router:Router,public hf:handleFunction) { }
+  constructor(public sec:SecurityCheckService,public hd:HandleDataService,public apiCallservice:ApiCallsService,public router:Router,public hf:handleFunction) {if(!this.sec.login){
+    this.router.navigate([''])
+  } }
 
   ngOnInit() {
     this.loadingDate=this.hd.givePPData()[0]['loadingDate'];

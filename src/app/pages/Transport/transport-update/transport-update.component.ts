@@ -5,6 +5,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { FormBuilder } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { Router } from 'node_modules/@angular/router';
 
 @Component({
   selector: 'app-transport-update',
@@ -22,8 +23,11 @@ export class TransportUpdateComponent implements OnInit {
     public handledata: HandleDataService,
     public _location: Location,
     public formBuilder: FormBuilder,
+    public router:Router,
     public apiCallservice: ApiCallsService,
-    public sec: SecurityCheckService) { }
+    public sec: SecurityCheckService) {if(!this.sec.login){
+      this.router.navigate([''])
+    } }
   ngOnInit() {
     this.myFormGroup = this.formBuilder.group({
       tptName:this.handledata.Data.tptName,
