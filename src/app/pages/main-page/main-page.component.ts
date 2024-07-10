@@ -86,7 +86,7 @@ export class MainPageComponent implements OnInit {
     // if(!this.security.login){
     //   this.router.navigate([''])
     // }
-    this.downloadBank({refNo:'12345'});
+    // this.downloadBank({refNo:'12345'});
     }
     dateSetter() {
       if (this.dateFromUI === undefined || this.dateFromUI === '') {

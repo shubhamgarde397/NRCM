@@ -140,7 +140,7 @@ let data=this.myFormGroup.value;
 
     doc.text(data.refNo,25,95)
     doc.text('NITIN ROADWAYS',95,95)
-    doc.text(data.nrcm==='nrcm'?'326512':(data.nrcm==='nr'?'3265363':'3465'),95,100)
+    // doc.text(data.nrcm==='nrcm'?'3265261000012':(data.nrcm==='nr'?'3265201000363':'3465'),95,100)
     doc.text(data.accName,165,95)
     doc.text(String(data.accNo),165,100)
 

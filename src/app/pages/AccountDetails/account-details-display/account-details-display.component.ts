@@ -657,16 +657,17 @@ switch (this.buttonOption) {
 
   }
   updateContact(i,j){
-    let contact=(<HTMLInputElement>document.getElementById('contact_' + j)).value;
-    let m=(<HTMLInputElement>document.getElementById('m_' + j)).checked;
-    if(contact===''){
+    let contacttb=(<HTMLInputElement>document.getElementById('contacttb_' + j)).value;
+    let contactqr=(<HTMLInputElement>document.getElementById('contactqr_' + j)).value;
+    if(contacttb===''&&contactqr===''){
       alert('Cannot add empty fields')
     }
     else{
       let tempObj={}
-      tempObj['contact']=contact;
-      tempObj['ownerid']=i['_id'];
-      tempObj['m']=m;
+      tempObj['contacttb']=contacttb;
+      tempObj['contactqr']=contactqr;
+      tempObj['_id']=i['_id'];
+      tempObj['ownerid']=i['ownerid'];
       tempObj['tablename']='';
       tempObj['method']='SMARTCONTACTUPDATE';
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)

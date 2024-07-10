@@ -285,18 +285,20 @@ action="/">
     <thead>
       <tr>
         <th>Srno</th>
+        <th>Date</th>
         <th>Truck No</th>
         <th>Number</th>
-        <th>Mobile</th>
+        <th>QR Number</th>
         <th>Update</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let ii of contactarray;let jj=index;">
         <td>{{jj+1}}</td>
+        <td>{{ii.loadingDate}}</td>
         <td>{{ii.truckno}}</td>
-        <td><input type="number" value={{ii.contact[0]}} placeholder="" id="contact_{{jj}}"></td>
-        <td><input type="checkbox" value={{ii.m}} id="m_{{jj}}"></td>
+        <td><input type="number" placeholder="" id="contacttb_{{jj}}"></td>
+        <td><input type="number" placeholder="" id="contactqr_{{jj}}"></td>
         <td><button class="btn btn-warning" (click)="updateContact(ii,jj)">Update</button></td>
       </tr>
     </tbody>

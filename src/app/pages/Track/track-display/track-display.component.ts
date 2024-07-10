@@ -26,9 +26,7 @@ export class TrackDisplayComponent implements OnInit {
     public spin: Ng4LoadingSpinnerService,
     public hF: handleFunction,
     public activatedRoute: ActivatedRoute
-  ) {if(!this.sec.login){
-    this.router.navigate([''])
-  } }
+  ) {}
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(data=>{
@@ -44,16 +42,40 @@ export class TrackDisplayComponent implements OnInit {
           alert('Contact No. Missing')
         }
         else{
-        let qr='';
-      qr=qr+"*Received Payment Done*%0A%0A"
-      qr=qr+'*Date* :'+String(this.hF.getDateddmmyy(res.Data[0]['loadingDate']))+'%0A'
-      qr=qr+'*Truck No* :'+res.Data[0]['truckno']+'%0A'
-      qr=qr+'*Loading To* :'+res.Data[0]['destination']+'%0A'
+      //   let qr='';
+      // qr=qr+"*Received Payment Done*%0A%0A"
+      // qr=qr+'*Date* :'+String(this.hF.getDateddmmyy(res.Data[0]['loadingDate']))+'%0A'
+      // qr=qr+'*Truck No* :'+res.Data[0]['truckno']+'%0A'
+      // qr=qr+'*Loading To* :'+res.Data[0]['destination']+'%0A'
+      // qr=qr+'*Payment Date* :'+String(this.hF.getDateddmmyy(res.Data[0]['actualPaymentDate']))+'%0A'
+      // qr=qr+'*Payment Amount* :'+res.Data[0]['actualPaymentAmount']+'%0A'
+      // qr=qr+"%0A%0A*Nitin Roadways*%0A*Pune*%0A*Mo : 9766707061*"  
+      
+      // this.data='https://wa.me/+91'+res.Data[0]['contacttb']+'/?text='+qr
+
+
+      let qr='';
+      qr=qr+'*Truck No* :'+res.Data[0]['truckno']+'%0A%0A'
+
+      for(let i =0;i<res.Data[0]['pochAmount'].length;i++){
+        qr=qr+'*Date* :'+String(this.hF.getDateddmmyy(res.Data[0]['loadingDate'][i]))+'%0A'
+        qr=qr+'*Place* :'+res.Data[0]['place'][i]+'%0A'
+        qr=qr+'*Balance* :'+res.Data[0]['pochAmount'][i]+'%0A%0A'
+      }
+      
+      qr=qr+'*Total* :'+res.Data[0]['actualPaymentAmount']+'%0A%0A'
       qr=qr+'*Payment Date* :'+String(this.hF.getDateddmmyy(res.Data[0]['actualPaymentDate']))+'%0A'
       qr=qr+'*Payment Amount* :'+res.Data[0]['actualPaymentAmount']+'%0A'
+
+      qr=qr+'*Account Name* :'+res.Data[0]['accdetail']['accountName']+'%0A'
+      qr=qr+'*Account No* :'+res.Data[0]['accdetail']['accountNo']+'%0A'
+
       qr=qr+"%0A%0A*Nitin Roadways*%0A*Pune*%0A*Mo : 9766707061*"  
       
-      this.data='https://wa.me/+91'+res.Data[0]['contacttb']+'/?text='+qr
+      this.data='https://wa.me/+91'+res.Data[0]['contactqr']+'/?text='+qr
+
+
+
       if(confirm('Click Ok to open Whatsapp')){
       window.open(this.data,'_blank');    
       }else{
