@@ -6,6 +6,7 @@ import { Router } from 'node_modules/@angular/router';
 import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
+import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 @Component({
   selector: 'app-declaration',
   templateUrl: './pdf.component.html',
@@ -36,7 +37,7 @@ export class PDFComponent implements OnInit {
   public max;
   constructor(
     public router:Router,public formBuilder: FormBuilder, 
-    public securityCheck: SecurityCheckService, public apiCallservice: ApiCallsService, public handledata: HandleDataService) {
+    public securityCheck: SecurityCheckService, public apiCallservice: ApiCallsService, public handledata: HandleDataService,public hf:handleFunction) {
       if(!this.securityCheck.login){
         this.router.navigate([''])
       }
@@ -145,7 +146,7 @@ let data=this.myFormGroup.value;
     doc.text(String(data.accNo),165,100)
 
     doc.text(String(data.amt),25,115)
-    doc.text(data.date,95,115)
+    doc.text(this.hf.getDateddmmyy(data.date),95,115)
     doc.text(data.type,165,115)
 
     doc.text(data.truckno,25,135)

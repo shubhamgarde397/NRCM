@@ -34,6 +34,7 @@ import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.co
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
 import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
 import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
+import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
  
 export const routes: Routes =
     [
@@ -201,6 +202,10 @@ export const routes: Routes =
                     {
                         path: 'POCH_COLLECTION_HANDLER',
                         loadChildren: './pages/PochCollection/app.module#AppModule'
+                    },
+                    {
+                        path:'PODNOTREC',
+                        component:PODNOTRECComponent
                     },
                     {
                         path: 'TURN_BOOK_HANDLER',
