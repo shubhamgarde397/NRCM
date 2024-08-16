@@ -20,14 +20,8 @@
   <div class="col-sm-1" style="margin-left: 2vh;">
     <button class="btn btn-info" (click)="getWhichType('13',true)">Same LR</button>
 </div>
-  <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
-    <button class="btn btn-info" (click)="getWhichType('7',false)">Balance Hire</button>
-</div>
 <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
   <button class="btn btn-info" (click)="getWhichType('10',false)">Pending Payment Entry</button>
-</div>
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('9',false)">Document No</button>
 </div>
 
 <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
@@ -57,9 +51,6 @@
 <div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
   <button class="btn btn-info" (click)="getTpt()">All Envelopes</button>
 </div>
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
-  <button class="btn btn-info" (click)="getAmitDetails()">Amit Urse</button>
-</div>
 </div>
 
 
@@ -72,15 +63,15 @@
       enctype="multipart/form data" action="/">
   
       <div class="form-group row">
-        <div class="col-xs-3">
+        <div class="col-xs-4">
          Date :  <input type="date" id="value" class="form-control" formControlName="date">
         </div>
 
-        <div class="col-xs-3">
+        <div class="col-xs-4">
          Link :  <textarea id="value" class="form-control" formControlName="link"></textarea>
         </div>
 
-        <div class="form-group" class="col-xs-1">
+        <div class="form-group" class="col-sm-4">
           <button type="submit" class="btn btn-primary" [disabled]='!myFormGroupQR.valid'>
             <i class="material-icons">send</i>
           </button>
@@ -115,28 +106,8 @@
   <button class="btn btn-danger" (click)="sendLinkData()">Final Send</button>
   </div>
 
-  <div class="well">
-    <div class="row">
-      <div class="col-sm-6" *ngFor="let i of linkData;let j = index;">
-        <button class="btn btn-success" style="width: 100%;" (click)="getLinkParties(i)">{{i}}</button>
-      </div>
-      <div class="col-sm-6">
-        <button class="btn btn-success" style="width: 100%;" (click)="getAllLinks()">All</button>
-      </div>
-    </div>
-  </div>
-
-  
-  <div class="well" *ngIf="allParties">
-    <div class="row">
-      <div class="col-sm-3"  *ngFor="let i of partyLink;let j = index;">
-        <button class="btn btn-warning" style="width: 100%;" (click)="getLinks(i)">{{i}}</button>
-      </div>
-    </div>
-  </div>
-
   <div>
-    <table class="table" style="width:100%" align="center" *ngIf="allLinks">
+    <table class="table" style="width:100%" align="center">
       <thead class="table-header">
           <tr>
               <th>Srno</th>
@@ -151,7 +122,7 @@
 
 
       <tbody style="text-align: center;">
-          <tr *ngFor="let i of link;let j = index">
+          <tr *ngFor="let i of data14;let j = index">
               <td>{{j+1}}</td>
               <td>{{i.date}}</td>
               <td>{{i.party}}</td>
@@ -215,7 +186,7 @@
 
 
           <h4>Select Trucks to update the payment Date</h4>
-          <table class="table" style="width:100%" align="center">
+          <!-- <table class="table" style="width:100%" align="center">
             <thead class="table-header">
                 <tr>
                     <th>Srno</th>
@@ -249,7 +220,68 @@
                     </td>
                 </tr>
             </tbody>
-        </table>  
+        </table>   -->
+
+        <table class="table table-bordered" style="width:100%" align="center" *ngIf="byapd">
+
+          <thead class="table-header">
+            <tr>
+              <th>Srno</th>
+              <th>Amount</th>
+              <th>Comments</th>
+              <th>Date</th>
+              <th>Truckno</th>
+              <th>AccountNo-IFSC</th>
+              <th>Payment Date</th>
+              <th>Payment Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+  
+  
+          <tbody>
+            <tr *ngFor="let i of fullpendingPayment;let j = index">
+              <td>{{j+1}}</td>
+              <td>
+                <ul *ngFor="let k of i.truckData">
+                  <li>{{k.pochAmount}}+{{k.return_hamali}}={{k.total}}</li>
+                </ul>              
+              </td>
+              <td>
+                <ul *ngFor="let k of i.truckData">
+                  <li>{{k.parentAccNo}}:{{k.remark}}</li>
+                </ul>              
+              </td>
+              <td>
+                <ul *ngFor="let k of i.truckData">
+                  <li>{{k.date|date:'dd-MM-yyyy'}}</li>
+                </ul>
+              </td>
+  
+              <td>
+                <ul *ngFor="let k of i.truckData;let o = index;">
+                  <li>{{k.truckno}}</li>
+                </ul>
+              </td>
+  
+              
+              <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
+              <td><input type="date" id="bhdate_{{j}}"></td>
+                    <td><input type="number" id="bhamt_{{j}}"></td>
+                    <td>
+                      <select class="form-control" id="bhstatus_{{j}}">
+                        <option>Okay</option>
+                        <option>Damage</option>
+                        <option>Shortage</option>
+                        <option>Loan</option>
+                        <option>Late</option>
+                        <option>To Pay</option>
+                      </select>
+                    </td>
+  
+            </tr>
+          </tbody>
+        </table>
 
         <div class="col-sm-2">
           <button class="btn btn-success" (click)="sendDatatoUpdate()">Send2</button>
@@ -261,73 +293,6 @@
 
         </div>
 
-    </div>
-  </div>
-  </div>
-
-<div class="well" *ngIf="whichType=='7'" style="background-color: black;color: wheat;">  
-  <div class="row"  *ngIf="secretDoorForAnil||secretDoor">
-    <h3>Update Actual Payment</h3>
-   
-    <div class="well"  *ngIf="actualPayment" style="background-color: black;color: wheat;">  
-     
-      <div class="row" style="background-color: black;color: wheat;">  
-        <div class="col-sm-2">
-          Select Poch Date To Procees :
-          <input type="date" class="form-control" [(ngModel)]="selectedPochDate">
-        </div> 
-      <div class="col-sm-2">
-        <button class="btn btn-warning" (click)="fetchPendinActualPayments()">Get</button>
-      </div> 
-      
-    </div>
-      
-        <div class="row" *ngIf="paymentSettings">
-
-
-
-          <h4>Select Trucks to update the payment Date</h4>
-          <table class="table" style="width:100%" align="center">
-            <thead class="table-header">
-                <tr>
-                    <th>Srno</th>
-                    <th>Date</th>
-                    <th>Truckno</th>
-                    <th>Party:Type:Place</th>
-                    <th>Payment Date</th>
-                    <th>Payment Amount</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-    
-    
-            <tbody style="text-align: center;">
-                <tr *ngFor="let i of fullpendingPayment;let j = index">
-                    <td>{{j+1}}</td>
-                    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                    <td>{{i.truckno}}<br>{{i.pochAmount}}</td>
-                    <td>{{i.party}}<br>{{i.place}}</td>
-                    <td><input type="date" id="bhdate_{{j}}"></td>
-                    <td><input type="number" id="bhamt_{{j}}"></td>
-                    <td>
-                      <select class="form-control" id="bhstatus_{{j}}">
-                        <option>Okay</option>
-                        <option>Damage</option>
-                        <option>Shortage</option>
-                        <option>Loan</option>
-                        <option>Late</option>
-                        <option>To Pay</option>
-                      </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>  
-
-        <div class="col-sm-2">
-          <button class="btn btn-success" (click)="sendDatatoUpdate()">Send</button>
-        </div>
-
-        </div>
     </div>
   </div>
   </div>
@@ -398,7 +363,6 @@
             <th>Name</th>
             <th>Number</th>
             <th>IFSC</th>
-            <th>Bank</th>
           </tr>
         </thead>
         <tbody>
@@ -407,8 +371,7 @@
             <td>{{ii.truckno}}<br>{{ii.currentDate|date:'dd-MM-yyyy'}}</td>
             <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
             <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
-            <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>
-            <td><input type="text" placeholder="BankName" id="bname_{{jj}}" disabled></td>
+            <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}"></td>
           </tr>
         </tbody>
       </table>
@@ -499,6 +462,10 @@
           <div class="col-sm-2">
             <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('qr')">QR</button>
           </div>
+        
+          <div class="col-sm-2">
+            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('party')">Party</button>
+          </div>
             
           
         </div>
@@ -514,7 +481,7 @@
                       <th>TruckNo</th>
                       <th>Type-Party-Place</th>
                       <th>LRNO</th>
-                      <th *ngIf="amount">Amount</th>
+                      <th *ngIf="amountV">Amount</th>
                       <th>Poch : Amt : Acc</th>
                       <th>Payment Details</th>
                       <th>Given Date</th>
@@ -528,7 +495,7 @@
                       <button class="btn btn-warning" (click)="saveData(j)" data-toggle="modal" data-target="#myModalPan">Copy!</button></td>
                       <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
                       <td>{{i.lrno}}</td>
-                      <td *ngIf="amount">{{i.hamt}}<br>{{i.rent}}</td>
+                      <td *ngIf="amountV">{{i.hamt}}<br>{{i.rent}}</td>
                       <td [ngStyle]="{'background-color': i.colors[0]}" class="wadhiw">{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
                       <td [ngStyle]="{'background-color': i.colors[1]}"  class="wadhiw" (click)="savePayment(i,j)" data-toggle="modal" data-target="#myModalPay">
                         {{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.truckName['pan']}}</td>
@@ -565,67 +532,6 @@
         </div>
         </div>
     
-      <div *ngIf="whichType==='9'">
-        <div class="well" style="background-color: black;border-color: black;">
-        <div class="row">
-          <div class="col-sm-3">
-            <input type="text" class="form-control col-sm-3" [(ngModel)]='truckVar' placeholder="Truck No">
-          </div>
-          <div class="col-sm-3">
-            <select class="form-control" *ngIf="wala11" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
-              <option>Default</option>
-              <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
-            </select>
-          </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-2">
-              <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11')">Truck No</button>
-            </div>
-            <div class="col-sm-2">
-              <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('bill')">BillNo</button>
-            </div>
-           
-          </div>
-  
-            
-                <div class="col-sm-12">
-  
-              <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="byTruckName">
-                    <thead align="center" style="font-weight: bold">
-                      <tr class=table-header>
-                        <th>Srno</th>
-                        <th>Loading</th>
-                        <th>TruckNo</th>
-                        <th>Type-Party-Place</th>
-                        <th>LRNO</th>
-                        <th>Document</th>
-                        <th>Option</th>
-                      </tr>
-                    </thead>
-                    <tbody align="center">
-                      <tr *ngFor="let i of turn11;let j = index">
-                        <td>{{j+1}}</td>
-                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                        <td>{{i.truckName['truckno']}}<br>{{i.billno}}</td>
-                        <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
-                        <td>{{i.lrno}}</td>
-                        <td>
-                          <ul><li *ngFor="let ii of i.documentNo;let k = index">{{ii}}</li></ul>
-                        </td>
-                        <td>
-                          <button (click)="saveDoc(i,j)" data-toggle="modal" data-target="#myModalDoc">Add Document</button>
-                          <button (click)="saveDocData(i,j)">Save Document</button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-           
-  
-        </div>
-        </div>
-
       <div *ngIf="whichType==='3'">
         <div class="well" style="background-color: black;border-color: black;">
           <div class="col-sm-3">
@@ -1236,43 +1142,6 @@
                 
               </div>
             </div>
-
-            <div class="modal fade" id="myModalDoc" role="dialog">
-              <div class="modal-dialog">
-              
-            
-                <div class="modal-content" style="background-color: black;color: wheat;">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Document No</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-                      Document No : <input type="text" class="form-control" [(ngModel)]="documentNo">
-                    </div>
-
-                    <table>
-                      <tr>
-                        <th>DocumentNo</th>
-                        <th>Delete</th>
-                      </tr>
-                      <tr *ngFor="let i of documentNos;let j = index;">
-                        <td>{{i}}</td>
-                        <td><button (click)="delDoc(j,1)">Delete</button></td>
-                      </tr>
-            
-                    </table>
-=                 </div>
-            
-                  <div class="modal-footer">
-                    <button class="btn btn-warning" (click)="addDoc()">Store</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-
 
             <div class="container">
     

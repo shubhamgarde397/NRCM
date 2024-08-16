@@ -37,6 +37,45 @@ export class MainPageComponent implements OnInit {
   public byTruckName=false;
   public villagenamelist=[];
   public whichType='0';
+  public byapd=false;
+//   public data={
+//     "_id": "500101010703347-12",
+//     "truckData": [
+//         {
+//             "contact": [
+//                 ""
+//             ],
+//             "forwardDate": "",
+//             "date": "2024-05-20",
+//             "parentAccNo": 12,
+//             "truckno": "TN18 BC 7188",
+//             "total": 2950,
+//             "pochAmount": 2950,
+//             "return_hamali": 0,
+//             "tbid": "6649ab9325be3b8b3b0d6aba",
+//             "ownerid": "66443144a755803b55dedf38",
+//             "partyType": "NRCM",
+//             "shortDetails": "NRCM-SVPC-MDS-F",
+//             "remark": "",
+//             "pay": true,
+//             "Prd": ""
+//         }
+//     ],
+//     "due": [
+//         {}
+//     ],
+//     "dueToTake": [
+//         false
+//     ],
+//     "ifsc": "KVBL",
+//     "accountNumber": "500101010703347",
+//     "parentAccNo": 12,
+//     "update": false,
+//     "accountName": "Sivakumar G",
+//     "apd": "",
+//     "apm": 0,
+//     "todayDate": "2024-08-09"
+// }
   public parties=[];
   public selectedMY='';
   public emptyData=[];
@@ -133,6 +172,7 @@ public totalRentb5=0
 public totalAdvanceb5=0
 public billamt5b=0
 public amount=0;
+public amountV=false;
 public remark='';
 public coolie5b=0;
 public data8=[];
@@ -148,6 +188,7 @@ public allLinks=false;
 public allParties=false;
 public plant='';
 public partyLinkName=''
+public todaypassword='';
 // 
 
   constructor(
@@ -161,6 +202,7 @@ public partyLinkName=''
   ) { }
 
   ngOnInit() {
+    this.todaypassword=String(new Date().getDate())+String(new Date().getMonth()+1)
     this.myFormGroup = this.formBuilder.group({
       loadingDate:'',
       truckno: '',
@@ -244,6 +286,7 @@ formbody['selectedPochDate']=i._id;
     .subscribe((res: any) => {
       this.fullpendingPayment=res.Data;
       this.actualPayment=true;
+      this.byapd=true;
       this.paymentSettings2=true;
       this.paymentSettings=false;
     });
@@ -251,6 +294,7 @@ formbody['selectedPochDate']=i._id;
   back10(){
     this.paymentSettings2=false;
       this.paymentSettings=true;
+      this.byapd=false;
   }
   fetchPendinActualPayments(){
     this.fullpendingPayment=[];
@@ -324,11 +368,17 @@ formbody['selectedPochDate']=this.selectedPochDate;
       else if ((<HTMLInputElement>document.getElementById('bhdate_' + i)).value=='') {}
         else {
           let temp={}
-          temp['_id']=this.fullpendingPayment[i]['_id'];
-          temp['date']=(<HTMLInputElement>document.getElementById('bhdate_' + i )).value;
-          temp['amt']=parseInt((<HTMLInputElement>document.getElementById('bhamt_' + i )).value);
-          temp['status']=(<HTMLInputElement>document.getElementById('bhstatus_' + i )).value;
-          arr.push(temp)
+          for(let j=0;j<this.fullpendingPayment[i]['truckData'].length;j++){
+            temp={};
+            console.log(this.fullpendingPayment[i]['truckData'][j]['tbid']);
+            temp['_id']=this.fullpendingPayment[i]['truckData'][j]['tbid']
+            temp['date']=(<HTMLInputElement>document.getElementById('bhdate_' + i )).value;
+            temp['amt']=parseInt((<HTMLInputElement>document.getElementById('bhamt_' + i )).value);
+            temp['status']=(<HTMLInputElement>document.getElementById('bhstatus_' + i )).value;
+            arr.push(temp)
+        }
+          
+          
         }
 
     }
@@ -403,7 +453,7 @@ formbody['selectedPochDate']=this.selectedPochDate;
 
   adminP(){
 let pwd=prompt('Enter code!')
-    if(pwd==='GOLDENLEO'){
+    if(pwd==='LEO'){
       this.secretDoor=true
     }
     else if(pwd==='NRCM'){
@@ -414,6 +464,7 @@ let pwd=prompt('Enter code!')
       this.personalshubham=true;
     }
     else if(pwd==='ADMIN'){
+      this.amountV=true;
       // Use this to show/hide hireamount and other important stuff
     }
   }
@@ -444,20 +495,6 @@ let pwd=prompt('Enter code!')
     this.truckNo=this.turnbooklist[this.bigI]['truckName']['truckno'];
     this.dataTT=this.littleDetail1(this.turnbooklist[this.bigI])
       }
-
-  getAmitDetails(){
-    let tempObj={}
-          tempObj['method']='findbyqrforLoadingStatus';  
-    tempObj['tablename']='';
-  
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-
-              this.dataT=this.setMsg1(res.Data);
-        this.whichType='7';    
-        
-      });
-  }
 
   littleDetail(data,msg){
     if(data.typeOfLoad==='Pipe'){
@@ -557,22 +594,6 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         })
   }
 
-  getLinkParties(i){
-    this.plant=i;
-    this.partyLink=[]
-    let a=this.data14; 
-    let aa = a.filter(r=>{return r.place == i})
-
-    var flags = [];
-    for(let i=0; i<aa.length; i++) {
-      if( flags[aa[i].party]) continue;
-      flags[aa[i].party] = true;
-      this.partyLink.push(aa[i].party);
-  }
-  this.allParties=true;
-  this.allLinks=false;
-  
-  }
   getAllLinks(){
     this.allLinks=true;
     this.link=this.data14;
@@ -619,6 +640,7 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
 
 
   doneQR(i,j){
+    // if(confirm('Are you sure?')){
     let tempObj={'tablename':'','method':'updateLinkDone','_id':i._id}
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
     .subscribe((res: any) => {
@@ -626,6 +648,7 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       this.data14.splice(j,1);
     alert(res.Status)
     });
+  // }
   }
 
   changeLR(i){
@@ -745,14 +768,12 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
     for(let i=0;i<this.accountarrayUF.length;i++){
     let accname=(<HTMLInputElement>document.getElementById('accname_' + i)).value;
     let accno=(<HTMLInputElement>document.getElementById('accno_' + i)).value;
-    let bname=(<HTMLInputElement>document.getElementById('bname_' + i)).value;
     let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + i)).value;
-    if(accname===''||accno===''||bname===''||ifsc===''){}
+    if(accname===''||accno===''||ifsc===''){}
     else{
       let itempObj={}
       itempObj['accountName']=accname;
       itempObj['accountNumber']=accno;
-      itempObj['bankName']=bname;
       itempObj['ifsc']=ifsc;
       itempObj['_id']=this.accountarrayUF[i]['_id'];
       aD.push(itempObj)
@@ -767,12 +788,7 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);
-        this.accountarrayUF.splice(j,1);
       });
-  }
-
-  updateifscCode(index){
-    (<HTMLInputElement>document.getElementById('bname_'+index)).value=(<HTMLInputElement>document.getElementById('ifsc_'+index)).value.slice(0,4)
   }
 
   getdata3(){
@@ -860,12 +876,28 @@ console.log(this.data3value);
       }
 
 find(event){
+  let goin=false;
+  
   if(event==='11'){
     this.wala11=true;
+    goin=true;
   }
   else{
+    if(event==='party'){
+      if(prompt('Enter code!')==this.todaypassword){
+        goin=true;
+      }
+      else{
+        alert('Wrong Code!')
+        goin=false;
+      }
+    }
+    else{
     this.wala11=false;
+    goin=true;
+    }
   }
+  if(goin){
         let tempObj1={};
     tempObj1['tablename'] = 'turnbook'
     tempObj1['method'] = 'singleTruck'
@@ -890,6 +922,9 @@ find(event){
           this.trucknoid11=res.Data[0].truckName.truckno
           this.find11UniqueTruck();
         }
+        if(event==='party'){
+          this.turn11=res.Data;
+        }
       }
       else{
         this.unique11turnbooklist=[];
@@ -898,7 +933,7 @@ find(event){
         this.byTruckName=false;
       }
       });
-
+    }
 }
 
   generate(){
