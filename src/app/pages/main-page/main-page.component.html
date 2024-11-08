@@ -450,6 +450,14 @@
             <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
           </select>
         </div>
+<!-- Saved Data -->
+        <div class="col-sm-3">
+          <select class="form-control" *ngIf="saveTab" [(ngModel)]="trucknoid11s" (change)="find11UniqueTruckS()" id="truckNoone11">
+            <option>Default</option>
+            <option *ngFor="let i of savedData;let j = index;" value={{i.viewValue}}>{{i.viewValue}}</option>
+          </select>
+        </div>
+<!-- Saved Data -->
         </div>
         <div class="row">
           <div class="col-sm-2">
@@ -466,13 +474,17 @@
           <div class="col-sm-2">
             <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('party')">Party</button>
           </div>
+
+          <div class="col-sm-2">
+            <button class="btn btn-danger col-sm-3"  style="width: 50%;" (click)="save()" *ngIf="byTruckName">Save</button>
+          </div>
             
           
         </div>
 
           
               <div class="col-sm-12">
-
+                
             <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="byTruckName">
                   <thead align="center" style="font-weight: bold">
                     <tr class=table-header>

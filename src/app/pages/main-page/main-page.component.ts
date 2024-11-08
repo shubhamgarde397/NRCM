@@ -30,7 +30,8 @@ export class MainPageComponent implements OnInit {
   public todayDate;
   public placeidto;
   public partyidto;
-  public trucknoid11=''
+  public trucknoid11='';
+  public trucknoid11s='';
   public selectDate=false;
   public pantable=false;
   public panarray=[];
@@ -108,6 +109,8 @@ public advanceArray=[];
 public showQR=false;
 public showsignstamp=false;
 public rc='';
+public savedData=[];
+public saveTab=false;
 public showshubhamsign=false;
 public showshubhamstamp=false;
 public partyType2='';
@@ -247,7 +250,15 @@ public todaypassword='';
     this.bigJJ=j;
   }
 
-
+  save(){
+    let temp={'value':[],'viewValue':''};
+    temp['viewValue']=this.trucknoid11;
+    temp['value']=this.turn11;
+    this.savedData.push(temp);
+    this.saveTab=true;
+    console.log(this.savedData);
+    
+  }
   
 
   saveDoc(i,j){
@@ -884,7 +895,7 @@ find(event){
   }
   else{
     if(event==='party'){
-      if(prompt('Enter code!')==this.todaypassword){
+      if(String(prompt('Enter code!'))==String(this.todaypassword)){
         goin=true;
       }
       else{
@@ -982,18 +993,24 @@ this.apiCallservice.handleData_New_python
         this.selectDate=false;
         this.byTruckName=true;
       this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
-      this.turn11.forEach(r=>{
-        let ad=r.advanceArray
-        for(let i=0;i<ad.length;i++){
-            if(ad[i]['reason']==='Balance'){
-                r['BHamt']=ad[i]['advanceAmt']
-                r['BHAccNo']=ad[i]['BHAccNo']
-                r['BHAccName']=ad[i]['BHAccname']
-            }
-        }
-    })
+    //   this.turn11.forEach(r=>{
+    //     let ad=r.advanceArray
+    //     for(let i=0;i<ad.length;i++){
+    //         if(ad[i]['reason']==='Balance'){
+    //             r['BHamt']=ad[i]['advanceAmt']
+    //             r['BHAccNo']=ad[i]['BHAccNo']
+    //             r['BHAccName']=ad[i]['BHAccname']
+    //         }
+    //     }
+    // })
       
       }
+    }
+
+    find11UniqueTruckS(){
+      let tData=this.savedData;
+
+      this.turn11=this.savedData.find(r=>{return r.viewValue==this.trucknoid11s}).value;
     }
 
   getVillages(){
@@ -1184,7 +1201,13 @@ let tempObj1={};
       doc.setFontSize('9');
       doc.setFontType('bold');
       doc.setTextColor(224,0,0);
-      doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY',18,mainY+8)
+      if(data.partyType==='SNL'){
+        doc.text('DAILY SERVICE MAHARASHTRA,TAMILNADU, KERALA & KARNATAKA',18,mainY+8)
+      }
+      else{
+        doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY',18,mainY+8)
+      }
+      
       doc.setDrawColor(163,0,0);
       doc.setLineWidth(0.5);
       doc.line(3, mainY+9, 146, mainY+9);
@@ -1193,15 +1216,24 @@ let tempObj1={};
       doc.setLineWidth(0.8);
       doc.line(3, mainY+10, 146, mainY+10);
       
-      doc.setFontType('normal');
+      doc.setFontType('italic');
+      if(data.partyType==='SNL'){
+        doc.setFontType('normal');
+      doc.setFontSize('9');
+      doc.setTextColor(0, 0, 0);
+      doc.text('Cell :- 9822288257, 9766707061', 10, mainY+14)
+      doc.text('Email : shrinitinlogistics@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
+      doc.text('PNo 25, Vazhudavoor Rd, Ramanathapuram, Villianur Commune,Pondicherry - 605505', 10, mainY+22)
+      }
+      else{
+        doc.setFontType('normal');
       doc.setFontSize('9');
       doc.setTextColor(0, 0, 0);
       doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, mainY+14)
       doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
-      
-      doc.setFontType('italic');
       doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 10, mainY+22)
-      
+
+      }
       
       doc.setDrawColor(224,0,0);
       doc.setLineWidth(0.2);
@@ -1302,6 +1334,10 @@ let tempObj1={};
       }
       if(data.partyType==='SNL'){
           doc.text('For Shri Nitin Logistics',105, mainY+84)
+          doc.setTextColor(0,0,0);
+        if(this.showPan){
+        doc.text('PAN : BTBPG2818K',10, mainY+92)
+        }
       }
     doc.save(data.truckno+'.pdf')
       // 3 Info
