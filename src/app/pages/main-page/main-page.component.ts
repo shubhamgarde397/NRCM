@@ -27,6 +27,7 @@ export class MainPageComponent implements OnInit {
   public buttons = []
   public accountarrayUF=[];
   public accounttableUF=false;
+  public showdelete=false;
   public todayDate;
   public placeidto;
   public partyidto;
@@ -119,7 +120,7 @@ public partyName='';
 public rent='';
 public advance='';
 public balance='';
-public lrno='';
+public lrno=0;
   public wala11=false;
   public data6=[];
   public fromDate='';
@@ -152,13 +153,16 @@ public secretDoor=false;
 public data14=[];
 public selectedmy;
 public data3='0';
+public data15='0';
 public data3value='';
+public data15value='';
 public billNo=''
 public fullpendingPayments=[];
 public showForm2=false;
 
 // custom
 public date;
+public showsaved=false;
 public type1;
 public type2;
 public documentNos=[];
@@ -169,6 +173,7 @@ public truckno5b=''
 public partyName5b=''
 public placeName5b=''
 public placeName25b=''
+public hire=0;
 public rent5b=0;
 public partyType5b='';
 public totalRentb5=0
@@ -255,12 +260,12 @@ public todaypassword='';
     temp['viewValue']=this.trucknoid11;
     temp['value']=this.turn11;
     this.savedData.push(temp);
-    this.saveTab=true;
-    console.log(this.savedData);
-    
+    this.showdelete=this.savedData.length>0?true:false;
   }
-  
-
+  deleteSaved(){
+  this.savedData.splice(this.savedData.findIndex(r=>{return r.viewValue==this.trucknoid11s}),1)
+  this.showdelete=this.savedData.length>0?true:false;
+  }  
   saveDoc(i,j){
     this.bigII=i;
     this.bigJJ=j;
@@ -302,33 +307,22 @@ formbody['selectedPochDate']=i._id;
       this.paymentSettings=false;
     });
   }
+  check(){
+    for(let i=0;i<this.fullpendingPayment.length;i++){
+      (<HTMLInputElement>document.getElementById('bhdate_' + i )).value=this.fullpendingPayment[i]['apd'];
+      (<HTMLInputElement>document.getElementById('bhamt_' + i )).value=this.fullpendingPayment[i]['apm'];
+      if(this.fullpendingPayment[i]['apd']===''){
+        this.fullpendingPayment[i]['color']='red'
+      }
+      else{
+        this.fullpendingPayment[i]['color']='wheat'
+      }
+    }
+  }
   back10(){
     this.paymentSettings2=false;
       this.paymentSettings=true;
       this.byapd=false;
-  }
-  fetchPendinActualPayments(){
-    this.fullpendingPayment=[];
-    this.saveArray=[]
-    this.selectedPaymentAmount=0;
-    this.selectedPaymentDate=''
-    this.paymentSettings=false;
-    this.showpaymentButton=false;
-    this.saveArrayData=false;
-    this.defaultAmt=0;
-
-let formbody={}
-formbody['method']='getTrucksWithNoActualPayment';
-formbody['tablename']=''
-formbody['selectedPochDate']=this.selectedPochDate;
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, true)
-    .subscribe((res: any) => {
-      this.fullpendingPayment=res.Data;
-      this.actualPayment=true;
-      this.paymentSettings=true;
-    });
-    
   }
   
   find4() {
@@ -474,6 +468,21 @@ let pwd=prompt('Enter code!')
     else if(pwd==='SELFADMIN'){
       this.personalshubham=true;
     }
+    else if(pwd==='MERGE'){
+      let temp=[]
+      let temp1=this.savedData;
+        for(let i=0;i<temp1.length;i++){
+          for(let j=0;j<temp1[i]['value'].length;j++){
+            temp.push(temp1[i]['value'][j])
+          }
+        }
+        this.turn11=temp.sort(function(a, b) {
+          let c = new Date(a.loadingDate).valueOf();
+          let d = new Date(b.loadingDate).valueOf();
+          return d-c;
+      });
+        
+    }
     else if(pwd==='ADMIN'){
       this.amountV=true;
       // Use this to show/hide hireamount and other important stuff
@@ -499,34 +508,8 @@ let pwd=prompt('Enter code!')
     else if(data==='Ratnagiri'){return 'Ratnagiri';}
   }
 
-  saveData(index){
-    this.bigI=index;
-    console.log(this.data[this.bigI]);
-    
-    this.truckNo=this.turnbooklist[this.bigI]['truckName']['truckno'];
-    this.dataTT=this.littleDetail1(this.turnbooklist[this.bigI])
-      }
+  smartChoice(i,j){
 
-  littleDetail(data,msg){
-    if(data.typeOfLoad==='Pipe'){
-    msg=msg+(data.truckno)+'\n';
-    msg=msg+(data.party)+'\n';
-    msg=msg+(data.v1)+'\n';
-    msg=msg+'\n\n';
-    return msg;
-    }
-    return msg;
-  }
-  
-  
-  setMsg1(data){
-    let msg='';
-    data.forEach(r => {
-      msg=this.littleDetail(r,msg)
-      console.log(msg);
-      
-    });
-    return msg;
   }
 
   getWhichType(data,yn){
@@ -991,26 +974,18 @@ this.apiCallservice.handleData_New_python
     find11UniqueTruck(){
       if(this.trucknoid11!=='Default'){
         this.selectDate=false;
-        this.byTruckName=true;
-      this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});
-    //   this.turn11.forEach(r=>{
-    //     let ad=r.advanceArray
-    //     for(let i=0;i<ad.length;i++){
-    //         if(ad[i]['reason']==='Balance'){
-    //             r['BHamt']=ad[i]['advanceAmt']
-    //             r['BHAccNo']=ad[i]['BHAccNo']
-    //             r['BHAccName']=ad[i]['BHAccname']
-    //         }
-    //     }
-    // })
-      
+        
+      this.turn11=this.turnbooklist.filter(r=>{return r.truckName.truckno==this.trucknoid11});    
+      this.showsaved=true;
+      this.byTruckName=true;
       }
     }
 
     find11UniqueTruckS(){
-      let tData=this.savedData;
-
+      if(this.trucknoid11s==='Default'){}
+      else{
       this.turn11=this.savedData.find(r=>{return r.viewValue==this.trucknoid11s}).value;
+      }
     }
 
   getVillages(){
@@ -1035,6 +1010,58 @@ this.apiCallservice.handleData_New_python
         this.sec.commonArray['parties'] = res.Data.length > 0 ? res.Data : this.sec.commonArray['parties'];
       });
   }
+
+  getpartiesSNL(){
+    let value={}
+    value['method'] = 'display';
+    value['code'] = 'psnl';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation', 1, value, true)
+      .subscribe((res: any) => {
+        this.parties=res.Data;
+        this.sec.commonArray['parties'] = res.Data.length > 0 ? res.Data : this.sec.commonArray['parties'];
+      });
+  }
+
+  setNRCMTruck(){
+    let tempObj={
+    'method':'setnrcmTruck',
+    'tablename':'',
+    'id': this.truckNo,
+    'date':this.loadingDate,   
+    'place':this.placeName
+    }
+
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.date=''
+        this.truckNo=''
+      });
+  }
+
+
+  setSNLTruck(){
+    let tempObj={
+    'method':'setsnlTruck',
+    'tablename':'',
+    'id': this.truckNo,
+    'partyType':'SNL',
+    'pid':this.partyName,
+    'vid':this.placeName,
+    'oid':'',
+    'date':this.loadingDate,    
+    'type':'Others',
+    }
+
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status);
+      });
+  }
+
 
   selectedColor(data){
     this.radio=data;
@@ -1732,4 +1759,3 @@ let tempObj1={};
       // 3 Info
     }
 }
-
