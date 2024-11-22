@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactDAddComponent implements OnInit {
 
+  public admin=false;
   constructor() { }
 
   ngOnInit() {

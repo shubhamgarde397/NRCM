@@ -56,8 +56,6 @@ import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-accoun
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
 import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
-import { AddqrComponent } from './pages/Track/addqr/addqr.component';
-import { QrstatusComponent } from './pages/Track/qrstatus/qrstatus.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
 import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
@@ -102,8 +100,6 @@ import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/conta
     DisplaySequenceComponent,
     TrackDisplayComponent,
     TrackLoginComponent,
-    AddqrComponent,
-    QrstatusComponent,
     RentdisplayComponent,
     ComdisplayComponent,
     PODSTATComponent,

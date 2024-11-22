@@ -17,7 +17,6 @@ import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnaviga
 import { TPTWelcomeComponent } from './pages/TPTLogin/tptwelcome/tptwelcome.component';
 import { TruckDetailsComponent } from './pages/TPTLogin/truck-details/truck-details.component';
 import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/personal-details.component';
-import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
@@ -29,7 +28,6 @@ import { LRDisplayComponent } from './pages/LRsend/lrdisplay/lrdisplay.component
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
 import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
-import { AddqrComponent } from './pages/Track/addqr/addqr.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
 import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
@@ -89,10 +87,6 @@ export const routes: Routes =
                     component:PersonalDetailsComponent
                 },
                 {
-                    path:'TICKET_DETAILS',
-                    component:TicketComponent
-                },
-                {
                     path:'LOADING_DETAILS',
                     component:TruckLoadingComponent
                 }
@@ -107,10 +101,6 @@ export const routes: Routes =
                     {
                         path: 'NRCM_HOME',
                         component: WelcomePageComponent
-                    },
-                    {
-                        path: 'QRDATA',
-                        component: AddqrComponent
                     },
                     {
                         path: 'PMTRCT',
@@ -193,16 +183,8 @@ export const routes: Routes =
                         loadChildren: './pages/Charts/bar-chart/app.module#AppModule'
                     },
                     {
-                        path: 'OTHER_REPORT',
-                        loadChildren: './pages/Report/generate-report/app.module#AppModule'
-                    },
-                    {
                         path: 'MAIL_DISPLAY',
                         loadChildren: './pages/Mail/mail-display/app.module#AppModule'
-                    },
-                    {
-                        path:'TICKET_HANDLER',
-                        loadChildren:'./pages/Ticket/ticket.module#TicketModule'
                     },
                     {
                         path:'MISSING_LR',
