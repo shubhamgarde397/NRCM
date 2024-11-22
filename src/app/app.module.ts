@@ -63,6 +63,9 @@ import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.compo
 import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
 import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
+import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
+import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
+import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/contact-dadd.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +108,10 @@ import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.compo
     ComdisplayComponent,
     PODSTATComponent,
     BalMsgComponent,
-    PODNOTRECComponent
+    PODNOTRECComponent,
+    TpdfComponent,
+    ReceiptComponent,
+    ContactDAddComponent
   ],
   imports: [
     QRCodeModule,

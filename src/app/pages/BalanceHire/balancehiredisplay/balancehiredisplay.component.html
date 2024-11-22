@@ -36,9 +36,6 @@
         <button class="btn btn-danger" (click)="printUpdate()" *ngIf="showPDFButton"
           [ngStyle]="{'background-color': !printed ? 'red' : 'wheat' }" [disabled]="printed">Print</button>
       </div>
-      <div class="col-xs-2" align="center">
-        <button class="btn btn-danger" (click)="selectAll()" *ngIf="showPDFButton">Select All</button>
-      </div>
     </div>
 
     <div style="text-align: center">
@@ -81,8 +78,7 @@
 
             <td>
               <ul *ngFor="let k of i.truckData;let o = index;">
-                <li>{{k.truckno}} <input type="checkbox" [checked]="k.pay" id="m_{{j}}_{{o}}"><br>
-                  <span style="color:red;">{{k.remark}}</span>
+                <li>{{k.truckno}}
                   <br>
                   <select [(ngModel)]="dueChangeValue" (change)="dueChange()">
                     <option *ngFor="let jj of k.dues;let z = index;" value={{j}}_{{o}}_{{z}}_{{jj._id}}>
@@ -96,14 +92,14 @@
 
             
             <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
-            <td>
+            <td *ngIf="admin">
               <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
-                class="btn-danger btn-sm btn-just-icon" *ngIf="admin">
+                class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete_forever</i>
               </button>
             </td>
-            <td>
-              <button mat-raised-button (click)="showDatabyidEditForm(i,j)" *ngIf="admin"
+            <td *ngIf="admin">
+              <button mat-raised-button (click)="showDatabyidEditForm(i,j)"
                 class="btn-primary btn-sm btn-just-icon">
                 <i class="material-icons">edit</i>
               </button>
@@ -112,9 +108,6 @@
           </tr>
         </tbody>
       </table>
-      <div class="col-sm-3" *ngIf="adminA">
-        <button class="btn btn-danger" style="width:100%" (click)="pay()">Pay</button>
-      </div>
     </div>
     <div class="col-sm-3" *ngIf="daydiv">
       <button class="btn btn-danger" style="width:100%" (click)="back('day')">Back</button>

@@ -289,7 +289,6 @@ action="/">
         <th>Truck No</th>
         <th>Number</th>
         <th>QR Number</th>
-        <th>Update</th>
       </tr>
     </thead>
     <tbody>
@@ -299,10 +298,10 @@ action="/">
         <td>{{ii.truckno}}</td>
         <td><input type="number" placeholder="" id="contacttb_{{jj}}"></td>
         <td><input type="number" placeholder="" id="contactqr_{{jj}}"></td>
-        <td><button class="btn btn-warning" (click)="updateContact(ii,jj)">Update</button></td>
       </tr>
     </tbody>
   </table>
+  <button class="btn btn-warning" (click)="updateContact()">Update</button>
 </div>
 </div>
 
@@ -337,43 +336,6 @@ action="/">
           <br>
           <button class="btn btn-warning" (click)="updatetpt(ii,jj,'self')">Self</button>
         </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
-
-<div class="well" *ngIf="buttonOption==='9'">
-
-  <div class="row">
-<button class="btn btn-warning" (click)="getAccountsUpdateTrue()">Get Data!</button>
-<button class="btn btn-warning" (click)="generateReportAccount2()">Download</button>
-  </div>
-
-<div class="well" *ngIf="accounttableUF">
-
-  <button class="btn btn-warning" (click)="updateaccountDetails()">Update</button>
-
-
-
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Srno</th>
-        <th>Truck No-Date</th>
-        <th>Name</th>
-        <th>Number</th>
-        <th>IFSC</th>
-        <th>Bank</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let ii of accountarrayUF;let jj=index;">
-        <td>{{jj+1}}</td>
-        <td>{{ii.truckno}}<br>{{ii.currentDate|date:'dd-MM-yyyy'}}</td>
-        <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
-        <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
-        <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}" (change)="updateifscCode(jj)"></td>
       </tr>
     </tbody>
   </table>

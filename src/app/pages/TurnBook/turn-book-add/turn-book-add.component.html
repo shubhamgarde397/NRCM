@@ -1,5 +1,5 @@
 <div class="well">
-  <form [formGroup]="myFormGroup" (ngSubmit)="addToTurn()" submitted=true
+  <form [formGroup]="myFormGroup" submitted=true
     enctype="multipart/form data" action="/">
 
     <div class="row">
@@ -30,7 +30,7 @@
     <div class="form-group row">
       <div class="col-xs-3">
         TruckNo : 
-        <input type="text" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM">
+        <input type="text" class="form-control" [(ngModel)]="trucknoM" formControlName="trucknoM" (keyup.enter)="addToTurn()">
       </div>
 
       <div class="col-xs-1">
@@ -41,27 +41,6 @@
         </div>
       </div>
     </div>
-
-    <!--Truckno-->
-
-    <div class="form-group row">
-      <div class="col-xs-3">
-        Type : 
-        <select class="form-control" formControlName="type">
-          <option value="Open">Open</option>
-          <option value="Container">Container</option>
-        </select>
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.type.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-    </div>
-
 
     <div class="row">
       <div class="form-group" class="col-xs-2">

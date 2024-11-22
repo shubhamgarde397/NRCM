@@ -24,6 +24,7 @@ export class PDFComponent implements OnInit {
   public name = '';
   public addr1 = '';
   public yearDrop;
+
   bankArray = [];
   public imgData2;
   tabber = '';
@@ -295,7 +296,15 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontSize('28');
     doc.setFontType('bold');
     doc.setTextColor(234, 1, 0);
-    doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), this.branch==='nitin roadways'?60:7, 25)
+    if(this.branch==='nitin roadways'){
+      doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), 60, 25)  
+    }
+    else if(this.branch==='nitin roadways and cargo movers'){
+      doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), 7, 25)  
+    }
+    else{
+      doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), 50, 25)  
+    }
 
     doc.setFontSize('16');
     doc.setFontType('bold');
@@ -364,9 +373,9 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('bold')
     doc.text(this.name, 28, 133)
     doc.setFontType('normal')
-    doc.text('Proprietor/Partner/Director of M/s', 50, 133)
+    doc.text('Proprietor/Partner/Director of M/s',this.name==='Shubham Garde'? 60: 50, 133)
     doc.setFontType('bold')
-    doc.text(this.branch.toUpperCase(), 108, 133)
+    doc.text(this.branch.toUpperCase(),this.name==='Shubham Garde'? 118: 108, 133)
 
     doc.setFontType('normal')
     doc.text('(hereinafter "the contractor") do hereby make the following declaration as required by sub', 25, 138)
@@ -411,8 +420,13 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
   }
 
   getAddresses(){
-    let data=this.gstdetailslist.filter(r=>{return r.name===this.addr1})[0]
-    return [data['addr1'],data['addr2']]
+    let data=this.gstdetailslist.filter(r=>{return r.name===this.addr1})
+    if(data.length>0){
+    return [data[0]['addr1'],data[0]['addr2']]
+    }
+    else{
+      return ['','']
+    }
   }
   
   letterpad(data){
@@ -428,7 +442,15 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontSize('28');
     doc.setFontType('bold');
     doc.setTextColor(234, 1, 0);
-    doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), this.branch==='nitin roadways'?60:7, 25)
+    if(this.branch==='nitin roadways'){
+      doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), 60, 25)  
+    }
+    else if(this.branch==='nitin roadways and cargo movers'){
+      doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), 7, 25)  
+    }
+    else{
+      doc.text(this.branch.split(' ').map(r=>{return r.toUpperCase()}).join(' '), 60, 25)  
+    }
 
     doc.setFontSize('16');
     doc.setFontType('bold');

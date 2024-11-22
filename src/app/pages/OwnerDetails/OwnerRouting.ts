@@ -2,7 +2,6 @@
 import {  Routes } from '@angular/router';
 import { OwnerhandlerComponent } from './ownerhandler/ownerhandler.component';
 import { OddispComponent } from './oddisp/oddisp.component';
-import { OdaddComponent } from './odadd/odadd.component';
 import { OwnerUpdateComponent } from './owner-update/owner-update.component';
 
 export const OwnerRouting: Routes =
@@ -19,10 +18,6 @@ export const OwnerRouting: Routes =
                     {
                         path: '',
                         component: OddispComponent
-                    },
-                    {
-                        path: 'OwnerAdd',
-                        component: OdaddComponent
                     },
                     {
                         path: 'OwnerDisp',

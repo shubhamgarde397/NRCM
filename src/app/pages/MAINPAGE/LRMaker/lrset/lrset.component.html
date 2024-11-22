@@ -18,6 +18,30 @@
       </div>
     </div>
 
+
+    <div class="form-group row" >
+
+      <div class="col-xs-2">
+        <label for="truckNo"> Party Type </label>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Party Type : <select id="dest" class="form-control" formControlName="partyType">
+            <option value="NRCM">NRCM</option>
+            <option value="SNL">SNL</option>
+          </select>
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.partyType.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+    </div>
+
       <div class="form-group row">
 
         <div class="col-xs-2">

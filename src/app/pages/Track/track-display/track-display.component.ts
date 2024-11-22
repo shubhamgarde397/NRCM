@@ -38,9 +38,7 @@ export class TrackDisplayComponent implements OnInit {
       this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
       .subscribe((res: any) => {
       
-      this.data=res.Data;
-
-
+      this.data=res.Status;
 
       if(confirm('Click Ok to open Whatsapp')){
       window.open(this.data,'_blank');    

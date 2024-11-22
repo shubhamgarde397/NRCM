@@ -1,30 +1,66 @@
 <div class="well">
   <div class="row">
-      
-  <div class="col-sm-4">
-  <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
-    Find
-  </button>
-</div>
-</div>
-<hr>
+    <button class="btn btn-warning" (click)="qr(1)">QR Link</button>
+    <button class="btn btn-warning" (click)="qr(2)">Whatsapp QR</button>
+    <button class="btn btn-warning" (click)="qr(3)">QR To Home</button>
+  </div>
 
-<table class="table table-bordered" *ngIf="!gotData18">
+<table class="table table-bordered" *ngIf="whichqr==1">
   <tr>
     <th>Srno</th>
     <th>Date</th>
     <th>TruckNo-Contact</th>
-    <th>Place</th>
     <th>Account</th>
     <th>QR</th>
+    <th>Update</th>
   </tr>
   <tr *ngFor="let i of turnbooklist;let j = index;">
     <td>{{j+1}}</td>
     <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
     <td>{{i.truckno}}<br>{{i.contacttb}}</td>
-    <td>{{i.place}}</td>
     <td>{{i.acc['accountName']}}-{{i.acc['accountNumber']}}</td>
-    <td><qrcode [scale]='1' [qrdata]=i.qr [width]="150" [errorCorrectionLevel]="'M'"></qrcode></td>
+
+    <td *ngIf="i.contactqr!==''"><qrcode [scale]='1' [qrdata]=i.qr [width]="150" [errorCorrectionLevel]="'M'" ></qrcode></td>
+    <td *ngIf="i.contactqr==''"><input type="text" id="a_{{jj}}"><button class="btn btn-warning" (click)="addContact(i,j,1)">Add</button></td>
+    
+  </tr>
+</table>
+
+<table class="table table-bordered" *ngIf="whichqr==2">
+  <tr>
+    <th>Srno</th>
+    <th>Date</th>
+    <th>TruckNo-Contact</th>
+    <th>Account</th>
+    <th>Whatsapp QR</th>
+    <th>Update</th>
+  </tr>
+  <tr *ngFor="let i of turnbooklist1;let j = index;">
+    <td>{{j+1}}</td>
+    <td>
+      <ul *ngFor="let j of i.loadingDate">
+        <li>{{j|date:'dd-MM-yyyy'}}</li>
+      </ul>
+    </td>
+    <td>
+      <ul *ngFor="let j of i.truckno">
+        <li>{{j}}</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>{{i.accdetail.accountName}}</li>
+        <li>{{i.accdetail.accountNumber}}</li>
+      </ul>
+    </td>
+    <td *ngIf="i.contactqr!==''">
+      <qrcode [scale]='1' [qrdata]=i.wqr [width]="500" [errorCorrectionLevel]="'M'" ></qrcode>
+    </td>
+    <td *ngIf="i.contactqr==''">
+      <input type="text" id="a_{{j}}">
+      <button class="btn btn-warning" (click)="addContact(i,j,2)">Generate QR</button>
+    </td>
+    
   </tr>
 </table>
 </div>

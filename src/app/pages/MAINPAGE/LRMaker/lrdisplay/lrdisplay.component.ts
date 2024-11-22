@@ -19,7 +19,18 @@ import 'jspdf-autotable';
 export class LrdisplayComponent implements OnInit {
 public billno='';
 public data=[];
+public documentNo='';
+public particular='';
+public documentNos=[];
+public particulars=[];
+public w;
+public tf;
+public paid;
+public tp;
+public ba;
 public showFrieght=false;
+public bigJJ=0;
+public bigII;
 public showdownload=false;
 constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
   public handleData: HandleDataService, public handleF: handleFunction,
@@ -35,7 +46,7 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   let tempObj1={};
       tempObj1['tablename'] = ''
       tempObj1['method'] = 'getDigiLR'
-      tempObj1['billno'] = 'nrcm_'+this.billno;
+      tempObj1['billno'] = this.billno;
       this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj1, true)
         .subscribe((res: any) => {
@@ -47,6 +58,116 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
         });
   
   }
+
+  delDoc(j){
+    if(confirm('Are you sure you want to delete this document?')){
+    this.documentNos.splice(j,1)
+    this.data[this.bigJJ].documentNo.splice(j,1)
+
+    let tempObj={}
+    tempObj['method']='saveDocumentNo';  //work from here
+    tempObj['tablename']='';
+    tempObj['_id']=this.bigII['_id']
+    tempObj['documentNo']=this.documentNos;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+      });
+    }
+}
+
+addDoc(){
+  if(this.documentNo===''){}
+  else{
+  this.data[this.bigJJ].documentno.push(this.documentNo);
+  this.documentNos=this.data[this.bigJJ]['documentno'];
+  }
+  let tempObj={}
+  tempObj['method']='saveDocumentNo';  //work from here
+  tempObj['tablename']='';
+  tempObj['_id']=this.bigII['_id']
+  tempObj['documentNo']=this.documentNos;
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+    });
+}
+
+delPar(j){
+  if(confirm('Are you sure you want to delete this particular?')){
+  this.particulars.splice(j,1)
+  this.data[this.bigJJ].particulars.splice(j,1)
+
+  let tempObj={}
+  tempObj['method']='saveparticular';  //work from here
+  tempObj['tablename']='';
+  tempObj['_id']=this.bigII['_id']
+  tempObj['particulars']=this.particulars;
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+    });
+  }
+}
+
+addPar(){
+if(this.particular===''){}
+else{
+this.data[this.bigJJ].particulars.push(this.particular);
+this.particulars=this.data[this.bigJJ]['particulars'];
+}
+let tempObj={}
+tempObj['method']='saveparticular';  //work from here
+tempObj['tablename']='';
+tempObj['_id']=this.bigII['_id']
+tempObj['particulars']=this.particulars;
+this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+  .subscribe((res: any) => {
+    alert(res.Status);
+    this.particular='';
+  });
+}
+
+addPar2(){
+  let tempObj={}
+  tempObj['method']='saveparticular2';
+  tempObj['tablename']='';
+  tempObj['_id']=this.bigII['_id']
+  tempObj['w']=this.w;
+  tempObj['tf']=this.tf;
+  tempObj['paid']=this.paid;
+  tempObj['tp']=this.tp;
+  tempObj['ba']=this.ba;
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status);
+    });
+  }
+
+  
+
+saveDoc(i,j,data){
+  this.bigII=i;
+  this.bigJJ=j;
+  switch (data) {
+    case 'doc':
+      this.documentNos=this.data[this.bigJJ]['documentno'];    
+      break;
+      case 'par':
+      this.particulars=this.data[this.bigJJ]['particulars'];
+      break;
+      case 'par2':
+        this.w=this.data[this.bigJJ]['particulars2'].w;
+        this.tf=this.data[this.bigJJ]['particulars2'].tf;
+        this.paid=this.data[this.bigJJ]['particulars2'].paid;
+        this.tp=this.data[this.bigJJ]['particulars2'].tp;
+        this.ba=this.data[this.bigJJ]['particulars2'].ba;
+      
+      break;
+  }
+  
+  
+}
 
   DownloadLR1() {
     let temp=this.data[0];
@@ -341,17 +462,22 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
       'billno':temp['billno'],
       'partyname':temp['partyname'],
       'truckno':temp['truckno'],
+      'partyType':temp['partyType'],
       'typeofload':temp['typeOfLoad'],
       'documentno':temp['documentno'],
       'destination':temp['destination'],
       'flexid':temp.flexid.filter(t=>{return t.village===temp.destination})[0]['flexid'],
       'fromflex':temp['fromflex'],
       'gstno':temp['gstno'],
+      'particulars':temp['particulars'],
+      'particulars2':temp['particulars2'],
       'fromname':temp['fromname'],
       'fromaddress':temp['fromaddress'],
       'fromgstno':temp['fromgstno'],
       'lrshort':temp['lrshort']
   }
+  console.log(data);
+  
   // Box on the page
   doc.line(14,14,295,14)
   doc.line(14,14,14,208)
@@ -364,7 +490,11 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
     doc.setFontType('bold');
     doc.setTextColor(224,0,0);
     doc.addImage(om,'PNG',114,y+13,5,5)
+    if(data.partyType==='NRCM'){
     doc.text('NITIN ROADWAYS AND CARGO MOVERS',27, y+26)
+    }else if(data.partyType==='SNL'){
+      doc.text('SHRI NITIN LOGISTICS',72, y+26)
+    }
   
     doc.setFontSize('16');
     doc.setFontType('bold');
@@ -405,7 +535,7 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   doc.text(data.fromaddress,17,72)
   doc.text('Shipping Address : As Per Bill to '+data.destination,115,72)
   doc.text('Customer Id : '+data.fromflex,17,77)
-  doc.text('Customer Id : '+data.flexid,115,77)
+  doc.text('Customer Id : '+(data.flexid.length>0?data.flexid:'0'),115,77)//
   doc.text('GST NO : '+data.fromgstno,17,82)
   doc.text('GST NO : '+data.gstno,115,82)
   
@@ -430,8 +560,12 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   doc.setTextColor(0,0,0)
   doc.setFontSize('10');
   doc.setFontType('bold')
+  if(data.partyType==='NRCM'){
   doc.text('GSTIN NO. : 27AFGPG3657L1Z5',222,40)
   doc.text('PAN : AFGPG3657L',222,47)
+  }else if(data.partyType==='SNL'){
+    doc.text('PAN : BTBPG2818K',222,43)
+  }
   doc.setTextColor(52,65,124)
   doc.text('DATE',222,20)
   doc.text('BILL NO',262,20)
@@ -534,16 +668,45 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   doc.text('Amount in Words : ',16,185)
   
   doc.setFontType('normal')
-  if(data.typeofload==='Fittings'){
-    doc.text('1',18,145)
-  doc.text('Fittings Bags and Boxes',50,145)
-  doc.text('FTL',126,145)
-  }else if(data.typeofload==='Pipe'){
-    doc.text('1',18,145)
-    doc.text('PVC Pipes',50,145)
-    doc.text('FTL',126,145)
+
+  if(data.partyType==='NRCM'){
+    if(data.particulars.length>0)
+    {
+      for(let ii=0;ii<data.particulars.length;ii++){
+        doc.text(String(ii+1),18,145+(ii*5))
+        doc.text(data.particulars[ii],50,145+(ii*5))
+      }
+      doc.text(String(data.particulars2['w']),126,145)
+      doc.text(String(data.particulars2['tf']),158,145)
+      doc.text(String(data.particulars2['paid']),205,145)
+      doc.text(String(data.particulars2['tp']),245,145)
+      doc.text(String(data.particulars2['ba']),275,145)
+    }else{
+      if(data.typeofload==='Fittings'){
+      doc.text('1',18,145)
+      doc.text('PVC Fittings Bags and Boxes',50,145)
+      doc.text('FTL',126,145)
+      }else if(data.typeofload==='Pipe'){
+        doc.text('1',18,145)
+        doc.text('PVC Pipes',50,145)
+        doc.text('FTL',126,145)
+      }
+    }
+  }else if(data.partyType==='SNL')
+  {
+    if(data.particulars.length>0)
+      {
+        for(let ii=0;ii<data.particulars.length;ii++){
+          doc.text(String(ii+1),18,145+(ii*5))
+          doc.text(data.particulars[ii],50,145+(ii*5))
+        }
+        doc.text(String(data.particulars2['w']),126,145)
+        doc.text(String(data.particulars2['tf']),158,145)
+        doc.text(String(data.particulars2['paid']),205,145)
+        doc.text(String(data.particulars2['tp']),245,145)
+        doc.text(String(data.particulars2['ba']),275,145)
+      }
   }
-  
   doc.setFontType('bold')
   
   doc.setFontSize('12');
@@ -596,11 +759,23 @@ constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4Lo
   
   
   doc.setTextColor(255,0,0)
-  doc.text('ISSUE CHEQUE IN FAVOR OF NITIN ROADWAYS AND CARGO MOVERS ONLY',15,206)
-  doc.setTextColor(52,65,124)
+  if(data.partyType==='NRCM'){
+    doc.text('ISSUE CHEQUE IN FAVOR OF NITIN ROADWAYS AND CARGO MOVERS ONLY',15,206)
+    doc.setTextColor(52,65,124)
   doc.text('Signature of Consignor',145,206)
   doc.setTextColor(255,0,0)
   doc.text('FOR NITIN ROADWAYS AND CARGO MOVERS',222,205)
+  }
+  else if(data.partyType==='SNL'){
+    doc.text('ISSUE CHEQUE IN FAVOR OF SHRI NITIN LOGISTICS ONLY',15,206)
+    doc.setTextColor(52,65,124)
+  doc.text('Signature of Consignor',145,206)
+  doc.setTextColor(255,0,0)
+  doc.text('FOR SHRI NITIN LOGISTICS',222,205)
+
+  }
+  
+  
   
   doc.line(212,187,212,208)
   doc.line(140,201,140,208)

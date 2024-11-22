@@ -1,0 +1,91 @@
+<div class="well" *ngIf="!admin">
+  <div class="row"> 
+    <input type="text" [(ngModel)]="billno">
+    <button class="btn btn-warning" (click)="get()">Get</button>
+    <button class="btn btn-warning" (click)="adminF()">ADMIN</button>
+  </div>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Srno</th>
+    <th>Date</th>
+    <th>TruckNo</th>
+    <th>Place</th>
+    <th>Amount</th>
+    <th>Total</th>
+    <th>Account</th>
+  </tr>
+  <tr *ngFor="let i of turnbooklist1;let j = index;">
+    <td>{{j+1}}</td>
+
+    <td>
+      <ul *ngFor="let jj of i.loadingDate">
+      <li>{{jj|date:'dd-MM-yyyy'}}</li>
+    </ul></td>
+    <td>
+      <ul *ngFor="let jj of i.truckno">
+        <li>{{jj}}</li>
+      </ul></td>
+    <td>
+      <ul *ngFor="let jj of i.place">
+        <li>{{jj}}</li>
+      </ul></td>
+    <td>
+      <ul *ngFor="let jj of i.pochAmount">
+        <li>{{jj}}</li>
+      </ul></td>
+    <td>{{i.total}}<br>Refence:{{i.balrefno}}</td>
+
+    <td>{{i.accdetail['accountNumber']}}</td>
+  </tr>
+</table>
+
+<input class="form-control" type="text" placeholder="Reference" [(ngModel)]="balrefno">
+      <input class="form-control" type="number" placeholder="amount" [(ngModel)]="apa">
+      <input class="form-control" type="date" [(ngModel)]="apd">
+      <button class="btn btn-danger" (click)="save()">Save</button>
+
+</div>
+
+<div class="well" *ngIf="admin">
+  <div class="row"> 
+    <button class="btn btn-warning" (click)="getA()">Get</button>
+  </div>
+  <table class="table table-bordered">
+    <tr>
+      <th>Srno</th>
+      <th>Date</th>
+      <th>TruckNo</th>
+      <th>Account</th>
+      <th>Update</th>
+    </tr>
+    <tr *ngFor="let i of turnbooklist;let j = index;">
+      <td>{{j+1}}</td>
+      <td>
+        <ul *ngFor="let j of i.loadingDate">
+          <li>{{j|date:'dd-MM-yyyy'}}</li>
+        </ul>
+      </td>
+      <td>
+        <ul *ngFor="let j of i.truckno">
+          <li>{{j}}</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>{{i.accdetail.accountName}}</li>
+          <li>{{i.accdetail.accountNumber}}</li>
+        </ul>
+      </td>
+      <td *ngIf="i.contact!==''">
+        {{i.contact}}
+        <button class="btn btn-warning" (click)="qrF(i)">Send Msg</button> 
+      </td>
+      <td *ngIf="i.contact==''">
+        <input type="text" id="a">
+        <button class="btn btn-warning" (click)="addContact(i)">Generate QR</button>
+      </td>
+      
+    </tr>
+  </table>
+</div>

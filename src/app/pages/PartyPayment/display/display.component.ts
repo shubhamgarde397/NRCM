@@ -809,7 +809,11 @@ public year;
           doc.text(String('-'), 174, y)//partyname
            }
       }
-
+      if(this.paymentData[i]['typeOfLoad']==='Fittings'){
+      doc.setTextColor(234, 1, 0);
+      doc.text(String(this.paymentData[i]['typeOfLoad']), 180, y)//type of load
+      doc.setTextColor(0,0,0);
+      }
        
       
         if(this.paymentData[i].placeName2===undefined){

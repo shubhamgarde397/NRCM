@@ -161,6 +161,26 @@ pageCalculator(data){
 }
 
 pdfData(doc,data,ack){
+  console.log(data);
+  
+  let partyType='';
+  let panno=''
+  let x=0;
+  switch (data.partyType) {
+    case 'NR':
+      partyType='NITIN ROADWAYS'
+      panno='AFGPG0575D'
+      x=28;
+      break;
+      case 'SNL':
+        partyType='SHRI NITIN LOGISTICS'
+        panno='BTBPG2818K'
+        x=15;
+        break;
+  
+    default:
+      break;
+  }
   let threshhold=this.threshholdCalculator(data.sum);
   let pager=1;
   let pagerMax=this.pageCalculator(data.sum);
@@ -171,7 +191,7 @@ pdfData(doc,data,ack){
   doc.setFontSize('30');
   doc.setFontType('bold');
   doc.setTextColor(224,0,0);
-  doc.text('NITIN ROADWAYS',28, 18)
+  doc.text(partyType,x, 18)
   doc.line(0, 106, 5, 106);//punching line helper
   doc.setDrawColor(163,0,0);
   doc.setLineWidth(0.5);
@@ -215,11 +235,11 @@ pdfData(doc,data,ack){
   doc.text('Bill No. :    '+billno,10,55)
   doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,55)
   
-  doc.text("We Nitin Roadways are submitting "+data['sum']+" PODs to",15,66)
-  doc.text(data['_id'],15,72.5)
+  doc.text("We "+partyType+" are submitting ",15,66)
+  doc.text(data['sum']+" PODs to "+data['_id'],15,72.5)
   doc.setTextColor(224,0,0);
   doc.setFontSize('10');
-  doc.text('PAN No. : AFGPG0575D',15,80)
+  doc.text('PAN No. : '+panno,15,80)
   doc.setFontSize('12');
   doc.setTextColor(0, 0, 0);
 // 
@@ -288,7 +308,7 @@ doc.setTextColor(0, 0, 0);
   doc.setFontSize('30');
   doc.setFontType('bold');
   doc.setTextColor(224,0,0);
-  doc.text('NITIN ROADWAYS',28, 18)
+  doc.text(partyType,28, 18)
   doc.line(0, 106, 5, 106);//punching line helper
   doc.setDrawColor(163,0,0);
   doc.setLineWidth(0.5);
@@ -332,11 +352,11 @@ doc.setTextColor(0, 0, 0);
   doc.text('Bill No. :    '+billno,10,55)
   doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,55)
   
-  doc.text("We Nitin Roadways are submitting "+data['sum']+" PODs to",15,66)
+  doc.text("We "+partyType+" are submitting "+data['sum']+" PODs to",15,66)
   doc.text(data['_id'],15,72.5)
   doc.setTextColor(224,0,0);
   doc.setFontSize('10');
-  doc.text('PAN No. : AFGPG0575D',15,80)
+  doc.text('PAN No. : '+panno,15,80)
   doc.setFontSize('12');
   doc.setTextColor(0, 0, 0);
 // 
@@ -504,7 +524,7 @@ CollectionMemoC(dataa,j,sign){
   doc.text('Lorry Hire : ',10,mainY+53)
   doc.setTextColor(224,0,0);
 
-  doc.text(data['lrnoTF']?'LRNO':'TON',67, mainY+53)
+  doc.text('LRNO',67, mainY+53)//
 
   doc.setTextColor(12,139,173);
   doc.text('Height or Length Extra Rs     : ',10,mainY+60)
@@ -526,7 +546,7 @@ CollectionMemoC(dataa,j,sign){
   if(this.admin){
   doc.text(String(data.hamt),35,mainY+53)
   }
-    doc.text(data['lrnoTF']?data.nrlrno:'TON',100, mainY+53)
+    doc.text(data.nrlrno,100, mainY+53)//
 if(sign){
   doc.addImage(this.sstampsign,'JPEG',100,85,40,20)
 }
@@ -563,6 +583,8 @@ if(sign){
   }
   else if(data.partyType==='SNL'){
       doc.text('For Shri Nitin Logistics',105, mainY+84)
+      doc.setTextColor(0,0,0);
+    doc.text('PAN : BTBPG2818K',10, mainY+92)
   }
   if(index+1>=dataa.sum){}
     else{

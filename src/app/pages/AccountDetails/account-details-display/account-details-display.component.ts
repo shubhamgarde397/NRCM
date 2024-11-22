@@ -22,7 +22,6 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Pan','value':'2','disabled':false},//remove
     {'viewValue':'Contact','value':'3','disabled':false},
     {'viewValue':'Transport Name','value':'5','disabled':false},
-    {'viewValue':'Update Account Details','value':'9','disabled':false},
     {'viewValue':'Truck Format','value':'10','disabled':false},
     {'viewValue':'Truck Registration Fee','value':'11','disabled':false},
     {'viewValue':'My RC','value':'13','disabled':false},
@@ -32,6 +31,7 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'Daily Account Details','value':'19','disabled':false},
   ]
   public displayType;
+  public contacto;
   public buttonOption;
   public buttonValue;
   public showButton=false;
@@ -155,40 +155,6 @@ public bname;
   }
   updateifscCode(index){
     (<HTMLInputElement>document.getElementById('bname_'+index)).value=(<HTMLInputElement>document.getElementById('ifsc_'+index)).value.slice(0,4)
-  }
-
-  updateaccountDetails(i,j){
-
-    let aD=[]
-    let tempObj={};
-
-
-    for(let i=0;i<this.accountarrayUF.length;i++){
-    let accname=(<HTMLInputElement>document.getElementById('accname_' + i)).value;
-    let accno=(<HTMLInputElement>document.getElementById('accno_' + i)).value;
-    let bname=(<HTMLInputElement>document.getElementById('bname_' + i)).value;
-    let ifsc=(<HTMLInputElement>document.getElementById('ifsc_' + i)).value;
-    if(accname===''||accno===''||bname===''||ifsc===''){}
-    else{
-      let itempObj={}
-      itempObj['accountName']=accname;
-      itempObj['accountNumber']=accno;
-      itempObj['ifsc']=ifsc;
-      itempObj['_id']=this.accountarrayUF[i]['_id'];
-      aD.push(itempObj)
-
-    }
-  }
-
-
-  tempObj['aD']=aD;
-      tempObj['tablename']='';
-      tempObj['method']='SMARTACCOUNTUPDATEUFNEW';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.accountarrayUF.splice(j,1);
-      });
   }
 
   find(){
@@ -585,17 +551,6 @@ switch (this.buttonOption) {
     });
   }
 
-  getAccountsUpdateTrue(){
-    let tempObj={};
-    tempObj['method']='SmartAccountUpdateTrue'
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {  
-    this.accountarrayUF=res.chartData;
-    this.accounttableUF=true;
-    });
-  }
-
   gettruckFormat(){
     let tempObj={};
     tempObj['method']='SmartTruckFormat'
@@ -657,25 +612,36 @@ switch (this.buttonOption) {
 
   }
   updateContact(i,j){
-    let contacttb=(<HTMLInputElement>document.getElementById('contacttb_' + j)).value;
-    let contactqr=(<HTMLInputElement>document.getElementById('contactqr_' + j)).value;
-    if(contacttb===''&&contactqr===''){
-      alert('Cannot add empty fields')
-    }
+    
+
+    let aD=[]
+    let tempObj={};
+
+
+    for(let i=0;i<this.contactarray.length;i++){
+      let contacttb=(<HTMLInputElement>document.getElementById('contacttb_' + i)).value;
+      let contactqr=(<HTMLInputElement>document.getElementById('contactqr_' + i)).value;
+    if(contacttb===''||contactqr===''){}
     else{
-      let tempObj={}
-      tempObj['contacttb']=contacttb;
-      tempObj['contactqr']=contactqr;
-      tempObj['_id']=i['_id'];
-      tempObj['ownerid']=i['ownerid'];
+      let itempObj={}
+      // itempObj['contacttb']=contacttb;
+      // itempObj['contactqr']=contactqr;
+      itempObj['contacto']=this.contacto;
+      itempObj['_id']=this.contactarray[i]['_id'];
+      itempObj['ownerid']=this.contactarray[i]['ownerid'];
+      aD.push(itempObj)
+
+    }
+  }
+
+
+  tempObj['data']=aD;
       tempObj['tablename']='';
       tempObj['method']='SMARTCONTACTUPDATE';
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
-        alert(res.Status);
-        this.contactarray.splice(j,1);
+        alert('Please Refresh!');
       });
-    }
   }
 
   updatetruckformat(i,j){
@@ -841,75 +807,4 @@ switch (this.buttonOption) {
       
            doc.save('Account-Details.pdf')
          }
-
-         generateReportAccount2(){//threshhold is 295
-          // Fetch all trucks who have either 12 or 363 as false
-                let data=this.accountarrayUF;
-                let pager=1;
-                 var doc = new jsPDF()
-                 doc.setFontType('bold');
-                 doc.setFontSize('25');
-                 doc.setLineWidth(0.5);
-                 doc.line(0, 5, 210, 5);//line after main header
-                 //headers
-                 doc.setFontSize('10');
-                 let y = 9;
-                 let starty = 9;
-                 doc.text('Sr', 3, y)//partyname
-                 doc.text('TruckNo', 12, y)//partyname
-                 doc.text('Account', 39, y)//partyname
-                 //headers
-                 doc.line(0, 10, 210, 10);//line after header
-             
-                 //vertical lines
-                 doc.line(10, 5, 10, 10);//srno
-                 doc.line(38, 5, 38, 10);//date
-                 //vertical lines
-                 let startforI=0;
-                 y = y + 6;
-                 startforI=0;
-                 for (let i = startforI; i < data.length; i++) {
-             
-                   if(y>195){
-                    //vertical lines//getting applied for every loop, make it happen once only
-                 doc.line(10, starty, 10, y-4);//srno
-                 doc.line(38, starty, 38, y-4);//date
-                 //vertical lines
-                     y=9;
-                     y=y+6;
-                 starty = 9;
-                     doc.addPage();
-                 doc.setFontType('bold');
-                 doc.setFontSize('25');
-                 doc.setLineWidth(0.5);
-                 doc.line(0, 5, 210, 5);//line after main header
-                 //headers
-                 doc.setFontSize('10');
-                 doc.text('Sr', 3, y-6)//partyname
-                 doc.text('TruckNo', 12, y-6)//partyname
-                 doc.text('Account', 39, y-6)//partyname
-                 //headers
-                 doc.line(0, 10, 210, 10);//line after header
-             
-                 //vertical lines
-                 doc.line(10, 5, 10, 10);//srno
-                 doc.line(38, 5, 38, 10);//date
-                 //vertical lines
-                 }
-    
-                  doc.text(String(i+1), 3, y)//partyname
-                  doc.text(data[i].truckno, 11, y)//partyname
-     
-                            
-                   doc.line(0, y + 11, 210, y + 11);//line after header
-                   y = y + 15;
-                 }
-      
-                 //vertical lines//getting applied for every loop, make it happen once only
-                 doc.line(10, starty, 10, y-4);//srno
-                 doc.line(38, starty, 38, y-4);//date
-                 //vertical lines
-            
-                 doc.save('Account-Details.pdf')
-               }
 }

@@ -6,6 +6,7 @@ import { SecurityCheckService } from '../../../common/services/Data/security-che
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import { Consts } from 'src/app/common/constants/const';
 
 @Component({
   selector: 'app-transport-display',
@@ -83,6 +84,36 @@ export class TransportDisplayComponent implements OnInit {
     this.transportlist = this.commonArray.transport;
   }
 
+download(i){
+  var doc = new jsPDF('l','mm',[110,220])
+  doc.setFontSize('5')
+  doc.setFontType('Open Sans')
+  doc.text('From,',23, 28)
+  doc.setTextColor(224,0,0);
+  doc.text('Nitin Roadways,',25, 30)
+  doc.setTextColor(0,0,0);
+  doc.text('Shop No. 253, Opp. Katraj Police Station,',25, 32)
+  doc.text('Pune Satara Road,Pune - 411046',25, 34)
+  doc.text('Co : 9766707061',25, 36)
+  doc.text('www.nitinroadways.in',25, 38)
+  doc.addImage(Consts.goldennr, 'PNG', 2, 20, 20, 20);//add if else
+
+
+
+  doc.text('To,',28, 8)
+  doc.setTextColor(224,0,0);
+  doc.text(i.tptName,30,10)
+  doc.setTextColor(0,0,0);
+  doc.text(i.addr1,30, 12)
+  doc.text(i.addr2,30, 14)
+  doc.text(i.addr3,30, 16)
+  doc.text(this.makeCo({contact:i.contact}),30, 18)
+
+
+  doc.save(i.tptName+'.pdf')
+
+}
+
   downloadMail(){
     let data=this.transportlist;
   
@@ -135,7 +166,7 @@ export class TransportDisplayComponent implements OnInit {
       let str='Mo : '
 for(let i=0;i<data.contact.length;i++){
     str=str+data.contact[i]
-    if(data.contact[i+1]){str=str+','}
+    if(data.contact[i+1]){str=str+', '}
 }
 str=str+'.'
 return str;

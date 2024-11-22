@@ -55,6 +55,33 @@ export class TurnBookAddComponent implements OnInit {
     this.role = this.securityCheck.role;
   }
 
+getType(a){
+  let raw=a.replace(/ /g, "");
+  return [raw.split('.')[0],raw.split('.')[1]===undefined?'O':raw.split('.')[1]]
+}
+
+  addToTurn(){
+    let truckNo='';
+    let data=this.getType(this.myFormGroup.value.trucknoM);
+    data[0]=data[0].toUpperCase();
+    data[1]=data[1].toUpperCase();
+    truckNo=this.formatTruckNo(data[0])
+    if(this.checkValidity(truckNo)){
+    let temp={}
+    temp['turnbookDate']=this.turnbookDate;
+    temp['truckno']=truckNo;
+    temp['type']=data[1]==='O'?'Open':'Container';
+    temp['delete']=true
+    this.turnAdd.push(temp);
+    this.toAdd.push(temp)
+    this.myFormGroup.patchValue({trucknoM:''})
+    }else{
+      alert('Truck already present!')
+      this.myFormGroup.patchValue({trucknoM:''})
+      this.myFormGroup.patchValue({type:'None'})
+    }
+  }
+
 
   storeTurnBookData() {
     this.submitted = true;
@@ -107,6 +134,7 @@ export class TurnBookAddComponent implements OnInit {
 			newtruck.push(raw.slice(6,10))	
 	}
 	if(raw.length==9){
+
 			newtruck.push(' ')
 			newtruck.push(raw.slice(4,5))	
 			newtruck.push(' ')
@@ -120,24 +148,6 @@ export class TurnBookAddComponent implements OnInit {
 }
 
 
-  addToTurn(){
-    let truckNo='';
-    truckNo=this.formatTruckNo(this.myFormGroup.value.trucknoM)
-    if(this.checkValidity(truckNo)){
-    let temp={}
-    temp['turnbookDate']=this.turnbookDate;
-    temp['truckno']=truckNo;
-    temp['type']=this.myFormGroup.value.type;
-    temp['delete']=true
-    this.turnAdd.push(temp);
-    this.toAdd.push(temp)
-    this.myFormGroup.patchValue({trucknoM:''})
-    }else{
-      alert('Truck already present!')
-      this.myFormGroup.patchValue({trucknoM:''})
-      this.myFormGroup.patchValue({type:'None'})
-    }
-  }
 
   deleteFromTurn(data) {
     if (confirm('Are you sure?')) {

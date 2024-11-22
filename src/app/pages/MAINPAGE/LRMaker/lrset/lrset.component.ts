@@ -48,6 +48,7 @@ public table3=false;
     this.nrcmid=this.securityCheck.nrcmid;
     this.myFormGroup = this.formBuilder.group({
       date:['',Validators.required],
+      partyType:['',Validators.required],
       tbid:['',Validators.required],
       type:['',Validators.required],
       pid:['',Validators.required],
@@ -85,12 +86,15 @@ this.dataT=data;
   }
 
   submitAmt(){
+    
+    
     let truckss=this.trucks.find(r =>{return r.truckno == this.myFormGroup.value.tbid})
     truckss=truckss?truckss:{'_id':this.myFormGroup.value.tbid,'ownerid':'','new':true};
     let tempObj={
     'method':'setdigilr',
     'tablename':'',
     'id': truckss['_id'],
+    'partyType':this.myFormGroup.value.partyType,
     'pid':this.myFormGroup.value.pid,
     'vid':this.myFormGroup.value.vid,
     'fid':this.myFormGroup.value.fid,
@@ -101,8 +105,6 @@ this.dataT=data;
     'new':truckss['new']
 
     }
-
-
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
         alert(res.Status);

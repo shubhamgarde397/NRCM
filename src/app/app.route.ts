@@ -35,6 +35,8 @@ import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.compo
 import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
 import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
+import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
+import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
  
 export const routes: Routes =
     [
@@ -53,6 +55,10 @@ export const routes: Routes =
         {
             path: 'QR',
             component: TrackDisplayComponent
+        },
+        {
+            path: 'PDF',
+            component: TpdfComponent
         },
         {
             path: 'TRACK',
@@ -105,6 +111,14 @@ export const routes: Routes =
                     {
                         path: 'QRDATA',
                         component: AddqrComponent
+                    },
+                    {
+                        path: 'PMTRCT',
+                        component: ReceiptComponent
+                    },
+                    {
+                        path: 'CONTACT_DAILY',
+                        component: ReceiptComponent
                     },
                     {
                         path: 'GST_HANDLER',

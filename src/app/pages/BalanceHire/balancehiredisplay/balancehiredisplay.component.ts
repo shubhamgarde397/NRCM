@@ -136,35 +136,6 @@ public dueMDate;
     this.givenDate=this.handleF.createDate(new Date());
   }
 
-  selectAll(){
-    let temp=[];
-    for(let i=0;i<this.balanceDate.length;i++){
-      for(let j=0;j<this.balanceDate[i]['truckData'].length;j++){
-        (<HTMLInputElement>document.getElementById('m_'+i+'_'+j)).checked=true;
-      }
-    }
-  }
-
-  pay(){
-    let formbody={}
-    let temp=[];
-    for(let i=0;i<this.balanceDate.length;i++){
-      for(let j=0;j<this.balanceDate[i]['truckData'].length;j++){
-        if((<HTMLInputElement>document.getElementById('m_'+i+'_'+j)).checked){
-          temp.push(this.balanceDate[i]['truckData'][j]['tbid'])
-        }
-      }
-    }
-
-formbody['method']='updatewhichtopay';
-formbody['tablename']=''
-formbody['ids']=temp;
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, formbody, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-    });
-  }
 
   adminAccess() {
     this.admin = !this.admin;
@@ -681,22 +652,6 @@ if(confirm('Do you want to temporary delete it?')){
       }
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
-        if(this.balanceDate[z].truckData[k].pay){
-        doc.text("Pay", 2, i);//amount
-        }
-        // Forward Date
-        if(this.selectedDate==this.balanceDate[z]['todayDate']){
-          if(this.balanceDate[z].truckData[k].forwardDate==''){}else{
-            doc.text('fD:'+this.handleF.getDateddmmyy(this.balanceDate[z].truckData[k].forwardDate), 191, i+12);
-            }
-        }
-        else{
-          if(this.balanceDate[z].truckData[k].forwardDate==this.selectedDate){
-            doc.text('pD:'+this.handleF.getDateddmmyy(this.balanceDate[z]['todayDate']), 191, i+12);
-          }
-        }
-        
-        // Forward Date
         doc.text(String(this.balanceDate[z].truckData[k].total), 16, i);//amount
 
         doc.setFontSize('10');
@@ -707,7 +662,7 @@ if(confirm('Do you want to temporary delete it?')){
         
         doc.setFontSize('8');
         if(dataTF){
-        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails:'', 108, i);//truckno
+        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails+'-'+String(this.billno(this.balanceDate[z].truckData[k].billno)):'', 107, i);//truckno
         doc.text(this.balanceDate[z].truckData[k].Prd, 142, i);//truckno
         }        
 
@@ -758,9 +713,7 @@ if(confirm('Do you want to temporary delete it?')){
   
       doc.text(this.balanceDate[z].accountName, 147.5, accountI);//accno
       doc.text(String(this.balanceDate[z].accountNumber), 147.5, accountI+6);//accname
-      doc.text(this.balanceDate[z].ifsc + '-' + this.balanceDate[z].contacttb, 147.5, accountI+12);//ifsc
-      doc.rect( 195, accountI+9,3,3)
-      doc.rect( 200, accountI+9,3,3)
+      doc.text(this.balanceDate[z].ifsc, 147.5, accountI+12);//ifsc
       }
       if(!dataTF){
         doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 115, accountI);//truckno
@@ -775,6 +728,17 @@ if(confirm('Do you want to temporary delete it?')){
     //Dynamic Part End
     doc.save(dateFormat + '.pdf')
   }
+
+  billno(data){
+    switch (data.split('_')[0]) {
+      case 'nrcm':
+      return '1'+data.split('_')[1]
+      case 'nr':
+      return '2'+data.split('_')[1]
+      case 'snl':
+      return '3'+data.split('_')[1]
+  }
+}
 
   ls(no){
     if(no<6){

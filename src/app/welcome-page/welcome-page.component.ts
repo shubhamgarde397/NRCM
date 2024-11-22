@@ -71,6 +71,9 @@ this.fetchData();
       case 'truckdetails':
         this.router.navigate(['Navigation/OWNER_HANDLER'])
         break;
+        case 'contactadd':
+          this.router.navigate(['Navigation/CONTACT_DAILY'])
+          break;
     }
 
   }
