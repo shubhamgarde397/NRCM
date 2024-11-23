@@ -34,10 +34,10 @@ export class DisplayComponent implements OnInit {
         let tempObj={}
         switch (this.whichType) {
           case '1':
-            tempObj = { "method": "getVehicleDetailsJG", "tablename": '','truckno':this.truckno};    
+            tempObj = { "method": "getVehicleDetailsFROD", "tablename": '','truckno':this.truckno};    
             break;
             case '2':
-            tempObj = { "method": "getVehicleDetailsAllJG", "tablename": ''};    
+            tempObj = { "method": "getVehicleDetailsAllFROD", "tablename": ''};    
             break;
         
           default:
@@ -52,8 +52,8 @@ export class DisplayComponent implements OnInit {
           });
       }
 
-      addToJG(){
-        let tempObj = { "method": "addToJG", "tablename": '','new':this.new,'truckno':this.truckno};
+      addToFROD(){
+        let tempObj = { "method": "addToFROD", "tablename": '','new':this.new,'truckno':this.truckno};
         this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
           .subscribe((res: any) => {
             alert(res.Status)

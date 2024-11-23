@@ -20,8 +20,7 @@ import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/pers
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
-import { DisplayComponent } from './pages/CI/JG/display/display.component';
-import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
+import { DisplayComponent } from './pages/CI/FROD/display/display.component';
 import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component'
 import { LRDisplayComponent } from './pages/LRsend/lrdisplay/lrdisplay.component';
@@ -30,7 +29,6 @@ import { TrackLoginComponent } from './pages/Track/track-login/track-login.compo
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
-import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
 import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
 import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
@@ -151,11 +149,7 @@ export const routes: Routes =
                         component:DailyAccountAdderComponent
                     },
                     {
-                        path: 'GIFTS',
-                        component:GiftHandlerComponent
-                    },
-                    {
-                        path: 'JG',
+                        path: 'FROD',
                         component:DisplayComponent
                     },
                     {
@@ -187,11 +181,6 @@ export const routes: Routes =
                         loadChildren: './pages/Mail/mail-display/app.module#AppModule'
                     },
                     {
-                        path:'MISSING_LR',
-                        loadChildren: './pages/MissingLRNOS/missing-display/app.module#AppModule'
-                    },
-
-                    {
                         path: 'BALANCE_HIRE_HANDLER',
                         loadChildren: './pages/BalanceHire/app.module#AppModule'
                     },
@@ -214,10 +203,6 @@ export const routes: Routes =
                     {
                         path: 'TURN_BOOK_LOCATION_DISP',
                         component:TurnBookLocationDispComponent
-                    },
-                    {
-                        path: 'PODSTATUS',
-                        component:PODSTATComponent
                     },
                     {
                         path: 'MESSAGE',

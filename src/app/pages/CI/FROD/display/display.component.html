@@ -1,9 +1,9 @@
 <div class="row">
   <div class="col-sm-4">
-      <button class="btn btn-info" (click)="getWhichType('1')">Add to JG</button>
+      <button class="btn btn-info" (click)="getWhichType('1')">Add to FROD</button>
   </div>
   <div class="col-sm-4">
-      <button class="btn btn-info" (click)="getWhichType('2')">Display all of JG</button>
+      <button class="btn btn-info" (click)="getWhichType('2')">Display all of FROD</button>
   </div>
 </div>
 
@@ -11,7 +11,7 @@
  
       <input type="text" [(ngModel)]="truckno">
       <button class="btn btn-danger" (click)="getVehicleDetails()">Get Details!</button>
-      <button class="btn btn-danger" (click)="addToJG()">Add to JG</button>
+      <button class="btn btn-danger" (click)="addToFROD()">Add to FROD</button>
       <table class="table" style="width:100%" align="center" *ngIf="table">
   
           <thead>
@@ -20,7 +20,7 @@
                   <th>TruckNumber-Type</th>
                   <th>Contact</th>
                   <th>ContactO</th>
-                  <th>JG</th>
+                  <th>FROD</th>
               </tr>
           </thead>
           <tbody>
@@ -39,7 +39,7 @@
                           <li>{{kk}}</li>
                       </ul>
                   </td>
-                  <td><span *ngIf="i.jg">Yes</span><span *ngIf="!i.jg">No</span></td>
+                  <td><span *ngIf="i.frod">Yes</span><span *ngIf="!i.frod">No</span></td>
               </tr>
           </tbody>
       </table>

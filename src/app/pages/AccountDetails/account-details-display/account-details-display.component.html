@@ -416,7 +416,7 @@ action="/">
         <th>Full</th>
         <th>Contact</th>
         <th>Score</th>
-        <th>JG?</th>
+        <th>FROD?</th>
         <th>Prefer</th>
       </tr>
     </thead>
@@ -432,7 +432,7 @@ action="/">
         </li></ul></td>
         <td><ul><li *ngFor="let c of i.contact">{{c}}</li></ul></td>
         <td>{{i.load}}/{{i.total}}={{i.score}}</td>
-        <td [ngStyle]="{'background-color': i.s[0].jg===undefined ? '#5CB85C' : '#F0AD4E' }">{{i.s[0].jg}}</td>
+        <td [ngStyle]="{'background-color': i.s[0].frod===undefined ? '#5CB85C' : '#F0AD4E' }">{{i.s[0].frod}}</td>
         <td><ul><li *ngFor="let p of i.preferences">{{p}}</li></ul></td>
       </tr>
     </tbody>

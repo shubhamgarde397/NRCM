@@ -48,8 +48,7 @@ import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
-import { DisplayComponent } from './pages/CI/JG/display/display.component';
-import { GiftHandlerComponent } from './pages/CI/Gifts/gift-handler/gift-handler.component';
+import { DisplayComponent } from './pages/CI/FROD/display/display.component';
 import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
 import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component';
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
@@ -58,7 +57,6 @@ import { TrackDisplayComponent } from './pages/Track/track-display/track-display
 import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
-import { PODSTATComponent } from './pages/CI/POD-STATUS/podstat/podstat.component';
 import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
 import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
@@ -94,7 +92,6 @@ import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/conta
     DuesPageComponent,
     DuesFromAdvanceDisplayComponent,
     DisplayComponent,
-    GiftHandlerComponent,
     AddComponent,
     DailyAccountAdderComponent,
     DisplaySequenceComponent,
@@ -102,7 +99,6 @@ import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/conta
     TrackLoginComponent,
     RentdisplayComponent,
     ComdisplayComponent,
-    PODSTATComponent,
     BalMsgComponent,
     PODNOTRECComponent,
     TpdfComponent,

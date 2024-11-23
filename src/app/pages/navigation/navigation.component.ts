@@ -68,7 +68,7 @@ public seq=[];
   //       {name:'Dues',link:'DUES_PAGE'},
   //       {name:'Dues Advance',link:'DUES_PAGE_ADVANCE'},
   //       {name:'Gifts',link:'GIFTS'},
-  //       {name:'JG',link:'JG'},
+  //       {name:'FROD',link:'FROD'},
   //       {name:'Village',link:'VILLAGE_HANDLER'},
   //       {name:'LR Reason',link:'REASON_HANDLER'},
   //       {name:'Party GST',link:'IMP_GST_HANDLER'},
@@ -105,8 +105,8 @@ public seq=[];
   //       {name:'RC DL Expiry',link:'F2'},
   //       {name:'Task Page',link:'F3'},
   //       {name:'Last Loaded Trucks',link:'F4'},
-  //       {name:'Last Loaded NRCM & JG',link:'F5'},
-  //       {name:'Last Loaded JG',link:'F6'},
+  //       {name:'Last Loaded NRCM & FROD',link:'F5'},
+  //       {name:'Last Loaded FROD',link:'F6'},
   //       {name:'Missing Prdfp',link:'F7'},
   //       {name:'Rent Slip',link:'F8'},
   //       {name:'Other Report',link:'OTHER_REPORT'},
@@ -213,10 +213,10 @@ public seq=[];
           this.latestLoadedTrucks();
           break;
           case '5':
-          this.latestLoadedTrucksNRCMandJG();
+          this.latestLoadedTrucksNRCMandFROD();
           break;
           case '6':
-          this.latestLoadedTrucksJG();
+          this.latestLoadedTrucksFROD();
           break;
           case '8':
           this.rentslip();
@@ -486,9 +486,9 @@ this.downloadLoaded(this.reportData);
     });
   }
   
-  latestLoadedTrucksNRCMandJG(){
+  latestLoadedTrucksNRCMandFROD(){
     let tempObj={
-      "method": "fetchnrcmandjgtrucks",
+      "method": "fetchnrcmandfrodtrucks",
       "tablename": "",
     }
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
@@ -498,9 +498,9 @@ this.downloadLoadedNandJ(this.reportData);
 
     });
   }
-  latestLoadedTrucksJG(){
+  latestLoadedTrucksFROD(){
     let tempObj={
-      "method": "fetchjgtrucks",
+      "method": "fetchfrodtrucks",
       "tablename": "",
     }
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
@@ -599,7 +599,7 @@ this.downloadLoadedJ(this.reportData);
 
         doc.text(String(this.hF.getDateddmmyy(data[i].loadingDate)), 85, y)//partyname
         doc.text(String(data[i].places+' : '+String(data[i].sum)), 110, y)//partyname
-        doc.text(data[i].jg?'JG':'', 110, y)//partyname
+        doc.text(data[i].frod?'FROD':'', 110, y)//partyname
       doc.line(20, (y+1), 210, (y+1));//line after each entry
        y = y  +5;
      }
@@ -699,7 +699,7 @@ this.downloadLoadedJ(this.reportData);
 
         doc.text(String(this.hF.getDateddmmyy(data[i].loadingDate)), 85, y)//partyname
         doc.text(String(data[i].places+' : '+String(data[i].sum)), 110, y)//partyname
-        doc.text(data[i].jg?'JG':'', 110, y)//partyname
+        doc.text(data[i].frod?'FROD':'', 110, y)//partyname
       doc.line(20, (y+1), 210, (y+1));//line after each entry
        y = y  +5;
      }
