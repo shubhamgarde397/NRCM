@@ -1,0 +1,235 @@
+<div class="row">
+  <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('declaration')">Declaration</button></div>
+  <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('bank')">Bank</button></div>
+  <div class="col-sm-3"><button class="btn btn-warning" (click)="changeTab('receipt')">Receipt</button></div>
+</div>
+
+
+<div class="well">
+  <!-- Declaration -->
+  <div class="form-body" *ngIf="tabber==='declaration'">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Date : 
+        <input type="date" class="form-control" [(ngModel)]="dateFromUI">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Year : 
+        <select [(ngModel)]="yearDrop" class="form-control">
+          <option>2021-22</option>
+          <option>2022-23</option>
+          <option>2023-24</option>
+          <option>2024-25</option>
+          <option>2025-26</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+
+      <div class="col-xs-3">
+        Name : 
+        <select [(ngModel)]="name" class="form-control">
+          <option>Nitin Garde</option>
+          <option>Jyoti Garde</option>
+          <option>Shubham Garde</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+
+      <div class="col-xs-3">
+        Pan : 
+        <select [(ngModel)]="pan" class="form-control">
+          <option>AFGPG3657L</option>
+          <option>AFGPG0575D</option>
+          <option>BTBPG2818K</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Branch : 
+        <select [(ngModel)]="branch" class="form-control">
+          <option>nitin roadways and cargo movers</option>
+          <option>nitin roadways</option>
+          <option>shri nitin logistics</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+
+      <div class="col-xs-3">
+        Party Name : 
+        <input type="text" list="cars" class="form-control" [(ngModel)]="addr1" />
+        <datalist id="cars">
+          <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst.name}}>
+            {{gst.name}}...{{gst.dest}}
+          </option>
+        </datalist>
+      </div>
+    </div>
+
+    <div class="col-sm-3"><button class="btn btnBig btn-warning" (click)="download(false)">No Signature</button></div>
+    <div class="col-sm-3"><button class="btn btnBig btn-warning" (click)="download(true)">Signature</button></div>
+    <div class="col-sm-3"><button class="btn btn-warning" (click)="letterpad(true)">Letter Pad with Signature</button></div>
+    <div class="col-sm-3"><button class="btn btn-warning" (click)="letterpad(false)">Letter Pad without Signature</button></div>
+  </div>
+  <!-- Declaration -->
+  <!-- Bank -->
+  <div class="form-body" *ngIf="tabber==='bank'">
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="date" class="form-control" [(ngModel)]="dateFromUI">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="dest" class="form-control" [(ngModel)]="timeLog">
+          <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="dest" class="form-control" [(ngModel)]="timeLogYear">
+          <option>2020</option>
+          <option>2021</option>
+          <option>2022</option>
+          <option>2023</option>
+          <option>2024</option>
+          <option>2025</option>
+        </select>
+      </div>
+    </div>
+
+
+
+    <div class="form-group row">
+
+      <div class="col-xs-3">
+        <select id="nop" class="form-control " [(ngModel)]="nop">
+          <option disabled selected>Select Name of The Party</option>
+          <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst.name}}>
+            {{gst.name}}...{{gst.dest}}
+          </option>
+        </select>
+      </div>
+
+    </div>
+
+
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="number" class="form-control" [(ngModel)]="amt">
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <button class="btn btn-primary" (click)="addDetails()">Add</button>
+      </div>
+    </div>
+    <div class="col-sm-3"><button class="btn btn-warning" (click)="downloadBank()">Bank</button></div>
+    <!-- <div class="col-sm-3"><button class="btn btn-warning" (click)="downloadBankNew()">BankNew</button></div> -->
+
+    <div class="col-xs-5">
+      <table>
+        <tr>
+          <th>Party</th>
+          <th>Amount</th>
+          <th>Delete</th>
+        </tr>
+        <tr *ngFor="let data of bankArray;let j=index;">
+          <td>{{data.Name}}</td>
+          <!-- <td>{{data.Amount}}</td> -->
+          <td><input type="number" value={{data.Amount}} id={{j}}> </td>
+          <td><button class="btn btn-danger" (click)="delete(data,j)">D</button></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="form-body" *ngIf="tabber==='receipt'">
+    <form [formGroup]="myFormGroup" (ngSubmit)="bankRec()" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Truck No - <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN02 AB 2045">
+      </div>
+      <div class="col-xs-1">
+        Type - <select  formControlName="type" class="form-control">
+          <option>NEFT</option>
+          <option>IMPS</option>
+          <option>GPAY</option>
+        </select>
+      </div>
+      <div class="col-xs-3">
+        Reference - <input type="text" class="form-control" formControlName="refNo" placeholder="Name">
+      </div>
+      </div>
+
+      <div class="form-group row">
+      <div class="col-xs-3">
+        Acc Name - <input type="text" class="form-control" formControlName="accName" placeholder="ASDFG1234A">
+      </div>
+
+      <div class="col-xs-3">
+        Acc No - <input type="number" class="form-control" formControlName="accNo" placeholder="ASDFG1234A">
+      </div>
+
+      <div class="col-xs-1">
+        Acc Type - <select  formControlName="nrcm" class="form-control">
+          <option>NRCM</option>
+          <option>NR</option>
+          <option>SNL</option>
+        </select>
+      </div>
+
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Amount- <input type="number" class="form-control" formControlName="amt" placeholder="ASDFG1234A">
+      </div>
+
+      <div class="col-xs-3">
+        Date - <input type="date" class="form-control" formControlName="date" placeholder="ASDFG1234A">
+      </div>
+    </div>
+    
+
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+    </div>
+  </form>
+  </div>
+  
+  <!-- Bank -->
+</div>

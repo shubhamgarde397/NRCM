@@ -1,0 +1,243 @@
+<div class="well" *ngIf="no">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
+
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Truck No - <input type="text" id="truckno" class="form-control" formControlName="truckno" disabled>
+      </div>
+      <div class="col-xs-1">
+        Type - <select [(ngModel)]='typeOfVehicle' class="form-control" formControlName="typeOfVehicle" >
+          <option selected disabled>{{type}}</option>
+          <option>Open</option>
+          <option>Container</option>
+          <option>Taurus</option>
+        </select>
+      </div>
+      <div class="col-xs-3">
+        Name - <input type="text" id="oname" class="form-control" formControlName="oname" placeholder="Name">
+      </div>
+      <div class="col-xs-3">
+        Pan - <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="ASDFG1234A">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      
+      <div class="col-xs-1">
+        DL - <input type="checkbox" id="d" class="form-control" formControlName="d">
+      </div>
+      <div class="col-xs-1">
+        RC - <input type="checkbox" id="r" class="form-control" formControlName="r">
+      </div>
+      <div class="col-xs-1">
+        Pan - <input type="checkbox" id="P" class="form-control" formControlName="P">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-2">
+        (Max) Weight in Ton - <input type="number" id="weight" class="form-control" formControlName="weight" placeholder="Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-2">
+        Height Breadth Length - 
+        <input type="text" id="h" class="form-control" formControlName="h" placeholder="20*8*8">
+        <input type="text" id="b" class="form-control" formControlName="b" placeholder="20*8*8">
+        <input type="text" id="l" class="form-control" formControlName="l" placeholder="20*8*8">
+      </div>
+      <div class="col-xs-3">
+       Aadhar No -  <input type="number" id="aadhar" class="form-control" formControlName="aadhar">
+      </div>
+    </div>
+
+    <div class="form-group row">
+    
+      <div class="col-xs-3">
+        Truck Contact:
+        <input type="text" id="contact" class="form-control" [(ngModel)]="contactA"
+          [ngModelOptions]="{standalone: true}" placeholder="9876543211">
+        <button type="button" class="btn btn-primary" (click)="addMore()">Add</button>
+      </div>
+      <div class="col-xs-4">
+        <ul *ngFor="let i of contactArray;let j =index;">
+          <li>{{i}} <button type="button" mat-raised-button (click)="deleteOne(i,j)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      
+      <div class="col-xs-3">
+        Owner Contact:
+        <input type="text" id="contactO" class="form-control" [(ngModel)]="contactOA"
+          [ngModelOptions]="{standalone: true}" placeholder="9876543211">
+        <button type="button" class="btn btn-primary" (click)="addMoreO()">Add</button>
+      </div>
+      <div class="col-xs-4">
+        <ul *ngFor="let i of contactOArray;let j =index;">
+          <li>{{i}} <button type="button" mat-raised-button (click)="deleteOOne(i,j)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button></li>
+        </ul>
+      </div>
+    </div>
+    <hr>
+
+
+    <!-- Account details -->
+    <div class="well">
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="ABC">
+      </div>
+      <div class="col-xs-3">
+        <input type="text" id="accountNumber" class="form-control" formControlName="accountNumber"
+          placeholder="325689741">
+      </div>
+      <div class="col-xs-3">
+        <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC">
+      </div>
+</div>
+      <div class="form-group row">
+        <div class="col-sm-1">
+          <button type="button" class="btn btn-danger" style="width: 100%;" (click)="addaccount()">Add</button>
+          <button type="button" class="btn btn-success" style="width: 100%;" (click)="copyaccount()">Copy!</button>
+        </div>
+        <div class="col-sm-6">
+          <table class="table table-bordered">
+            <tr>
+              <th>Srno</th>
+              <th>Name</th>
+              <th>Number</th>
+              <th>IFSC</th>
+              <th>Delete</th>
+            </tr>
+            <tr *ngFor="let i of accountArray;let j = index;">
+              <td>{{j+1}}</td>
+              <td>{{i.accountName}}</td>
+              <td>{{i.accountNumber}}</td>
+              <td>{{i.ifsc}}</td>
+              <td (click)="deleteOneA(i,j)">Delete</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+
+  </div>
+    <hr>
+    <!-- Account Details -->
+    <!-- Preference -->
+    <div class="form-group row">
+      <div class="col-xs-3">Preference:
+        <select id="preferences" class="form-control" [(ngModel)]="pA" [ngModelOptions]="{standalone: true}"  (change)="findvillagedetails()">
+          <option disabled selected>Select Village</option>
+          <option *ngFor="let i of villagedetailslist;let j=index;" value={{i._id}}+{{i.village_name}}>{{i.village_name}}
+          </option>
+        </select>
+        
+      </div>
+      <div class="col-xs-3">
+        <ul *ngFor="let i of preferenceArrayName;let j =index;">
+          <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneP(i,j)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button></li>
+        </ul>
+      </div>
+    </div>
+ <!-- Preference -->
+
+ <!-- Native -->
+ <div class="form-group row">
+  <div class="col-xs-3">Native:
+    <select class="form-control" [(ngModel)]="nA" [ngModelOptions]="{standalone: true}"  (change)="findvillagedetailsN()">
+      <option disabled selected>Select Village</option>
+      <option *ngFor="let i of villagedetailslist;let j=index;" value={{i._id}}+{{i.village_name}}>{{i.village_name}}
+      </option>
+    </select>
+    
+  </div>
+  <div class="col-xs-3">
+    <ul *ngFor="let i of nativeArrayName;let j =index;">
+      <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneN(i,j)"
+          class="btn-danger btn-sm btn-just-icon">
+          <i class="material-icons">delete_forever</i>
+        </button></li>
+    </ul>
+  </div>
+</div>
+<!-- Native -->
+
+
+<!-- Transport -->
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <button class="btn btn-danger" (click)="getTransports()">Get!</button>
+        <select id="preferences" class="form-control" [(ngModel)]="selectedTransportNo" [ngModelOptions]="{standalone: true}"  (change)="findTramsportDetails()">
+          <option disabled selected>Select Transport</option>
+          <option *ngFor="let i of transportsArrayList;let j=index;" value={{j}}>{{i.tptName}}
+          </option>
+        </select>
+        
+      </div>
+      <div class="col-xs-3">
+        {{selectedTransport}}
+      </div>
+    </div>
+
+
+   <!-- Transport -->
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="well" *ngIf="!no">
+  <form [formGroup]="myFormGroup1" submitted=true enctype="multipart/form data"
+  action="/">
+
+  <div class="row form-group">
+    <div class="col-sm-8">
+        <input type="text" class="form-control" formControlName="truckno" disabled
+          placeholder="TN02 AB 2045" />
+      
+
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-sm-8">
+        <input type="text" class="form-control" formControlName="newtruckno" placeholder="TN02 AB 2045" />
+    </div>
+  </div>
+  
+
+
+  <div class="row">
+    
+    <div class="form-group" class="col-xs-3">
+      <button class="btn btn-danger" (click)="changeTruck()">
+        TBO
+      </button>
+    </div>
+  </div>
+</form>
+</div>

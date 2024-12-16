@@ -1,0 +1,30 @@
+<div class="well" *ngIf="!show">
+
+  <table class="table" style="width:100%" align="center">
+
+      <thead class="table-header">
+          <tr>
+              <th>Srno</th>
+              <th>LRNO</th>
+              <th>Old - Reason</th>
+              <th>Update</th>
+          </tr>
+      </thead>
+
+
+      <tbody>
+          <tr *ngFor="let i of missing;let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i.lrno}}</td>
+              <td>{{i.reason}}</td>
+              <td>
+                  <select class="form-control" (change)="setReason()" [(ngModel)]="ReasonSelected[i._id]">
+                    <option selected disabled>{{i.reason}}</option>
+                    <option *ngFor="let k of lrlist;let l=index" value={{k._id}}>{{k.reason}}</option>
+                  </select>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+  <button class="btn btn-danger" (click)="update()">Update</button>
+</div>

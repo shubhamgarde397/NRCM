@@ -1,1373 +1,193 @@
-<div style="background-color: black">
+<div *ngIf="loginV" style="background-color: black;color: wheat;">
+  <router-outlet>
+  </router-outlet>
+</div>
+<div *ngIf="!loginV" style="font-family: 'Comfortaa', arial, sans-serif;">
 
-  <nav class="navbar navbar-inverse" style="background-color: black">
-    <div class="container row">
+ <nav class="navbar navbar-inverse" style="position: fixed;width:100%;z-index:1;"> 
+    <div class="container row" style="width: 100%;">
+      <div class="col-sm-6">
       <div class="navbar-header">
-        <a class="navbar-brand" (click)="adminP()"><b>Nitin Roadways FAST</b></a>
+        <a class="navbar-brand fonthead" routerLink="NRCM_HOME">
+          Nitin Roadways And Cargo Movers 2024
+        </a>
+      </div>
+    </div>
+    <div class="col-sm-6 fontbody">
+        <a class="navbar-brand" routerLink="NRCM_HOME">Home&nbsp;&nbsp;</a>
+        <a class="navbar-brand" (click)="track()">Track&nbsp;&nbsp;</a>
+        <a class="navbar-brand" routerLink="NRCM_ABOUT">About Us&nbsp;&nbsp;</a>
+        <a class="navbar-brand" href="/assets/images/VisitingCard.png" download="NitinRoadways_VisitingCard">Visiting Card&nbsp;&nbsp;</a>
+        <a class="navbar-brand" (click)="generateDuesReport()">Contact&nbsp;&nbsp;</a>
+        <a class="navbar-brand" (click)="login('nrcm')">Login</a>
       </div>
     </div>
 
   </nav>
 
-
-<div class="row">
-
-<div class="col-sm-1" style="margin-left: 2vh;">
-  <button class="btn btn-info" (click)="getWhichType('2',false)">Truck Data</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;">
-  <button class="btn btn-info" (click)="getWhichType('14',true)">QR LINK</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;">
-  <button class="btn btn-info" (click)="getWhichType('13',true)">Same LR</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;">
-  <button class="btn btn-info" (click)="getWhichType('15',true)">Digi LR</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('10',false)">Pending Payment Entry</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('11',false)">PAN</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoorForAnil||secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('12',false)">AccNo</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="personalshubham">
-  <button class="btn btn-info" (click)="getWhichType('8',false)">Personal</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('3',false)">Other</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('4',false)">VillageParty</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('5',false)">Tentative</button>
-</div>
-
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
-  <button class="btn btn-info" (click)="getWhichType('6',false)">Random</button>
-</div>
-<div class="col-sm-1" style="margin-left: 2vh;" *ngIf="secretDoor">
-  <button class="btn btn-info" (click)="getTpt()">All Envelopes</button>
-</div>
-</div>
-<div *ngIf="whichType==='15'">
-  <div class="well" style="background-color: black;border-color: black;">
-    <div class="col-sm-3">
-    <select class="form-control" (change)="getdata3()" [(ngModel)]="data3value">
-      <option disabled>Select Option</option>
-      <option value="1">SNL</option>
-      <option value="2">NRCM</option>
-    </select>
-  </div>
-  </div>
-  <div *ngIf="data3==='1'" class="row" style="background-color: black;border-color: black;">
-
-    <button class="btn btn-warning" (click)="getInformationDataB()">Get Data</button>
-  
-      <div class="container">
-
-
-            
-      <div class="container">
-
-        <div class="col-sm-3">
-        Date : <input type="date" class="form-control" [(ngModel)]="loadingDate">
-        </div>
-  
-        <div class="col-sm-3">
-        Truck No : <input type="text" class="form-control" [(ngModel)]="truckNo">
-        </div>
-
-        <div class="col-sm-3">
-        Party : <i class="material-icons" (click)="getpartiesSNL()">autorenew</i>
-        <select id="partyName" class="form-control" [(ngModel)]="partyName">
-          <option selected disabled value={{partyid}}>{{party}}</option>
-          <option *ngFor="let i of parties;let j = index;" value={{i._id}}>{{i.name}}</option>
-        </select>
+  <div class="well backgroundWhite" style="background-color: black;">
+<br>
+<br>
+<br>
+    <div class="row container wid backgroundWhite">
+      <div class="well backgroundWhite" style="background-color: black;">
+        <marquee><h3 class="fonthead">Daily Service : Tamil Nadu, Pondicherry, Karnataka and Kerala</h3></marquee>
       </div>
 
-      <div class="col-sm-3">
-        Place : <i class="material-icons" (click)="getVillages()">autorenew</i>
-        <select id="placeName" class="form-control" [(ngModel)]="placeName">
-          <option selected disabled value={{villageid}}>{{village_name}}</option>
-          <option *ngFor="let i of villagenamelist;let j = index;" value={{i._id}}>{{i.village_name}}</option>
-        </select>
-      </div>
-  
-    </div>
-
- 
-  
-      <div class="container">
-        <button class="btn btn-danger" (click)="setSNLTruck()">Set Truck</button>
-      </div>
-    
-    
-</div>
-
-    
-  </div>
-
-  <div *ngIf="data3==='2'" class="row" style="background-color: black;border-color: black;">
-  
-            
-      <div class="container">
-
-        <div class="col-sm-3">
-        Date : <input type="date" class="form-control" [(ngModel)]="loadingDate">
-        </div>
-  
-        <div class="col-sm-3">
-        Truck No : <input type="text" class="form-control" [(ngModel)]="truckNo">
-        </div>
-  
-        <div class="col-sm-3">
-          Place : <i class="material-icons" (click)="getVillages()">autorenew</i>
-          <select id="placeName" class="form-control" [(ngModel)]="placeName">
-            <option selected disabled value={{villageid}}>{{village_name}}</option>
-            <option *ngFor="let i of villagenamelist;let j = index;" value={{i._id}}>{{i.village_name}}</option>
-          </select>
-        </div>
-
-
-  
-    </div>
-
- 
-  
-      <div class="container">
-        <button class="btn btn-danger" (click)="setNRCMTruck()">Set Truck</button>
-      </div>
-    
-    
-
-
-    
-  </div>
-
-
-</div>
-<div *ngIf="whichType==='14'">
-             
-
-          
-  <div class="well"  style="background-color: black;border-color: black;">
-    <form [formGroup]="myFormGroupQR" (ngSubmit)="storeLink()" submitted=true
-      enctype="multipart/form data" action="/">
-  
-      <div class="form-group row">
-        <div class="col-xs-4">
-         Date :  <input type="date" id="value" class="form-control" formControlName="date">
-        </div>
-
-        <div class="col-xs-4">
-         Link :  <textarea id="value" class="form-control" formControlName="link"></textarea>
-        </div>
-
-        <div class="form-group" class="col-sm-4">
-          <button type="submit" class="btn btn-primary" [disabled]='!myFormGroupQR.valid'>
-            <i class="material-icons">send</i>
-          </button>
-        </div>
-      </div>
-    </form>
-
-
-    
-
-    <table class="table" style="width:100%" align="center">
-      <thead class="table-header">
-          <tr>
-              <th>Srno</th>
-              <th>Date</th>
-              <th>Link</th>
-              <th>Delete</th>
-          </tr>
-      </thead>
-
-
-      <tbody style="text-align: center;">
-          <tr *ngFor="let i of linkArray;let j = index">
-              <td>{{j+1}}</td>
-              <td>{{i.date}}</td>
-              <td>{{i.link}}</td>
-              <td><button class="btn btn-danger" (click)="deleteLink(j)">Delete</button></td>
-          </tr>
-      </tbody>
-  </table> 
-
-  <button class="btn btn-danger" (click)="sendLinkData()">Final Send</button>
-  </div>
-
-  <div>
-    <table class="table" style="width:100%" align="center">
-      <thead class="table-header">
-          <tr>
-              <th>Srno</th>
-              <th>Date</th>
-              <th>Party</th>
-              <th>Place</th>
-              <th>Link</th>
-              <th>QR</th>
-              <th>CheckBox</th>
-          </tr>
-      </thead>
-
-
-      <tbody style="text-align: center;">
-          <tr *ngFor="let i of data14;let j = index">
-              <td>{{j+1}}</td>
-              <td>{{i.date}}</td>
-              <td>{{i.party}}</td>
-              <td>{{i.place}}</td>
-              <td><a href={{i.slink}} target="_blank">Link</a></td>
-              <td>
-                <ul *ngFor="let ii of i.qr;let jj = index">
-                  <li (click)="delQR(j,jj)">{{ii}}</li>
-                </ul>
-                <button class="btn btn-info" (click)="addQR(i,j)">Add</button>
-              </td>
-              <td><button class="btn btn-warning" (click)="doneQR(i,j)">Done</button></td>
-          </tr>
-      </tbody>
-  </table>  
-  </div>
-  </div>
-
-
-<div class="well" *ngIf="whichType=='10'" style="background-color: black;color: wheat;">  
-  <div class="row"  *ngIf="secretDoorForAnil||secretDoor">
-    <h3>Payment Pending</h3>
-   
-    <div class="well"  *ngIf="actualPayment" style="background-color: black;color: wheat;">  
-     
-      <div class="row" style="background-color: black;color: wheat;">  
-        
-      <div class="col-sm-2">
-        <button class="btn btn-warning" (click)="fetchPendinActualPaymentsYear()">Get Pending Payments</button>
-      </div> 
       
+      <h2 class="wid fonthead">Our Advantages</h2>
+      <div id="myCarousel" class="carousel slide wid" data-ride="carousel">
+        <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+          <li data-target="#myCarousel" data-slide-to="1"></li>
+          <li data-target="#myCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="item active">
+            <img src="../../../assets/images/travel.jpg" alt="Chicago" style="width:100%;">
+            <h3 class="fontbody">Daily Service to Tamil Nadu, Pondicherry , Karnataka and Kerala</h3>
+          </div>
+
+          <div class="item">
+            <img src="../../../assets/images/online.jpg" alt="Chicago" style="width:100%;">
+            <h3 class="fontbody">No delayed Payments!</h3>
+          </div>
+
+          <div class="item">
+            <img src="../../../assets/images/tfs.jpg" alt="Chicago" style="width:100%;">
+            <h3 class="fontbody">Avaliable 24 by 7 !</h3>
+          </div>
+        </div>
+
+        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+          <span class="glyphicon glyphicon-chevron-left"></span>
+          <span class="sr-only">Previous</span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div>
     </div>
-      
-        <div class="row" *ngIf="paymentSettings">
 
-          <table class="table" style="width:100%" align="center">
-            <thead class="table-header">
-                <tr>
-                    <th>Srno</th>
-                    <th>Poch Date</th>
-                    <th>Count</th>
-                </tr>
-            </thead>
-    
-    
-            <tbody style="text-align: center;">
-                <tr *ngFor="let i of fullpendingPayments;let j = index">
-                    <td>{{j+1}}</td>
-                    <td (click)="fetchPendinActualPayments2(i)">{{i._id|date:'dd-MM-yyyy'}}</td>
-                    <td>{{i.sum}}</td>
-                </tr>
-            </tbody>
-        </table>  
-
-    
-
-        </div>
-
-        <div class="row" *ngIf="paymentSettings2">
-
-
-
-          <h4>Select Trucks to update the payment Date</h4>
-          <!-- <table class="table" style="width:100%" align="center">
-            <thead class="table-header">
-                <tr>
-                    <th>Srno</th>
-                    <th>Date</th>
-                    <th>Truckno</th>
-                    <th>Party:Type:Place</th>
-                    <th>Payment Date</th>
-                    <th>Payment Amount</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-    
-    
-            <tbody style="text-align: center;">
-                <tr *ngFor="let i of fullpendingPayment;let j = index">
-                    <td>{{j+1}}</td>
-                    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                    <td>{{i.truckno}}<br>{{i.pochAmount}}</td>
-                    <td>{{i.party}}<br>{{i.place}}</td>
-                    <td><input type="date" id="bhdate_{{j}}"></td>
-                    <td><input type="number" id="bhamt_{{j}}"></td>
-                    <td>
-                      <select class="form-control" id="bhstatus_{{j}}">
-                        <option>Okay</option>
-                        <option>Damage</option>
-                        <option>Shortage</option>
-                        <option>Loan</option>
-                        <option>Late</option>
-                        <option>To Pay</option>
-                      </select>
-                    </td>
-                </tr>
-            </tbody>
-        </table>   -->
-<button class="btn btn-primary" (click)="check()">Check!</button>
-        <table class="table table-bordered" style="width:100%" align="center" *ngIf="byapd">
-
-          <thead class="table-header">
-            <tr>
-              <th>Srno</th>
-              <th>Amount</th>
-              <th>Comments</th>
-              <th>Date</th>
-              <th>Truckno</th>
-              <th>AccountNo-IFSC</th>
-              <th>Payment Date</th>
-              <th>Payment Amount</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-  
-  
-          <tbody>
-            <tr [ngStyle]="{'color': i.color}" *ngFor="let i of fullpendingPayment;let j = index">
-              <td>{{j+1}}</td>
-              <td>
-                <ul *ngFor="let k of i.truckData">
-                  <li>{{k.pochAmount}}+{{k.return_hamali}}={{k.total}}</li>
-                </ul>              
-              </td>
-              <td>
-                <ul *ngFor="let k of i.truckData">
-                  <li>{{k.parentAccNo}}:{{k.remark}}</li>
-                </ul>              
-              </td>
-              <td>
-                <ul *ngFor="let k of i.truckData">
-                  <li>{{k.date|date:'dd-MM-yyyy'}}</li>
-                </ul>
-              </td>
-  
-              <td>
-                <ul *ngFor="let k of i.truckData;let o = index;">
-                  <li>{{k.truckno}}</li>
-                </ul>
-              </td>
-  
-              
-              <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
-              <td><input type="date" id="bhdate_{{j}}"></td>
-                    <td><input type="number" id="bhamt_{{j}}"></td>
-                    <td>
-                      <select class="form-control" id="bhstatus_{{j}}">
-                        <option>Okay</option>
-                        <option>Damage</option>
-                        <option>Shortage</option>
-                        <option>Loan</option>
-                        <option>Late</option>
-                        <option>To Pay</option>
-                      </select>
-                    </td>
-  
-            </tr>
-          </tbody>
-        </table>
-
-        <div class="col-sm-2">
-          <button class="btn btn-success" (click)="sendDatatoUpdate()">Send2</button>
-        </div>
-
-        <div class="col-sm-2">
-          <button class="btn btn-success" (click)="back10()">Back</button>
-        </div>
-
-        </div>
-
+    <div class="row well wid backgroundWhite">
+      <h1 style="text-align: center;" class="fonthead">-Popular Truck Types-</h1>
     </div>
-  </div>
-  </div>
+<div class="row container wid backgroundWhite">
+    <div class="col-md-12">
+      <style>#type1{width:95% !important;}#border{border: 2px solid #ddd;height: 298px !important;width: 19% !important;}@media only screen and (max-width: 991px) {#border{width: 100% !important;}.payment-option{display: inline-block !important;}}@media only screen and (min-device-width : 768px) and (max-device-width : 1024px)  {#type1{display:none;} }</style>
+        <div class="col-sm-1"></div>
 
-  <div class="well" *ngIf="whichType=='11'" style="background-color: black;color: wheat;">  
-    <div class="row"  *ngIf="secretDoorForAnil||secretDoor">
-        <div class="row">
-            <div class="col-sm-4">
-        <select class="form-control" [(ngModel)]="selectedMY" (change)="getData()">
-            <option disabled>Select Option</option>
-            <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
-          </select>
-        </div>
-    </div>
-    <div class="well">
-        <div class="row">
-            <div class="col-sm-2" *ngFor="let i of emptyData">
-    <button class="btn btn-warning" (click)="downloadPan(i)">{{i._id}} : {{i.sum}}</button>
+          <div class="col-md-2" id="border" style="margin-right:10px;">
+          <div class="center">
+          <img src="../../../assets/images/eicher-19feet.jpg" loading="lazy" alt="Eicher Truck - TruckGuru LLP">
+          </div>
+          <div class="center fontbody">
+          <h4 style="margin-top: 40px !important;"><b>EICHER 19/20 Feet</b></h4>
+          </div>
+          </div>
+
+          <div class="col-md-2" id="border" style="margin-right:10px;">
+          <div class="center">
+          <img src="../../../assets/images/taurus-21ton.jpg" loading="lazy" alt="Truck - TruckGuru LLP">
+          </div>
+          <div class="center fontbody">
+          <h4 style="margin-top: 68px !important;"><b>TATA TAURUS 21 T</b></h4>
+          </div>
+          </div>
+
+            <div class="col-md-2" id="border" style="margin-right:10px;">
+            <div class="center">
+            <img src="../../../assets/images/24ft.jpg" loading="lazy" alt="Eicher Truck - TruckGuru LLP">
             </div>
-        </div>
-    </div>
-    <div class="well" *ngIf="pantable">
-    
-      <button class="btn btn-warning" (click)="updatePan()">Update</button>
-    
-    
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Srno</th>
-              <th>Date</th>
-              <th>Truck No</th>
-              <th>Name</th>
-              <th>PAN</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let ii of panarray;let jj=index;">
-              <td>{{jj+1}}</td>
-              <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
-              <td>{{ii.truckno}}</td>
-              <td><input type="text" placeholder="Name" id="name_{{jj}}"></td>
-              <td><input type="text" placeholder="PAN" id="pan_{{jj}}"></td>
-            </tr>
-          </tbody>
-        </table>
-    </div>
-    </div>
-    </div>
+            <div class="center fontbody">
+            <h4 style="margin-top: 40px !important;"><b>Container 20/22/24 Feet</b></h4>
+            </div>
+            </div>
 
-    <div class="well" *ngIf="whichType==='12'">
-
-      <div class="row">
-    <button class="btn btn-warning" (click)="getAccountsUpdateTrue()">Get Data!</button>
+            <div class="col-md-2" id="border" style="margin-right:10px;">
+            <div class="center">
+            <img src="../../../assets/images/32ft.jpg" loading="lazy" alt="Truck - TruckGuru LLP">
+            </div>
+            <div class="center fontbody">
+            <h4 style="margin-top: 60px !important;"><b>Container 32 Feet</b></h4>
+            </div>
+            </div>
+            <div class="col-sm-1"></div>
       </div>
-    
-    <div class="well" *ngIf="accounttableUF">
-    
-      <button class="btn btn-warning" (click)="updateaccountDetails()">Update</button>
-    
-    
-    
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Srno</th>
-            <th>Truck No-Date</th>
-            <th>Name</th>
-            <th>Number</th>
-            <th>IFSC</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let ii of accountarrayUF;let jj=index;">
-            <td>{{jj+1}}</td>
-            <td>{{ii.truckno}}<br>{{ii.currentDate|date:'dd-MM-yyyy'}}</td>
-            <td><input type="text" placeholder="Account Name" id="accname_{{jj}}"></td>
-            <td><input type="text" placeholder="Account Number" id="accno_{{jj}}"></td>
-            <td><input type="text" placeholder="IFSC" id="ifsc_{{jj}}"></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    </div>
 
-  <div *ngIf="whichType==='8'" style="background-color: black;border-color: black;">
+  
+  </div>
+<br>
+<br>
+
+<div class="wid fonthead backgroundWhite">
+  <h1 style="text-align: center;">JOIN US AND LETS GROW TOGETHER.</h1>
+</div>
+<br>
+<br>
+
+
+<div class="container wid" style="color:white;background-color: #262626;">
     <div class="row">
-      <button class="btn btn-success" (click)="changeDiv()">Change</button>
-    </div>
-            <div class="container" *ngIf="display8">
-        
-              <div class="col-sm-4">
-              Type1 : <select class="form-control" [(ngModel)]="type1">
-                <option value="Self">Self</option>
-                <option value="Both">Both</option>
-              </select> 
-            </div>
-        
-            <div class="col-sm-4">
-              Type2 : <select class="form-control" [(ngModel)]="type2">
-                <option value="Protected">Protected</option>
-                <option value="Unprotected">Unprotected</option>
-                <option value="Nil">Nil</option>
-              </select> 
-            </div>
 
-            <div class="col-sm-4">
-              Date : <input type="date" class="form-control" [(ngModel)]="date">
-            </div>
-        
-         
-        
-                 
-            <div class="container">
-              <button class="btn btn-danger" (click)="storePersonal()">Store</button>
-            </div>
-          </div>
+     <div class="col-sm-4">
+      <h3 class="fonthead">  Contact for Loading : <br><br>Mr. Nitin</h3>
+      <h4>
+        <a href="tel:+91 9822288257" style="color:white" class="fontbody">+91 9822288257</a> &nbsp;&nbsp;
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('nitin','wa')"><i class="material-icons"> whatsapp</i></button>
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
+      </h4>
+      <h4>
+        <a href="tel:+91 9423580221" style="color:white" class="fontbody">+91 9423580221</a> &nbsp;&nbsp;
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','wa')"><i class="material-icons">whatsapp</i></button>
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
+      </h4>
 
-          <div class="container" *ngIf="!display8">
-            <button class="btn btn-success" (click)="get8()">Get</button>
-            <table class="table" style="width:100%;background-color: black;color: wheat;" align="center">
-              <thead align="center" style="font-weight: bold">
-                <tr class=table-header>
-                  <th>Srno</th>
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Type1</th>
-                  <th>Type2</th>
-                </tr>
-              </thead>
-              <tbody align="center">
-                <tr *ngFor="let i of data8;let j = index">
-                  <td>{{j+1}}</td>
-                  <td>{{i.date|date:'dd-MM-yyyy'}}</td>
-                  <td>{{i.type}}</td>
-                  <td>{{i.type1}}</td>
-                  <td>{{i.type2}}</td>
-                </tr>
-              </tbody>
-            </table>
-     
-    </div>
-    </div>
+      <h4>
+        <a href="tel:+91 9423580221" style="color:white" class="fontbody">+91 9423580221</a> &nbsp;&nbsp;
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','wa')"><i class="material-icons">whatsapp</i></button>
+        <button class="btn btn-success" style="border-radius: 33px;" (click)="sendMsg('nitin','txt')"><i class="material-icons">chat</i></button>
+      </h4> 
+     </div>
 
-
-    <div *ngIf="whichType==='2'">
-      <div class="well" style="background-color: black;border-color: black;">
+     <div class="col-sm-4">
+      <h3 class="fonthead">  Contact for Payments : <br><br>Mr. Shubham</h3>
+      <h4>
+        <a href="tel:+91 9766707061" style="color:white" class="fontbody">+91 9766707061</a> &nbsp;&nbsp;
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('shubham','wa')"><i class="material-icons"> whatsapp</i></button>
+        <button class="btn btn-success"style="border-radius: 33px;"  (click)="sendMsg('shubham','txt')"><i class="material-icons">chat</i></button>
+      </h4>
+     </div>
+     <div class="col-sm-4">
       <div class="row">
-        <div class="col-sm-3">
-          <input type="text" class="form-control col-sm-3" [(ngModel)]='truckVar' placeholder="Truck No">
-        </div>
-        <div class="col-sm-3">
-          <select class="form-control" *ngIf="wala11" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
-            <option>Default</option>
-            <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
-          </select>
-        </div>
-<!-- Saved Data -->
-        <div class="col-sm-3">
-          <select class="form-control" *ngIf="showdelete" [(ngModel)]="trucknoid11s" (change)="find11UniqueTruckS()" id="truckNoone11">
-            <option>Default</option>
-            <option *ngFor="let i of savedData;let j = index;" value={{i.viewValue}}>{{i.viewValue}}</option>
-          </select>
-        </div>
-<!-- Saved Data -->
-        </div>
-        <div class="row">
-          <div class="col-sm-2">
-            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11')">Truck No</button>
-          </div>
-          <div class="col-sm-2">
-            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11new')">LRNO</button>
-          </div>
-
-          <div class="col-sm-2">
-            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('qr')">QR</button>
-          </div>
-        
-          <div class="col-sm-2">
-            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('party')">Party</button>
-          </div>
-
-          <div class="col-sm-2">
-            <button class="btn btn-danger col-sm-3"  style="width: 50%;" (click)="save()" *ngIf="showsaved">Save</button>
-          </div>
-          <div class="col-sm-2">
-            <button class="btn btn-danger col-sm-3"  style="width: 50%;" (click)="deleteSaved()" *ngIf="showdelete">Delete</button>
-          </div>
-            
-          
-        </div>
-
-          
-              <div class="col-sm-12">
-                
-            <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="byTruckName">
-                  <thead align="center" style="font-weight: bold">
-                    <tr class=table-header>
-                      <th>Srno</th>
-                      <th>Entry-Loading</th>
-                      <th>TruckNo</th>
-                      <th>Type-Party-Place</th>
-                      <th>LRNO</th>
-                      <th *ngIf="amountV">Amount</th>
-                      <th>Poch : Amt : Acc</th>
-                      <th>Payment Details</th>
-                      <th>Given Date</th>
-                    </tr>
-                  </thead>
-                  <tbody align="center">
-                    <tr *ngFor="let i of turn11;let j = index">
-                      <td>{{j+1}}</td>
-                      <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.billno}}</td>
-                      <td (click)="smartChoice(i,j)" data-toggle="modal" data-target="#myModalSmart">{{i.truckName['truckno']}}<br>
-                      <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
-                      <td>{{i.lrno}}</td>
-                      <td *ngIf="amountV">{{i.hamt}}<br>{{i.rent}}</td>
-                      <td [ngStyle]="{'background-color': i.colors[0]}" class="wadhiw">{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
-                      <td [ngStyle]="{'background-color': i.colors[1]}"  class="wadhiw" (click)="savePayment(i,j)" data-toggle="modal" data-target="#myModalPay">
-                        {{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.truckName['pan']}}</td>
-                        <td [ngStyle]="{'background-color': i.colors[2]}" class="wadhiw">{{i.givenDate}}</td>
-                    </tr>
-                  </tbody>
-                </table>
-          </div>
-         
-
+        <h3 class="fonthead">
+          Registered Office : <br></h3>
+          <h4 class="fontbody">
+            &nbsp;NITIN ROADWAYS AND CARGO MOVERS,<br>
+            &nbsp;Shop No. 253,<br>
+            &nbsp;Opp Katraj Police Station,<br>
+            &nbsp;Pune Satara Road,<br>
+            &nbsp;Katraj,<br>
+            &nbsp;Pune 411046.
+        <br>
+        <br>
+        Email : punenitinroadways@gmail.com
+      </h4>
       </div>
-      </div>
-
-      <div *ngIf="whichType==='13'">
-        <div class="well" style="background-color: black;border-color: black;">
-              <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="byTruckName">
-                    <thead align="center" style="font-weight: bold">
-                      <tr class=table-header>
-                        <th>Srno</th>
-                        <th>Loading</th>
-                        <th>TruckNo</th>
-                        <th>LRNO</th>
-                      </tr>
-                    </thead>
-                    <tbody align="center">
-                      <tr *ngFor="let i of turn11;let j = index">
-                        <td>{{j+1}}</td>
-                        <td>{{i.loadingDate[0]|date:'dd-MM-yyyy'}}<br>{{i.billno}}</td>
-                        <td>{{i.loadingDate[1]}}</td>
-                        <td (click)="changeLR(i)">{{i._id}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-        </div>
-        </div>
+     </div>
+     
     
-      <div *ngIf="whichType==='3'">
-        <div class="well" style="background-color: black;border-color: black;">
-          <div class="col-sm-3">
-          <select class="form-control" (change)="getdata3()" [(ngModel)]="data3value">
-            <option disabled>Select Option</option>
-            <option value="1">By RC</option>
-            <option value="2">Rent Sheet</option>
-            <option value="3">Memo-Custom</option>
-            <option value="4">Memo-BillNo</option>
-            <option value="5">Bill-Custom</option>
-            <option value="6">Bill-BillNo</option>
-          </select>
-        </div>
-        </div>
-        <div *ngIf="data3==='1'" class="row" style="background-color: black;border-color: black;">
 
-          <div class="col-sm-3">
-             <select class="form-control" [(ngModel)]="rc">
-                <option>Default</option>
-                <option value="AP">AP</option>
-                <option value="MH">MH</option>
-                <option value="KA">KA</option>
-                <option value="TN">TN</option>
-              </select>
-          </div>
+    </div>
+    <div class="row" style="text-align: center">
+      © 2024 NITIN ROADWAYS AND CARGO MOVERS<br>
+      Safe | Fast | Reliable | Punctual | 24*7 Avaliable
+    </div>
+  </div>
 
-          <div class="col-sm-4">
-            <i class="material-icons" (click)="getVillages()">autorenew</i>
-            <select id="placeName" class="form-control" [(ngModel)]="placeName">
-              <option selected disabled value={{villageid}}>{{village_name}}</option>
-              <option *ngFor="let i of villagenamelist;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
-            </select>
-         
-          </div>
 
-          <div class="col-sm-3">
-            <button class="btn btn-warning col-sm-3" (click)="find4()">Find</button>
-          </div>
+  </div> 
 
-      
-            
-        <div class="col-sm-12">
   
-              <table class="table" style="width:100%" align="center" *ngIf="table4">
-                    <thead align="center" style="font-weight: bold">
-                      <tr class=table-header>
-                        <th>Srno</th>
-                        <th>Date</th>
-                        <th>TruckNo<input type="checkbox"></th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                      </tr>
-                    </thead>
-                    <tbody align="center">
-                      <tr *ngFor="let i of turnbooklist;let j = index">
-                        <td>{{j+1}}</td>
-                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                        <td>{{i.truckno}}</td>
-                        <td>{{i.partyType}}-{{i.typeOfLoad}}</td>
-                        <td>{{i.hamt}}<br>{{i.rent}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-           
-          </div>
-          <div *ngIf="data3==='2'" class="row" style="background-color: black;border-color: black;">
-            <div class="col-sm-4">
-              <select class="form-control" [(ngModel)]="selectedmy">
-                <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
-              </select>
-            </div>
-            <div class="col-sm-4">
-              <button class="btn btn-danger" (click)="download()">Download</button>
-            </div>
-              <table class="table" style="width:100%" align="center">
-                <thead align="center" style="font-weight: bold">
-                  <tr class=table-header>
-                    <th>Srno</th>
-                    <th>Loading-Truck</th>
-                    <th>Party-Place-Type</th>
-                    <th>Hire</th>
-                    <th>Rent</th>
-                    <th>Comm</th>
-                  </tr>
-                </thead>
-                <tbody align="center">
-                  <tr *ngFor="let i of turnbooklist;let j = index">
-                    <td>{{j+1}}<br>{{i.billno}}</td>
-                    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}=>{{i.truckno}}</td>
-                    <td>{{i.party}}=>{{i.place}}=>{{i.typeOfLoad}}</td>
-                    <td (click)="changeRC('hamt',i)">{{i.hamt}}</td>
-                    <td (click)="changeRC('rent',i)">{{i.rent}}</td>
-                    <td (click)="changeRC('billamt',i)">{{i.billamt}}</td>
-                  </tr>
-                </tbody>
-              </table>
-          </div>
-
-          <div *ngIf="data3==='3'" class="row" style="background-color: black;border-color: black;">
-
-              <button class="btn btn-warning" (click)="getInformationDataB()">Get Data</button>
-            
-                <div class="container">
-            
-                  <div class="col-sm-4">
-                  Party Type : <select class="form-control" [(ngModel)]="partyType2">
-                    <option value="NR">NR</option>
-                    <option value="NRCM">NRCM</option>
-                    <option value="SNL">SNL</option>
-                    <option value="None" selected>None</option>
-                  </select> 
-                </div>
-            
-                <div class="col-sm-4">
-                  Party : <i class="material-icons" (click)="getparties()">autorenew</i>
-                  <select id="partyName" class="form-control" [(ngModel)]="partyName"  (change)="setPartyNameMS(2)">
-                    <option selected disabled value={{partyid}}>{{party}}</option>
-                    <option *ngFor="let i of parties;let j = index;" value={{i.name}}>{{i.name}}</option>
-                  </select>
-                </div>
-            
-              </div>
-            
-                <div class="container">
-                  <div class="col-sm-4">
-                  Place : <i class="material-icons" (click)="getVillages()">autorenew</i>
-                  <select id="placeName" class="form-control" [(ngModel)]="placeName">
-                    <option selected disabled value={{villageid}}>{{village_name}}</option>
-                    <option *ngFor="let i of villagenamelist;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  Place 2: 
-                  <input type="text" class="form-control" [(ngModel)]="placeName2">
-                </div>
-            </div>
-               
-                <div class="container">
-                  <div class="col-sm-4">
-                  Date : <input type="date" class="form-control" [(ngModel)]="loadingDate">
-                  </div>
-            
-                  <div class="col-sm-4">
-                  Truck No : <input type="text" class="form-control" [(ngModel)]="truckNo">
-                  </div>
-            </div>
-            
-            <div class="container">
-              <div class="col-sm-1">
-                <label>
-                  <input type="radio" name="color" class="form-control" value="TON" (change)="selectedColor('TON')"> TON
-                </label>
-              </div>
-              <div class="col-sm-1">
-                <label>
-                  <input type="radio" name="color" class="form-control" value="QR" (change)="selectedColor('QR')"> QR
-                </label>
-              </div>
-              <div class="col-sm-2">
-                <label>
-                  <input type="radio" name="color" class="form-control" value="LRNO" (change)="selectedColor('LRNO')"> LRNO
-                </label>
-              </div>
-              <div class="col-sm-4">
-                {{radio}} : <input type="text" class="form-control" [(ngModel)]="lrno">
-                </div>
-                
-            </div>
-            
-            <div class="container">
-              <div class="col-sm-1">
-                <label>
-                  <input type="checkbox" class="form-control" [(ngModel)]="showPan">Pan
-                </label>
-              </div>
-              <div class="col-sm-1">
-                <label>
-                  <input type="checkbox" class="form-control" [(ngModel)]="showsignstamp">Stamp
-                </label>
-              </div>
-              <div class="col-sm-2">
-                <label>
-                  <input type="checkbox" class="form-control" [(ngModel)]="showshubhamsign">Sign and Stamp
-                </label>
-              </div>
-            </div>
-            
-            
-            
-            <div class="container">
-              <div class="col-sm-3">
-              Rent : <input type="number" class="form-control" [(ngModel)]="rent">
-              </div>
-              <div class="col-sm-3">
-                Advance : <input type="number" class="form-control" [(ngModel)]="advance">
-                </div>
-                <div class="col-sm-3">
-                  Balance : <input type="number" class="form-control" [(ngModel)]="balance">
-                  </div>
-            </div>
-            
-                <div class="container">
-                  <button class="btn btn-danger" (click)="CollectionMemoC()">Get CollectionMemo</button>
-                </div>
-              
-              
-          </div>
-
-          <div *ngIf="data3==='5'" class="row" style="background-color: black;border-color: black;">
-                     
-            <form submitted=true enctype="multipart/form data" action="/">
-          <div class="row">
-
-            <div class="col-sm-2">
-              <div class="well">
-              <h3>Basic</h3>
-              Date : <input type='date' [ngModelOptions]="{standalone: true}" [(ngModel)]="date5b"> <br>
-              Truck No : <input type='text' [ngModelOptions]="{standalone: true}" [(ngModel)]="truckno5b"> <br>
-              PartyType : 
-                  <select id="partyName" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="partyType5b">
-                    <option value='NRCM'>NRCM</option>
-                    <option value='NR'>NR</option>
-                    <option value='SNL'>SNL</option>
-                  </select><br>
-              Party : <i class="material-icons" (click)="getparties()">autorenew</i>
-                  <select id="partyName" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="partyName5b">
-                    <option selected disabled value={{partyid}}>{{party}}</option>
-                    <option *ngFor="let i of parties;let j = index;" value={{i.name}}>{{i.name}}</option>
-                  </select><br>
-                Place : <i class="material-icons" (click)="getVillages()">autorenew</i>
-                <select id="placeName" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="placeName5b">
-                  <option selected disabled value={{villageid}}>{{village_name}}</option>
-                  <option *ngFor="let i of villagenamelist;let j = index;" value={{i.village_name}}>{{i.village_name}}</option>
-                </select>
-              <br>
-                Place 2: 
-                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="placeName25b">
-          </div>
-          </div>
-
-          <div class="col-sm-2">
-            <div class="well">
-            <h3>Rent</h3>
-            Rent : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="rent5b" (change)='calcTotalRent()'><br>
-            <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" (click)="toModal(j)">Add Extra</button>
-            Extra :<ul><li *ngFor="let i of extraRent;let j=index;" (click)="delRent(j)">{{i.extraAdvancemsg}}->{{i.extraAdvanceamt}}</li></ul><br>
-            Total  : {{totalRentb5}}
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="well">
-          <h3>Advance</h3>
-          <button class="btn btn-danger" data-toggle="modal" data-target="#myModal1" (click)="toModal(j)">Add Advance</button>
-        <ul><li *ngFor="let i of advanceArray;let j=index;"><label (click)="deladv(j)">{{i.date|date:'dd-MM-yyyy'}}->{{i.amount}}</label></li></ul>
-          Total Paid : {{totalAdvanceb5}}
-        </div>
-      </div>
-
-      <div class="col-sm-2">
-        <div class="well">
-        <h3>Billing</h3>
-        Bill : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="billamt5b" (change)="calcTotalBill()"><br>
-        Coolie : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="coolie5b" (change)="calcTotalBill()"><br>
-        Less : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="less5b" (change)="calcTotalBill()"><br>
-        Cash : <input type='number' [ngModelOptions]="{standalone: true}" [(ngModel)]="cash5b" (change)="calcTotalBill()"><br>
-        Total : {{totalcut5b}}
-      </div>
-    </div>
-
-    <div class="col-sm-2">
-      <div class="well">
-      <h3>Balance</h3>
-      Total Balance : <input type='text' [ngModelOptions]="{standalone: true}" [(ngModel)]="balance5b">
-    </div>
-  </div> 
-  <div class="col-sm-3">
-    <div class="well">
-      <button type="button" (click)="pdfData('custom')" class="btn btn-warning">
-        <i class="material-icons">download</i>
-      </button>
-  </div>
-</div> 
-
-          </div>
-            </form>
-          </div>
-
-          <div *ngIf="data3==='6'" class="row" style="background-color: black;border-color: black;">
-            <div class="row">
-              <div class="col-sm-2">
-                <input type="text" class="form-control" [(ngModel)]="billNo">
-              </div>
-            </div>
-            <div class="row">
-              <button class="btn btn-danger" (click)="getInformationData()">Get Data</button>
-            </div>
-          
-            <form [formGroup]="myFormGroup" *ngIf="showForm2" submitted=true enctype="multipart/form data" action="/">
-          <div class="row">
-
-            <div class="col-sm-2">
-              <div class="well">
-              <h3>Basic</h3>
-              Date : {{myFormGroup.value.loadingDate|date:'dd-MM-yyyy'}}<br>
-              Truck No : {{myFormGroup.value.truckno}}<br>
-              Party : {{myFormGroup.value.partyName}}<br>
-              Place  : {{myFormGroup.value.placeName}}
-            </div>
-          </div>
-
-          <div class="col-sm-2">
-            <div class="well">
-            <h3>Rent</h3>
-            Rent : {{myFormGroup.value.rent}}<br>
-            Extra :<ul><li *ngFor="let i of extraRent">{{i.extraAdvancemsg}}->{{i.extraAdvanceamt}}</li></ul><br>
-            Total  : {{myFormGroup.value.totalRent}}
-          </div>
-        </div>
-
-        <div class="col-sm-2">
-          <div class="well">
-          <h3>Advance</h3>
-        <ul><li *ngFor="let i of advanceArray;let j=index;">{{i.date|date:'dd-MM-yyyy'}}->{{i.amount}}</li></ul>
-          Total Paid : {{myFormGroup.value.totalAdvance}}
-        </div>
-      </div>
-
-      <div class="col-sm-2">
-        <div class="well">
-        <h3>Billing</h3>
-        Bill : {{myFormGroup.value.billamt}}<br>
-        Coolie : {{myFormGroup.value.extra_hamali}}<br>
-        Less : {{myFormGroup.value.less}}<br>
-        Cash : {{myFormGroup.value.cash}}<br>
-        Total : {{myFormGroup.value.totalCut}}
-      </div>
-    </div>
-
-    <div class="col-sm-2">
-      <div class="well">
-      <h3>Balance</h3>
-      Total Balance : {{myFormGroup.value.totalBalance}}
-    </div>
-  </div> 
-  <div class="col-sm-3">
-    <div class="well">
-      <button type="button" (click)="pdfData('simple')" class="btn btn-warning">
-        <i class="material-icons">download</i>
-      </button>
-  </div>
-</div> 
-
-          </div>
-            </form>
-          </div>
-          
-        </div>
-
-        <div *ngIf="whichType==='4'">
-          <div class="well" style="background-color: black;border-color: black;">
-            <div class="form-group row" style="background-color: black;border-color: black;">
-              <div class="col-xs-2">
-                <label>Place</label>
-                <select class="form-control" [(ngModel)]="placeidto">
-                  <option selected>Select Place</option>
-                  <option *ngFor="let i of villagenamelist" value={{i._id}}>{{i.village_name}}</option>
-                </select>
-              </div>
-              <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
-                <i class="material-icons" (click)="getVillages()">autorenew</i>
-              </div>
-            
-
-              <div class="col-xs-2">
-                <label>Party</label>
-                <select class="form-control" [(ngModel)]="partyidto">
-                  <option selected>Select Place</option>
-                  <option *ngFor="let i of parties" value={{i._id}}>{{i.name}}</option>
-                </select>
-              </div>
-              <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
-                <i class="material-icons" (click)="getparties()">autorenew</i>
-              </div>
-
-              <div class="col-xs-3">
-                <label>From</label>
-                <input type="date" class="form-control" [(ngModel)]="fromDate">
-              </div>
-
-              <div class="col-xs-3">
-                <label>To</label>
-                <input type="date" class="form-control" [(ngModel)]="toDate">
-              </div>
-                
-
-
-            </div>
-            <div class="row">
-              <div class="col-sm-4">
-                  <button class="btn btn-danger" (click)="getVPData()">Get</button>
-                </div>
-            </div>
-              
-
-            <div class="col-sm-12">
-
-              <table class="table" style="width:100%" align="center">
-                    <thead align="center" style="font-weight: bold">
-                      <tr class=table-header>
-                        <th>Srno</th>
-                        <th>Loading</th>
-                        <th>LRNO</th>
-                        <th>Amount</th>
-                        <th>Poch : Amt : Acc</th>
-                        <th>Payment Details</th>
-                      </tr>
-                    </thead>
-                    <tbody align="center">
-                      <tr *ngFor="let i of turnbooklist;let j = index">
-                        <td>{{j+1}}</td>
-                        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}=>{{i.datetruck}}</td>
-                        <td>{{i.lrno}}</td>
-                        <td>{{i.hamt}}<br>{{i.rent}}</td>
-                        <td>{{i.pochDate|date:'dd-MM-yyyy'}} <br>{{i.pochAmount}}</td>
-                        <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-             
-    
-          </div>
-          </div>
-
-          <div *ngIf="whichType==='5'">
-            <div class="well"  style="background-color: black;border-color: black;">
-            <div class="row"  style="background-color: black;border-color: black;">
-
-    
-              <div class="col-sm-3">
-                <button class="btn btn-warning col-sm-3" (click)="find6()">Find</button>
-              </div>
-              <div class="col-sm-3">
-                <button class="btn btn-warning col-sm-3" (click)="show(0)">0</button>
-              </div>
-              <div class="col-sm-3">
-                <button class="btn btn-warning col-sm-3" (click)="show(1)">1</button>
-              </div>
-              <div class="col-sm-3">
-                <button class="btn btn-warning col-sm-3" (click)="show(2950)">2950</button>
-              </div>
-    
-            </div>
-                
-            <div class="col-sm-12">
-      
-                  <table class="table" style="width:100%" align="center">
-                        <thead align="center" style="font-weight: bold">
-                          <tr class=table-header>
-                            <th>Srno</th>
-                            <th>Date</th>
-                            <th>TruckNo</th>
-                            <th>Party</th>
-                            <th>Place</th>
-                            <th>Amount</th>
-                          </tr>
-                        </thead>
-                        <tbody align="center">
-                          <tr *ngFor="let i of data6;let j = index">
-                            <td>{{j+1}}</td>
-                            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-                            <td>{{i.truckno}}</td>
-                            <td>{{i.party}}</td>
-                            <td>{{i.place}}</td>
-                            <td><input type="number" id="tb_{{j}}" value={{i.tentativeBalance}}></td>
-                          </tr>
-                        </tbody>
-                      </table>
-                </div>
-               
-                <button mat-raised-button type="button" (click)="setTB()" class="btn-success btn-sm btn-just-icon">
-                  <i class="material-icons">arrow_forward</i>
-                </button>
-            </div>
-            </div>
-
-            <div *ngIf="whichType==='6'">
-             
-          
-              <div class="well"  style="background-color: black;border-color: black;">
-                <form [formGroup]="myFormGroupR" (ngSubmit)="generate(myFormGroupR)" submitted=true
-                  enctype="multipart/form data" action="/">
-              
-                  <div class="form-group row">
-                    <div class="col-xs-3">
-                     Qty :  <input type="number" id="value" class="form-control" formControlName="qty">
-                    </div>
-                  </div>
-          
-                  <div class="form-group row">
-                    <div class="col-xs-3">
-                     From :  <input type="number" id="value" class="form-control" formControlName="from">
-                    </div>
-                  </div>
-          
-                  
-              
-                  <div class="form-group row">
-                    <div class="col-xs-3">
-                     To :  <input type="number" id="value" class="form-control" formControlName="to">
-                    </div>
-                  </div>
-              
-                          
-              
-                  <div class="row">
-                    <div class="form-group" class="col-xs-2"></div>
-                    <div class="form-group" class="col-xs-1">
-                      <button type="submit" class="btn btn-primary" [disabled]='!myFormGroupR.valid'>
-                        <i class="material-icons">send</i>
-                      </button>
-                    </div>
-              
-              
-                  </div>
-                </form>
-              
-              
-              
-              </div>
-              <div class="well"  style="background-color: black;border-color: black;">
-                <ul *ngFor="let i of randomarray;">
-                  <li>{{i}}</li>
-                </ul>
-              </div>
-              </div>
-              
-              
-
-            </div>
-
-
-
-            <div class="modal fade" id="myModalPay" role="dialog">
-              <div class="modal-dialog">
-              
-            
-                <div class="modal-content" style="background-color: black;color: wheat;">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Actual Payment Details</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-                      Date : <input type="date" class="form-control" [(ngModel)]="paymentDate">
-                    </div>
-            
-                    <div class="row">
-                      Amount : <input type="number" class="form-control" [(ngModel)]="paymentAmt">
-                    </div>
-                    <div class="row">
-                      <select class="form-control" [(ngModel)]="statusOfPoch">
-                        <option>Okay</option>
-                        <option>Damage</option>
-                        <option>Shortage</option>
-                        <option>Diesel</option>
-                        <option>Loan</option>
-                        <option>Double Load</option>
-                        <option>Late</option>
-                        <option>To Pay</option>
-                      </select>
-                    </div>
-                  </div>
-            
-                  <div class="modal-footer">
-                    <button class="btn btn-warning" (click)="addPayment()">Store</button>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-
-            <div class="container">
-    
-              <div class="modal fade" id="myModal" role="dialog" style="background-color: black;">
-                <div class="modal-dialog">
-                
-              
-                  <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Edit for {{truckno5b}}</h4>
-                    </div>
-                    <div class="modal-body" style="background-color: black;">
-                <div class="well" style="background-color: black;">
-            
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Extra Amount : 
-                      <input type="number" class="form-control" [(ngModel)]="amount">
-                    </div>
-                  </div>
-            
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Remark : 
-                      <input type="text" class="form-control" [(ngModel)]="remark">
-                    </div>
-                  </div>
-            
-                  <div class="row form-group">
-                    
-                    
-                  <div class="col-sm-4">
-                    <button type="button" class="btn btn-warning" (click)="addToArray()">
-                      Submit
-                    </button>
-                  </div>
-                  </div>
-                </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              
-            </div>
-
-            <div class="container">
-    
-              <div class="modal fade" id="myModal1" role="dialog" style="background-color: black;">
-                <div class="modal-dialog">
-                
-              
-                  <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Advance for {{truckno5b}}</h4>
-                    </div>
-                    <div class="modal-body" style="background-color: black;">
-                <div class="well" style="background-color: black;">
-            
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Amount : 
-                      <input type="number" class="form-control" [(ngModel)]="advamt">
-                    </div>
-                  </div>
-            
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Date : 
-                      <input type="date" class="form-control" [(ngModel)]="advdate">
-                    </div>
-                  </div>
-            
-                  <div class="row form-group">
-                    
-                    
-                  <div class="col-sm-4">
-                    <button type="button" class="btn btn-warning" (click)="addToArrayAdv()">
-                      Submit
-                    </button>
-                  </div>
-                  </div>
-                </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              
-            </div>
-
-
-            <div class="modal fade" id="myModalSmart" role="dialog">
-              <div class="modal-dialog">
-              
-            
-                <div class="modal-content" style="background-color: black;color: wheat;">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">SMART</h4>
-                  </div>
-                  <div class="modal-body">
-                    <div class="row">
-
-                        <div class="col-sm-4">
-                          <button type="button" class="btn btn-danger">Memo</button>  
-                        </div>
-
-                        <div class="col-sm-4">
-                          <button type="button" class="btn btn-success">Courier</button>  
-                        </div>
-
-                        <div class="col-sm-4">
-                          <button type="button" class="btn btn-success">Envelope</button>  
-                        </div>
-
-                    </div>
-                  </div>
-            
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-            
+</div>

@@ -1,0 +1,215 @@
+<div class="row">
+  <div class="col-sm-3">
+      <button class="btn btn-info" (click)="switcher('add')">Add</button>
+  </div>
+
+  <div class="col-sm-3">
+    <button class="btn btn-info" (click)="switcher('display')">Display</button>
+</div>
+</div>
+
+<div class="well" *ngIf="display=='add'">
+  <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Tab Name : <input type="text" id="gst" class="form-control" formControlName="name" placeholder="Tab Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Is Parent? : <input type="checkbox" id="gst" class="form-control" formControlName="isParent">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Has Children? : <input type="checkbox" id="gst" class="form-control" formControlName="hasChildren">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Children : <input type="number" id="gst" class="form-control" formControlName="children" placeholder="No. of childrens">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Position : <input type="number" id="gst" class="form-control" formControlName="position" placeholder="Position">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Link : <input type="text" id="gst" class="form-control" formControlName="link" placeholder="Router Link Name">
+      </div>
+    </div>
+   
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Add NRCM Ids : 
+        <select class="form-control" class="form-control" formControlName="nrcmid" (change)="addtonrcmids()">
+          <option value="Default" selected>Default</option>
+          <option *ngFor="let i of usersArray; let j =index;" value={{j}}>{{i.displayName}}</option>
+        </select>
+      </div>
+
+      <div class="col-xs-5">
+       
+       <table>
+        <tr>
+          <th>SR</th>
+          <th>Name</th>
+          <th>NRCMID</th>
+          <th>Delete</th>
+        </tr>
+        <tr *ngFor="let i of nrcmids;let j = index;">
+          <td>{{j+1}}</td>
+          <td>{{i.displayName}}</td>
+          <td>{{i.nrcmid}}</td>
+          <td><button class="btn btn-danger" (click)="delete(j)">Delete</button></td>
+        </tr>
+       </table>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-5">
+        Parent Id : 
+        <select class="form-control" class="form-control" formControlName="parentid">
+          <option value="Default">Default</option>
+          <option *ngFor="let i of seqArray" value={{i._id}}>{{i.name}}</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+<div class="well" *ngIf="display=='display'">
+ <button class="btn btn-primary" (click)="check()">Check</button>
+<div class="well">
+ 
+      <ul>
+        <hr>
+        <li *ngFor="let i of sacha; let s=index;">
+          <div class="row">
+            <div class="col-sm-2">
+              Parent Name : <input type="text" value={{i.parent}} id="parent_{{s}}" class="form-control col-sm-3">
+            </div>
+            <div class="col-sm-2">
+              Link Name : <input type="text" value={{i.link}} id="link_{{s}}"class="form-control col-sm-3">
+            </div>
+            <div class="col-sm-2">
+              <div class="row">
+              NRCMIDS : <select class="form-control" class="form-control" id="nrcmid_{{s}}" (change)="addPid(s,'parent')">
+                <option value="Default" selected>Default</option>
+                <option *ngFor="let u of usersArray; let j = index;" value={{u.displayName}}>{{u.displayName}}</option>
+              </select>
+              </div>
+              <div class="row">
+                <table>
+                  <tr>
+                  <th>Sr</th>
+                  <th>Name</th>
+                  <th>Delete</th>
+                </tr>
+                <tr *ngFor="let ii of i.nrcmids;let iij=index;">
+                  <td>{{iij+1}}</td>
+                  <td>{{ii}}</td>
+                  <td><button class="btn btn-danger" (click)="deletePid(iij,s,'parent')">Delete</button></td>
+                </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="col-sm-2">
+              is Parent : <input type="checkbox" [checked]="i.isParent" id="isParent_{{s}}" class="form-control col-sm-3">
+            </div>
+
+            <div class="col-sm-2">
+              has Children? : <input type="checkbox" [checked]="i.hasChildren" id="hasChildren_{{s}}" class="form-control col-sm-3">
+              no. of child : <input type="number" value={{i.nochildren}} id="children_{{s}}" class="form-control col-sm-3">
+            </div>
+
+            <div class="col-sm-2">
+              position : <input type="number" value={{i.position}} id="position_{{s}}" class="form-control col-sm-3">
+            </div>
+          </div>
+          <hr>
+          
+              <ul *ngFor="let j of i.children;let y = index;">
+                <li>
+                  <!-- <div class="row">
+                    <div class="col-sm-2">
+                      <input type="text" value={{j.name}} id="parent_{{s}}_{{y}}" class="form-control col-sm-3">
+                    </div>
+                  </div> -->
+
+                  <div class="row">
+                    <div class="col-sm-2">
+                      Child Name : <input type="text" value={{j.name}} id="name_{{s}}_{{y}}" class="form-control col-sm-3">
+                    </div>
+                    <div class="col-sm-2">
+                      Child Link : <input type="text" value={{j.link}} id="link_{{s}}_{{y}}"class="form-control col-sm-3">
+                    </div>
+                    <div class="col-sm-2">
+                      <div class="row">
+                      NRCMIDS : <select class="form-control" class="form-control" id="nrcmid_{{s}}_{{y}}" (change)="addPid(s,'child',y)">
+                        <option value="Default" selected>Default</option>
+                        <option *ngFor="let u of usersArray; let j = index;" value={{u.displayName}}>{{u.displayName}}</option>
+                      </select>
+                      </div>
+                      <div class="row">
+                        <table>
+                          <tr>
+                          <th>Sr</th>
+                          <th>Name</th>
+                          <th>Delete</th>
+                        </tr>
+                        <tr *ngFor="let ii of j.nrcmids;let iij=index;">
+                          <td>{{iij+1}}</td>
+                          <td>{{ii}}</td>
+                          <td><button class="btn btn-danger" (click)="deletePid(iij,s,'child',y)">Delete</button></td>
+                        </tr>
+                        </table>
+                      </div>
+                    </div>
+        
+                    <div class="col-sm-2">
+                      is parent :  <input type="checkbox" [checked]="j.isParent" id="isParent_{{s}}_{{y}}" class="form-control col-sm-3">
+                    </div>
+        
+                    <div class="col-sm-2">
+                      has children :  <input type="checkbox" [checked]="i.hasChildren" id="hasChildren_{{s}}_{{y}}" class="form-control col-sm-3">
+                      no of children : <input type="number" value={{j.nochildren}} id="children_{{s}}_{{y}}" class="form-control col-sm-3">
+                    </div>
+        
+                    <div class="col-sm-2">
+                      position : <input type="number" value={{j.position}} id="position_{{s}}_{{y}}" class="form-control col-sm-3">
+                    </div>
+                  </div>
+
+
+                </li>
+              </ul>
+        </li>
+        
+      </ul>
+  </div>
+
+
+</div>

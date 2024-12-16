@@ -1,0 +1,39 @@
+<div class="well">
+  <form [formGroup]="myFormGroup"submitted=true enctype="multipart/form data"
+    action="/">
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Remark</th>
+            <th>Amount</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let i of truckArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td><input  value={{i.date}} id="{{ 'date' + j }}" disabled></td>
+            <td><input  value={{i.truckno}} id="{{ 'truckno' + j }}" disabled></td>
+            <td><input  [disabled]='i.field===true' value={{i.remark}} id="{{ 'remark' + j }}"></td>
+            <td><input  [disabled]='i.field===true' value={{i.amount}} id="{{ 'amount' + j }}"></td>
+            <td><button type="button" class="btn btn-info" (click)="enableInternalAddition(i,j)" [disabled]='inProgress===false'>
+              <i class="material-icons">edit</i>
+            </button></td>
+            <td><button type="button" class="btn btn-danger" (click)="deleteInternalElement(i,j)" [disabled]='inProgress===false'>
+              <i class="material-icons">delete_forever</i>
+            </button></td>
+          </tr>
+        </table>
+        <button type=" button" class="btn btn-warning" (click)="submit()"  [disabled]='inProgress===true'>
+          <i class="material-icons">send</i>
+        </button>
+        <button type=" button" class="btn btn-danger" (click)="clear()"  [disabled]='inProgress===true'>
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

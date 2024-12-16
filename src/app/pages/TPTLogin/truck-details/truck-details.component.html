@@ -1,0 +1,58 @@
+<div class="well" *ngIf="display">
+
+<div class="row">
+  <div class="col-sm-2" *ngFor="let i of ownerdetailslist;let j=index;">
+    <button class="btn btn-danger" (click)="getTruckDetails(i._id,j)">{{i.truckno}}</button>
+  </div>
+</div>
+</div>
+<div class="well" *ngIf="display2">
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 style="font-weight: bolder;">Owner Details</h1>
+      <hr style="background-color: black;height: 8px;">
+      <div class="row">
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">PAN </span>: <i class="material-icons" *ngIf="selectedTruck.P" style="color: green;">done</i>
+                                        <i class="material-icons" *ngIf="!selectedTruck.P" style="color: red;">close</i></div>
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">RC </span>: <i class="material-icons" *ngIf="selectedTruck.r" style="color: green;">done</i>
+          <i class="material-icons" *ngIf="!selectedTruck.r" style="color: red;">close</i></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">PAN </span><span>:&nbsp;{{selectedTruck.pan}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Owner </span><span>:&nbsp;{{selectedTruck.oname}}</span></div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Contact </span><span>:&nbsp;{{selectedTruck.contactO[0]}}</span></div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <h1 style="font-weight: bolder;">Account Details</h1>
+      <hr style="background-color: black;height: 8px;">
+      <div class="row">
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Name </span>:&nbsp; {{selectedTruck['accountDetails'][0].accountName}}</div>
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Number </span>:&nbsp; {{selectedTruck['accountDetails'][0].accountNumber}}</div>
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">IFSC </span>:&nbsp; {{selectedTruck['accountDetails'][0].ifsc}}</div>
+      </div>
+    </div>
+
+    
+    <div class="col-sm-4">
+      <h1 style="font-weight: bolder;">Vehicle Details</h1>
+      <hr style="background-color: black;height: 8px;">
+      <div class="row">
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">License </span>:&nbsp; <i class="material-icons" *ngIf="selectedTruck.d" style="color: green;">done</i>
+                                        <i class="material-icons" *ngIf="!selectedTruck.d" style="color: red;">close</i></div>
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Length </span>:&nbsp; {{selectedTruck.h}}-{{selectedTruck.b}}-{{selectedTruck.l}}</div>
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Weight </span>:&nbsp; {{selectedTruck.weight}}</div>
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Type </span>:&nbsp; {{selectedTruck.typeOfVehicle}}</div>
+        <div class="col-sm-12 vh2"><span style="font-weight: bolder;">Contact Driver </span>:&nbsp; {{selectedTruck.contactO[0]}}</div>
+</div>
+
+
+    </div>
+  </div>
+</div>
+
+  

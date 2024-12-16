@@ -1,0 +1,237 @@
+<!-- Balance Hire -->
+<div *ngIf="saveToCheckArrayBoolean">
+  <div class="row">
+
+  <!-- <div class="col-sm-4">Today Date : <input type="date" class="form-control" (change)="todayDateSetter()" [(ngModel)]="uitodayDate"></div> -->
+
+
+  <div class="row">
+    <div class="col-lg-1"><label for="uitodayDate" (click)="forceBack()">Date</label></div>
+  <div class="col-lg-9">
+    <div class="row">
+      <div class="col-sm-2">
+    <button mat-raised-button type="button" (click)="leftRight('back')" *ngIf="back"
+      class="btn btn-danger btn-sm btn-just-icon delete">
+      Back
+    </button>
+  </div>
+    <div class="col-sm-3">
+      <input type="date" id="uitodayDate" class="form-control" [(ngModel)]="uitodayDate" style="display: none;">
+    <h3>{{uitodayDate|date:'dd-MM-yyyy'}}</h3>
+  </div>
+    <div class="col-sm-2">
+    <button mat-raised-button type="button" (click)="leftRight('ahead')"
+      class="btn btn-primary btn-sm btn-just-icon delete">
+      Ahead
+    </button>
+  </div>
+  </div>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <button mat-raised-button type="button" (click)="find()" 
+      class="btn btn-primary btn-sm btn-just-icon delete">
+      Get Data
+    </button>
+    <!--findNew-->
+</div>
+
+
+  
+</div>
+  <table class="table" style="width:100%" align="center" *ngIf="tableSelected">
+    <thead align="center" style="font-weight: bold">
+      <tr class=table-header>
+        <th>Srno</th>
+        <th>Loading Date</th>
+        <th>Place</th>
+        <th>Party-Type</th>
+        <th>LRNO</th>
+        <th>Account</th>
+      </tr>
+    </thead>
+
+    <tbody align="center">
+      <tr *ngFor="let i of turnbooklist;let j = index" [ngStyle]="{'color': i.checker===0 ? 'red' : 'wheat' }">
+        <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
+          done
+          </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
+            close
+            </i></td>
+
+        <td (click)="addToCheckArray(i,j,1)" >
+          {{i.loadingDate|date:'dd-MM-yyyy'}}
+          <br>
+          {{i.truckno}}
+          <br>
+          {{i.typeOfLoad}}</td>
+
+        <td>{{i.place}}</td>
+        <td>{{i.partyType}}<br>{{i.snameparty}}</td>
+        <td>{{i.lrno}}</td>
+        <td>
+          <!-- *ngIf="!i.update&&i.advAccid!==-1" -->
+          
+          <span *ngIf="i.accounts!==undefined">
+          {{i.accounts['accountName']}}<br>
+          {{i.accounts['accountNumber']}}<br>
+          {{i.accounts['ifsc']}}
+        </span>
+        </td>
+
+      </tr>
+    </tbody>
+  </table>
+  <div>
+    <button mat-raised-button type="button" (click)="saveToCheckArray()" class="btn-danger btn-sm btn-just-icon" *ngIf="nextStepButton && balanceHireArrray.length<1">
+      <i class="material-icons">add</i>
+    </button>
+  </div>
+  <div>
+    <button mat-raised-button type="button" (click)="moveToFinalStep()" class="btn-success btn-sm btn-just-icon"
+      *ngIf="balanceHireArrray.length>0 && uitodayDate!==''">
+      <i class="material-icons">arrow_forward</i>
+    </button>
+  </div>
+</div>
+
+<div *ngIf="!saveToCheckArrayBoolean">
+  <div *ngIf="finalCheckDone">
+    <div *ngFor="let k of balanceHireArrray;let kk=index;">
+      <table class="table">
+        <thead align="center">
+          <tr>
+            <th>Srno</th>
+            <th>Loading Date</th>
+            <th>LRNO</th>
+            <th>Truck No</th>
+            <th>Party Name</th>
+            <th>Party Type</th>
+            <th>Place</th>
+            <th>Advance Account</th>
+          </tr>
+        </thead>
+        <tbody align="center">
+          <tr *ngFor="let ii of k;let jj=index;">
+            <td>{{jj+1}}</td>
+            <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{ii.lrno}}</td>
+            <td>{{ii.truckno}}</td>
+            <td>{{ii.snameparty}}</td>
+            <td>{{ii.partyType}}</td>
+            <td>{{ii.place}}</td>
+            <td>{{ii.accounts['accountName']}}<br>{{ii.accounts['accountNumber']}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button mat-raised-button type="button" (click)="moveToFinalStep2()" class="btn-success btn-sm btn-just-icon">
+      <i class="material-icons">arrow_forward</i>
+    </button>
+  </div>
+
+  <div *ngIf="!finalCheckDone">
+    <div *ngFor="let k of balanceHireArrray;let kk=index;">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Srno</th>
+            <th>Loading Date</th>
+            <th>Truck No</th>
+            <th>Party Name</th>
+            <th>Party Type</th>
+            <th>Place</th>
+            <th>Balance</th>
+            <th>LRNO</th>
+            <th>Remark</th>
+            <th>Account Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ii of k;let jj=index;">
+            <td>{{jj+1}}</td>
+            <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{ii.truckno}}
+              <button class="btn btn-warning" *ngIf="ii.update" (click)='updateACC(ii,jj)' data-toggle="modal" data-target="#myModalDD">Update</button>
+            </td>
+            <td>{{ii.snameparty}}</td>
+            <td>{{ii.partyType}}</td>
+            <td>{{ii.place}}</td>
+            <td>
+              <div class="row">
+                <div class="col-sm-2">Hamali</div>
+                <div class="col-sm-2"><input type="number" placeholder="Hamali" id="hamali_{{kk}}_{{jj}}" value={{ii.returnhamali}} (change)="addhamali(kk,jj)"></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">Balance</div>
+                <div class="col-sm-2"><input type="number" placeholder="Balance" id="balance_{{kk}}_{{jj}}" value={{ii.tentativeBalance}}></div>
+              </div>
+              <div class="row">
+                <div class="col-sm-2">Total</div>
+                <div class="col-sm-2"><input type="number" style="cursor: no-drop;" placeholder="Balance" id="total_{{kk}}_{{jj}}" value={{ii.tentativeBalance}} disabled></div>
+              </div>
+            </td>
+            <td><input type="text" placeholder="LRNO" id="lrno_{{kk}}_{{jj}}" value={{ii.lrno}}>
+            </td>
+            <td>
+              <select class="form-control" id="remark_{{kk}}_{{jj}}">
+                <option *ngFor="let i of remarks;" value={{i.value}}>{{i.viewValue}}</option>
+              </select>
+            </td>
+            <td>
+              <select class="form-control" id="name_{{jj}}" [disabled]="ii.update"  style="background-color: black;color: wheat;">
+                <option disabled id="option_{{jj}}">Default</option>
+                <option value={{kki}} *ngFor="let kk of ii.accountNo;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <button mat-raised-button type="button" (click)="accountCheckerF()" class="btn-danger btn-sm btn-just-icon" *ngIf="accountChecker">
+      Account Checker
+    </button>
+    <button mat-raised-button type="button" (click)="check()" class="btn-success btn-sm btn-just-icon" *ngIf="checkSign">
+      <i class="material-icons">check</i>
+    </button>
+    <button mat-raised-button type="button" (click)="setBalPage()" class="btn-success btn-sm btn-just-icon" *ngIf="firstTime">
+      <i class="material-icons">arrow_forward</i>
+    </button>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content" style="background-color: black;color: wheat;">
+      <div class="modal-header" style="background-color: black;color: wheat;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Account Details for {{accUpdater.truckno}}</h4>
+      </div>
+      <div class="modal-body" style="background-color: black;color: wheat;">
+        <div class="row">
+          Account Name : <input type="text" class="form-control" [(ngModel)]="accName">
+        </div>
+
+        <div class="row">
+         Account Number : <input type="text" class="form-control" [(ngModel)]="accNo">
+        </div>
+
+        <div class="row">
+          IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc">
+        </div>
+       
+      </div>
+
+      <div class="modal-footer" style="background-color: black;color: wheat;">
+        <button class="btn btn-warning" (click)="storeAcc()">Store</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+<!-- Balance Hire -->

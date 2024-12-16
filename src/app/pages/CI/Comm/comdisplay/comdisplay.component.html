@@ -1,0 +1,28 @@
+<div class="well">
+  <div class="row">
+    <input type="text" [(ngModel)]="billno">
+    <button class="btn btn-danger" (click)="find()"><i class="material-icons" >send</i></button>
+  </div>
+
+  <table class="table" style="width:100%" align="center"  *ngIf="table">
+
+      <thead>
+          <tr class="table-header">
+              <th>Srno</th>
+              <th>Date</th>
+              <th>Truck</th>
+              <th>BillAmt</th>
+              <th>Options</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let i of data;let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i.loadingDate}}</td>
+              <td>{{i.truck}}</td>
+              <td>{{i.billamt}}
+              <td><i class="material-icons" style="color: blue;cursor: pointer;" (click)="edit(i)">edit</i></td>
+          </tr>
+      </tbody>
+  </table>
+</div>

@@ -1,0 +1,59 @@
+body, html {
+  height: 100%;
+}
+
+h3 {
+    color: rebeccapurple;
+    font-family: arial, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 1px;
+   
+  }
+  .horizontalLine {
+    height: 20px;
+    color: grey;
+  }
+  .line {
+    border: 1px solid grey;
+    width: 100%;
+  }
+  
+  .home{
+    background-image: url('../../../assets/images/cd.jpg');
+    background-position: center;
+    /* position:relative; */
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+  }
+  .hrLine{
+    height: 10px;
+    width:100%;
+  }
+  img{
+    height:100px;
+    width:100px;
+    
+  }
+  #header{
+    margin-top: 30px;
+    margin-bottom: 350px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-display: initial;
+    font-size: 50px;
+    font-stretch: narrower;
+    font-style: italic;
+    color:black ;
+  }
+  .input{
+    background-color: transparent;
+    border-color: ddd;
+    color: white;
+  }
+  button{
+    border-color: black;
+  }

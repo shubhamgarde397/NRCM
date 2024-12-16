@@ -1,0 +1,31 @@
+.header-head{
+    background-color: orange;
+    color:white;
+    padding: 1%;
+        border-radius: 100px;
+        text-align: center;
+  }
+  
+  button{
+      border-radius: 100px;
+      margin-left: 5px;
+      margin-right: 5px;
+      color: black;
+  }
+  
+  
+  
+  .well{
+      box-shadow: none;
+      background-color: black;
+      color: wheat;
+  }
+
+  input,select,table{
+    background-color: black;
+    color: wheat;
+  }
+
+
+
+  

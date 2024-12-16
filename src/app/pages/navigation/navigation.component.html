@@ -1,38 +1,35 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
+<nav class="navbar navbar-inverse" style="margin-bottom: 0px;">
+
+  <div class="container-fluid" style="background-color: black;">
+
     <div class="navbar-header">
-      <a class="navbar-brand" routerLink="NRCM_HOME">Nitin Roadways Fast</a>
+      <a class="navbar-brand" routerLink="NRCM_HOME">NRCM</a>
     </div>
-    <ul class="nav navbar-nav">
-      <li>
-        <a routerLink="ACCOUNT_DETAILS_DISPLAY">SMART UPDATE</a>
-      </li>
-      <li>
-        <a (click)="getData()">Available Trucks</a>
-      </li>
 
-      <li>
-        <a routerLink="NRCM_ACCOUNT" (click)="makeAllFalse()">Account Number 135</a>
-      </li>
+    <ul class="nav navbar-nav" *ngFor="let i of tabs;" style="background-color: black;color: wheat;">
 
-      <li>
-        <a routerLink="NRCM_TRANSPORT_ENVELOPE" (click)="makeAllFalse()">Envelope Entries</a>
-      </li>
+      <li class="dropdown" style="background-color: black;color: wheat;">
 
-      <li class="dropdown">
-        <a (click)="logout()">Logout
+          <a class="dropdown-toggle" style="background-color: black;color: wheat;" data-toggle="dropdown" (click)="routeR(i.link)">{{i.parent}}
           <span class="caret"></span>
         </a>
-      </li>
-      <li class="time">
-        {{day}}-{{month}}-{{year}}
-      </li>
-      <li style="color: white;font-size: 20px;margin-top: 10px;margin-left: 15px;">Welcome {{username}}
+
+
+        <ul class="dropdown-menu" style="background-color: black;color: wheat;">
+          <li *ngFor="let k of i.children;" style="background-color: black;color: wheat;">
+            <a style="background-color: black;color: wheat;" (click)="routeR(k.link)">{{k.name}}</a>
+          </li>
+        </ul>
+
       </li>
 
 
     </ul>
+
+    
+
   </div>
+
 </nav>
 
 <div>

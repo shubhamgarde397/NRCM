@@ -1,0 +1,206 @@
+<div class="well">
+  <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/">
+
+
+   
+
+
+    <div class="form-group row">
+        <div class="col-xs-3">
+          <select id="from" class="form-control" formControlName="from">
+            <option selected disabled>Select Type</option>
+            <option value="Truck">Truck</option>
+            <option value="Transport">Transport</option>
+          </select>
+      </div>
+      <div class="col-xs-3">
+        <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN11 TN 1111">
+      </div>
+      <div class="col-xs-3">
+        <button mat-raised-button type="button" (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+          Find
+        </button>
+      </div>
+      <div class="col-sm-3">
+        <select class="form-control" [(ngModel)]="trucknoid11" [ngModelOptions]="{standalone: true}" (change)="find11UniqueTruck()" id="truckNoone11">
+          <option>Default</option>
+          <option *ngFor="let i of turnbooklist;let j = index;" value={{i.truckno}}>{{i.truckno}}</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="gotData18">
+      <div class="col-xs-3">
+        Date : <input type="date" class="form-control" formControlName="date">
+      </div>
+    </div>
+
+    <div class="form-group row" *ngIf="gotData18">
+      <div class="col-xs-3">
+        Amount : <input type="number" id="amt" class="form-control" formControlName="amt">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.amt.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group row" *ngIf="gotData18">
+      <div class="col-xs-3">
+        Reason : <input type="text" id="reason" class="form-control" value='Loan' formControlName="reason" placeholder="Reason">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.reason.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="gotData18">
+      <div class="form-group" class="col-xs-2"></div>
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+<button class="btn btn-success" (click)="fetchBasic()">Refresh!</button>
+<table class="table" style="width:100%" align="center" *ngIf="showdues">
+
+  <thead class="table-header">
+      <tr>
+          <th>Srno</th>
+          <th>Truckno</th>
+          <th>Date</th>
+          <th>Reason</th>
+          <th>Amount</th>
+          <th>Pending</th>
+          <th>From</th>
+          <th>Info</th>
+          <!-- <th>Options</th> -->
+      </tr>
+  </thead>
+
+
+  <tbody>
+      <tr *ngFor="let i of dues;let j = index">
+          <td>{{j+1}}</td>
+          <td>{{i.truckno}}</td>
+          <td>{{i.date}}</td>
+          <td>{{i.reason}}</td>
+          <td>{{i.amt}}</td>
+          <td>{{i.pending}}</td>
+          <td>{{i.from}}</td>
+          <td>
+            <span *ngFor="let k of i.info;let z = index;">
+              <ul>
+                <li>Amt Taken : {{k.dueAmtTaken}}</li>
+                <li>Date Taken : {{k.date}}</li>
+                <li><button class="btn btn-warning" (click)='deleteOne(j,z)'>Delete</button></li>
+                <!-- <li><button class="btn btn-warning" (click)='details("TurnBook",i,z)' data-toggle="modal" data-target="#myModal">TB</button>---<button data-toggle="modal" data-target="#myModal" class="btn btn-warning" (click)='details("Balance",i,z)'>BH</button></li> -->
+              </ul>
+            </span>            
+
+          </td>
+          <!-- <td>
+              <button mat-raised-button (click)="delete(i._id,j)" class="btn-danger btn-sm btn-just-icon">
+                  <i class="material-icons">delete_forever</i>
+              </button>
+          </td> -->
+      </tr>
+  </tbody>
+</table>
+
+
+<div class="container">
+  
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Due Details</h4>
+        </div>
+        
+        <div class="modal-body" *ngIf="whichData">
+          <h1>Balance Hire Truck Data</h1>
+          <table class="table table-bordered">
+            <tr>
+            <th>Srno</th>
+            <th>TruckNo</th>
+            <th>Date</th>
+            </tr>
+            <tr *ngFor="let i of bhdata.truckData;let j =index;">
+              <td>{{j+1}}</td>
+              <td>{{i.truckno}}</td>
+              <td>{{i.date|date:'dd-MM-yyyy'}}</td>
+            </tr>
+          </table>
+          <h1>Balance Hire Loan/Dues</h1>
+          <table class="table table-bordered">
+            <tr>
+            <th>Srno</th>
+            <th>Msg</th>
+            <th>Srno of Truck</th>
+            <th>Type</th>
+            <th>How much</th>
+            </tr>
+            <tr *ngFor="let i of bhdata.commentToTruck2;let j =index;">
+              <td>{{j+1}}</td>
+              <td>{{i.msg}}</td>
+              <td>{{i.tsrno}}</td>
+              <td>{{i.type}}</td>
+              <td>{{i.no}}</td>
+            </tr>
+          </table>
+          <h1>TurnBook Load and Payments</h1>
+          <table class="table table-bordered">
+            <tr>
+            <th>Date</th>
+            <th>Balance Amt</th>
+            <th>Payment Date Apprx</th>
+            </tr>
+            <tr>
+              <td>{{tbdata.loadingDate|date:'dd-MM-yyyy'}}</td>
+              <td>{{tbdata.advanceArray[0]['advanceAmt']}}</td>
+              <td>{{tbdata.advanceArray[0]['advanceDate']|date:'dd-MM-yyyy'}}</td>
+            </tr>
+          </table>
+          <h1>Turnbook Due Information</h1>
+          <table class="table table-bordered">
+            <tr>
+            <th>Srno</th>
+            <th>Total Due</th>
+            <th>Due Amt Taken</th>
+            <th>Due Date Taken</th>
+            </tr>
+            <tr *ngFor="let i of tbdata.dueInfo;let j =index;">
+              <td>{{j+1}}</td>
+              <td>{{i.dueWholeAmt}}</td>
+              <td>{{i.dueAmtTaken}}</td>
+              <td>{{i.date|date:'dd-MM-yyyy'}}</td>
+              
+            </tr>
+          </table>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>

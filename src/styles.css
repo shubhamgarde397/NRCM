@@ -2,7 +2,7 @@
 button{
     border-radius: 100px;
     height:38px;
-    width: 100px;
+    /* width: 100px; */
 }
 
 th{
@@ -18,3 +18,30 @@ a:hover{
     cursor: pointer;
 }
 
+.well .container{
+    background-color: black;
+}
+
+html{
+    background-color: black;
+}
+
+button{
+    border-radius: 100px;
+}
+
+input,select,table{
+    background-color: black;
+    color: wheat;
+  }
+  .well{
+    background-color: black;
+    color: wheat;
+  }
+  button{
+    color: black;
+  }
+  
+  thead>tr{
+    color: wheat;
+  }

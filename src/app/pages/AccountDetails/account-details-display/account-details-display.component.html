@@ -1,0 +1,534 @@
+<div class="well">
+  <div class="row">
+    <div class="col-sm-5">
+      <select class="form-control" [(ngModel)]="displayType" (change)="findOption()">
+        <option *ngFor="let i of options;let j = index;" value={{i.value}} [hidden]="i.disabled">{{i.viewValue}}</option>
+      </select>
+    </div>
+    <div class="col-sm-5">
+      <h3>{{buttonValue}}</h3>
+      <button class="btn btn-danger" (click)="callOptionAPI()" *ngIf="showButton">Click to Get!</button>
+    </div>
+  </div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='18'">
+  <div class="row">
+      
+  <div class="col-sm-4">
+  <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+    Find
+  </button>
+</div>
+</div>
+<hr>
+
+<table class="table table-bordered" *ngIf="!gotData18">
+  <tr>
+    <th>Srno</th>
+    <th>TruckNo</th>
+    <th>Date</th>
+    <th>Party</th>
+    <th>Account</th>
+  </tr>
+  <tr *ngFor="let i of turnbooklist;let j = index;">
+    <td>{{j+1}}</td>
+    <td>{{i.truckno}}
+      <button class="btn btn-primary" (click)="edit(i,j)" *ngIf="i.pan===''">P</button>
+      <button class="btn btn-danger" (click)="edit(i,j)" *ngIf="i.update">A</button>
+      <button class="btn btn-success" (click)="edit(i,j)" *ngIf="i.typeOfVehicle==='None'">V</button>
+
+    </td>
+    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+    <td>{{i.partyType}}</td>
+    <td>{{i.accountDetails[0]['accountName']}}-{{i.accountDetails[0]['accountNumber']}}</td>
+  </tr>
+</table>
+
+      
+    
+<form *ngIf="gotData18" [formGroup]="myFormGroup18" (ngSubmit)="change(myFormGroup18)" submitted=true enctype="multipart/form data"
+action="/">
+    <div class="well">
+
+    <div class="row">
+
+      <div class="col-sm-4">
+        <label>Truck No</label>
+        <input type="text" class="form-control" formControlName="truckNo" disabled>
+      </div>
+
+      <div class="col-sm-4">
+        <label>Pan</label>
+        <input type="text" class="form-control" formControlName="pan">
+      </div>
+
+      <div class="col-sm-4">
+        <label>Name</label>
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+
+    </div>
+
+
+    <!-- <div class="row">
+
+      <div class="col-sm-4">
+        <label>Aadhar</label>
+        <input type="text" class="form-control">
+      </div>
+
+    </div> -->
+    <div class="row">
+
+      <div class="col-sm-4">
+        <label>Type of Vehicle</label>
+
+        <select class="form-control" formControlName="typeOfVehicle" (change)="getDimW()">
+          <option disabled>{{turn11.typeOfVehicle}}</option>
+          <option value='Container'>Container</option>
+          <option value='Open'>Open</option>
+        </select>
+
+
+      </div>
+
+    </div>
+
+
+    <div class="row">
+
+      <div class="col-sm-4">
+        <label>Weight</label>
+        <input type="number" class="form-control" formControlName="weight">
+      </div>
+
+    </div>
+
+    <div class="row">
+      <label style="margin-left: 2vh;">Dimensions</label>
+      <br>
+      <div class="col-sm-3">
+        <input type="number" class="form-control" formControlName="h" placeholder="Height">
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" formControlName="b" placeholder="Width">
+        </div>
+        <div class="col-sm-3">
+          <input type="number" class="form-control" formControlName="l" placeholder="Length">
+        </div>
+
+    </div>
+
+    <hr>
+    <h4>Account Details</h4>
+    <!-- Account details -->
+    <div class="well">
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <input type="text" id="accountName" class="form-control" formControlName="accountName" placeholder="Account Name">
+        </div>
+        <div class="col-xs-3">
+          <input type="text" id="accountNumber" class="form-control" formControlName="accountNumber"
+            placeholder="Account Number">
+        </div>
+        <div class="col-xs-3">
+          <input type="text" id="ifsc" class="form-control" formControlName="ifsc" placeholder="IFSC Code">
+        </div>
+        
+  </div>
+        <div class="form-group row">
+          <div class="col-sm-1">
+            <button type="button" class="btn btn-danger" style="width: 100%;" (click)="addaccount()">Add</button>
+          </div>
+          <div class="col-sm-6">
+            <table class="table table-bordered">
+              <tr>
+                <th>Srno</th>
+                <th>Name</th>
+                <th>Number</th>
+                <th>IFSC</th>
+                <th>Delete</th>
+              </tr>
+              <tr *ngFor="let i of accountArray;let j = index;">
+                <td>{{j+1}}</td>
+                <td>{{i.accountName}}</td>
+                <td>{{i.accountNumber}}</td>
+                <td>{{i.ifsc}}</td>
+                <td *ngIf="i.delete" (click)="deleteOneA(i,j)">Delete</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+  
+  
+    </div>
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-3">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup18.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+      <div class="form-group" class="col-xs-3">
+        <button type="button" class="btn btn-primary" (click)="back()">
+          <i class="material-icons">refresh</i>
+        </button>
+      </div>
+  
+    </div>
+
+  </div>
+ 
+</form>
+
+</div>
+
+<div class="well" *ngIf="buttonOption==='19'">
+  <div class="row">
+  
+    <div class="col-sm-4">
+      <input type="date" class="form-control" [(ngModel)]="loadingDate">
+    </div>
+
+  <div class="col-sm-4">
+  <button mat-raised-button (click)="find19()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+    Find
+  </button>
+</div>
+</div>
+<hr>
+
+<table class="table table-bordered" *ngIf="!gotData119">
+  <tr>
+    <th>Srno</th>
+    <th>Date</th>
+    <th>TruckNo</th>
+    <th>AccountDetails</th>
+    <th>Edit</th>
+    <th>Save</th>
+
+  </tr>
+  <tr *ngFor="let i of turnbooklist;let j = index;">
+    <td>{{j+1}}</td>
+    <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+    <td>{{i.truckno}}</td>
+    <td>
+      <ul *ngFor="let k of i.accounts;let z = index;">
+        <li>{{k.accountName}}-{{k.accountNumber}}-{{k.ifsc}}-<button class="btn btn-danger" (click)="delLit(j,z)">Delete</button></li>
+      </ul>
+    </td>
+    <td><button class="btn btn-danger" (click)="saveEdit(i,j)"  data-toggle="modal" data-target="#myModalDD">Edit</button></td>
+    <td><button class="btn btn-success" (click)="save(i,j)">Save</button></td>
+  </tr>
+</table>
+
+
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='2'">
+    <div class="row">
+        <div class="col-sm-4">
+    <select class="form-control" [(ngModel)]="selectedMY" (change)="getData('')">
+        <option disabled>Select Option</option>
+        <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+      </select>
+    </div>
+</div>
+<div class="well">
+    <div class="row">
+        <div class="col-sm-2" *ngFor="let i of emptyData">
+<button class="btn btn-warning" (click)="downloadPan(i)">{{i._id}} : {{i.sum}}</button>
+        </div>
+    </div>
+</div>
+<div class="well" *ngIf="pantable">
+
+  <button class="btn btn-warning" (click)="updatePan()">Update</button>
+
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Srno</th>
+          <th>Date</th>
+          <th>Truck No</th>
+          <th>Name</th>
+          <th>PAN</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ii of panarray;let jj=index;">
+          <td>{{jj+1}}</td>
+          <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+          <td>{{ii.truckno}}</td>
+          <td><input type="text" placeholder="Name" id="name_{{jj}}"></td>
+          <td><input type="text" placeholder="PAN" id="pan_{{jj}}"></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+</div>
+
+
+<div class="well" *ngIf="buttonOption==='3'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getContacts()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="contacttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Date</th>
+        <th>Truck No</th>
+        <th>Number</th>
+        <th>QR Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of contactarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.loadingDate}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="number" placeholder="" id="contacttb_{{jj}}"></td>
+        <td><input type="number" placeholder="" id="contactqr_{{jj}}"></td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-warning" (click)="updateContact()">Update</button>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='5'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getTransports()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="tpttable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Transport</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of tptarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td>
+          <select [(ngModel)]="selectedTransporter" class="form-control">
+            <option *ngFor="let i of transportlist;let k = index" value={{i._id}}>{{i.tptName}}</option>
+          </select>
+
+        </td>
+        <td>
+          <button class="btn btn-warning" (click)="updatetpt(ii,jj,'diff')">Update</button>
+          <br>
+          <button class="btn btn-warning" (click)="updatetpt(ii,jj,'self')">Self</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='10'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="gettruckFormat()">Get Data!</button>
+  </div>
+
+<div class="well" *ngIf="truckformattable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>New TruckNo</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of truckformatarray;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.tno}}</td>
+        <td><input type="text" placeholder="TN12 TN 1212" id="truckno_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updatetruckformat(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='11'">
+
+  <div class="row">
+<button class="btn btn-warning" (click)="getEmptyRegFee()">Get Reg Data!</button>
+<button class="btn btn-warning" (click)="doRegExpiry()">Registration Expire</button>
+
+  </div>
+
+<div class="well" *ngIf="emptyregDatatable">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Truck No</th>
+        <th>Date</th>
+        <th>Check</th>
+        <th>Update</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of emptyregData;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="date" placeholder="" value={{ii.regFeeDate}} id="regFeeDate_{{jj}}"></td>
+        <td><input type="checkbox" id="regFee_{{jj}}"></td>
+        <td><button class="btn btn-warning" (click)="updateRegFee(ii,jj)">Update</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='13'">
+  <button class="btn btn-danger" (click)="getRC('TN')">TN</button>
+  <button class="btn btn-success" (click)="getRC('MH')">MH</button>
+  <button class="btn btn-info" (click)="getRC('KA')">KA</button>
+  <button class="btn btn-warning" (click)="getRC('AP')">AP</button>
+  <table class="table display nowrap" style="width:100%" align="center" id="example" *ngIf="tblShow13">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Type</th>
+        <th>Full</th>
+        <th>Contact</th>
+        <th>Score</th>
+        <th>FROD?</th>
+        <th>Prefer</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of myrcData;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.truckno}}</td>
+        <td>{{i.s[0].typeOfVehicle}}</td>
+        <td><ul><li *ngFor="let kk of i.full">
+          <span *ngFor="let b of kk.split(':')">{{b}}-></span>
+        </li></ul></td>
+        <td><ul><li *ngFor="let c of i.contact">{{c}}</li></ul></td>
+        <td>{{i.load}}/{{i.total}}={{i.score}}</td>
+        <td [ngStyle]="{'background-color': i.s[0].frod===undefined ? '#5CB85C' : '#F0AD4E' }">{{i.s[0].frod}}</td>
+        <td><ul><li *ngFor="let p of i.preferences">{{p}}</li></ul></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="well" *ngIf="buttonOption==='14'">
+  <div class="row">
+      <div class="col-sm-4">
+  <select class="form-control" [(ngModel)]="selectedMY" (change)="getData14()">
+      <option disabled>Select Option</option>
+      <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+    </select>
+  </div>
+</div>
+<div class="well" *ngIf="table14">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Name</th>
+        <th>Sum</th>
+        <th>Check</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of emptyData14;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.pn}}</td>
+        <td>{{ii.sum}}</td>
+        <td><input type="checkbox"></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+<div class="well" *ngIf="buttonOption==='15'">
+  <div class="row">
+      <div class="col-sm-4">
+  <select class="form-control" [(ngModel)]="selectedMY" (change)="getData15()">
+      <option disabled>Select Option</option>
+      <option *ngFor="let i of buttons" value={{i.index}}>{{i.viewValue}}</option>
+    </select>
+  </div>
+</div>
+<div class="well" *ngIf="table15">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>Name</th>
+        <th>Sum</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of emptyData15;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii._id}}</td>
+        <td>{{ii.sum}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+</div>
+
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Account Details for {{trucks.truckno}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Account Name : <input type="text" class="form-control" [(ngModel)]="accName">
+        </div>
+
+        <div class="row">
+         Account Number : <input type="text" class="form-control" [(ngModel)]="accNo">
+        </div>
+
+        <div class="row">
+          IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc">
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeAcc()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>

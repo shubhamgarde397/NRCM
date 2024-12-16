@@ -1,0 +1,57 @@
+<div class="well">
+  <form [formGroup]="myFormGroup" (ngSubmit)="storeGstDetailsData(myFormGroup)" submitted=true
+    enctype="multipart/form data" action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="name" class="form-control" formControlName="name" placeholder="Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="name" class="form-control" formControlName="lrshort" placeholder="SHORT NAME">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="gst" class="form-control" formControlName="gst" placeholder="GST No">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="name" class="form-control" formControlName="dest" placeholder="Place">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="text" id="name" class="form-control" formControlName="addr" placeholder="Addrerss">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <input type="number" id="name" class="form-control" formControlName="custCode" placeholder="Customer Code">
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      <div class="form-group" class="col-xs-4">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+
+    </div>
+  </form>
+
+
+
+</div>

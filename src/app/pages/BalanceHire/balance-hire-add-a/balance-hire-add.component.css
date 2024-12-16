@@ -1,0 +1,26 @@
+input,select,table{
+    background-color: black;
+    color: wheat;
+  }
+  .well{
+    background-color: black;
+    color: wheat;
+  }
+  button{
+    color: black;
+  }
+  
+  thead>tr{
+    color: wheat;
+  }
+
+  
+input:disabled,h4{
+  background-color: black;
+  color: wheat;
+}
+
+modal-header,modal-body,modal-footer{
+background-color: black;
+color: wheat;
+}

@@ -1,0 +1,183 @@
+  <div class="well" style="background-color: black;border-color: black;">
+  <div class="row">
+    <div class="col-sm-3">
+      <input type="text" class="form-control col-sm-3" [(ngModel)]='billno' placeholder="BILLNO">
+    </div>
+    <div class="col-sm-2">
+      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find()">BillNo</button>
+    </div>
+    
+    <div class="col-sm-2">
+      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="DownloadLR()" *ngIf="showdownload">Download</button>
+    </div>
+    </div>
+     
+    <div class="col-sm-12">
+
+        <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="showdownload">
+              <thead align="center" style="font-weight: bold">
+                <tr class=table-header>
+                  <th>Loading</th>
+                  <th>TruckNo-BillNo</th>
+                  <th>Type-Party-Place</th>
+                  <th>LRNO</th>
+                  <th>Document</th>
+                  <th>Particulars</th>
+                  <th>Details</th>
+                </tr>
+              </thead>
+              <tbody align="center">
+                <tr *ngFor="let i of data;let j = index">
+                  <td>{{i.date|date:'dd-MM-yyyy'}}<br>{{i.billno}}</td>
+                  <td>{{i.truckno}}<br>{{i.billno}}</td>
+                  <td>{{i.partyname}}<br>{{i.destination}}<br>{{i.typeOfLoad}}</td>
+                  <td>{{i.billno}}</td>
+                  <td>
+                    <ul>
+                      <li *ngFor="let ii of i.documentno;let k = index">
+                        {{ii}}
+                      </li>
+                    </ul>
+                    <button (click)="saveDoc(i,j,'doc')" data-toggle="modal" data-target="#myModalDoc">Add Document</button>
+                  </td>
+                  <td>
+                    <ul>
+                      <li *ngFor="let ii of i.particulars;let k = index">
+                        {{ii}}
+                      </li>
+                    </ul>
+                    <button (click)="saveDoc(i,j,'par')" data-toggle="modal" data-target="#myModalPar">Add Particulars</button>
+                  </td>
+                  <td>
+                    <ul>
+                      <li>
+                        Weight : {{i.particulars2.w}}<br>
+                        Total Fr. : {{i.particulars2.tf}}<br>
+                        Paid : {{i.particulars2.paid}}<br>
+                        Total Paid : {{i.particulars2.tp}}<br>
+                        Balance : {{i.particulars2.ba}}
+                      </li>
+                    </ul>
+                    <button (click)="saveDoc(i,j,'par2')" data-toggle="modal" data-target="#myModalPar2">Add Particulars</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+     
+
+  </div>
+
+  <div class="modal fade" id="myModalDoc" role="dialog">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: wheat;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Document No</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            Document No : <input type="text" class="form-control" [(ngModel)]="documentNo">
+          </div>
+
+          <table>
+            <tr>
+              <th>DocumentNo</th>
+              <th>Delete</th>
+            </tr>
+            <tr *ngFor="let i of documentNos;let j = index;">
+              <td>{{i}}</td>
+              <td><button (click)="delDoc(j,1)">Delete</button></td>
+            </tr>
+  
+          </table>
+        </div>
+  
+        <div class="modal-footer">
+          <button class="btn btn-warning" (click)="addDoc()">Store</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalPar" role="dialog">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: wheat;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Particular</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            Particular : <input type="text" class="form-control" [(ngModel)]="particular">
+          </div>
+
+          <table>
+            <tr>
+              <th>Particular</th>
+              <th>Delete</th>
+            </tr>
+            <tr *ngFor="let i of particulars;let j = index;">
+              <td>{{i}}</td>
+              <td><button (click)="delPar(j)">Delete</button></td>
+            </tr>
+  
+          </table>
+        </div>
+  
+        <div class="modal-footer">
+          <button class="btn btn-warning" (click)="addPar()">Store</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <div class="modal fade" id="myModalPar2" role="dialog">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content" style="background-color: black;color: wheat;">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Particular</h4>
+        </div>
+        <div class="modal-body">
+
+          <div class="row">
+            Weight : <input type="text" class="form-control" [(ngModel)]="w">
+          </div>
+
+          <div class="row">
+            Total Fr : <input type="number" class="form-control" [(ngModel)]="tf">
+          </div>
+
+          <div class="row">
+            Paid : <input type="number" class="form-control" [(ngModel)]="paid">
+          </div>
+
+          <div class="row">
+            Total Paid : <input type="number" class="form-control" [(ngModel)]="tp">
+          </div>
+
+          <div class="row">
+            Balance : <input type="number" class="form-control" [(ngModel)]="ba">
+          </div>
+
+        </div>
+  
+        <div class="modal-footer">
+          <button class="btn btn-warning" (click)="addPar2()">Store</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>

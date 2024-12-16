@@ -1,0 +1,134 @@
+<div class="well">
+
+  <br />
+  <div class="row">
+    <div class="col-lg-12">
+
+
+      <div class="row">
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            Get Data
+          </button>
+        </div>
+      </div>
+
+      <h3>{{todaysDate|date:'dd-MM-yyyy'}}</h3>
+      <table class="table" style="width:100%" align="center">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>LR</th>
+            <th>Given</th>
+            <th>Place</th>
+            <th>Date</th>
+            <th>By</th>
+            <th style="width: 20vh;">Options</th>
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of lrlist;let j = index">
+
+            <td>{{j+1}}</td>
+            <td>{{i.lrvalue}}</td>
+            <td>{{i.given}}</td>
+            <td>{{i.to}}</td>
+            <td>{{i.date}}</td>
+            <td>{{i.givenBy}}</td>
+            <td>
+              <button class="btn btn-success" data-toggle="modal" data-target="#myModal" (click)="showDatabyid(i,j,true)">Action</button>
+              <button class="btn btn-danger" (click)="showDatabyid(i,j,false)">Cancel</button>
+          </td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+  
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Edit for LR</h4>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="myFormGroup"submitted=true enctype="multipart/form data" action="/">
+    <div class="well">
+      <div class="row form-group">
+        <div class="col-sm-12">
+          LR Value : 
+          <input type="text" class="form-control" formControlName="lrvalue" disabled>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          To : {{updateLR.to}}
+          <select class="form-control" formControlName="to">
+            <option value="Urse">Urse</option>
+            <option value="Chinchwad">Chinchwad</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-12">
+          By : {{updateLR.givenBy}}
+          <select class="form-control" formControlName="givenBy">
+            <option value="Katkar">Katkar</option>
+            <option value="Driver">Driver</option>
+            <option value="Anil">Anil</option>
+            <option value="Shubham">Shubham</option>
+          </select>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-sm-12">
+          Date : 
+          <input type="date" class="form-control" formControlName="date">
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-sm-4">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid' (click)="edit()">
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+      <div class="col-sm-4">
+        <button type="submit" class="btn btn-primary" disabled>
+          Closed
+        </button>
+      </div>
+      <div class="col-sm-4">
+        <button class="btn btn-primary" (click)="getLRMISS()">
+          <i class="material-icons">edit</i>
+        </button>
+      </div>
+      </div>
+
+      <div class="row form-group">
+        <ul>
+          <li *ngFor="let i of lrmissdata;">{{i}}</li>
+        </ul>
+      </div>
+    </div>
+    </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+</div>

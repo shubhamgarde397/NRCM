@@ -1,0 +1,251 @@
+<div class="row">
+    <div class="col-sm-2">
+        <button class="btn btn-info" (click)="getWhichType('1')">Add Transports</button>
+    </div>
+  <div class="col-sm-2" *ngIf="nrcmid===1">
+      <button class="btn btn-info" (click)="getWhichType('2')">Get All Transports</button>
+  </div>
+
+<div class="col-sm-2">
+    <button class="btn btn-info" (click)="getWhichType('4')">Envelope Trucks</button>
+</div>
+
+</div>
+
+
+
+<div *ngIf="whichType==='1'">
+
+    <div class="well">
+        <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
+          enctype="multipart/form data" action="/">
+      
+      <!-- TPT Name -->
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Transport Name - <input type="text" id="tptName" class="form-control" formControlName="tptName" placeholder="Transport Name">
+        </div>
+      </div>
+      <!--TPT Name -->
+      
+      <!-- Name -->
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Owner Name - <input type="text" id="name" class="form-control" formControlName="name" placeholder="Transport Owner">
+        </div>
+      </div>
+      <!-- Name -->
+      <!-- PAN -->
+          <div class="form-group row">
+            <div class="col-xs-3">
+              PAN - <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="Transport PAN">
+            </div>
+          </div>
+          <!-- PAN -->
+              <!-- PAN -->
+              <div class="form-group row">
+                <div class="col-xs-1">
+                  Pan - <input type="checkbox" id="P" class="form-control" formControlName="P">
+                </div>
+              </div>
+              <!-- PAN -->
+          <!-- email -->
+          <div class="form-group row">
+            <div class="col-xs-3">
+              Email - <input type="text" id="email" class="form-control" formControlName="email" placeholder="Transport Email">
+            </div>
+          </div>
+          <!-- email -->
+      <!-- Contact -->
+          <div class="form-group row">
+            <div class="col-xs-3">
+              Contact - <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211" [(ngModel)]="contactA">
+            </div>
+            <div class="col-xs-2">
+              <button type="button" class="btn btn-primary" (click)="addMore()">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+            <div class="col-xs-3">
+              <table>
+                <tr>
+                  <th>Contact</th>
+                </tr>
+                <tr *ngFor="let i of contactArray;let j = index;">
+                  <td>{{i}}</td>
+                </tr>
+      
+              </table>
+            </div>
+          </div>
+          <!-- Contact -->
+      
+          <!-- Address -->
+      
+          <div class="form-group row">
+            <div class="col-xs-3">
+              Address : 
+              <input type="text" class="form-control" formControlName="addr1" placeholder="Address Line 1">
+              <input type="text" class="form-control" formControlName="addr2" placeholder="Address Line 2">
+              <input type="text" class="form-control" formControlName="addr3" placeholder="Address Line 3">
+            </div>
+          </div>
+      <!-- Address -->
+      
+          <div class="row">
+            <div class="form-group" class="col-xs-2"></div>
+            <div class="form-group" class="col-xs-1">
+              <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+                <i class="material-icons">send</i>
+              </button>
+            </div>
+      
+            <div *ngIf="!submitted" class="col-xs-1">
+      
+              <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+                <i class="material-icons">undo</i>
+              </button>
+            </div>
+      
+            <div *ngIf="submitted" class="col-xs-1">
+              <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+                <i class="material-icons">add</i>
+              </button>
+            </div>
+      
+          </div>
+        </form>
+      
+      
+      
+      </div>
+</div>
+
+<div *ngIf="whichType==='2'">
+    <div class="well">
+    <div>
+      <button type="button" mat-raised-button (click)="addToDB()" class="btn-warning btn-sm btn-just-icon"> Add</button>
+      <table class="table" style="width:100%" align="center"  *ngIf="tableDataTF">
+    
+          <thead>
+              <tr class="table-header">
+                  <th>Srno</th>
+                  <th>Tpt Name</th>
+                  <th>Owner Name<br>Pan</th>
+                  <th>Address</th>
+                  <th>Contact</th>
+                  <th>Email</th>
+                  <th>TruckNos</th>
+                  <th>Attach</th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let i of tableData;let j = index">
+                  <td>{{j+1}}</td>
+                  <td>{{i.tptName}}</td>
+                  <td><ul><li>{{i.oname}}</li><li>{{i.pan}}</li></ul></td>
+                  <td>
+                      <ul>
+                      <li>{{i.addr1}}</li>
+                      <li>{{i.addr2}}</li>
+                      <li>{{i.addr3}}</li></ul>
+                  </td>
+                  <td>
+                      <ul *ngFor="let k of i.contact">
+                          <li>{{k}}</li>
+                      </ul>
+                  </td>
+                  <td>{{i.email}}</td>
+                 
+                  <td>
+                      <ul *ngFor="let j of i.trucks;">
+                          <li>{{j}}</li>
+                      </ul>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control" id="truck_{{j}}"
+                    placeholder="TN12 AS 1212">
+                  <button type="button" class="btn btn-primary" (click)="addMoreT(j)">Add</button>
+
+
+                      <ul *ngFor="let ii of i.trucks2;let jj =index;">
+                        <li>{{ii}} <button type="button" mat-raised-button (click)="deleteOOne(j,jj)"
+                                    class="btn-danger btn-sm btn-just-icon">
+                                    <i class="material-icons">delete_forever</i>
+                                  </button></li>
+                      </ul>
+                  </td>
+                </tr>
+          </tbody>
+      </table>
+    </div>
+    
+    
+    </div>
+    </div>
+
+
+        <div *ngIf="whichType==='4'">
+            <div class="well">
+            <div>
+              <input type="text" [(ngModel)]="trucknodata" (click)="newData()">
+              <button class="btn btn-danger" (click)="getsingleTrucks()"><i class="material-icons" >send</i></button>
+
+              <table class="table" style="width:100%" align="center"  *ngIf="tableDataTF4">
+            
+                  <thead>
+                      <tr class="table-header">
+                          <th>Srno</th>
+                          <th>Truck No</th>
+                          <th>Contact</th>
+                          <th>Native Place</th>
+                          <th>Attach</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let i of tableData4;let j = index">
+                          <td>{{j+1}}</td>
+                          <td>{{i.truckno}}</td>
+                          <td>
+                            <input type="text" id="contactO" class="form-control" [(ngModel)]="contactOA"
+                            [ngModelOptions]="{standalone: true}" placeholder="9876543211">
+                          <button type="button" class="btn btn-primary" (click)="addMoreO(j)">Add</button>
+
+
+                              <ul *ngFor="let ii of i.contact;let jj =index;">
+                                <li>{{ii}}</li>
+                              </ul>
+                          </td>
+                         
+                          <td>
+                              <ul *ngFor="let kk of i.nativeplaces;let jj=index;">
+                                  <li>{{kk}}</li>
+                              </ul>
+                          
+
+                            <select class="form-control" [(ngModel)]="nA" [ngModelOptions]="{standalone: true}"  (change)="findvillagedetailsN(j)">
+                                <option disabled selected>Select Village</option>
+                                <option *ngFor="let ii of villagedetails;let jj=index;" value={{ii.village_name}}>{{ii.village_name}}
+                                </option>
+                              </select>
+                              <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
+                                <i class="material-icons" (click)="getWhichType('4')">autorenew</i>
+                              </div>
+                              
+                            
+                              <ul *ngFor="let i of nativeArrayName;let j =index;">
+                                <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneN(j,jj)"
+                                    class="btn-danger btn-sm btn-just-icon">
+                                    <i class="material-icons">delete_forever</i>
+                                  </button></li>
+                              </ul>
+
+
+                          </td>
+                          <td><button class="btn btn-success" (click)="attachToOwner3(i,j)">Attach!</button></td>
+                         </tr>
+                  </tbody>
+              </table>
+            </div>
+            </div>
+            </div>

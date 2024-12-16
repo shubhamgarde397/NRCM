@@ -1,0 +1,214 @@
+  <div class="well">
+
+    <form [formGroup]="myFormGroup" name="myform" id="myform">
+      
+    <div class="form-group row">
+      <div class="col-xs-2">
+        Date : 
+        </div>
+        <div class="col-xs-3">
+          <input type="date" id="date" class="form-control" formControlName="date">
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.date.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="form-group row" >
+
+      <div class="col-xs-2">
+        <label for="truckNo"> Party Type </label>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Party Type : <select id="dest" class="form-control" formControlName="partyType">
+            <option value="NRCM">NRCM</option>
+            <option value="SNL">SNL</option>
+          </select>
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.partyType.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="form-group row">
+
+        <div class="col-xs-2">
+          Truckno : 
+          </div>
+          <div class="col-xs-3">
+          <input type="text" list="cars" class="form-control" formControlName="tbid" />
+          <datalist id="cars">
+            <option *ngFor="let own of trucks" value={{own.truckno}}>{{own.truckno}}</option>
+          </datalist>
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.tbid.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
+          <label for="truckNo"> Party </label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Party : <i class="material-icons" (click)="getCI('p')">autorenew</i>
+             <select id="dest" class="form-control" formControlName="pid">
+              <option *ngFor="let own of partys" value={{own._id}}>{{own.name}}</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.pid.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
+          <label for="truckNo"> Party </label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            From Party : <i class="material-icons" (click)="getCI('f')">autorenew</i>
+             <select id="dest" class="form-control" formControlName="fid">
+              <option *ngFor="let own of imps" value={{own._id}}>{{own.name}}</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.fid.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
+          <label for="truckNo"> Village </label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Village : <i class="material-icons" (click)="getCI('v')">autorenew</i>
+            <select id="dest" class="form-control" formControlName="vid">
+              <option *ngFor="let own of villages" value={{own._id}}>{{own.village_name}}</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.vid.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
+          <label for="truckNo"> Village 2 </label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Village : <select id="dest" class="form-control" formControlName="vid2">
+              <option *ngFor="let own of villages" value={{own._id}}>{{own.village_name}}</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.vid2.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
+          <label for="truckNo"> Type Of Load </label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Type Of Load : <select id="dest" class="form-control" formControlName="type">
+              <option value="Pipe">Pipe</option>
+              <option value="Fittings">Fittings</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.type.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row" >
+
+        <div class="col-xs-2">
+          <label for="truckNo"> Plant </label>
+        </div>
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            Plant : <select id="dest" class="form-control" formControlName="plant">
+              <option value="Urse">Urse</option>
+              <option value="Talegaon">Talegaon</option>
+              <option value="Ratnagiri">Ratnagiri</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="col-xs-2">
+            <div [hidden]="myFormGroup.controls.plant.valid">
+              <font color="red">
+                <span class="glyphicon glyphicon-remove"></span>
+              </font>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="row">
+        
+        <div class="form-group" class="col-xs-3">
+          <button class="btn btn-warning" (click)="submitAmt()" [disabled]='!myFormGroup.valid'>Send to Set</button>
+        </div>
+      </div>
+
+    </form>
+  </div>

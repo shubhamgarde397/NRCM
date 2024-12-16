@@ -1,0 +1,153 @@
+<div class="well" style="width:100%;background-color: balck;color: wheat;">
+
+    <div class="row">
+
+      <div class="col-xs-3" align="center">
+        <input type="date" [(ngModel)]="selectedDate">
+      </div>
+
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-warning" (click)="find()">Find</button>
+      </div>
+      <div class="col-sm-5">
+        <select class="form-control">
+          <option *ngFor="let jj of DuesT;">
+            {{jj.date}}-{{jj.amt}},{{jj.pending}}->{{jj.reason}}->{{jj.truckno}}
+          </option>
+        </select>
+      </div>
+      <div class="col-xs-2" align="center" *ngIf="!duesButton">
+        <button class="btn btn-warning" (click)="getDues()">Dues</button>
+      </div>
+      
+
+      </div>
+      <div class="row">
+        <div class="col-xs-2" align="center">
+          <button class="btn btn-danger" (click)="download(true)" *ngIf="showPDFButton">PDF</button>
+        </div>
+        <div class="col-xs-2" align="center">
+          <button class="btn btn-danger" (click)="download(false)" *ngIf="showPDFButton">PDF-Mail</button>
+        </div>
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-danger" (click)="adminAccess()" *ngIf="showPDFButton">Admin</button>
+      </div>
+      <div class="col-xs-2" align="center">
+        <button class="btn btn-danger" (click)="printUpdate()" *ngIf="showPDFButton"
+          [ngStyle]="{'background-color': !printed ? 'red' : 'wheat' }" [disabled]="printed">Print</button>
+      </div>
+    </div>
+
+    <div style="text-align: center">
+      <h3>{{selectedDate|date:'dd-MM-yyyy'}}</h3>
+      <table class="table table-bordered" style="width:100%" align="center">
+
+        <thead class="table-header">
+          <tr>
+            <th>Srno</th>
+            <th>Amount</th>
+            <th>Comments</th>
+            <th>Date</th>
+            <th>Truckno</th>
+            <th>AccountNo-IFSC</th>
+            <th *ngIf="admin">Delete Admin</th>
+            <th *ngIf="admin">Edit Admin</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+          <tr *ngFor="let i of balanceDate;let j = index"
+            [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'wheat' }">
+            <td (click)="tempDelete(j)">{{j+1}}</td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.pochAmount}}+{{k.return_hamali}}={{k.total}}</li>
+              </ul>              
+            </td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.parentAccNo}}:{{k.remark}}</li>
+              </ul>              
+            </td>
+            <td>
+              <ul *ngFor="let k of i.truckData">
+                <li>{{k.date|date:'dd-MM-yyyy'}}</li>
+              </ul>
+            </td>
+
+            <td>
+              <ul *ngFor="let k of i.truckData;let o = index;">
+                <li>{{k.truckno}}
+                  <br>
+                  <select [(ngModel)]="dueChangeValue" (change)="dueChange()">
+                    <option *ngFor="let jj of k.dues;let z = index;" value={{j}}_{{o}}_{{z}}_{{jj._id}}>
+                      {{jj.date}}-{{jj.amt}},{{jj.pending}}->{{jj.reason}}
+                    </option>
+                  </select>
+                  <button class="btn btn-danger" *ngIf="addDueDetailsTF" data-toggle="modal" data-target="#myModalDD">Due Details</button>
+                </li>
+              </ul>
+            </td>
+
+            
+            <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
+            <td *ngIf="admin">
+              <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
+                class="btn-danger btn-sm btn-just-icon">
+                <i class="material-icons">delete_forever</i>
+              </button>
+            </td>
+            <td *ngIf="admin">
+              <button mat-raised-button (click)="showDatabyidEditForm(i,j)"
+                class="btn-primary btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-sm-3" *ngIf="daydiv">
+      <button class="btn btn-danger" style="width:100%" (click)="back('day')">Back</button>
+    </div>
+</div>
+
+
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Due Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Date : <input type="date" class="form-control" [(ngModel)]="dueMDate">
+        </div>
+
+        <div class="row">
+          Pending Amout : <label class="form-control">{{dueInfoPending}}</label>
+        </div>
+
+        <div class="row">
+          Due to Take : <input type="number" class="form-control" [(ngModel)]="dueMAmt">
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeDue()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>

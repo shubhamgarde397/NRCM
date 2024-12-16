@@ -1,0 +1,50 @@
+<div class="well" *ngIf="!show">
+  <button class="btn btn-danger" (click)="refresh()"><i class="material-icons">undo</i></button>
+  <button class="btn btn-danger" (click)="downloadMail()"><i class="material-icons">download</i></button>
+  <table class="table" style="width:100%" align="center">
+
+      <thead class="table-header">
+          <tr>
+              <th>Srno</th>
+              <th>Tpt Name</th>
+              <th>Owner Name</th>
+              <th>PAN</th>
+              <th>Contact</th>
+              <th>Email</th>
+              <th>Account</th>
+              <th>Address</th>
+              <th>Options</th>
+          </tr>
+      </thead>
+
+
+      <tbody>
+          <tr *ngFor="let i of transportlist;let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i.tptName}}</td>
+              <td>{{i.name}}</td>
+              <td>{{i.pan}}<br> <i class="material-icons" *ngIf="i.P" style="color: green;">done</i>
+                <i class="material-icons" *ngIf="!i.P" style="color: red;">close</i></td>
+              <td><ul *ngFor="let j of i.contact"><li>{{j}}</li></ul></td>
+              <td>{{i.email}}</td>
+              <td>Account Details WIP</td>
+              <td>{{i.addr1}}<br>{{i.addr2}}<br>{{i.addr3}}</td>
+              
+              <td>
+                  <button mat-raised-button (click)="delete(i._id)" class="btn-danger btn-sm btn-just-icon">
+                      <i class="material-icons">delete_forever</i>
+                  </button>
+                  <button mat-raised-button type="button" (click)="showDatabyid(i)" class="btn-primary btn-sm btn-just-icon">
+                      <i class="material-icons">edit</i>
+                  </button>
+                  <button mat-raised-button type="button" (click)="download(i)" class="btn-primary btn-sm btn-just-icon">
+                    <i class="material-icons">download</i>
+                </button>
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>

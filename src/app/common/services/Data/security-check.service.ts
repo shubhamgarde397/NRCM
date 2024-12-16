@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 export class SecurityCheckService {
   public yearNames = [];
   public monthNames;
+  public login=false;
   public IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
   public commonArray = {
     "gstdetails": [{}],
@@ -17,17 +18,21 @@ export class SecurityCheckService {
     "dues":[{}],
     "Role": 6
   }
-  public nrcmid;
   public commonBalanceHire = [];
 
   public AUTH = false;
   public username;
-  public dname;
-  public userid;
   public username2;
   public role = 6;
-  public typeofuser = 3;
   public amountShow=false;
+  public branch='';
+  public dname;
+  public userid;
+  public arr;
+  public nrcmid;
+  public firstTime;
+  public seq=[];
+  public noti=[];
   constructor() {
     this.yearNames = this.generateYears();
   }
@@ -37,6 +42,15 @@ this.amountShow=data;
   }
   getAmountShow(){
     return this.amountShow;
+  }
+  setLoginTrue(){
+    this.login=true;
+  }
+  setBranch(data){
+    this.branch=data;
+  }
+  getBranch(){
+    return this.branch;
   }
 
 
@@ -61,9 +75,17 @@ this.amountShow=data;
   setUsername(username) {
     this.username = username;
   }
-
   setDisplayname(name){
     this.dname = name;
+  }
+  setSequence(data){
+    this.seq=data;
+  }
+  setNotifications(data){
+    this.noti=data;
+  }
+  getNoti(){
+    return this.noti;
   }
   setUserid(_id){
     this.userid=_id;
@@ -74,16 +96,16 @@ this.amountShow=data;
   setNRCMid(data){
     this.nrcmid=data;
   }
+  getNRCMid(){
+    return this.nrcmid;
+  }
+  setTruckData(data){
+    this.arr=data;
+  }
 
   setRole(role) {
     this.role = role;
   }
 
-  setTypeOfUser(data) {
-    this.typeofuser = data;
-  }
-  getTypeOfUser() {
-    return this.typeofuser
-  }
 
 }

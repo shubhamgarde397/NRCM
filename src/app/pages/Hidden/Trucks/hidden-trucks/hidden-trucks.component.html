@@ -1,0 +1,88 @@
+<div class="well" *ngIf="!show">
+
+  <input type="text" [(ngModel)]="data" (input)="newData()">
+  <button class="btn btn-danger" (click)="refresh()"><i class="material-icons">undo</i></button>
+  <table class="table" style="width:100%" align="center">
+
+      <thead>
+          <tr class="table-header">
+              <th>Srno</th>
+              <th>TruckNumber</th>
+              <th>Owner Name<br>Aadhar</th>
+              <th>PAN</th>
+              <th>RC</th>
+              <th>DL</th>
+              <th>Contact</th>
+              <th>Account Details</th>
+              <th>Prefer</th>
+              <th>Delete</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let i of hiddendetailslist;let j = index">
+              <td>{{j+1}}</td>
+              <td>{{i.truckno}}</td>
+              <td>
+                  <ul>
+                      <li>{{i.oname}}</li>
+                      <li>{{i.aadhar}}</li>
+                      </ul>
+                  </td>
+              <td>
+                  <ul>
+                      <li>{{i.pan}}</li>
+                  </ul>
+                  
+              </td>
+              <td><ul>
+                  <li>
+                  <i class="material-icons" *ngIf="i.r" style="color: green;">
+                    done
+                    </i><i class="material-icons" *ngIf="!i.r" style="color: red;">
+                      close
+                      </i>
+                      </li>
+                  </ul>
+              </td>
+              <td>
+                  <ul>
+                  <li><i class="material-icons" *ngIf="i.d" style="color: green;">
+                    done
+                    </i><i class="material-icons" *ngIf="!i.d" style="color: red;">
+                      close
+                      </i></li>
+              </ul>
+              </td>
+              <td>
+                  <ul *ngFor="let k of i.contact">
+                      <li>{{k}}</li>
+                  </ul>
+              </td>
+              <td>
+                  <ul *ngFor="let k of i.accountDetails">
+                      <li>{{k.accountName}}</li>
+                      <li>{{k.accountNumber}}</li>
+                      <li>{{k.ifsc}}</li>
+                      <hr>
+                  </ul>
+              </td>
+              <td>
+                <ul *ngFor="let j of i.preferences;">
+                    <li>{{j}}</li>
+                </ul>
+            </td>
+              <td>
+                  <button mat-raised-button (click)="showOwnerDetails(i._id)"
+                      class="btn-danger btn-sm btn-just-icon">
+                      <i class="material-icons">delete_forever</i>
+                  </button>
+                  <i class="material-icons" style="color: blue;cursor: pointer;" (click)="showDatabyid(i)">edit</i>
+                 
+              </td>
+          </tr>
+      </tbody>
+  </table>
+</div>
+<div *ngIf="show">
+  <router-outlet></router-outlet>
+</div>

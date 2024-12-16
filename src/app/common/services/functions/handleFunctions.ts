@@ -11,6 +11,31 @@ export class handleFunction {
     public monthNames = [];
     public MorseCryptedFinalCode = "";
     public monthtoReturn;
+
+    checkme(array,tocheckfor,r){
+        for(let i=0;i<array.length;i++){
+            r.push(this.confirmer(array[i],tocheckfor[i]))
+        }
+        return r;
+    }
+
+    confirmer(data,type){
+
+        switch (type) {
+            case 'string':
+                if(data===''){return 0;}
+                else if(data==null){return 0;}
+                else if(data==undefined){return 0;}
+                else return 1;
+            case 'object':
+                if(data.length===0){return 0;}
+                else return 1;
+                // else{
+                //     if(data=='')
+                // }
+        }
+    }
+
     genaratemonthNames() {
         return this.monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"]
@@ -38,6 +63,29 @@ export class handleFunction {
     }
     generateDays2() {
         for (let i = 1; i < 32; i++) { String(i).length > 1 ? this.days.push(i) : this.days.push(parseInt('0' + i)); } return this.days;
+    }
+    generateDatefromBillno(data){
+        // 'F020724'
+        let monthNo=data.slice(1,3)//02
+        let day = data.slice(3,5)//04
+        let year = data.slice(5)
+        return '20'+year+'-'+monthNo+'-'+day;
+    }
+
+    generateBillByDate(date){//date format must be dd-mm-yyyy
+        let billno='';
+        let d = this.getDateddmmyy(date);
+        let day = d.slice(0,2)
+        let month = d.slice(3,5)
+        let year = d.slice(8)
+
+        let monthName = this.genaratemonthNames()[parseInt(month)-1].slice(0,1)
+        billno = billno + monthName;
+        billno = billno + month;
+        billno = billno + day;
+        billno = billno + year;
+
+        return billno;
     }
 
     getMonthNumber(month) {
@@ -126,8 +174,7 @@ export class handleFunction {
         return this.getDate(date.getDate(),date.getMonth()+1,date.getFullYear())
     }
 
-
-     getDateddmmyy(date,format='ddmmyyyy') {
+    getDateddmmyy(date,format='ddmmyyyy') {
         let year;
         if(date===undefined){
             return ''
@@ -145,13 +192,6 @@ export class handleFunction {
        return day+'-'+monthno+'-'+year;
         }
     }
-    }
-
-    getDateyyyymmdd(date) {
-        let day=date.slice(0,2);
-        let monthno=date.slice(3,5);
-        let year=date.slice(6);
-       return year+'-'+monthno+'-'+day;
     }
 
     getMoney() {

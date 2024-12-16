@@ -1,0 +1,183 @@
+<div class="well">
+  <div class="header-head">
+    <h1>Link Trucks</h1>
+  </div>
+</div>
+
+<div class="well">
+  <button class="btn btn-warning" (click)="swicther(3)">Create Login/Pwd to Transport</button>
+  <button class="btn btn-danger" (click)="swicther(2)">Link Transport to Users</button>
+  <button class="btn btn-danger" (click)="swicther(1)">Link Truck to Transport</button>
+  <button class="btn btn-warning" (click)="swicther(4)">ReCreate Password/Username</button>
+  <button class="btn btn-warning" (click)="swicther(5)">Login Pending</button>
+</div>
+
+<div class="well" *ngIf="switchTab===1">
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-success" (click)="getInformationData()">Get Data!</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <select class="form-control" [(ngModel)]="tptId">
+        <option value="Default">Default</option>
+        <option *ngFor="let i of tpts" value={{i._id}}>{{i.tptName}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="truckNo" class="form-control" placeholder="Truck No.">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-warning" (click)="link()">Link --></button>
+    </div>
+  </div>
+ 
+</div>
+
+<div class="well" *ngIf="switchTab===2">
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-success" (click)="getAll()">Get Data!</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <select class="form-control" [(ngModel)]="tptId">
+        <option value="Default">Default</option>
+        <option *ngFor="let i of tpts2" value={{i._id}}>{{i.tptName}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <select class="form-control" [(ngModel)]="tptIdU">
+        <option value="Default">Default</option>
+        <option *ngFor="let i of tptusers" value={{i._id}}>{{i.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-warning" (click)="link2()">Link --></button>
+    </div>
+  </div>
+ 
+</div>
+
+<div class="well" *ngIf="switchTab===3">
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-success" (click)="getInformationData()">Get Data!</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <select class="form-control" [(ngModel)]="tptId">
+        <option value="Default">Default</option>
+        <option *ngFor="let i of tpts" value={{i._id}}>{{i.tptName}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="dname" class="form-control" placeholder="Display Name">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="username" class="form-control" placeholder="Username">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+     <input type="text" [(ngModel)]="password" class="form-control" placeholder="Password">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+     <select class="form-control" [(ngModel)]="type">
+      <option value="nrcm">NRCM</option>
+      <option value="nrcm_s">Shivapur</option>
+      <option value="nrcm_k">Katraj</option>
+      <option value="nrcm_transport">Transport</option>
+      <option value="nrcm_party">Party</option>
+     </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-warning" (click)="register()">Create</button>
+    </div>
+  </div>
+ 
+</div>
+
+<div class="well" *ngIf="switchTab===4">
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-success" (click)="getInformationUsers()">Get Data!</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <select class="form-control" [(ngModel)]="tptIdU" (click)="getUseridInfo()">
+        <option value="Default">Default</option>
+        <option *ngFor="let i of tptusers" value={{i._id}}>{{i.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="usernameU" class="form-control" placeholder="Username">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+     <input type="text" [(ngModel)]="passwordU" class="form-control" placeholder="Password">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-warning" (click)="forgot()">Forgot</button>
+    </div>
+  </div>
+ 
+</div>
+
+<div class="well" *ngIf="switchTab===5">
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-success" (click)="getInformationUsersWhoDidNotLogin()">Get Data!</button>
+    </div>
+  </div>
+
+<table class="table table-bordered">
+  <tr>
+    <th>Sr</th>
+    <th>Transport Name</th>
+    <th>UP</th>
+    <th>Count</th>
+  </tr>
+  <tr *ngFor="let i of tptusers;let j=index;">
+    <td>{{j+1}}</td>
+    <td>{{i.displayName}}</td>
+    <td>{{i.name}}-{{i.password}}</td>
+    <td>{{i.count}}</td>
+  </tr>
+</table>
+ 
+</div>

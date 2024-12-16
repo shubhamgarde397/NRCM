@@ -1,0 +1,35 @@
+#set($inputRoot = $input.path('$'))
+#if($inputRoot['Status']=='TBInsert')
+{
+        "_id":"$inputRoot['_id']",
+        "Status":"Inserted Succesfully"
+}
+#end
+#if($inputRoot['Status']=='InsertDuplicate')
+{
+        "Status":"$inputRoot['StatusToSend']",
+        "hidden":$inputRoot['hidden']
+
+}
+#end
+#if($inputRoot['Status']=='DisplayTB')
+{
+    "Data":$inputRoot['Data']
+}
+#end
+#if($inputRoot['Status']=='Update')
+{
+    "Status":"$inputRoot['Message']"
+}
+#end
+#if($inputRoot['Status']=='HiddenEntry')
+{
+        "Data":$inputRoot['Data'],
+        "Status":"Inserted Succesfully"
+}
+#end
+#if($inputRoot['Status']=='DisplayCommon')
+{
+    "Data":$inputRoot["Data"]
+}
+#end

@@ -1,0 +1,78 @@
+<button class="btn btn-success" (click)="refresh()">Refresh!</button>
+
+<table class="table table-bordered" style="width:100%" align="center" *ngIf="showdues">
+
+  <thead class="table-header">
+      <tr>
+          <th>Srno</th>
+          <th>Truckno</th>
+          <th>Date</th>
+          <th>Reason</th>
+          <th>Amount</th>
+          <th>Pending</th>
+          <th>From</th>
+          <th>Info</th>
+          <th>Options</th>
+      </tr>
+  </thead>
+
+
+  <tbody>
+      <tr *ngFor="let i of dues;let j = index">
+          <td>{{j+1}}</td>
+          <td>{{i.truckno}}</td>
+          <td>{{i.date}}</td>
+          <td>{{i.reason}}</td>
+          <td>{{i.amt}}</td>
+          <td>{{i.pending}}</td>
+          <td>{{i.from}}</td>
+          <td>
+            <span *ngFor="let k of i.info;let z = index;">
+              <ul>
+                <li>Amt Taken : {{k.dueAmtTaken}}</li>
+                <li>Date Taken : {{k.date}}</li>
+              </ul>
+            </span>            
+
+          </td>
+          <td>
+              <button mat-raised-button (click)='update(i,j)' data-toggle="modal" data-target="#myModalDD" class="btn-danger btn-sm btn-just-icon">Edit
+              </button>
+          </td>
+      </tr>
+  </tbody>
+</table>
+
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Due Advance Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          Date : <input type="date" class="form-control" [(ngModel)]="dueMDate">
+        </div>
+
+        <div class="row">
+          Pending Amout : <label class="form-control">{{dueInfoPending}}</label>
+        </div>
+
+        <div class="row">
+          Due to Take : <input type="number" class="form-control" [(ngModel)]="dueMAmt">
+        </div>
+       
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-warning" (click)="storeDue()">Store</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>

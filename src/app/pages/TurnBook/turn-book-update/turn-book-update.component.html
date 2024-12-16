@@ -1,0 +1,241 @@
+<!-- <div class="well">
+
+
+
+<div class="well">
+  <div class="row">
+    <div class="col-sm-3">
+      <button class="btn btn-danger" (click)="getDoubts()">Get Doubts TB</button>
+      </div>
+      <div class="col-sm-3">
+        <button class="btn btn-danger" (click)="getDoubtsOD()">Get Doubts OD</button>
+    </div>
+    <div class="col-sm-3">
+      <select class="form-control" [(ngModel)]="displayType">
+        <option *ngFor="let i of options;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
+      </select>
+    </div>
+
+    <div class="col-sm-3">
+      <select class="form-control" [(ngModel)]="partyType">
+        <option value="">All</option>
+        <option value="NRCM">NRCM</option>
+        <option value="NR">NR</option>
+        <option value="SNL">SNL</option>
+      </select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-3">
+      <button class="btn btn-danger" (click)="getData()">Get Places</button>
+      </div>
+
+      <div class="col-sm-3">
+        <button class="btn btn-danger" (click)="findData()">Get Data!</button>
+        </div>
+  </div>
+</div>
+</div>
+
+<div class="well" *ngIf="mainTable">
+  <button class="btn btn-warning" (click)="updatetruckformat()">Update TD</button>
+  <button class="btn btn-warning" (click)="updateAllOKAY()">All OK</button>
+
+  <table class="table" >
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>Party Name</th>
+        <th>Date</th>
+        <th>{{buttonValue}}</th>
+        <th>New-{{buttonValue}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of showData;let jj=index;">
+        <td>{{jj+1}}-{{ii.partyType}}</td>
+        <td>{{ii.datetruck.split('_')[1]}}</td>
+        <td>{{ii.party}}</td>
+        <td *ngIf="buttonOption==='2'">{{ii.typeOfLoad}}</td>
+        <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
+        <td *ngIf="buttonOption==='1'">{{ii.lrno}}</td>
+        <td *ngIf="buttonOption==='2'">{{ii.typeOfLoad}}</td>
+        <td *ngIf="buttonOption==='3'">{{ii.place1}}</td>
+        <td *ngIf="buttonOption==='4'">{{ii.place2}}</td>
+        
+        <td *ngIf="buttonOption==='1'"><input type="number" placeholder="1234" id="lrno_{{jj}}"></td>
+
+        <td *ngIf="buttonOption==='2'">
+          <select id="typeOfLoad_{{jj}}" class="form-control">
+            <option selected disabled>Select</option>
+            <option value='Pipe'>Pipe</option>
+            <option value='Fittings'>Fittings</option>
+            <option value='Other'>Other</option>
+            <option value='Bundle'>Bundle</option>
+            <option value='FX'>FX</option>
+          </select>
+        </td>
+
+        <td *ngIf="buttonOption==='3'">
+          <select id="placeName1_{{jj}}" class="form-control">
+            <option selected disabled>Select</option>
+            <option *ngFor="let i of places;let j = index;" value={{i._id}}>{{i.village_name}}</option>
+          </select>
+        </td>
+        <td *ngIf="buttonOption==='4'">
+          <select id="placeName2_{{jj}}" class="form-control">
+            <option selected disabled>Select</option>
+            <option *ngFor="let i of places;let j = index;" value={{i._id}}>{{i.village_name}}</option>
+          </select>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="well" *ngIf="mainTable2">
+  <button class="btn btn-warning" (click)="updatetruckformat1()">Update OD</button>
+  <table class="table" >
+    
+    <thead>
+      <tr>
+        <th>Srno</th>
+        <th>TruckNo</th>
+        <th>To Change</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let ii of data;let jj=index;">
+        <td>{{jj+1}}</td>
+        <td>{{ii.truckno}}</td>
+        <td><input type="text" placeholder="TN10 BR 1212" id="truck_{{jj}}"></td>
+
+
+      </tr>
+    </tbody>
+  </table>
+</div> -->
+
+
+<div class="well">
+
+      <div class="row">
+        <div class="col-sm-3">
+          <input type="text" class="form-control col-sm-3" [(ngModel)]='truckVar' placeholder="Truck No">
+        </div>
+        <div class="col-sm-3">
+          <select class="form-control" *ngIf="wala11" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
+            <option>Default</option>
+            <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i._id}}>{{i.truckName.truckno}}-{{i.loadingDate|date:'dd-MM-yyyy'}}</option>
+          </select>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-2">
+            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11')">Truck No</button>
+            
+          </div>
+          <div class="col-sm-2">
+            <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11new')">LRNO</button></div>
+
+            <div class="col-sm-2">
+              <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find('11newnr')">NRLRNO</button></div>
+            
+          
+        </div>
+        
+        
+    <div class="row">
+      <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data" action="/">
+
+        <div class="form-group row">
+
+          <div class="col-xs-3">
+           Truck No : <input type="text" id="name" class="form-control" formControlName="truckno" placeholder="Truck No" disabled>
+          </div>
+          <div class="col-xs-3">
+            Date: <input type="text" id="name" class="form-control" formControlName="loadingDate" placeholder="Truck No" disabled>
+           </div>
+           <div class="col-sm-3">
+            Place : 
+         <input type="text" id="place" class="form-control" formControlName="place" disabled>
+         </div>
+         <div class="col-sm-3">
+          Place 2 : 
+        <input type="text" id="place" class="form-control" formControlName="place2" disabled>
+        </div>
+        </div>
+
+        <div class="row form-group">
+          <div class="col-sm-6">
+            Party : {{partyToUI}}
+          <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyid()">
+            <option selected disabled value={{partyid}}>{{party}}</option>
+            <option *ngFor="let i of parties;let j = index;" value={{i._id}}>{{i.name}}</option>
+          </select>
+        </div>
+        <div class="col-sm-6">
+          Old Party : 
+          <input type="text" id="partyName" class="form-control" formControlName="partyName" disabled>
+          </div>
+          </div>
+
+    
+   
+    <h3>LRNO</h3>
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <input type="text" id="addr2" class="form-control" formControlName="lrno" placeholder="LRNO">
+          </div>
+        </div>
+    
+   
+  
+         
+    
+        <div class="row">
+          <div class="form-group" class="col-xs-2"></div>
+          <div class="form-group" class="col-xs-1">
+            <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+              <i class="material-icons">send</i>
+            </button>
+          </div>
+    
+          <div *ngIf="!submitted" class="col-xs-1">
+    
+            <button type="button" value="Reset Form" onClick="this.form.reset()" class="btn btn-danger">
+              <i class="material-icons">undo</i>
+            </button>
+          </div>
+    
+          <div *ngIf="submitted" class="col-xs-1">
+            <button type="button" value="Add More" onClick="this.form.reset()" (click)="back()" class="btn btn-success">
+              <i class="material-icons">add</i>
+            </button>
+          </div>
+    
+        </div>
+      </form>
+    </div> 
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

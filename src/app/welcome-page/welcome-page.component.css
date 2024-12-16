@@ -5,3 +5,12 @@ button{
 .inheritedHeight{
     height: inherit;
 }
+
+.well,.container{
+    background-color: black;
+    color: wheat;
+}
+
+button{
+    color: black;
+}

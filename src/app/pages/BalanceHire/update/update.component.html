@@ -1,0 +1,160 @@
+<div class="well" *ngIf="editOption==0">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
+
+    <!-- TruckDate -->
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Page No</th>
+            <th>Amount</th>
+          </tr>
+          <tr *ngFor="let i of truckArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td>{{i.date|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.truckno}}</td>
+            <td>{{i.pageno}}</td>
+            <td>{{i.amount}}</td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+    <!--  -->
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        <select id="truckNo" class="form-control " formControlName="truckNo" [(ngModel)]="trucknoid"
+          (change)="findAccountDetails()">
+          <option disabled selected>Select Name</option>
+          <option *ngFor="let own of truckdetailslist;let j=index;" value={{own.truckno}}>{{own.truckno}}</option>
+        </select>
+      </div>
+      <div class="col-xs-2">
+        <div [hidden]="myFormGroup.controls.truckNo.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="accountData">
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <select id="accountName" class="form-control " formControlName="accountName" [(ngModel)]="accountid"
+            (change)="findAccountDetails2()">
+            <option disabled selected>Select Name</option>
+            <option *ngFor="let own of accountdetailslist;let j=index;" value={{own.accountName}}>{{own.accountName}}
+            </option>
+          </select>
+        </div>
+        <div class="col-xs-2">
+          <div [hidden]="myFormGroup.controls.accountName.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <input type="text" id="accountNumber" class="form-control" formControlName="accountNumber"
+            [(ngModel)]="accountNumber">
+        </div>
+      </div>
+
+
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          <input type="text" id="ifsc" class="form-control" formControlName="ifsc" [(ngModel)]="ifsc">
+        </div>
+      </div>
+
+    </div>
+
+    <!--  -->
+
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+
+
+
+
+</div>
+<!-- 
+<div class="well" *ngIf="editOption==1">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data"
+    action="/">
+
+
+    <div class="form-group row">
+      <div class="col-sm-6">
+        <button type=" submit" class="btn btn-primary" (click)="eneableInternalAddition()">
+          Add Here
+        </button>
+        <table class="table table-bordered">
+          <tr>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Page No</th>
+            <th>Amount</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+          <tr *ngFor="let i of truckArray;let j = index;">
+            <td>{{j+1}}</td>
+            <td><input  [disabled]='i.field===true' value={{i.date}}></td>
+            <td><input  [disabled]='i.field===true' value={{i.truckno}}></td>
+            <td><input  [disabled]='i.field===true' value={{i.pageno}}></td>
+            <td><input  [disabled]='i.field===true' value={{i.amount}}></td>
+            <td><button type=" submit" class="btn btn-info" (click)="enableInternalAddition(i,j)">
+              <i class="material-icons">edit</i>
+            </button></td>
+            <td><button type=" submit" class="btn btn-danger" (click)="deleteInternalElement(i,j)">
+              <i class="material-icons">delete_forever</i>
+            </button></td>
+          </tr>
+        </table>
+      </div>
+
+    </div>
+
+
+
+    <div class="row">
+
+      <div class="form-group" class="col-xs-2">
+        <button type=" submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+
+
+
+
+</div> -->

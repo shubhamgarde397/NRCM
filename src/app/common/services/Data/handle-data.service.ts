@@ -7,6 +7,7 @@ import { SecurityCheckService } from '../Data/security-check.service';
 export class HandleDataService {
 
   public Data;
+  
   public flag = false;
   public commonArray = {
     "gstdetails": [{}],
@@ -25,44 +26,80 @@ export class HandleDataService {
   public PPData=[];
   public PaymentData=[]
   public updateTurnData=false;
-  public users
-  public arr=[];
+  public arr=[]
+  public AnilData=[]
+
   constructor(public securityCheck: SecurityCheckService) { }
 
+  
+
   saveLRStatus(data){
-    
     this.arr=data;
   }
 
   getLRStatus(){
     return this.arr;
   }
-  setUsers(data){
-    this.users=[];
-    this.users=data;
-
+  saveTruckHuge(data){
+    this.hugeData=data;
   }
-  getUsers(){
-    return this.users;
+  getTruckHuge(){
+    return this.hugeData;
+  }
+  updateTurn(){
+    return this.updateTurnData;
+  }
+  saveupdateTurn(data){
+this.updateTurnData=data;
+  }
+  savePaymentData(data){
+    this.PaymentData=data;
+  }
+  givePaymentData(){
+    return this.PaymentData;
+  }
+  savePPData(data){
+    this.PPData=data;
+  }
+  givePPData(){
+    return this.PPData;
+  }
+  
+  notification(value) {
+    this.flag = value;
+  }
+
+  checkNotification() {
+    return this.flag;
   }
 
   saveData(data) {
     this.Data = data;
   }
+  saveAnilsWorkData(data) {
+    this.AnilData = data;
+  }
   giveBHData(){
     return this.Data;
   }
-
   saveTurn(data) {
     this.turnData = data;
   }
 
   giveTurn() { return this.turnData; }
-  
+
+  saveBH(data) {
+    this.BHData = [];
+    this.BHData = data;
+  }
+
+  giveBH() { return this.BHData; }
+
+ 
+
   createConsiderArray(data) {
     let tempCArr = [];
     let tempArrofAPI = [];
-    
     tempArrofAPI = this.getIndexes(data);
     
     for (let i = 0; i < tempArrofAPI.length; i++) {
@@ -76,18 +113,41 @@ export class HandleDataService {
   getIndexes(data) {
     switch (data) {
       case 'default':
-        return [Consts.ROLE_INDEX];
+        return [Consts.ROLE_INDEX,Consts.DUES_INDEX];
+      case 'first':
+        return [Consts.ROLE_INDEX, Consts.OWNER_INDEX];//send everything not sprecific to index
+      case 'booking':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
+      case 'infogst':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
+      case 'infogstonly':
+        return [Consts.GST_INDEX];
+      case 'infoowner':
+        return [Consts.OWNER_INDEX, Consts.VILLAGE_INDEX];
+      case 'infoonlyowner':
+        return [Consts.OWNER_INDEX];
+      case 'infovillage':
+        return [Consts.VILLAGE_INDEX];
+      case 'turnbook':
+        return [Consts.VILLAGE_INDEX, Consts.GST_INDEX];
       case 'turnbookadd':
-        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX]
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.GST_INDEX]
+      case 'infolrlist':
+        return [Consts.LRLIST_INDEX]
+      case 'infohiddenlist':
+        return [Consts.HIDDEN_TRUCK_INDEX]
       case 'infotpt':
         return [Consts.TRANSPORT_INDEX]
+        case 'infodues':
+        return [Consts.DUES_INDEX]
+
     }
   }
 
   resetArray(data) {
     switch (data) {
       case 'full':
-        this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+        this.securityCheck.IP = [0, 0, 0, 0, 0, 0, 0, 0,0];
     }
 
   }
@@ -132,4 +192,6 @@ export class HandleDataService {
     }
     return false;
   }
+
+
 }

@@ -1,0 +1,49 @@
+.table-header{
+    background-color: orange;
+    color: white;
+    font-weight: bold;  
+  }
+  
+  button{
+      border-radius: 100px;
+  }
+  
+  .well{
+      border-color:#f5f5f5;
+      box-shadow: none;
+  }
+  
+  .container{
+    color: white;
+  }
+
+  
+
+  select,input,.well{
+    color: white;
+    background-color: black;
+  }
+
+  button{
+    color: black;
+  }
+  input,select,table{
+    background-color: black;
+    color: wheat;
+  }
+  .well{
+    background-color: black;
+    color: wheat;
+  }
+  button{
+    color: black;
+  }
+  
+  thead>tr{
+    color: black;
+  }
+
+  input:disabled{
+    background-color: black;
+    color: wheat;
+  }

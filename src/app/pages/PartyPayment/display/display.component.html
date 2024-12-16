@@ -1,0 +1,183 @@
+  <div class="container">
+  <div class="row">
+    <div class="col-sm-4" *ngIf="partyids.length>0">
+      <table>
+        <tr><th>Name</th><th>Delete</th></tr>
+        <tr *ngFor="let i of partyids;let j=index;"><td>{{i.name}}</td><td (click)="deletePartyIds(i,j)"><span style="cursor: pointer;color: red;">X</span></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+<div class="col-sm-10" >
+  <div class="form-group row">
+
+    <div class="col-sm-3">
+      <select id="nop" class="form-control" [(ngModel)]="nopid" (change)="findgst()">
+        <option disabled selected>Select Name of The Party</option>
+        <option *ngFor="let gst of gstdetailslist;let j = index;" value={{gst._id+j}}>
+          {{gst.name}}
+        </option>
+      </select>
+    </div>
+
+    <div class="col-sm-3">
+      <select class="form-control" [(ngModel)]="typeOfCols" (change)="typeofcolsF()">
+        <option value="default">Default</option>
+        <option value="noamount">No Amount</option>
+        <option value="nobalance">No Balance</option>
+      </select>
+    </div>
+
+    <div class="col-sm-3">
+      <button class="btn btn-info" (click)="getAdminAccess()">Admin</button>
+    </div>
+   
+  </div>
+
+  <div class="row">
+    <h4>Truck Loading Dates : </h4>
+    <div class="col-sm-4">
+      <input type="date" class="form-control" [(ngModel)]="fromloading" id="loadDate">
+      <label>{{fromloading}}</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="date" class="form-control" [(ngModel)]="toloading">
+      <label>{{toloading}}</label>
+    </div>
+    
+   
+    
+    </div>
+    <div class="row">
+      <h4>Payment Dates : </h4>
+    <div class="col-sm-4">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="frompayment">
+      <label>{{frompayment}}</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="date" class="form-control col-sm-2" [(ngModel)]="topayment">
+      <label>{{topayment}}</label>
+    </div>
+    <div class="col-sm-4">
+      <button class="btn btn-warning" (click)="cancel('payment')">No Payment</button>
+    </div>
+  </div>
+
+      </div>
+      <div class="row" *ngIf="typeOfColsB">
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            {{buttonValue}}
+          </button>
+        </div>
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="findMany()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            {{buttonValue}}-Many
+          </button>
+        </div>
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="all()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            All
+          </button>
+        </div>
+       
+            
+      </div>
+
+      <h3>{{todaysDate}}</h3>
+      <div class="row" *ngIf="tableData">
+       
+    <div class="col-sm-3">
+      <button mat-raised-button type="button" (click)="downloadForParty1('party')" class="btn-danger btn-sm btn-just-icon">
+        PDF : Party Many
+      </button>
+    </div>
+      
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="mailSendButton" (click)="mailSentSave()" class="btn-danger btn-sm btn-just-icon">
+        Mail Sent
+      </button>
+    </div>
+    </div>
+      <table class="table" style="width:100%" align="center" *ngIf="tableData">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>Lrno</th>
+            <th>Party</th>
+            <th>Amount</th>
+            <th>Value</th>
+            <th>Trucks</th>
+            <th *ngIf="adminAccess">Delete</th>
+            <th *ngIf="adminAccess">Edit</th>
+            <th *ngIf="!adminAccess">Temp Delete</th>
+            <!-- <th *ngIf="!adminAccess">Edit Trucks</th> -->
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of paymentData;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.date|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.lrno}}</td>
+            <td>{{i.partyName}}</td>
+            <td>{{i.amount}}</td>
+            <td>{{i.value}}</td>
+            <td>
+              <ul *ngFor="let k of i['loadingDate'];let l = index;">
+                <li>{{k.split('_')[1]}}:{{k.split('_')[3]}}</li>
+              </ul>
+          </td>
+            <td *ngIf="adminAccess">
+              <button mat-raised-button type="button" (click)="delete(i,j)" class="btn-danger btn-sm btn-just-icon">
+                <i class="material-icons">delete</i>
+              </button>
+            </td>
+            <td *ngIf="adminAccess">
+              <button mat-raised-button type="button" (click)="edit(i,j)" class="btn-primary btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td>
+            <td *ngIf="!adminAccess">
+              <button mat-raised-button type="button" (click)="deleteTemp(i,j)" class="btn-warning btn-sm btn-just-icon">
+                <i class="material-icons">delete</i>
+              </button>
+            </td>
+            <!-- <td *ngIf="!adminAccess">
+              <button mat-raised-button type="button" (click)="deleteTrucks(i,j)" class="btn-warning btn-sm btn-just-icon">
+                <i class="material-icons">edit</i>
+              </button>
+            </td> -->
+          </tr>
+        </tbody>
+      </table>
+      <div class="row" *ngIf="tableData">
+        
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
+        PDF : Party
+      </button>
+    </div>
+
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
+        PDF: Self
+      </button>
+    </div>
+    <div class="col-sm-3">
+      <button mat-raised-button (click)="pochDetails()" class="btn btn-warning" style="width: 100%;margin-top: 10px;">
+       Poch Details
+      </button>
+    </div>
+      
+      <div class="col-sm-3">
+      <button mat-raised-button type="button" *ngIf="mailSendButton" (click)="mailSentSave()" class="btn-danger btn-sm btn-just-icon">
+        Mail Sent
+      </button>
+    </div>
+    </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,64 @@
+<div class="well" style="width:100%;" *ngIf="!show">
+
+  <div class="row">
+
+    <div class="col-xs-2" align="center">
+      <button class="btn btn-warning" (click)="find()">Find</button>
+    </div>
+
+    </div>
+    <div class="row">
+  </div>
+
+  <div style="text-align: center">
+    <button class="btn btn-danger" (click)="addtoBH()" *ngIf="finalAdd">Final Add</button><!--extra-->
+    <table class="table" style="width:100%" align="center">
+
+      <thead class="table-header">
+        <tr>
+          <th>Srno</th>
+          <th>Date</th>
+          <th>Truckno</th>
+          <th>Party</th>
+          <th>Type-LR</th>
+          <th>Place</th>
+          <th>Amount</th>
+          <th>PgNo</th>
+          <th>Account Name</th>
+          <th>Account Number</th>
+          <th>IFSC</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let i of balanceDate;let j = index">
+          <td >{{j+1}}</td>
+          <td>{{i.loadingDate}}</td>
+          <td>{{i.truckno}}<input type="checkbox">
+          <br><span style="color: red;">{{i.remark}}</span></td>
+          <td>{{i.party}}</td>
+          <td>{{i.partyType}}-{{i.lrno}}</td>
+          <td>{{i.place}}</td>
+          <td>{{i.pochAmount}}<br>{{i.return_hamali}}<br>{{i.total}}</td>
+          <td>{{i.pageno}}</td>
+          <td>{{i.account[0].accountName}}</td>
+          <td>{{i.account[0].accountNumber}}</td>
+          <td>{{i.account[0].ifsc}}</td>
+          <td>
+            <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
+              class="btn-danger btn-sm btn-just-icon">
+              <i class="material-icons">delete_forever</i>
+            </button>
+          </td>
+
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="show">
+<router-outlet></router-outlet>
+</div>

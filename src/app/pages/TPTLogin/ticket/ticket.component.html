@@ -1,0 +1,40 @@
+
+  <div class="col-sm-4">
+    <button class="btn btn-danger" (click)="find()">
+      Get Tickets
+    </button>
+  </div>
+  <div class="well">
+    <div *ngIf="tabletransport">
+      <div class="row" *ngFor="let i of tickets;let j = index">
+          <table class="table table-bordered">
+            <tr>
+              <th>Change</th>
+              <th>Tpt Name</th>
+              <th>Owner</th>
+              <th>Addr 1</th>
+              <th>Addr 2</th>
+              <th>Addr 3</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Option</th>
+            </tr>
+            <tr>
+              <td>New</td>
+              <td>{{i.tptName}}</td>
+              <td>{{i.name}}</td>
+              <td>{{i.addr1}}</td>
+              <td>{{i.addr2}}</td>
+              <td>{{i.addr3}}</td>
+              <td>{{i.email}}</td>
+              <td>{{i.contact[0]}}</td>
+              <td><button class="btn btn-danger" (click)=reject(j,i)>Delete</button></td>
+            </tr>
+
+          </table>
+        
+      </div>
+    </div>
+    
+    <div *ngIf="(tabletransport)"><h3>{{msg}}</h3></div>
+  </div>

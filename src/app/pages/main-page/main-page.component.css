@@ -5,26 +5,129 @@ body
     font-family: sans-serif;
 }
 
-select,input{
-    background-color: black;
-    color:wheat;
+.wid{
+width: 100%;;
 }
 
-button{
-    color:black
-}
-
-table,label{
-    color:wheat;
-}
-
-.wadhiw{
-    color:black;
-}
-
-.well{
+.backgroundWhite{
     background-color: black;
     color: wheat;
-    border-radius: 100px;
-    text-align: center;
 }
+.fonthead{
+    font-weight: 700;
+    font-family: monospace;
+}
+.fontbody{
+    font-family: monospace;
+}
+ul
+{
+    position: fixed;
+    top:50%;
+    left:0;
+    transform: translateY(-50%);
+    margin: 0;
+    padding: 0;
+    z-index: 1;
+}
+
+ul li
+{
+    list-style: none;
+}
+
+ul li a{
+    display: block;
+    text-decoration: none;
+    height: 30px;
+    line-height: 30px;
+    font-size:24px;
+    background: #fff;
+    color:#262626;
+    margin:4px 0;
+    border-radius: 15px;
+    padding-left:15px;
+}
+
+
+
+#container{
+    width: 100%;
+    height: 100vh;
+    border-color: black;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+}
+
+#container div{
+    width: 100%;
+    height: 100%;
+}
+
+#container div h1{
+    position: absolute;
+    top:50%;
+    transform: translateY(-50%);
+    width:100%;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    font-size: 8em;
+    text-transform :uppercase;
+    color: #fff;
+}
+
+#container div#red{
+background-color: red;
+}
+
+#container div#blue{
+background-color: blue;
+}
+
+#container div#green{
+background-color: green;
+}
+
+#container div#yellow{
+background-color: yellow;
+}
+
+#container div#black{
+background-color: black;
+}
+
+#container div#pink{
+background-color: pink;
+}
+
+.blue-title {
+    color:blue;
+  }
+
+  .red-title {
+    color:red;
+  }
+
+
+  /* PRIMARY
+3B71CA
+59, 113, 202
+49,94,168
+
+SUCCESS
+14A44D
+20, 164, 77)
+
+DANGER
+DC4C64
+220, 76, 100
+
+WARBING
+E4A11B
+228, 161, 27
+191,115,16
+
+YELLOW
+255,193,7
+189,143,5 */

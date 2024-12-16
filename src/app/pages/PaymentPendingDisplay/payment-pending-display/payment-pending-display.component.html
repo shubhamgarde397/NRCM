@@ -1,0 +1,35 @@
+<div class="well" *ngIf="tblShow">
+  <button class="btn btn-warning" (click)="downloadReport()">Download!</button>
+  <table class="table display nowrap" style="width:100%" align="center" id="example">
+    <thead>
+      <tr class="table-header">
+        <th>Srno</th>
+        <th>Poch Date</th>
+        <th>TruckNo</th>
+        <th>Account Details</th>
+        <th>Acc No</th>
+        <th>Loading Date</th>
+      </tr>
+    </thead>
+
+
+    <tbody>
+      <tr *ngFor="let i of tbl;let j = index">
+        <td>{{j+1}}</td>
+        <td>{{i.pochDate|date:'dd-MM-yyyy'}}</td>
+        <td>{{i.truckno}}</td>
+        <td>
+          <ul *ngIf="i.aD.length>0">
+            <li>{{i.aD[0].accountName}}</li>
+            <li>{{i.aD[0].accountNumber}}</li>
+            <li>{{i.aD[0].ifsc}}</li>
+          </ul>
+          </td>
+          <td>
+            <h3>{{i.parentAccNo}}</h3>
+        </td>
+        <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

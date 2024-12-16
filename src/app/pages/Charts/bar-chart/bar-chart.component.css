@@ -1,0 +1,27 @@
+#divChart{
+    display: block;
+    width :800px;
+    height: 800px;
+}
+
+.width100{
+    width: 100%;
+}
+
+.textaligncenter{
+    text-align: center;
+}input,select,table{
+    background-color: black;
+    color: wheat;
+  }
+  .well{
+    background-color: black;
+    color: wheat;
+  }
+  button{
+    color: black;
+  }
+  
+  thead>tr{
+    color: wheat;
+  }
