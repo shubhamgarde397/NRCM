@@ -19,11 +19,11 @@ export class PochPdfComponent implements OnInit {
   public showPDFButton=false;
   public showPochData=false;
   public found;
+  public bigI=0;
   public date = new Date();
   public balanceDate = [];
   public pochDate='';
   public printInfo = false;
-  public sstampsign='';
   public ssign='';
   public adminMode='Admin Inactive!'
   public admin=false;
@@ -77,9 +77,31 @@ export class PochPdfComponent implements OnInit {
       });
   };
 
+  what(j,data,i){
+    switch (data) {
+      case 'big':
+        this.bigI=j;
+        let a=(<HTMLInputElement>document.getElementById('selectb_'+j)).checked;
+        for(let i=0;i<this.balanceDate[j]['sum'];i++){
+          this.balanceDate[j]['check'][i]=a;
+        }
+        this.showData(i)
+        break;
+      case 'small':
+        let b=(<HTMLInputElement>document.getElementById('selects_'+j)).checked;
+          this.balanceDate[this.bigI]['check'][j]=b;
+        break;
+    
+    }
+    
+
+    
+  }
+
   showData(i){
     let temp={
     }
+    this.data=[]
     for(let ii=0;ii<i.sum;ii++){
       temp={
         truckno:i['truckno'][ii],
@@ -87,32 +109,45 @@ export class PochPdfComponent implements OnInit {
         nrlrno:i['nrlrno'][ii],
         hamt:i['hamt'][ii],
         partyAdvance:i['partyAdvance'][ii],
-        partyBalance:i['partyBalance'][ii]
+        partyBalance:i['partyBalance'][ii],
+        check:i['check'][ii]
       }
       this.data.push(temp)
     }
-    console.log(this.data);
     
     this.showPochData=true;
   }
 
 
 
-PochBill(i,j){//threshhold is 295
-  let data=this.balanceDate;
-  let threshhold=this.threshholdCalculator(data[0]['sum']);
-    var doc = new jsPDF({
-      orientation: 'p',
-      unit: 'mm',
-      format: 'a5',
-      putOnlyUsedFonts:true
-     }) 
-     this.pdfData(doc,data[j],false);
-     doc.addPage();
-     this.pdfData(doc,data[j],true);
-    doc.save(data[j]['_id'])
-  
-}
+  PochBill(){//threshhold is 295
+    let data=this.balanceDate;
+    let threshhold=this.threshholdCalculator(data[0]['sum']);
+      var doc = new jsPDF({
+        orientation: 'p',
+        unit: 'mm',
+        format: 'a5',
+        putOnlyUsedFonts:true
+       }) 
+  let newPage=true;
+    for(let i=0;i<this.balanceDate.length;i++){
+      
+    let a=(<HTMLInputElement>document.getElementById('selectb_'+i)).checked;
+    if(a){
+      if(!newPage){doc.addPage()}
+        this.pdfData(doc,this.balanceDate[i],false);
+        doc.addPage();
+        this.pdfData(doc,this.balanceDate[i],true);
+        newPage=false;
+    }
+    }
+    if(newPage){
+      alert('No Pages to Print!')
+    }else{
+    doc.save('Receipt.pdf')
+    }
+    
+  }
 
 
 threshholdCalculator(data){//16
@@ -161,11 +196,12 @@ pageCalculator(data){
 }
 
 pdfData(doc,data,ack){
-  console.log(data);
   
   let partyType='';
   let panno=''
   let x=0;
+
+  
   switch (data.partyType) {
     case 'NR':
       partyType='NITIN ROADWAYS'
@@ -437,7 +473,8 @@ doc.setTextColor(0, 0, 0);
 
 amountSettler(d,c){return d.reduce((partialSum, a) => partialSum + a[c], 0);}
 
-CollectionMemoC(dataa,j,sign){
+CollectionMemoC(){
+  let dataa=this.balanceDate;
   var doc = new jsPDF({
     orientation: 'l',
     unit: 'mm',
@@ -445,25 +482,28 @@ CollectionMemoC(dataa,j,sign){
     putOnlyUsedFonts:true
    })
    
-  
-  for(let index=0;index<dataa.sum;index++){
+  let newPage=true;
+  for(let i=0;i<dataa.length;i++){
     
+    for(let j=0;j<dataa[i]['sum'];j++){
+    if(dataa[i]['check'][j]){
+      if(newPage){
+      }
+      else{
+      doc.addPage()
+      }
   let data={
-    'partyType':dataa.partyType,
-    'loadingDate':dataa['loadingDate'][index],
-    'party':dataa['party'][index],
-    'place':dataa['place'][index],
-    'hamt':dataa['hamt'][index]===0?'':dataa['hamt'][index],
-    'partyAdvanceAmt':this.amountSettler(dataa['partyAdvance'][index],'amount')===0?'':this.amountSettler(dataa['partyAdvance'][index],'amt'),
-    'balance':this.amountSettler(dataa['partyBalance'][index],'amount')===0?'':this.amountSettler(dataa['partyBalance'][index],'amt'),
-    'truckno':dataa['truckno'][index],
-    'nrlrno':dataa['nrlrno'][index],
-    'billno':dataa['billno'][index].split('_')[1],
-    'lrnoTF':dataa['lrnoTF']
+    'partyType':dataa[i].partyType,
+    'loadingDate':dataa[i]['loadingDate'][j],
+    'party':dataa[i]['party'][j],
+    'place':dataa[i]['place'][j],
+    'hamt':dataa[i]['hamt'][i]===0?'':dataa[i]['hamt'][j],
+    'partyAdvanceAmt':this.amountSettler(dataa[i]['partyAdvance'][j],'amount')===0?'':this.amountSettler(dataa[i]['partyAdvance'][j],'amt'),
+    'balance':this.amountSettler(dataa[i]['partyBalance'][j],'amount')===0?'':this.amountSettler(dataa[i]['partyBalance'][j],'amt'),
+    'truckno':dataa[i]['truckno'][j],
+    'nrlrno':dataa[i]['nrlrno'][j],
+    'billno':dataa[i]['billno'][j].split('_')[1]
   };
-
-  this.sstampsign=Consts.sstampsign;//showsignstamp
-  this.ssign=Consts.ssign;//showshubhamsign
 
   let mainY=6
   doc.setFontSize('20');
@@ -546,10 +586,7 @@ CollectionMemoC(dataa,j,sign){
   if(this.admin){
   doc.text(String(data.hamt),35,mainY+53)
   }
-    doc.text(data.nrlrno,100, mainY+53)//
-if(sign){
-  doc.addImage(this.sstampsign,'JPEG',100,85,40,20)
-}
+  doc.text(data.nrlrno,100, mainY+53)//
 
   doc.text(String('-'),75,mainY+60)
   doc.setFontSize('10')
@@ -586,35 +623,24 @@ if(sign){
       doc.setTextColor(0,0,0);
     doc.text('PAN : BTBPG2818K',10, mainY+92)
   }
-  if(index+1>=dataa.sum){}
-    else{
-    doc.addPage()
-    }
-
+  newPage=false;
+  }
 }
-doc.save(dataa._id+'.pdf')
+
 
   // 3 Info
 }
-  
+if(newPage){
+  alert('No Pages to Print!')
+}
+else{
+doc.save('Memo.pdf')
+}
 }
 
-
-//  PochBillAll(){//threshhold is 295
+PartyBill(){
+  alert('Enter Bill No.');
+  alert('You can find bill no. by printing the receipt.')
+}
   
-//   let data=this.balanceDate;
-//   var doc = new jsPDF({
-//     orientation: 'p',
-//     unit: 'mm',
-//     format: 'a5',
-//     putOnlyUsedFonts:true
-//    }) 
-//   for(let i=0;i<data.length;i++){
-   
-//      this.pdfData(doc,data[i],false);
-//      doc.addPage();
-//      this.pdfData(doc,data[i],true);
-//      doc.addPage();
-//   }
-//   doc.save(this.pochDate)
-// }
+}

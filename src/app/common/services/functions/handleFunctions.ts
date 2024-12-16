@@ -11,6 +11,31 @@ export class handleFunction {
     public monthNames = [];
     public MorseCryptedFinalCode = "";
     public monthtoReturn;
+
+    checkme(array,tocheckfor,r){
+        for(let i=0;i<array.length;i++){
+            r.push(this.confirmer(array[i],tocheckfor[i]))
+        }
+        return r;
+    }
+
+    confirmer(data,type){
+
+        switch (type) {
+            case 'string':
+                if(data===''){return 0;}
+                else if(data==null){return 0;}
+                else if(data==undefined){return 0;}
+                else return 1;
+            case 'object':
+                if(data.length===0){return 0;}
+                else return 1;
+                // else{
+                //     if(data=='')
+                // }
+        }
+    }
+
     genaratemonthNames() {
         return this.monthNames = ["January", "February", "March", "April", "May", "June",
             "July", "August", "September", "October", "November", "December"]

@@ -1,0 +1,134 @@
+<div class="row">
+  <button class="btn btn-warning" (click)="tabF(0)">Add</button>
+  <button class="btn btn-warning" (click)="tabF(1)">Display</button>
+</div>
+
+
+<div class="well" *ngIf="tab==0">
+  <button class="btn btn-danger" (click)="get()">Get Data</button>
+  <input type="text" [(ngModel)]="qrsetter" id="qrsetter">
+  <input type="date" id="datesetter">
+    <table class="table table-bordered">
+      <tr>
+        <th>Srno</th>
+        <th>Date</th>
+        <th>TruckNo</th>
+        <th>Party Type</th>
+        <th>Party Name</th>
+        <th>Place1/Place2</th>
+        <th>TypeOfLoad</th>
+        <th>Contact</th>
+        <th>QR</th>
+        <th>Lock/Unloack</th>
+      </tr>
+      <tr *ngFor="let i of turnbooklist1;let j = index;">
+        <td>{{j+1}}</td>
+        <td><input type="date" id="date_{{j}}" [disabled]='i.lul==="unlock"' value={{i.loadingDate}}></td>
+        <td><input type="text" id="truckno_{{j}}" [disabled]='i.lul==="unlock"'></td>
+
+        <td>
+          <select class="form-control" id="pt_{{j}}" [disabled]='i.lul==="unlock"' (change)="setParty(j)">
+            <option disabled id="">Default</option>
+          <option *ngFor="let i of pts;" value={{i.value}}>{{i.viewValue}}</option>
+        </select>
+      </td>
+
+        <td>
+          <select class="form-control" [disabled]='i.lul==="unlock"' id="pn_{{j}}" style="background-color: black;color: wheat;">
+            <option disabled id="">Default</option>
+            <option value={{k._id}} *ngFor="let k of i.parties2;let kki = index">{{k.name}}</option>
+          </select>
+        </td>
+
+
+
+        <td>
+          <select class="form-control" [disabled]='i.lul==="unlock"' id="p1_{{j}}" style="background-color: black;color: wheat;">
+            <option disabled id="">Default</option>
+            <option value={{k._id}} *ngFor="let k of villages;let kki = index">{{k.village_name}}</option>
+          </select>
+          <br>
+          <select class="form-control" [disabled]='i.lul==="unlock"' id="p2_{{j}}" style="background-color: black;color: wheat;">
+            <option disabled id="">Default</option>
+            <option value={{k._id}} *ngFor="let k of villages;let kki = index">{{k.village_name}}</option>
+          </select>
+        </td>
+
+        <td *ngIf="!i.otherbuttons"></td>
+        <td *ngIf="i.otherbuttons">
+          <select class="form-control" [disabled]='i.lul==="unlock"' id="tol_{{j}}">
+          <option *ngFor="let i of tols;" value={{i.value}}>{{i.viewValue}}</option>
+        </select>
+      </td>
+
+        <td>
+         <table border="0">
+          <tr>
+            <th>Co</th>
+            <th>D</th>
+          </tr>
+          <tr *ngFor="let ii of i.contacts;let jj =index;">
+            <td><input [disabled]='i.lul==="unlock"' type="text" id="co_{{j}}{{jj}}"></td>
+            <td><button class="btn btn-danger" [disabled]='i.lul==="unlock"' (click)="delete(j,'c',jj)">D</button></td>
+          </tr>
+         </table>
+         <button [disabled]='i.lul==="unlock"' class="btn btn-warning" (click)="addRow('c',j)">A</button>
+        </td>
+
+        <td *ngIf="!i.otherbuttons"></td>
+        <td *ngIf="i.otherbuttons">
+          <table border="0">
+           <tr>
+             <th>QR</th>
+             <th>D</th>
+           </tr>
+           <tr *ngFor="let ii of i.qrs;let jj =index;">
+             <td><input [disabled]='i.lul==="unlock"' type="text" id="qr_{{j}}{{jj}}" value={{ii.qr}}></td>
+             <td><button class="btn btn-danger" [disabled]='i.lul==="unlock"' (click)="delete(j,'q',jj)">D</button></td>
+           </tr>
+          </table>
+          <button [disabled]='i.lul==="unlock"' class="btn btn-warning" (click)="addRow('q',j)">A</button>
+         </td>
+
+        <td>
+          <button class="btn btn-danger" (click)="lul(j,i.lul)">{{i.lul}}</button>
+          <button class="btn btn-danger" [disabled]='i.lul==="unlock"' (click)="delete(j,'r')">D</button>
+        </td>
+      </tr>
+    </table>
+    <button class="btn btn-primary" (click)="addRow('r',j)">Row</button>
+  <button class="btn btn-danger" [disabled]="!submitButton" (click)="save()">Save</button>
+
+</div>
+
+
+<div class="well" *ngIf="tab==1">
+  <button class="btn btn-danger" (click)="get2()">Get Data</button>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Srno</th>
+      <th>Date</th>
+      <th>TruckNo-Contact</th>
+      <th>Party-Contact-Load</th>
+      <th>Place</th>
+      <th>QR</th>
+      <th>Code</th>
+    </tr>
+    <tr *ngFor="let i of pmts;let j = index;">
+      <td>{{j+1}}</td>
+      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      <td>{{i.truckno}}<br>{{i.contacttb[0]}}</td>
+      <td>{{i.partyName}}<br>{{i.contactp}}<br>{{i.typeOfLoad}}</td>
+      <td>{{i.destination}}-{{i.destination2}}</td>
+      <td>
+        <ul>
+          <li *ngFor="let k of i.qr">{{k}}</li>
+        </ul>
+      </td>
+      <td><qrcode [scale]='1' (click)="qrCoder(i.qrcode)" [qrdata]=i.qrcode [width]="150" [errorCorrectionLevel]="'M'" ></qrcode></td>
+      
+    </tr>
+  </table>
+
+</div>

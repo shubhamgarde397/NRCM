@@ -5,7 +5,6 @@ import { HandleDataService } from '../../../common/services/Data/handle-data.ser
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-track-display',

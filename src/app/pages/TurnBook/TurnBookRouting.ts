@@ -38,10 +38,6 @@ export const TurnBookRouting: Routes =
                             ]
                     },
                     {
-                        path: 'TurnBookAdd',
-                        component: TurnBookAddComponent
-                    },
-                    {
                         path: 'TurnBookUpdate',
                         component: TurnBookUpdateComponent
                     }

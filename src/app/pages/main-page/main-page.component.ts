@@ -15,6 +15,10 @@ import { Consts } from '../../common/constants/const';
   providers: [ApiCallsService]
 })
 export class MainPageComponent implements OnInit {
+  public data=[]
+  public showPochData=false;
+  public admin=false;
+
   public contact;
   public dateFromUI='';
   public modalData;
@@ -34,12 +38,13 @@ export class MainPageComponent implements OnInit {
   public pochDate= '2024-01-17';
   public selectedFile = null;
   public imageFolder = ''
+  public bigI=0;
   public panCardFile: any;
   public panCardString: string;
   public finalJson = {};
   public pythonVar = '';
   public document = new jsPDF();
-
+public balanceDate:any;
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
     localStorage.clear();
@@ -54,7 +59,7 @@ export class MainPageComponent implements OnInit {
       return this.dateFromUI.slice(8, 11) + '-' + this.dateFromUI.slice(5, 7) + '-' + this.dateFromUI.slice(0, 4)
     }
     
-
+ 
 
   login(data) {
     this.security.setBranch(data);
@@ -120,7 +125,6 @@ export class MainPageComponent implements OnInit {
 
     }
   }
-
 
 
 

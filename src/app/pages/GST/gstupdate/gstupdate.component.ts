@@ -28,9 +28,9 @@ export class GstupdateComponent implements OnInit {
   public cities=[];
   public city;
   public pT;x
-  public Email=[]
+  public Email=''
   public email=''
-  public contact=[]
+  public contact=''
   public contactA;
   public contactArray=[]
   public flexid=0;
@@ -59,8 +59,8 @@ export class GstupdateComponent implements OnInit {
       accNo:this. handledata.Data.accNo,
       partyType:this.handledata.Data.partyType,
       shortName:this.handledata.Data.shortName,
-      Email:[],
-      contact:[],
+      Email:'',
+      contact:'',
       show:this.handledata.Data.show
     });
     this.dest = this.handledata.Data.dest;
@@ -82,9 +82,7 @@ export class GstupdateComponent implements OnInit {
   //   this.load.splice(j,1);
   // }
 
-  addEmail(){
-    this.Email.push(this.email);
-  }
+
 
   addFlex(){
 let temp={flexid:this.flexid,village:this.village}
@@ -94,19 +92,6 @@ let temp={flexid:this.flexid,village:this.village}
   deleteFlex(i,j){
     this.flexids.splice(j,1);
   }
-
-  addMore() {
-    this.contactArray.push(this.contactA)
-    this.contactA = '';
-  }
-
-  deleteOne(i, j) {
-    this.contactArray.splice(j, 1);
-  }
-  deleteEmail(i,j){
-    this.Email.splice(j,1);
-  }
-
   addCity(){
     this.cities.push(this.city);
   }
@@ -117,7 +102,7 @@ let temp={flexid:this.flexid,village:this.village}
     let formbody = {}
     formbody['name'] = data.value.name;
     formbody['gst'] = data.value.gst;
-    formbody['email'] = this.Email;
+    formbody['email'] = data.value.Email;
     formbody['dest'] = data.value.dest;
     formbody['addr2'] = data.value.addr1;
     formbody['addr3'] = data.value.addr2;
@@ -128,7 +113,7 @@ let temp={flexid:this.flexid,village:this.village}
     formbody['show'] = data.value.show;
     formbody['_id'] = this.handledata.Data._id;
     // formbody['load'] = this.load;
-    formbody['contact']=this.contactArray;
+    formbody['contact']=data.value.contact;
     formbody['flexids']=this.flexids;
     formbody['method'] = 'updategst';
     formbody['tablename'] = 'gstdetails';
@@ -140,7 +125,7 @@ let temp={flexid:this.flexid,village:this.village}
           if (res._id == this.handledata.Data._id) {
             res['name'] = data.value.name;
             res['gst'] = data.value.gst;
-            res['email'] = this.Email;
+            res['email'] = data.value.Email;
             res['dest'] = data.value.dest;
             res['shortName'] = data.value.shortName;
           }

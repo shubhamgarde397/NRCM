@@ -28,19 +28,18 @@
           <th>Srno</th>
           <th>Party</th>
           <th>Count</th>
-          <th>Receipt</th>
-          <th>Signed - Memo</th>
-          <th>Unsigned - Memo</th>
+          <th>Check</th>
         </tr>
         <tr *ngFor="let i of balanceDate;let j = index;">
           <td>{{j+1}}</td>
           <td>{{i._id}}</td>
           <td (click)="showData(i,j)">{{i.sum}}</td>
-          <td><button class="btn btn-success" (click)="PochBill(i,j)">Receipt</button></td>
-          <td><button class="btn btn-success" (click)="CollectionMemoC(i,j,true)">Sign-Memo</button></td>
-          <td><button class="btn btn-success" (click)="CollectionMemoC(i,j,false)">UnSign-Memo</button></td>
+          <td><input type="checkbox" id="selectb_{{j}}" (change)="what(j,'big',i)"></td>
         </tr>
       </table>
+      <button class="btn btn-success" (click)="PochBill(i,j)">Receipt</button>
+      <button class="btn btn-success" (click)="CollectionMemoC()">Memo</button>
+      <button class="btn btn-success" (click)="PartyBill()">Party Bill</button>
     </div>
 
     <div class="row" *ngIf="showPochData">
@@ -51,6 +50,7 @@
           <th>Truckno</th>
           <th>LRNO</th>
           <th>Amount</th>
+          <th>Check</th>
           <th *ngIf="admin">Advance</th>
           <th *ngIf="admin">Balance</th>
         </tr>
@@ -60,6 +60,7 @@
           <td>{{i.truckno}}</td>
           <td>{{i.nrlrno}}</td>
           <td>{{i.hamt}}</td>
+          <td><input type="checkbox" id="selects_{{j}}" [checked]=i.check  (change)="what(j,'small')"></td>
           <td *ngIf="(i.partyAdvance.length>0 && admin)">
             <ul>
               <li *ngFor="let ii of i.partyAdvance;">{{ii.amt}}=>{{ii.date}}</li>
@@ -70,7 +71,7 @@
               <li *ngFor="let ii of i.partyBalance;">{{ii.amt}}=>{{ii.date}}</li>
           </ul>
           </td>
-
+  
         </tr>
       </table>
     </div>

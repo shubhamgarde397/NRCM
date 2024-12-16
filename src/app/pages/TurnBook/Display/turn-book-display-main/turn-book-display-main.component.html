@@ -17,21 +17,10 @@
           <option value="SNL">SNL</option>
           </select>
         </div>
-        <div class="col-sm-3" *ngIf="buttonOption==='1'">
-          <select class="form-control" [(ngModel)]="buttonOptionVehicleType" (change)="getVehicleTypeList()">
-            <option value="Open">Open</option>
-          <option value="Container">Container</option>
-          <option value="None">None</option>
-          <option value="All">All</option>
-          </select>
-        </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='1' ) && (buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='9' )&&(buttonOption!=='10' )&&(buttonOption!=='11' )&&(buttonOption!=='13')&&(buttonOption!=='17' )">
+          *ngIf="(buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11' )&&(buttonOption!=='13')">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
-        </div>
-        <div class="col-sm-3" *ngIf="buttonOption==='4'">
-          <input type="date" class="form-control" [(ngModel)]="dynDate2">
         </div>
 
         <div class="col-sm-3" *ngIf="buttonOption==='13'">
@@ -42,26 +31,6 @@
           <select class="form-control" [(ngModel)]="selectedmy">
             <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
           </select>
-        </div>
-        <div class="col-sm-3" *ngIf="buttonOption==='10'">
-          <button class="btn btn-warning" (click)="downloadAvailableData()" style="width: 100%;">Party Details</button>
-        </div>
-        <div class="col-sm-3" *ngIf="isAvailable">
-          <button class="btn btn-warning" (click)="downloadAvailable()" style="width: 100%;">Available Details</button>
-        </div>
-        <div class="col-sm-3" *ngIf="buttonOption==='11'">
-          <button class="btn btn-warning" (click)="downloadDeepData()" style="width: 100%;">PDF Deep Detail</button>
-        </div>
-        <div class="col-sm-3" *ngIf="buttonOption==='10'">
-          <select id="nop" class="form-control" [(ngModel)]="partyVar" (change)="findgst()">
-            <option disabled selected>Select Name of The Party</option>
-            <option *ngFor="let gst of parties;let j = index;" value={{gst._id+j}}>
-              {{gst.name}}
-            </option>
-          </select>
-        </div>
-        <div class="col-sm-3" *ngIf="buttonOption==='11'">
-          <input type="text" class="form-control" [(ngModel)]='truckVar' placeholder="Truck No">
         </div>
       </div>
       <div class="row">
@@ -90,7 +59,6 @@
             <th>LRNO</th>
             <th *ngIf="adminAmount">Amount-OAmt-AccNo</th>
             <th>Poch</th>
-            <th *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">Undo</th>
             
           </tr>
         </thead>
@@ -108,22 +76,7 @@
             <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.typeOfLoad}}</td>
 
             <td *ngIf="i.ownerDetails[0]!==undefined">
-              <div class="col-sm-6" >
-               
-                <div class="row">
-                  <div class="col-sm-3" [ngStyle]="{'background-color':i.P}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">P</div>
-                  <div class="col-sm-3" [ngStyle]="{'background-color':i.Pf}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">Px</div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-3" [ngStyle]="{'background-color':i.A}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">A</div>
-                  <div class="col-sm-3" [ngStyle]="{'background-color':i.C}" (click)="showDatabyidTurn(i.ownerDetails[0])" style="color: black;cursor: pointer;">C</div>
-                </div>
-                <div class="row" *ngIf="changeTextA">
-                  <div class="col-sm-3" style="color: black;">{{i.truckName.accountDetails[0].accountName}}</div>
-                  <div class="col-sm-3"  style="color: black;">{{i.truckName.accountDetails[0].accountNumber}}</div>
-                </div>
-              
-              </div>
+
               <div class="col-sm-6">
                 <div class="row">
                   <div class="col-sm-6"  data-toggle="modal" data-target="#myModalTB" (click)="showDatabyid(i,j,1)">
@@ -154,12 +107,6 @@
 
             <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}</td>
 
-            <td *ngIf="(buttonOption=='9')&&(buttonOption!=='10')">
-              <button mat-raised-button type="button" (click)="showDatabyid2(i,'uncancel')"
-                class="btn-primary btn-sm btn-just-icon">
-                <i class="material-icons">undo</i>
-              </button>
-            </td>
 
           
             
@@ -397,122 +344,6 @@
       </div>
     </div>
 
-<div class="row" *ngIf="buttonOption=='11'">
-<div class="col-sm-6" *ngIf="showprdfP">
-  <div class="row">
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].Pf}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">pan:{{turn11[0].truckName.pan}}</div>
-  </div>
-  <div class="row">
-    <div class="col-sm-3" [ngStyle]="{'background-color':turn11[0].A}" style="color: black;cursor: pointer;" (click)="showDatabyidTurn(turn11[0].truckName)">Acc</div>
-  </div>
-</div>
-
-
-    <div class="col-sm-12">
-      <select class="form-control" id="partyType" [(ngModel)]="trucknoid11" (change)="find11UniqueTruck()" id="truckNoone11">
-        <option>Default</option>
-        <option *ngFor="let i of unique11turnbooklist;let j = index;" value={{i}}>{{i}}</option>
-      </select>
-    </div>
-
-    <div class="col-sm-12">
-
-<div class="btn btn-warning" (click)="getpdfcomplex()">PDF C</div>
-
-<div *ngIf="selectDate">
-  <div class="row">
-    <div class="col-sm-3">Loading From<input type="date" class="form-control" [(ngModel)]="fdate"></div>
-    <div class="col-sm-3">Loading To<input type="date" class="form-control" [(ngModel)]="tdate"></div>
-    <div class="col-sm-3"><button class="btn btn-danger" (click)="getAllTruckData()">Get</button></div>
-</div>
-</div>
-<table *ngIf="reportPDF" class="table">
-  <thead align="center" style="font-weight: bold">
-    <tr class=table-header>
-      <th>Srno</th>
-      <th>Loading</th>
-      <th>Poch : Pg : G : Amt : Acc</th>
-      <th>Payment Details</th>
-    </tr>
-  </thead>
-  <tbody align="center">
-    <tr *ngFor="let i of turn12;let j = index">
-      <td>{{j+1}}</td>
-      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-      <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
-      <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
-    </tr>
-  </tbody>
-</table>
-
-<table *ngIf="reportPDF" class="table">
-  <thead align="center" style="font-weight: bold">
-    <tr class=table-header>
-      <th>Srno</th>
-      <th>Loading</th>
-      <th>Poch : Pg : G : Amt : Acc</th>
-      <th>Payment Details</th>
-      <th>Options</th>
-    </tr>
-  </thead>
-  <tbody align="center">
-    <tr *ngFor="let i of turn12;let j = index">
-      <td>{{j+1}}</td>
-      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-      <td>{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}}<br>{{i.BHamt}}:{{i.BHAccName}}<br>{{i.BHAccNo}}</td>
-      <td>{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
-      <td>
-        <button class="btn btn-danger" (click)="considerForPaymentOption(false,j)" *ngIf="i.considerForPayment">Delete</button>
-        <button class="btn btn-success" (click)="considerForPaymentOption(true,j)" *ngIf="!i.considerForPayment">Consider</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-
-<button class="btn btn-danger" (click)="downloadThePDF()" *ngIf="reportPDF">Download</button>
-<button class="btn btn-warning" (click)="getpdfcomplex2()">PDF 2</button>
-  <table class="table" style="width:100%" align="center" *ngIf="byTruckName">
-        <thead align="center" style="font-weight: bold">
-          <tr class=table-header>
-            <th>Srno</th>
-            <th>Entry-Loading</th>
-            <th>Type-Party-Place</th>
-            <th>LRNO</th>
-            <th>Amount</th>
-            <th>Poch : Pg : G : Amt : Acc</th>
-            <th>Payment Details</th>
-            <th>Msg</th>
-          </tr>
-        </thead>
-        <tbody align="center">
-          <tr *ngFor="let i of turn11;let j = index">
-            <td>{{j+1}}<br><i class="material-icons" *ngIf="i.complete" style="color: green;">
-              done
-              </i><i class="material-icons" *ngIf="!i.complete" style="color: red;">
-                close
-                </i></td>
-            <td>{{i.turnbookDate|date:'dd-MM-yyyy'}}<br>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-            <td>{{i.partyType}}-{{i.partyName.shortName}}-{{i.placeName.shortName}}<br><span *ngIf="i.placeName2!==undefined">{{i.placeName2.shortName}}</span>-{{i.typeOfLoad}}</td>
-            <td>{{i.lrno}}</td>
-            <td>{{i.hamt}}<br>{{i.rent}}</td>
-            <td [ngStyle]="{'background-color': i.colors[0]}">{{i.pochDate|date:'dd-MM-yyyy'}} : {{i.pgno}} : {{i.givenDate|date:'dd-MM-yyyy'}}<br>{{i.pochAmount}}:{{i.truckName.accountDetails[0].accountName}}<br>{{i.truckName.accountDetails[0].accountNumber}}</td>
-            <td [ngStyle]="{'background-color': i.colors[1]}">{{i.actualPaymentDate|date:'dd-MM-yyyy'}}<br>{{i.actualPaymentAmount}}<br>{{i.statusOfPoch}}</td>
-            <td>
-              <button class="btn btn-warning" (click)="sendBalanceData(i,j,'truck')">Send</button>
-              <button class="btn btn-warning" (click)="sendBalanceData(i,j,'shubham')">Self</button>
-              <button class="btn btn-warning" (click)="sendBalanceData(i,j,'dad')">Dad</button>
-              <button class="btn btn-warning" (click)="clearData(i,j)">Clear</button>
-              <button class="btn btn-warning" (click)="clearBalanceAdd(i,j)">Uncheck Balance</button>
-              <button class="btn btn-warning" data-toggle="modal" data-target="#myModal" (click)="getData(i,j)">Add Actual</button>
-              
-            </td>
-          </tr>
-        </tbody>
-      </table>
-</div>
-</div>
-
 
 <div *ngIf="buttonOption=='19'">
 
@@ -618,112 +449,6 @@
   </div>
   
 </div>
-
-<div class="container">
-  
-  <div class="modal fade" id="myModalTB" role="dialog">
-    <div class="modal-dialog">
-    
-  
-      <div class="modal-content" style="background-color: black;">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit for {{updateTruckTB.truckno}}</h4>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="myFormGroupTB"submitted=true (ngSubmit)="edit2()" enctype="multipart/form data" action="/">
-    <div class="well">
-      <div class="row form-group">
-        <div class="col-sm-12">
-          Loading Date : 
-          <input type="date" class="form-control" formControlName="loadingDate" placeholder="Date">
-        </div>
-      </div>
-      <div class="row form-group">
-        <div class="col-sm-6">
-          Party Type : {{partyType}}
-          <select class="form-control" formControlName="partyType" (change)="changeDivPartyWise()">
-            <option value="NRCM">NRCM</option>
-            <option value="NR">NR</option>
-            <option value="SNL">SNL</option>
-          </select>
-        </div>
-
-      </div>
-<div *ngIf="showEditOtherDiv">
-      <div class="row form-group">
-      <div class="col-sm-6">
-        Party : {{partyToUI}}
-      <select id="partyName" class="form-control " formControlName="partyName" (change)="setPartyName()">
-        <option selected disabled value={{partyid}}>{{party}}</option>
-        <option *ngFor="let i of parties;let j = index;" value={{i._id}}+{{j}}>{{i.name}}</option>
-      </select>
-    </div>
-    <div class="col-sm-6">
-      Old Party : 
-      <input type="text" id="partyName" class="form-control disF" formControlName="partyName" disabled>
-      </div>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-sm-6">
-        Place : 
-        <select id="place" class="form-control" formControlName="place">
-          <option disabled value="{{placeid}}" selected>{{place}}</option>
-          <option *ngFor="let own of villagelist;let j = index;" value="{{own}}">{{own}}</option>
-        </select>
-        </div>
-        <div class="col-sm-6">
-          Old Place : 
-        <input type="text" id="place" class="form-control disF" formControlName="place" disabled>
-        </div>
-</div>
-<div class="form-group row">
-        <div class="col-sm-6">
-          Place 2 : 
-          <select id="place2" class="form-control" formControlName="place2">
-            <option disabled value="{{placeid2}}" selected>{{place2}}</option>
-            <option *ngFor="let own of villagelist;let j = index;" value="{{own}}">{{own}}</option>
-          </select>
-          </div>
-          <div class="col-sm-6">
-            Old Place 2 : 
-          <input type="text" id="place" class="form-control" formControlName="place2" disabled>
-          </div>
-    </div>
-
-
-      <div class="row form-group">
-        <div class="col-sm-4">
-        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroupTB.valid'>
-          <i class="material-icons">send</i>
-        </button>
-      </div>
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-danger" (click)="deleteTB()">
-         Delete
-        </button>
-      </div>
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-warning" (click)="showDatabyid2('cancel')">
-          Cancel
-        </button>
-      </div>
-      </div>
-    </div>
-    </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-</div>
-
 
 <div *ngIf="show">
 

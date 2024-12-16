@@ -62,6 +62,8 @@ import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.compo
 import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
 import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
 import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/contact-dadd.component';
+import { DriverContactComponent } from './pages/CI/DriverContact/driver-contact/driver-contact.component';
+import { PmtMsgComponent } from './pages/Track/pmt-msg/pmt-msg.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +105,9 @@ import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/conta
     PODNOTRECComponent,
     TpdfComponent,
     ReceiptComponent,
-    ContactDAddComponent
+    ContactDAddComponent,
+    DriverContactComponent,
+    PmtMsgComponent
   ],
   imports: [
     QRCodeModule,

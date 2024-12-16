@@ -55,6 +55,7 @@ public table3=false;
       fid:['',Validators.required],
       vid:['',Validators.required],
       vid2:[''],
+      plant:['',Validators.required]
     });
 
   }
@@ -102,7 +103,8 @@ this.dataT=data;
     'oid':truckss['ownerid'],
     'date':this.myFormGroup.value.date,    
     'type':this.myFormGroup.value.type,
-    'new':truckss['new']
+    'new':truckss['new'],
+    'plant':this.myFormGroup.value.plant
 
     }
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)

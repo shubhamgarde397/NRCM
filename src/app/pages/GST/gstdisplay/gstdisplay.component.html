@@ -24,19 +24,15 @@
                 <td>{{j+1}}</td>
                 <td>{{i.name}}:{{i.shortName}}</td>
                 <td>{{i.gst}}<br>
-                <ul>
-                    <li *ngFor="let ii of i.email" (click)="copyEmail(ii)">{{ii}}</li>
-                </ul>
-            </td>
+                {{i.email}}
+                </td>
             <td>
                 <ul>
                     <li *ngFor="let ii of i.flexids">{{ii.village}}->{{ii.flexid}}</li>
                 </ul>
             </td>
                 <td>{{i.dest}}<br>
-                        <ul *ngFor="let k of i.contact">
-                            <li>{{k}}</li>
-                        </ul>
+                    {{i.contact}}
                 </td>
                 <td>{{i.partyType}}-{{i.accNo}}</td>
                 <td>{{i.addr1}},{{i.addr2}}</td>

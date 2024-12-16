@@ -146,39 +146,7 @@
 <h3>Contact : Email</h3>
     <div class="form-group row">
       <div class="col-xs-3">
-        <table class="table table-border">
-          <tr>
-            <th>Email</th>
-            <th>Option</th>
-          </tr>
-          <tr>
-            <td>
-              <input type="text" [(ngModel)]="email" [ngModelOptions]="{standalone: true}"></td>
-            <td>
-              <button type="button" class="btn btn-success" (click)="addEmail()">Add</button>
-            </td>
-          </tr>
-        </table>
-        
-
-      </div>
-  
-      <div class="col-xs-3">
-      
-        <table class="table table-border">
-          <tr>
-          <th>Sr</th>
-          <th>Email</th>
-          <th>Delete</th>
-        </tr>
-        <tr *ngFor="let i of Email;let j = index;">
-          <td>{{j+1}}</td>
-          <td>{{i}}</td>
-          <td><button type="button" mat-raised-button (click)="deleteEmail(i,j)" class="btn-danger btn-sm btn-just-icon">
-            <i class="material-icons">delete_forever</i>
-        </button></td>
-        </tr>
-        </table>
+        <input type="text" formControlName='Email'>
       </div>
     </div>
 
@@ -186,26 +154,7 @@
         <h3>Contact : Phone</h3>
         <div class="form-group row">
           <div class="col-xs-3">
-           <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211"
-              [(ngModel)]="contactA">
-          </div>
-          <div class="col-xs-2">
-            <button type="button" class="btn btn-primary" (click)="addMore()">
-              <i class="material-icons">add</i>
-            </button>
-          </div>
-          <div class="col-xs-3">
-            <table>
-              <tr>
-                <th>Contact</th>
-                <th>Delete</th>
-              </tr>
-              <tr *ngFor="let i of contactArray;let j = index;">
-                <td>{{i}}</td>
-                <td><button (click)="deleteArray(j,1)">Delete</button></td>
-              </tr>
-    
-            </table>
+           <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211">
           </div>
         </div>
         <!--  -->

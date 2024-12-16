@@ -256,7 +256,7 @@ this.nrcmids.splice(j,1);
     isParent:this.myFormGroup.value.isParent,
     hasChildren:this.myFormGroup.value.hasChildren,
     children:this.myFormGroup.value.children,
-    position:this.myFormGroup.value.position,
+    position:String(this.myFormGroup.value.position),
     parentid:this.myFormGroup.value.parentid,
     nrcmids:this.nrcmids.map(r=>{return r.nrcmid}),
     link:this.myFormGroup.value.link,

@@ -33,6 +33,8 @@ import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.comp
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
 import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
 import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
+import { DriverContactComponent } from './pages/CI/DriverContact/driver-contact/driver-contact.component';
+import { PmtMsgComponent } from './pages/Track/pmt-msg/pmt-msg.component';
  
 export const routes: Routes =
     [
@@ -51,6 +53,10 @@ export const routes: Routes =
         {
             path: 'QR',
             component: TrackDisplayComponent
+        },
+        {
+            path: 'PM',
+            component: PmtMsgComponent
         },
         {
             path: 'PDF',
@@ -125,6 +131,10 @@ export const routes: Routes =
                         component:HiddenTrucksComponent
                     },
                     {
+                        path:'ContactDriver',
+                        component:DriverContactComponent
+                    },
+                    {
                         path: 'DUES_PAGE',
                         component:DuesPageComponent
                     },
@@ -167,10 +177,6 @@ export const routes: Routes =
                     {
                         path: 'VILLAGE_HANDLER',
                         loadChildren: './pages/Village/app.module#AppModule'
-                    },
-                    {
-                        path:'REASON_HANDLER',
-                        loadChildren: './pages/MissingReason/app.module#AppModule'
                     },
                     {
                         path: 'CHART',
