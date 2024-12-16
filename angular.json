@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "NRCM_FAST",
+            "outputPath": "NRCM",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -123,5 +123,5 @@
       }
     }
   },
-  "defaultProject": "NRCM_FAST"
+  "defaultProject": "NRCM"
 }

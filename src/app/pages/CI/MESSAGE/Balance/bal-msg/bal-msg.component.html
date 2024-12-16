@@ -20,7 +20,11 @@
     <td>{{i.truckno}}<br>{{i.contacttb}}</td>
     <td>{{i.acc['accountName']}}-{{i.acc['accountNumber']}}</td>
 
+<<<<<<< HEAD
     <td *ngIf="i.contactqr!==''"></td><!-- <qrcode [scale]='1' [qrdata]=i.qr [width]="150" [errorCorrectionLevel]="'M'" ></qrcode> -->
+=======
+    <td *ngIf="i.contactqr!==''"><qrcode [scale]='1' [qrdata]=i.qr [width]="150" [errorCorrectionLevel]="'M'" ></qrcode></td>
+>>>>>>> 3575bbef0bbd76350fb37eafa11f4230e874f847
     <td *ngIf="i.contactqr==''"><input type="text" id="a_{{jj}}"><button class="btn btn-warning" (click)="addContact(i,j,1)">Add</button></td>
     
   </tr>
