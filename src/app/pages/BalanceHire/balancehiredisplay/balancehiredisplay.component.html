@@ -32,10 +32,6 @@
       <div class="col-xs-2" align="center">
         <button class="btn btn-danger" (click)="adminAccess()" *ngIf="showPDFButton">Admin</button>
       </div>
-      <div class="col-xs-2" align="center">
-        <button class="btn btn-danger" (click)="printUpdate()" *ngIf="showPDFButton"
-          [ngStyle]="{'background-color': !printed ? 'red' : 'wheat' }" [disabled]="printed">Print</button>
-      </div>
     </div>
 
     <div style="text-align: center">

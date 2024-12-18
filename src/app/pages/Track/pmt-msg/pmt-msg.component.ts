@@ -16,6 +16,8 @@ export class PmtMsgComponent implements OnInit {
 
   public data=''
   public list=[];
+  public s='';
+  public ss=''
    constructor(
      public sec:SecurityCheckService,
      public router: Router,
@@ -30,13 +32,14 @@ export class PmtMsgComponent implements OnInit {
      this.activatedRoute.queryParams.subscribe(data=>{
       
       let temp={}
-      let s=data['i'].split('_');
-      console.log(s);
+      this.s=data['i'].split('_');
+      this.ss=this.s[0]
+      console.log(this.s);
       
-      switch (s[0]) {
+      switch (this.s[0]) {
         case 'q':
           temp={
-            billno:s[1],
+            billno:this.s[1],
             tablename:'',
             method:'getbybillno2'
           }   
@@ -50,11 +53,10 @@ export class PmtMsgComponent implements OnInit {
             });
           break;
     
-        case 'c': 
-        console.log('tel://+91'+s[1]+'','_blank');
+        //  case 'c': 
         
-          window.open('tel://+91'+s[1]+'','_blank');
-          break;
+        //    window.open('tel://+91'+this.s[1]+'','_blank');
+        //    break;
       }
        
 
@@ -62,6 +64,10 @@ export class PmtMsgComponent implements OnInit {
 
       
      })
+   }
+
+   call(){
+    window.open('tel://+91'+this.s[1]+'','_blank');
    }
  
  }

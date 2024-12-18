@@ -48,7 +48,7 @@
         <th>Place</th>
         <th>Party-Type</th>
         <th>LRNO</th>
-        <th>Account</th>
+        <!-- <th>Account</th  > -->
       </tr>
     </thead>
 
@@ -70,15 +70,15 @@
         <td>{{i.place}}</td>
         <td>{{i.partyType}}<br>{{i.snameparty}}</td>
         <td>{{i.lrno}}</td>
-        <td>
-          <!-- *ngIf="!i.update&&i.advAccid!==-1" -->
+        <!-- <td>
+          *ngIf="!i.update&&i.advAccid!==-1"
           
           <span *ngIf="i.accounts!==undefined">
           {{i.accounts['accountName']}}<br>
           {{i.accounts['accountNumber']}}<br>
           {{i.accounts['ifsc']}}
         </span>
-        </td>
+        </td> -->
 
       </tr>
     </tbody>
@@ -109,7 +109,7 @@
             <th>Party Name</th>
             <th>Party Type</th>
             <th>Place</th>
-            <th>Advance Account</th>
+            <!-- <th>Advance Account</th> -->
           </tr>
         </thead>
         <tbody align="center">
@@ -121,7 +121,7 @@
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
             <td>{{ii.place}}</td>
-            <td>{{ii.accounts['accountName']}}<br>{{ii.accounts['accountNumber']}}</td>
+            <!-- <td>{{ii.accounts['accountName']}}<br>{{ii.accounts['accountNumber']}}</td> -->
           </tr>
         </tbody>
       </table>
@@ -145,7 +145,7 @@
             <th>Balance</th>
             <th>LRNO</th>
             <th>Remark</th>
-            <th>Account Details</th>
+            <!-- <th>Account Details</th> -->
           </tr>
         </thead>
         <tbody>
@@ -153,7 +153,7 @@
             <td>{{jj+1}}</td>
             <td>{{ii.loadingDate|date:'dd-MM-yyyy'}}</td>
             <td>{{ii.truckno}}
-              <button class="btn btn-warning" *ngIf="ii.update" (click)='updateACC(ii,jj)' data-toggle="modal" data-target="#myModalDD">Update</button>
+              <!-- <button class="btn btn-warning" *ngIf="ii.update" (click)='updateACC(ii,jj)' data-toggle="modal" data-target="#myModalDD">Update</button> -->
             </td>
             <td>{{ii.snameparty}}</td>
             <td>{{ii.partyType}}</td>
@@ -179,19 +179,19 @@
                 <option *ngFor="let i of remarks;" value={{i.value}}>{{i.viewValue}}</option>
               </select>
             </td>
-            <td>
+            <!-- <td>
               <select class="form-control" id="name_{{jj}}" [disabled]="ii.update"  style="background-color: black;color: wheat;">
                 <option disabled id="option_{{jj}}">Default</option>
                 <option value={{kki}} *ngFor="let kk of ii.accountNo;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
               </select>
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>
     </div>
-    <button mat-raised-button type="button" (click)="accountCheckerF()" class="btn-danger btn-sm btn-just-icon" *ngIf="accountChecker">
+    <!-- <button mat-raised-button type="button" (click)="accountCheckerF()" class="btn-danger btn-sm btn-just-icon" *ngIf="accountChecker">
       Account Checker
-    </button>
+    </button> -->
     <button mat-raised-button type="button" (click)="check()" class="btn-success btn-sm btn-just-icon" *ngIf="checkSign">
       <i class="material-icons">check</i>
     </button>
@@ -202,7 +202,7 @@
 </div>
 
 
-<div class="modal fade" id="myModalDD" role="dialog">
+<!-- <div class="modal fade" id="myModalDD" role="dialog">
   <div class="modal-dialog">
   
 
@@ -233,5 +233,5 @@
     </div>
     
   </div>
-</div>
+</div> -->
 <!-- Balance Hire -->

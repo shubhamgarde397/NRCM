@@ -1,3 +1,37 @@
 <div class="container">
-  <h3>Please wait while we direct you to Whatsapp!</h3>
+
+  <nav class="navbar navbar-inverse" style="position: fixed;width:100%;z-index:1;"> 
+    <div class="container row" style="width: 100%;">
+      <div class="col-sm-6">
+      <div class="navbar-header">
+        <a class="navbar-brand fonthead" routerLink="NRCM_HOME">
+          Nitin Roadways And Cargo Movers
+        </a>
+      </div>
+    </div>
+    </div>
+
+
+
+    <div class="container" *ngIf="ss==='q'">
+      <h3>Please wait while we direct you to Whatsapp!</h3>
+    </div>
+    
+    <div class="container" *ngIf="ss==='c'">
+      <button class="btn btn-warning" (click)="call()">Click to call the driver!</button>
+<br><br><br><br>
+      We will redirenting to phone call page!
+    </div>
+    
+    
+    <!-- <div class="row" style="text-align: center"> -->
+      © 2024 NITIN ROADWAYS AND CARGO MOVERS<br>
+      Safe | Fast | Reliable | Punctual | 24*7 Avaliable
+    <!-- </div> -->
+
+
+  </nav>
+
+
+
 </div>

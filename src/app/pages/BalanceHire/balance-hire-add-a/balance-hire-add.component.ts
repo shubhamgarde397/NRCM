@@ -34,7 +34,7 @@ public nextStepButton=false;
 public firstTime=false;
 public back=false;
 public checkSign=true;
-public accountChecker=false;
+// public accountChecker=false;
 public forceBackButton=false;
 public nrcmid;
 public bigI;
@@ -221,29 +221,29 @@ alert('Selected!')
       }
     }
     if(breaker){
-      this.checkSign=false;
-      this.accountChecker=true;
+      this.checkSign=true;
+      // this.accountChecker=true;
     }
     
   }
 
-  accountCheckerF(){
-    let breaker=false;
-    console.log(this.balanceHireArrray[0])
-    for(let i=0;i<this.balanceHireArrray[0].length;i++){
-      if(this.balanceHireArrray[0][i]['update']){
-        breaker=true;
-        break;
-      }
-    }
-    if(!breaker){
-      this.checkSign=true;
-      this.accountChecker=false;
-    }
-    else{
-      alert('Update all Acounts!')
-    }
-  }
+  // accountCheckerF(){
+  //   let breaker=false;
+  //   console.log(this.balanceHireArrray[0])
+  //   for(let i=0;i<this.balanceHireArrray[0].length;i++){
+  //     if(this.balanceHireArrray[0][i]['update']){
+  //       breaker=true;
+  //       break;
+  //     }
+  //   }
+  //   if(!breaker){
+  //     this.checkSign=true;
+  //     this.accountChecker=false;
+  //   }
+  //   else{
+  //     alert('Update all Acounts!')
+  //   }
+  // }
   moveToFinalStepReset(action) {
     
     this.balanceHireArrray = [];
@@ -265,7 +265,7 @@ alert('Selected!')
               this.bhTrucks[index]['return_hamali']=parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
               this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value;
               this.bhTrucks[index]['remark']=(<HTMLInputElement>document.getElementById('remark_' + i + '_' + j)).value;
-              this.bhTrucks[index]['balAccid']=parseInt((<HTMLInputElement>document.getElementById('name_' + j)).value);
+              // this.bhTrucks[index]['balAccid']=parseInt((<HTMLInputElement>document.getElementById('name_' + j)).value);//work on thiis
               this.bhTrucks[index]['pageno']=this.securityCheck.nrcmid;  
               return true
             }
@@ -344,8 +344,8 @@ alert('Selected!')
           (parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value) == 1) 
           ||
           (parseInt((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value) == 0)
-          ||
-          ((<HTMLInputElement>document.getElementById('name_'  + j)).value == 'Default')
+          // ||
+          // ((<HTMLInputElement>document.getElementById('name_'  + j)).value == 'Default')
           ) {
           
           checker=checker+1;

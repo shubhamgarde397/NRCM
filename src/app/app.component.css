@@ -53,7 +53,10 @@ ul li a{
     padding-left:15px;
 }
 
-
+.well,.container{
+    background-color: black;
+    color: wheat;
+}
 
 #container{
     width: 100%;
