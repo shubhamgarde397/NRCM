@@ -104,6 +104,11 @@ export class handleFunction {
             case "December": return 12
         }
     }
+
+    getEmpId(data){
+        return 'N'+String(data.state.slice(0,1))+String(data.nrcmid)+String('00')+String(data['gender']=='Male'?1:2);
+
+    }
     generate2DigitNumber(data) {//pass a string
         if (data.length == 1) {
             return '0' + data;

@@ -18,6 +18,7 @@ export class PmtMsgComponent implements OnInit {
   public list=[];
   public s='';
   public ss=''
+  public sstab=false;
    constructor(
      public sec:SecurityCheckService,
      public router: Router,
@@ -52,6 +53,19 @@ export class PmtMsgComponent implements OnInit {
               }
             });
           break;
+          case 'i':
+            temp={
+              i:this.s[1],
+              tablename:'',
+              method:'empinfo'
+            }   
+  
+            this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
+            .subscribe((res: any) => {
+              this.data=res.Data[0];
+              this.sstab=true;
+              });
+            break;
     
         //  case 'c': 
         

@@ -35,6 +35,7 @@ import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
 import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
 import { DriverContactComponent } from './pages/CI/DriverContact/driver-contact/driver-contact.component';
 import { PmtMsgComponent } from './pages/Track/pmt-msg/pmt-msg.component';
+import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
  
 export const routes: Routes =
     [
@@ -114,6 +115,11 @@ export const routes: Routes =
                         path: 'CONTACT_DAILY',
                         component: ReceiptComponent
                     },
+                    {
+                        path: 'PROFILE',
+                        component: ProfileComponent
+                    },
+
                     {
                         path: 'GST_HANDLER',
                         loadChildren: './pages/GST/app.module#AppModule'

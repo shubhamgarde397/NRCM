@@ -11,7 +11,17 @@
     </div>
     </div>
 
-
+    <div class="container" *ngIf="sstab">
+      <h3>Name : {{data.displayName}}</h3>
+      <ul>
+        <li>I reside in {{data.city}}</li>
+        <li>Blood Group : {{data.bgrp}}</li>
+        <li>Contact : {{data.contact}}</li>
+        <li>Registration ID : {{data.nrcmid}}</li>
+        <li>Employee ID in Nitin Roadways And Cargo Movers : {{data.empid}}</li>
+        <li>If this card is lost please contact +91 8529275757</li>
+      </ul>
+    </div>
 
     <div class="container" *ngIf="ss==='q'">
       <h3>Please wait while we direct you to Whatsapp!</h3>
@@ -20,10 +30,10 @@
     <div class="container" *ngIf="ss==='c'">
       <button class="btn btn-warning" (click)="call()">Click to call the driver!</button>
 <br><br><br><br>
-      We will redirenting to phone call page!
+      We will redirect you to the phone page!
     </div>
     
-    
+    <br><br><br><br>
     <!-- <div class="row" style="text-align: center"> -->
       © 2024 NITIN ROADWAYS AND CARGO MOVERS<br>
       Safe | Fast | Reliable | Punctual | 24*7 Avaliable

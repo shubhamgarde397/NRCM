@@ -24,6 +24,7 @@ public usernameU;
 public passwordU;
 public tptIdU;
 public type;
+public contact='';
 public dname;
 public tpts2;
   constructor(public router:Router,public apiCallservice: ApiCallsService, public handledata: HandleDataService,public sec: SecurityCheckService
@@ -124,6 +125,22 @@ public tpts2;
         this.truckNo=''
       });
   }
+
+  register6(){
+    let tempObj = {};
+    tempObj['method']='register_user'
+    tempObj['password']=this.password
+    tempObj['username']=this.username;
+    tempObj['dname']=this.username;
+    tempObj['contact']=this.contact;
+    tempObj['tablename']=''
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+        this.truckNo=''
+      });
+  }
+
   forgot(){
     let tempObj = {};
     tempObj['method']='forgot_nrcm'

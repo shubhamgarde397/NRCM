@@ -19,7 +19,7 @@ export class SecurityCheckService {
     "Role": 6
   }
   public commonBalanceHire = [];
-
+  public data0=[];
   public AUTH = false;
   public username;
   public username2;
@@ -77,6 +77,9 @@ this.amountShow=data;
   }
   setDisplayname(name){
     this.dname = name;
+  }
+  setData0(data){
+    this.data0=data;
   }
   setSequence(data){
     this.seq=data;

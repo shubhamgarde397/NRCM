@@ -58,6 +58,11 @@ ul li a{
     color: wheat;
 }
 
+div{
+    background-color: black;
+    color: wheat;
+}
+
 #container{
     width: 100%;
     height: 100vh;

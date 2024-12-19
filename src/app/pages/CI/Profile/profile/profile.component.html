@@ -1,0 +1,99 @@
+<div class="well">
+
+  <form [formGroup]="myFormGroup" (ngSubmit)="change(myFormGroup)" submitted=true enctype="multipart/form data" action="/">
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        User Name : <input type="text" id="name" class="form-control" formControlName="name" placeholder="Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+       Password : <input type="text" id="gst" class="form-control" formControlName="password" placeholder="GST No">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Display Name : <input type="text" id="shortName" class="form-control" formControlName="displayName" placeholder="Short Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        City : <input type="text" id="shortName" class="form-control" formControlName="city" placeholder="Short Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        State : 
+        <select class="form-control" formControlName="state">
+          <option disabled>{{state}}</option>
+          <option value="Maharashtra">Maharashtra</option>
+          <option value="TamilNadu">TamilNadu</option>
+          <option value="Kerala">Kerala</option>
+          <option value="Karnataka">Karnataka</option>
+          <option value="Gujrat">Gujrat</option>
+        </select>
+      </div>
+    </div>
+  
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Gender : 
+        <select class="form-control" formControlName="gender">
+          <option disabled>{{gender}}</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Birth Date : <input type="date" class="form-control" formControlName="bod" placeholder="Short Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Email : <input type="text" id="shortName" class="form-control" formControlName="email" placeholder="Short Name">
+      </div>
+    </div>
+
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Contact : <input type="text" id="shortName" class="form-control" formControlName="contact" placeholder="Short Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Blood Group : <input type="text" id="shortName" class="form-control" formControlName="bgrp" placeholder="Short Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+      ID : <input type="number" style="background-color: black;" disabled class="form-control" formControlName="nrcmid" placeholder="Short Name">
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <div class="col-xs-3">
+        Last Login Date : <input type="date" style="background-color: black;" disabled class="form-control" formControlName="lastLoginDate" placeholder="Short Name">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group" class="col-xs-1">
+        <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
+          <i class="material-icons">send</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

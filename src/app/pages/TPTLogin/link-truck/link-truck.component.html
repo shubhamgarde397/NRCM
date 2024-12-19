@@ -5,6 +5,7 @@
 </div>
 
 <div class="well">
+  <button class="btn btn-warning" (click)="swicther(6)">Create New User</button>
   <button class="btn btn-warning" (click)="swicther(3)">Create Login/Pwd to Transport</button>
   <button class="btn btn-danger" (click)="swicther(2)">Link Transport to Users</button>
   <button class="btn btn-danger" (click)="swicther(1)">Link Truck to Transport</button>
@@ -89,12 +90,6 @@
 
   <div class="row">
     <div class="col-sm-4">
-      <input type="text" [(ngModel)]="dname" class="form-control" placeholder="Display Name">
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-sm-4">
       <input type="text" [(ngModel)]="username" class="form-control" placeholder="Username">
     </div>
   </div>
@@ -118,6 +113,37 @@
   <div class="row">
     <div class="col-sm-4">
       <button class="btn btn-warning" (click)="register()">Create</button>
+    </div>
+  </div>
+ 
+</div>
+
+<div class="well" *ngIf="switchTab===6">
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="dname" class="form-control" placeholder="Display Name">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+      <input type="text" [(ngModel)]="username" class="form-control" placeholder="Username">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+     <input type="text" [(ngModel)]="password" class="form-control" placeholder="Password">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-4">
+     <input type="number" [(ngModel)]="contact" class="form-control" placeholder="9766707061">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <button class="btn btn-warning" (click)="register6()">Create</button>
     </div>
   </div>
  

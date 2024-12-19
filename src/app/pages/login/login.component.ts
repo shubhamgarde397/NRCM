@@ -81,8 +81,11 @@ export class LoginComponent implements OnInit {
         ('commoninformation', 1, value, true)
         .subscribe((res: any) => {
           if(res['Login']){
+            console.log('hi');
+            
             this.security.setDisplayname(res['Data'][0]['displayName']);
             this.security.setSequence(res['Data'][1]);
+            this.security.setData0(res['Data'][0])
             this.security.setNotifications(res['Data1'][7]['notificstions']);
             this.security.setUserid(res['Data'][0]['_id']);
             this.security.setUserName(res['Data'][0]['name']);
