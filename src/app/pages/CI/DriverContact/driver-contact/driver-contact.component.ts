@@ -27,12 +27,12 @@ export class DriverContactComponent implements OnInit {
   public tols=[
     {value:'Pipe',viewValue:'Pipe_Urse'},
     {value:'Fittings',viewValue:'Fittings'},
-    {value:'Ratnagiri',viewValue:'Pipe_Ratnagiri'},
-    {value:'Other',viewValue:'Other'},
+    {value:'Ratnagiri',viewValue:'Pipe_Ratnagiri'}
   ]
 
 public tols2=[]
 public submitButton=false;
+public tons=[]
 public submission=[];
 public commonArray;
 public parties=[]
@@ -90,21 +90,36 @@ public pmts=[]
       this.parties = this.commonArray.gstdetails;
       this.villages = this.commonArray.villagenames;
     }
+
+    checkTON(index){     
+      if((<HTMLInputElement>document.getElementById('tol_' + index)).value==='Fittings')
+        {
+          this.turnbooklist1[index].tons=['0','6','SXL-32','MXL-32']
+        }
+        else
+        {
+          this.turnbooklist1[index].tons=['0','8','10','T'];
+        }
+    }
   
     setParty(index){
       let data=(<HTMLInputElement>document.getElementById('pt_' + index)).value;
       switch (data) {
         case 'NRCM':
           this.turnbooklist1[index].parties2=this.parties.filter(r=>{return r.partyType=='NRCM'});
+          this.turnbooklist1[index]['qrs'].push({qr:(<HTMLInputElement>document.getElementById('qrsetter')).value});
           this.turnbooklist1[index]['otherbuttons']=true;
+          this.turnbooklist1[index].tons=['0','8','10','T'];
           break;
           case 'NR':
             this.turnbooklist1[index].parties2=this.parties.filter(r=>{return r.partyType=='NR'})
             this.turnbooklist1[index]['otherbuttons']=false;
+            this.turnbooklist1[index]['qrs']=[];
           break;
           case 'SNL':
             this.turnbooklist1[index].parties2=this.parties.filter(r=>{return r.partyType=='SNL'})
             this.turnbooklist1[index]['otherbuttons']=false;
+            this.turnbooklist1[index]['qrs']=[];
           break;
       
         
@@ -117,11 +132,12 @@ public pmts=[]
       case 'r':
         let temp={
           loadingDate:(<HTMLInputElement>document.getElementById('datesetter')).value,
-          contacts:[],
+          contacts:[{co:''}],
           qrs:[],
           lul:'lock',
           parties2:[],
-          tol:''
+          tol:'',
+          tons:[]
         }
         this.turnbooklist1.push(temp);
         this.submission.push(0);
@@ -154,7 +170,8 @@ public pmts=[]
       let q = this.turnbooklist1[index]['qrs'];
       let pac=12;
       let tol = (<HTMLInputElement>document.getElementById('tol_' + index)).value;
-      let r = this.handleF.checkme([date,tno,pn,p1,c,q,tol],['string','string','string','string','object','object','string'],[]);
+      let weight=(<HTMLInputElement>document.getElementById('weight_' + index)).value;
+      let r = this.handleF.checkme([date,tno,pn,p1,c,q,tol,weight],['string','string','string','string','object','object','string','string'],[]);
 
       return r.every((value)=>{return value>0})
     }
@@ -245,6 +262,7 @@ alert('Incomplete Fields! Cannot Lock!')
       let p1 = (<HTMLInputElement>document.getElementById('p1_' + i)).value;
       let p2 = (<HTMLInputElement>document.getElementById('p2_' + i)).value;
       let tol = pt==='NRCM'?(<HTMLInputElement>document.getElementById('tol_' + i)).value:'Other';
+      let weight = pt==='NRCM'?(<HTMLInputElement>document.getElementById('weight_' + i)).value:0;
       let pac = pn==='NRCM'?12:(pn==='NR'?363:65)
       let tb = pn==='NRCM'?2950:0;
       for(let j=0;j<this.turnbooklist1[i]['contacts'].length;j++){
@@ -262,6 +280,7 @@ alert('Incomplete Fields! Cannot Lock!')
         'p1' :p1,
         'p2' :p2==='Default'?'':p2,
         'tol' :tol==='Ratnagiri'?'Pipe':tol,
+        'weight':weight,
         'c':c,
         'q':q,
         'tb':tb,

@@ -644,16 +644,11 @@ this.placeid=this.tempDate[0]['place']['_id']
   change(data) {
     let tempData = {}
    
-    if(data.value.weight==='0'||data.value.lrno===0||data.value.typeOfLoad===''){alert('Missing Entries!')}
+    if(data.value.lrno===0){alert('Missing Entries!')}
     else{
     tempData['rc'] = this.tempDate[0].truckno.slice(0,2);
     tempData['lrno'] = data.value.lrno===0?parseInt(this.tempDate[0]['lrno']):parseInt(data.value.lrno);
     tempData['partyType']=this.buttonOptionPartyType;
-    tempData['typeOfLoad'] = data.value.typeOfLoad===''?this.tempDate[0]['typeOfLoad']:data.value.typeOfLoad;
-    tempData['weight'] = data.value.weight;
-    tempData['partyid'] = data.value.partyid===''?this.tempDate[0].party['_id']:data.value.partyid;
-    tempData['placeid'] = data.value.placeid===''?this.tempDate[0].place['_id']:data.value.placeid;
-    tempData['placeid2'] = data.value.placeid2===''?this.tempPlaceid:data.value.placeid2;
     tempData['_id'] = this.toSendid;
     tempData['tablename'] = 'turnbook'
     tempData['method'] = 'updateSeries1'
@@ -667,15 +662,10 @@ this.placeid=this.tempDate[0]['place']['_id']
         this.turnbooklistnew = newData;
         
         this.myFormGroup1.patchValue({loadingDateDynamic: '' })
-        this.myFormGroup1.patchValue({typeOfLoad:'' })
         this.myFormGroup1.patchValue({turnbookDate: '' })
         this.myFormGroup1.patchValue({truckno: '' })
         this.myFormGroup1.patchValue({loadingDate: '' })
         this.myFormGroup1.patchValue({lrno: 0 })
-        this.myFormGroup1.patchValue({partyid:'' })
-        this.myFormGroup1.patchValue({placeid:'' })
-        this.myFormGroup1.patchValue({placeid2:'' })
-        this.myFormGroup1.patchValue({weight:0 })
 
         this.showbuttonOption82 = false;
         this.showbuttonOption821 = false;
