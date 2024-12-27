@@ -187,6 +187,10 @@ public dueMDate;
 // if data is true it means no dues, if data is false it means dues are there
   }
 
+  latemarker(ld,pd){
+    return Math.floor(Math.abs(new Date(pd).valueOf()-new Date(ld).valueOf())/(1000*60*60*24))>30?'Late':'';
+  }
+
   getDues(){
     this.balanceDate.forEach(r=>{
       r.truckData.forEach(s=>{
@@ -661,6 +665,7 @@ if(confirm('Do you want to temporary delete it?')){
           doc.text(this.balanceDate[z].truckData[k].remark, 50, i);//truckno
         
         doc.setFontSize('8');
+        doc.text(String(this.latemarker(this.balanceDate[z].truckData[k].date,this.selectedDate)), 50, i);//comments
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails+'-'+String(this.billno(this.balanceDate[z].truckData[k].billno)):'', 107, i);//truckno
         doc.text(this.balanceDate[z].truckData[k].Prd, 142, i);//truckno

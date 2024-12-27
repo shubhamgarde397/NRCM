@@ -98,7 +98,7 @@ public pmts=[]
         }
         else
         {
-          this.turnbooklist1[index].tons=['0','8','10','T'];
+          this.turnbooklist1[index].tons=['0','7','8','10','T'];
         }
     }
   
@@ -109,7 +109,7 @@ public pmts=[]
           this.turnbooklist1[index].parties2=this.parties.filter(r=>{return r.partyType=='NRCM'});
           this.turnbooklist1[index]['qrs'].push({qr:(<HTMLInputElement>document.getElementById('qrsetter')).value});
           this.turnbooklist1[index]['otherbuttons']=true;
-          this.turnbooklist1[index].tons=['0','8','10','T'];
+          this.turnbooklist1[index].tons=['0','7','8','10','T'];
           break;
           case 'NR':
             this.turnbooklist1[index].parties2=this.parties.filter(r=>{return r.partyType=='NR'})

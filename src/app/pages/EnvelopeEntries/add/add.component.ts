@@ -23,7 +23,6 @@ public todayDate;
 public data='';
 public attachToListA=[];
 
-public tableData4=[]
 public contactOA=''
 public trucknodata='';
 public tableDataTF4=false;
@@ -55,9 +54,6 @@ public nrcmid=0;
     this.todayDate=this.handleF.createDate(new Date());
     this.myFormGroup = this.formBuilder.group({
       tptName:'',
-      name: '',
-      pan:'',
-      P:false,
       contact:[],
       addr1:'',
       addr2:'',
@@ -107,19 +103,6 @@ switch(data){
 }
   }
 
-  getsingleTrucks(){
-    let tempObj = {}
-    tempObj['tablename'] = 'ownerdetails'
-    tempObj['method'] = 'displayEditTruckB'
-    tempObj['truckno'] = this.trucknodata;
-
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        this.tableData4=res.Data;
-        this.tableDataTF4=true;
-      });
-  }
-
   getalltransports(){
     let tempObj={}
     tempObj['method']='gettpts'
@@ -131,27 +114,6 @@ switch(data){
       this.alltransports=res.Data;
       this.tableDataTF=true;
     });
-  }
-
-
-  newData() {
-    if (this.data === '' || this.data === null || this.data === undefined) {
-      this.tableData = [];
-      this.tableData = this.alltransports;
-    }
-    else {
-      let tempList = this.alltransports;
-      this.tableData = this.alltransports;
-      this.tableData = [];
-      let tempData = [];
-      tempList.filter((res, index) => {
-        if (res['tptName'].includes(this.data)) {
-          tempData.push(res);
-        }
-      })
-      this.tableData = [];
-      this.tableData = tempData;
-    }
   }
 
   attachToList(i,j){
@@ -203,25 +165,6 @@ for(let i=0;i<this.attachToListA.length;i++){
   
 }
 
-attachToOwner3(i,j){
-  
-
-  let temp={}
-  temp['method']='attachTrucksDetails'
-  temp['tablename']='';
-  temp['contact']=i['contact']
-  temp['nativeplaces']=i['nativeplaces']
-  temp['_id']=i['_id']
-
-    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      
-
-    });
-
-  
-}
 
 // tn31bb9574
 
@@ -229,10 +172,6 @@ attachToOwner3(i,j){
 addMoreT(j) {
   this.tableData[j]['trucks2'].push((<HTMLInputElement>document.getElementById('truck_' + j)).value)
   this.truckOA = '';
-}
-addMoreO(j){
-  this.tableData4[j]['contact'].push(this.contactOA)
-  this.contactOA = '';
 }
 addMore() {
   this.contactArray.push(this.contactA)
@@ -271,17 +210,6 @@ addToDB(){
 deleteOOne( j,jj) {
   this.tableData[j]['trucks2'].splice(jj, 1);
 }
-
-  findvillagedetailsN(j){
-    this.tableData4[j]['nativeplaces'].push(this.nA)
-    this.nA=''
-  }
-
-  deleteOneN(j,jj) {
-    this.tableData4[j]['nativeplaces'].splice(jj, 1);
-  }
-
-
 
 }
 

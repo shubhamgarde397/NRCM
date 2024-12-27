@@ -813,6 +813,10 @@ public year;
       doc.setTextColor(234, 1, 0);
       doc.text(String(this.paymentData[i]['typeOfLoad']), 180, y)//type of load
       doc.setTextColor(0,0,0);
+      }else{
+        doc.setTextColor(234, 1, 0);
+      doc.text(String(this.paymentData[i]['typeOfLoad']), 180, y)//type of load
+      doc.setTextColor(0,0,0);
       }
        
       
@@ -836,7 +840,7 @@ public year;
       doc.text(String(balance), 172, bigValueofY)//partyname
       }
       if(data=='party'){
-       doc.text('Balance', 172, bigValueofY-5)//partyname
+      //  doc.text('Balance', 172, bigValueofY-5)//partyname
        doc.text(String(balance), 172, bigValueofY)//partyname
       }
     }else if(this.typeOfCols==='noamount'){

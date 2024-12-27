@@ -6,10 +6,6 @@
       <button class="btn btn-info" (click)="getWhichType('2')">Get All Transports</button>
   </div>
 
-<div class="col-sm-2">
-    <button class="btn btn-info" (click)="getWhichType('4')">Envelope Trucks</button>
-</div>
-
 </div>
 
 
@@ -27,29 +23,8 @@
         </div>
       </div>
       <!--TPT Name -->
-      
-      <!-- Name -->
-      <div class="form-group row">
-        <div class="col-xs-3">
-          Owner Name - <input type="text" id="name" class="form-control" formControlName="name" placeholder="Transport Owner">
-        </div>
-      </div>
-      <!-- Name -->
-      <!-- PAN -->
-          <div class="form-group row">
-            <div class="col-xs-3">
-              PAN - <input type="text" id="pan" class="form-control" formControlName="pan" placeholder="Transport PAN">
-            </div>
-          </div>
-          <!-- PAN -->
-              <!-- PAN -->
-              <div class="form-group row">
-                <div class="col-xs-1">
-                  Pan - <input type="checkbox" id="P" class="form-control" formControlName="P">
-                </div>
-              </div>
-              <!-- PAN -->
-          <!-- email -->
+
+         <!-- email -->
           <div class="form-group row">
             <div class="col-xs-3">
               Email - <input type="text" id="email" class="form-control" formControlName="email" placeholder="Transport Email">
@@ -183,69 +158,3 @@
     
     </div>
     </div>
-
-
-        <div *ngIf="whichType==='4'">
-            <div class="well">
-            <div>
-              <input type="text" [(ngModel)]="trucknodata" (click)="newData()">
-              <button class="btn btn-danger" (click)="getsingleTrucks()"><i class="material-icons" >send</i></button>
-
-              <table class="table" style="width:100%" align="center"  *ngIf="tableDataTF4">
-            
-                  <thead>
-                      <tr class="table-header">
-                          <th>Srno</th>
-                          <th>Truck No</th>
-                          <th>Contact</th>
-                          <th>Native Place</th>
-                          <th>Attach</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr *ngFor="let i of tableData4;let j = index">
-                          <td>{{j+1}}</td>
-                          <td>{{i.truckno}}</td>
-                          <td>
-                            <input type="text" id="contactO" class="form-control" [(ngModel)]="contactOA"
-                            [ngModelOptions]="{standalone: true}" placeholder="9876543211">
-                          <button type="button" class="btn btn-primary" (click)="addMoreO(j)">Add</button>
-
-
-                              <ul *ngFor="let ii of i.contact;let jj =index;">
-                                <li>{{ii}}</li>
-                              </ul>
-                          </td>
-                         
-                          <td>
-                              <ul *ngFor="let kk of i.nativeplaces;let jj=index;">
-                                  <li>{{kk}}</li>
-                              </ul>
-                          
-
-                            <select class="form-control" [(ngModel)]="nA" [ngModelOptions]="{standalone: true}"  (change)="findvillagedetailsN(j)">
-                                <option disabled selected>Select Village</option>
-                                <option *ngFor="let ii of villagedetails;let jj=index;" value={{ii.village_name}}>{{ii.village_name}}
-                                </option>
-                              </select>
-                              <div class="col-xs-1" style="cursor: pointer; margin-top: 3vh;">
-                                <i class="material-icons" (click)="getWhichType('4')">autorenew</i>
-                              </div>
-                              
-                            
-                              <ul *ngFor="let i of nativeArrayName;let j =index;">
-                                <li>{{i}} <button type="button" mat-raised-button (click)="deleteOneN(j,jj)"
-                                    class="btn-danger btn-sm btn-just-icon">
-                                    <i class="material-icons">delete_forever</i>
-                                  </button></li>
-                              </ul>
-
-
-                          </td>
-                          <td><button class="btn btn-success" (click)="attachToOwner3(i,j)">Attach!</button></td>
-                         </tr>
-                  </tbody>
-              </table>
-            </div>
-            </div>
-            </div>
