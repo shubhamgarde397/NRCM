@@ -81,7 +81,38 @@ export class PmtMsgComponent implements OnInit {
    }
 
    call(){
-    window.open('tel://+91'+this.s[1]+'','_blank');
+    if(this.s[1].length===10){
+      window.open('tel://+91'+this.s[1]+'','_blank');
+    }else{
+      window.open('tel://+91'+this.htd(this.s[1])+'','_blank');
+    }
+    
+   }
+
+   htd(hexVal)
+   {
+       var len = hexVal.length;
+       var base = 1;
+       var dec_val = 0;
+   
+       for (var i = len - 1; i >= 0; i--) {
+           if (hexVal.charAt(i) >= '0'&& hexVal.charAt(i) <= '9') {
+               dec_val += (hexVal.charAt(i).charCodeAt(0) - 48) * base;
+               base = base * 62;
+           }
+           else if (hexVal.charAt(i) >= 'A'&& hexVal.charAt(i) <= 'Z') {
+               dec_val += (hexVal.charAt(i).charCodeAt(0) - 55) * base;
+               base = base * 62;
+           }
+           else if (hexVal.charAt(i) >= 'a'&& hexVal.charAt(i) <= 'z') {
+               dec_val += (hexVal.charAt(i).charCodeAt(0) - 61) * base;
+               base = base * 62;
+           }
+       }
+       return dec_val;
    }
  
  }
+
+
+

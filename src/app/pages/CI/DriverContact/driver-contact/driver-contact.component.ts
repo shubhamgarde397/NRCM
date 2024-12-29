@@ -263,8 +263,8 @@ alert('Incomplete Fields! Cannot Lock!')
       let p2 = (<HTMLInputElement>document.getElementById('p2_' + i)).value;
       let tol = pt==='NRCM'?(<HTMLInputElement>document.getElementById('tol_' + i)).value:'Other';
       let weight = pt==='NRCM'?(<HTMLInputElement>document.getElementById('weight_' + i)).value:0;
-      let pac = pn==='NRCM'?12:(pn==='NR'?363:65)
-      let tb = pn==='NRCM'?2950:0;
+      let pac = pt==='NRCM'?12:(pt==='NR'?363:65)
+      let tb = pt==='NRCM'?2950:0;
       for(let j=0;j<this.turnbooklist1[i]['contacts'].length;j++){
         c.push((<HTMLInputElement>document.getElementById('co_' + i+j)).value)
       }
