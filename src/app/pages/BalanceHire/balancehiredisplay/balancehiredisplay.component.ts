@@ -16,6 +16,7 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 })
 export class BalancehiredisplayComponent implements OnInit {
   public show = false;
+  public accUpdater={'truckno':''};
   public found;
   public date = new Date();
   public balanceDate = [];
@@ -116,6 +117,9 @@ public nrcmid=0;
 public adminA=false;
 public dueMAmt;
 public dueMDate;
+public accName;
+public accNo:any;
+public ifsc;
 
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
@@ -139,6 +143,92 @@ public dueMDate;
 
   adminAccess() {
     this.admin = !this.admin;
+  }
+
+  updateACC(i,j){
+    this.bigI=j;
+    this.accUpdater=i.truckData[0].truckno;
+  }
+
+  storeAcc(){
+    this.bigI;
+    if(
+      (this.accName==='') 
+      ||
+      (this.accNo==='') 
+      ||
+      (this.ifsc==='') ){
+      alert('Fields Cannot be empty')
+    }
+    
+    else{
+    let tempObj={
+      'ownerid':this.balanceDate[this.bigI]['truckData'][0]['ownerid'],
+      'name':this.accName,
+      'no':this.accNo,
+      'ifsc':this.ifsc,
+      'tablename':'',
+      'method':'updateSimpleAccNo'
+    }
+
+    this.apiCallservice.handleData_New_python
+    ('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this.balanceDate[this.bigI]['accounts'].push({
+        "accountName": this.accName,
+        "accountNumber":this.accNo,
+        "ifsc":this.ifsc
+    })
+    });
+  }
+  }
+
+  checkAccounts(){
+    let breaker=false;
+    for(let i=0;i<this.balanceDate.length;i++){
+      let acc=parseInt((<HTMLInputElement>document.getElementById('name_' + i)).value);
+      console.log(acc);
+      
+      if(acc<=0){
+        breaker=true;
+        break;
+      }
+    }
+    if(!breaker){
+      alert('Updating')
+    }
+    else{
+      this.setBalPage();
+    }
+  }
+
+  setBalPage() {
+    let arr=[];
+    for (let i = 0; i < this.balanceDate.length; i++) {
+      let a = parseInt((<HTMLInputElement>document.getElementById('name_' + i)).value);
+      if(a===-1){}else{
+        let tempObj = {}
+        let arrofid=[];
+        for (let j = 0; j < this.balanceDate[i]['truckData'].length;j++){
+          arrofid.push(this.balanceDate[i]['truckData'][j]['billno'])
+        }
+        tempObj['billno']=arrofid;
+        tempObj['balAccid']=a;
+        arr.push(tempObj);
+    }
+    }
+    let temp={}
+     temp['method'] = 'updateBalanceAccounts';
+     temp['tablename'] = 'BalanceHire';
+     temp['Data']=arr;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
+  .subscribe((res: any) => {
+    alert(res.Status);
+    
+  });
+    
+
   }
 
   find = function () {
@@ -252,56 +342,6 @@ let duesdate=this.balanceDate[a[0]]['truckData'][a[1]]['dues'][a[2]]['date']
     data.forEach(r=>{r['available']=r['acc'+String(r.parentAccNo)]?'':'X'})
       return data
     }
-  find2(data, type, set = true) {
-    if (set) {
-      switch (type) {
-        case 'year':
-          this.createdDate = this.createdDate + data;
-          this.yeardiv = false;
-          this.monthdiv = true;
-          break;
-        case 'month':
-
-          this.createdDate = this.createdDate + '-' + this.handleF.generate2DigitNumber(String(data['number']));
-          this.monthdiv = false;
-          this.daydiv = true;
-          break;
-        case 'day':
-          this.createdDate = this.createdDate + '-' + data['_id'].slice(8);
-          this.daydiv = false;
-          this.printInfo = true;
-          break;
-      }
-    }
-    this.actualMonths = [];
-    let tempObj = {};
-    tempObj['method'] = 'BalanceHireDisplay';
-    tempObj['tablename'] = 'BalanceHire';
-    tempObj['createdDate'] = type === 'year' ? '^' + data + '.*' : type === 'month' ? this.createdDate : type === 'day' ? this.createdDate : null;
-    tempObj['type'] = type;
-    this.apiCallservice.handleData_New_python
-      ('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        if (type === 'year') {
-          res.balanceData.forEach((res) => {
-            let temp = {}
-            temp['name'] = res['name'];
-            temp['number'] = res['_id'];
-            temp['count'] = res['data']
-            temp['print'] = res['print']
-            this.actualMonths.push(temp)
-          });
-        }
-        else if (type === 'month') {
-          this.dayData = res.balanceData;
-        }
-        else {
-          this.balanceDate = res.balanceData;
-        }
-        this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
-        this.selectedDate=this.createdDate;
-      })
-  }
 
   deleteBH(data) {
     if (confirm('Are you sure?')) {
@@ -751,33 +791,6 @@ if(confirm('Do you want to temporary delete it?')){
     }
     else if(no>=6){
       return no-5+this.ls(no-1);
-    }
-  }
-  back(type) {
-    switch (type) {
-      case 'year':
-        this.yeardiv = true;
-        this.monthdiv = false;
-        this.daydiv = false;
-        this.printInfo = false;
-        this.createdDate = "";
-        break;
-      case 'month':
-        this.yeardiv = false;
-        this.monthdiv = true;
-        this.daydiv = false;
-        this.printInfo = false;
-        this.createdDate = this.createdDate.slice(0, 4);
-        this.find2(this.createdDate, 'year', false)
-        break;
-      case 'day':
-        this.yeardiv = false;
-        this.monthdiv = false;
-        this.daydiv = true;
-        this.printInfo = false;
-        this.createdDate = this.createdDate.slice(0, 7);
-        this.find2(this.createdDate, 'month', false)
-        break;
     }
   }
 

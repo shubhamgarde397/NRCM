@@ -67,10 +67,10 @@ export class PmtMsgComponent implements OnInit {
               });
             break;
     
-        //  case 'c': 
+         case 'test': 
         
-        //    window.open('tel://+91'+this.s[1]+'','_blank');
-        //    break;
+         window.open('tel://+91'+this.htd(this.s[1])+'','_blank');
+           break;
       }
        
 

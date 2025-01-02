@@ -20,7 +20,7 @@ width: 100%;;
 .fontbody{
     font-family: monospace;
 }
-ul
+/* ul
 {
     position: fixed;
     top:50%;
@@ -47,7 +47,7 @@ ul li a{
     margin:4px 0;
     border-radius: 15px;
     padding-left:15px;
-}
+} */
 
 
 

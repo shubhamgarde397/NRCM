@@ -15,7 +15,8 @@ import { Consts } from '../../common/constants/const';
   providers: [ApiCallsService]
 })
 export class MainPageComponent implements OnInit {
-  public data=[]
+ 
+
   public showPochData=false;
   public admin=false;
 
@@ -44,13 +45,15 @@ export class MainPageComponent implements OnInit {
   public finalJson = {};
   public pythonVar = '';
   public document = new jsPDF();
-public balanceDate:any;
+
+
+
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
     public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
     localStorage.clear();
     }
 
-
+    
 
     dateSetter() {
       if (this.dateFromUI === undefined || this.dateFromUI === '') {
@@ -58,7 +61,7 @@ public balanceDate:any;
       }
       return this.dateFromUI.slice(8, 11) + '-' + this.dateFromUI.slice(5, 7) + '-' + this.dateFromUI.slice(0, 4)
     }
-    
+  
  
 
   login(data) {

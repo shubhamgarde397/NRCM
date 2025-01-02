@@ -45,7 +45,9 @@
             <th>Comments</th>
             <th>Date</th>
             <th>Truckno</th>
-            <th>AccountNo-IFSC</th>
+            <th>Adv Acc</th>
+            <th>Account</th>
+            <th>Other</th>
             <th *ngIf="admin">Delete Admin</th>
             <th *ngIf="admin">Edit Admin</th>
           </tr>
@@ -55,7 +57,7 @@
         <tbody>
           <tr *ngFor="let i of balanceDate;let j = index"
             [ngStyle]="{'color': i.comments==='cancel' ? 'red' : 'wheat' }">
-            <td (click)="tempDelete(j)">{{j+1}}</td>
+            <td>{{j+1}}</td>
             <td>
               <ul *ngFor="let k of i.truckData">
                 <li>{{k.pochAmount}}+{{k.return_hamali}}={{k.total}}</li>
@@ -86,8 +88,20 @@
               </ul>
             </td>
 
+            <td>
+              {{i.tdoa.accountName}}<br>{{i.tdoa.accountNumber}}-{{i.tdoa.ifsc}}
+            </td>
             
-            <td>{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
+            
+            <td>
+              <button class="btn btn-warning" (click)='updateACC(i,j)' data-toggle="modal" data-target="#myModalDD1">Update</button>
+              <select class="form-control" id="name_{{j}}" style="background-color: black;color: wheat;">
+                <option disabled id="option_{{j}}" value="-1">Default</option>
+                <option value={{kki}} *ngFor="let kk of i.accounts;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
+              </select>
+            </td>
+              <td *ngIf="i.whattosshow===3">{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
+
             <td *ngIf="admin">
               <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
                 class="btn-danger btn-sm btn-just-icon">
@@ -105,9 +119,9 @@
         </tbody>
       </table>
     </div>
-    <div class="col-sm-3" *ngIf="daydiv">
-      <button class="btn btn-danger" style="width:100%" (click)="back('day')">Back</button>
-    </div>
+    <button mat-raised-button type="button" (click)="checkAccounts()" class="btn-success btn-sm btn-just-icon">
+      <i class="material-icons">check</i>
+    </button>
 </div>
 
 
@@ -142,6 +156,39 @@
       <div class="modal-footer">
         <button class="btn btn-warning" (click)="storeDue()">Store</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+<div class="modal fade" id="myModalDD1" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content" style="background-color: black;color: wheat;">
+      <div class="modal-header" style="background-color: black;color: wheat;">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Account Details for {{accUpdater}}</h4>
+      </div>
+      <div class="modal-body" style="background-color: black;color: wheat;">
+        <div class="row">
+          Account Name : <input type="text" class="form-control" [(ngModel)]="accName">
+        </div>
+
+        <div class="row">
+         Account Number : <input type="text" class="form-control" [(ngModel)]="accNo">
+        </div>
+
+        <div class="row">
+          IFSC : <input type="text" class="form-control" [(ngModel)]="ifsc">
+        </div>
+       
+      </div>
+
+      <div class="modal-footer" style="background-color: black;color: wheat;">
+        <button class="btn btn-warning" (click)="storeAcc()">Store</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
       </div>
     </div>
     
