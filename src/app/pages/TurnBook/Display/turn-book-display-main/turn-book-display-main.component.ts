@@ -66,9 +66,7 @@ public showbuttonOption821HA=true;
   public sum=0;
   public advanceArray=[];
   public displayoptionsarray=[
-    0,0,0,0,
-    0,0,0,0,
-    0,0,0,1
+    0,0,0,0,0
   ]
   public addis19=true;
   public tons=[];
@@ -195,15 +193,11 @@ public nrcmid;
     switch (this.nrcmid) {
       case 1:
         this.displayoptionsarray=[
-          1,1,1,1,
-          1,1,1,1,
-          1,1,1,1]
+          1,1,1,1,1]
         break;
         case 7:
           this.displayoptionsarray=[
-            1,0,0,0,
-            1,0,0,1,
-            1,0,0,1]
+            0,0,0,0,1]
         break;
     
       default:
@@ -269,7 +263,7 @@ public nrcmid;
       if(parseInt((<HTMLInputElement>document.getElementById('hamt_'+j)).value)!==0){
         obj['id']=this.turn18[j]['_id'];
         obj['amt']=parseInt((<HTMLInputElement>document.getElementById('hamt_'+j)).value)
-        obj['partyhamali']=parseInt((<HTMLInputElement>document.getElementById('partyhamali_'+j)).value)
+        obj['weight']=parseInt((<HTMLInputElement>document.getElementById('weight_'+j)).value)
         arr.push(obj)
         obj={};
       }
@@ -436,6 +430,7 @@ let tempObj = {};
         case '18':
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
+        tempObj['partyid']=this.partyVar18;
         break;
         case '13':
           tempObj['lrno']=this.bylrno;
