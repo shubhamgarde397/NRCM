@@ -35,8 +35,6 @@ export class PmtMsgComponent implements OnInit {
       let temp={}
       this.s=data['i'].split('_');
       this.ss=this.s[0]
-      console.log(this.s);
-      
       switch (this.s[0]) {
         case 'q':
           temp={

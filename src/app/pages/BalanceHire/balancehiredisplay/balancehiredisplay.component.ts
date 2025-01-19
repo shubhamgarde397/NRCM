@@ -188,8 +188,6 @@ public ifsc;
     let breaker=false;
     for(let i=0;i<this.balanceDate.length;i++){
       let acc=parseInt((<HTMLInputElement>document.getElementById('name_' + i)).value);
-      console.log(acc);
-      
       if(acc<=0){
         breaker=true;
         break;

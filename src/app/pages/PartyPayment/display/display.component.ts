@@ -301,9 +301,7 @@ public paymentData3=[];
     })
     return data;
   }
-  pdfJSONForParty(data, balanceFollow,todo) {
-    console.log(data);
-    
+  pdfJSONForParty(data, balanceFollow,todo) { 
     let val = 0
     if(todo=='addBalance'){
       for(let i=0;i<balanceFollow.length;i++){
@@ -862,8 +860,82 @@ public paymentData3=[];
      doc.line(171, starty, 171, bigValueofY-4);//balance
      doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
 
+     
+         
+      y=30;
+     starty = 20;
+      doc.addPage();
+      doc.setFontSize('20');
+  doc.setFontType('bold');
+
+  doc.setTextColor(234, 1, 0);
+  doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
+  doc.setFontSize('15');
+  doc.setTextColor(215, 6, 9);
+  doc.text(this.partyids[0]['name'], 60, 15)//partyname
+  doc.setFontSize('10');
+  doc.setTextColor(0, 0, 0);
+  doc.text('GST No. : '+this.partyids[0]['gst'], 60, 19)//partyname
+  doc.setFontSize('10');
+  doc.text('Details From Date : ', 165, 15)
+  doc.text(this.handleF.getDateddmmyy(this.fromloading)+' to '+this.handleF.getDateddmmyy(this.toloading), 165, 19)//date
+  doc.text(String(pager), 180, 5)//pageno
+  pager=pager+1;
+  doc.setFontSize('25');
+  doc.setLineWidth(0.5);
+  doc.line(0, 20, 210, 20);//line after main header
+  doc.line(20, 20, 20, 300);//punching area line
+  //headers
+  doc.setFontSize('20')
+  doc.text('Summary of loaded vehicles by Tonnage.',25,30)
+  let v=[];
+  let Countdata = this.counts(this.paymentData)
+  v=Object.values(Countdata)
+  let k=Object.keys(Countdata)
+  
+  v.push(v.splice(k.findIndex(r=>{return r==='6'}),1)[0])
+  v.push(this.paymentData.length)
+  k.splice(k.findIndex(r=>{return r==='6'}),1)[0]
+  k.push('Fittings','Total')
+  
+    doc.autoTable({
+      head: [['Tonnage'].concat(k)],
+      body: [['Count'].concat(v)],
+      style:[],
+      theme: 'grid',
+      startY: 40,
+      margin: {  left: 50 },
+      headStyles :{lineWidth: 1,fillColor: [215, 6, 9],textColor: [255,255,255],
+      },
+      tableWidth: 'wrap'
+  })
+  
+  
+  //headers
+
+  
+  
+
+
+
+
+
+
      doc.save(this.partyids[0]['name']+'_'+this.handleF.getDateddmmyy(this.fromloading)+'_'+this.handleF.getDateddmmyy(this.toloading)+ '.pdf')
    }
+
+   counts(a){
+    let arr={}
+    a.forEach(r=>{
+        if(r.weight in arr){
+            arr[r.weight]=arr[r.weight]+1
+        }
+        else{
+            arr[r.weight]=1
+        }
+    }); 
+    return arr;
+}
 
       fancy(data) {//threshhold is 295
          this.mailSendButton=true;

@@ -105,7 +105,6 @@ export class GstdisplayComponent implements OnInit {
   }
 
   showDatabyid = function (data) {
-    console.log(data);
     
     this.handledata.saveData(data);
     this.show = true;

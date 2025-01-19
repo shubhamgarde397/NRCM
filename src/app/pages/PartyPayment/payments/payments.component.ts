@@ -328,7 +328,6 @@ public year;
         tempObj['data']=i['date']+'_'+i['entryDate']+'_'+i['truckno']+'_'+i['data'].split('_')[3]+'_'+i['rent']+'_'+i['hamt']
             this.pendingTrucks.splice(i['index'],0,tempObj); 
             this.youcanaddinarray=this.updateTruck['paymentof']-this.amtFromArray();
-            console.log(tempObj);
 let tempo={
   tbid:i['data'].split('_')[3],
   paymentid:i['id'],
@@ -366,7 +365,6 @@ let tempo={
         tempObj['data']=i['date']+'_'+i['entryDate']+'_'+i['truckno']+'_'+i['data'].split('_')[3]+'_'+i['rent']+'_'+i['hamt']
             this.pendingTrucks.splice(i['index'],0,tempObj); 
             this.youcanaddinarray=this.updateTruck['paymentof']-this.amtFromArray();
-            console.log(tempObj);
 let tempo={
   tbid:i['data'].split('_')[3],
   paymentid:i['id'],

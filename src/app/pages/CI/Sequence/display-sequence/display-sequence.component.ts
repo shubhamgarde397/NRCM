@@ -41,12 +41,7 @@ export class DisplaySequenceComponent implements OnInit {
   }
 
   addtonrcmids(j){
-    console.log(this.usersArray);
-    console.log(j);
-    
     this.nrcmids.push(this.usersArray[this.myFormGroup.value.nrcmid]);
-    // console.log(this.nrcmids);
-    
   }
 
   delete(j){
@@ -194,9 +189,7 @@ this.nrcmids.splice(j,1);
       tempPS['isParent']=(<HTMLInputElement>document.getElementById('isParent_'+i)).checked
       tempPS['hasChildren']=(<HTMLInputElement>document.getElementById('hasChildren_'+i)).checked
       tempPS['nochildren']=parseInt((<HTMLInputElement>document.getElementById('children_'+i)).value);
-      console.log(tempPS);
       
-      let carr=[]
       for(let j=0;j<this.sacha[i]['children'].length;j++){
         let tempCS={}
         tempCS['name']=(<HTMLInputElement>document.getElementById('name_'+i+'_'+j)).value
@@ -204,10 +197,6 @@ this.nrcmids.splice(j,1);
         tempCS['childid']=this.sacha[i]['children'][j]['childid'];
         tempCS['nrcmids']=this.sacha[i]['children'][j]['nrcmids'];
         tempCS['position']=(<HTMLInputElement>document.getElementById('position_'+i+'_'+j)).value
-        console.log(tempCS);
-        console.log(i);
-        console.log(j);
-        console.log('isParent'+i+'_'+j);
         
         
         
@@ -219,7 +208,6 @@ this.nrcmids.splice(j,1);
       newsacha.push(tempPS);
     }
 
-    console.log(newsacha);
     let temp={
       Data:newsacha,
       method:'updatesequencesacha',

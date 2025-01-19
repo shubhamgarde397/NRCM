@@ -42,19 +42,12 @@ export class UpdateSingleComponent implements OnInit {
     this.commonArray = this.sec.commonArray;
     this.truckdetailslist = this.commonArray.ownerdetails;
     this.truckArray = this.handledata.Data.truckData;  
-    console.log(this.truckArray);
-    
     this.truckArray2=this.handledata.giveBHData()
   };
 
   submit(){
     let remark=(<HTMLInputElement>document.getElementById('remark'+this.index)).value;
     let amount=(<HTMLInputElement>document.getElementById('amount'+this.index)).value;
-
-    console.log(this.truckArray);
-    console.log(this.index);
-      console.log(this.oldIndex);
-
     let tempObj={}
     tempObj['method']='BalanceHireSingleUpdateNew';
     tempObj['tablename']='BalanceHire';

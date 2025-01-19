@@ -119,8 +119,6 @@ alert('Selected!')
     this.balanceHireArrray.push(this.tempArray);
     this.tempArray = []
     this.turnbooklist = this.reduceArray();
-    console.log(this.balanceHireArrray);
-    
   }
 
   moveToFinalStep() {

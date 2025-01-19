@@ -83,9 +83,6 @@ public dueMDate;
 
   dueChange(){
     let a=this.dueChangeValue.split('_')
-    console.log(a);
-    console.log(this.turn);
-    
     this.addDueDetailsTF=true;
     this.dueInfo=this.turn[a[0]]['dues'][a[1]]
     this.dueInfoPending=this.turn[a[0]]['dues'][a[1]]['pending']
@@ -97,7 +94,6 @@ public dueMDate;
               return t.truckno===r.truckno 
           })
   })
-  console.log(this.turn)
   }
 
   toModal(index){
@@ -124,11 +120,9 @@ public dueMDate;
   this.calcTotalRent(this.bigI);
   }
   addToArrayAdv(){
-    console.log(this.bigI);
     
     let temp={'amount':this.advamt,'date':this.advdate};
   this.turn[this.bigI]['advanceArray'].push(temp);
-  console.log(this.turn[this.bigI]);
   
   this.calcTent(this.bigI);//work on this
   }
@@ -198,8 +192,6 @@ storeDue(){
   else if(this.dueMAmt===0){alert('Due amount cant be 0.')}
   else if(this.dueMAmt<=this.dueInfoPending){
   let a=this.dueChangeValue.split('_')
-  console.log(this.turn);
-  console.log(a);
 let tbid=this.turn[a[0]]['_id']
 let oid=this.turn[a[0]]['ownerid']
 let duesid=this.turn[a[0]]['dues'][a[1]]['_id']

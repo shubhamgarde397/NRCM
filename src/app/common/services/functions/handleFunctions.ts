@@ -13,8 +13,6 @@ export class handleFunction {
     public monthtoReturn;
 
     checkme(array,tocheckfor,r){
-        console.log(array);
-        
         for(let i=0;i<array.length;i++){
             r.push(this.confirmer(array[i],tocheckfor[i]))
         }

@@ -165,7 +165,6 @@ export class TurnBookUpdateComponent implements OnInit {
   }
 
   change(data){
-    console.log(data);
     let tempObj1={};
     tempObj1['tablename'] = ''
     tempObj1['methoddisplay']=this.methoddisplay
@@ -195,20 +194,6 @@ export class TurnBookUpdateComponent implements OnInit {
         this.mainTable2=false;
       });
   }
-  getDoubtsOD() {
-    let tempObj1 = {};
-    tempObj1['tablename'] = ''
-    tempObj1['method'] = 'getDoubtsfromOD'
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
-      .subscribe((res: any) => {
-        this.data = res.Data;
-        this.mainTable=false;
-        this.mainTable2=true;
-      });
-  }
-  findOption() {
-
-  }
   findData(){
     this.showButton = true;
     this.buttonOption = this.displayType;
@@ -232,81 +217,5 @@ export class TurnBookUpdateComponent implements OnInit {
         this.commonArray = this.securityCheck.commonArray;
         this.places = this.commonArray.villagenames;
     }
-  updatetruckformat(){
-    let tempo=[]
-    for(let i=0;i<this.showData.length;i++){
-      let dataaa=(<HTMLInputElement>document.getElementById(this.caller+'_' + i)).value;
-      this.showData[i]['N']=dataaa;
-      if(this.displayType==='1'){
-        this.showData[i]['U']=dataaa==''?false:true;
-      }
-      else{
-        this.showData[i]['U']=dataaa=='Select'?false:true;
-      }
-      delete(this.showData[i]['check'])
-      delete(this.showData[i]['datetruck'])
-      delete(this.showData[i]['loadingDate'])
-      delete(this.showData[i]['lrno'])
-      delete(this.showData[i]['party'])
-      delete(this.showData[i]['place1'])
-      delete(this.showData[i]['turnbookDate'])
-      delete(this.showData[i]['partyType'])
-      delete(this.showData[i]['typeOfLoad'])
-      }
-      let tempobj={
-        'method':'updateAnilsWork',
-        'tablename':'',
-        'newData':this.showData,
-        'displayType':String(parseInt(this.displayType)-1),
-        'caller':this.caller
-      }
-      this.mainTable=false;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
-      .subscribe((res: any) => {
-            alert(res.Status)
-
-      });
-
-  }
-  updateAllOKAY(){
-    let tempo=[]
-    for(let i=0;i<this.showData.length;i++){
-      tempo.push(this.showData[i]['_id'])
-      }
-      let tempobj={
-        'method':'updateAnilsWorkAll',
-        'tablename':'',
-        'newData':tempo,
-        'displayType':String(parseInt(this.displayType)-1),
-        'caller':this.caller
-      }
-      this.mainTable=false;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
-      .subscribe((res: any) => {
-            alert(res.Status)
-
-      });
-
-  }
-  updatetruckformat1(){
-    for(let i=0;i<this.data.length;i++){
-      let dataaa=(<HTMLInputElement>document.getElementById(this.caller+'_' + i)).value;
-      this.data[i]['N']=dataaa;
-        this.data[i]['U']=dataaa==''?false:true;
-      delete(this.data[i]['truckno'])
-      }
-      let tempobj={
-        'method':'updateAnilsWorkOD',
-        'tablename':'',
-        'newData':this.data
-      }
-      this.mainTable=false;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempobj, true)
-      .subscribe((res: any) => {
-            alert(res.Status)
-
-      });
-  }
- 
 
 }

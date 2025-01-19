@@ -34,8 +34,6 @@ export class ProfileComponent implements OnInit {
     } }
   ngOnInit() {
     
-    console.log(this.sec)
-
     this.myFormGroup = this.formBuilder.group({
       name: this.sec.data0['name'],
       password: this.sec.data0['password'],

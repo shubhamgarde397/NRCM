@@ -17,7 +17,6 @@ import 'jspdf-autotable';
 export class AccountDetailsDisplayComponent implements OnInit {
   // $BASIC $
   
-  public myFormGroup18: FormGroup;
   public options = [
     {'viewValue':'Pan','value':'2','disabled':false},//remove
     {'viewValue':'Contact','value':'3','disabled':false},
@@ -27,7 +26,6 @@ export class AccountDetailsDisplayComponent implements OnInit {
     {'viewValue':'My RC','value':'13','disabled':false},
     {'viewValue':'Count Partywise','value':'14','disabled':false},
     {'viewValue':'Count Loadwise','value':'15','disabled':false},
-    {'viewValue':'Update Truck Details','value':'18','disabled':false},
     {'viewValue':'Daily Account Details','value':'19','disabled':false},
   ]
   public displayType;
@@ -98,7 +96,6 @@ public truckformattable=false;
 // 
 public table14=false;
 public emptyData14=[];
-public gotData18=false;
 public table15=false;
 public emptyData15=[];
 public truckVar='';
@@ -181,31 +178,6 @@ public bname;
       });
   }
 
-
-  back(){
-    this.gotData18=!this.gotData18;
-  }
-  edit(i,j){
-    this.bigI=i;
-    this.index=j;
-    this.gotData18=!this.gotData18;
-
-    this.myFormGroup18 = this.formBuilder.group({
-      truckNo: i['truckno'],
-      pan:i['pan'],
-      name:i['oname'],
-      weight:i['weight'],
-      h:i['h'],
-      b:i['b'],
-      l:i['l'],
-      typeOfVehicle:i['typeOfVehicle'],
-      ifsc:'',
-      accountNumber:'',
-      accountName:''
-    });
-    this.accountArray=i.accountDetails;
-  }
-
   saveEdit(i,j){
     this.trucks=i;
     this.index=j;
@@ -256,70 +228,11 @@ public bname;
       });
   }
 
-  addaccount() {
-    if (
-      this.myFormGroup18.value.accountNumber === '' ||
-       this.myFormGroup18.value.accountName === '' ||
-       this.myFormGroup18.value.ifsc === '') { alert('Cant enter empt entries!') } else {
-      let tempObj = {};
-      tempObj['accountName'] = this.myFormGroup18.value.accountName;
-      tempObj['accountNumber'] = this.myFormGroup18.value.accountNumber;
-      tempObj['ifsc'] = this.myFormGroup18.value.ifsc;
-      tempObj['delete'] = true;
-      this.accountArray.push(tempObj);
-      this.myFormGroup18.patchValue({ accountName: '' });
-      this.myFormGroup18.patchValue({ accountNumber: '' });
-      this.myFormGroup18.patchValue({ ifsc: '' });
-    }
-
-  }
-
   deleteOneA(i, j) {
     if (confirm('Are you sure?')) {
       this.accountArray.splice(j, 1);0
     }
   }
-
-  getDimW(){
-    switch (this.myFormGroup18.value.typeOfVehicle) {
-      case 'Container':
-        this.myFormGroup18.patchValue({'weight':6})
-        this.myFormGroup18.patchValue({'h':8})
-        this.myFormGroup18.patchValue({'b':8})
-        this.myFormGroup18.patchValue({'l':20})
-        break;
-    case 'Open':
-      this.myFormGroup18.patchValue({'weight':8})
-        this.myFormGroup18.patchValue({'h':7})
-        this.myFormGroup18.patchValue({'b':7})
-        this.myFormGroup18.patchValue({'l':20})
-        break;
-    }
-    
-  }
-
-  // find11UniqueTruck(){
-  //   if(this.trucknoid11!=='Default'){
-  //   this.turn11=this.turnbooklist.filter(r=>{return r.truckno==this.trucknoid11})[0]; 
-    
-  //   this.showButton=false;
-  //         this.myFormGroup18 = this.formBuilder.group({
-  //           truckNo: this.turn11['truckno'],
-  //           pan:this.turn11['pan'],
-  //           name:this.turn11['oname'],
-  //           weight:this.turn11['weight'],
-  //           h:this.turn11['h'],
-  //           b:this.turn11['b'],
-  //           l:this.turn11['l'],
-  //           typeOfVehicle:this.turn11['typeOfVehicle'],
-  //           ifsc:'',
-  //           accountNumber:'',
-  //           accountName:''
-  //         });
-  //         this.gotData18=true;
-
-  //   }
-  // }
 
   getRC(data){
 
@@ -332,40 +245,11 @@ public bname;
   }
 
   findOption() {
-    if(this.buttonOption=='18'){
-      this.showButton=false;
-    }
     this.showButton=true;
     let temp=this.options.filter(r=>{return r.value==this.displayType})[0]
     this.buttonOption = this.displayType;
     this.buttonValue = temp.viewValue;
 
-  }
-  change(data){
-    let temp={
-      'pan':data.value.pan,
-      'oname':data.value.name,
-      'h':data.value.h,
-      'b':data.value.b,
-      'l':data.value.l,
-      'weight':data.value.weight,
-      'typeOfVehicle':data.value.typeOfVehicle,
-      'accountDetails':this.accountArray,
-      'ownerid':this.bigI['ownerid'],
-      '_id':this.bigI['_id'],
-    }
-   
-    let tempObj={};
-    tempObj['data']=temp
-    tempObj['method']='allAnilUpdate'
-    tempObj['tablename']='';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj,true)
-    .subscribe((res: any) => {
-    alert(res.Status)
-    this.turnbooklist.splice(this.index,1)
-    this.gotData18=!this.gotData18;
-    });
-    
   }
 
   callOptionAPI(){
@@ -624,8 +508,6 @@ switch (this.buttonOption) {
     if(contacttb===''||contactqr===''){}
     else{
       let itempObj={}
-      // itempObj['contacttb']=contacttb;
-      // itempObj['contactqr']=contactqr;
       itempObj['contacto']=this.contacto;
       itempObj['_id']=this.contactarray[i]['_id'];
       itempObj['ownerid']=this.contactarray[i]['ownerid'];

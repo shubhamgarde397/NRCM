@@ -174,9 +174,7 @@ public seq=[];
   }}
 
   ngOnInit() {
-    this.tabs=this.securityCheck.seq
-    console.log(this.tabs);
-    
+    this.tabs=this.securityCheck.seq  
     this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.URL = window.location.href.split('/')[2];
     this.username = this.securityCheck.dname;

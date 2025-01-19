@@ -121,7 +121,6 @@ switch (data) {
 
     qr=qr+"%0A%0A*Nitin Roadways*%0A*Pune*%0A*Mo : 9766707061*%0A%0AOR%0AClick on below link to download pdf.%0Ahttp://www.nitinroadways.in/%23/PDF%3Fi%3D"+String(data.billno.split('_')[0]==='nrcm'?1:2)+parseInt(data.billno.split('_')[1]).toString(16)
     qr='https://wa.me/+91'+data.contactqr+'/?text='+qr
-    console.log(qr)
     return qr
 
   }

@@ -360,9 +360,7 @@ let buttons=[]
       case 2:
       this.myFormGroup1.patchValue({placeid2:this.myFormGroup1.value.placeid2})
       break;
-    }
-    console.log(this.myFormGroup1);
-    
+    }  
  }
 
   findtruck() {

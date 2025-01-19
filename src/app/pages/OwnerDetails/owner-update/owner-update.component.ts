@@ -91,7 +91,6 @@ public nativeArray=[]
     });
     
     this.contactArray = this.handledata.Data.contact;
-    this.contactOArray = this.handledata.Data.contactO;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
     this.nativeArray = this.handledata.Data.nativeplaces;
@@ -149,30 +148,19 @@ public nativeArray=[]
     formbody['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle:data.value.typeOfVehicle;
     formbody['aadhar'] = data.value.aadhar;
     formbody['contact'] = this.contactArray;
-    formbody['contactO'] = this.contactOArray;
     formbody['_id'] = this.handledata.Data._id;
     formbody['accountDetails'] = this.accountArray;
     formbody['preferences'] = this.preferenceArray;
-    formbody['nativeplaces'] = this.nativeArray;
     formbody['reference'] = this.handledata.Data.reference;
     formbody['method'] = 'updateOwner';
     formbody['tablename'] = 'ownerdetails';
-    formbody['r'] = data.value.r;
-    formbody['d'] = data.value.d;
-    formbody['P'] = data.value.P;
     formbody['h'] = data.value.h;
     formbody['b'] = data.value.b;
     formbody['l'] = data.value.l;
     formbody['weight'] = data.value.weight;
     formbody['transportid'] = this.selectedTransportid;
-    formbody['document'] = this.handledata.Data.document;
-    formbody['score'] = this.handledata.Data.score;
-    formbody['total'] = this.handledata.Data.total;
-    formbody['load'] = this.handledata.Data.load;
     formbody['update']=this.handledata.Data.update;
-    formbody['ticket']=this.handledata.Data.ticket;
-    formbody['regFee']=this.handledata.Data.regFee;
-    formbody['regFeeDate']=this.handledata.Data.regFeeDate;
+
 
     this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
       .subscribe((response: Response) => {
@@ -184,17 +172,11 @@ public nativeArray=[]
               res['oname'] = data.value.oname;
               res['pan'] = data.value.pan;
               res['typeOfVehicle'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle;
-              // res['typeOfVehiclefirst'] = data.value.typeOfVehicle===undefined?this.handledata.Data.typeOfVehicle[0]:data.value.typeOfVehicle[0];
               res['aadhar'] = data.value.aadhar;
               res['contact'] = this.contactArray;
-              res['contactO'] = this.contactOArray;
               res['accountDetails'] = this.accountArray;
               res['preferences'] = this.preferenceArray;
-              res['nativeplaces'] = this.nativeArray;
               res['reference'] = "";
-              res['r'] = data.value.r;
-              res['d'] = data.value.d;
-              res['P'] = data.value.P;
               res['h'] = data.value.h;
               res['b'] = data.value.b;
               res['l'] = data.value.l;

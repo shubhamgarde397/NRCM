@@ -55,8 +55,6 @@ public bname
     this.uitodayDate = this.handleF.getDate(this.handleF.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.nrcmid=this.securityCheck.nrcmid;
-    console.log(this.securityCheck.nrcmid);
-    
     // this.find();
   }
 
@@ -229,7 +227,6 @@ alert('Selected!')
 
   // accountCheckerF(){
   //   let breaker=false;
-  //   console.log(this.balanceHireArrray[0])
   //   for(let i=0;i<this.balanceHireArrray[0].length;i++){
   //     if(this.balanceHireArrray[0][i]['update']){
   //       breaker=true;

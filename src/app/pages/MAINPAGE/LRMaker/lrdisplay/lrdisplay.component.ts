@@ -170,9 +170,7 @@ saveDoc(i,j,data){
 }
 
   DownloadLR1() {
-    let temp=this.data[0];
-    console.log(temp);
-    
+    let temp=this.data[0]; 
     let om = Consts.om;
     let y=2
     let x=0
@@ -444,8 +442,6 @@ saveDoc(i,j,data){
 
   DownloadLR() {
     let temp=this.data[0];
-    console.log(temp);
-    
     let om = Consts.om;
     let y=2
     let x=0
@@ -476,8 +472,6 @@ saveDoc(i,j,data){
       'fromgstno':temp['fromgstno'],
       'lrshort':temp['lrshort']
   }
-  console.log(data);
-  
   // Box on the page
   doc.line(14,14,295,14)
   doc.line(14,14,14,208)
