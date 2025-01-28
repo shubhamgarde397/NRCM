@@ -216,9 +216,6 @@ public seq=[];
           case '6':
           this.latestLoadedTrucksFROD();
           break;
-          case '8':
-          this.rentslip();
-          break;
           case '9':
           this.logout();
           break;
@@ -307,77 +304,6 @@ switch (this.nrcmid) {
   }
 
   amount(data){
-  }
-  rentslip(){//threshhold is 295
-
-    var doc = new jsPDF()
-    doc.setFontType('bold');
-    doc.setFontSize('15');
-    doc.setLineWidth(0.5);
-    let yaxis=0
-    let xaxis=0
-    //headers
-   //  ṣtart side
- 
-
-    doc.line(70+yaxis, 0+xaxis, 70+yaxis, 300+xaxis);//mid line
-    doc.line(140+yaxis, 0+xaxis, 140+yaxis, 300+xaxis);//mid line
-    
-
-    doc.line(0, 75, 210, 75);//line after main header
-    doc.line(0, 150, 210, 150);//line after main header
-    doc.line(0, 225, 210, 225);//line after main header
-
-    let pluser=0;
-    for(let i=0;i<3;i++){
-      
-      let plusers=0;
-      for(let j=0;j<4;j++){
-        let adder=8;
-      doc.text('NITIN ROADWAYS',12+pluser,6+plusers)
-      doc.line(0+pluser, 8+plusers, 70+pluser, 8+plusers);//line after main header
-  
-      doc.text('Date',2+pluser,(adder*2)-1+plusers)
-      doc.text('___/___/2023',28+pluser,(adder*2)-2+plusers)
-      doc.line(0+pluser, (adder*2)+plusers, 70+pluser, (adder*2)+plusers);//line after main header
-  
-      doc.text('TruckNo',2+pluser,(adder*3)-1+plusers)
-      doc.line(0+pluser, (adder*3)+plusers, 70+pluser, (adder*3)+plusers);//line after main header
-  
-      doc.text('Party',2+pluser,(adder*4)-1+plusers)
-      doc.line(0+pluser, (adder*4)+plusers, 70+pluser, (adder*4)+plusers);//line after main header
-      
-      doc.text('Place',2+pluser,(adder*5)-1+plusers)
-      doc.line(0+pluser, (adder*5)+plusers, 70+pluser, (adder*5)+plusers);//line after main header
-      
-      doc.text('Rent',2+pluser,(adder*6)-1+plusers)
-      doc.line(0+pluser, (adder*6)+plusers, 70+pluser, (adder*6)+plusers);//line after main header
-      
-      doc.text('Extra',2+pluser,(adder*7)-1+plusers)
-      doc.line(0+pluser, (adder*7)+plusers, 70+pluser, (adder*7)+plusers);//line after main header
-      
-      doc.text('Total',2+pluser,(adder*8)-1+plusers)
-      doc.line(0+pluser, (adder*8)+plusers, 70+pluser, (adder*8)+plusers);//line after main header
-  
-      doc.line(25+pluser, 8+plusers, 25+pluser, 75+plusers);//line after main header
-      doc.line(48+pluser, (adder*8)+plusers, 48+pluser, (adder*8)+11+plusers);//line after main header
-      doc.text('Book',28+pluser,(adder*8)+8+plusers)
-      doc.text('PC',50+pluser,(adder*8)+8+plusers)
-      plusers=plusers+75
-      
-      }
-      pluser=pluser+70
-    }
-    
-    // 
-    // All Box
-    doc.line(0,0,210,0)
-    doc.line(210,0,210,297)
-    doc.line(0,0,0,297)
-    doc.line(0,297,210,297)
-
-    // 
-    doc.save('Rent.pdf')//partyname
   }
   getInformationData() {
     // this.spin.show();

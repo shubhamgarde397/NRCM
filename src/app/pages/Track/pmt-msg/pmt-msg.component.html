@@ -1,6 +1,7 @@
 <div class="container">
 
   <nav class="navbar navbar-inverse" style="position: fixed;width:100%;z-index:1;"> 
+
     <div class="container row" style="width: 100%;">
       <div class="col-sm-6">
       <div class="navbar-header">
@@ -11,7 +12,7 @@
     </div>
     </div>
 
-    <div class="container" *ngIf="sstab">
+    <div class="container row" style="width: 100%;" *ngIf="sstab">
       <h3>Name : {{data.displayName}}</h3>
       <ul>
         <li>I reside in {{data.city}}</li>
@@ -23,25 +24,36 @@
       </ul>
     </div>
 
-    <div class="container" *ngIf="ss==='q'">
+    <div class="container row" style="width: 100%;" *ngIf="ss==='q'">
       <h3>Please wait while we direct you to Whatsapp!</h3>
     </div>
     
-    <div class="container" *ngIf="ss==='c'">
+    <div class="container row" style="width: 100%;text-align: center;" *ngIf="ss==='c'">
       <button class="btn btn-warning" (click)="call()">Click to call the driver!</button>
 <br><br><br><br>
       We will redirect you to the phone page!
     </div>
-    
-    <br><br><br><br>
-    <!-- <div class="row" style="text-align: center"> -->
-      © 2025 NITIN ROADWAYS AND CARGO MOVERS<br>
-      Safe | Fast | Reliable | Punctual | 24*7 Avaliable
-    <!-- </div> -->
 
 
+
+    <div class="container row" style="width: 100%;text-align: center;" *ngIf="ss==='c'">
+      <br>
+      <!-- <marquee> -->
+        <h4>
+        20 Years of Excellence
+      </h4>
+      <!-- </marquee> -->
+    </div>
   </nav>
 
 
 
+</div>
+
+
+<div class="footer">
+  <p>NITIN ROADWAYS AND CARGO MOVERS<br>
+    Since 2004<br>
+    
+    Safe | Fast | Reliable | Punctual | 24*7 Avaliable</p>
 </div>
