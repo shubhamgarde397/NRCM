@@ -9,7 +9,6 @@
                 <th>Name</th>
                 <th>GST Number<br>Email</th>
                 <th>CustomerIds</th>
-                <th>Destination<br>Contact</th>
                 <th>Type</th>
                 <th>Address</th>
                 <th>Cities</th>
@@ -28,12 +27,9 @@
                 </td>
             <td>
                 <ul>
-                    <li *ngFor="let ii of i.flexids">{{ii.village}}->{{ii.flexid}}</li>
+                    <li *ngFor="let ii of i.flexids">{{ii.village}}->{{ii.flexid}}->{{ii.contact}}</li>
                 </ul>
             </td>
-                <td>{{i.dest}}<br>
-                    {{i.contact}}
-                </td>
                 <td>{{i.partyType}}-{{i.accNo}}</td>
                 <td>{{i.addr1}},{{i.addr2}}</td>
                 <td><ul *ngFor="let j of i.cities"><li>{{j}}</li></ul></td>

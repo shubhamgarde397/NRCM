@@ -1,6 +1,7 @@
 <div class="row">
   <button class="btn btn-warning" (click)="tabF(0)">Add</button>
   <button class="btn btn-warning" (click)="tabF(1)">Display</button>
+  <button class="btn btn-warning" (click)="tabF(2)">Ofc Location</button>
 </div>
 
 
@@ -134,6 +135,30 @@
       </td>
       <!-- <td><qrcode [scale]='1' (click)="qrCoder(i.qrcode)" [qrdata]=i.qrcode [width]="150" [errorCorrectionLevel]="'M'" ></qrcode></td> -->
       <td><button class="btn btn-warning" (click)="qrCoder(i.qrcode)">Send</button></td>
+      
+    </tr>
+  </table>
+
+</div>
+
+
+
+<div class="well" *ngIf="tab==2">
+  <button class="btn btn-danger" (click)="get3()">Get Data</button>
+  <button class="btn btn-danger" (click)="setTrue3()">Set All True</button>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Srno</th>
+      <th>Date</th>
+      <th>TruckNo-Contact</th>
+      <th>Code</th>
+    </tr>
+    <tr *ngFor="let i of pmts3;let j = index;">
+      <td>{{j+1}}</td>
+      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      <td>{{i.truckno}}<br>{{i.contacttb}}</td>
+      <td><button class="btn btn-warning" (click)="LocationSender(i)">Send</button></td>
       
     </tr>
   </table>

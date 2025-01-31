@@ -46,8 +46,6 @@ public selectedTransport;
 public selectedTransportid;
 public transportsArrayList=[];
 public selectedTransportNo;
-public nativeArrayName=[]
-public nativeArray=[]
   constructor(
     public router:Router,
     public handledata: HandleDataService,
@@ -93,7 +91,6 @@ public nativeArray=[]
     this.contactArray = this.handledata.Data.contact;
     this.accountArray = this.handledata.Data.accountDetails;
     this.preferenceArray = this.handledata.Data.preferences;
-    this.nativeArray = this.handledata.Data.nativeplaces;
     this.transportsArray = this.handledata.Data.transports;
     this.selectedTransport=this.transportsArray[0]['tptName'];
     this.selectedTransportid=this.transportsArray[0]['_id'];
@@ -243,20 +240,10 @@ public nativeArray=[]
 
   }
 
-  findvillagedetailsN(){
-    this.nativeArray.push(this.nA.split('+')[0])
-    this.nativeArrayName.push(this.nA.split('+')[1])
-    this.nA=''
-
-  }
 
   deleteOneP(i, j) {
     this.preferenceArray.splice(j, 1);
     this.preferenceArrayName.splice(j, 1);
-  }
-  deleteOneN(i, j) {
-    this.nativeArray.splice(j, 1);
-    this.nativeArrayName.splice(j, 1);
   }
 
 

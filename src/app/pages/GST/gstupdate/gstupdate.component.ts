@@ -20,6 +20,7 @@ export class GstupdateComponent implements OnInit {
   public villagenamelist: any;
   public show = false;
   public name: string;
+  public contactflex='';
   public gst: string;
   public dest: string;
   public myFormGroup: FormGroup;
@@ -85,7 +86,7 @@ export class GstupdateComponent implements OnInit {
 
 
   addFlex(){
-let temp={flexid:this.flexid,village:this.village}
+let temp={flexid:this.flexid,village:this.village,contact:this.contactflex}
     this.flexids.push(temp);
   }
 

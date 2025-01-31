@@ -99,7 +99,6 @@
                 <th>ContactO</th>
                 <th>Account Details</th>
                 <th *ngIf="nrcmid===1">Prefer</th>
-                    <th *ngIf="nrcmid===1">Native</th>   
                     <th>Options</th>
             </tr>
         </thead>
@@ -137,11 +136,6 @@
                 </td>
                 <td *ngIf="nrcmid===1">
                     <ul *ngFor="let j of i.preferences;">
-                        <li>{{j}}</li>
-                    </ul>
-                </td>
-                <td *ngIf="nrcmid===1">
-                    <ul *ngFor="let j of i.nativeplaces;">
                         <li>{{j}}</li>
                     </ul>
                 </td>
@@ -250,7 +244,6 @@
                         <th>ContactO</th>
                         <th>Account Details</th>
                         <th>Prefer</th>
-                        <th>Native</th>
                         <th>Options</th>
                     </tr>
                 </thead>
@@ -302,11 +295,6 @@
                         </td>
                         <td>
                             <ul *ngFor="let j of i.preferences;">
-                                <li>{{j}}</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <ul *ngFor="let j of i.nativeplaces;">
                                 <li>{{j}}</li>
                             </ul>
                         </td>
@@ -384,7 +372,6 @@
                     <th>ContactO</th>
                     <th >Account Details</th>
                     <th>Prefer</th>
-                    <th>Native</th>
                 </tr>
             </thead>
             <tbody>
@@ -422,11 +409,6 @@
                     </td>
                     <td>
                         <ul *ngFor="let j of i.preferences;">
-                            <li>{{j}}</li>
-                        </ul>
-                    </td>
-                    <td>
-                        <ul *ngFor="let j of i.nativeplaces;">
                             <li>{{j}}</li>
                         </ul>
                     </td>

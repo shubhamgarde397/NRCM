@@ -29,8 +29,6 @@ public tableDataTF4=false;
 public truckOA='';
 public villagedetailslist=[];
 public nA;
-public nativeArray=[]
-public nativeArrayName=[]
 public villagedetails=[];
 public trucks2=[];
 public contactArray=[];

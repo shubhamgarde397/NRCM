@@ -29,15 +29,6 @@
 
     <div class="form-group row">
       <div class="col-xs-3">
-        Native Place : <select id="dest" class="form-control" formControlName="dest">
-          <option>{{dest}}</option>
-          <option *ngFor="let own of villagenamelist">{{own.village_name}}</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <div class="col-xs-3">
         Party Type : <select id="dest" class="form-control" formControlName="partyType">
           <option selected disabled>{{pT}}</option>
           <option value="NRCM">NRCM</option>
@@ -46,43 +37,6 @@
         </select>
       </div>
     </div>
-
-    <!-- <div class="form-group row">
-      <hr>
-      <h3>Rent Details</h3>
-      <div class="col-xs-6">
-        <table class="table table-border">
-          <tr>
-            <th>Load Name</th>
-            <th>Load Amount</th>
-            <th>Load Advance</th>
-            <th>Add</th>
-          </tr>
-          <tr>
-            <td><input type="text" [(ngModel)]="loadSingle" [ngModelOptions]="{standalone: true}"></td>
-            <td><input type="number" [(ngModel)]="loadAmount" [ngModelOptions]="{standalone: true}"></td>
-            <td><input type="number" [(ngModel)]="loadAdvance" [ngModelOptions]="{standalone: true}"></td>
-            <td><button type="button" (click)="addLoad()">Add</button></td>
-          </tr>
-          </table>
-        
-      </div>
-
-
-      <div class="col-xs-6">
-        <div *ngFor="let ii of load;let j=index;">
-          <div *ngFor="let key of objectKeys(ii)">
-            <h4><u>{{key}}</u>
-              <span (click)="deleteLoad(i,j)">X</span>
-          </h4>
-            <span *ngFor="let key2 of objectKeys(ii[key])">
-              {{key2}}:{{ii[key][key2]|json}}
-            </span>
-          </div>
-        </div>
-
-      </div>
-    </div> -->
 
     <div class="form-group row">
       <div class="col-xs-3">
@@ -149,23 +103,15 @@
         <input type="text" formControlName='Email'>
       </div>
     </div>
-
-        <!--  -->
-        <h3>Contact : Phone</h3>
-        <div class="form-group row">
-          <div class="col-xs-3">
-           <input type="text" id="contact" class="form-control" formControlName="contact" placeholder="9876543211">
-          </div>
-        </div>
-        <!--  -->
         <hr>
         <h3>Customer Flex Ids</h3>
             <div class="form-group row">
-              <div class="col-xs-5">
+              
                 <table class="table table-border">
                   <tr>
                     <th>Village</th>
                     <th>FlexId</th>
+                    <th>Contact</th>
                   </tr>
                   <tr>
                     <td>
@@ -173,34 +119,40 @@
                         <option *ngFor="let k of villagenamelist">{{k.village_name}}</option>
                       </select></td>
                     <td>
-                      <input type="number" [(ngModel)]="flexid" [ngModelOptions]="{standalone: true}"></td>
+                      <input type="number" [(ngModel)]="flexid" [ngModelOptions]="{standalone: true}">
+                    </td>
+                    <td>
+                      <input type="number" [(ngModel)]="contactflex" [ngModelOptions]="{standalone: true}">
+                    </td>
                       
                   </tr>
                 </table>
                 <button type="button" class="btn btn-success" (click)="addFlex()">Add</button>
-        
-              </div>
+        </div>
+              
           
-              <div class="col-xs-3">
+        <div class="form-group row">
               
                 <table class="table table-border">
                   <tr>
                   <th>Sr</th>
                   <th>Village</th>
                   <th>FlexId</th>
+                  <th>Contact</th>
                   <th>Delete</th>
                 </tr>
                 <tr *ngFor="let i of flexids;let j = index;">
                   <td>{{j+1}}</td>
                   <td>{{i.village}}</td>
                   <td>{{i.flexid}}</td>
+                  <td>{{i.contact}}</td>
                   <td><button type="button" mat-raised-button (click)="deleteFlex(i,j)" class="btn-danger btn-sm btn-just-icon">
                     <i class="material-icons">delete_forever</i>
                 </button></td>
                 </tr>
                 </table>
               </div>
-            </div>
+            
         
                 <!--  -->
 

@@ -40,6 +40,7 @@ public parties2=[]
 public villages=[]
 public todayDate=new Date().toLocaleDateString();
 public pmts=[]
+public pmts3=[]
 
     constructor(
       public apiCallservice: ApiCallsService, 
@@ -67,12 +68,35 @@ public pmts=[]
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.pmts=res.Data;
+          this.pmts.forEach(r=>{
+            r.contactp=r['contactp1'].filter(rr=>{return rr.village==r['destination']})[0]['contact']
+        })
+        });
+    }
+
+    get3(){
+      let tempObj = { "method": "sendOfcLocation", 'tablename':''};
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.pmts3=res.Data;
+        });
+    }
+    setTrue3(){
+      let tempObj = { "method": "setOfcLocation", 'tablename':'','ownerids':this.pmts3.map(r=>{return r.ownerid})};
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          alert(res.Status)
         });
     }
 
     qrCoder(data){
       window.open(data,'_blank');  
     }
+
+    LocationSender(data){
+      window.open("https://wa.me/+91"+data.contacttb+"/?text=*Nitin Roadways*%0A%0Ahttps://maps.app.goo.gl/6i4xkLQUbeGXXh3y8?g_st=awb",'_blank');
+    }
+
 
     get() {
       let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
