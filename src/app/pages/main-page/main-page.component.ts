@@ -27,6 +27,7 @@ export class MainPageComponent implements OnInit {
   public morseIS = '';
   public clue = false;
   public bigI=0;
+  public file;
   public mailSendButton=true;
 public partyids=[{'name':'LOL'}]
 public fromloading=''
@@ -61,6 +62,7 @@ public typeOfCols='default';
     this.router.navigate(['TRACK']);
     this.loginV = true;
   }
+
   sendMsg(type,typo){
 
     switch (typo) {
@@ -101,15 +103,58 @@ public typeOfCols='default';
     this.loginV = true;
   }
 
-  // incomingFile(file) {
+  sent2() {
 
-  //   this.selectedFile = file.target.files[0]
-  //   if (file) {
-  //     this.fileFormData.append('image', file.target.files[0]);
+    const file =(<HTMLInputElement>document.getElementById('image')).files[0];
 
-  //   }
-  // }
+console.log(file);
+// Create a reader
+// const reader = new FileReader();
+const reader = new (window as any).FileReader();
 
+// Convert the image to Base64
+reader.onload = () => {
+
+    const base64String = reader.result.split(',')[1];
+};
+
+// Read the file as a data URL
+reader.readAsDataURL(file);
+console.log(reader.readAsDataURL(file));
+
+
+  }
+
+sent(){
+
+  const file =(<HTMLInputElement>document.getElementById('image')).files[0];
+    const reader = new (window as any).FileReader();
+
+    reader.onload = () => {
+        const base64String = reader.result.split(',')[1];
+
+
+        let tempObj = {}
+        tempObj['method'] = 'tp'
+        tempObj['tablename']=''
+        tempObj['base64']= base64String
+        tempObj['name'] = 'testing'
+    
+        this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+          .subscribe((res: any) => {
+
+          });
+
+
+
+
+    };
+
+    reader.readAsDataURL(file);
+
+
+
+}
 
 
 
