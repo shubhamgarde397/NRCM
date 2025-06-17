@@ -1,20 +1,15 @@
-<div class="well" *ngIf="show">
+<div class="well">
   <button class="btn btn-danger" (click)="fetchBasicData()"><i class="material-icons">undo</i></button>
-  <div class="col-sm-6">
-    <input type="date" [(ngModel)]="locationDate" [ngModelOptions]="{standalone: true}" class="form-control">
-  </div>
-  <table class="table display nowrap" style="width:100%" align="center" id="example">
+  <button class="btn btn-danger" (click)="download()"><i class="material-icons">download</i></button>
+  <table class="table display nowrap" style="width:100%" align="center" *ngIf="tblShow">
     <thead>
       <tr class="table-header">
         <th>Srno</th>
         <th>LoadingDate</th>
         <th>TruckNo</th>
-        <th>Party</th>
-        <th>Destination</th>
+        <th>Party-Place</th>
         <th>Contact</th>
-        <th>Locations</th>
-        <th>Update</th>
-        <th>Details</th>
+        <th>Location</th>
       </tr>
     </thead>
 
@@ -23,57 +18,32 @@
       <tr *ngFor="let i of tbl;let j = index">
         <td>{{j+1}}</td>
         <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-        <td>{{i.truckno}}</td>
-        <td>{{i.partyName}}</td>
-        <td>{{i.destination}}</td>
-        <td><ul *ngFor="let z of i.contact;">
-          <li>{{z}}</li>
-        </ul></td>
+        <td data-toggle="modal" data-target="#myModal" (click)="setBigJ(i,j)">{{i.truckno}}</td>
+        <td>{{i.party}}-{{i.place}}</td>
+        <td>{{i.contacttb}}</td>
+
         <td>
           <table class="table table-bordered" style="background-color: black;color: wheat;">
             <tr>
-              <th>Location</th>
               <th>Date</th>
+              <th>Time</th>
+              <th>Location</th>
               <th>Delete</th>
             </tr>
-            <tr *ngFor="let l of i.currentVehicleStatus;let p = index;">
-              <td>{{l.locations}}</td>
-              <td>{{l.locationsDate|date:'dd-MM-yyyy'}}</td>
+            <tr *ngFor="let l of i.currentLocation;let p = index;">
+              <td>{{l.date|date:'dd-MM-yyyy'}}</td>
+              <td (click)="changeInner(i,j,l,'time')">{{l.timeOfDay}}</td>
+              <td (click)="changeInner(i,j,l,'loc')">{{l.location}}</td>
               <td>
                 <span style="color: red;cursor: pointer;" (click)="delete(i._id,p,j)">X</span>
               </td>
             </tr>
           </table>
         </td>
-        <td>
-          <button mat-raised-button type="button" (click)="showDatabyid(i,j)" class="btn-primary btn-sm btn-just-icon" data-toggle="modal" data-target="#myModal">
-            <i class="material-icons">edit</i>
-          </button>
-          <button mat-raised-button type="button" (click)="newEdit(i,j)" *ngIf='locationDate!==""' class="btn-primary btn-sm btn-just-icon">
-            NB
-          </button>
-          <button mat-raised-button type="button" (click)="updateTurnLocationTruck(i,j)" class="btn-warning btn-sm btn-just-icon" *ngIf='i.updateTBL'>
-
-          <!-- [disabled]='!i.updateTBL'> -->
-            <i class="material-icons">add</i>
-          </button>
-        </td>
-        <td>
-          <div class="row">
-            <div class="col-sm-3" [ngStyle]="{'background-color': i.P}" style="color: black;cursor: pointer;" (click)="showDatabyidoD(i.oD)">Pan</div>
-            <div class="col-sm-3" [ngStyle]="{'background-color': i.dE}" style="color: black;cursor: pointer;" (click)="showDatabyidoD(i.oD)">Lic</div>
-          </div>
-          <div class="row">
-            <div class="col-sm-3" [ngStyle]="{'background-color': i.A}" style="color: black;cursor: pointer;" (click)="showDatabyidoD(i.oD)">Acc</div>
-            <div class="col-sm-3" [ngStyle]="{'background-color': i.rE}" style="color: black;cursor: pointer;" (click)="showDatabyidoD(i.oD)">RC</div>
-          </div>
-        </td>
       </tr>
     </tbody>
   </table>
 </div>
-
-
 
 
 <div class="container">
@@ -87,38 +57,57 @@
         </div>
         <div class="modal-body">
 
+          <div class="well" *ngIf="firstModal">
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <input type="date" [(ngModel)]="todayDate" [ngModelOptions]="{standalone: true}" class="form-control">
+              </div>
+            </div>
 
-          <form [formGroup]="myFormGroup" (ngSubmit)="update(myFormGroup)" submitted=true
-          enctype="multipart/form data" action="/">
-    <div class="form-group row">
-      <div class="col-xs-6">
-        <select id="location" class="form-control" formControlName="location" (change)="setPlaceName()">
-          <option *ngFor="let own of villagenamelist;let j = index;" value="{{own._id}}+{{j}}">{{own.village_name}}</option>
-        </select>
-      </div>
-    </div>
-
-          <div class="form-group row">
-            <div class="col-xs-6">
-              <input type="date" id="date" class="form-control" formControlName="date">
+            <div class="form-group row">
+              <div class="col-xs-2">
+                <button class="btn btn-primary" (click)="setTime('m')">Morning</button>
+              </div>
+               <div class="col-xs-2">
+                <button class="btn btn-success" (click)="setTime('a')">Afternoon</button>
+              </div>
+               <div class="col-xs-2">
+                <button class="btn btn-danger" (click)="setTime('e')">Evening</button>
+              </div>
             </div>
           </div>
 
-          <div class="form-group row">
-            <div class="col-xs-6">
-            <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
-              <i class="material-icons">send</i>
-            </button>
+          <div class="well" *ngIf="!firstModal">
+            <div class="row">
+              Date : {{todayDate|date:'dd-MM-yyyy'}}
+              Time : {{timeOfDay}}
+            </div>
+            <div class="row">
+              <div class="col-sm-4">
+               <input type="text" [(ngModel)]="location">
+              </div>
+            </div>
           </div>
-          </div>
-</form>
 
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
+
+          <div class="col-sm-3">
+            <button class="btn btn-danger"  *ngIf="!firstModal" (click)="backtoModal1()">Back</button>
+          </div>
+          <div class="col-sm-3">
+            <button class="btn btn-danger" *ngIf="!firstModal" (click)="update()">Submit</button>
+          </div>
+          <div class="col-xs-3">
+            <button class="btn btn-warning" *ngIf="firstModal" (click)="completeTrip()">Complete Trip</button>
+          </div>
+          <div class="col-xs-3">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+
         </div>
       </div>
-      
     </div>
+      
   </div>
+</div>

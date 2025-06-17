@@ -54,7 +54,6 @@ import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component';
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
-import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
 import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
@@ -99,7 +98,6 @@ import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
     DailyAccountAdderComponent,
     DisplaySequenceComponent,
     TrackDisplayComponent,
-    TrackLoginComponent,
     RentdisplayComponent,
     ComdisplayComponent,
     BalMsgComponent,

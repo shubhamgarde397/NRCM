@@ -40,9 +40,22 @@
       <br>
       <!-- <marquee> -->
         <h4>
-        20 Years of Excellence
+        {{birthday}} Years of Excellence
       </h4>
       <!-- </marquee> -->
+    </div>
+
+      <div class="container row" style="width: 100%;text-align: center;" *ngIf="ss==='lc'">
+      <br>
+        <h5>
+        {{birthday}} Years of Excellence
+      </h5>
+
+      <div class="row bbtn"><button class="btn btn-warning" (click)="call2(1)">Finolex Pipes</button></div>
+      <div class="row bbtn"><button class="btn btn-danger" (click)="call2(2)">Finolex Fittings</button></div>
+      <div class="row bbtn"><button class="btn btn-success" (click)="call2(3)">Prince Dhaba</button></div>
+      <div class="row bbtn"><button class="btn btn-primary" (click)="call2(4)">Nitin Roadways Office Pune</button></div>
+      <div class="row bbtn"><button class="btn btn-info" (click)="call2(5)">Nitin Roadways Office Pondicherry</button></div>
     </div>
   </nav>
 

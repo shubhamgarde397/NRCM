@@ -25,7 +25,6 @@ import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component'
 import { LRDisplayComponent } from './pages/LRsend/lrdisplay/lrdisplay.component';
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
-import { TrackLoginComponent } from './pages/Track/track-login/track-login.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
@@ -62,10 +61,6 @@ export const routes: Routes =
         {
             path: 'PDF',
             component: TpdfComponent
-        },
-        {
-            path: 'TRACK',
-            component: TrackLoginComponent
         },
         {
             path: 'Whatsapp',

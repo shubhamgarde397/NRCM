@@ -754,15 +754,14 @@ if(confirm('Do you want to temporary delete it?')){
       doc.setFontSize('10');
       if(this.balanceDate[z].update){}else{
   
-      doc.text(this.balanceDate[z].accountName, 147.5, accountI);//accno
-      doc.text(String(this.balanceDate[z].accountNumber), 147.5, accountI+6);//accname
-      doc.text(this.balanceDate[z].ifsc, 147.5, accountI+12);//ifsc
+      doc.text(this.balanceDate[z]['tda'].accountName, 147.5, accountI);//accno
+      doc.text(String(this.balanceDate[z]['tda'].accountNumber), 147.5, accountI+6);//accname
+      doc.text(this.balanceDate[z]['tda'].ifsc, 147.5, accountI+12);//ifsc
       }
       if(!dataTF){
         doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 115, accountI);//truckno
         doc.text(String(this.balanceDate[z].apm), 115, accountI+6);//truckno
       }
-      // doc.text(this.balanceDate[z]['available'], 191, accountI+6);//accno
       doc.setFontSize('8');
       
       i = i + 12-(bigK*2)+(bigKK-5);

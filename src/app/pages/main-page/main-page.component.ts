@@ -7,7 +7,6 @@ import { SecurityCheckService } from 'src/app/common/services/Data/security-chec
 import { ApiCallsService } from '../../common/services/ApiCalls/ApiCalls.service';
 import { HandleDataService } from '../../common/services/Data/handle-data.service';
 import { handleFunction } from '../../common/services/functions/handleFunctions';
-import { Consts } from '../../common/constants/const';
 @Component({
   selector: 'app-main-page',
   templateUrl: './main-page.component.html',
@@ -35,7 +34,7 @@ public toloading=''
 public balanceFollowArr=[]
 public typeOfCols='default';
   constructor(public apiCallservice: ApiCallsService, public handledata: HandleDataService,
-    public router: Router, public handleF: handleFunction,public security:SecurityCheckService) {
+    public router: Router, public hf: handleFunction,public security:SecurityCheckService) {
     localStorage.clear();
     }
 
@@ -57,10 +56,12 @@ public typeOfCols='default';
     
   }
 
-  track(){
-    this.security.setBranch('nrcm');
-    this.router.navigate(['TRACK']);
-    this.loginV = true;
+  findName(data){
+    switch (data) {
+      case 'M':return 'Morning';
+      case 'A':return 'Afternoon';
+      case 'E':return 'Evening';
+    }
   }
 
   sendMsg(type,typo){
@@ -153,14 +154,13 @@ sent(){
     reader.readAsDataURL(file);
 
 
-
 }
 
 
 
 
   getMorse(data) {
-    this.morseIS = this.handleF.normalMorseCode(data);
+    this.morseIS = this.hf.normalMorseCode(data);
   }
 
   clueCall() {

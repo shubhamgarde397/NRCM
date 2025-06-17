@@ -48,3 +48,12 @@ color: wheat;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  /* .navbar-inverse {
+    background-color: black;
+  } */
+
+  .bbtn {
+    margin-bottom: 4vh;
+    margin-top: 4vh;
+  }

@@ -120,4 +120,27 @@ public parties=[];
       });
   }
 
+  update(i,j,s){
+    let news=parseInt(prompt('Enter new value of '+s));
+    if(news>0){
+    let data={}
+    data['method'] = 'updateRent';
+    data['type']=s;
+    data['news']=news;
+    data['id'] = i._id;
+    data['tablename'] = '';
+    this.apiCallservice.handleData_New_python
+      ('commoninformation',
+       1, data, true)
+      .subscribe((res: any) => {
+        alert(res['Status']);
+        this.display[j][s]=news
+      });
+
+  }
+  else{
+    
+  }
+}
+
 }

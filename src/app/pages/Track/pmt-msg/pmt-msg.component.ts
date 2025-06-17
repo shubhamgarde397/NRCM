@@ -17,6 +17,7 @@ export class PmtMsgComponent implements OnInit {
   public data=''
   public list=[];
   public s='';
+  public birthday = new Date().getFullYear() - 2004;
   public ss=''
   public sstab=false;
    constructor(
@@ -30,8 +31,13 @@ export class PmtMsgComponent implements OnInit {
    ) {}
  
    ngOnInit() {
+    
+    
      this.activatedRoute.queryParams.subscribe(data=>{
-      
+      if(Object.keys(data).length===0){
+        this.ss='lc';
+      }
+      else{
       let temp={}
       this.s=data['i'].split('_');
       this.ss=this.s[0]
@@ -71,11 +77,12 @@ export class PmtMsgComponent implements OnInit {
            break;
       }
        
-
+    }
 
 
       
      })
+    
    }
 
    call(){
@@ -109,6 +116,35 @@ export class PmtMsgComponent implements OnInit {
        }
        return dec_val;
    }
+
+   call2(data){
+    switch (data) {
+      case 1:
+        window.open('https://wa.me/+918529275757/?text=*Finolex Pipes*%0A%0Ahttps://maps.app.goo.gl/bqwhwzfUVPhCe29r6','_blank');
+        
+        break;
+
+        case 2:
+        window.open('https://wa.me/+918529275757/?text=*Finolex Fittings*%0A%0Ahttps://maps.app.goo.gl/NfKpt7FD72vuK521A','_blank');
+        break;
+
+        case 3:
+        window.open('https://wa.me/+918529275757/?text=*Prince Dhaba*%0A*Nitin Roadways*%0A%0Ahttps://maps.app.goo.gl/WjNDtUGFVZJLRxyd9','_blank');
+        break;
+
+        case 4:
+        window.open('https://wa.me/+918529275757/?text=*Nitin Roadways Pune*%0A%0Ahttps://maps.app.goo.gl/vTyjKAVJBoZPm27E8','_blank');
+        break;
+
+        case 5:
+        window.open('https://wa.me/+918529275757/?text=*Nitin Roadways Pondicherry*%0A%0Ahttps://maps.app.goo.gl/5jeSNE4bvqVB19b1A','_blank');
+        break;
+    
+      
+    }
+   }
+
+   
  
  }
 

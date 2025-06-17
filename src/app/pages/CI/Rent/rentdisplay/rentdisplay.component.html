@@ -75,7 +75,16 @@
 
       <div class="form-group row">
         <div class="col-xs-3">
-         Tons :  <input type="number" id="value" class="form-control" formControlName="ton">
+         Tons :
+         <select id="typeOfLoad" class="form-control" formControlName="ton">
+          <option selected>Select Type</option>
+          <option value="6">6</option>
+          <option value="7">7</option>
+          <option value="8">8</option>
+          <option value="10">10</option>
+          <option value="SXL-32">SXL-32</option>
+          <option value="MXL-32">MXL-32</option>
+        </select>
         </div>
       </div>
 
@@ -88,6 +97,12 @@
           </select>
         </div>
       </div>  
+
+      <div class="form-group row">
+        <div class="col-xs-3">
+          Hire : <input type="number" id="value" class="form-control" formControlName="hamt" placeholder="Value">
+        </div>
+      </div>
   
       <div class="form-group row">
         <div class="col-xs-3">
@@ -95,11 +110,7 @@
         </div>
       </div>
 
-      <div class="form-group row">
-        <div class="col-xs-3">
-          Hire : <input type="number" id="value" class="form-control" formControlName="hamt" placeholder="Value">
-        </div>
-      </div>
+     
 
       <div class="row">
         <div class="form-group" class="col-xs-2"></div>
@@ -142,8 +153,8 @@
             <td>{{i.location2}}</td>
             <td>{{i.ton}}</td>
             <td>{{i.typeOfLoad}}</td>
-            <td>{{i.hamt}}</td>
-            <td>{{i.rent}}</td>
+            <td (click)="update(i,j,'hamt')">{{i.hamt}}</td>
+            <td (click)="update(i,j,'rent')">{{i.rent}}</td>
             <td><button class="btn btn-info" (click)="delete(i,j)">Delete</button></td>
         </tr>
     </tbody>

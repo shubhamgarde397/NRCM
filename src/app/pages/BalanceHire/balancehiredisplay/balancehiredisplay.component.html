@@ -47,7 +47,7 @@
             <th>Truckno</th>
             <th>Adv Acc</th>
             <th>Account</th>
-            <th>Other</th>
+            <th>Bal Acc</th>
             <th *ngIf="admin">Delete Admin</th>
             <th *ngIf="admin">Edit Admin</th>
           </tr>
@@ -89,7 +89,7 @@
             </td>
 
             <td>
-              {{i.tdoa.accountName}}<br>{{i.tdoa.accountNumber}}-{{i.tdoa.ifsc}}
+              {{i.advAcc.accountName}}<br>{{i.advAcc.accountNumber}}-{{i.advAcc.ifsc}}
             </td>
             
             
@@ -100,8 +100,8 @@
                 <option value={{kki}} *ngFor="let kk of i.accounts;let kki = index">{{kk.accountName}}-{{kk.accountNumber}}</option>
               </select>
             </td>
-              <td *ngIf="i.whattosshow===3">{{i.accountName}}<br>{{i.accountNumber}}-{{i.ifsc}}</td>
-
+            
+            <td>{{i.tda.accountName}}<br>{{i.tda.accountNumber}}-{{i.tda.ifsc}}</td>
             <td *ngIf="admin">
               <button mat-raised-button type="button" (click)="deleteBHComplete(i,j)"
                 class="btn-danger btn-sm btn-just-icon">
