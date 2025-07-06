@@ -67,6 +67,7 @@ export class BalanceHireAddComponent implements OnInit {
   public showpaymentButton=false;
   public defaultAmt=0;
   public ownerdetailslist;
+  public id=1;
   public showPDFButton=false;
   public sentComments=[];
   public nrcmid=0;
@@ -85,6 +86,8 @@ public todaysDate;
     this.uitodayDate = this.handleF.getDate(this.handleF.generate2DigitNumber(this.date.getDate()), (this.date.getMonth() + 1), this.date.getFullYear());
     this.todaysDate = this.handleF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.role = this.securityCheck.role;
+    this.id=this.nrcmid;
+    
     this.balanceDate = this.securityCheck.commonBalanceHire.length > 0 ? this.securityCheck.commonBalanceHire : [];
     for (let i = 0; i < new Date().getFullYear() - 2020; i++) {
       this.years.push(i + 2021)
@@ -95,6 +98,7 @@ public todaysDate;
   find = function () {
     let tempObj = {};
     tempObj['method'] = 'BHInserttoProcessingDisplay';
+    tempObj['id']=this.id;
     tempObj['tablename'] = 'BalanceHire';
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, true)
@@ -129,6 +133,7 @@ public todaysDate;
       tempObj['tablename'] = 'BalanceHire';
       tempObj['bhTrucks']=this.balanceDate
       tempObj['todayDate'] = this.uitodayDate;
+      tempObj['id']=this.id;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)
         .subscribe((res: any) => {
           alert(res.Status);

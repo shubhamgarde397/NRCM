@@ -76,6 +76,7 @@ public showbuttonOption821HA=true;
     { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
     { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
     { 'value': '19', 'viewvalue': 'Packet' ,'disabled':false},
+    { 'value': '20', 'viewvalue': 'GST' ,'disabled':false},
   ]
   // 18
   public lrStarter=0;
@@ -110,6 +111,7 @@ public showbuttonOption821HA=true;
   public selectedMonth;
   public selectedYear;
   public selectedmy;
+  public selectedmy2;
   public turnbooklist_trucks = [];
   public myFormGroup: FormGroup;
   public myFormGroupTB : FormGroup;
@@ -415,6 +417,7 @@ let tempObj = {};
 
   find = function (data = null) {//only for data from 1st april 2021 and loading data is empty
     let tempObj = {};
+    let call=true;
     this.byTruckName=false;
     this.parties = this.commonArray.gstdetails;
     switch (this.buttonOption) {
@@ -436,6 +439,10 @@ let tempObj = {};
         case '19':
           this.showbuttonOption19=true;
         break;
+        case '20':
+          call=false;
+          this.downloadGST()
+        break;
     }
     if (this.buttonOption !== '8') {
       this.showbuttonOption8 = false;
@@ -445,6 +452,7 @@ let tempObj = {};
       this.showbuttonOption18 = true;
     }
 
+    if(call){
     tempObj['tablename'] = 'turnbook'
     tempObj['method'] = 'displayTB'
     tempObj['display'] = this.displayoptions[parseInt(this.trucknoid) ].value;
@@ -452,11 +460,7 @@ let tempObj = {};
     this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
       .subscribe((res: any) => {
         if(this.buttonOption!=='8'&&this.buttonOption!=='18'){
-        this.types={'None':0,'Open':0,'Container':0}
-        this.Locationtypes={'None':0,'Shivapur':0,'Dhaba':0}
         res.Data.forEach(r=>{
-          this.types[r.ownerDetails[0].typeOfVehicle]=this.types[r.ownerDetails[0].typeOfVehicle]+1;
-          this.Locationtypes[r.waitLocation]=this.Locationtypes[r.waitLocation]+1;
           r['typeOfVehiclefirst']=r.ownerDetails[0].typeOfVehicle.slice(0,1)
           });
         }
@@ -511,6 +515,7 @@ let tempObj = {};
           this.tableSelected=true;
         }
       });
+    }
   };
 
   checkTON(){
@@ -530,6 +535,17 @@ let tempObj = {};
     }
   }
   
+  downloadGST(){
+    
+    let tempObj1={};
+    tempObj1['tablename'] = ''
+    tempObj1['date'] = this.selectedmy;
+    tempObj1['method'] = 'downloadgstdetails'
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
+      .subscribe((res: any) => {
+        this.pdfGST(res.Data)
+      });
+  }
   clearBalanceAdd(i,j){
     if(confirm('Do you want to Uncheck Balance Add?')){
     let tempObj1={};
@@ -852,5 +868,151 @@ this.updateTruck['index']=j;
 
     considerForPaymentOption(data,index){
       this.turn12[index]['considerForPayment']=data;
+    }
+
+    pdfGST(data){
+          let pager=1;
+           let bigValueofY=0;
+           var doc = new jsPDF()
+           doc.setFontSize('20');
+           doc.setFontType('bold');
+           doc.setTextColor(234, 1, 0);
+           doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
+           doc.setFontSize('15');
+           doc.setTextColor(215, 6, 9);
+            doc.text('Finolex Industries Limited', 60, 15)//partyname
+           doc.setFontSize('10');
+           doc.setTextColor(0, 0, 0);
+           doc.setFontSize('10');
+           doc.text('Details For '+this.handleF.genaratemonthNames()[parseInt(this.selectedmy.slice(6,8))], 165, 15)
+          //  doc.text(this.handleF.getDateddmmyy(this.selectedmy)+' to '+this.handleF.getDateddmmyy(this.selectedmy2), 165, 19)//date
+           doc.text(String(pager), 180, 5)//pageno
+           pager=pager+1;
+           doc.setFontSize('25');
+           doc.setLineWidth(0.5);
+           doc.line(0, 20, 210, 20);//line after main header
+           doc.line(20, 20, 20, 300);//punching area line
+           //headers
+           doc.setFontSize('10');
+           let y = 24;
+           let starty = 24;
+           doc.line(0, 148.2, 5, 148.2);//punching line helper
+           doc.text('Sr', 22, y)//partyname
+           doc.text('Date', 38, y)//partyname
+           doc.text('Place', 60, y)//partyname
+           doc.text('Truck No.', 86, y)//partyname
+           doc.text('Party Name', 114, y)//partyname
+           doc.text('LRNO', 175, y)//partyname
+            doc.text('Type', 187, y)
+      
+            doc.line(30, 20, 30, 25);//srno
+            doc.line(52, 20, 52, 25);//date
+            doc.line(83, 20, 83, 25);//truckno
+            doc.line(112, 20, 112, 25);//lrno
+            doc.line(173, 20, 173, 25);//credit
+            doc.line(186, 20, 186, 25);//debit
+      
+      
+           //headers
+           doc.line(0, 25, 210, 25);//line after header
+       
+           let startforI=0;
+           starty = 25;
+            y=y+6
+            
+       
+           for (let i = startforI; i < data.length; i++) {
+       
+            
+             if(y>290){
+               
+               y=30;
+              doc.line(30, starty, 30, 291);//srno
+              doc.line(52, starty, 52, 291);//date
+              doc.line(83, starty, 83, 291);//truckno
+              doc.line(112, starty, 112, 291);//lrno
+              doc.line(173, starty, 173, 291);//credit
+              doc.line(186, starty, 186, 291);//debit
+      
+              starty = 20;
+               doc.addPage();
+               doc.setFontSize('20');
+           doc.setFontType('bold');
+      
+           doc.setTextColor(234, 1, 0);
+           doc.text('NITIN ROADWAYS AND CARGO MOVERS', 30, 8)//partyname
+           doc.setFontSize('15');
+           doc.setTextColor(215, 6, 9);
+            doc.text('Finolex Industries Limited', 60, 15)//partyname
+           doc.setFontSize('10');
+           doc.setTextColor(0, 0, 0);
+           doc.setFontSize('10');
+           doc.text('Details For '+this.handleF.genaratemonthNames()[parseInt(this.selectedmy.slice(6,8))], 165, 15)
+          //  doc.text(this.handleF.getDateddmmyy(this.selectedmy)+' to '+this.handleF.getDateddmmyy(this.selectedmy2), 165, 19)//date
+           doc.text(String(pager), 180, 5)//pageno
+           pager=pager+1;
+           doc.setFontSize('25');
+           doc.setLineWidth(0.5);
+           doc.line(0, 20, 210, 20);//line after main header
+           doc.line(20, 20, 20, 300);//punching area line
+           //headers
+           doc.setFontSize('10');
+           doc.text('Sr', 22, y-6)//partyname
+           doc.text('Date', 32, y-6)//partyname
+           doc.text('Place', 55, y-6)//partyname
+           doc.text('TruckNo', 84, y-6)//partyname
+           doc.text('PartyName', 114, y-6)//partyname
+           doc.text('LRNO', 175, y-6)//partyname
+            doc.text('Type', 187, y-6)//partyname
+      
+           
+           //headers
+           doc.line(0, 25, 210, 25);//line after header
+       
+           //vertical lines
+           doc.line(30, 20, 30, 25);//srno
+           doc.line(52, 20, 52, 25);//date
+           doc.line(83, 20, 83, 25);//truckno
+           doc.line(112, 20, 112, 25);//lrno
+           doc.line(173, 20, 173, 25);//credit
+           doc.line(186, 20, 186, 25);//debit
+           //vertical lines
+           }
+
+
+doc.text(String(i+1), 22, y)//partyname             
+doc.text(this.handleF.getDateddmmyy(data[i].loadingDate), 32, y)//partyname
+doc.text(data[i].village, 55, y)//truckno
+doc.text(String(data[i].truckno), 84, y)//lrno
+doc.text(data[i].partyname.split('_')[0], 114, y)//truckno
+doc.text(data[i].lrno===0?'':String(data[i].lrno), 174, y)//partyname
+doc.text(String(data[i].typeOfLoad+'-'+data[i].weight), 187, y)//partyname         
+            
+              if(data[i].yco){
+                y = y + 5;
+                }else{
+                  doc.text(String(data[i].village2), 57, y+5)//partyname  
+                 y = y + 10;                 
+                }
+                doc.line(20, y -4, 210, y -4);//line after header
+           }
+
+           if(data[data.length-1].yco){
+               y = y - 5;
+            }else{
+                y = y - 10;                 
+            }
+            bigValueofY=y;
+           doc.setFontSize('10');
+           doc.line(30, starty, 30, bigValueofY+1);//srno
+           doc.line(52, starty, 52, bigValueofY+1);//date
+           doc.line(83, starty, 83, bigValueofY+1);//truckno
+           doc.line(112, starty, 112, bigValueofY+1);//lrno
+           doc.line(173, starty, 173, bigValueofY+1);//credit
+           doc.line(186, starty, 186, bigValueofY+1);//credit
+           doc.line(20, bigValueofY+1, 210, bigValueofY+1);//line after header
+      
+           doc.save('All.pdf')
+        
     }
 }

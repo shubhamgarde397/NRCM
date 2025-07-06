@@ -7,9 +7,6 @@
       <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="find()">BillNo</button>
     </div>
     
-    <div class="col-sm-2">
-      <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="DownloadLR()" *ngIf="showdownload">Download</button>
-    </div>
     </div>
      
     <div class="col-sm-12">
@@ -20,18 +17,19 @@
                   <th>Loading</th>
                   <th>TruckNo-BillNo</th>
                   <th>Type-Party-Place</th>
-                  <th>LRNO</th>
+                  <th>From</th>
                   <th>Document</th>
                   <th>Particulars</th>
                   <th>Details</th>
+                  <th>Download</th>
                 </tr>
               </thead>
               <tbody align="center">
                 <tr *ngFor="let i of data;let j = index">
-                  <td>{{i.date|date:'dd-MM-yyyy'}}<br>{{i.billno}}</td>
+                  <td>{{i.date|date:'dd-MM-yyyy'}}<br>{{i.billno}}<br>{{i.lrno}}</td>
                   <td>{{i.truckno}}<br>{{i.billno}}</td>
                   <td>{{i.partyname}}<br>{{i.destination}}<br>{{i.typeOfLoad}}</td>
-                  <td>{{i.billno}}</td>
+                  <td>{{i.fromname}}</td>
                   <td>
                     <ul>
                       <li *ngFor="let ii of i.documentno;let k = index">
@@ -60,6 +58,15 @@
                     </ul>
                     <button (click)="saveDoc(i,j,'par2')" data-toggle="modal" data-target="#myModalPar2">Add Particulars</button>
                   </td>
+                  <td *ngIf="i.imps2">
+                      <select class="form-control" [(ngModel)]="selectedDrop">
+                        <option selected>Select Type</option>
+                        <option value='lrno'>LRNO</option>
+                        <option value='billno'>Bill</option>
+                      </select>
+                    <button class="btn btn-warning col-sm-3"  style="width: 50%;" (click)="DownloadLR(i,j)" *ngIf="showdownload">Download</button>
+                  </td>
+                   <td *ngIf="!i.imps2">Missing Details</td>
                 </tr>
               </tbody>
             </table>

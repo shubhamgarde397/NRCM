@@ -100,6 +100,7 @@ export class BalancehiredisplayComponent implements OnInit {
   public partyName;
   public qr;
   public typeOfLoad;
+  public showTable=false;
   public dest1;
   public dest2;
 public partyDetails;
@@ -249,6 +250,7 @@ public ifsc;
         this.balanceDate = this.accE(res.balanceData);
         this.Dues=res.Dues;
         this.DuesT=res.DuesT;
+        this.showTable=true;
         this.findDues(res);
         this.securityCheck.commonBalanceHire = res.balanceData;
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;

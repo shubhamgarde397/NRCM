@@ -104,7 +104,9 @@
       </tr>
     </table>
     <button class="btn btn-primary" (click)="addRow('r',j)">Row</button>
-  <button class="btn btn-danger" [disabled]="!submitButton" (click)="save()">Save</button>
+  <button class="btn btn-success" [disabled]="!submitButton" (click)="save()">Save</button>
+  <button class="btn btn-danger" [disabled]="submitButton" (click)="lul()">Force Enable</button>
+  <button class="btn btn-warning" (click)="lulAll()">Force Lock</button>
 
 </div>
 
@@ -133,12 +135,11 @@
           <li *ngFor="let k of i.qr">{{k}}</li>
         </ul>
       </td>
-      <!-- <td><qrcode [scale]='1' (click)="qrCoder(i.qrcode)" [qrdata]=i.qrcode [width]="150" [errorCorrectionLevel]="'M'" ></qrcode></td> -->
       <td><button class="btn btn-warning" (click)="qrCoder(i.qrcode)">Send</button></td>
       
     </tr>
   </table>
-
+<button class="btn btn-danger" (click)="partyOk()">Set All</button>
 </div>
 
 

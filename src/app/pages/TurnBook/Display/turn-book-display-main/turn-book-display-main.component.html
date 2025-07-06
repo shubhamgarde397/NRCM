@@ -10,7 +10,7 @@
             <option *ngFor="let i of displayoptions;let j = index;" value={{j}} [hidden]="i.disabled">{{i.viewvalue}}</option>
           </select>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3" *ngIf="(buttonOption!=='20')">
           <select class="form-control" [(ngModel)]="buttonOptionPartyType">
             <option value="NRCM">NRCM</option>
           <option value="NR">NR</option>
@@ -19,7 +19,7 @@
         </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11' )&&(buttonOption!=='13')">
+          *ngIf="(buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11' )&&(buttonOption!=='13')&&(buttonOption!=='20')">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
 
@@ -27,7 +27,7 @@
           <input type="text" class="form-control" [(ngModel)]="bylrno" placeholder="Lrno">
         </div>
 
-        <div class="col-sm-3" *ngIf="(buttonOption==='8')||(buttonOption==='18')||(buttonOption==='19')">
+        <div class="col-sm-3" *ngIf="(buttonOption==='8')||(buttonOption==='18')||(buttonOption==='19')||(buttonOption==='20')">
           <select class="form-control" [(ngModel)]="selectedmy">
             <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
           </select>

@@ -6,6 +6,16 @@
       <button class="btn btn-warning" (click)="find()">Find</button>
     </div>
 
+    <div class="col-xs-2" align="center" *ngIf="nrcmid===1">
+       <select class="form-control" [(ngModel)]="id">
+          <option selected>Select Type</option>
+          <option value=1>1</option>
+          <option value=3>3</option>
+          <option value=7>7</option>
+          <option value='All'>All</option>
+        </select>
+    </div>
+
     </div>
     <div class="row">
   </div>

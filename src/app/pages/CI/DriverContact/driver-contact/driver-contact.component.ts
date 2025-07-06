@@ -157,7 +157,6 @@ public pmts3=[]
         let temp={
           loadingDate:(<HTMLInputElement>document.getElementById('datesetter')).value,
           contacts:[{co:''}],
-          qrs:[],
           lul:'lock',
           parties2:[],
           tol:'',
@@ -227,6 +226,13 @@ public pmts3=[]
     }
 
   }
+lulAll(){
+  for(let i = 0;i<this.turnbooklist1.length;i++){
+    this.turnbooklist1[i]['lul']='unlock'
+    this.submission[i]=1;
+  }
+  this.submitButton=this.submission.every((value)=>{return value>0})
+}
 
   lul(index,data){
   if(this.checker(index)){
@@ -254,10 +260,10 @@ alert('Incomplete Fields! Cannot Lock!')
   delete(index,data,index2){
     switch (data) {
       case 'r':
-
+      if(confirm('Do you want to delete entire row?')){
         this.turnbooklist1.splice(index,1);
         this.submitButton=this.submission.every((value)=>{return value>0})
-        
+      }
         break;
     
       case 'c':
@@ -317,6 +323,15 @@ alert('Incomplete Fields! Cannot Lock!')
         .subscribe((res: any) => {
           alert(res.Status);
           this.turnbooklist1=[];
+        });
+  }
+
+  partyOk(){
+    
+    let tempObj = { "method": "setPartyOk",tablename:'' };
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          alert(res.Status);
         });
   }
 
