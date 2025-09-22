@@ -716,7 +716,7 @@ public paymentData3=[];
      doc.text('LR No.', 86, y-6)//partyname
      doc.text('Destination', 106, y-6)//partyname
      doc.text('Lorry Bill', 135, y-6)//partyname
-      doc.text('Payment', 151, y-6)//partyname
+      doc.text('Payment', 152, y-6)//partyname
       if(data=='party'){
         doc.text('Weight / Notes', 180, y-6)//partyname
         }else if(data=='self'){
@@ -738,9 +738,9 @@ public paymentData3=[];
      //vertical lines
      }
      if(this.paymentData[0]['bf'] == true){
-      doc.text(String(i), 25, y)//partyname
+      doc.text(String(i), 22, y)//partyname
       }else {
-        doc.text(String(i+1), 23, y)//partyname
+        doc.text(String(i+1), 22, y)//partyname
       }
        
        doc.text(this.handleF.getDateddmmyy(this.paymentData[i].date), 32, y)//partyname
@@ -811,7 +811,7 @@ public paymentData3=[];
       }
       if(this.paymentData[i]['typeOfLoad']==='Fittings'){
       doc.setTextColor(234, 1, 0);
-      doc.text(String(this.paymentData[i]['typeOfLoad']), 180, y)//type of load
+      doc.text(String(this.paymentData[i]['typeOfLoad'])+'-'+String(this.paymentData[i]['weight']), 180, y)//type of load
       doc.setTextColor(0,0,0);
       }else{
         if (this.paymentData[i].type === 'buy') {
@@ -893,11 +893,16 @@ public paymentData3=[];
   v=Object.values(Countdata)
   let k=Object.keys(Countdata)
   
+k[k.findIndex(r=>{return r==='undefined'})]='Payments'
+
   v.push(v.splice(k.findIndex(r=>{return r==='6'}),1)[0])
   v.push(this.paymentData.length)
   k.splice(k.findIndex(r=>{return r==='6'}),1)[0]
   k.push('Fittings','Total')
   
+   if(this.typeOfCols==='default'){
+            if (this.paymentData[0].type === 'buy') {}
+   }
     doc.autoTable({
       head: [['Tonnage'].concat(k)],
       body: [['Count'].concat(v)],
@@ -1163,7 +1168,7 @@ public paymentData3=[];
            }
            if(this.paymentData[i]['typeOfLoad']==='Fittings'){
            doc.setTextColor(234, 1, 0);
-           doc.text(String(this.paymentData[i]['typeOfLoad']), 180, y)//type of load
+           doc.text(String(this.paymentData[i]['typeOfLoad'])+String(this.paymentData[i]['weight']), 180, y)//type of load
            doc.setTextColor(0,0,0);
            }
            else{

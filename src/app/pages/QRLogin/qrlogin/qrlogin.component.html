@@ -1,0 +1,122 @@
+<div class="container">
+
+  <nav class="navbar navbar-inverse" style="position: fixed;width:100%;z-index:1;"> 
+
+    <div class="container row" style="width: 100%;">
+      <div class="col-sm-6">
+      <div class="navbar-header">
+        <a class="navbar-brand fonthead" routerLink="NRCM_HOME">
+          Nitin Roadways And Cargo Movers
+        </a>
+      </div>
+    </div>
+    </div>
+  </nav>
+    <!-- -1 -->
+    <div class="row" *ngIf="div2==-1">
+      <h3>SCAN VALID QR CODE TO LOGIN!</h3>
+    </div>
+    <!-- -1 -->
+<!-- 0 -->
+ <div class="row" *ngIf="div2==0" style="padding-top: 10vh;">
+    <div class="col-xs-12" style="padding-bottom: 10vh;padding-top:5vh;display: flex;justify-content: center;">
+          <button type="submit" class="btn btn-danger col-sm-6 col-xs-6" style="height: 10vh;" (click)="buttonAction2(1)">
+            <i class="material-icons">lock_open</i> Login
+          </button>
+    </div>
+  </div>
+  <div class="row" *ngIf="div2==0">
+    <div class="col-xs-12" style="padding-bottom: 10vh;display: flex;justify-content: center;">
+          <button type="submit" class="btn btn-warning col-sm-6 col-xs-6" style="height: 10vh;" (click)="buttonAction2(2)">
+            <i class="material-icons">forward</i> POD<br>For Office Use
+          </button>
+    </div>
+  </div>
+<!-- 0 -->
+
+<!-- 1 -->
+  <div class="row " *ngIf="div2==1">
+    <div class="col-xs-12" id="main" style="padding-bottom: 10vh;padding-top:5vh;display: flex;justify-content: center;">
+      <form [formGroup]="myFormGroup" (ngSubmit)="login(myFormGroup,!loginButton)" submitted=true
+        enctype="multipart/form data" action="/" name="myform" id="myform" class="form-horizontal">
+
+        <div class="form-group" style="padding-top: 10vh;">
+          <div
+            class="col-sm-6 col-xs-6">
+            <input type="text" style="color:wheat;width: 20vh;background-color: black;" class="form-control input"
+              formControlName="lrno" disabled />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div
+            class="col-sm-6 col-xs-6">
+            <input type="text" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="Username"
+              formControlName="username" required />
+          </div>
+          <div [hidden]="myFormGroup.controls.username.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-6 col-xs-6">
+            <input type="password" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="Password"
+              formControlName="password" required />
+          </div>
+          <div [hidden]="myFormGroup.controls.password.valid">
+            <font color="red">
+              <span class="glyphicon glyphicon-remove"></span>
+            </font>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="button" (click)="back()" class="btn btn-primary col-sm-6 col-xs-6">
+            <i class="material-icons">arrow_back</i>
+          </button>
+          <button type="submit" class="btn btn-primary col-sm-6 col-xs-6">
+            <i class="material-icons">lock_open</i>
+          </button>   
+        </div>
+        
+      </form>
+    </div>
+  </div>
+<!-- 1 -->
+
+
+<!-- after login -->
+ <div class="row" *ngIf="whichUser=='transport'" style="padding-top: 10vh;">
+    <!-- <div class="col-xs-12" style="padding-bottom: 10vh;padding-top:5vh;display: flex;justify-content: center;">
+          <button type="submit" class="btn btn-danger col-sm-6 col-xs-6" style="height: 10vh;" (click)="buttonAction2(1)">
+            <i class="material-icons">lock_open</i> Login
+          </button>
+    </div> -->
+    <h1>{{data.truckno}}</h1>
+    <br>
+    <h3>Eway Bill valid till {{ewaybill|date:'dd-MM-yyyy'}}</h3>
+    <br>
+    <h4>POD Payment details</h4>
+    <br>
+    <h4>Payment Date : {{data.actualPaymentDate}}</h4>
+    <h4>Payment Amount : {{data.actualPaymentAmount}}</h4>
+
+  </div>
+
+<!-- after login -->
+
+
+
+
+</div>
+
+
+<div class="footer">
+  <p>NITIN ROADWAYS AND CARGO MOVERS<br>
+    Since 2004<br>
+    
+    Safe | Fast | Reliable | Punctual | 24*7 Avaliable</p>
+</div>

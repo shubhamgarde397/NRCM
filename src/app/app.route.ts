@@ -35,6 +35,8 @@ import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.componen
 import { DriverContactComponent } from './pages/CI/DriverContact/driver-contact/driver-contact.component';
 import { PmtMsgComponent } from './pages/Track/pmt-msg/pmt-msg.component';
 import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
+import { QRLoginComponent } from './pages/QRLogin/qrlogin/qrlogin.component';
+import { QRGeneratorComponent } from './pages/QRGenerator/qrgenerator/qrgenerator.component';
  
 export const routes: Routes =
     [
@@ -57,6 +59,10 @@ export const routes: Routes =
         {
             path: 'PM',
             component: PmtMsgComponent
+        },
+        {
+            path: 'QL',
+            component: QRLoginComponent
         },
         {
             path: 'PDF',
@@ -166,6 +172,10 @@ export const routes: Routes =
                     {
                         path:'LINK_TRUCK',
                         component:LinkTruckComponent
+                    },
+                    {
+                        path:'QRGenerator',
+                        component:QRGeneratorComponent
                     },
                     {
                         path: 'IMP_GST_HANDLER',

@@ -19,6 +19,7 @@ export class PmtMsgComponent implements OnInit {
   public s='';
   public birthday = new Date().getFullYear() - 2004;
   public ss=''
+  public dataofNR=[];
   public sstab=false;
    constructor(
      public sec:SecurityCheckService,
@@ -70,11 +71,18 @@ export class PmtMsgComponent implements OnInit {
               this.sstab=true;
               });
             break;
-    
-         case 'test': 
-        
-         window.open('tel://+91'+this.htd(this.s[1])+'','_blank');
-           break;
+         case 'z':
+          temp={
+            billno:this.s[1],
+            tablename:'',
+            method:'getbybillno3'
+          }   
+
+          this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
+          .subscribe((res: any) => {
+            this.dataofNR=res.Status;
+            });
+          break;
       }
        
     }

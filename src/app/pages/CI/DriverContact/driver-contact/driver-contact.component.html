@@ -25,7 +25,15 @@
       <tr *ngFor="let i of turnbooklist1;let j = index;">
         <td>{{j+1}}</td>
         <td><input type="date" id="date_{{j}}" [disabled]='i.lul==="unlock"' value={{i.loadingDate}}></td>
-        <td><input type="text" id="truckno_{{j}}" [disabled]='i.lul==="unlock"'></td>
+        <td>
+          <!-- <input type="text" id="truckno_{{j}}" [disabled]='i.lul==="unlock"'> -->
+
+          <input type="text" list="cars" class="form-control" id="truckno_{{j}}" [disabled]='i.lul==="unlock"' autocomplete="off"/>
+           <datalist id="cars">
+            <option *ngFor="let own of trucks" value={{own.truckno}}>{{own.truckno}}</option>
+           </datalist>
+        
+        </td>
 
         <td>
           <select class="form-control" id="pt_{{j}}" [disabled]='i.lul==="unlock"' (change)="setParty(j)">

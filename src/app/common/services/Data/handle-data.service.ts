@@ -120,6 +120,8 @@ this.updateTurnData=data;
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
       case 'infogst':
         return [Consts.GST_INDEX, Consts.VILLAGE_INDEX];
+      case 'infogsthidden':
+        return [Consts.GST_INDEX, Consts.VILLAGE_INDEX,Consts.HIDDEN_TRUCK_INDEX];
       case 'infogstonly':
         return [Consts.GST_INDEX];
       case 'infoowner':

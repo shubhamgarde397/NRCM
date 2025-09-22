@@ -57,6 +57,51 @@
       <div class="row bbtn"><button class="btn btn-primary" (click)="call2(4)">Nitin Roadways Office Pune</button></div>
       <div class="row bbtn"><button class="btn btn-info" (click)="call2(5)">Nitin Roadways Office Pondicherry</button></div>
     </div>
+
+    <div class="container row" style="width: 100%;" *ngIf="ss=='z'">
+      <h3>Welcome to Nitin Roadways</h3>
+
+      <h6 style="color:red"><i>Note : This data is for view once only, to access again you need to get a new link.</i></h6>
+
+
+<div class="col-sm-12">
+                
+            <table class="table" style="width:100%;background-color: black;color: wheat;" align="center" *ngIf="byTruckName">
+                  <thead align="center" style="font-weight: bold">
+                    <tr class=table-header>
+                      <th>Srno</th>
+                      <th>Loading/TruckNo</th>
+                      <th>Party-Place/LRNO</th>
+                      <th *ngIf="amountV">Amounts</th>
+                      <th colspan="5">Images</th>
+                    </tr>
+                  </thead>
+                  <tbody align="center">
+                    <tr *ngFor="let i of turn11;let j = index">
+                      <td>{{j+1}}</td>
+                      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.truckName}}</td>
+                      <td (click)="setLRNO(i,j,i.nrlrno)">{{i.partyName}}<br>{{i.placeName}}<br>{{i.nrlrno}}</td>
+                      <td *ngIf="amountV">{{i.hamt}}<br>{{i.rent}}<br>{{i.suspenseAmt}}</td>
+                      <td *ngIf="i.nrlrno!=''" data-toggle="modal" data-target="#myModalImage" (click)="savePayment(i,j)">
+                        <button class="btn btn-warning">View</button><br>
+                        <div class="row">
+                          <div class="col-xs-1" id="a0"></div>
+                          <div class="col-xs-1" [ngClass]="i['podImage'][0]['setter']==0 ? 'redC':'greenC'" id="a1"></div>
+                          <div class="col-xs-1" [ngClass]="i['podImage'][1]['setter']==0 ? 'redC':'greenC'" id="a1"></div>
+                          <div class="col-xs-1" [ngClass]="i['podImage'][2]['setter']==0 ? 'redC':'greenC'" id="a1"></div>
+                          <div class="col-xs-1" [ngClass]="i['podImage'][5]['setter']==0 ? 'redC':'greenC'" id="a1"></div>
+                          </div>
+                      </td>
+
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+
+
+
+    </div>
+
   </nav>
 
 

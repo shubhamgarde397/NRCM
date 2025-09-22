@@ -41,6 +41,7 @@ public villages=[]
 public todayDate=new Date().toLocaleDateString();
 public pmts=[]
 public pmts3=[]
+public trucks=[]
 
     constructor(
       public apiCallservice: ApiCallsService, 
@@ -54,7 +55,7 @@ public pmts3=[]
       } }
   
     ngOnInit() {
-      this.considerArray = this.handledata.createConsiderArray('infogst')
+      this.considerArray = this.handledata.createConsiderArray('infogsthidden')
     this.handledata.goAhead(this.considerArray) ? this.get() : this.fetchBasic();
     this.commonArray = this.securityCheck.commonArray;
     }
@@ -99,20 +100,26 @@ public pmts3=[]
 
 
     get() {
+      this.securityCheck.commonArray['hiddenownerdetails']=[];
+      this.trucks=[];
       let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
           this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
+          this.securityCheck.commonArray['hiddenownerdetails'] = Object.keys(res.hiddenownerdetails[0]).length > 0 ? res.hiddenownerdetails : this.securityCheck.commonArray['hiddenownerdetails'];
+          
           this.fetchBasic();
         });
     }
     fetchBasic() {
       this.commonArray = this.securityCheck.commonArray;
       this.parties = [];
+      this.trucks=[]
       this.villages = [];
       this.parties = this.commonArray.gstdetails;
       this.villages = this.commonArray.villagenames;
+      this.trucks = this.commonArray.hiddenownerdetails;
     }
 
     checkTON(index){     

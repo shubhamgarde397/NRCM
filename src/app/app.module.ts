@@ -21,7 +21,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { ExcelService } from './common/services/sharedServices/excel.service';
 import { HashLocationStrategy, Location, LocationStrategy } from '@angular/common';
-// import { QRCodeModule } from 'angularx-qrcode';
+import { QRCodeModule } from 'angularx-qrcode';
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -64,6 +65,8 @@ import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/conta
 import { DriverContactComponent } from './pages/CI/DriverContact/driver-contact/driver-contact.component';
 import { PmtMsgComponent } from './pages/Track/pmt-msg/pmt-msg.component';
 import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
+import { QRLoginComponent } from './pages/QRLogin/qrlogin/qrlogin.component';
+import { QRGeneratorComponent } from './pages/QRGenerator/qrgenerator/qrgenerator.component';
 
 @NgModule({
   declarations: [
@@ -107,10 +110,12 @@ import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
     ContactDAddComponent,
     DriverContactComponent,
     PmtMsgComponent,
-    ProfileComponent
+    ProfileComponent,
+    QRLoginComponent,
+    QRGeneratorComponent
   ],
   imports: [
-    // QRCodeModule,
+    QRCodeModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,

@@ -25,7 +25,20 @@ export class PDFComponent implements OnInit {
   public addr1 = '';
   public yearDrop;
 
-  bankArray = [];
+  bankArray = [
+{ 'Name': 'Sri Ram Traders', 'Amount': undefined },
+{ 'Name': 'Shri Vijay PVC Distributors', 'Amount': undefined },
+{ 'Name': 'Shri Vijay Pipe Corporation', 'Amount': undefined },
+{ 'Name': 'SS Agency', 'Amount': undefined },
+{ 'Name': 'Tubes and Pipes', 'Amount': undefined },
+{ 'Name': 'ALST', 'Amount': undefined },
+{ 'Name': 'Krishnaveni Associates', 'Amount': undefined },
+{ 'Name': 'Rajendra Pumps', 'Amount': undefined },
+{ 'Name': 'K2 Polymers', 'Amount': undefined },
+{ 'Name': 'Tirumala Pipe Distributors', 'Amount': undefined },
+{ 'Name': 'Universal Marketing', 'Amount': undefined },
+{ 'Name': 'Kumaran And Co', 'Amount': undefined }
+];
   public imgData2;
   tabber = '';
   public nop;

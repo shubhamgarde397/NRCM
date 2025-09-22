@@ -1,0 +1,23 @@
+<div class="container">
+
+    <div>
+      <h6>QR Are generated in quantity of 50.</h6>
+      <input type="number" [(ngModel)]="lrnoStart">
+      <button (click)="viewQR()">View and Download QR Codes!</button>
+      
+<!-- <button (click)="func1()">Download QR Sheet!</button> -->
+      <div class="container" style="display: none;" *ngIf="qrViewer">
+        <div class="row" *ngFor="let i of qrcodes;let j = index;">
+          <div class="col-sm-1" *ngFor="let ii of i;let jj = index;">
+            <qrcode [size]=250 [qrdata]=ii.qrcode id=qrcode_{{j}}_{{jj}} ></qrcode>
+            <!-- [elementType]="img" -->
+            <h6>{{ii.lrno}}</h6>    
+            
+          </div>
+        </div>
+      </div>
+
+    </div>
+</div>
+
+ <!-- [logo]="logoUrl" -->
