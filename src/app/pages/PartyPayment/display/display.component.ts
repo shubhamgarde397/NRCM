@@ -234,7 +234,7 @@ public paymentData3=[];
 
       }else{
         // balanceFollow['bf'] = false;
-        this.balanceFollowArr.push({'bf':false});
+        // this.balanceFollowArr.push({'bf':false});
       }
       flag = true;
       }
@@ -601,6 +601,9 @@ public paymentData3=[];
   }
 
   downloadForParty1(data) {//threshhold is 295
+    console.log(this.balanceFollowArr);
+    console.log(this.paymentData);
+    
     this.mailSendButton=true;
     let pager=1;
      let bigValueofY=0;
@@ -779,6 +782,7 @@ public paymentData3=[];
               doc.text(String('-'), 152, y)//partyname
             } else {
               doc.text(String(this.paymentData[i].amount), 152, y)//partyname
+              doc.text(String(this.paymentData[i].weight), 180, y)//partyname
               doc.text(String('-'), 135, y)//partyname
             }
       }else if(this.typeOfCols==='noamount'){
@@ -836,14 +840,13 @@ public paymentData3=[];
     //  doc.text(String(this.paymentData.length+1), 23, bigValueofY)//partyname
     if(this.typeOfCols==='default'){
       doc.text('Total', 106, bigValueofY)//partyname
-      doc.text(String(amount), 135, bigValueofY)//partyname
-      doc.text(String(payment), 151, bigValueofY)//partyname
+      doc.text(String(amount)+' - '+String(payment), 135, bigValueofY)//partyname
       if(data=='self'){
-      doc.text(String(balance), 172, bigValueofY)//partyname
+      doc.text(' = '+String(balance), 172, bigValueofY)//partyname
       }
       if(data=='party'){
       //  doc.text('Balance', 172, bigValueofY-5)//partyname
-       doc.text(String(balance), 172, bigValueofY)//partyname
+       doc.text(' = '+String(balance), 172, bigValueofY)//partyname
       }
     }else if(this.typeOfCols==='noamount'){
     }

@@ -26,7 +26,8 @@ export class DriverContactComponent implements OnInit {
   ]
   public tols=[
     {value:'Pipe',viewValue:'Pipe_Urse'},
-    {value:'Fittings',viewValue:'Fittings'},
+    {value:'Fittings',viewValue:'Fittings_TVS'},
+    {value:'Fittings',viewValue:'Fittings_DHL'},
     {value:'Ratnagiri',viewValue:'Pipe_Ratnagiri'}
   ]
 
@@ -123,22 +124,32 @@ public trucks=[]
     }
 
     checkTON(index){     
-      if((<HTMLInputElement>document.getElementById('tol_' + index)).value==='Fittings')
+      console.log((<HTMLInputElement>document.getElementById('tol_' + index)).value);
+      
+      if((<HTMLInputElement>document.getElementById('tol_' + index)).value==='Fittings_TVS')
         {
           this.turnbooklist1[index].tons=['0','6','SXL-32','MXL-32']
+        }
+      else if((<HTMLInputElement>document.getElementById('tol_' + index)).value==='Fittings_DHL')
+        {
+          this.turnbooklist1[index].tons=['0','6','7','SXL-32','MXL-32']
         }
         else
         {
           this.turnbooklist1[index].tons=['0','7','8','10','T'];
         }
+        console.log(this.turnbooklist1[index].tons);
+        
     }
   
     setParty(index){
       let data=(<HTMLInputElement>document.getElementById('pt_' + index)).value;
       switch (data) {
         case 'NRCM':
+          let qr=(<HTMLInputElement>document.getElementById('qrsetter')).value;
           this.turnbooklist1[index].parties2=this.parties.filter(r=>{return r.partyType=='NRCM'});
-          this.turnbooklist1[index]['qrs'].push({qr:(<HTMLInputElement>document.getElementById('qrsetter')).value});
+          this.turnbooklist1[index]['qrs']=[];
+          this.turnbooklist1[index]['qrs'].push({qr:qr});
           this.turnbooklist1[index]['otherbuttons']=true;
           this.turnbooklist1[index].tons=['0','7','8','10','T'];
           break;
@@ -286,6 +297,34 @@ alert('Incomplete Fields! Cannot Lock!')
   }
 
 
+   formatTruckNo(a){
+  a=a.toUpperCase();
+	let newtruck=[]
+	let raw=a.replace(/ /g, "");
+	newtruck.push(raw.slice(0,2))
+	newtruck.push(raw.slice(2,4))
+	
+	if(raw.length==10){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,6))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(6,10))	
+	}
+	if(raw.length==9){
+
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,5))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(5,9))	
+	}
+	if(raw.length==8){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,8))	
+	}
+	return newtruck.join('')
+}
+
+
   save(){
     let array=[]
     for(let i =0;i<this.turnbooklist1.length;i++){
@@ -293,7 +332,7 @@ alert('Incomplete Fields! Cannot Lock!')
       let c = []
       let q=[]
       let date = (<HTMLInputElement>document.getElementById('date_' + i)).value;
-      let tno = (<HTMLInputElement>document.getElementById('truckno_' + i)).value;
+      let tno = this.formatTruckNo((<HTMLInputElement>document.getElementById('truckno_' + i)).value);
       let pt = (<HTMLInputElement>document.getElementById('pt_' + i)).value;
       let pn = (<HTMLInputElement>document.getElementById('pn_' + i)).value;
       let p1 = (<HTMLInputElement>document.getElementById('p1_' + i)).value;

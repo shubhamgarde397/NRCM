@@ -1,11 +1,12 @@
 <div class="container">
 
+<div class="container">
+
     <div>
-      <h6>QR Are generated in quantity of 50.</h6>
-      <input type="number" [(ngModel)]="lrnoStart">
+      <input type="number" [(ngModel)]="lrnoStart" placeholder="LRNO Start">
+      <input type="number" [(ngModel)]="lrnoQTY" placeholder="Quantity">
       <button (click)="viewQR()">View and Download QR Codes!</button>
       
-<!-- <button (click)="func1()">Download QR Sheet!</button> -->
       <div class="container" style="display: none;" *ngIf="qrViewer">
         <div class="row" *ngFor="let i of qrcodes;let j = index;">
           <div class="col-sm-1" *ngFor="let ii of i;let jj = index;">
@@ -18,6 +19,7 @@
       </div>
 
     </div>
+</div>
 </div>
 
  <!-- [logo]="logoUrl" -->

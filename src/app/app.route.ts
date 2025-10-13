@@ -5,7 +5,6 @@ import { RegisterComponent } from './pages/register/register.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
-import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
@@ -71,10 +70,6 @@ export const routes: Routes =
         {
             path: 'Whatsapp',
             component: WhatsappComponent
-        },
-        {
-            path: 'WhysApp',
-            component: WhatsappTowhysappComponent
         },
         {
             path:'Transport_Navigation',

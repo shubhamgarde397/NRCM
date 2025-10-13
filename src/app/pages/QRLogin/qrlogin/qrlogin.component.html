@@ -89,13 +89,9 @@
 
 
 <!-- after login -->
- <div class="row" *ngIf="whichUser=='transport'" style="padding-top: 10vh;">
-    <!-- <div class="col-xs-12" style="padding-bottom: 10vh;padding-top:5vh;display: flex;justify-content: center;">
-          <button type="submit" class="btn btn-danger col-sm-6 col-xs-6" style="height: 10vh;" (click)="buttonAction2(1)">
-            <i class="material-icons">lock_open</i> Login
-          </button>
-    </div> -->
+ <div class="row" *ngIf="whichUser=='transport'" style="padding-top: 10vh;padding-left:10vh;">
     <h1>{{data.truckno}}</h1>
+    <h3>{{data.place}}</h3>
     <br>
     <h3>Eway Bill valid till {{ewaybill|date:'dd-MM-yyyy'}}</h3>
     <br>
@@ -103,6 +99,34 @@
     <br>
     <h4>Payment Date : {{data.actualPaymentDate}}</h4>
     <h4>Payment Amount : {{data.actualPaymentAmount}}</h4>
+
+    <!-- <h6>Click on the link to download account tally.</h6> -->
+
+  </div>
+
+
+   <div class="row" *ngIf="whichUser=='driver'" style="padding-top: 10vh;padding-left:10vh;">
+    <h1>{{data.truckno}}</h1>
+    <h3>{{data.place}}</h3>
+    <br>
+    <h3>Eway Bill valid till {{ewaybill|date:'dd-MM-yyyy'}}</h3>
+    <br>
+    <h4>POD Payment details</h4>
+    <br>
+    <h4>Payment Date : {{data.actualPaymentDate}}</h4>
+    <h4>Payment Amount : {{data.actualPaymentAmount}}</h4>
+
+    <!-- <h6>Click on the link to download account tally.</h6> -->
+
+  </div>
+
+     <div class="row" *ngIf="whichUser=='party'" style="padding-top: 10vh;padding-left:10vh;">
+    <h1>{{data.truckno}}</h1>
+    <h3>{{data.place}}</h3>
+    <h3>{{data.weight}}-Tons {{data.typeOfLoad}}</h3>
+    <br>
+    <h3>Eway Bill valid till {{ewaybill|date:'dd-MM-yyyy'}}</h3>
+    
 
   </div>
 

@@ -32,7 +32,6 @@ import {
   MatIconModule,
   MatSidenavModule
 } from '@angular/material';
-import { WhatsappTowhysappComponent } from './pages/whatsappTowhysapp/whatsapp-towhysapp/whatsapp-towhysapp.component';
 import { PDFComponent } from './pages/pdf/pdf.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
@@ -78,7 +77,6 @@ import { QRGeneratorComponent } from './pages/QRGenerator/qrgenerator/qrgenerato
     DrawerComponent,
     PageNotFoundComponent,
     MainPageComponent,
-    WhatsappTowhysappComponent,
     PDFComponent,
     TurnBookLocationDispComponent,
     HiddenTrucksComponent,
