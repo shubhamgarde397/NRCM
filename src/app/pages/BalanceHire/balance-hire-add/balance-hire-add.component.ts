@@ -119,7 +119,7 @@ public todaysDate;
   addtoBH(){
 
     for(let i=0;i<this.balanceDate.length;i++){
-      if(this.balanceDate[i]['lrno'].split('_')[0]==='nrcm'){}
+      if(String(this.balanceDate[i]['lrno']).split('_')[0]==='nrcm'){}
       else{
         if(this.balanceDate[i]['partyType']==='NRCM'){
           this.balanceDate[i]['lrno']=parseInt(this.balanceDate[i]['lrno'])

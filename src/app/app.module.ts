@@ -66,6 +66,7 @@ import { PmtMsgComponent } from './pages/Track/pmt-msg/pmt-msg.component';
 import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
 import { QRLoginComponent } from './pages/QRLogin/qrlogin/qrlogin.component';
 import { QRGeneratorComponent } from './pages/QRGenerator/qrgenerator/qrgenerator.component';
+import { RegisterQRComponent } from './pages/registerQR/register-qr/register-qr.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { QRGeneratorComponent } from './pages/QRGenerator/qrgenerator/qrgenerato
     PmtMsgComponent,
     ProfileComponent,
     QRLoginComponent,
-    QRGeneratorComponent
+    QRGeneratorComponent,
+    RegisterQRComponent
   ],
   imports: [
     QRCodeModule,

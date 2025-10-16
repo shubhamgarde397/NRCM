@@ -22,21 +22,23 @@ export class QRLoginComponent implements OnInit {
 
   @ViewChild('qrCode') qrCode: ElementRef;
 
-
+public todaysDate = ''
   public data=''
+  public date=new Date();
 public ewaybill=0;
     public myFormGroup: FormGroup;
+    public myFormGroup1:FormGroup;
   public list=[];
   public qr='https://www.nitinroadways.com/#/QL?d=4efg';
  
   public qrcodes1=[];
   public whichUser='';
-  public div2=0;
+  public div2=1;
   public s='';
   public qrlr='';
   public ss=''
   public dataofNR=[];
-
+  public userid=0;
 
   
    constructor(
@@ -50,7 +52,55 @@ public ewaybill=0;
 
     public formBuilder: FormBuilder,
     public security: SecurityCheckService
-   ) {}
+   ) {
+    this.todaysDate=this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
+   }
+
+   office(){
+    let login=false;
+    let pwd = prompt('Enter Password');
+    switch (pwd) {
+      case 'NRCMSHUB':
+        this.userid=1;
+        login=true;
+        break;
+      case 'NRCMANIL':
+        this.userid=7;
+        login=true;
+        break;
+      case 'NRCMROHI':
+        this.userid=3;
+        login=true;
+        break;
+      case 'NRCMPOOJ':
+        this.userid=2;
+        login=true;
+        break;
+    }
+    if(login){
+      this.div2=3;
+    }
+    else{
+      login=false;
+      alert('Wrong Password!')
+    }
+   }
+
+   setPOD(data){
+    let tempObj = {}
+    tempObj['method'] = 'BHInserttoProcessingByQR';
+    tempObj['tablename'] = '';
+    tempObj['remark']=data,
+    tempObj['lrno']=parseInt(this.qrlr),
+      tempObj['pageno']=this.userid,
+      tempObj['nrcmid']=this.userid,
+    tempObj['todayDate'] = this.todaysDate;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.todaysDate)//check this function
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.router.navigate[''];
+      });
+   }
 
    ngOnInit() {
 
@@ -58,6 +108,14 @@ public ewaybill=0;
       username: ['', Validators.required],
       password: ['', Validators.required],
       lrno:['', Validators.required]
+    });
+
+    this.myFormGroup1 = this.formBuilder.group({
+      truckNo: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      passwordC: ['', Validators.required],
+      contact:['', Validators.required]
     });
     
      this.activatedRoute.queryParams.subscribe(data=>{
@@ -68,7 +126,10 @@ public ewaybill=0;
       }
       else{
         this.qrlr = atob(data.d)
-        
+
+        this.myFormGroup.patchValue({
+    lrno:'LRNO : '+String(this.qrlr)
+  })
 
           }
 
@@ -77,8 +138,8 @@ public ewaybill=0;
     
    }
 
-   back(){
-    this.div2=0;
+      register(){
+    this.div2=2;
    }
 
      login() {
@@ -101,41 +162,35 @@ let value = this.myFormGroup.value;
             this.div2=-2;
           }
           else{
-            alert('Password Wrong,Contact Admin!')
+            alert('Password Wrong. Please contact Nitin Roadways!')
           }
         });
   }
 
+       registerFinal() {
+      let value = this.myFormGroup1.value;
 
-buttonAction2(data){
- this.div2=data;
- if(data==1){
-  this.myFormGroup.patchValue({
-    lrno:'LRNO : '+String(this.qrlr)
-  })
- }
-}
-   
- 
- }
-
-   
- 
-//  function (){
-//         let temp={}
-//       this.s=data['d']
-//           temp={
-//             lrno:this.s,
-//             tablename:'',
-//             method:'getbyqrlrno'
-//           }   
-
-//           this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
-//           .subscribe((res: any) => {
-//             console.log(res);
+      value['method'] = 'registerforqr';
+      value['truckNo']=value.username
+      value['username']=value.username
+      value['password']=value.password
+      value['passwordC']=value.passwordC
+      value['contact']=value.contact
+      value['lrno'] = parseInt(this.qrlr);
+      value['tablename']=''
+      
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, value, true)
+        .subscribe((res: any) => {
+          alert(res.Status)
+          if(res.Status == 'Registered'){
+            window.open("https://wa.me/+918529275757/?text=Hi,%0A%0ARegister my details.%0A%0AMy vehicle no is "+value.truckno+"%0A%0AClick on the link to confirm : %0Ahttps://www.nitinroadways.in/%23/Register?i="+btoa((this.qrlr).toString()),'_blank');
             
-//             });
-//  }
-
-
-
+          }
+          else{
+          this.router.navigate(['']);
+          }
+        });
+  }
+ 
+ }

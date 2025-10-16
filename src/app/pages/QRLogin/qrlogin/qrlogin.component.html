@@ -5,7 +5,7 @@
     <div class="container row" style="width: 100%;">
       <div class="col-sm-6">
       <div class="navbar-header">
-        <a class="navbar-brand fonthead" routerLink="NRCM_HOME">
+        <a class="navbar-brand fonthead" (click)="office()">
           Nitin Roadways And Cargo Movers
         </a>
       </div>
@@ -17,22 +17,6 @@
       <h3>SCAN VALID QR CODE TO LOGIN!</h3>
     </div>
     <!-- -1 -->
-<!-- 0 -->
- <div class="row" *ngIf="div2==0" style="padding-top: 10vh;">
-    <div class="col-xs-12" style="padding-bottom: 10vh;padding-top:5vh;display: flex;justify-content: center;">
-          <button type="submit" class="btn btn-danger col-sm-6 col-xs-6" style="height: 10vh;" (click)="buttonAction2(1)">
-            <i class="material-icons">lock_open</i> Login
-          </button>
-    </div>
-  </div>
-  <div class="row" *ngIf="div2==0">
-    <div class="col-xs-12" style="padding-bottom: 10vh;display: flex;justify-content: center;">
-          <button type="submit" class="btn btn-warning col-sm-6 col-xs-6" style="height: 10vh;" (click)="buttonAction2(2)">
-            <i class="material-icons">forward</i> POD<br>For Office Use
-          </button>
-    </div>
-  </div>
-<!-- 0 -->
 
 <!-- 1 -->
   <div class="row " *ngIf="div2==1">
@@ -54,11 +38,6 @@
             <input type="text" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="Username"
               formControlName="username" required />
           </div>
-          <div [hidden]="myFormGroup.controls.username.valid">
-            <font color="red">
-              <span class="glyphicon glyphicon-remove"></span>
-            </font>
-          </div>
         </div>
 
         <div class="form-group">
@@ -66,20 +45,18 @@
             <input type="password" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="Password"
               formControlName="password" required />
           </div>
-          <div [hidden]="myFormGroup.controls.password.valid">
-            <font color="red">
-              <span class="glyphicon glyphicon-remove"></span>
-            </font>
-          </div>
         </div>
 
         <div class="form-group">
-          <button type="button" (click)="back()" class="btn btn-primary col-sm-6 col-xs-6">
-            <i class="material-icons">arrow_back</i>
-          </button>
-          <button type="submit" class="btn btn-primary col-sm-6 col-xs-6">
+          <button type="submit" class="btn btn-danger col-sm-12 col-xs-12">
             <i class="material-icons">lock_open</i>
           </button>   
+        </div>
+
+        <div class="form-group">
+          <button type="button" (click)="register()" class="btn btn-warning col-sm-12 col-xs-12">
+            New? Click to Register.
+          </button>
         </div>
         
       </form>
@@ -131,6 +108,104 @@
   </div>
 
 <!-- after login -->
+
+
+
+<!-- register -->
+<div class="row " *ngIf="div2==2">
+  <h4 style="margin-top: 10vh;align-items: center;text-align: center;">Registration only for Drivers!</h4 >
+    <div class="col-xs-12" id="main" style="display: flex;justify-content: center;">
+      
+      <form [formGroup]="myFormGroup1" (ngSubmit)="registerFinal(myFormGroup1,!loginButton)" submitted=true
+        enctype="multipart/form data" action="/" name="myform" id="myform" class="form-horizontal">
+
+
+        <div class="form-group">
+          <div
+            class="col-sm-6 col-xs-6">
+            <input type="text" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="TN12TN1234"
+              formControlName="truckNo" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div
+            class="col-sm-6 col-xs-6">
+            <input type="text" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="Username"
+              formControlName="username" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-6 col-xs-6">
+            <input type="password" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="Password"
+              formControlName="password" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-6 col-xs-6">
+            <input type="text" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="Confirm Password"
+              formControlName="passwordC" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <div class="col-sm-6 col-xs-6">
+            <input type="number" style="color:wheat;width: 20vh;background-color: black;" class="form-control input" placeholder="8529275757"
+              formControlName="contact" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <button type="button" (click)="back()" class="btn btn-success col-sm-12 col-xs-12">
+            <i class="material-icons">arrow_back</i>
+          </button>
+        </div>
+
+        <div class="form-group">
+          <button type="button" (click)="registerFinal()" class="btn btn-warning col-sm-12 col-xs-12">
+            <i class="material-icons">vpn_key</i>
+          </button>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+
+<!-- register -->
+
+
+
+
+<!-- POD ENTRY -->
+<div class="row " *ngIf="div2==3">
+  
+    <div class="col-xs-12" id="main" style="padding-bottom: 10vh;padding-top:10vh;display: flex;justify-content: center;">
+      
+     
+
+        <div class="form-group">
+          <button type="button" (click)="setPOD('')" class="btn btn-success col-sm-12 col-xs-12">
+           Okay
+          </button>
+        </div>
+
+        <div class="form-group">
+          <button type="button" (click)="setPOD('damage')" class="btn btn-danger col-sm-12 col-xs-12">
+            Damage
+          </button>
+        </div>
+
+         <div class="form-group">
+          <button type="button" (click)="setPOD('shortage')" class="btn btn-warning col-sm-12 col-xs-12">
+            Shortage
+          </button>
+        </div>
+    </div>
+  </div>
+
+<!-- POD ENTRY -->
 
 
 

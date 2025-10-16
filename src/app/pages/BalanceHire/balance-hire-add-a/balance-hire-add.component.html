@@ -63,7 +63,7 @@
 
         <td>{{i.place}}</td>
         <td>{{i.partyType}}<br>{{i.snameparty}}</td>
-        <td>{{i.lrno}}</td>
+        <td (click)="addToCheckArray(i,j,1)">{{i.lrno}}</td>
       </tr>
     </tbody>
   </table>
