@@ -41,6 +41,20 @@ export class RegisterQRComponent implements OnInit {
    }
 
    call(){
+    let a = prompt('Enter Password');
+    let login = false;
+    switch (a) {
+      case 'NRCMSHUB':
+        login=true;
+        break;
+      case 'NRCMANIL':
+        login=true;
+        break;
+      case 'NRCMROHI':
+        login=true;
+        break;
+    }
+    if(login){
     let temp={}
             temp={
               lr:atob(this.s),
@@ -53,4 +67,10 @@ export class RegisterQRComponent implements OnInit {
               alert(res.Status)
               });
    }
+   else{
+    alert('Wrong Password!')
+  }
+  }
+  
+  
  }

@@ -57,6 +57,7 @@ public ewaybill=0;
    }
 
    office(){
+    if(this.div2==1){
     let login=false;
     let pwd = prompt('Enter Password');
     switch (pwd) {
@@ -84,6 +85,7 @@ public ewaybill=0;
       login=false;
       alert('Wrong Password!')
     }
+  }
    }
 
    setPOD(data){

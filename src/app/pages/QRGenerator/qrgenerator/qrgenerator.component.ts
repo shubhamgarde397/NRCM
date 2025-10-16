@@ -32,10 +32,12 @@ public logoUrl = 'assets/images/N.png';
 
 
        viewQR(){
+        
         if(this.lrnoQTY < 2){ 
           this.lrnoQTY = 2;
         }
         else{
+          this.lrnoQTY = this.lrnoQTY%20 + this.lrnoQTY;
   let temp={};
   this.qrcodes=[];
   let qrcodesinner=[];
