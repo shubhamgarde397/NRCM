@@ -29,7 +29,7 @@ public ewaybill=0;
     public myFormGroup: FormGroup;
     public myFormGroup1:FormGroup;
   public list=[];
-  public qr='https://www.nitinroadways.com/#/QL?d=4efg';
+  public qr='https://www.nitinroadways.in/#/QL?d=4efg';
  
   public qrcodes1=[];
   public whichUser='';
@@ -138,6 +138,10 @@ public ewaybill=0;
     
    }
 
+   backToLogin(){
+    this.div2=1;
+   }
+
       register(){
     this.div2=2;
    }
@@ -171,7 +175,7 @@ let value = this.myFormGroup.value;
       let value = this.myFormGroup1.value;
 
       value['method'] = 'registerforqr';
-      value['truckNo']=value.username
+      value['truckNo']=this.formatTruckNo(value.truckNo);
       value['username']=value.username
       value['password']=value.password
       value['passwordC']=value.passwordC
@@ -192,5 +196,32 @@ let value = this.myFormGroup.value;
           }
         });
   }
+
+     formatTruckNo(a){
+  a=a.toUpperCase();
+	let newtruck=[]
+	let raw=a.replace(/ /g, "");
+	newtruck.push(raw.slice(0,2))
+	newtruck.push(raw.slice(2,4))
+	
+	if(raw.length==10){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,6))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(6,10))	
+	}
+	if(raw.length==9){
+
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,5))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(5,9))	
+	}
+	if(raw.length==8){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,8))	
+	}
+	return newtruck.join('')
+}
  
  }
