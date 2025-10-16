@@ -57,14 +57,15 @@ export class RegisterQRComponent implements OnInit {
     if(login){
     let temp={}
             temp={
-              lr:atob(this.s),
+              lr:parseInt(this.s,16),
               tablename:'',
               method:'registerFinal2'
             }   
   
             this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
             .subscribe((res: any) => {
-              alert(res.Status)
+              alert(res.Status);
+              window.open("https://www.nitinroadways.in/#/QL?d="+(this.s),'_self')
               });
    }
    else{

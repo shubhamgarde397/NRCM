@@ -35,7 +35,7 @@ public ewaybill=0;
   public whichUser='';
   public div2=1;
   public s='';
-  public qrlr='';
+  public qrlr=0;
   public ss=''
   public dataofNR=[];
   public userid=0;
@@ -93,7 +93,7 @@ public ewaybill=0;
     tempObj['method'] = 'BHInserttoProcessingByQR';
     tempObj['tablename'] = '';
     tempObj['remark']=data,
-    tempObj['lrno']=parseInt(this.qrlr),
+    tempObj['lrno']=this.qrlr
       tempObj['pageno']=this.userid,
       tempObj['nrcmid']=this.userid,
     tempObj['todayDate'] = this.todaysDate;
@@ -127,7 +127,7 @@ public ewaybill=0;
         this.div2=-1;
       }
       else{
-        this.qrlr = atob(data.d)
+        this.qrlr = parseInt(data.d,16)
 
         this.myFormGroup.patchValue({
     lrno:'LRNO : '+String(this.qrlr)
@@ -182,7 +182,7 @@ let value = this.myFormGroup.value;
       value['password']=value.password
       value['passwordC']=value.passwordC
       value['contact']=value.contact
-      value['lrno'] = parseInt(this.qrlr);
+      value['lrno'] = this.qrlr
       value['tablename']=''
       
       this.apiCallservice.handleData_New_python
@@ -190,7 +190,7 @@ let value = this.myFormGroup.value;
         .subscribe((res: any) => {
           alert(res.Status)
           if(res.Status == 'Registered'){
-            window.open("https://wa.me/+918529275757/?text=Hi,%0A%0ARegister my details.%0A%0AMy vehicle no is "+this.formatTruckNo(value.truckNo)+"%0A%0AClick on the link to confirm : %0Ahttps://www.nitinroadways.in/%23/RQR?i="+btoa((this.qrlr).toString()),'_blank');
+            window.open("https://wa.me/+918529275757/?text=Hi,%0A%0ARegister my details.%0A%0AMy vehicle no is "+this.formatTruckNo(value.truckNo)+"%0A%0AClick on the link to confirm : %0Ahttps://www.nitinroadways.in/%23/RQR?i="+(this.qrlr).toString(16),'_blank');
             
           }
           else{

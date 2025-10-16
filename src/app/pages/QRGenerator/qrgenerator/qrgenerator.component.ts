@@ -46,7 +46,7 @@ public logoUrl = 'assets/images/N.png';
    qrcodesinner=[] 
     for(let ii=i;ii<i+12&&ii<this.lrnoQTY;ii++){
       temp={}
-      temp['qrcode']='https://www.nitinroadways.in/#/QL?d='+btoa((this.lrnoStart+ii).toString())
+      temp['qrcode']='https://www.nitinroadways.in/#/QL?d='+(this.lrnoStart+ii).toString(16)
       temp['lrno']=1+ii;
       qrcodesinner.push(temp)
   }
