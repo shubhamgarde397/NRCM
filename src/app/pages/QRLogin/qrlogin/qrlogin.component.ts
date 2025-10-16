@@ -188,7 +188,7 @@ let value = this.myFormGroup.value;
         .subscribe((res: any) => {
           alert(res.Status)
           if(res.Status == 'Registered'){
-            window.open("https://wa.me/+918529275757/?text=Hi,%0A%0ARegister my details.%0A%0AMy vehicle no is "+value.truckno+"%0A%0AClick on the link to confirm : %0Ahttps://www.nitinroadways.in/%23/Register?i="+btoa((this.qrlr).toString()),'_blank');
+            window.open("https://wa.me/+918529275757/?text=Hi,%0A%0ARegister my details.%0A%0AMy vehicle no is "+this.formatTruckNo(value.truckNo)+"%0A%0AClick on the link to confirm : %0Ahttps://www.nitinroadways.in/%23/RQR?i="+btoa((this.qrlr).toString()),'_blank');
             
           }
           else{

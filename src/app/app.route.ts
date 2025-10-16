@@ -61,7 +61,7 @@ export const routes: Routes =
             component: PmtMsgComponent
         },
         {
-            path: 'Register',
+            path: 'RQR',
             component: RegisterQRComponent
         },
 
