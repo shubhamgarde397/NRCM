@@ -72,17 +72,8 @@ console.log(this.qrcodes);
     let lrno=this.lrnoStart;
     const qrCodeElements = document.querySelectorAll('qrcode img');
        var doc = new jsPDF()//x : y : 290
-      //  var doc = new jsPDF('p','mm',[850,57])
-// lines 210 , 300
-      // doc.line(52.5,0,52.5,297)
-      // doc.line(105,0,105,297)
-      // doc.line(157.5,0,157.5,297)
 
-      // for(let i=0;i<10;i++){
-      //   doc.line(0,(30*i)-3,210,(30*i)-3)
-      // }
-
-      doc.setLineDash([0.5, 1],10);
+       doc.setLineDash([0.5, 1],10);
 
       doc.line(25.50,0,25.50,297)
       doc.line(77.75,0,77.75,297)
@@ -94,7 +85,7 @@ console.log(this.qrcodes);
       let innerI=0;
        for(let i=0;i<qrCodeElements.length;i++){
           const qrCodeImage = qrCodeElements[i] as HTMLImageElement;
-          const qrCodeImage1 = qrCodeElements[1] as HTMLImageElement;
+          const qrCodeImage1 = qrCodeElements[i+1] as HTMLImageElement;
       
                 if(i%20===0){
                   if(i==0){}
