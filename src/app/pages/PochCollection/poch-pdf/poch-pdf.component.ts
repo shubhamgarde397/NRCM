@@ -29,7 +29,7 @@ export class PochPdfComponent implements OnInit {
   public admin=false;
   public data=[];
   public billno='';
-
+  public balanceDate2 = [];
   constructor(public apiCallservice: ApiCallsService, public spinnerService: Ng4LoadingSpinnerService, public router: Router,
     public handledata: HandleDataService, public excelService: ExcelService,
     public securityCheck: SecurityCheckService, public handleF: handleFunction) {
@@ -69,13 +69,24 @@ export class PochPdfComponent implements OnInit {
         this.showPDFButton=true;
         this.printInfo = true;
         this.balanceDate = [];
-        this.balanceDate = res.Data;
+        this.balanceDate2 = [];
+        this.balanceDate2 = res.Data;
+        this.balanceDate = this.processData(this.balanceDate2);
+        console.log(this.balanceDate);
+        
         }else{
           this.showPDFButton=false;
           alert('No Data Present')
         }
       });
   };
+
+  processData(data){
+    for(let i = 0;i<data.length;i++){
+      this.balanceDate2[i]['qrcode'] = this.dth36(this.handleF.getDateddmmyy(this.pochDate).split('-').join('')+this.balanceDate2[i]['crvNo'][0],this.balanceDate2[i]['crvNo'][0])
+    }
+    return this.balanceDate2;
+  }
 
   what(j,data,i){
     switch (data) {
@@ -98,6 +109,47 @@ export class PochPdfComponent implements OnInit {
     
   }
 
+    dth36(a,data){
+      if(parseInt(data)==0){return ''}
+      else{
+    let hex_characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+    if (a == 0)
+    {return "0"}
+    let remainder = 0;
+    let hexadecimal = ""
+    while (a > 0){
+        remainder = a % 62
+        hexadecimal = hex_characters[remainder] + hexadecimal
+        a = Math.trunc(a/62)
+    }
+    return 'https://www.nitinroadways.in/#/C?d=' + hexadecimal;
+}
+    }
+
+ 
+
+  addCRVNo(i,j){
+    var a = parseInt(prompt('Enter Unique CRV Number.'));
+     let tempObj = {};
+
+    tempObj['method'] = 'addCRVNo';
+    tempObj['tablename'] = '';
+    tempObj['givenDate'] = this.pochDate;
+    tempObj['crvNo'] = a;
+    tempObj['nrlrno']= i['nrlrno']
+
+    this.apiCallservice.handleData_New_python
+      ('turnbook', 1, tempObj, true)
+      .subscribe((res:any) => {
+        alert(res.Status);
+        if(res.Status == 'Updated'){
+          for(let ii = 0;ii<i.sum;ii++){
+            this.balanceDate[j]['crvNo'][ii] = a;
+          }
+        }
+      })
+  }
+
   showData(i){
     let temp={
     }
@@ -110,7 +162,9 @@ export class PochPdfComponent implements OnInit {
         hamt:i['hamt'][ii],
         partyAdvance:i['partyAdvance'][ii],
         partyBalance:i['partyBalance'][ii],
-        check:i['check'][ii]
+        check:i['check'][ii],
+        crv:i['crv'][ii],
+        crvNo:i['crvNo'][ii]
       }
       this.data.push(temp)
     }
@@ -135,9 +189,11 @@ export class PochPdfComponent implements OnInit {
     let a=(<HTMLInputElement>document.getElementById('selectb_'+i)).checked;
     if(a){
       if(!newPage){doc.addPage()}
-        this.pdfData(doc,this.balanceDate[i],false);
+          const qrCodes = document.querySelectorAll('qrcode img');
+          let qrCodeElements = qrCodes[i]['src'];
+        this.pdfData(doc,this.balanceDate[i],false,qrCodeElements);
         doc.addPage();
-        this.pdfData(doc,this.balanceDate[i],true);
+        this.pdfData(doc,this.balanceDate[i],true,qrCodeElements);
         newPage=false;
     }
     }
@@ -195,12 +251,13 @@ pageCalculator(data){
   }
 }
 
-pdfData(doc,data,ack){
+pdfData(doc,data,ack,qrCodeElements){
   
   let partyType='';
   let panno=''
   let x=0;
 
+  
   
   switch (data.partyType) {
     case 'NR':
@@ -262,17 +319,17 @@ pdfData(doc,data,ack){
   doc.setLineWidth(0.2);
   doc.line(3, 48, 146, 48);
   
-  doc.setFontSize('12');
+  doc.setFontSize('10');
   doc.setFontType('normal');
   doc.setTextColor(0, 0, 0);
   
   doc.setFontType('bold');
   doc.setDrawColor(0,0,0);
-  doc.text('Bill No. :    '+billno,10,55)
-  doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,55)
+  doc.text('Bill No. :    '+billno,10,52)
+  doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,52)
   
-  doc.text("We "+partyType+" are submitting ",15,66)
-  doc.text(data['sum']+" PODs to "+data['_id'],15,72.5)
+  doc.text("We "+partyType+" are submitting ",15,60)
+  doc.text(data['sum']+" PODs to "+data['_id'],15,66.5)
   doc.setTextColor(224,0,0);
   doc.setFontSize('10');
   doc.text('PAN No. : '+panno,15,80)
@@ -280,13 +337,9 @@ pdfData(doc,data,ack){
   doc.setTextColor(0, 0, 0);
 // 
 // Signature box
-doc.line(110, 58, 143, 58);
-doc.line(110, 58, 110, 80);
-doc.line(143, 58, 143, 80);
-doc.line(110, 80, 143, 80);
-doc.setFontSize('8');
-doc.setTextColor(132,132,132);
-doc.text('Sign & Stamp',118,69)
+doc.addImage(qrCodeElements, 'PNG', 110, 54, 22, 22);
+doc.setFontSize('10');
+doc.text('Scan QR to Acknowledge',100,80)
 // 
 doc.setTextColor(0, 0, 0);
   
@@ -379,17 +432,17 @@ doc.setTextColor(0, 0, 0);
   doc.setLineWidth(0.2);
   doc.line(3, 48, 146, 48);
   
-  doc.setFontSize('12');
+  doc.setFontSize('10');
   doc.setFontType('normal');
   doc.setTextColor(0, 0, 0);
   
   doc.setFontType('bold');
   doc.setDrawColor(0,0,0);
-  doc.text('Bill No. :    '+billno,10,55)
-  doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,55)
+  doc.text('Bill No. :    '+billno,10,52)
+  doc.text('Date : '+this.handleF.getDateddmmyy(this.pochDate),110,52)
   
-  doc.text("We "+partyType+" are submitting "+data['sum']+" PODs to",15,66)
-  doc.text(data['_id'],15,72.5)
+  doc.text("We "+partyType+" are submitting "+data['sum']+" PODs to",15,60)
+  doc.text(data['_id'],15,66.5)
   doc.setTextColor(224,0,0);
   doc.setFontSize('10');
   doc.text('PAN No. : '+panno,15,80)
@@ -397,13 +450,9 @@ doc.setTextColor(0, 0, 0);
   doc.setTextColor(0, 0, 0);
 // 
 // Signature box
-doc.line(110, 58, 143, 58);
-doc.line(110, 58, 110, 80);
-doc.line(143, 58, 143, 80);
-doc.line(110, 80, 143, 80);
-doc.setFontSize('8');
-doc.setTextColor(132,132,132);
-doc.text('Sign & Stamp',118,69)
+doc.addImage(qrCodeElements, 'PNG', 110, 54, 22, 22);
+doc.setFontSize('10');
+doc.text('Scan QR to Acknowledge',100,80)
 // 
 doc.setTextColor(0, 0, 0);
   
@@ -463,6 +512,7 @@ doc.setTextColor(0, 0, 0);
         doc.setTextColor(132,132,132);
         doc.setFontType('bold');
         doc.setFontSize('20');
+
       doc.text('Acknowledgement Slip',21,205)
       doc.setFontType('normal');
       doc.setTextColor(0,0,0);

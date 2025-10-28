@@ -59,21 +59,9 @@ this.fetchData();
       case 'partyAdd':
         this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Add'])
         break;
-      case 'partyDisplay':
-        this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Display'])
-        break;
-      case 'turnAdd':
-        this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookAdd'])
-        break;
       case 'turnDisplay':
-        this.router.navigate(['Navigation/TURN_BOOK_HANDLER/TurnBookDispHandler'])
+        this.router.navigate(['Navigation/ContactDriver'])
         break;
-      case 'truckdetails':
-        this.router.navigate(['Navigation/OWNER_HANDLER'])
-        break;
-        case 'contactadd':
-          this.router.navigate(['Navigation/CONTACT_DAILY'])
-          break;
     }
 
   }

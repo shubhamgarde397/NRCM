@@ -340,7 +340,16 @@ alert('Incomplete Fields! Cannot Lock!')
       let tol = pt==='NRCM'?(<HTMLInputElement>document.getElementById('tol_' + i)).value:'Other';
       let weight = pt==='NRCM'?(<HTMLInputElement>document.getElementById('weight_' + i)).value:0;
       let pac = pt==='NRCM'?12:(pt==='NR'?363:65)
-      let tb = pt==='NRCM'?2950:0;
+
+      let rent = (<HTMLInputElement>document.getElementById('rent_' + i)).value;
+      let extra = (<HTMLInputElement>document.getElementById('extra_' + i)).value;
+      let extraMsg = (<HTMLInputElement>document.getElementById('extraMsg_' + i)).value;
+      let adv = (<HTMLInputElement>document.getElementById('adv_' + i)).value;
+      let tentativeBalance = (<HTMLInputElement>document.getElementById('bal_' + i)).value;
+      let bill = (<HTMLInputElement>document.getElementById('bill_' + i)).value;
+      let less = (<HTMLInputElement>document.getElementById('less_' + i)).value;
+      let cash = (<HTMLInputElement>document.getElementById('cash_' + i)).value;
+      let extra_hamali = (<HTMLInputElement>document.getElementById('coolie_' + i)).value;
       for(let j=0;j<this.turnbooklist1[i]['contacts'].length;j++){
         c.push((<HTMLInputElement>document.getElementById('co_' + i+j)).value)
       }
@@ -359,7 +368,15 @@ alert('Incomplete Fields! Cannot Lock!')
         'weight':weight,
         'c':c,
         'q':q,
-        'tb':tb,
+        'tb':isNaN(parseInt(tentativeBalance))?0:parseInt(tentativeBalance),
+        'rent':isNaN(parseInt(rent))?0:parseInt(rent),
+        'extra':isNaN(parseInt(extra))?0:parseInt(extra),
+        'extraMsg':extraMsg,
+        'adv':isNaN(parseInt(adv))?0:parseInt(adv),
+        'bill':isNaN(parseInt(bill))?0:parseInt(bill),
+        'less':isNaN(parseInt(less))?0:parseInt(less),
+        'cash':isNaN(parseInt(cash))?0:parseInt(cash),
+        'extra_hamali':isNaN(parseInt(extra_hamali))?0:parseInt(extra_hamali),
         'plant':tol==='Ratnagiri'?'Ratnagiri':(tol==='Pipe'?'Urse':'Talegaon')
       }
       array.push(temp);
@@ -370,6 +387,11 @@ alert('Incomplete Fields! Cannot Lock!')
           alert(res.Status);
           this.turnbooklist1=[];
         });
+  }
+
+  billAmount(i){
+    (<HTMLInputElement>document.getElementById('bill_'+i)).value=String(parseInt((<HTMLInputElement>document.getElementById('rent_'+i)).value)-parseInt((<HTMLInputElement>document.getElementById('adv_'+i)).value) - 3000);
+    
   }
 
   partyOk(){

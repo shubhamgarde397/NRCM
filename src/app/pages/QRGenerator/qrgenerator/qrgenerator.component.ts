@@ -54,7 +54,6 @@ public logoUrl = 'assets/images/N.png';
   }
   
   this.qrViewer=true;
-console.log(this.qrcodes);
 
   setTimeout(() => {
   this.func1();    

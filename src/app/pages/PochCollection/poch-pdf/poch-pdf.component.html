@@ -28,13 +28,17 @@
           <th>Srno</th>
           <th>Party</th>
           <th>Count</th>
+          <th>CRV</th>
           <th>Check</th>
         </tr>
         <tr *ngFor="let i of balanceDate;let j = index;">
-          <td>{{j+1}}</td>
+          <td>{{j+1}}
+            <span style="display: none;"><qrcode [size]=250 [qrdata]=i.qrcode id=qrcode_{{j}}></qrcode></span>
+          </td>
           <td>{{i._id}}</td>
           <td (click)="showData(i,j)">{{i.sum}}</td>
-          <td><input type="checkbox" id="selectb_{{j}}" (change)="what(j,'big',i)"></td>
+          <td (click)="addCRVNo(i,j)">{{balanceDate[j]['crvNo'][0]}}/{{balanceDate[j]['crv'][0]}}</td>
+          <td *ngIf="i.qrcode != ''"><input type="checkbox" id="selectb_{{j}}" (change)="what(j,'big',i)"></td>
         </tr>
       </table>
       <button class="btn btn-success" (click)="PochBill(i,j)">Receipt</button>
@@ -50,6 +54,7 @@
           <th>Truckno</th>
           <th>LRNO</th>
           <th>Amount</th>
+          <th>CRV</th>
           <th>Check</th>
           <th *ngIf="admin">Advance</th>
           <th *ngIf="admin">Balance</th>
@@ -60,6 +65,7 @@
           <td>{{i.truckno}}</td>
           <td>{{i.nrlrno}}</td>
           <td>{{i.hamt}}</td>
+          <td>{{i.crvNo}}/{{i.crv}}</td>
           <td><input type="checkbox" id="selects_{{j}}" [checked]=i.check  (change)="what(j,'small')"></td>
           <td *ngIf="(i.partyAdvance.length>0 && admin)">
             <ul>

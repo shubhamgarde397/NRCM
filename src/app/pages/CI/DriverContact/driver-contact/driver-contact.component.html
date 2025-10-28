@@ -12,52 +12,48 @@
     <table class="table table-bordered">
       <tr>
         <th>Srno</th>
-        <th>Date</th>
-        <th>TruckNo</th>
-        <th>Party Type</th>
-        <th>Party Name</th>
+        <th>Date-TNO</th>
+        <th>Party Type & Name</th>
         <th>Place1/Place2</th>
-        <th>TypeOfLoad</th>
-        <th>Contact</th>
-        <th>QR</th>
+        <th>Load & Ton</th>
+        <th>Co & QR</th>
+        <th>Rent</th>
+        <th>Details</th>
         <th>Lock/Unlock</th>
       </tr>
       <tr *ngFor="let i of turnbooklist1;let j = index;">
         <td>{{j+1}}</td>
-        <td><input type="date" id="date_{{j}}" [disabled]='i.lul==="unlock"' value={{i.loadingDate}}></td>
         <td>
-          <!-- <input type="text" id="truckno_{{j}}" [disabled]='i.lul==="unlock"'> -->
+          <input type="date" class="form-control" style="width: 50%;" id="date_{{j}}" [disabled]='i.lul==="unlock"' value={{i.loadingDate}}>
 
-          <input type="text" list="cars" class="form-control" id="truckno_{{j}}" [disabled]='i.lul==="unlock"' autocomplete="off"/>
+          <input type="text" list="cars" class="form-control"  style="width: 50%;" id="truckno_{{j}}" [disabled]='i.lul==="unlock"' autocomplete="off"/>
            <datalist id="cars">
             <option *ngFor="let own of trucks" value={{own.truckno}}>{{own.truckno}}</option>
            </datalist>
-        
         </td>
 
         <td>
-          <select class="form-control" id="pt_{{j}}" [disabled]='i.lul==="unlock"' (change)="setParty(j)">
+          <select class="form-control" id="pt_{{j}}"  style="width: 50%;" [disabled]='i.lul==="unlock"' (change)="setParty(j)">
             <option disabled id="">Default</option>
           <option *ngFor="let ii of pts;" value={{ii.value}}>{{ii.viewValue}}</option>
         </select>
-      </td>
 
-        <td>
-          <select class="form-control" [disabled]='i.lul==="unlock"' id="pn_{{j}}" style="background-color: black;color: wheat;">
+        <select class="form-control" [disabled]='i.lul==="unlock"' id="pn_{{j}}" style="width: 50%;background-color: black;color: wheat;">
             <option disabled id="">Default</option>
             <option value={{k._id}} *ngFor="let k of i.parties2;let kki = index">{{k.name}}</option>
           </select>
-        </td>
+
+      </td>
 
 
 
         <td>
-          <select class="form-control" [disabled]='i.lul==="unlock"' id="p1_{{j}}" style="background-color: black;color: wheat;">
+          <select class="form-control" [disabled]='i.lul==="unlock"' id="p1_{{j}}" style="width: 50%;background-color: black;color: wheat;">
             <option disabled id="">Default</option>
             <option value={{k._id}} *ngFor="let k of villages;let kki = index">{{k.village_name}}</option>
           </select>
           <br>
-          <select class="form-control" [disabled]='i.lul==="unlock"' id="p2_{{j}}" style="background-color: black;color: wheat;">
+          <select class="form-control" [disabled]='i.lul==="unlock"' id="p2_{{j}}" style="width: 50%;background-color: black;color: wheat;">
             <option disabled id="">Default</option>
             <option value={{k._id}} *ngFor="let k of villages;let kki = index">{{k.village_name}}</option>
           </select>
@@ -65,12 +61,12 @@
 
         <td *ngIf="!i.otherbuttons"></td>
         <td *ngIf="i.otherbuttons">
-          <select class="form-control" [disabled]='i.lul==="unlock"' id="tol_{{j}}" (change)="checkTON(j)">
+          <select class="form-control"  style="width: 50%;" [disabled]='i.lul==="unlock"' id="tol_{{j}}" (change)="checkTON(j)">
           <option *ngFor="let ii of tols;" value={{ii.viewValue}}>{{ii.viewValue}}</option>
         </select>
 
         <br>
-          <select class="form-control"  [disabled]='i.lul==="unlock"' id="weight_{{j}}">
+          <select class="form-control"  style="width: 50%;" [disabled]='i.lul==="unlock"' id="weight_{{j}}">
             <option *ngFor="let k of i.tons;let k = index;" value={{k}}>{{k}}</option>
           </select>
 
@@ -88,11 +84,11 @@
           </tr>
          </table>
          <button [disabled]='i.lul==="unlock"' class="btn btn-warning" (click)="addRow('c',j)">A</button>
-        </td>
 
-        <td *ngIf="!i.otherbuttons"></td>
-        <td *ngIf="i.otherbuttons">
-          <table border="0">
+         <hr>
+
+
+         <table border="0" *ngIf="i.otherbuttons">
            <tr>
              <th>QR</th>
              <th>D</th>
@@ -103,7 +99,23 @@
            </tr>
           </table>
           <button [disabled]='i.lul==="unlock"' class="btn btn-warning" (click)="addRow('q',j)">A</button>
-         </td>
+
+        </td>
+        
+        <td>
+          Rent : <input type="number" class="form-control" style="width: 50%;" id="rent_{{j}}" [disabled]='i.lul==="unlock"' value={{i.rent}}>
+          Extra :<input type="number" class="form-control" style="width: 50%;" id="extra_{{j}}" [disabled]='i.lul==="unlock"'>
+          Extra Msg :<input type="text" class="form-control" style="width: 50%;" id="extraMsg_{{j}}" [disabled]='i.lul==="unlock"'>
+          Adv :<input type="number" class="form-control" style="width: 50%;" id="adv_{{j}}" (change)="billAmount(j)" [disabled]='i.lul==="unlock"'>
+          Bal :<input type="number" class="form-control" style="width: 50%;" id="bal_{{j}}" [disabled]='i.lul==="unlock"' value=2950>
+        </td>
+
+        <td>
+          Bill : <input type="number" class="form-control" style="width: 50%;" id="bill_{{j}}" [disabled]='i.lul==="unlock"' value={{i.bill}}>
+          Coolie : <input type="number" class="form-control" style="width: 50%;" id="coolie_{{j}}" [disabled]='i.lul==="unlock"'>
+          Less : <input type="number" class="form-control" style="width: 50%;" id="less_{{j}}" [disabled]='i.lul==="unlock"'>
+          Cash : <input type="number" class="form-control" style="width: 50%;" id="cash_{{j}}" [disabled]='i.lul==="unlock"'>
+        </td>
 
         <td>
           <button class="btn btn-danger" (click)="lul(j,i.lul)">{{i.lul}}</button>

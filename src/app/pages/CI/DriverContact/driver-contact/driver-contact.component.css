@@ -17,3 +17,7 @@ input,select,table{
   thead>tr{
     color: wheat;
   }
+
+  .width50{
+    width: 50%;
+  }

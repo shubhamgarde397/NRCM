@@ -37,6 +37,7 @@ import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
 import { QRLoginComponent } from './pages/QRLogin/qrlogin/qrlogin.component';
 import { QRGeneratorComponent } from './pages/QRGenerator/qrgenerator/qrgenerator.component';
 import { RegisterQRComponent } from './pages/registerQR/register-qr/register-qr.component';
+import { CRVComponent } from './pages/CRV/crv/crv.component';
  
 export const routes: Routes =
     [
@@ -59,6 +60,10 @@ export const routes: Routes =
         {
             path: 'PM',
             component: PmtMsgComponent
+        },
+        {
+            path: 'C',
+            component: CRVComponent
         },
         {
             path: 'RQR',

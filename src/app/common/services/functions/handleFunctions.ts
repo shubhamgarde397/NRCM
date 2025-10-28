@@ -165,6 +165,20 @@ export class handleFunction {
         return convertedDate;
     }
 
+    fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        const base64String = reader.result as string;
+        resolve(base64String);
+      };
+      reader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
+
     getDate(day, monthno, year) {//yymmdd
         if (day < 10 && day > 0) {
             if (monthno < 10 && monthno > 0) { return year + "-0" + monthno + "-0" + day; }

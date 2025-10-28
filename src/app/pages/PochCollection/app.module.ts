@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { PochCollectorComponent } from './poch-collector/poch-collector.component';
 import { PochHandlerComponent } from './poch-handler/poch-handler.component';
 import { PochPdfComponent } from './poch-pdf/poch-pdf.component';
-
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
     declarations: [
@@ -16,6 +16,7 @@ import { PochPdfComponent } from './poch-pdf/poch-pdf.component';
     ],
     imports: [
         CommonModule,
+        QRCodeModule,
         ReactiveFormsModule,
         FormsModule,
         RouterModule.forChild(PochCollectionRouting),
