@@ -19,6 +19,7 @@ export class CRVComponent implements OnInit {
   public birthday = new Date().getFullYear() - 2004;
   public msg = ''
   public arr = []
+  public imgDataRes={};
    constructor(
      public sec:SecurityCheckService,
      public router: Router,
@@ -73,7 +74,7 @@ if(a=='c'){
       ('commoninformation', 1, tempObj, true)
       .subscribe((res:any) => {
         let a = res.Data
-        
+        this.imgDataRes = res.Data;
         let pics = ['raw_F','stamp_F','stamp_B','courier_D2T','courier_T2B','bill_F']
         for(let i=0;i<a.length;i++){//2
 
@@ -91,9 +92,6 @@ if(a=='c'){
             }
         }
       }
-
-      this.download(res.Data,this.arr);
-        
         
       })
     }
@@ -103,20 +101,29 @@ if(a=='c'){
 
 
 
-    download(data,arr) {
-       
-   
-       
-   console.log(data);
-   console.log(arr);
-   
+    download() {
+       let arr = this.arr;
+       let data = this.imgDataRes
    
        var doc = new jsPDF()
    
+
+       const qrCodes = document.querySelectorAll('img');
+       
+
+      
+
+       
+    
        for(let i=0;i<arr.length;i++){//link
 
-        let imgData=this.returnBase(arr[i])
-   
+        let imgData=new Image();
+        imgData.crossOrigin="anonymous"
+        imgData.src=qrCodes[i]['src'];
+        
+
+        
+        
        doc.setFontSize('28');
        doc.setFontType('bold');
        doc.setTextColor(234, 1, 0);
@@ -175,9 +182,7 @@ if(a=='c'){
        doc.setTextColor(0, 0, 0);
        doc.text(data[i]['datetruck'].split('_')[1].split(' ').join(''), 80, 75)
    
-setTimeout(() => {
   doc.addImage(imgData,arr[i].split('.').at(-1),10,80,100,100)
-}, 1000);
      
          
 
@@ -243,17 +248,17 @@ urlToBase64(url).then((base64String) => {
 
  urlMaker(data){
   let month = this.hF.genaratemonthNames()[parseInt(data[0]['givenDate'].slice(5,7))-1].slice(0,1);
-  
+  let date = data[0]['givenDate'].slice(5,7)+data[0]['givenDate'].slice(8,10)+data[0]['givenDate'].slice(2,4)
 
 
   let str = '';
 str =str+'Hi,%0A%0A'
-str =str+'We received '+ data.length +'POD with LRNO as%0A%0A'
+str =str+'We '+data[0]['p']+' received '+ data.length +' POD(s) with LRNO as%0A%0A'
 for(let i=0;i<data.length;i++){
   str =str + (i+1)+'. '+data[i]['nrlrno'] + '%0A'
 }
 str= str + '%0A';
-str= str + 'Bill no : '+month+data[0]['givenDate'].split('-').join('')+'%0A%0A'
+str= str + 'Bill no : '+month+date+'%0A%0A'
 
 // str= str + 'Click on the link to view the submitted LR%0A';
 // str= str + 'https://www.nitinroadways.in/%23/C?c='+this.dth36(parseInt(data[0]['crvNo']+(data[0]['givenDate'].split('-').join(''))));

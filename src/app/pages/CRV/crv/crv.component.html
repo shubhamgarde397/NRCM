@@ -25,6 +25,12 @@
       <br>
 
       <h3>{{msg}}</h3>
+      <button class="btn btn-warning" (click)='download()'>Download LR</button>
+      <div *ngFor="let i of arr;let j = index">
+        <img src={{i}} id={{j}}>
+      </div>
+
+      
       <!-- </marquee> -->
     </div>
 
