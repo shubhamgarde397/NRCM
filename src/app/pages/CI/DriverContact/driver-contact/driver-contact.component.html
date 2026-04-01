@@ -1,7 +1,10 @@
 <div class="row">
   <button class="btn btn-warning" (click)="tabF(0)">Add</button>
-  <button class="btn btn-warning" (click)="tabF(1)">Display</button>
-  <button class="btn btn-warning" (click)="tabF(2)">Ofc Location</button>
+  <button class="btn btn-warning" (click)="tabF(1)">PartyInfo</button>
+  <button class="btn btn-warning" (click)="tabF(2)">Location</button>
+  <button class="btn btn-warning" (click)="tabF(3)">Comm Bill</button>
+  <button class="btn btn-warning" (click)="tabF(4)">Balance Data</button>
+  <button class="btn btn-warning" (click)="tabF(5)">Memo</button>
 </div>
 
 
@@ -9,17 +12,16 @@
   <button class="btn btn-danger" (click)="get()">Get Data</button>
   <input type="text" [(ngModel)]="qrsetter" id="qrsetter">
   <input type="date" id="datesetter">
+  <button class="btn btn-primary" (click)="addRow('r',j)">Row</button>
     <table class="table table-bordered">
       <tr>
         <th>Srno</th>
-        <th>Date-TNO</th>
-        <th>Party Type & Name</th>
+        <th>Date-TNO-Party</th>
         <th>Place1/Place2</th>
         <th>Load & Ton</th>
         <th>Co & QR</th>
         <th>Rent</th>
         <th>Details</th>
-        <th>Lock/Unlock</th>
       </tr>
       <tr *ngFor="let i of turnbooklist1;let j = index;">
         <td>{{j+1}}</td>
@@ -30,10 +32,8 @@
            <datalist id="cars">
             <option *ngFor="let own of trucks" value={{own.truckno}}>{{own.truckno}}</option>
            </datalist>
-        </td>
 
-        <td>
-          <select class="form-control" id="pt_{{j}}"  style="width: 50%;" [disabled]='i.lul==="unlock"' (change)="setParty(j)">
+           <select class="form-control" id="pt_{{j}}"  style="width: 50%;" [disabled]='i.lul==="unlock"' (change)="setParty(j)">
             <option disabled id="">Default</option>
           <option *ngFor="let ii of pts;" value={{ii.value}}>{{ii.viewValue}}</option>
         </select>
@@ -42,8 +42,7 @@
             <option disabled id="">Default</option>
             <option value={{k._id}} *ngFor="let k of i.parties2;let kki = index">{{k.name}}</option>
           </select>
-
-      </td>
+        </td>
 
 
 
@@ -57,20 +56,18 @@
             <option disabled id="">Default</option>
             <option value={{k._id}} *ngFor="let k of villages;let kki = index">{{k.village_name}}</option>
           </select>
-        </td>
 
-        <td *ngIf="!i.otherbuttons"></td>
-        <td *ngIf="i.otherbuttons">
-          <select class="form-control"  style="width: 50%;" [disabled]='i.lul==="unlock"' id="tol_{{j}}" (change)="checkTON(j)">
-          <option *ngFor="let ii of tols;" value={{ii.viewValue}}>{{ii.viewValue}}</option>
-        </select>
+          <span *ngIf="i.otherbuttons">
+            <select class="form-control"  style="width: 50%;" [disabled]='i.lul==="unlock"' id="tol_{{j}}" (change)="checkTON(j)">
+              <option *ngFor="let ii of tols;" value={{ii.viewValue}}>{{ii.viewValue}}</option>
+            </select>
 
         <br>
           <select class="form-control"  style="width: 50%;" [disabled]='i.lul==="unlock"' id="weight_{{j}}">
             <option *ngFor="let k of i.tons;let k = index;" value={{k}}>{{k}}</option>
           </select>
-
-      </td>
+          </span>
+        </td>
 
         <td>
          <table border="0">
@@ -98,7 +95,11 @@
              <td><button class="btn btn-danger" [disabled]='i.lul==="unlock"' (click)="delete(j,'q',jj)">D</button></td>
            </tr>
           </table>
-          <button [disabled]='i.lul==="unlock"' class="btn btn-warning" (click)="addRow('q',j)">A</button>
+          <button [disabled]='i.lul==="unlock"' *ngIf="i.otherbuttons" class="btn btn-warning" (click)="addRow('q',j)">A</button>
+
+          <hr>
+
+          <input type="number" class="form-control" style="width: 50%;" id="hamt_{{j}}" [disabled]='i.lul==="unlock"' *ngIf="!i.otherbuttons" value=0>
 
         </td>
         
@@ -118,12 +119,11 @@
         </td>
 
         <td>
-          <button class="btn btn-danger" (click)="lul(j,i.lul)">{{i.lul}}</button>
           <button class="btn btn-danger" [disabled]='i.lul==="unlock"' (click)="delete(j,'r')">D</button>
         </td>
       </tr>
     </table>
-    <button class="btn btn-primary" (click)="addRow('r',j)">Row</button>
+    
   <button class="btn btn-success" [disabled]="!submitButton" (click)="save()">Save</button>
   <button class="btn btn-danger" [disabled]="submitButton" (click)="lul()">Force Enable</button>
   <button class="btn btn-warning" (click)="lulAll()">Force Lock</button>
@@ -185,3 +185,45 @@
   </table>
 
 </div>
+
+<div class="well" *ngIf="tab==3">
+  <button class="btn btn-danger" (click)="get4()">Get Data</button>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Srno</th>
+      <th>Date</th>
+      <th>TruckNo-Contact-Load</th>
+      <th>Place</th>
+      <th>Rent-Adv-Bal</th>
+      <th>Other</th>
+      <th>Advance</th>
+      <th>Code</th>
+    </tr>
+    <tr *ngFor="let i of comm;let j = index;">
+       <td>{{j+1}}</td>
+      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      <td>{{i.truckno}}<br>{{i.contacttb[0]}}<br>{{i.typeOfLoad}}</td>
+      <td>{{i.destination}}-{{i.destination2}}</td>
+      <td>{{i.rent}}-{{i.advance}}-{{i.balance}}</td>
+      <td>{{i.billamt}}-{{i.extra_hamali}}-{{i.cash}}-{{i.less}}</td>
+      
+      <td>
+        <ul>
+          <li *ngFor="let k of i.advanceArray">{{k.date}}-{{k.amount}}</li>
+        </ul>
+      </td>
+
+      <!-- <td *ngIf="extraAvailiable">
+        <ul>
+          <li *ngFor="let k of i.extra">{{k.extraAdvancemsg}}-{{k.extraAdvanceamt}}</li>
+        </ul>
+      </td> -->
+
+      <td><button class="btn btn-warning" (click)="sendMsg(i)">Send</button></td>
+      
+    </tr>
+  </table>
+<button class="btn btn-danger" (click)="CommOk()">Set All</button>
+</div>
+

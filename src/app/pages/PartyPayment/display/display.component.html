@@ -9,7 +9,7 @@
   </div>
   <div class="row">
     <div class="col-lg-12">
-<div class="col-sm-10" >
+<div class="col-sm-12" >
   <div class="form-group row">
 
     <div class="col-sm-3">
@@ -45,6 +45,17 @@
       <input type="date" class="form-control" [(ngModel)]="toloading">
       <label>{{toloading}}</label>
     </div>
+
+     <div class="col-sm-4">
+      <input type="number" class="form-control" [(ngModel)]="lrno" (keyup.enter)="addlrno()">>
+      <ul>
+      <li *ngFor="let k of lrnos;let z = index;">
+        <button class="btn btn-danger" (click)="delLR(z)">{{k}}</button>
+      </li>
+    </ul>
+    </div>
+
+    
     
    
     
@@ -94,11 +105,6 @@
       </button>
     </div>
 
-    <div class="col-sm-3">
-      <button mat-raised-button type="button" (click)="fancy('party')" class="btn-danger btn-sm btn-just-icon">
-        PDF : Fancy
-      </button>
-    </div>
       
       <div class="col-sm-3">
       <button mat-raised-button type="button" *ngIf="mailSendButton" (click)="mailSentSave()" class="btn-danger btn-sm btn-just-icon">
@@ -114,8 +120,9 @@
             <th>Lrno</th>
             <th>Party</th>
             <th>Amount</th>
-            <th>Value</th>
-            <th>Trucks</th>
+            <th>Pending</th>
+            <th>Dominance</th>
+            <!-- <th>Trucks</th> -->
             <th *ngIf="adminAccess">Delete</th>
             <th *ngIf="adminAccess">Edit</th>
             <th *ngIf="!adminAccess">Temp Delete</th>
@@ -128,14 +135,15 @@
             <td>{{j+1}}</td>
             <td>{{i.date|date:'dd-MM-yyyy'}}</td>
             <td>{{i.lrno}}</td>
-            <td>{{i.partyName}}</td>
+            <td>{{i.partyName}}-{{i.placeName}}</td>
             <td>{{i.amount}}</td>
-            <td>{{i.value}}</td>
-            <td>
+            <td (click)="changePReason(i,j)">{{i.pendingAmt}}<br>{{i.pendingReason}}</td>
+            <td><input type="checkbox" id="dom_{{j}}" [checked]="i.dominance"></td>
+            <!-- <td>
               <ul *ngFor="let k of i['loadingDate'];let l = index;">
                 <li>{{k.split('_')[1]}}:{{k.split('_')[3]}}</li>
               </ul>
-          </td>
+          </td> -->
             <td *ngIf="adminAccess">
               <button mat-raised-button type="button" (click)="delete(i,j)" class="btn-danger btn-sm btn-just-icon">
                 <i class="material-icons">delete</i>
@@ -159,31 +167,6 @@
           </tr>
         </tbody>
       </table>
-      <div class="row" *ngIf="tableData">
-        
-      <div class="col-sm-3">
-      <button mat-raised-button type="button" (click)="downloadForParty('party')" class="btn-danger btn-sm btn-just-icon">
-        PDF : Party
-      </button>
-    </div>
-
-      <div class="col-sm-3">
-      <button mat-raised-button type="button" (click)="downloadForParty('self')" class="btn-danger btn-sm btn-just-icon">
-        PDF: Self
-      </button>
-    </div>
-    <div class="col-sm-3">
-      <button mat-raised-button (click)="pochDetails()" class="btn btn-warning" style="width: 100%;margin-top: 10px;">
-       Poch Details
-      </button>
-    </div>
-      
-      <div class="col-sm-3">
-      <button mat-raised-button type="button" *ngIf="mailSendButton" (click)="mailSentSave()" class="btn-danger btn-sm btn-just-icon">
-        Mail Sent
-      </button>
-    </div>
-    </div>
     </div>
   </div>
 </div>

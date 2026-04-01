@@ -2,47 +2,18 @@
   <form [formGroup]="myFormGroup" (ngSubmit)="storeTurnBookData(myFormGroup)" submitted=true
     enctype="multipart/form data" action="/">
 
-    <!-- DATE-->
-    <!-- <div class="form-group row">
 
-      <div class="col-xs-1">
-        <label for="date"> Date</label>
-      </div>
-
-      <div class="col-xs-3">
-        <input type="date" id="date" class="form-control" formControlName="date">
-      </div>
-
-      <div class="col-xs-1">
-        <div [hidden]="myFormGroup.controls.date.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
-
-    </div> -->
 
     <div class="row">
       <div class="col-lg-1"><label for="paymentDate">Date</label></div>
     <div class="col-lg-9">
       <div class="row">
-        <!-- <div class="col-sm-2">
-      <button mat-raised-button type="button" (click)="leftRight('back')"
-        class="btn btn-danger btn-sm btn-just-icon delete">
-        Back
-      </button>
-    </div> -->
+
       <div class="col-sm-3">
         <input type="date" id="paymentDate" class="form-control" [(ngModel)]="paymentDate" formControlName="paymentDate">
       <h3>{{paymentDate|date:'dd-MM-yyyy'}}</h3>
     </div>
-      <!-- <div class="col-sm-2">
-      <button mat-raised-button type="button" (click)="leftRight('ahead')"
-        class="btn btn-primary btn-sm btn-just-icon delete">
-        Ahead
-      </button>
-    </div> -->
+
     </div>
     </div>
   </div>
@@ -121,6 +92,28 @@
 
     </div>
     <!--amount-->
+
+        <!--Notes-->
+    <div class="form-group row">
+
+      <div class="col-xs-1">
+        <label for="notes"> Notes </label>
+      </div>
+
+      <div class="col-xs-3">
+        <input type="text" id="notes" class="form-control" formControlName="notes">
+      </div>
+
+      <div class="col-xs-1">
+        <div [hidden]="myFormGroup.controls.notes.valid">
+          <font color="red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </font>
+        </div>
+      </div>
+
+    </div>
+    <!--Notes-->
 
 
     <div class="row">

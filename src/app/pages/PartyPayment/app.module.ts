@@ -9,6 +9,7 @@ import { UpdateComponent } from './update/update.component';
 import { HandlerComponent } from './handler/handler.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { PendingComponent } from './pending/pending.component';
+import { TptpmtComponent } from './TptPmt/tptpmt/tptpmt.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { PendingComponent } from './pending/pending.component';
         UpdateComponent,
         HandlerComponent,
         PaymentsComponent,
-        PendingComponent
+        PendingComponent,
+        TptpmtComponent
     ],
     imports: [
         CommonModule,

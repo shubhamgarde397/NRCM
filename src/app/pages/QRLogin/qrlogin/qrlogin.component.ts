@@ -65,10 +65,6 @@ public ewaybill=0;
         this.userid=1;
         login=true;
         break;
-      case 'NRCMANIL':
-        this.userid=7;
-        login=true;
-        break;
       case 'NRCMROHI':
         this.userid=3;
         login=true;
@@ -153,8 +149,8 @@ let value = this.myFormGroup.value;
       this.security.setUsername(value['username']);
 
       value['method'] = 'loginforqr';
-      value['username']=value.username
-      value['password']=value.password
+      value['username']=value.username.replace(/\s+/g, '').toLowerCase();
+      value['password']=value.password.replace(/\s+/g, '').toLowerCase();
       value['lrno'] = this.qrlr;
       value['tablename']=''
       
@@ -168,7 +164,7 @@ let value = this.myFormGroup.value;
             this.div2=-2;
           }
           else{
-            alert('Password Wrong. Please contact Nitin Roadways!')
+            alert(this.data['Message'])
           }
         });
   }
@@ -178,9 +174,9 @@ let value = this.myFormGroup.value;
 
       value['method'] = 'registerforqr';
       value['truckNo']=this.formatTruckNo(value.truckNo);
-      value['username']=value.username
-      value['password']=value.password
-      value['passwordC']=value.passwordC
+      value['username']=value.username.replace(/\s+/g, '').toLowerCase();
+      value['password']=value.password.replace(/\s+/g, '').toLowerCase();
+      value['passwordC']=value.passwordC.replace(/\s+/g, '').toLowerCase();
       value['contact']=value.contact
       value['lrno'] = this.qrlr
       value['tablename']=''

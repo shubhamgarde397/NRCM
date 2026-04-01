@@ -1,25 +1,30 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.service';
+import { ApiCallsService } from '../../../../common/services/ApiCalls/ApiCalls.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 import { Router } from '@angular/router';
-import { HandleDataService } from '../../../common/services/Data/handle-data.service';
+import { HandleDataService } from '../../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import * as  jsPDF from 'jspdf';
 import 'jspdf-autotable';
-
 @Component({
-  selector: 'app-display',
-  templateUrl: './display.component.html',
-  styleUrls: ['./display.component.css']
+  selector: 'app-tptpmt',
+  templateUrl: './tptpmt.component.html',
+  styleUrls: ['./tptpmt.component.css']
 })
-export class DisplayComponent implements OnInit {
-  public detailedPrint=false;
+export class TptpmtComponent implements OnInit {
+ public detailedPrint=false;
   data: any;
   show = false;
   tabledata: false;
   public today;
   public todaysDate;
+  public bigI;
+  public bigJ;
+  public apd;
+  public apa;
+  public pochamount;
+  public balRefNo;
   public name: string;
   public dbName = 1;
   public commonArray;
@@ -36,7 +41,7 @@ export class DisplayComponent implements OnInit {
   public partyid = '';
   public considerArray;
   public partyData;
-  public gstdetailslist;
+  public transports;
   public nopid;
   public adminAccess = false;
   public tableData = false;
@@ -73,37 +78,32 @@ public paymentData3=[];
 
   ngOnInit() {
     this.commonArray = this.securityCheck.commonArray;
-    this.considerArray = this.handledata.createConsiderArray('infogstonly')
+    this.considerArray = this.handledata.createConsiderArray('infotpt')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-    this.monthNames=this.handleF.genaratemonthNames()
     this.partyids=[];
     this.paymentData=this.handledata.givePaymentData();
     this.paymentData.length>0?this.tableData = true:this.tableData = false;
   }
 
-  typeofcolsF(){
-    this.typeOfColsB=true;
-  }
 
-  findgst() {
-    this.partyid = this.handleF.findgst(this.nopid, this.gstdetailslist);
-    this.partyids.push(this.handleF.findgst(this.nopid, this.gstdetailslist))
-  }
   getInformationData() {
-    this.spinnerService.show();
     let tempObj = { "method": "displaynew", "consider": this.considerArray ,'notall':false};
     this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
       .subscribe((res: any) => {
-        this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];
+        this.securityCheck.commonArray['transport'] = Object.keys(res.transport).length > 0 ? res.transport : this.securityCheck.commonArray['transport'];
         this.fetchBasic();
-        this.spinnerService.hide();
       });
+  }
+
+    refresh(){
+    this.considerArray=[0,0,0,0,0,0,1,0]
+    this.getInformationData()
   }
 
   fetchBasic() {
     this.commonArray = this.securityCheck.commonArray;
-    this.gstdetailslist = [];
-    this.gstdetailslist = this.commonArray.gstdetails;
+    this.transports = [];
+    this.transports = this.commonArray.transport;
   }
 
   cancel(data){
@@ -137,121 +137,34 @@ public paymentData3=[];
     this.date1="2021-"+this.handleF.generate2DigitNumber(String(this.handleF.getMonthNumber(this.monthName)))+"-01"
     this.date2="2021-"+this.handleF.generate2DigitNumber(String(this.handleF.getMonthNumber(this.monthName)))+"-31"
   }
-  find = function () {
-    this.mailSendButton=false;
-    this.paymentData=[];
-    let flag = false;
-    let tempObj = {};
-    let balanceFollow = {};
-    tempObj['from'] = this.date1;
-    tempObj['to'] = this.date2;
-    this.date1=tempObj['from'];
-    this.date2=tempObj['to'];
-    if ((this.frompayment === undefined) || (this.topayment === undefined) || (this.fromloading === undefined)  || (this.toloading === undefined) || (this.partyid === '')) { 
-      alert('Select a Date and Party'); 
-    }
-    else {
-      tempObj['frompayment'] = this.frompayment;
-      tempObj['topayment'] = this.topayment;
-      tempObj['fromloading'] = this.fromloading;
-      tempObj['toloading'] = this.toloading;
-      tempObj['method'] = 'partyPaymentPDFForParty';
-      tempObj['partyid']=this.partyids;
-      this.frompayment=tempObj['frompayment'];
-      this.topayment=tempObj['topayment'];
-      this.fromloading=tempObj['fromloading'];
-      this.toloading=tempObj['toloading'];
-      if (confirm('Want to add Balance Follow?')) {
-        this.balanceFollowMsg = prompt('Balance Follow Message');
-        this.balanceFollowAmount = parseInt(prompt('Balance Follow Amount'));
-        balanceFollow['partyName'] = this.balanceFollowMsg;
-        balanceFollow['amount'] = this.balanceFollowAmount;
-        balanceFollow['type'] = 'buy';
-        balanceFollow['lrno'] = 'Balance Follow';
-        balanceFollow['bf'] = true;
-      }else{
-        balanceFollow['bf'] = false;
-      }
-      flag = true;
-      }
-    if (flag) {
-      tempObj['tablename'] = 'partyPayment'
-      tempObj['partyid']=this.partyids.map(r=>r._id);
-      tempObj['display'] = parseInt('5');
-      tempObj['lrnos'] = this.lrnos;
-      this.balanceFollowGlobal=balanceFollow;
-      this.paymentData = [];
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-        .subscribe((res: any) => {
-          this.paymentData = res.paymentData;
-          this.paymentData =  this.pdfJSONForParty(res.paymentData,balanceFollow,'addBalance');
-          if (this.paymentData.length > 0) {
-            this.tableData = true;
-            this.handledata.savePaymentData(this.paymentData);
-          } else {
-            alert('No Data Available.');
-            this.tableData = false;
-          }
-        });
-    }
-  };
+
   findMany = function () {
-    this.balanceFollowArr=[];
-    this.mailSendButton=false;
     this.paymentData=[];
     let flag = false;
     let tempObj = {};
-    let balanceFollow = {};
-    tempObj['from'] = this.date1;
-    tempObj['to'] = this.date2;
-    this.date1=tempObj['from'];
-    this.date2=tempObj['to'];
-    if ((this.frompayment === undefined) || (this.topayment === undefined) || (this.fromloading === undefined)  || (this.toloading === undefined) || (this.partyid === '')) { 
+console.log(this.nopid);
+
+    if ((this.fromloading === undefined)  || (this.toloading === undefined) || (this.nopid === undefined)) { 
       alert('Select a Date and Party'); 
     }
     else {
-      tempObj['frompayment'] = this.frompayment;
-      tempObj['topayment'] = this.topayment;
       tempObj['fromloading'] = this.fromloading;
       tempObj['toloading'] = this.toloading;
-      tempObj['method'] = 'partyPaymentPDFForParty';
-      tempObj['partyid']=this.partyids;
-      this.frompayment=tempObj['frompayment'];
-      this.topayment=tempObj['topayment'];
+      tempObj['method'] = 'transportPaymentPDFForParty';
+      tempObj['transportid']=this.nopid;
       this.fromloading=tempObj['fromloading'];
       this.toloading=tempObj['toloading'];
-      if (confirm('Want to add Balance Follow?')) {
-        let howmany=parseInt(prompt('How many BF?'));
-        for(let ii=0;ii<howmany;ii++){
 
-          let balanceFollowTemp={}
-        this.balanceFollowMsg = prompt('Balance Follow Message');
-        this.balanceFollowAmount = parseInt(prompt('Balance Follow Amount'));
-        balanceFollowTemp['partyName'] = this.balanceFollowMsg;
-        balanceFollowTemp['amount'] = this.balanceFollowAmount;
-        balanceFollowTemp['type'] = 'buy';
-        balanceFollowTemp['lrno'] = 'Balance Follow';
-        balanceFollowTemp['bf'] = true;
-        this.balanceFollowArr.push(balanceFollowTemp);
-        }
-        this.balanceFollowArr.reverse()
-
-      }else{
-        // balanceFollow['bf'] = false;
-        // this.balanceFollowArr.push({'bf':false});
-      }
       flag = true;
-      }
+      
     if (flag) {
-      tempObj['tablename'] = 'partyPayment'
-      tempObj['partyid']=this.partyids.map(r=>r._id);
-      tempObj['display'] = parseInt('5');
+      tempObj['tablename'] = 'transportPayment'
+      tempObj['transportid']=this.nopid;
       tempObj['lrnos'] = this.lrnos;
       this.balanceFollowGlobal=this.balanceFollowArr;
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
-          this.paymentData = res.paymentData;
-          this.paymentData =  this.pdfJSONForParty(res.paymentData,this.balanceFollowArr,'addBalance');
+          this.paymentData = res.Data;
           if (this.paymentData.length > 0) {
             this.tableData = true;
             this.handledata.savePaymentData(this.paymentData);
@@ -261,147 +174,69 @@ public paymentData3=[];
           }
         });
     }
+  }
   };
 
-  changePReason(i,j){
-let pendingAmt = parseInt(prompt('Enter the Amount'));
-let pendingReason = prompt('Enter the Reason');
-
-     let formbody = {};
-      formbody['_id'] = i._id;;
-      formbody['method'] = 'updateLRPendingPayment';
-      formbody['tablename'] = '';
-      formbody['pendingReason']=pendingReason;
-      formbody['pendingAmt']=pendingAmt;
-      formbody['lrno']=i['lrno'];
-
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
-        .subscribe((response: Response) => {
-          alert(response['Status']);
-          this.paymentData[j]['pendingReason']=pendingReason;
-          this.paymentData[j]['pendingAmt']=pendingAmt;
-        });
-  }
-  
-
-  deletePartyIds(i,j){
-    this.partyids.splice(j,1);
-  }
-  mailSentSave(){
-    let tempObj={}
-    let newDate=new Date()
-    this.mailSentDate= newDate.getFullYear()+'-'+(this.handleF.generate2DigitNumber(String(newDate.getMonth()+1)))+'-'+(this.handleF.generate2DigitNumber(newDate.getDate()));
-    tempObj['partyid']=this.partyids[0]['_id'];
-    tempObj['loadingFrom']=this.fromloading;
-    tempObj['loadingTo']=this.toloading;
-    tempObj['paymentFrom']=this.frompayment;
-    tempObj['paymentTo']=this.topayment;
-    tempObj['balanceFollowMsg']=this.balanceFollowMsg
-    tempObj['balanceFollowAmount']=this.balanceFollowAmount
-    tempObj['balanceFollowArr']=this.balanceFollowArr
-    tempObj['mailSentDate']=this.mailSentDate;
-    tempObj['method']='insert';
-    tempObj['tablename']='MailDetails';
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true).subscribe((res: any) => {alert(res.Status)});
+  setVar(i,j){
+    this.bigI=i;
+    this.bigJ=j;
   }
 
-  pdfJSON(data, balanceFollow,todo) {
-    let val = 0
-    if(todo=='addBalance'){
-    if(balanceFollow['bf']){
-    data.unshift(balanceFollow);
-    }
-  }
-    
-    
-    data.forEach((res) => {
-      if (res['type'] == 'buy') {
-        val = val + res['amount'];
-        res['value'] = val;
-
-      }
-      else if (res['type'] == 'payment') {
-        val = val - res['amount'];
-        res['value'] = val;
-      }
-    })
-    return data;
-  }
-  pdfJSONForParty(data, balanceFollow,todo) { 
-    let val = 0
-    if(todo=='addBalance'){
-      for(let i=0;i<balanceFollow.length;i++){
-    if(balanceFollow[i]['bf']){
-    data.unshift(balanceFollow[i]);
-    }
-  }
-  }
-    data.forEach((res) => {
-     if (res['pendingAmt'] > 0) { 
-      res['dominance'] = true;
-     }
-      if (res['type'] == 'buy') {
-        val = val + res['amount'];
-        res['value'] = val;
-
-      }
-      else if (res['type'] == 'payment') {
-        val = val - res['amount'];
-        res['value'] = val;
-      }
-    })
-    
-    return data;
-  }
-
-  delete(id, j) {
-    if (confirm('Are you sure?')) {
+  submitapd(){
       let formbody = {}
-      formbody['_id'] = id._id;
-      formbody['method'] = 'delete';
-      formbody['tablename'] = 'partyPayment';
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
-        .subscribe((response: Response) => {
-          alert(response['Status']);
-          this.paymentData.splice(j, 1);
-          if (this.paymentData.length > 0) {
-            this.tableData = true;
-          } else {
-            this.tableData = false;
-          }
-        });
-    }
-  }
-  edit(i,j){
-    var amt=prompt('Enter the updating amount')
-    if(amt!==null){
-      let formbody = {'partyData':{}}
 
-      formbody['_id'] = i._id;;
-      formbody['method'] = 'editAmount';
-      formbody['tablename'] = 'partyPayment';
-      formbody['amount']=parseInt(amt);
+      formbody['_id'] = this.bigI._id;;
+      formbody['method'] = 'addapd';
+      formbody['tablename'] = '';
+      formbody['apd']=this.apd;
+      formbody['apa']=this.apa;
+      formbody['pochAmount']=this.pochamount;
+      formbody['balRefNo']=this.balRefNo;
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
           alert(response['Status']);
-          this.paymentData[j]['amount']=parseInt(amt);
+          this.paymentData[this.bigJ]['actualPaymentDate']=this.apd;
+          this.paymentData[this.bigJ]['actualPaymentAmount']=this.apa;
+          this.paymentData[this.bigJ]['pochAmount']=this.pochamount;
+          this.paymentData[this.bigJ]['balRefNo']=this.balRefNo;
         });
-    }
   }
-    deleteTrucks(i,j){
-      this.handledata.savePPData([i])
-      this.router.navigate(['Navigation/PARTY_PAYMENT_HANDLER/Update']);
+
+  rentUpdate(i,j){
+  let digit = 0
+  let gono = false;
+
+      digit=parseInt(prompt('Enter the updating amount'))
+    if(digit!==null){
+      if(!isNaN(digit)){      
+        gono = true
+      }
+      else{
+        alert('Error with number')
+      }
+      
+    }else{
+      alert('Error with number')
     }
-  
+
+if(gono){
+  let tempObj={}
+  tempObj['method']='rentupdate';  //work from here
+  tempObj['tablename']='';
+  tempObj['_id']=i['_id']
+  tempObj['rent']=digit
+
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this.paymentData[j]['rent'] = digit;
+    });
+  }
+}
 
   deleteTemp(id,j){
     if (confirm('Are you sure to temporarily delete?')) {
-      if(id['bF']){
-        // this.balanceFollowGlobal={}
-        // this.balanceFollowGlobal['bF']=false;
-        this.balanceFollowGlobal.splice(j,1)
-      }
           this.paymentData.splice(j, 1);
           if (this.paymentData.length > 0) {
             this.tableData = true;
@@ -409,14 +244,11 @@ let pendingReason = prompt('Enter the Reason');
             this.tableData = false;
           }
           
-          this.paymentData =  this.pdfJSONForParty(this.paymentData,this.balanceFollowGlobal,'');
           alert('Done!');
     }
   }
 
-  getAdminAccess() {
-    this.adminAccess = !this.adminAccess;
-  }
+
 
   downloadForParty1(data) {//threshhold is 295
     console.log(this.balanceFollowArr);

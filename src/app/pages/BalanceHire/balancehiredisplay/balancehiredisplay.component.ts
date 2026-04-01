@@ -244,6 +244,7 @@ public ifsc;
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, true)
       .subscribe((res:any) => {
+        if(res.balanceData.length>0){
         this.showPDFButton=true;
         this.printInfo = true;
         this.balanceDate = [];
@@ -254,6 +255,11 @@ public ifsc;
         this.findDues(res);
         this.securityCheck.commonBalanceHire = res.balanceData;
         this.printed = res.balanceData.length > 0 ? res.balanceData[0].print : true;
+        }
+        else{
+          this.showTable=false;
+          alert('Data not avaliable!')
+        }
       });
   };
 
@@ -398,7 +404,7 @@ if(confirm('Do you want to temporary delete it?')){
   msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
   msg=msg+'*Pune*%0A'
   msg=msg+'9822288257%0A'
-  msg=msg+'9766707061%0A'
+  msg=msg+'8529275757%0A'
     switch (type) {
       case 'wa':
           window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
@@ -466,7 +472,7 @@ if(confirm('Do you want to temporary delete it?')){
     msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
     msg=msg+'*Pune*%0A'
     msg=msg+'9822288257%0A'
-    msg=msg+'9766707061%0A'
+    msg=msg+'8529275757%0A'
       switch (type) {
         case 'wa':
             window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
@@ -591,7 +597,7 @@ if(confirm('Do you want to temporary delete it?')){
     doc.line(61, i + 6 - 16, 61, i + 12 - 16);
     // doc.line(72, i + 6 - 16, 72, i + 12 - 16);
     doc.line(83, i + 6 - 16, 83, i + 12 - 16);
-    doc.line(146, i + 6 - 16, 146, i + 12 - 16);
+    doc.line(149, i + 6 - 16, 149, i + 12 - 16);
 
 
     //vertical line after date till headers
@@ -608,7 +614,7 @@ if(confirm('Do you want to temporary delete it?')){
     doc.text('Payment Details', 111.5, i + 10 - 16)
     }
 
-    doc.text('Account Details', 146.5, i + 10 - 16)
+    doc.text('Account Details', 150, i + 10 - 16)
     //Headers End
     //Line after headers
     doc.setDrawColor(0, 0, 0);
@@ -655,7 +661,7 @@ if(confirm('Do you want to temporary delete it?')){
         // doc.line(72, 6, 72, 12);
 
         doc.line(83, 6, 83, 12);
-        doc.line(146, 6, 146, 12);
+        doc.line(149, 6, 149, 12);
         //vertical line after date
         //Headers
         doc.setFontSize('10');
@@ -671,7 +677,7 @@ if(confirm('Do you want to temporary delete it?')){
           doc.text('Payment Details', 111.5, 10)
           }
 
-        doc.text('Account Details', 146.5, 10)
+        doc.text('Account Details', 150, 10)
         //Headers End
         //Line after headers
         doc.setDrawColor(0, 0, 0);
@@ -702,13 +708,12 @@ if(confirm('Do you want to temporary delete it?')){
         doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 83.5, i);//truckno
-          doc.text(this.balanceDate[z].truckData[k].remark, 50, i);//truckno
+          doc.text(this.balanceDate[z].truckData[k].remark, 40, i);//truckno
         
         doc.setFontSize('8');
         doc.text(String(this.latemarker(this.balanceDate[z].truckData[k].date,this.selectedDate)), 50, i);//comments
         if(dataTF){
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails+'-'+String(this.billno(this.balanceDate[z].truckData[k].billno)):'', 107, i);//truckno
-        doc.text(this.balanceDate[z].truckData[k].Prd, 142, i);//truckno
         }        
 
         doc.setFontSize('10');
@@ -750,7 +755,7 @@ if(confirm('Do you want to temporary delete it?')){
       doc.line(61, i - (data.length * 6) -11-(bigK*2), 61, i + 7-(bigK*2)+adder);
 
       doc.line(83, i - (data.length * 6) -11-(bigK*2), 83, i + 7-(bigK*2)+adder);
-      doc.line(146, i - (data.length * 6) -11-(bigK*2), 146, i + 7-(bigK*2)+adder);
+      doc.line(149, i - (data.length * 6) -11-(bigK*2), 149, i + 7-(bigK*2)+adder);
 
   
       doc.setFontSize('10');

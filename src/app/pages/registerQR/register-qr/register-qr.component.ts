@@ -47,9 +47,6 @@ export class RegisterQRComponent implements OnInit {
       case 'NRCMSHUB':
         login=true;
         break;
-      case 'NRCMANIL':
-        login=true;
-        break;
       case 'NRCMROHI':
         login=true;
         break;

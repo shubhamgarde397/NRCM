@@ -1,0 +1,166 @@
+  <div class="container">
+
+  <div class="row">
+    <div class="col-lg-12">
+<div class="col-sm-12" >
+  <div class="form-group row">
+
+    <div class="col-sm-3">
+      <select id="nop" class="form-control" [(ngModel)]="nopid">
+        <option disabled selected>Select Name of The Transport</option>
+        <option *ngFor="let i of transports;let j = index;" value={{i._id}}>
+          {{i.tptName}}
+        </option>
+      </select>
+      <button class="btn btn-danger" (click)="refresh()">Refresh</button>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <h4>Truck Loading Dates : </h4>
+    <div class="col-sm-4">
+      <input type="date" class="form-control" [(ngModel)]="fromloading" id="loadDate">
+      <label>{{fromloading}}</label>
+    </div>
+    <div class="col-sm-4">
+      <input type="date" class="form-control" [(ngModel)]="toloading">
+      <label>{{toloading}}</label>
+    </div>
+
+     <div class="col-sm-4">
+      <input type="number" class="form-control" [(ngModel)]="lrno" (keyup.enter)="addlrno()">>
+      <ul>
+      <li *ngFor="let k of lrnos;let z = index;">
+        <button class="btn btn-danger" (click)="delLR(z)">{{k}}</button>
+      </li>
+    </ul>
+    </div>
+
+    
+    
+   
+    
+    </div>
+
+      </div>
+      
+      <div class="row">
+
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="findMany()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            Find
+          </button>
+        </div>
+
+            
+      </div>
+
+      <div class="row" *ngIf="tableData">
+       
+    <div class="col-sm-3">
+      <button mat-raised-button type="button" (click)="downloadForParty1('party')" class="btn-danger btn-sm btn-just-icon">
+        PDF
+      </button>
+    </div>
+
+    </div>
+      <table class="table" style="width:100%" align="center" *ngIf="tableData">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Place</th>
+            <th>Rent</th>
+            <th>Advance</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of paymentData;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.truckNo}}</td>
+            <td>{{i.place}}</td>
+            <td (click)="rentUpdate(i,j)">{{i.rent}}</td>
+            <td>
+              <ul *ngFor="let k of i.advanceArray;let kk = index">
+                <li (click)="addAdvRefNo(i,kk)">{{k.date|date:'dd-MM-yyyy'}}<br>{{k.amount}}<br>REF:{{k.advRefNo}}</li>
+              </ul>
+            </td>
+            <td (click)="setVar(i,j)" data-toggle="modal" data-target="#myModal">{{i.actualPaymentAmount}}<br>{{i.actualPaymentDate}}<br>Ref : {{i.balRefNo}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+   <div class="container">
+    
+              <div class="modal fade" id="myModal" role="dialog" style="background-color: black;">
+                <div class="modal-dialog">
+                
+              
+                  <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
+                    <div class="modal-header">
+                      <button style="color:black;" type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Edit for {{truckno5b}}</h4>
+                    </div>
+                    <div class="modal-body" style="background-color: black;">
+                <div class="well" style="background-color: black;">
+            
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Actual Amount : 
+                      <input style="color:wheat;background-color: black;" type="number" class="form-control" [(ngModel)]="apa">
+                    </div>
+                  </div>
+            
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Actual Date : 
+                      <input style="color:wheat;background-color: black;" type="date" class="form-control" [(ngModel)]="apd">
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Poch Amount : 
+                      <input style="color:wheat;background-color: black;" type="number" class="form-control" [(ngModel)]="pochamount">
+                    </div>
+                  </div>
+
+                  <div class="row form-group">
+                    <div class="col-sm-12">
+                      Bal Ref : 
+                      <input style="color:wheat;background-color: black;" type="text" class="form-control" [(ngModel)]="balRefNo">
+                    </div>
+                  </div>
+                  
+            
+                  <div class="row form-group">
+                    
+                    
+                  <div class="col-sm-4">
+                    <button style="color:black;" type="button" class="btn btn-warning" (click)="submitapd()">
+                      Submit
+                    </button>
+                  </div>
+                  </div>
+                </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button style="color:black;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                  
+                </div>
+              </div>
+              
+            </div>

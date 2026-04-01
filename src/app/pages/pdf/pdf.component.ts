@@ -7,6 +7,7 @@ import { ApiCallsService } from 'src/app/common/services/ApiCalls/ApiCalls.servi
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
+import {Consts} from '../../common/constants/const'
 @Component({
   selector: 'app-declaration',
   templateUrl: './pdf.component.html',
@@ -205,7 +206,7 @@ let data=this.myFormGroup.value;
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 25, 51)
     doc.setFontSize('12');
     doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 58)
 
@@ -341,7 +342,7 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 25, 51)
     doc.setFontSize('12');
     doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 58)
 
@@ -422,9 +423,13 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     if (data) {
       if(this.branch==='nitin roadways'){
       doc.addImage(this.imgData2,'JPEG',131,240,50,20)
-      }else{
+      }else if(this.branch==='nitin roadways and cargo movers'){
         doc.addImage(imgData, 'JPEF', 131, 240, 80, 20);//add if else
       }
+      else if(this.branch==='shri nitin logistics'){
+        doc.addImage(Consts.snlsign, 'JPEF', 131, 240, 50, 20);//add if else
+      }
+      
     }
     doc.text('Place : PUNE', 25, 248)
     doc.text('Declarant', 150, 268)
@@ -486,7 +491,7 @@ this.imgData2="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAATcAAAB0CAYAAADgmXV
     doc.setFontType('normal');
     doc.setFontSize('15');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 51)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 25, 51)
     doc.setFontSize('12');
     doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 58)
 

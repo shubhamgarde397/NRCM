@@ -61,7 +61,7 @@ export class GstdisplayComponent implements OnInit {
     doc.setTextColor(0,0,0);
     doc.text('Shop No. 253, Opp. Katraj Police Station,',25, 32)
     doc.text('Pune Satara Road,Pune - 411046',25, 34)
-    doc.text('Co : 9766707061',25, 36)
+    doc.text('Co : 8529275757',25, 36)
     doc.text('www.nitinroadways.in',25, 38)
     doc.addImage(Consts.goldennr, 'PNG', 2, 20, 20, 20);//add if else
 

@@ -72,13 +72,13 @@ public logoUrl = 'assets/images/N.png';
     const qrCodeElements = document.querySelectorAll('qrcode img');
        var doc = new jsPDF()//x : y : 290
 
-       doc.setLineDash([0.5, 1],10);
+      //  doc.setLineDash([0.5, 1],10);
 
-      doc.line(25.50,0,25.50,297)
-      doc.line(77.75,0,77.75,297)
-      doc.line(105+25.25,0,105+25.25,297)
-      doc.line(105+77.75,0,105+77.75,297)
-      doc.setLineDash([]);
+      // doc.line(25.50,0,25.50,297)
+      // doc.line(77.75,0,77.75,297)
+      // doc.line(105+25.25,0,105+25.25,297)
+      // doc.line(105+77.75,0,105+77.75,297)
+      // doc.setLineDash([]);
 // lines
       let y = 0;
       let innerI=0;
@@ -92,6 +92,13 @@ public logoUrl = 'assets/images/N.png';
                     
                     
                   doc.addPage();
+      //             doc.setLineDash([0.5, 1],10);
+
+      // doc.line(25.50,0,25.50,297)
+      // doc.line(77.75,0,77.75,297)
+      // doc.line(105+25.25,0,105+25.25,297)
+      // doc.line(105+77.75,0,105+77.75,297)
+      // doc.setLineDash([]);
                   y = 0;
                   innerI=0;
                 }
@@ -105,7 +112,37 @@ public logoUrl = 'assets/images/N.png';
     let x=this.sub[innerI]['n']-this.sub[innerI]['s']
     
             // 
-            // 
+                  var img = new Image();
+                  img.src = '../../../assets/images/NLOGO.png';
+                  var w=8;
+                  var h= 6;
+              //
+               doc.addImage(img, 'PNG', 21, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 21, (30*innerI)+x+13, h,w);
+
+               doc.addImage(img, 'PNG', 46, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 46, (30*innerI)+x+13, h,w);
+
+               doc.addImage(img, 'PNG', 72.5, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 72.5, (30*innerI)+x+13, h,w);
+
+               doc.addImage(img, 'PNG', 98.5, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 98.5, (30*innerI)+x+13, h,w);
+
+
+               doc.addImage(img, 'PNG', 105+20, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 105+20, (30*innerI)+x+13, h,w);
+
+
+               doc.addImage(img, 'PNG', 105+46, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 105+46, (30*innerI)+x+13, h,w);
+
+               doc.addImage(img, 'PNG', 105+72.5, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 105+72.5, (30*innerI)+x+13, h,w);
+
+               doc.addImage(img, 'PNG', 105+97.5, (30*innerI)+x, h,w);
+               doc.addImage(img, 'PNG', 105+97.5, (30*innerI)+x+13, h,w);
+
             doc.addImage(qrCodeImage.src, 'PNG', 3, (30*innerI)+x, 18, 18);
             doc.addImage(qrCodeImage.src, 'PNG', 28, (30*innerI)+x, 18, 18);
 

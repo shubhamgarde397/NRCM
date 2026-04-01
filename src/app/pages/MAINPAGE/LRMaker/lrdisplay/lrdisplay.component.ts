@@ -94,6 +94,41 @@ addDoc(){
     });
 }
 
+set(i,j,data){
+  let digit = 0
+  let gono = false;
+  switch(data){
+    case 'lrno':
+      digit=parseInt(prompt('Enter the updating amount'))
+    if(digit!==null){
+      if(!isNaN(digit)){      
+        gono = true
+      }
+      else{
+        alert('Error with number')
+      }
+      
+    }else{
+      alert('Error with number')
+    }
+      break;
+  }
+
+if(gono){
+  let tempObj={}
+  tempObj['method']='set'+data;  //work from here
+  tempObj['tablename']='';
+  tempObj['_id']=i['_id']
+  tempObj[data]=digit
+
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this.data[j][data] = digit;
+    });
+  }
+}
+
 delPar(j){
   if(confirm('Are you sure you want to delete this particular?')){
   this.particulars.splice(j,1)
@@ -232,7 +267,7 @@ saveDoc(i,j,data){
     doc.setFontType('normal');
     doc.setFontSize('12');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 37, y+33)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 37, y+33)
     doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 37, y+38)
   
   

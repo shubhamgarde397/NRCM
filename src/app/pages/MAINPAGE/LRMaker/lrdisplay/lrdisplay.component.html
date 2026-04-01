@@ -26,7 +26,7 @@
               </thead>
               <tbody align="center">
                 <tr *ngFor="let i of data;let j = index">
-                  <td>{{i.date|date:'dd-MM-yyyy'}}<br>{{i.billno}}<br>{{i.lrno}}</td>
+                  <td (click)="set(i,j,'lrno')">{{i.date|date:'dd-MM-yyyy'}}<br>{{i.billno}}<br>{{i.lrno}}</td>
                   <td>{{i.truckno}}<br>{{i.billno}}</td>
                   <td>{{i.partyname}}<br>{{i.destination}}<br>{{i.typeOfLoad}}</td>
                   <td>{{i.fromname}}</td>

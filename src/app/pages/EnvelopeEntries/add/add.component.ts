@@ -22,7 +22,8 @@ public whichType;
 public todayDate;
 public data='';
 public attachToListA=[];
-
+public billno=''
+public bills=[];
 public contactOA=''
 public trucknodata='';
 public tableDataTF4=false;
@@ -31,10 +32,15 @@ public villagedetailslist=[];
 public nA;
 public villagedetails=[];
 public trucks2=[];
+public billnoArray='';
 public contactArray=[];
 public myFormGroup: FormGroup;
 public contactA=''
 public nrcmid=0;
+public partyVar19='';
+  public transportlist;
+  public commonArray;
+  public considerArray;
   constructor(
     public apiCallservice: ApiCallsService,
     public formBuilder: FormBuilder,
@@ -49,6 +55,13 @@ public nrcmid=0;
   } }
 
   ngOnInit() {
+
+      this.commonArray = this.sec.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infotpt')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
+    this.transportlist = this.commonArray.transport;
+
+
     this.todayDate=this.handleF.createDate(new Date());
     this.myFormGroup = this.formBuilder.group({
       tptName:'',
@@ -101,6 +114,42 @@ switch(data){
 }
   }
 
+  addbillno(){
+        this.bills.push(String(this.billno));
+        this.billno = ''
+      }
+
+      addbillnoArray(){
+         
+          this.billnoArray.split(',').forEach(r=>{this.bills.push(r)})
+        
+        this.billnoArray = ''
+
+      }
+      delBill(index){
+        if (confirm('Are you sure?')) {
+
+          this.bills.splice(index,1);
+          
+      }
+    }
+
+     getInformationData() {
+    this.spinnerService.show();
+    let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        this.sec.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.sec.commonArray['transport'];;
+        this.fetchBasic();
+        this.spinnerService.hide();
+      });
+  }
+   fetchBasic() {
+    this.commonArray = this.sec.commonArray;
+    this.transportlist = [];
+    this.transportlist = this.commonArray.transport;
+  }
+
   getalltransports(){
     let tempObj={}
     tempObj['method']='gettpts'
@@ -111,6 +160,18 @@ switch(data){
       this.tableData=res.Data;
       this.alltransports=res.Data;
       this.tableDataTF=true;
+    });
+  }
+
+  sendToSetMain(){
+    let tempObj={}
+    tempObj['method']='setbilltotpt'
+    tempObj['billnos']=this.bills;
+    tempObj['transportid']=this.partyVar19;
+    tempObj['tablename']=''
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
     });
   }
 
@@ -125,89 +186,44 @@ switch(data){
   
 }
 
-sendAllTrucksForAttachment(){
-  
-  let arr=[]
-  for(let i=0;i<this.attachToListA.length;i++){
-    if((<HTMLInputElement>document.getElementById('' + i)).value!==''){
-      let tempo={'transportid':this.attachToListA[i]['_id'],'truckno':(<HTMLInputElement>document.getElementById('' + i)).value}
-      arr.push(tempo);
-    }
+refresh(){
+    this.considerArray=[0,0,0,0,0,0,1,0]
+    this.getInformationData()
   }
-  let temp={}
-  temp['method']='attachTrucksToTransports'
-  temp['tablename']='';
-  temp['arr']=arr;
-
-  if(arr.length>0){
-    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      
-for(let i=0;i<this.attachToListA.length;i++){
-  
-    if(res['Data'][i]===1){
-      
-     this.attachToListA[i]['color']='green'
-
-    }
-      else{
-       this.attachToListA[i]['color']='red'
-        
-      }
-}
-    });
-  }else{
-    alert('No Trucks Entered!')
-  }
-  
-}
-
 
 // tn31bb9574
+formatTruckNo(a){
+  a=a.toUpperCase();
+	let newtruck=[]
+	let raw=a.replace(/ /g, "");
+	newtruck.push(raw.slice(0,2))
+	newtruck.push(raw.slice(2,4))
+	
+	if(raw.length==10){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,6))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(6,10))	
+	}
+	if(raw.length==9){
 
-
-addMoreT(j) {
-  this.tableData[j]['trucks2'].push((<HTMLInputElement>document.getElementById('truck_' + j)).value)
-  this.truckOA = '';
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,5))	
+			newtruck.push(' ')
+			newtruck.push(raw.slice(5,9))	
+	}
+	if(raw.length==8){
+			newtruck.push(' ')
+			newtruck.push(raw.slice(4,8))	
+	}
+	return newtruck.join('')
 }
+
 addMore() {
   this.contactArray.push(this.contactA)
   this.contactA = '';
 }
-addToDB(){
-  let Data=[]
-  for(let i=0;i<this.tableData.length;i++){
-    let temp={}
-    if(this.tableData[i].trucks2.length>0){
-      temp['_id']=this.tableData[i]['_id']
-      temp['trucks2']=this.tableData[i]['trucks2']
-      Data.push(temp)
-    }
 
-  }
-  if(Data.length>0){
-
-  let temp={}
-  temp['method']='attachTrucksToTransports'
-  temp['tablename']='';
-  temp['Data']=Data;
-
-    this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-    });
-  }
-  
-}
-
-
-
-
-
-deleteOOne( j,jj) {
-  this.tableData[j]['trucks2'].splice(jj, 1);
-}
 
 }
 

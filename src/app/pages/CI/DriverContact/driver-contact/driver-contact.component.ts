@@ -41,8 +41,10 @@ public parties2=[]
 public villages=[]
 public todayDate=new Date().toLocaleDateString();
 public pmts=[]
+public comm=[];
 public pmts3=[]
 public trucks=[]
+public rqty =0
 
     constructor(
       public apiCallservice: ApiCallsService, 
@@ -83,6 +85,52 @@ public trucks=[]
           this.pmts3=res.Data;
         });
     }
+
+       get4(){
+      let tempObj = { "method": "getcommtosend", 'tablename':''};
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.comm=res.Data;
+        //   this.comm.forEach(r=>{
+        //     r.contactp=r['contactp1'].filter(rr=>{return rr.village==r['destination']})[0]['contact']
+        // })
+        });
+    }
+
+
+
+    sendMsg(data){
+      let qr=''
+      
+      qr=qr+'*'+data['truckno']+'*%0A'
+      qr=qr+'*'+this.handleF.getDateddmmyy(data['loadingDate'])+'*%0A'
+      qr=qr+'*'+data['destination']+'*%0A%0A'
+      
+      qr=qr+'*Rent* :'+String(data['rent'])+'%0A'
+      qr=qr+'*Advance* :'+String(data['advance'])+'%0A'
+      qr=qr+'*Balance* :'+String(data['balance'])+'%0A%0A'
+      if(data['billamt']==0){}else{
+      qr=qr+'*Comm* :'+String(data['billamt'])+'%0A'
+      }
+      if(data['extra_hamali']==0){}else{
+      qr=qr+'*Coolie* :'+String(data['extra_hamali'])+'%0A'
+      }
+      if(data['cash']==0){}else{
+      qr=qr+'*Cash* :'+String(data['cash'])+'%0A'
+      }
+      if(data['less']==0){}else{
+      qr=qr+'*Other* :'+String(data['less'])+'%0A'
+      }
+      qr=qr+'%0A'
+
+      qr=qr+'*Advance Paid* :%0A'+String(data['advance'])+'-'+String(data['billamt']+data['extra_hamali']+data['cash']+data['less'])+' = '
+      qr=qr+'*'+String(data['onlyadvance'])+'*'
+      qr=qr+'%0A%0Ahttps://www.nitinroadways.in/%23/PM'
+      qr='https://wa.me/+91'+data.contacttb[0]+'/?text='+qr
+      window.open(qr,'_blank');    
+  }
+
+
     setTrue3(){
       let tempObj = { "method": "setOfcLocation", 'tablename':'','ownerids':this.pmts3.map(r=>{return r.ownerid})};
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
@@ -180,9 +228,10 @@ public trucks=[]
           tol:'',
           tons:[]
         }
-        this.turnbooklist1.push(temp);
-        this.submission.push(0);
-        this.submitButton=this.submission.every((value)=>{return value>0})
+          this.turnbooklist1.push(temp);
+          this.submission.push(0);
+          this.submitButton=this.submission.every((value)=>{return value>0})
+       
         break;
     
       case 'c':
@@ -252,28 +301,6 @@ lulAll(){
   this.submitButton=this.submission.every((value)=>{return value>0})
 }
 
-  lul(index,data){
-  if(this.checker(index)){
-
-    switch (data) {
-      case 'lock':
-        this.turnbooklist1[index]['lul']='unlock'
-        this.submission[index]=1;
-        
-        this.submitButton=this.submission.every((value)=>{return value>0})
-      break;
-    
-      case 'unlock':
-        this.turnbooklist1[index]['lul']='lock'
-        this.submission[index]=0;
-        this.submitButton=this.submission.every((value)=>{return value>0})
-      break;
-    }
-  }
-  else{
-alert('Incomplete Fields! Cannot Lock!')
-  }
-  }
 
   delete(index,data,index2){
     switch (data) {
@@ -338,6 +365,7 @@ alert('Incomplete Fields! Cannot Lock!')
       let p1 = (<HTMLInputElement>document.getElementById('p1_' + i)).value;
       let p2 = (<HTMLInputElement>document.getElementById('p2_' + i)).value;
       let tol = pt==='NRCM'?(<HTMLInputElement>document.getElementById('tol_' + i)).value:'Other';
+      let hamt = pt==='NRCM'?0:parseInt((<HTMLInputElement>document.getElementById('hamt_' + i)).value);
       let weight = pt==='NRCM'?(<HTMLInputElement>document.getElementById('weight_' + i)).value:0;
       let pac = pt==='NRCM'?12:(pt==='NR'?363:65)
 
@@ -363,6 +391,7 @@ alert('Incomplete Fields! Cannot Lock!')
         'pt' :pt,
         'pn' :pn,
         'p1' :p1,
+        'hamt' :hamt,
         'p2' :p2==='Default'?'':p2,
         'tol' :tol==='Ratnagiri'?'Pipe':tol,
         'weight':weight,
@@ -397,6 +426,15 @@ alert('Incomplete Fields! Cannot Lock!')
   partyOk(){
     
     let tempObj = { "method": "setPartyOk",tablename:'' };
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          alert(res.Status);
+        });
+  }
+
+  CommOk(){
+    
+    let tempObj = { "method": "setCommOk",tablename:'' };
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           alert(res.Status);

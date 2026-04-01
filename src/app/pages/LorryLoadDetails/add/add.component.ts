@@ -563,7 +563,7 @@ let billno=String(d.getMinutes())+String(d.getSeconds());
     doc.setFontType('normal');
     doc.setFontSize('9');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, mainY+14)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, mainY+14)
     doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
     
     doc.setFontType('italic');
@@ -730,7 +730,7 @@ let billno=String(d.getMinutes())+String(d.getSeconds());
     doc.setFontType('normal');
     doc.setFontSize('9');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, mainY+14)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, mainY+14)
     doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
     
     doc.setFontType('italic');
@@ -915,7 +915,7 @@ let billno=String(d.getMinutes())+String(d.getSeconds());
     doc.setFontType('normal');
     doc.setFontSize('12');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, mainY+19)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, mainY+19)
     doc.setFontSize('12');
     doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+24)
     
@@ -1153,7 +1153,7 @@ doc.setFontType('bold');
     doc.setFontType('normal');
     doc.setFontSize('12');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, mainY+19)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, mainY+19)
     doc.setFontSize('12');
     doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+24)
     
@@ -1367,7 +1367,7 @@ doc.setFontType('bold');
     // Account Details// 
     doc.setFontSize('8')
     if(data['update']){
-      doc.text('*Note : Please send your Account details with Truck No. on Mo:-9766707061',12, mainY+148)
+      doc.text('*Note : Please send your Account details with Truck No. on Mo:-8529275757',12, mainY+148)
     }else{
     doc.text('*Note : Advance and Balance payment will be done on this account.',12, mainY+148)
     doc.text('Please update your Account Details if necessary.',22, mainY+151)

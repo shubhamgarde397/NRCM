@@ -13,7 +13,7 @@ export class WhatsappComponent implements OnInit {
   }
 
   sendMsg(){
-    this.contact=this.contact===""?'9766707061':this.contact
+    this.contact=this.contact===""?'8529275757':this.contact
 window.open('https://wa.me/+91'+this.contact+'/?text=Hi','_blank');
   }
   resetMsg(){
@@ -21,7 +21,7 @@ window.open('https://wa.me/+91'+this.contact+'/?text=Hi','_blank');
   }
 
   sendMultiple(){
-    let contacts=['9766707061','9822288257'];
+    let contacts=['8529275757','9822288257'];
     for (let i=0;i<contacts.length;i++){
       window.open('https://wa.me/+91'+contacts[i]+'/?text=Hi','_self');
     }

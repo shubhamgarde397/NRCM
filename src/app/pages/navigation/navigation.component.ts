@@ -933,7 +933,7 @@ doc.line(3, 48, 146, 48);
 doc.setFontType('normal');
 doc.setFontSize('12');
 doc.setTextColor(0, 0, 0);
-doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, 55)
+doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, 55)
 doc.setFontSize('12');
 doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, 60)
 

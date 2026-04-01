@@ -59,7 +59,7 @@ this.data=data;
     doc.setFontType('normal');
     doc.setFontSize('12');
     doc.setTextColor(0, 0, 0);
-    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 17)
+    doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 25, 17)
     doc.setFontSize('12');
     doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 21)
 

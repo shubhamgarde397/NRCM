@@ -105,7 +105,7 @@ export class TruckLoadingComponent implements OnInit {
         doc.setFontType('normal');
         doc.setFontSize('15');
         doc.setTextColor(0, 0, 0);
-        doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 25, 36)
+        doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 25, 36)
         doc.setFontSize('12');
         doc.text('Email : punenitinroadways@gmail.com    Website : www.nitinroadways.in', 25, 43)
     

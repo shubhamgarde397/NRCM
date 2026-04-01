@@ -6,6 +6,7 @@ import { UpdateComponent } from './update/update.component';
 import { HandlerComponent } from './handler/handler.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { PendingComponent } from './pending/pending.component';
+import { TptpmtComponent } from './TptPmt/tptpmt/tptpmt.component';
 
 export const PartyPaymentRouting: Routes =
     [
@@ -29,6 +30,10 @@ export const PartyPaymentRouting: Routes =
                     {
                         path: 'Display',
                         component: DisplayComponent
+                    },
+                    {
+                        path:'TDisplay',
+                        component: TptpmtComponent
                     },
                     {
                         path: 'Update',

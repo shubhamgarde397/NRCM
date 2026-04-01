@@ -47,7 +47,8 @@ export class AddComponent implements OnInit {
       partyName: ['', Validators.required],
       partyType:['',Validators.required],
       paymentDate: ['', Validators.required],
-      amount: ['', Validators.required]
+      amount: ['', Validators.required],
+      notes:['', Validators.required]
     });
     this.considerArray = this.handledata.createConsiderArray('infogstonly')
     this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
@@ -90,6 +91,7 @@ export class AddComponent implements OnInit {
     tempobj['partyName']=this.gstdetailslistid.name;
     tempobj['done']=false;
     tempobj['amount'] = value['amount'];
+    tempobj['weight'] = value['notes'];
     tempobj['tbids']=["61739cccd00acebeefa834e1"];
     tempobj['entryDate'] = this.date.getFullYear() + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getMonth() + 1)) + '-' + this.handlefunction.generate2DigitNumber(String(this.date.getDate()));
     this.partyData.push(tempobj);//before pushing, check if it is duplicate or not.. write a function

@@ -301,7 +301,7 @@ pdfData(doc,data,ack,qrCodeElements){
   doc.setFontType('normal');
   doc.setFontSize('12');
   doc.setTextColor(0, 0, 0);
-  doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, 35)
+  doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, 35)
   doc.setFontSize('12');
   doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, 40)
   
@@ -414,7 +414,7 @@ doc.setTextColor(0, 0, 0);
   doc.setFontType('normal');
   doc.setFontSize('12');
   doc.setTextColor(0, 0, 0);
-  doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, 35)
+  doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, 35)
   doc.setFontSize('12');
   doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, 40)
   
@@ -588,7 +588,7 @@ CollectionMemoC(){
   doc.setFontType('normal');
   doc.setFontSize('9');
   doc.setTextColor(0, 0, 0);
-  doc.text('Cell :- 9822288257, 8459729293, 9423580221, 9766707061', 10, mainY+14)
+  doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, mainY+14)
   doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
   
   doc.setFontType('italic');
