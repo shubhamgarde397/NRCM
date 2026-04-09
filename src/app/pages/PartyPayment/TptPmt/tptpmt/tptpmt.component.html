@@ -86,9 +86,9 @@
             <td>{{i.truckNo}}</td>
             <td>{{i.place}}</td>
             <td (click)="rentUpdate(i,j)">{{i.rent}}</td>
-            <td>
+            <td (click)="setVar(i,j)" data-toggle="modal" data-target="#myModal">
               <ul *ngFor="let k of i.advanceArray;let kk = index">
-                <li (click)="addAdvRefNo(i,kk)">{{k.date|date:'dd-MM-yyyy'}}<br>{{k.amount}}<br>REF:{{k.advRefNo}}</li>
+                <li>{{k.date|date:'dd-MM-yyyy'}}<br>{{k.amount}}<br>REF:{{k.advRefNo}}</li>
               </ul>
             </td>
             <td (click)="setVar(i,j)" data-toggle="modal" data-target="#myModal">{{i.actualPaymentAmount}}<br>{{i.actualPaymentDate}}<br>Ref : {{i.balRefNo}}</td>

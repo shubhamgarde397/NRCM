@@ -28,12 +28,7 @@
       <h3>Please wait while we direct you to Whatsapp!</h3>
     </div>
     
-    <div class="container row" style="width: 100%;text-align: center;" *ngIf="ss==='c'">
-      <button class="btn btn-warning" (click)="call()">Click to call the driver!</button>
-<br><br><br><br>
-      We will redirect you to the phone page!
-    </div>
-
+    
 
 
     <div class="container row" style="width: 100%;text-align: center;" *ngIf="ss==='c'">
@@ -43,6 +38,13 @@
         {{birthday}} Years of Excellence
       </h4>
       <!-- </marquee> -->
+
+      <div class="container row" style="width: 100%;text-align: center;" *ngIf="ss==='c'">
+      <button style="    height: 15vh;width: 30vh;font-size: 20px;" class="btn btn-warning" (click)="call()">Click to call the driver!</button>
+<br><br><br><br>
+      We will redirect you to the phone page!
+    </div>
+
     </div>
 
       <div class="container row" style="width: 100%;text-align: center;" *ngIf="ss==='lc'">
@@ -51,11 +53,11 @@
         {{birthday}} Years of Excellence
       </h5>
 
-      <div class="row bbtn"><button class="btn btn-warning" (click)="call2(1)">Finolex Pipes</button></div>
-      <div class="row bbtn"><button class="btn btn-danger" (click)="call2(2)">Finolex Fittings</button></div>
-      <div class="row bbtn"><button class="btn btn-success" (click)="call2(3)">Nitin Roadways Office Urse</button></div>
-      <div class="row bbtn"><button class="btn btn-primary" (click)="call2(4)">Nitin Roadways Office Pune</button></div>
-      <div class="row bbtn"><button class="btn btn-info" (click)="call2(5)">Nitin Roadways Office Pondicherry</button></div>
+      <div class="row bbtn"><button class="btn btn-warning" (click)="call2(1,'pipe')">Finolex Pipes</button></div>
+      <div class="row bbtn"><button class="btn btn-danger" (click)="call2(2,'fittings')">Finolex Fittings</button></div>
+      <div class="row bbtn"><button class="btn btn-success" (click)="call2(3,'dhaba')">Nitin Roadways Office Urse</button></div>
+      <div class="row bbtn"><button class="btn btn-primary" (click)="call2(4,'shivre')">Nitin Roadways Office Pune</button></div>
+      <div class="row bbtn"><button class="btn btn-info" (click)="call2(5,'pondicherry')">Nitin Roadways Office Pondicherry</button></div>
     </div>
 
     <div class="container row" style="width: 100%;" *ngIf="ss=='z'">

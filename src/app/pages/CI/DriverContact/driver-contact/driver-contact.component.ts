@@ -12,10 +12,13 @@ import { Router } from 'node_modules/@angular/router';
   styleUrls: ['./driver-contact.component.css']
 })
 export class DriverContactComponent implements OnInit {
-
+  public bigI='';
+  public bigJ='';
   public tab=1;
   public considerArray;
   public turnbooklist1=[];
+  public tempTruckNo='';
+  public tempType='';
   public contact=[];
   public qr=[];
   public qrsetter=0;
@@ -31,9 +34,13 @@ export class DriverContactComponent implements OnInit {
     {value:'Ratnagiri',viewValue:'Pipe_Ratnagiri'}
   ]
 
+  public name=''
+  public value=''
+
 public tols2=[]
 public submitButton=false;
 public tons=[]
+public tempBalls=[];
 public submission=[];
 public commonArray;
 public parties=[]
@@ -45,7 +52,7 @@ public comm=[];
 public pmts3=[]
 public trucks=[]
 public rqty =0
-
+public transports=[];
     constructor(
       public apiCallservice: ApiCallsService, 
       public securityCheck: SecurityCheckService,
@@ -149,14 +156,13 @@ public rqty =0
 
 
     get() {
-      this.securityCheck.commonArray['hiddenownerdetails']=[];
       this.trucks=[];
       let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
           this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
-          this.securityCheck.commonArray['hiddenownerdetails'] = Object.keys(res.hiddenownerdetails[0]).length > 0 ? res.hiddenownerdetails : this.securityCheck.commonArray['hiddenownerdetails'];
+          this.securityCheck.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.securityCheck.commonArray['transport'];
           
           this.fetchBasic();
         });
@@ -168,7 +174,7 @@ public rqty =0
       this.villages = [];
       this.parties = this.commonArray.gstdetails;
       this.villages = this.commonArray.villagenames;
-      this.trucks = this.commonArray.hiddenownerdetails;
+      this.transports = this.commonArray.transport;
     }
 
     checkTON(index){     
@@ -217,6 +223,36 @@ public rqty =0
       }
     }
 
+    breakBill(data){
+     let temp={}
+for(let i=0;i<data.length;i++){
+    temp[data[i][0]]=data[i][1]
+}
+        return temp;
+      }
+
+     saveEdit(i,j,k){
+    this.bigI=i;
+    this.bigJ=j;
+    this.tempTruckNo=(<HTMLInputElement>document.getElementById('truckno_' + j)).value;
+    this.tempType=k;
+    this.tempBalls=this.turnbooklist1[this.bigJ][this.tempType];
+  }
+
+  deleteTB(j){
+    if(confirm('Do you want to delete?')){
+        this.turnbooklist1[this.bigJ][this.tempType].splice(j,1);
+      }
+  }
+
+  storeAD(){
+    let a=this.name
+    let b=this.value
+    let arr=[a,b]
+    this.turnbooklist1[this.bigJ][this.tempType].push(arr);
+    
+  }
+
   addRow(data,index){
     switch (data) {
       case 'r':
@@ -226,7 +262,9 @@ public rqty =0
           lul:'lock',
           parties2:[],
           tol:'',
-          tons:[]
+          tons:[],
+          addons:[],
+          deductions:[]
         }
           this.turnbooklist1.push(temp);
           this.submission.push(0);
@@ -364,26 +402,28 @@ lulAll(){
       let pn = (<HTMLInputElement>document.getElementById('pn_' + i)).value;
       let p1 = (<HTMLInputElement>document.getElementById('p1_' + i)).value;
       let p2 = (<HTMLInputElement>document.getElementById('p2_' + i)).value;
+      let tptName = (<HTMLInputElement>document.getElementById('tptName_' + i)).value;
       let tol = pt==='NRCM'?(<HTMLInputElement>document.getElementById('tol_' + i)).value:'Other';
       let hamt = pt==='NRCM'?0:parseInt((<HTMLInputElement>document.getElementById('hamt_' + i)).value);
       let weight = pt==='NRCM'?(<HTMLInputElement>document.getElementById('weight_' + i)).value:0;
       let pac = pt==='NRCM'?12:(pt==='NR'?363:65)
 
       let rent = (<HTMLInputElement>document.getElementById('rent_' + i)).value;
-      let extra = (<HTMLInputElement>document.getElementById('extra_' + i)).value;
-      let extraMsg = (<HTMLInputElement>document.getElementById('extraMsg_' + i)).value;
-      let adv = (<HTMLInputElement>document.getElementById('adv_' + i)).value;
+      // let extra = (<HTMLInputElement>document.getElementById('extra_' + i)).value;
+      // let extraMsg = (<HTMLInputElement>document.getElementById('extraMsg_' + i)).value;
+      // let adv = (<HTMLInputElement>document.getElementById('adv_' + i)).value;
       let tentativeBalance = (<HTMLInputElement>document.getElementById('bal_' + i)).value;
       let bill = (<HTMLInputElement>document.getElementById('bill_' + i)).value;
-      let less = (<HTMLInputElement>document.getElementById('less_' + i)).value;
-      let cash = (<HTMLInputElement>document.getElementById('cash_' + i)).value;
-      let extra_hamali = (<HTMLInputElement>document.getElementById('coolie_' + i)).value;
+      // let less = (<HTMLInputElement>document.getElementById('less_' + i)).value;
+      // let cash = (<HTMLInputElement>document.getElementById('cash_' + i)).value;
+      // let extra_hamali = (<HTMLInputElement>document.getElementById('coolie_' + i)).value;
       for(let j=0;j<this.turnbooklist1[i]['contacts'].length;j++){
         c.push((<HTMLInputElement>document.getElementById('co_' + i+j)).value)
       }
       for(let j=0;j<this.turnbooklist1[i]['qrs'].length;j++){
         q.push((<HTMLInputElement>document.getElementById('qr_' + i+j)).value)
       }
+
       temp={
         'date' :date,
         'pac':pac,
@@ -393,20 +433,23 @@ lulAll(){
         'p1' :p1,
         'hamt' :hamt,
         'p2' :p2==='Default'?'':p2,
+        'tptName':tptName,
         'tol' :tol==='Ratnagiri'?'Pipe':tol,
         'weight':weight,
         'c':c,
         'q':q,
         'tb':isNaN(parseInt(tentativeBalance))?0:parseInt(tentativeBalance),
         'rent':isNaN(parseInt(rent))?0:parseInt(rent),
-        'extra':isNaN(parseInt(extra))?0:parseInt(extra),
-        'extraMsg':extraMsg,
-        'adv':isNaN(parseInt(adv))?0:parseInt(adv),
+        // 'extra':isNaN(parseInt(extra))?0:parseInt(extra),
+        // 'extraMsg':extraMsg,
+        // 'adv':isNaN(parseInt(adv))?0:parseInt(adv),
         'bill':isNaN(parseInt(bill))?0:parseInt(bill),
-        'less':isNaN(parseInt(less))?0:parseInt(less),
-        'cash':isNaN(parseInt(cash))?0:parseInt(cash),
-        'extra_hamali':isNaN(parseInt(extra_hamali))?0:parseInt(extra_hamali),
-        'plant':tol==='Ratnagiri'?'Ratnagiri':(tol==='Pipe'?'Urse':'Talegaon')
+        // 'less':isNaN(parseInt(less))?0:parseInt(less),
+        // 'cash':isNaN(parseInt(cash))?0:parseInt(cash),
+        // 'extra_hamali':isNaN(parseInt(extra_hamali))?0:parseInt(extra_hamali),
+        'plant':tol==='Ratnagiri'?'Ratnagiri':(tol==='Pipe'?'Urse':'Talegaon'),
+        'addons':this.breakBill(this.turnbooklist1[i]['addons']),
+        'deductions':this.breakBill(this.turnbooklist1[i]['deductions'])
       }
       array.push(temp);
     }

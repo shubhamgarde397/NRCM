@@ -61,6 +61,7 @@ export class TptpmtComponent implements OnInit {
   public topayment;
   public mailSentDate;
   public partyids=[];
+  public truckno5b='';
   public mailSendButton=false;
 public balanceFollowGlobal=[];
 public balanceFollowArr=[]
@@ -180,6 +181,7 @@ console.log(this.nopid);
   setVar(i,j){
     this.bigI=i;
     this.bigJ=j;
+    this.truckno5b=i['truckNo'];
   }
 
   submitapd(){

@@ -84,6 +84,7 @@ export class PmtMsgComponent implements OnInit {
             });
           break;
       }
+
        
     }
 
@@ -125,27 +126,40 @@ export class PmtMsgComponent implements OnInit {
        return dec_val;
    }
 
-   call2(data){
+   call2(data,locations){
+    let temp={}
+             temp={
+            locations:locations,
+            tablename:'',
+            method:'sethitoflocation'
+          }   
+
+          this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
+          .subscribe((res: any) => {
+            this.dataofNR=res.Status;
+            });
     switch (data) {
       case 1:
-        window.open('https://wa.me/+918529275757/?text=*Finolex Pipes*%0A%0Ahttps://maps.app.goo.gl/bqwhwzfUVPhCe29r6','_blank');
+        window.open('https://maps.app.goo.gl/bqwhwzfUVPhCe29r6','_blank');
         
         break;
 
         case 2:
-        window.open('https://wa.me/+918529275757/?text=*Finolex Fittings*%0A%0Ahttps://maps.app.goo.gl/NfKpt7FD72vuK521A','_blank');
+        window.open('https://maps.app.goo.gl/NfKpt7FD72vuK521A','_blank');
         break;
 
         case 3:
-        window.open('https://wa.me/+918529275757/?text=*Prince Dhaba*%0A*Nitin Roadways*%0A%0Ahttps://maps.app.goo.gl/WjNDtUGFVZJLRxyd9','_blank');
+        window.open('https://maps.app.goo.gl/WjNDtUGFVZJLRxyd9','_blank');
         break;
 
         case 4:
-        window.open('https://wa.me/+918529275757/?text=*Nitin Roadways Pune*%0A%0Ahttps://maps.app.goo.gl/vTyjKAVJBoZPm27E8','_blank');
+
+        window.open('https://maps.app.goo.gl/vTyjKAVJBoZPm27E8','_blank');
         break;
 
         case 5:
-        window.open('https://wa.me/+918529275757/?text=*Nitin Roadways Pondicherry*%0A%0Ahttps://maps.app.goo.gl/5jeSNE4bvqVB19b1A','_blank');
+         
+        window.open('https://maps.app.goo.gl/5jeSNE4bvqVB19b1A','_blank');
         break;
     
       
