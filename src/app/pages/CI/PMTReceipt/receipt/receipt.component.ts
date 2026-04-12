@@ -17,7 +17,7 @@ export class ReceiptComponent implements OnInit {
   public turnbooklist1=[];
   public whichqr=0
   public gotData18=true;
-  public balrefno='';
+  public reference='';
   public apa='';
   public apd='';
   public billno=''
@@ -125,7 +125,7 @@ export class ReceiptComponent implements OnInit {
   save(){
     let tempObj = {}
       tempObj['tablename'] = ''
-      tempObj['balrefno'] = this.balrefno;
+      tempObj['reference'] = this.reference;
       tempObj['apa'] = this.apa;
       tempObj['apd'] = this.apd;
       tempObj['billno'] = this.turnbooklist1[0]['billno']

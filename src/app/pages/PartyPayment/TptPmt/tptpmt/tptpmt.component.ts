@@ -24,7 +24,7 @@ export class TptpmtComponent implements OnInit {
   public apd;
   public apa;
   public pochamount;
-  public balRefNo;
+  public reference;
   public name: string;
   public dbName = 1;
   public commonArray;
@@ -193,7 +193,7 @@ console.log(this.nopid);
       formbody['apd']=this.apd;
       formbody['apa']=this.apa;
       formbody['pochAmount']=this.pochamount;
-      formbody['balRefNo']=this.balRefNo;
+      formbody['reference']=this.reference;
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
         .subscribe((response: Response) => {
@@ -201,7 +201,7 @@ console.log(this.nopid);
           this.paymentData[this.bigJ]['actualPaymentDate']=this.apd;
           this.paymentData[this.bigJ]['actualPaymentAmount']=this.apa;
           this.paymentData[this.bigJ]['pochAmount']=this.pochamount;
-          this.paymentData[this.bigJ]['balRefNo']=this.balRefNo;
+          this.paymentData[this.bigJ]['reference']=this.reference;
         });
   }
 
