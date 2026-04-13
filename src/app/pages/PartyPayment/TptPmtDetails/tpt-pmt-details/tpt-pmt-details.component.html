@@ -1,0 +1,83 @@
+  <div class="container">
+
+  <div class="row">
+    <div class="col-lg-12">
+<div class="col-sm-12" >
+  <div class="form-group row">
+
+    <div class="col-sm-3">
+      <select id="nop" class="form-control" [(ngModel)]="nopid">
+        <option disabled selected>Select Name of The Transport</option>
+        <option *ngFor="let i of transports;let j = index;" value={{i.tptName}}>
+          {{i.tptName}}
+        </option>
+      </select>
+      <button class="btn btn-danger" (click)="refresh()">Refresh</button>
+    </div>
+
+
+  </div>
+
+  <div class="row">
+    <h4>Reference No</h4>
+    <div class="col-sm-4">
+      <input type="date" class="form-control" [(ngModel)]="date">
+    </div>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" [(ngModel)]="amount">
+    </div>
+
+     <div class="col-sm-4">
+      <input type="text" class="form-control" [(ngModel)]="reference" placeholder="Reference">
+    </div>
+
+    </div>
+
+      </div>
+      
+      <div class="row">
+
+        <div class="col-sm-4">
+          <button mat-raised-button (click)="findMany()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
+            Find
+          </button>
+        </div>
+
+            
+      </div>
+
+      <div class="row" *ngIf="tabledata">
+       
+    <div class="col-sm-3">
+      <button mat-raised-button type="button" (click)="download()" class="btn-danger btn-sm btn-just-icon">
+        PDF
+      </button>
+    </div>
+
+    </div>
+      <table class="table" style="width:100%" align="center" *ngIf="tabledata">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Place</th>
+            <th>LRNO</th>
+            <th>Balance</th>
+          </tr>
+        </thead>
+
+        <tbody align="center">
+          <tr *ngFor="let i of paymentData;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.truckName}}</td>
+            <td>{{i.placeName}}</td>
+            <td>{{i.lrno}}</td>
+            <td (click)="amountUpdate(i,j)">{{i.pochAmount}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

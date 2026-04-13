@@ -10,6 +10,7 @@ import { HandlerComponent } from './handler/handler.component';
 import { PaymentsComponent } from './payments/payments.component';
 import { PendingComponent } from './pending/pending.component';
 import { TptpmtComponent } from './TptPmt/tptpmt/tptpmt.component';
+import { TptPmtDetailsComponent } from './TptPmtDetails/tpt-pmt-details/tpt-pmt-details.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { TptpmtComponent } from './TptPmt/tptpmt/tptpmt.component';
         HandlerComponent,
         PaymentsComponent,
         PendingComponent,
-        TptpmtComponent
+        TptpmtComponent,
+        TptPmtDetailsComponent
     ],
     imports: [
         CommonModule,

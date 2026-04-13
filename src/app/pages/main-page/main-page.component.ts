@@ -12,7 +12,6 @@ import 'jspdf-autotable';
 export class MainPageComponent implements OnInit {
   public loginV = false;
 
-
   constructor(
     public router: Router,
     public security:SecurityCheckService,
@@ -51,7 +50,6 @@ export class MainPageComponent implements OnInit {
   ngOnInit() { 
     // this.DownloadLR();
   }
-
 
    DownloadLR() {//298,
       let temp={};
