@@ -220,10 +220,6 @@ export const routes: Routes =
                         loadChildren: './pages/TurnBook/turn-book.module#TurnBookModule'
                     },
                     {
-                        path:'Load_HANDLER',
-                        loadChildren:'./pages/LorryLoadDetails/app.module#AppModule'
-                    },
-                    {
                         path: 'TURN_BOOK_LOCATION_DISP',
                         component:TurnBookLocationDispComponent
                     },

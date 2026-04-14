@@ -96,9 +96,9 @@ export class PmtMsgComponent implements OnInit {
 
    call(){
     if(this.s[1].length===10){
-      window.open('tel://+91'+this.s[1]+'','_blank');
+      window.open('tel://'+this.s[1]+'','_blank');
     }else{
-      window.open('tel://+91'+this.htd(this.s[1])+'','_blank');
+      window.open('tel://'+this.htd(this.s[1])+'','_blank');
     }
     
    }

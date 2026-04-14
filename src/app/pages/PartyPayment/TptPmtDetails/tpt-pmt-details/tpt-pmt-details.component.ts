@@ -18,6 +18,7 @@ export class TptPmtDetailsComponent implements OnInit {
   public tptid=''
   public today;
   public reference='';
+  public amount='';
   public todaysDate;
   public name: string;
   public considerArray = [];

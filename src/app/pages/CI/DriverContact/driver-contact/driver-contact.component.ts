@@ -119,9 +119,7 @@ public transports=[];
       if(data['billamt']==0){}else{
       qr=qr+'*Comm* :'+String(data['billamt'])+'%0A'
       }
-      if(data['extra_hamali']==0){}else{
-      qr=qr+'*Coolie* :'+String(data['extra_hamali'])+'%0A'
-      }
+      
       if(data['cash']==0){}else{
       qr=qr+'*Cash* :'+String(data['cash'])+'%0A'
       }
@@ -130,7 +128,7 @@ public transports=[];
       }
       qr=qr+'%0A'
 
-      qr=qr+'*Advance Paid* :%0A'+String(data['advance'])+'-'+String(data['billamt']+data['extra_hamali']+data['cash']+data['less'])+' = '
+      qr=qr+'*Advance Paid* :%0A'+String(data['advance'])+'-'+String(data['billamt'])+' = '
       qr=qr+'*'+String(data['onlyadvance'])+'*'
       qr=qr+'%0A%0Ahttps://www.nitinroadways.in/%23/PM'
       qr='https://wa.me/+91'+data.contacttb[0]+'/?text='+qr
@@ -409,14 +407,13 @@ lulAll(){
       let pac = pt==='NRCM'?12:(pt==='NR'?363:65)
 
       let rent = (<HTMLInputElement>document.getElementById('rent_' + i)).value;
-      // let extra = (<HTMLInputElement>document.getElementById('extra_' + i)).value;
-      // let extraMsg = (<HTMLInputElement>document.getElementById('extraMsg_' + i)).value;
+      
       // let adv = (<HTMLInputElement>document.getElementById('adv_' + i)).value;
       let tentativeBalance = (<HTMLInputElement>document.getElementById('bal_' + i)).value;
       let bill = (<HTMLInputElement>document.getElementById('bill_' + i)).value;
       // let less = (<HTMLInputElement>document.getElementById('less_' + i)).value;
       // let cash = (<HTMLInputElement>document.getElementById('cash_' + i)).value;
-      // let extra_hamali = (<HTMLInputElement>document.getElementById('coolie_' + i)).value;
+      
       for(let j=0;j<this.turnbooklist1[i]['contacts'].length;j++){
         c.push((<HTMLInputElement>document.getElementById('co_' + i+j)).value)
       }
@@ -446,7 +443,7 @@ lulAll(){
         'bill':isNaN(parseInt(bill))?0:parseInt(bill),
         // 'less':isNaN(parseInt(less))?0:parseInt(less),
         // 'cash':isNaN(parseInt(cash))?0:parseInt(cash),
-        // 'extra_hamali':isNaN(parseInt(extra_hamali))?0:parseInt(extra_hamali),
+        
         'plant':tol==='Ratnagiri'?'Ratnagiri':(tol==='Pipe'?'Urse':'Talegaon'),
         'addons':this.breakBill(this.turnbooklist1[i]['addons']),
         'deductions':this.breakBill(this.turnbooklist1[i]['deductions'])

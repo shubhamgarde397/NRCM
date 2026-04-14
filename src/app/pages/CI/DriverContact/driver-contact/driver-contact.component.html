@@ -105,8 +105,6 @@
         
         <td>
           Rent : <input type="number" class="form-control" style="width: 50%;" id="rent_{{j}}" [disabled]='i.lul==="unlock"' value={{i.rent}}>
-          <!-- Extra :<input type="number" class="form-control" style="width: 50%;" id="extra_{{j}}" [disabled]='i.lul==="unlock"'>
-          Extra Msg :<input type="text" class="form-control" style="width: 50%;" id="extraMsg_{{j}}" [disabled]='i.lul==="unlock"'> -->
           Bill : <input type="number" class="form-control" style="width: 50%;" id="bill_{{j}}" [disabled]='i.lul==="unlock"' value=1200>
           <!-- Adv :<input type="number" class="form-control" style="width: 50%;" id="adv_{{j}}" (change)="billAmount(j)" [disabled]='i.lul==="unlock"'> -->
           Bal :<input type="number" class="form-control" style="width: 50%;" id="bal_{{j}}" [disabled]='i.lul==="unlock"' value=2950>
@@ -211,7 +209,7 @@
       <td>{{i.truckno}}<br>{{i.contacttb[0]}}<br>{{i.typeOfLoad}}</td>
       <td>{{i.destination}}-{{i.destination2}}</td>
       <td>{{i.rent}}-{{i.advance}}-{{i.balance}}</td>
-      <td>{{i.billamt}}-{{i.extra_hamali}}-{{i.cash}}-{{i.less}}</td>
+      <td>{{i.billamt}}</td>
       
       <td>
         <ul>
