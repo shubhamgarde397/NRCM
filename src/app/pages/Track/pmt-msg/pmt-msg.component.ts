@@ -39,6 +39,8 @@ export class PmtMsgComponent implements OnInit {
         this.ss='lc';
       }
       else{
+        console.log(data);
+        
       let temp={}
       this.s=data['i'].split('_');
       this.ss=this.s[0]
@@ -95,12 +97,37 @@ export class PmtMsgComponent implements OnInit {
    }
 
    call(){
+    // get partyname here from prev link and pass it to api and get the number and then call
     if(this.s[1].length===10){
-      window.open('tel://'+this.s[1]+'','_blank');
+      window.open('tel://'+this.s[1].slice(0,6)+'','_blank');
     }else{
-      window.open('tel://'+this.htd(this.s[1])+'','_blank');
+      window.open('tel://'+this.htd(this.s[1].slice(0,6))+'','_blank');
     }
+    if(this.s[1].slice(6)!==''){
+    let temp={}
+             temp={
+            locations:this.notoatoz(this.htd(this.s[1].slice(6))),
+            tablename:'',
+            method:'sethitoflocation'
+          }   
+          this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true).subscribe((res: any) => {});
     
+   }
+  }
+
+   notoatoz(a){
+    let str='abcdefghijklmnopqrstuvwxyz'
+    let char:any = '';
+    for(let i=0;i<a.toString().length;i=i+2){
+      if( parseInt(a.toString().slice(i,i+2))> 26){
+        char = (char - 26).toString();
+      }
+      else{
+      char = char + str[parseInt(a.toString().slice(i,i+2))-1]
+      }
+    }
+    return char;
+
    }
 
    htd(hexVal)
