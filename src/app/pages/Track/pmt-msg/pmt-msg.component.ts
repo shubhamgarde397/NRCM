@@ -97,15 +97,11 @@ export class PmtMsgComponent implements OnInit {
    }
 
    call(){
-    // get partyname here from prev link and pass it to api and get the number and then call
-    // if(this.s[1].length===10){
-    //   window.open('tel://'+this.s[1].slice(0,6)+'','_blank');
-    // }else{
-    //   window.open('tel://'+this.htd(this.s[1].slice(0,6))+'','_blank');
-    // }
-    console.log(this.s[1].slice(6))
-    console.log(this.htd(this.s[1].slice(6)))
-    console.log(this.notoatoz(this.htd(this.s[1].slice(6))))
+    if(this.s[1].length===10){
+      window.open('tel://'+this.s[1].slice(0,6)+'','_blank');
+    }else{
+      window.open('tel://'+this.htd(this.s[1].slice(0,6))+'','_blank');
+    }
     
     
     if(this.s[1].slice(6)!==''){
