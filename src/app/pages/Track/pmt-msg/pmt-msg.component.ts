@@ -98,11 +98,16 @@ export class PmtMsgComponent implements OnInit {
 
    call(){
     // get partyname here from prev link and pass it to api and get the number and then call
-    if(this.s[1].length===10){
-      window.open('tel://'+this.s[1].slice(0,6)+'','_blank');
-    }else{
-      window.open('tel://'+this.htd(this.s[1].slice(0,6))+'','_blank');
-    }
+    // if(this.s[1].length===10){
+    //   window.open('tel://'+this.s[1].slice(0,6)+'','_blank');
+    // }else{
+    //   window.open('tel://'+this.htd(this.s[1].slice(0,6))+'','_blank');
+    // }
+    console.log(this.s[1].slice(6))
+    console.log(this.htd(this.s[1].slice(6)))
+    console.log(this.notoatoz(this.htd(this.s[1].slice(6))))
+    
+    
     if(this.s[1].slice(6)!==''){
     let temp={}
              temp={
@@ -117,10 +122,10 @@ export class PmtMsgComponent implements OnInit {
 
    notoatoz(a){
     let str='abcdefghijklmnopqrstuvwxyz'
-    let char:any = '';
+    let char = '';
     for(let i=0;i<a.toString().length;i=i+2){
-      if( parseInt(a.toString().slice(i,i+2))> 26){
-        char = (char - 26).toString();
+      if(parseInt(a.toString().slice(i,i+2)) > 26){
+        char = char +  (parseInt(a.toString().slice(i,i+2)) - 26).toString();
       }
       else{
       char = char + str[parseInt(a.toString().slice(i,i+2))-1]
