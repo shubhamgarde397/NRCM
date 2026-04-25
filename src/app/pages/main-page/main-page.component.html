@@ -6,19 +6,13 @@
 
  <nav class="navbar navbar-inverse" style="position: fixed;width:100%;z-index:1;"> 
     <div class="container row" style="width: 100%;">
-      <div class="col-sm-6">
-      <div class="navbar-header">
-        <a class="navbar-brand fonthead" routerLink="NRCM_HOME">
-          Nitin Roadways And Cargo Movers
-        </a>
-      </div>
+      <div class="col-xs-12">
+        <span class="navbar-brand fonthead" routerLink="NRCM_HOME">NITIN ROADWAYS</span>
+        <span class="navbar-brand" href="/assets/images/VisitingCard.png" download="NitinRoadways_VisitingCard"><i class="material-icons">credit_card</i></span>
+        <span class="navbar-brand" routerLink="PM"><i class="material-icons">location_on</i></span>
+        <span class="navbar-brand" (click)="login('nrcm')"><i class="material-icons">lock_open</i></span>
     </div>
-    <div class="col-sm-6 fontbody">
-        <a class="navbar-brand" routerLink="NRCM_HOME">Home&nbsp;&nbsp;</a>
-        <a class="navbar-brand" href="/assets/images/VisitingCard.png" download="NitinRoadways_VisitingCard">Visiting Card&nbsp;&nbsp;</a>
-        <a class="navbar-brand" routerLink="PM">Location&nbsp;&nbsp;</a>
-        <a class="navbar-brand" (click)="login('nrcm')">Login</a>
-      </div>
+
     </div>
 
   </nav>

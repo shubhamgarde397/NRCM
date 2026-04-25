@@ -14,7 +14,6 @@ import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/pa
 import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.component';
 import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnavigation.component';
 import { TPTWelcomeComponent } from './pages/TPTLogin/tptwelcome/tptwelcome.component';
-import { TruckDetailsComponent } from './pages/TPTLogin/truck-details/truck-details.component';
 import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/personal-details.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
@@ -89,10 +88,6 @@ export const routes: Routes =
                 {
                     path:'NRCM_TPT_HOME',
                     component:TPTWelcomeComponent
-                },
-                {
-                    path:'TRUCK_DETAILS',
-                    component:TruckDetailsComponent
                 },
                 {
                     path:'PERSONAL_DETAILS',

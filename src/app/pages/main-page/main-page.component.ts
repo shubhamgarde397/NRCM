@@ -11,6 +11,233 @@ import 'jspdf-autotable';
 })
 export class MainPageComponent implements OnInit {
   public loginV = false;
+  public fromloading='2026-01-01';
+  public toloading='2026-01-01';
+  public partyids=[{name:'SSRV'}]
+public paymentData=[
+    {
+        "_id": "69576c0e749f845cb23859e6",
+        "advanceArray": [
+            {
+                "date": "2026-01-02",
+                "amount": 41400,
+                "reference": "SSRV-001"
+            }
+        ],
+        "loadingDate": "2025-12-27",
+        "rent": 46000,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "KA22 D 9172",
+        "place": "Tirupur"
+    },
+    {
+        "_id": "69576c0d749f845cb23859dd",
+        "advanceArray": [
+            {
+                "date": "2026-01-02",
+                "amount": 37800
+                "reference": "SSRV-001"
+            }
+        ],
+        "loadingDate": "2025-12-27",
+        "rent": 42100,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "MH11 CJ 5090",
+        "place": "Karur"
+    },
+    {
+        "_id": "69576c10749f845cb23859f2",
+        "advanceArray": [
+            {
+                "date": "2026-01-02",
+                "amount": 38700
+                "reference": "SSRV-001"
+            }
+        ],
+        "loadingDate": "2025-12-29",
+        "rent": 43000,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "KA28 AB 2605",
+        "place": "Karur"
+    },
+    {
+        "_id": "69576c11749f845cb2385a03",
+        "advanceArray": [
+            {
+                "date": "2026-01-02",
+                "amount": 38700
+                "reference": "SSRV-001"
+            }
+        ],
+        "loadingDate": "2025-12-30",
+        "rent": 43000,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "TN38 DK 8559",
+        "place": "Pollachi"
+    },
+    {
+        "_id": "69576c11749f845cb2385a05",
+        "advanceArray": [
+            {
+                "date": "2026-01-02",
+                "amount": 45000
+                "reference": "SSRV-001"
+            }
+        ],
+        "loadingDate": "2025-12-30",
+        "rent": 50000,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "PB08 FJ 9071",
+        "place": "Chennai"
+    },
+    {
+        "_id": "69576c12749f845cb2385a0a",
+        "advanceArray": [
+            {
+                "date": "2026-01-02",
+                "amount": 37800
+                "reference": "SSRV-001"
+            }
+        ],
+        "loadingDate": "2025-12-30",
+        "rent": 42100,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "MH13 EP 0611",
+        "place": "Vellore"
+    },
+    {
+        "_id": "695a13b38f09dc68509b1a23",
+        "advanceArray": [
+            {
+                "date": "2026-01-04",
+                "amount": 39150
+                "reference": "SSRV-001"
+            }
+        ],
+        "loadingDate": "2026-01-01",
+        "rent": 43500,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "GJ15 AX 6995",
+        "place": "Pollachi"
+    },
+    {
+        "_id": "695a13b48f09dc68509b1a2c",
+        "advanceArray": [
+            {
+                "date": "2026-01-04",
+                "amount": 38700
+                "reference": "h"
+            }
+        ],
+        "loadingDate": "2026-01-02",
+        "rent": 43000,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "KA09 AA 8021",
+        "place": "Karur"
+    },
+    {
+        "_id": "695a13b78f09dc68509b1a48",
+        "advanceArray": [
+            {
+                "date": "2026-01-04",
+                "amount": 37800
+                "reference": "www.nitinr"
+            }
+        ],
+        "loadingDate": "2026-01-03",
+        "rent": 42100,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "MH11 CJ 5090",
+        "place": "Karur"
+    },
+    
+    {
+        "_id": "69c0be36dc3c5aef9ba69a08",
+        "advanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "loadingDate": "2026-03-20",
+        "rent": 43000,
+        "balanceArray": [
+            {
+                "date": "2026-03-23",
+                "amount": 38700,
+                "reference": "CNRBH00125270772"
+            }
+        ],
+        "balTF": false,
+        "truckNo": "MH14 LL 7510",
+        "place": "Coimbatore"
+    }
+]
+
 
   constructor(
     public router: Router,

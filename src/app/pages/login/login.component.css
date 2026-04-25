@@ -1,45 +1,14 @@
 body, html {
   height: 100%;
 }
-
-h3 {
-    color: rebeccapurple;
-    font-family: arial, sans-serif;
-    font-size: 25px;
-    font-weight: bold;
-    margin-top: 0px;
-    margin-bottom: 1px;
-   
-  }
-  .horizontalLine {
-    height: 20px;
-    color: grey;
-  }
-  .line {
-    border: 1px solid grey;
-    width: 100%;
-  }
   
   .home{
-    background-image: url('../../../assets/images/cd.jpg');
-    /* background-image: url('https://truckdriverdocuments.s3.ap-south-1.amazonaws.com/testing'); */
-    background-position: center;
-    /* position:relative; */
-    width: 100%;
-    height: 100%;
-    background-repeat: no-repeat;
+    background-image: url('../../../assets/images/eicher3.jpg');
+    /* background-image: url('https://truckdriverdocuments.s3.ap-south-1.amazonaws.com/testing'); */    
     background-size: cover;
     
   }
-  .hrLine{
-    height: 10px;
-    width:100%;
-  }
-  img{
-    height:100px;
-    width:100px;
-    
-  }
+
   #header{
     margin-top: 30px;
     margin-bottom: 350px;
@@ -48,12 +17,11 @@ h3 {
     font-size: 50px;
     font-stretch: narrower;
     font-style: italic;
-    color:black ;
+    color:gray ;
   }
   .input{
-    background-color: transparent;
-    border-color: ddd;
-    color: white;
+    background-color: black;
+    color: wheat;
   }
   button{
     border-color: black;

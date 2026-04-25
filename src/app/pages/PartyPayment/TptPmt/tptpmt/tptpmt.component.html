@@ -60,6 +60,10 @@
       <div class="row" *ngIf="tableData">
        
     <div class="col-sm-3">
+      <input type="checkbox" id="adv" [(ngModel)]="adv">
+      <label for="adv">Advance</label>
+      <input type="checkbox" id="bal" [(ngModel)]="bal">
+      <label for="bal">Balance</label>
       <button mat-raised-button type="button" (click)="downloadForParty1('party')" class="btn-danger btn-sm btn-just-icon">
         PDF
       </button>
@@ -86,81 +90,18 @@
             <td>{{i.truckNo}}</td>
             <td>{{i.place}}</td>
             <td (click)="rentUpdate(i,j)">{{i.rent}}</td>
-            <td (click)="setVar(i,j)" data-toggle="modal" data-target="#myModal">
+            <td>
               <ul *ngFor="let k of i.advanceArray;let kk = index">
                 <li>{{k.date|date:'dd-MM-yyyy'}}<br>{{k.amount}}<br>REF:{{k.reference}}</li>
               </ul>
             </td>
-            <td (click)="setVar(i,j)" data-toggle="modal" data-target="#myModal">{{i.actualPaymentAmount}}<br>{{i.actualPaymentDate}}<br>Ref : {{i.reference}}</td>
+            <td>
+              <ul *ngFor="let k of i.balanceArray;let kk = index">
+                <li>{{k.date|date:'dd-MM-yyyy'}}<br>{{k.amount}}<br>REF:{{k.reference}}</li>
+              </ul>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 </div>
-
-
-
-   <div class="container">
-    
-              <div class="modal fade" id="myModal" role="dialog" style="background-color: black;">
-                <div class="modal-dialog">
-                
-              
-                  <div class="modal-content" style="background-color: black;color: wheat;border-color: white;">
-                    <div class="modal-header">
-                      <button style="color:black;" type="button" class="close" data-dismiss="modal">&times;</button>
-                      <h4 class="modal-title">Edit for {{truckno5b}}</h4>
-                    </div>
-                    <div class="modal-body" style="background-color: black;">
-                <div class="well" style="background-color: black;">
-            
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Actual Amount : 
-                      <input style="color:wheat;background-color: black;" type="number" class="form-control" [(ngModel)]="apa">
-                    </div>
-                  </div>
-            
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Actual Date : 
-                      <input style="color:wheat;background-color: black;" type="date" class="form-control" [(ngModel)]="apd">
-                    </div>
-                  </div>
-
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Poch Amount : 
-                      <input style="color:wheat;background-color: black;" type="number" class="form-control" [(ngModel)]="pochamount">
-                    </div>
-                  </div>
-
-                  <div class="row form-group">
-                    <div class="col-sm-12">
-                      Bal Ref : 
-                      <input style="color:wheat;background-color: black;" type="text" class="form-control" [(ngModel)]="reference">
-                    </div>
-                  </div>
-                  
-            
-                  <div class="row form-group">
-                    
-                    
-                  <div class="col-sm-4">
-                    <button style="color:black;" type="button" class="btn btn-warning" (click)="submitapd()">
-                      Submit
-                    </button>
-                  </div>
-                  </div>
-                </div>
-                    </div>
-                    <div class="modal-footer">
-                      <button style="color:black;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
-              
-            </div>

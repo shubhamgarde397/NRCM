@@ -4,7 +4,7 @@ import { ApiCallsService } from '../../../common/services/ApiCalls/ApiCalls.serv
 import { Location } from '@angular/common';
 import { HandleDataService } from '../../../common/services/Data/handle-data.service';
 import { SecurityCheckService } from 'src/app/common/services/Data/security-check.service';
-import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
+
 import { ObsServiceService } from 'src/app/common/services/Data/obs-service.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -43,7 +43,7 @@ export class TPTNavigationComponent implements OnInit {
     public handledata: HandleDataService,
     public securit: SecurityCheckService,
     public securityCheck: SecurityCheckService,
-    public spin: Ng4LoadingSpinnerService,
+    
     public obs: ObsServiceService,
     public hF: handleFunction,
     public formBuilder: FormBuilder,
@@ -55,24 +55,9 @@ export class TPTNavigationComponent implements OnInit {
     this.todayDate = this.hF.getDate(this.date.getDate(), this.date.getMonth() + 1, this.date.getFullYear());
     this.username = this.securityCheck.dname;
     this.nameOfUser = this.username.slice(0, 1).toLocaleUpperCase() + this.username.slice(1, this.username.length)
-    this.getInformationData()
     this.month = this.date.getMonth() + 1
     this.year = this.date.getFullYear();
     this.obs.saveDate(this.hF.generate2DigitNumber(String(this.month)) + '_' + this.year)
-  }
-
-
-
-  getInformationData() {
-    this.spin.show();
-    let tempObj = {};
-    tempObj['method']='getregisteredtruckstotpt';
-    tempObj['tablename']='';
-    tempObj['userid']=this.securityCheck.userid;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        this.securityCheck.setTruckData(res.Data)
-      });
   }
 
 

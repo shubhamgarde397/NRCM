@@ -47,15 +47,33 @@
       </div>
 
       <div class="row" *ngIf="tabledata">
-       
-    <div class="col-sm-3">
-      <button mat-raised-button type="button" (click)="download()" class="btn-danger btn-sm btn-just-icon">
-        PDF
-      </button>
-    </div>
+         <table class="table" style="width:100%" align="center" *ngIf="tabledata">
+        <thead align="center" style="font-weight: bold">
+          <tr class=table-header>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Reference</th>
+            <th>Action</th>
+          </tr>
+        </thead>
 
+        <tbody align="center">
+          <tr *ngFor="let i of Data;let j = index">
+            <td>{{j+1}}</td>
+            <td>{{i.paymentDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.amount}}</td>
+            <td>{{i.reference}}</td>
+            <td>
+              <button mat-raised-button type="button" (click)="get(i)" class="btn-danger btn-sm btn-just-icon">
+        Get
+      </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-      <table class="table" style="width:100%" align="center" *ngIf="tabledata">
+      <table class="table" style="width:100%" align="center" *ngIf="tabledata2">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
@@ -64,6 +82,7 @@
             <th>Place</th>
             <th>LRNO</th>
             <th>Balance</th>
+            <th>Action</th>
           </tr>
         </thead>
 
@@ -75,6 +94,11 @@
             <td>{{i.placeName}}</td>
             <td>{{i.lrno}}</td>
             <td (click)="amountUpdate(i,j)">{{i.pochAmount}}</td>
+            <td>
+              <button mat-raised-button type="button" (click)="download(i)" class="btn-danger btn-sm btn-just-icon">
+        PDF
+      </button>
+            </td>
           </tr>
         </tbody>
       </table>

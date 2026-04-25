@@ -89,7 +89,6 @@ export class AddComponent implements OnInit {
     tempobj['partyType']=this.partyType;
     tempobj['date'] = value['paymentDate'];
     tempobj['partyName']=this.gstdetailslistid.name;
-    tempobj['done']=false;
     tempobj['amount'] = value['amount'];
     tempobj['weight'] = value['notes'];
     tempobj['tbids']=["61739cccd00acebeefa834e1"];

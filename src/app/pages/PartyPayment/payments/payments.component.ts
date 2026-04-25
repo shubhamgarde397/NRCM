@@ -145,7 +145,6 @@ public year;
   }
 
   setAllData(){
-    this.paymentCheck = this.paymentData.find(r=>{return r._id===this.pp1})['done']
     
     let tempObj={};
     tempObj['method'] = 'pendingPayment';
@@ -164,7 +163,6 @@ public year;
   }
 
   setAllDataBalance(){
-    this.paymentCheck = this.paymentData.find(r=>{return r._id===this.pp1})['done']
     let tempObj={};
     tempObj['method'] = 'pendingPaymentBalance';
     tempObj['date'] = this.paymentData.find(r=>{return r._id===this.pp1})['date']

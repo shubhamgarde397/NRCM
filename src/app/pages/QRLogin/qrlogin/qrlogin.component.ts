@@ -61,18 +61,26 @@ public ewaybill=0;
     let login=false;
     let pwd = prompt('Enter Password');
     switch (pwd) {
-      case 'NRCMSHUB':
+      case 'SHUB':
         this.userid=1;
         login=true;
         break;
-      case 'NRCMROHI':
+      case 'ROHI':
         this.userid=3;
         login=true;
         break;
-      case 'NRCMPOOJ':
+      case 'POOJ':
         this.userid=2;
         login=true;
         break;
+       case 'TUKA':
+        this.userid=5;
+        login=true;
+        break; 
+        case 'KART':
+        this.userid=10;
+        login=true;
+        break; 
     }
     if(login){
       this.div2=3;

@@ -41,10 +41,7 @@ import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/pa
 import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.component';
 import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnavigation.component';
 import { TPTWelcomeComponent } from './pages/TPTLogin/tptwelcome/tptwelcome.component';
-import { TruckDetailsComponent } from './pages/TPTLogin/truck-details/truck-details.component';
 import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/personal-details.component';
-import { PendingPaymentComponent } from './pages/TPTLogin/pending-payment/pending-payment.component';
-import { TicketComponent } from './pages/TPTLogin/ticket/ticket.component';
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
@@ -88,11 +85,8 @@ import { CRVComponent } from './pages/CRV/crv/crv.component';
     LinkTruckComponent,
     TPTNavigationComponent,
     TPTWelcomeComponent,
-    TruckDetailsComponent,
     PersonalDetailsComponent,
-    PendingPaymentComponent,
     LRDisplayComponent,
-    TicketComponent,
     TruckLoadingComponent,
     DuesPageComponent,
     DuesFromAdvanceDisplayComponent,

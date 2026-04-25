@@ -14,6 +14,7 @@ import 'jspdf-autotable';
 export class TptPmtDetailsComponent implements OnInit {
   data: any;
   tabledata= false;
+  tabledata2 = false;
   public nopid;
   public tptid=''
   public today;
@@ -33,6 +34,7 @@ export class TptPmtDetailsComponent implements OnInit {
     "Role": 6
   }
   public transports = [];
+  public Data = [];
   public date = new Date();
 public paymentData=[];
   constructor(public apiCallservice: ApiCallsService, public router: Router,
@@ -73,7 +75,7 @@ public paymentData=[];
 
 
   findMany = function () {
-    this.paymentData=[];
+    this.Data=[];
     let tempObj = {};
     let flag = false;
     if ((this.nopid === undefined)) { 
@@ -88,14 +90,11 @@ public paymentData=[];
       
     if (flag) {
       tempObj['tablename'] = ''
-      tempObj['amount']=this.amount;
-      tempObj['date']=this.date;
-      tempObj['reference']=this.reference;
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
-          this.paymentData = res.Data;
-          if (this.paymentData.length > 0) {
+          this.Data = res.Data;
+          if (this.Data.length > 0) {
             this.tabledata = true;
           } else {
             alert('No Data Available.');
@@ -152,10 +151,46 @@ if(gono){
     }
   }
 
+    get(data) {
+
+      console.log(data);
+      
+    this.paymentData=[];
+    let tempObj = {};
+    let flag = false;
+    if ((this.nopid === undefined)) { 
+      alert('Select Transport'); 
+    }
+    else {
+      this.tptid=this.transports.find(r=>{return r.tptName===this.nopid})._id
+      tempObj['method'] = 'transportPaymentDetailsB';
+      tempObj['transportid']=this.tptid;
+
+      flag = true;
+      
+    if (flag) {
+      tempObj['tablename'] = ''
+      tempObj['amount']=this.amount;
+      tempObj['date']=this.date;
+      tempObj['reference']=this.reference;
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.paymentData = res.Data;
+          if (this.paymentData.length > 0) {
+            this.tabledata = true;
+          } else {
+            alert('No Data Available.');
+            this.tabledata = false;
+          }
+        });
+    }
+  }
+  };
 
 
-  download() {//threshhold is 295
-    let data=this.paymentData;
+  download(d) {//threshhold is 295
+    let data=d;
      let bigValueofY=0;
      var doc = new jsPDF()
      doc.setFontSize('20');
