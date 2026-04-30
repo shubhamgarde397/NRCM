@@ -250,19 +250,25 @@ if(gono){
     let tptName = this.transports.filter(r=>r._id==this.nopid)[0]['tptName']
     let adv=this.adv;
     let bal=this.bal;
+     let pmtNameArray='';
+    let pmtDate='';
+    let pmtAmt='';
+    let pmtNameArray2='';
+        let pmtDate2='';
+        let pmtAmt2='';
     if (adv){
-    let pmtNameArray='advanceArray';
-    let pmtDate='Adv Dt';
-    let pmtAmt='Ad Amt';
+    pmtNameArray='advanceArray';
+    pmtDate='Adv Dt';
+    pmtAmt='Ad Amt';
         if (bal){
-        let pmtNameArray2='balanceArray';
-        let pmtDate2='Bal Dt';
-        let pmtAmt2='Bl Amt';
+         pmtNameArray2='balanceArray';
+         pmtDate2='Bal Dt';
+         pmtAmt2='Bl Amt';
         }
     }else if (bal){
-      let pmtNameArray='balanceArray';
-    let pmtDate='Bal Dt';
-    let pmtAmt='Bl Amt';
+       pmtNameArray='balanceArray';
+     pmtDate='Bal Dt';
+     pmtAmt='Bl Amt';
     }
 
     let pager=1;

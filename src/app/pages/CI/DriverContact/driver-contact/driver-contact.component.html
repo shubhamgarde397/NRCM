@@ -106,20 +106,10 @@
         <td>
           Rent : <input type="number" class="form-control" style="width: 50%;" id="rent_{{j}}" [disabled]='i.lul==="unlock"' value={{i.rent}}>
           Bill : <input type="number" class="form-control" style="width: 50%;" id="bill_{{j}}" [disabled]='i.lul==="unlock"' value=1200>
-          <!-- Adv :<input type="number" class="form-control" style="width: 50%;" id="adv_{{j}}" (change)="billAmount(j)" [disabled]='i.lul==="unlock"'> -->
-          Bal :<input type="number" class="form-control" style="width: 50%;" id="bal_{{j}}" [disabled]='i.lul==="unlock"' value=2950>
-
           <button class="btn btn-danger" (click)="saveEdit(i,j,'addons')"  data-toggle="modal" data-target="#myModalDD">Addons</button>
 
           <button class="btn btn-warning" (click)="saveEdit(i,j,'deductions')"  data-toggle="modal" data-target="#myModalDD">Deductions</button>
         </td>
-
-        <!-- <td> -->
-          
-          <!-- Coolie : <input type="number" class="form-control" style="width: 50%;" id="coolie_{{j}}" [disabled]='i.lul==="unlock"'>
-          Less : <input type="number" class="form-control" style="width: 50%;" id="less_{{j}}" [disabled]='i.lul==="unlock"'>
-          Cash : <input type="number" class="form-control" style="width: 50%;" id="cash_{{j}}" [disabled]='i.lul==="unlock"'> -->
-        <!-- </td> -->
 
         <td>
           <button class="btn btn-danger" [disabled]='i.lul==="unlock"' (click)="delete(j,'r')">D</button>

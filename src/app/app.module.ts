@@ -36,7 +36,6 @@ import { PDFComponent } from './pages/pdf/pdf.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
-import { AccountDetailsDisplayComponent } from './pages/AccountDetails/account-details-display/account-details-display.component';
 import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
 import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.component';
 import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnavigation.component';
@@ -45,9 +44,7 @@ import { PersonalDetailsComponent } from './pages/TPTLogin/personal-details/pers
 import { TruckLoadingComponent } from './pages/TPTLogin/truck-loading/truck-loading.component';
 import { DuesPageComponent } from './pages/Dues/dues-page/dues-page.component';
 import { DuesFromAdvanceDisplayComponent } from './pages/CI/DuesFromAdvance/dues-from-advance-display/dues-from-advance-display.component';
-import { DisplayComponent } from './pages/CI/FROD/display/display.component';
 import { AddComponent } from './pages/EnvelopeEntries/add/add.component'
-import {LRDisplayComponent} from './pages/LRsend/lrdisplay/lrdisplay.component';
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
@@ -80,17 +77,14 @@ import { CRVComponent } from './pages/CRV/crv/crv.component';
     TurnBookLocationDispComponent,
     HiddenTrucksComponent,
     WhatsappComponent,
-    AccountDetailsDisplayComponent,
     PaymentPendingDisplayComponent,
     LinkTruckComponent,
     TPTNavigationComponent,
     TPTWelcomeComponent,
     PersonalDetailsComponent,
-    LRDisplayComponent,
     TruckLoadingComponent,
     DuesPageComponent,
     DuesFromAdvanceDisplayComponent,
-    DisplayComponent,
     AddComponent,
     DailyAccountAdderComponent,
     DisplaySequenceComponent,

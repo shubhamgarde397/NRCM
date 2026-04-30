@@ -19,12 +19,8 @@
         </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11' )&&(buttonOption!=='13')&&(buttonOption!=='20')">
+          *ngIf="(buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11' )&&(buttonOption!=='20')">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
-        </div>
-
-        <div class="col-sm-3" *ngIf="buttonOption==='13'">
-          <input type="text" class="form-control" [(ngModel)]="bylrno" placeholder="Lrno">
         </div>
 
         <div class="col-sm-3" *ngIf="(buttonOption==='8')||(buttonOption==='18')||(buttonOption==='19')||(buttonOption==='20')">
@@ -47,9 +43,6 @@
         <div class="col-sm-4">
           <button mat-raised-button (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
             {{buttonValue}}
-          </button>
-          <button mat-raised-button (click)="findBillNo()" class="btn btn-primary" style="width: 100%;margin-top: 10px;" *ngIf="buttonOption==='13'">
-            Bill No
           </button>
         </div>
       </div>
@@ -370,72 +363,6 @@
   </div>
 </div>
 
-
-<div class="container">
-  
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-  
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Edit for {{updateTruck.truckName.truckno}}</h4>
-        </div>
-        <div class="modal-body">
-    <div class="well">
-
-      <div class="row form-group">
-        <div class="col-sm-12">
-          Actual Payment Date : 
-          <input type="date" class="form-control" [(ngModel)]="paymentDate" placeholder="Date">
-        </div>
-      </div>
-
-      <div class="row form-group">
-        <div class="col-sm-12">
-          Actual Payment Amount : 
-          <input type="number" class="form-control" [(ngModel)]="paymentAmount" placeholder="Date">
-        </div>
-      </div>
-
-      <div class="row form-group">
-        <div class="col-sm-12">
-          Status Of Poch : 
-          <select class="form-control" [(ngModel)]="statusOfPoch">
-            <option>Okay</option>
-            <option>Damage</option>
-            <option>Shortage</option>
-            <option>Diesel</option>
-            <option>Loan</option>
-            <option>Double Load</option>
-            <option>Late</option>
-            <option>To Pay</option>
-          </select>
-        </div>
-      </div>
-
-
-      <div class="row form-group">
-        
-        
-      <div class="col-sm-4">
-        <button type="button" class="btn btn-warning" (click)="addActual()">
-          Submit
-        </button>
-      </div>
-      </div>
-    </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-  
-</div>
 
 <div *ngIf="show">
 

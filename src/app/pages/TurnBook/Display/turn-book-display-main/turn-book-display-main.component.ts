@@ -71,9 +71,7 @@ public showbuttonOption821HA=true;
   public addis19=true;
   public tons=[];
   public displayoptions = [
-    { 'value': '3', 'viewvalue': 'Truck Dispatched' ,'disabled':false},
     { 'value': '8', 'viewvalue': 'Monthly By Series' ,'disabled':false},
-    { 'value': '13', 'viewvalue': 'LRNO' ,'disabled':false},
     { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
     { 'value': '19', 'viewvalue': 'Packet' ,'disabled':false},
     { 'value': '20', 'viewvalue': 'GST' ,'disabled':false},
@@ -377,20 +375,6 @@ let buttons=[]
     this.tableSelected=false;
   }
 
-  findBillNo(){//only for data from 1st april 2021 and loading data is empty
-    let tempObj = {};
-    this.byTruckName=false;
-    tempObj['lrno']=this.bylrno;
-    tempObj['tablename'] = 'turnbook'
-    tempObj['method'] = 'displayTBBill'
-    tempObj['display'] = '20'
-    this.apiCallservice.handleData_New_python('turnbook', 1, tempObj, true)
-      .subscribe((res: any) => {
-        this.tableSelected=true;
-        this.turnbooklist=res.Data;
-      });
-
-  };
   admin(){
     this.adminAmount=true;
   }
@@ -421,9 +405,6 @@ let tempObj = {};
     this.byTruckName=false;
     this.parties = this.commonArray.gstdetails;
     switch (this.buttonOption) {
-      case '3':
-        tempObj['turnbookDate'] = this.dynDate;
-        break;
       case '8':
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
@@ -522,19 +503,7 @@ let tempObj = {};
     this.tons=this.myFormGroup1.value.typeOfLoad==='Pipe'?['0','8','10','T']:['0','6','SXL-32','MXL-32'];
   }
 
-  clearData(i,j){
-    if(confirm('Do you want to clear the payment?')){
-    let tempObj1={};
-    tempObj1['tablename'] = ''
-    tempObj1['method'] = 'uncheckActualPayment'
-    tempObj1['_id']=i._id;
-      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true)
-      .subscribe((res: any) => {
-        alert(res.Status);
-      });
-    }
-  }
-  
+ 
   downloadGST(){
     
     let tempObj1={};
@@ -817,25 +786,6 @@ this.placeid=this.tempDate[0]['place']['_id']
 this.updateTruck=i;
 this.updateTruck['index']=j;
 
-  }
-
-  addActual(){
-    let obj={}
-
-    obj['id']=this.updateTruck['_id'];
-    obj['paymentDate']=this.paymentDate;
-    obj['paymentAmt']=this.paymentAmount;
-    obj['statusOfPoch']=this.statusOfPoch;
-    obj['tablename']='';
-    obj['method']='updateActualPaymentDetailsSingly1'
-    this.apiCallservice.handleData_New_python
-    ('commoninformation', 1, obj, true)
-    .subscribe((res: any) => {
-      alert(res.Status);
-      this.statusOfPoch='';
-      this.paymentAmount=0;
-      this.paymentDate=''
-    });
   }
 
    getAllTruckData(){

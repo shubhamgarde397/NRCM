@@ -116,17 +116,7 @@ switch(data){
         
 }
   }
-  f14daysago(){
-    this.tableDate1=true;
-    let tempObj = {}
-    tempObj['tablename'] = 'ownerdetails'
-    tempObj['method'] = 'getLastLoaded14daysago'
 
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        this.ownerdetailslist2=res.Data;
-      });
-  }
   copyAcc(data){
     let msg=''
     msg=msg+'*'+data.truckno+'*\n\n';

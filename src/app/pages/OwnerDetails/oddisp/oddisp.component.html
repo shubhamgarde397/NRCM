@@ -1,10 +1,5 @@
 <div class="row">
-    <!-- <div class="col-sm-2">
-        <button class="btn btn-info" (click)="getWhichType('1')">All Truck</button>
-    </div> -->
-    <div class="col-sm-2">
-        <button class="btn btn-info" (click)="getWhichType('1')" *ngIf="nrcmid===1">14 days Ago</button>
-    </div>
+   
     <div class="col-sm-2">
         <button class="btn btn-info" (click)="getWhichType('2')">Single</button>
     </div>
@@ -39,48 +34,6 @@
         </tr>
     </table>
 </div>
-
-<div *ngIf="whichType==='1'">
-    <div class="well">
-    <div>
-        <button class="btn btn-danger" (click)="f14daysago()"><i class="material-icons" >send</i></button></div>
-    
-        <table class="table" style="width:100%" align="center"  *ngIf="tableDate1">
-    
-            <thead>
-                <tr class="table-header">
-                    <th>Srno</th>
-                    <th>Truck</th>
-                    <th>Last Details</th>
-                    <th>Score</th>
-                    <th>Contact</th>
-                    <th>Prefer</th>
-                    <th>FROD</th>
-                    <th>Option</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let i of ownerdetailslist2;let j = index">
-                    <td>{{j+1}}</td>
-                    <td>{{i.truckno}}-{{i.typeOfVehiclefirst}}</td>
-                    <td>{{i.currentDate|date:'dd-MM-yyyy'}}-{{i.currentLoc}}</td>
-                    <td>{{i.load}}/{{i.total}}={{i.score}}</td>
-                    <td>
-                        <ul *ngFor="let k of i.contact">
-                            <li>{{k}}</li>
-                        </ul>
-                    </td>
-                    <td>
-                        <ul *ngFor="let j of i.preferences;">
-                            <li>{{j}}</li>
-                        </ul>
-                    </td>
-                    <td>{{i.frod}}</td>        
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    </div>
 
 <div *ngIf="whichType==='2'">
 <div class="well">

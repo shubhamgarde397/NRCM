@@ -141,11 +141,6 @@ public ifsc;
     this.givenDate=this.handleF.createDate(new Date());
   }
 
-
-  adminAccess() {
-    this.admin = !this.admin;
-  }
-
   updateACC(i,j){
     this.bigI=j;
     this.accUpdater=i.truckData[0].truckno;
@@ -384,36 +379,6 @@ if(confirm('Do you want to temporary delete it?')){
     } else { }
   }
 
-   sendMsg(no,type,data){
-    let bal=data.advanceArray.find(r=>{return r.reason==='Balance'})
-  let msg=''
-  msg=msg+'*****%20%20*Balance%20Payment%20Details*%20%20*****%0A%0A'
-  msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A'
-  msg=msg+'*Loading*%20Date%20:%20'+this.handleF.getDateddmmyy(data.loadingDate)+'%0A'
-  msg=msg+'*Load*%20:%20'+data.typeOfLoad+'%0A'
-  msg=msg+'*Destination*%20:%20'+data.vsname+'%20'+(data.vsname2?data.vsname2:'')+'%0A'
-  msg=msg+'*Status%20of%20Delivery*%20:%20'+data.statusOfPoch+'%0A'
-  msg=msg+'*Balance%20Amount*%20:%20'+(bal?bal.advanceAmt:'')+'%0A%0A'
-  msg=msg+'*%20*Payment%20Details*%20*%0A%0A'
-  msg=msg+'*Payment%20Amount*%20:%20'+data.actualPaymentAmount+'%0A'
-  msg=msg+'*Payment%20Date*%20:%20'+this.handleF.getDateddmmyy(data.actualPaymentDate)+'%0A%0A%0A'
-  msg=msg+'*%20*Account%20Details*%20*%0A%0A'
-  msg=msg+'*Accname*%20:%20'+(bal?bal.BHAccname.replace(/\s/g, "%20"):'')+'%0A'
-  msg=msg+'*AccNo*%20:%20'+(bal?bal.BHAccNo:'')+'%0A'
-  msg=msg+'*IFSC*%20:%20'+(bal?bal.BHIFSC:'')+'%0A%0A'
-  msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
-  msg=msg+'*Pune*%0A'
-  msg=msg+'9822288257%0A'
-  msg=msg+'8529275757%0A'
-    switch (type) {
-      case 'wa':
-          window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
-        break;
-        case 'txt':
-          window.open('sms:+91'+no+'?body='+msg,'_blank');    
-        break;
-    }
-  }
 
   fetchparty(){
     this.commonArray = this.securityCheck.commonArray;
@@ -447,45 +412,7 @@ if(confirm('Do you want to temporary delete it?')){
     this.partyDetails=this.gstdetailslist[this.partyName.split('+')[1]]
     this.contactP=this.partyDetails.contact[0];
   }
-
-  sendMsgA(no,type,data){
-    let r=data.rc?'':'RC'
-    let l=data.lc?'':'License'
-    let p=data.pan?'':'PAN'
-    let shall=(data.rc&&data.lc&&data.pan);
-    let doc=(data.rc?'':'%20RC')+(data.lc?'':'%20License')+(data.pan?'':'%20PAN')
-    let bal=data.advanceArray.find(r=>{return r.reason==='Advance'})
-    let msg=''
-    msg=msg+'*NITIN%20ROADWAYS%20AND%20CARGO%20MOVERS*%0A%0A'
-    msg=msg+'*****%20%20*Advance%20Payment%20Details*%20%20*****%0A%0A'
-    msg=msg+'*TruckNo*%20:%20'+data.truckno.replace(/\s/g, "%20")+'%0A%0A'
-    msg=msg+'*%20*Advance%20Details*%20*%0A%0A'
-    msg=msg+'*Advance%20Amount*%20:%20'+bal.advanceAmt+'%0A'
-    msg=msg+'*Advance%20Date*%20:%20'+this.handleF.getDateddmmyy(bal.advanceDate)+'%0A%0A'
-    msg=msg+'*%20*Account%20Details*%20*%0A%0A'
-    msg=msg+'*Accname*%20:%20'+data.accountDetails[0].accountName.replace(/\s/g, "%20")+'%0A'
-    msg=msg+'*AccNo*%20:%20'+data.accountDetails[0].accountNumber+'%0A'
-    msg=msg+'*IFSC*%20:%20'+data.accountDetails[0].ifsc+'%0A%0A'
-    if(!shall){
-    msg=msg+'Unga%20Vandika%0A*'+doc+'*%0ASend%20Pananga%0A%0A';
-    }
-    msg=msg+'*Nitin%20Roadways%20and%20Cargo%20Movers*%0A'
-    msg=msg+'*Pune*%0A'
-    msg=msg+'9822288257%0A'
-    msg=msg+'8529275757%0A'
-      switch (type) {
-        case 'wa':
-            window.open('https://wa.me/+91'+no+'/?text='+msg,'_blank');  
-          break;
-          case 'txt':
-            window.open('sms:+91'+no+'?body='+msg,'_blank');    
-          break;
-      }
-    }
-
-
   
-
   deleteBHComplete(data, j) {
     let ids=[]
     for(let i=0;i<data.truckData.length;i++){
@@ -504,19 +431,6 @@ if(confirm('Do you want to temporary delete it?')){
           this.balanceDate.splice(j, 1);
         });
     }
-  }
-
-  showDatabyidEditForm(data, j) {
-    this.show = true;
-    this.found = data;
-    data['index'] = j;
-    data['editOption'] = 1;
-    data['truckData'].map(r=>{r.field=true;})
-    data['commentToTruck']=data['commentToTruck']
-
-    
-    this.handledata.saveData(data);
-    this.router.navigate(['Navigation/BALANCE_HIRE_HANDLER/UpdateSingle']);
   }
 
   getValueofI(a) {
@@ -540,7 +454,7 @@ if(confirm('Do you want to temporary delete it?')){
     return I;
   }
 
-   download(dataTF) {//threshhold is 295
+   download() {//threshhold is 295
 
     let i;
     if (confirm('Fresh Page?')) {
@@ -595,7 +509,6 @@ if(confirm('Do you want to temporary delete it?')){
     doc.setLineWidth(0.5);
     doc.line(37, i + 6 - 16, 37, i + 12 - 16);
     doc.line(61, i + 6 - 16, 61, i + 12 - 16);
-    // doc.line(72, i + 6 - 16, 72, i + 12 - 16);
     doc.line(83, i + 6 - 16, 83, i + 12 - 16);
     doc.line(149, i + 6 - 16, 149, i + 12 - 16);
 
@@ -607,12 +520,8 @@ if(confirm('Do you want to temporary delete it?')){
     doc.setTextColor(0, 0, 0);
     doc.text('Amount', 16, i + 10 - 16)
     doc.text('Comments', 38, i + 10 - 16)
-    // doc.text('Pg', 63, i + 10 - 16)
     doc.text('Date', 63, i + 10 - 16)
     doc.text('TruckNo', 83, i + 10 - 16)
-    if(!dataTF){
-    doc.text('Payment Details', 111.5, i + 10 - 16)
-    }
 
     doc.text('Account Details', 150, i + 10 - 16)
     //Headers End
@@ -669,13 +578,8 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setTextColor(0, 0, 0);
         doc.text('Amount', 16, 10)
         doc.text('Comments', 38, 10)
-        // doc.text('Pg', 63, 10)
         doc.text('Date', 63, 10)
         doc.text('TruckNo', 83, 10)
-
-        if(!dataTF){
-          doc.text('Payment Details', 111.5, 10)
-          }
 
         doc.text('Account Details', 150, 10)
         //Headers End
@@ -697,34 +601,47 @@ if(confirm('Do you want to temporary delete it?')){
       let K = 0
       let accountI=i;
       doc.setFontSize('10');
-      if(dataTF){
-        doc.text(String(parseInt(this.balanceDate[z].parentAccNo)).split(' ')[0], 38.5, i);//comments
-      }
+    
+      doc.text(String(parseInt(this.balanceDate[z].parentAccNo)).split(' ')[0], 38.5, i);//comments
+     
       for (let k = 0; k < data.length; k++) {
         doc.setFontSize('10');
-        doc.text(String(this.balanceDate[z].truckData[k].total), 16, i);//amount
+        doc.text(String(this.balanceDate[z].truckData[k].balance), 16, i);//amount
+
+
 
         doc.setFontSize('10');
-        doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '/' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '/' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
+        doc.text(this.balanceDate[z].truckData[k].date.slice(8, 10) + '-' + this.balanceDate[z].truckData[k].date.slice(5, 7) + '-' + this.balanceDate[z].truckData[k].date.slice(0, 4), 63, i);//date
         doc.setFontSize('10');
         doc.text(this.balanceDate[z].truckData[k].truckno.split(' ').join(''), 83.5, i);//truckno
           doc.text(this.balanceDate[z].truckData[k].remark, 40, i);//truckno
         
         doc.setFontSize('8');
         doc.text(String(this.latemarker(this.balanceDate[z].truckData[k].date,this.selectedDate)), 50, i);//comments
-        if(dataTF){
+      
         doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails+'-'+String(this.billno(this.balanceDate[z].truckData[k].billno)):'', 107, i);//truckno
-        }        
+               
 
         doc.setFontSize('10');
         K = k;
         i = i + 6;
-        totalAmount=totalAmount+this.balanceDate[z].truckData[k].total;
+        totalAmount=totalAmount+this.balanceDate[z].truckData[k].balance;
       }
       if(data.length>1){
       doc.line(5, i-4, 32, i-4);
       doc.text(String(totalAmount),16,i)
       }
+
+       if(this.balanceDate[z].balanceArray.length>0){
+          doc.setFontType('italic');
+          doc.setFontSize('8');
+          doc.line(10, i+3, 30, i+1);
+          doc.text(String(this.balanceDate[z].balanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0))+'_'+this.balanceDate[z].balanceArray[0]['date'].slice(8, 10) + '-' + this.balanceDate[z].balanceArray[0]['date'].slice(5, 7) + '-' + this.balanceDate[z].balanceArray[0]['date'].slice(2, 4), 16, i+6,null,5);//amount
+        }
+        doc.setFontSize('10');
+        doc.setFontType('normal');  
+
+
       let bigKK=0
       // let data = this.balanceDate[z].truckData;
       for (let kk = 0; kk < this.balanceDate[z].dueToTake.length; kk++) {
@@ -765,10 +682,7 @@ if(confirm('Do you want to temporary delete it?')){
       doc.text(String(this.balanceDate[z]['tda'].accountNumber), 147.5, accountI+6);//accname
       doc.text(this.balanceDate[z]['tda'].ifsc, 147.5, accountI+12);//ifsc
       }
-      if(!dataTF){
-        doc.text(String(this.handleF.getDateddmmyy(this.balanceDate[z].apd)), 115, accountI);//truckno
-        doc.text(String(this.balanceDate[z].apm), 115, accountI+6);//truckno
-      }
+
       doc.setFontSize('8');
       
       i = i + 12-(bigK*2)+(bigKK-5);
