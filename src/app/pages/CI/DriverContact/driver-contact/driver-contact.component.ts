@@ -255,7 +255,6 @@ for(let i=0;i<data.length;i++){
     switch (data) {
       case 'r':
         let temp={
-          loadingDate:(<HTMLInputElement>document.getElementById('datesetter')).value,
           contacts:[{co:''}],
           lul:'lock',
           parties2:[],
@@ -394,7 +393,6 @@ lulAll(){
       let temp={};
       let c = []
       let q=[]
-      let date = (<HTMLInputElement>document.getElementById('date_' + i)).value;
       let tno = this.formatTruckNo((<HTMLInputElement>document.getElementById('truckno_' + i)).value);
       let pt = (<HTMLInputElement>document.getElementById('pt_' + i)).value;
       let pn = (<HTMLInputElement>document.getElementById('pn_' + i)).value;
@@ -417,7 +415,7 @@ lulAll(){
       }
 
       temp={
-        'date' :date,
+        'date' :(<HTMLInputElement>document.getElementById('datesetter')).value,
         'pac':pac,
         'tno' :tno,
         'pt' :pt,

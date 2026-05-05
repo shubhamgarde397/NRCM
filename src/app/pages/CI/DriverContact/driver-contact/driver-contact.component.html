@@ -10,13 +10,13 @@
 
 <div class="well" *ngIf="tab==0">
   <button class="btn btn-danger" (click)="get()">Get Data</button>
-  <input type="text" [(ngModel)]="qrsetter" id="qrsetter">
+  <input type="text" [(ngModel)]="qrsetter" id="qrsetter" placeholder="Set QR Value">
   <input type="date" id="datesetter">
   <button class="btn btn-primary" (click)="addRow('r',j)">Row</button>
     <table class="table table-bordered">
       <tr>
         <th>Srno</th>
-        <th>Date-TNO-Party</th>
+        <th>TNO-Party</th>
         <th>Place1/Place2</th>
         <th>Co & QR</th>
         <th>Rent</th>
@@ -25,9 +25,8 @@
       <tr *ngFor="let i of turnbooklist1;let j = index;">
         <td>{{j+1}}</td>
         <td>
-          <input type="date" class="form-control" style="width: 50%;" id="date_{{j}}" [disabled]='i.lul==="unlock"' value={{i.loadingDate}}>
 
-          <input type="text" class="form-control"  style="width: 50%;" id="truckno_{{j}}" [disabled]='i.lul==="unlock"'/>
+          <input type="text" class="form-control"  style="width: 50%;" id="truckno_{{j}}" [disabled]='i.lul==="unlock"' placeholder="TN01 AB 1234"/>
 
            <select class="form-control" id="pt_{{j}}"  style="width: 50%;" [disabled]='i.lul==="unlock"' (change)="setParty(j)">
             <option disabled id="">Default</option>
@@ -76,7 +75,7 @@
             <th>D</th>
           </tr>
           <tr *ngFor="let ii of i.contacts;let jj =index;">
-            <td><input [disabled]='i.lul==="unlock"' type="text" id="co_{{j}}{{jj}}"></td>
+            <td><input [disabled]='i.lul==="unlock"' type="text" id="co_{{j}}{{jj}}" placeholder="8529275757"></td>
             <td><button class="btn btn-danger" [disabled]='i.lul==="unlock"' (click)="delete(j,'c',jj)">D</button></td>
           </tr>
          </table>

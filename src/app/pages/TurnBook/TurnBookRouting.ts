@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { TurnBookHandlerComponent } from './turn-book-handler/turn-book-handler.component';
 import { TurnBookDisplayHandlerComponent } from './Display/turn-book-display-handler/turn-book-display-handler.component';
 import { TurnBookDisplayMainComponent } from './Display/turn-book-display-main/turn-book-display-main.component';
-import { TurnBookUpdateComponent } from './turn-book-update/turn-book-update.component';
 
 export const TurnBookRouting: Routes =
     [
