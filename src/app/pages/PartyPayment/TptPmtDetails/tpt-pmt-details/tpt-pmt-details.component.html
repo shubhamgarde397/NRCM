@@ -82,7 +82,6 @@
             <th>Place</th>
             <th>LRNO</th>
             <th>Balance</th>
-            <th>Action</th>
           </tr>
         </thead>
 
@@ -93,15 +92,13 @@
             <td>{{i.truckName}}</td>
             <td>{{i.placeName}}</td>
             <td>{{i.lrno}}</td>
-            <td (click)="amountUpdate(i,j)">{{i.pochAmount}}</td>
-            <td>
-              <button mat-raised-button type="button" (click)="download(i)" class="btn-danger btn-sm btn-just-icon">
-        PDF
-      </button>
-            </td>
+            <td>{{i.balance}}</td>
           </tr>
         </tbody>
       </table>
+      <button mat-raised-button type="button" (click)="download()" class="btn-danger btn-sm btn-just-icon">
+        PDF
+      </button>
     </div>
   </div>
 </div>

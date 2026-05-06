@@ -3,6 +3,19 @@
 <div class="container">
 
     <div>
+      <input type="number" id="lrnoSep" placeholder="Seperate LR" [(ngModel)]="lrnoSep" (keyup.enter)="addlrArray()">
+      <button (click)="viewQRSeperate()">Download QR Codes!</button>
+
+      <div class="col-sm-3">
+    <ul>
+      <li *ngFor="let k of bills;let z = index;">
+        <button class="btn btn-danger" (click)="delBill(z)">{{k}}</button>
+      </li>
+    </ul>
+  </div>
+
+
+      <hr>
       <input type="number" [(ngModel)]="lrnoStart" placeholder="LRNO Start">
       <input type="number" [(ngModel)]="lrnoQTY" placeholder="Quantity">
       <button (click)="viewQR()">View and Download QR Codes!</button>

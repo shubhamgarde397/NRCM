@@ -105,39 +105,6 @@ public paymentData=[];
   }
   };
 
-
-  amountUpdate(i,j){
-  let digit = 0
-  let gono = false;
-
-      digit=parseInt(prompt('Enter the updating amount'))
-    if(digit!==null){
-      if(!isNaN(digit)){      
-        gono = true
-      }
-      else{
-        alert('Error with number')
-      }
-      
-    }else{
-      alert('Error with number')
-    }
-
-if(gono){
-  let tempObj={}
-  tempObj['method']='pochAmountupdate';  //work from here
-  tempObj['tablename']='';
-  tempObj['_id']=i['_id']
-  tempObj['pochAmount']=digit
-
-  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-    .subscribe((res: any) => {
-      alert(res.Status)
-      this.paymentData[j]['pochAmount'] = digit;
-    });
-  }
-}
-
   deleteTemp(id,j){
     if (confirm('Are you sure to temporarily delete?')) {
           this.paymentData.splice(j, 1);
@@ -157,40 +124,30 @@ if(gono){
       
     this.paymentData=[];
     let tempObj = {};
-    let flag = false;
-    if ((this.nopid === undefined)) { 
-      alert('Select Transport'); 
-    }
-    else {
-      this.tptid=this.transports.find(r=>{return r.tptName===this.nopid})._id
-      tempObj['method'] = 'transportPaymentDetailsB';
-      tempObj['transportid']=this.tptid;
 
-      flag = true;
-      
-    if (flag) {
+      this.tptid=this.transports.find(r=>{return r.tptName===this.nopid})._id
+      tempObj['method'] = 'transportPaymentDetailsB2';
+      tempObj['transportid']=this.tptid;
       tempObj['tablename'] = ''
-      tempObj['amount']=this.amount;
-      tempObj['date']=this.date;
-      tempObj['reference']=this.reference;
+      tempObj['reference']=data.reference;
 
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.paymentData = res.Data;
           if (this.paymentData.length > 0) {
-            this.tabledata = true;
+            this.tabledata2 = true;
           } else {
             alert('No Data Available.');
-            this.tabledata = false;
+            this.tabledata2 = false;
           }
         });
-    }
-  }
+    
+  
   };
 
 
-  download(d) {//threshhold is 295
-    let data=d;
+  download() {//threshhold is 295
+    let data=this.paymentData;;
      let bigValueofY=0;
      var doc = new jsPDF()
      doc.setFontSize('20');
@@ -301,7 +258,7 @@ if(gono){
          doc.text(data[i].truckName, 57, y)//truckno
          doc.text(data[i].placeName, 86, y)//truckno
        doc.text(String(data[i].lrno), 116, y)
-        doc.text(String(data[i].pochAmount), 145, y)
+        doc.text(String(data[i].balance), 145, y)
         
      
           y = y + 5;

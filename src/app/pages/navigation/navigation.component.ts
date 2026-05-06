@@ -67,7 +67,6 @@ public seq=[];
   //       {name:'Transport',link:'TRANSPORT_HANDLER'},
   //       {name:'Dues',link:'DUES_PAGE'},
   //       {name:'Dues Advance',link:'DUES_PAGE_ADVANCE'},
-  //       {name:'Gifts',link:'GIFTS'},
   //       {name:'Village',link:'VILLAGE_HANDLER'},
   //       {name:'LR Reason',link:'REASON_HANDLER'},
   //       {name:'Party GST',link:'IMP_GST_HANDLER'},

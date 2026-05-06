@@ -95,24 +95,6 @@ switch(data){
         this.tableDate=false;
         this.fetchBasic();
         break;
-        case '4':
-        this.tableDate=false;
-        this.considerArray = this.handledata.createConsiderArray('infotpt')
-        this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-        this.fetchBasic();
-        break;
-
-        case '5':
-          this.tableDate=false;
-          this.considerArray = this.handledata.createConsiderArray('infotpt')
-          this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
-          this.fetchBasic();
-          break;
-          case '6':
-            this.considerArray=[0,0,0,1,0,0,0,0]
-          this.getInformationData()
-          this.fetchBasic();
-            break;
         
 }
   }

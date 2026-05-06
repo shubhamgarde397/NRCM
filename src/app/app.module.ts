@@ -36,7 +36,6 @@ import { PDFComponent } from './pages/pdf/pdf.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
-import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
 import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.component';
 import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnavigation.component';
 import { TPTWelcomeComponent } from './pages/TPTLogin/tptwelcome/tptwelcome.component';
@@ -49,8 +48,6 @@ import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-accoun
 import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/display-sequence.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
-import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
-import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
 import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
 import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
@@ -77,7 +74,6 @@ import { CRVComponent } from './pages/CRV/crv/crv.component';
     TurnBookLocationDispComponent,
     HiddenTrucksComponent,
     WhatsappComponent,
-    PaymentPendingDisplayComponent,
     LinkTruckComponent,
     TPTNavigationComponent,
     TPTWelcomeComponent,
@@ -90,8 +86,6 @@ import { CRVComponent } from './pages/CRV/crv/crv.component';
     DisplaySequenceComponent,
     TrackDisplayComponent,
     RentdisplayComponent,
-    ComdisplayComponent,
-    BalMsgComponent,
     PODNOTRECComponent,
     TpdfComponent,
     ReceiptComponent,

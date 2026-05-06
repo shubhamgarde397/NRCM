@@ -9,7 +9,6 @@ import { PDFComponent } from './pages/pdf/pdf.component';
 import { TurnBookLocationDispComponent } from './pages/TurnbookLocation/turn-book-location-disp/turn-book-location-disp.component';
 import { HiddenTrucksComponent } from './pages/Hidden/Trucks/hidden-trucks/hidden-trucks.component';
 import { WhatsappComponent } from './pages/Whatsapp/whatsapp/whatsapp.component';
-import { PaymentPendingDisplayComponent } from './pages/PaymentPendingDisplay/payment-pending-display/payment-pending-display.component';
 import { LinkTruckComponent } from './pages/TPTLogin/link-truck/link-truck.component';
 import { TPTNavigationComponent } from './pages/TPTLogin/tptnavigation/tptnavigation.component';
 import { TPTWelcomeComponent } from './pages/TPTLogin/tptwelcome/tptwelcome.component';
@@ -22,8 +21,6 @@ import { DisplaySequenceComponent } from './pages/CI/Sequence/display-sequence/d
 import { DailyAccountAdderComponent } from './pages/CI/DailyAccount/daily-account-adder/daily-account-adder.component';
 import { TrackDisplayComponent } from './pages/Track/track-display/track-display.component';
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
-import { ComdisplayComponent } from './pages/CI/Comm/comdisplay/comdisplay.component';
-import { BalMsgComponent } from './pages/CI/MESSAGE/Balance/bal-msg/bal-msg.component';
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
 import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
 import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
@@ -152,10 +149,6 @@ export const routes: Routes =
                         component:RentdisplayComponent
                     },
                     {
-                        path: 'Comm',
-                        component:ComdisplayComponent
-                    },
-                    {
                         path: 'DUES_PAGE_ADVANCE',
                         component:DuesFromAdvanceDisplayComponent
                     },
@@ -210,14 +203,6 @@ export const routes: Routes =
                     {
                         path: 'TURN_BOOK_LOCATION_DISP',
                         component:TurnBookLocationDispComponent
-                    },
-                    {
-                        path: 'MESSAGE',
-                        component:BalMsgComponent
-                    },
-                    {
-                        path: 'PENDING_PAYMENT_DISPLAY',
-                        component:PaymentPendingDisplayComponent
                     },
                     {
                         path: 'PARTY_PAYMENT_HANDLER',
