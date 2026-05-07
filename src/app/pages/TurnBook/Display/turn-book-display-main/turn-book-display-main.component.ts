@@ -139,7 +139,7 @@ public showbuttonOption821HA=true;
   public comment='';
   public buttonOptionPartyType;
 public monthlybyseriesData={'place':'','typeOfLoad':'','weight':'','party':'','lrno':'','place2':''}
-public monthlybyseriesDataU={'place':'','party':'','pochAmount':0}
+public monthlybyseriesDataU={'place':'','party':''}
 public performActionButton='2';
 public selectDate=false;
 public reportPDF=false;

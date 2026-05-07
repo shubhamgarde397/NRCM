@@ -143,7 +143,6 @@ public paymentData3=[];
     this.paymentData=[];
     let flag = false;
     let tempObj = {};
-console.log(this.nopid);
 
     if ((this.fromloading === undefined)  || (this.toloading === undefined) || (this.nopid === undefined)) { 
       alert('Select a Date and Party'); 
@@ -177,27 +176,6 @@ console.log(this.nopid);
   }
   };
 
-  submitapd(){
-      let formbody = {}
-
-      formbody['_id'] = this.bigI._id;;
-      formbody['method'] = 'addapd';
-      formbody['tablename'] = '';
-      formbody['apd']=this.apd;
-      formbody['apa']=this.apa;
-      formbody['pochAmount']=this.pochamount;
-      formbody['reference']=this.reference;
-
-      this.apiCallservice.handleData_New_python('commoninformation', 1, formbody, true)
-        .subscribe((response: Response) => {
-          alert(response['Status']);
-          this.paymentData[this.bigJ]['actualPaymentDate']=this.apd;
-          this.paymentData[this.bigJ]['actualPaymentAmount']=this.apa;
-          this.paymentData[this.bigJ]['pochAmount']=this.pochamount;
-          this.paymentData[this.bigJ]['reference']=this.reference;
-        });
-  }
-
   rentUpdate(i,j){
   let digit = 0
   let gono = false;
@@ -229,19 +207,6 @@ if(gono){
     });
   }
 }
-
-  deleteTemp(id,j){
-    if (confirm('Are you sure to temporarily delete?')) {
-          this.paymentData.splice(j, 1);
-          if (this.paymentData.length > 0) {
-            this.tableData = true;
-          } else {
-            this.tableData = false;
-          }
-          
-          alert('Done!');
-    }
-  }
 
 
   downloadForParty1() {//threshhold is 295

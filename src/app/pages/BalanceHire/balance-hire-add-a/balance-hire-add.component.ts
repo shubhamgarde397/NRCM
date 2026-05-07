@@ -89,20 +89,6 @@ public bname
 
   };
 
-  finalFunction(action) {
-    let tempObj = {}
-    tempObj['method'] = 'BHInserttoProcessing';
-    tempObj['tablename'] = 'BalanceHire';
-    tempObj['bhTrucks']=this.reducebhTrucks(this.bhTrucks);
-    tempObj['todayDate'] = this.uitodayDate;
-    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)//check this function
-      .subscribe((res: any) => {
-        alert(res.Status);
-        this.firstTime=false;
-        this.moveToFinalStepReset(action);
-      });
-  }
-
   reducebhTrucks(data){
     let rkeys=[
     'advanceArray', 
@@ -258,8 +244,6 @@ alert('Selected!')
       for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
           this.bhTrucks.find((r,index)=>{
             if(r._id==this.balanceHireArrray[i][j]['_id']){
-              this.bhTrucks[index]['pochAmount']=parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value);
-              this.bhTrucks[index]['return_hamali']=parseInt((<HTMLInputElement>document.getElementById('hamali_' + i + '_' + j)).value);
               this.bhTrucks[index]['lrno']=(<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value;
               this.bhTrucks[index]['remark']=(<HTMLInputElement>document.getElementById('remark_' + i + '_' + j)).value;
               // this.bhTrucks[index]['balAccid']=parseInt((<HTMLInputElement>document.getElementById('name_' + j)).value);//work on thiis
@@ -274,6 +258,20 @@ alert('Selected!')
     this.finalFunction('do');
     }
 
+  }
+
+    finalFunction(action) {
+    let tempObj = {}
+    tempObj['method'] = 'BHInserttoProcessing';
+    tempObj['tablename'] = 'BalanceHire';
+    tempObj['bhTrucks']=this.reducebhTrucks(this.bhTrucks);
+    tempObj['todayDate'] = this.uitodayDate;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true,this.uitodayDate)//check this function
+      .subscribe((res: any) => {
+        alert(res.Status);
+        this.firstTime=false;
+        this.moveToFinalStepReset(action);
+      });
   }
 
   addhamali(i,j){

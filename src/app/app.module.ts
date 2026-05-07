@@ -50,8 +50,6 @@ import { TrackDisplayComponent } from './pages/Track/track-display/track-display
 import { RentdisplayComponent } from './pages/CI/Rent/rentdisplay/rentdisplay.component';
 import { PODNOTRECComponent } from './pages/CI/PODNotR/podnotrec/podnotrec.component';
 import { TpdfComponent } from './pages/pdf/TPDF/tpdf/tpdf.component';
-import { ReceiptComponent } from './pages/CI/PMTReceipt/receipt/receipt.component';
-import { ContactDAddComponent } from './pages/CI/ContactDaily/contact-dadd/contact-dadd.component';
 import { DriverContactComponent } from './pages/CI/DriverContact/driver-contact/driver-contact.component';
 import { PmtMsgComponent } from './pages/Track/pmt-msg/pmt-msg.component';
 import { ProfileComponent } from './pages/CI/Profile/profile/profile.component';
@@ -88,8 +86,6 @@ import { CRVComponent } from './pages/CRV/crv/crv.component';
     RentdisplayComponent,
     PODNOTRECComponent,
     TpdfComponent,
-    ReceiptComponent,
-    ContactDAddComponent,
     DriverContactComponent,
     PmtMsgComponent,
     ProfileComponent,
