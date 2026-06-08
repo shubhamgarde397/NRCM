@@ -4,7 +4,7 @@ import { BalancehiredisplayComponent } from './balancehiredisplay/balancehiredis
 import { BalanceHireAddComponent } from './balance-hire-add/balance-hire-add.component';
 import { BalanceHireHandlerComponent } from './balance-hire-handler/balance-hire-handler.component';
 import { BalanceHireAddComponentA } from './balance-hire-add-a/balance-hire-add.component';
-
+import { BHDigiComponent } from './bhdigi/bhdigi.component';
 export const BalanceHireRouting: Routes =
     [
         {
@@ -31,6 +31,10 @@ export const BalanceHireRouting: Routes =
                     {
                         path: 'BALANCE_HIRE_ADDA',
                         component: BalanceHireAddComponentA
+                    },
+                    {
+                       path : 'BalanceHireDispDigital',
+                       component : BHDigiComponent 
                     }
 
                 ]

@@ -179,6 +179,9 @@
 </div>
 
 <div class="well" *ngIf="tab==3">
+  <div class="col-sm-3">
+  <input type="date" class="form-control" [(ngModel)]="loadingDate">
+  </div>
   <button class="btn btn-danger" (click)="get4()">Get Data</button>
 
   <table class="table table-bordered">
@@ -195,28 +198,91 @@
     <tr *ngFor="let i of comm;let j = index;">
        <td>{{j+1}}</td>
       <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
-      <td>{{i.truckno}}<br>{{i.contacttb[0]}}<br>{{i.typeOfLoad}}</td>
-      <td>{{i.destination}}-{{i.destination2}}</td>
-      <td>{{i.rent}}-{{i.advance}}-{{i.balance}}</td>
+      <td>{{i.truckName.truckno}}<br>{{i.contacttb[0]}}<br>{{i.typeOfLoad}}</td>
+      <td>{{i.placeName.village_name}}</td>
+      <td>{{i.rent+i.addonsSum}}-{{i.advanceArraySum}}={{i.rent+i.addonsSum-i.advanceArraySum-i.deductionsSum-i.billamt}}</td>
       <td>{{i.billamt}}</td>
       
       <td>
-        <ul>
-          <li *ngFor="let k of i.advanceArray">{{k.date}}-{{k.amount}}</li>
-        </ul>
+        <div class="row">
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.advBalColor}" (click)="savePayment(i,j,'advanceArray')" data-toggle="modal" data-target="#myModalPay">Adv</button></div>
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.ADColor[0]}" (click)="savePayment2(i,j,'addons')" data-toggle="modal" data-target="#myModalDD">Addons</button></div>
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.ADColor[1]}" (click)="savePayment2(i,j,'deductions')" data-toggle="modal" data-target="#myModalDD">Deductions</button></div>
+        </div>
       </td>
-
-      <!-- <td *ngIf="extraAvailiable">
-        <ul>
-          <li *ngFor="let k of i.extra">{{k.extraAdvancemsg}}-{{k.extraAdvanceamt}}</li>
-        </ul>
-      </td> -->
 
       <td><button class="btn btn-warning" (click)="sendMsg(i)">Send</button></td>
       
     </tr>
   </table>
 <button class="btn btn-danger" (click)="CommOk()">Set All</button>
+</div>
+
+<div class="well" *ngIf="tab==4">
+  <button class="btn btn-danger" (click)="get44()">Get Data</button>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Srno</th>
+      <th>Date</th>
+      <th>TruckNo-Contact-Load</th>
+      <th>Place</th>
+      <th>Rent-Adv-Bal</th>
+      <th>Other</th>
+      <th>Advance</th>
+      <th>Code</th>
+    </tr>
+    <tr *ngFor="let i of comm;let j = index;">
+       <td>{{j+1}}</td>
+      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      <td>{{i.truckName.truckno}}<br>{{i.contacttb[0]}}<br>{{i.typeOfLoad}}</td>
+      <td>{{i.placeName.village_name}}</td>
+      <td>{{i.rent+i.addonsSum}}-{{i.advanceArraySum}}={{i.rent+i.addonsSum-i.advanceArraySum-i.deductionsSum-i.billamt}}</td>
+      <td>{{i.billamt}}</td>
+      
+      <td>
+        <div class="row">
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.advBalColor[1]}" (click)="savePayment(i,j,'advanceArray')" data-toggle="modal" data-target="#myModalPay">Adv</button></div>
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.ADColor[0]}" (click)="savePayment2(i,j,'addons')" data-toggle="modal" data-target="#myModalDD">Addons</button></div>
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.ADColor[1]}" (click)="savePayment2(i,j,'deductions')" data-toggle="modal" data-target="#myModalDD">Deductions</button></div>
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.ADColor[1]}" (click)="savePayment2(i,j,'balanceDeductions')" data-toggle="modal" data-target="#myModalDD">BalDeductions</button></div>
+          <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.advBalColor[0]}" (click)="savePayment(i,j,'balanceArray')" data-toggle="modal" data-target="#myModalPay">Bal</button></div>
+        </div>
+      </td>
+
+      <td><button class="btn btn-warning" (click)="sendMsgB(i)">Send</button></td>
+      
+    </tr>
+  </table>
+</div>
+
+<div class="well" *ngIf="tab==5">
+  <div class="col-sm-3">
+  <input type="date" class="form-control" [(ngModel)]="loadingDate">
+  </div>
+  <button class="btn btn-danger" (click)="get55()">Get Data</button>
+
+  <table class="table table-bordered">
+    <tr>
+      <th>Srno</th>
+      <th>Date</th>
+      <th>TruckNo</th>
+      <th>Party</th>
+      <th>Place</th>
+      <th>Rent-Adv-Bal</th>
+      <th>Code</th>
+    </tr>
+    <tr *ngFor="let i of comm;let j = index;">
+       <td>{{j+1}}</td>
+      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      <td>{{i.truckNo}}</td>
+      <td>{{i.party}}</td>
+      <td>{{i.place}}</td>
+      <td>{{i.hamt}}-<input type="number" class="form-control" value={{i.adv}} id="adv_{{j}}">=<input type="number" id="bal_{{j}}" class="form-control" value={{i.bal}}></td>
+      <td><button class="btn btn-warning" (click)="sendCM(i,j)">Send</button></td>
+      
+    </tr>
+  </table>
 </div>
 
 <div class="modal fade" id="myModalDD" role="dialog">
@@ -247,6 +313,102 @@
           <tbody>
             <tr *ngFor="let ii of tempBalls;let jj =index;">
              <td><button class="btn btn-danger" (click)="deleteTB(jj)">{{ii[0]}}:{{ii[1]}}</button></td>
+           </tr>
+          </tbody>
+        </table>
+      </div>
+      </div>
+
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModalPay" role="dialog">
+              <div class="modal-dialog" style="width: 50%;">
+              
+            
+                <div class="modal-content" style="background-color: black;color: wheat;">
+                  <div class="modal-header">
+                    <button style="color:black;" type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Actual Payment Details for {{tempType}}</h4>
+                  </div>
+                  <div class="modal-body">
+                    <div class="row">
+                      <div class="col-sm-6">
+                    <div class="row">
+                      Date : <input style="color:wheat;background-color: black;" type="date" class="form-control" [(ngModel)]="paymentDate">
+                    </div>
+            
+                    <div class="row">
+                      Amount : <input style="color:wheat;background-color: black;" type="number" class="form-control" [(ngModel)]="paymentAmt">
+                    </div>
+                    <div class="row">
+                      Ref : <input style="color:wheat;background-color: black;" type="text" class="form-control" [(ngModel)]="reference">
+                    </div>
+                       <div class="row">
+                          <select id="nop" class="form-control" class="form-control" [(ngModel)]="transportid">
+                            <option disabled selected>Select Name of The Transport</option>
+                            <option *ngFor="let i of transports;let j = index;" value={{i.tptName}}>
+                              {{i.tptName}}
+                            </option>
+                          </select>
+                          <i class="material-icons" style="color: green;cursor: pointer;" (click)="getTransport()">redo</i>
+                        </div>
+                    <div class="row">
+                      <table>
+                        <tr *ngFor="let i of advbalarray;let j=index;">
+                          <th><button style="width: 100%;" class="btn btn-danger" (click)="deladvbalArray(j)">{{i.date|date:'dd-MM-yyyy'}}->{{i.amount}}</button></th>
+                          <th><button style="width: 100%;" class="btn btn-warning">{{i.reference}}</button></th>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+
+                  </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button style="color:black;" class="btn btn-warning" (click)="addPayment()">Store</button>
+                    <button style="color:black;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div>
+</div>
+
+<div class="modal fade" id="myModalDD" role="dialog">
+  <div class="modal-dialog">
+  
+
+    <div class="modal-content" style="background-color: black;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">{{tempType}} for {{tempTruckNo}}</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-sm-3">
+          Name : <input type="text" class="form-control" [(ngModel)]="name">
+        </div>
+
+        <div class="col-sm-3">
+         Value : <input type="text" class="form-control" [(ngModel)]="value">
+        </div>
+        <div class="col-sm-3">
+        <button class="btn btn-warning" (click)="storeAD1()">Store</button>
+       </div>
+      </div>
+      <div class="row">
+        <table>
+          <thead><tr><th>Data</th></tr></thead>
+          <tbody>
+            <tr *ngFor="let ii of tempBalls;let jj =index;">
+             <td><button class="btn btn-danger" (click)="deleteTB1(ii,jj)">{{ii.key}}:{{ii.value}}</button></td>
            </tr>
           </tbody>
         </table>

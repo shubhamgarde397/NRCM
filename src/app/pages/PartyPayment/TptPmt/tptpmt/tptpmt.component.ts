@@ -407,19 +407,19 @@ if(gono){
          doc.text(String(this.paymentData[i].place), 78, y)//lrno
          doc.text(String(this.paymentData[i].rent), 106, y)//truckno
 
-         doc.text(this.paymentData[i][pmtNameArray][0]['date'], 118, y)//truckno
-         doc.text(String(this.paymentData[i][pmtNameArray][0]['amount']), 139, y)//truckno
+         doc.text(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['date'] : '', 118, y)//truckno
+         doc.text(String(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['amount'] : ''), 139, y)//truckno
          doc.setFontSize('8');
-         doc.text(this.paymentData[i][pmtNameArray][0]['reference'], 152, y)//truckno
+         doc.text(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['reference'] : '', 152, y)//truckno
          doc.setTextColor(0, 0, 0);
          doc.setFontSize('10');
 
           if(adv && bal){
             
-            doc.text(this.paymentData[i][pmtNameArray2][0]['date'], 181, y)//truckno
-            doc.text(String(this.paymentData[i][pmtNameArray2][0]['amount']), 202, y)//truckno
+            doc.text(this.paymentData[i][pmtNameArray2].length>0 ? this.paymentData[i][pmtNameArray2][0]['date'] : '', 181, y)//truckno
+            doc.text(String(this.paymentData[i][pmtNameArray2].length>0 ? this.paymentData[i][pmtNameArray2][0]['amount'] : ''), 202, y)//truckno
             doc.setFontSize('8');
-            doc.text(this.paymentData[i][pmtNameArray2][0]['reference'], 215, y)//truckno
+            doc.text(this.paymentData[i][pmtNameArray2].length>0 ? this.paymentData[i][pmtNameArray2][0]['reference'] : '', 215, y)//truckno
             doc.setTextColor(0, 0, 0);
             doc.setFontSize('10');
           }

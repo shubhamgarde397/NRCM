@@ -335,13 +335,7 @@ alert('Selected!')
     let checker=0;
     for (let i = 0; i < this.balanceHireArrray.length; i++) {
       for (let j = 0; j < this.balanceHireArrray[i].length; j++) {
-        if (
-          (parseInt((<HTMLInputElement>document.getElementById('balance_' + i + '_' + j)).value) == 1) 
-          ||
-          (parseInt((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value) == 0)
-          // ||
-          // ((<HTMLInputElement>document.getElementById('name_'  + j)).value == 'Default')
-          ) {
+        if (parseInt((<HTMLInputElement>document.getElementById('lrno_' + i + '_' + j)).value) == 0) {
           
           checker=checker+1;
         }

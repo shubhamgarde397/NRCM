@@ -619,7 +619,7 @@ if(confirm('Do you want to temporary delete it?')){
         doc.setFontSize('8');
         doc.text(String(this.latemarker(this.balanceDate[z].truckData[k].date,this.selectedDate)), 50, i);//comments
       
-        doc.text(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails+'-'+String(this.billno(this.balanceDate[z].truckData[k].billno)):'', 107, i);//truckno
+        doc.textWithLink(this.balanceDate[z].truckData[k].shortDetails?this.balanceDate[z].truckData[k].shortDetails+'-'+String(this.billno(this.balanceDate[z].truckData[k].billno)):'', 107, i,{url: 'https://www.nitinroadways.in'});//truckno
                
 
         doc.setFontSize('10');

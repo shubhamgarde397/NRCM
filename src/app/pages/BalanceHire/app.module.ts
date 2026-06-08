@@ -7,6 +7,7 @@ import { BalancehiredisplayComponent } from './balancehiredisplay/balancehiredis
 import { BalanceHireAddComponent } from './balance-hire-add/balance-hire-add.component';
 import { BalanceHireHandlerComponent } from './balance-hire-handler/balance-hire-handler.component';
 import { BalanceHireAddComponentA } from './balance-hire-add-a/balance-hire-add.component';
+import { BHDigiComponent } from './bhdigi/bhdigi.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { BalanceHireAddComponentA } from './balance-hire-add-a/balance-hire-add.
         BalancehiredisplayComponent,
         BalanceHireAddComponent,
         BalanceHireHandlerComponent,
-        BalanceHireAddComponentA
+        BalanceHireAddComponentA,
+        BHDigiComponent
     ],
     imports: [
         CommonModule,

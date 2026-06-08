@@ -5,6 +5,9 @@ import { SecurityCheckService } from '../../../../common/services/Data/security-
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { Router } from 'node_modules/@angular/router';
+import { Consts } from 'src/app/common/constants/const.ts';
+import * as jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 @Component({
   selector: 'app-driver-contact',
@@ -15,10 +18,24 @@ export class DriverContactComponent implements OnInit {
   public bigI='';
   public bigJ='';
   public tab=1;
-  public considerArray;
+  public considerArray=[];
+  
+public tempBalls= [];
+public tempType= '';
+public tempTruckNo='';
+public bigArr = [];
+public transports = [];
+public paymentDate;
+public paymentAmt;
+public reference;
+public transportid='';
+public name='';
+public value='';
+  public advbalarray=[]
+  public bigII;
+  public bigJJ;
+
   public turnbooklist1=[];
-  public tempTruckNo='';
-  public tempType='';
   public contact=[];
   public qr=[];
   public qrsetter=0;
@@ -34,25 +51,23 @@ export class DriverContactComponent implements OnInit {
     {value:'Ratnagiri',viewValue:'Pipe_Ratnagiri'}
   ]
 
-  public name=''
-  public value=''
-
 public tols2=[]
 public submitButton=false;
 public tons=[]
-public tempBalls=[];
+
 public submission=[];
 public commonArray;
 public parties=[]
 public parties2=[]
 public villages=[]
 public todayDate=new Date().toLocaleDateString();
+public loadingDate;
 public pmts=[]
 public comm=[];
 public pmts3=[]
 public trucks=[]
 public rqty =0
-public transports=[];
+
     constructor(
       public apiCallservice: ApiCallsService, 
       public securityCheck: SecurityCheckService,
@@ -66,7 +81,7 @@ public transports=[];
   
     ngOnInit() {
       this.considerArray = this.handledata.createConsiderArray('infogsthidden')
-    this.handledata.goAhead(this.considerArray) ? this.get() : this.fetchBasic();
+   this.get() 
     this.commonArray = this.securityCheck.commonArray;
     }
 
@@ -93,8 +108,12 @@ public transports=[];
         });
     }
 
-       get4(){
-      let tempObj = { "method": "getcommtosend", 'tablename':''};
+    get4(){
+      let tempObj = { 
+        "method": "getcommtosend", 
+        'tablename':'',
+        'loadingDate':this.loadingDate
+      };
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.comm=res.Data;
@@ -104,35 +123,324 @@ public transports=[];
         });
     }
 
+     get44(){
+      let tempObj = { 
+        "method": "getBaltosend", 
+        'tablename':''
+      };
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.comm=res.Data;
+        });
+    }
 
+    get55(){
+      let tempObj = { 
+        "method": "getCollectionMemo",
+        'loadingDate':this.loadingDate,
+        'tablename':''
+      };
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.comm=res.Data;
+        });
+    }
 
-    sendMsg(data){
-      let qr=''
+    sendCM(data,i){
+      this.sstampsign=Consts.sstampsign;
+      this.ssign=Consts.ssign;
+      if(this.place2===undefined){}else{
+        data.place=data.place+data.place2;
+      }
+
+     
       
-      qr=qr+'*'+data['truckno']+'*%0A'
-      qr=qr+'*'+this.handleF.getDateddmmyy(data['loadingDate'])+'*%0A'
-      qr=qr+'*'+data['destination']+'*%0A%0A'
       
-      qr=qr+'*Rent* :'+String(data['rent'])+'%0A'
-      qr=qr+'*Advance* :'+String(data['advance'])+'%0A'
-      qr=qr+'*Balance* :'+String(data['balance'])+'%0A%0A'
-      if(data['billamt']==0){}else{
-      qr=qr+'*Comm* :'+String(data['billamt'])+'%0A'
+      let d=new Date()
+      let billno=data.billno.split('_')[1];
+      let data={
+        'partyType':data.partyType,
+        'loadingDate':data.loadingDate,
+        'partyDetails':data.party,
+        'villageDetails':data.place,
+        'hamt':data.hamt,
+        'partyAdvanceAmt':(<HTMLInputElement>document.getElementById('adv_' + i)).value,
+        'balance':(<HTMLInputElement>document.getElementById('bal_' + i)).value,
+        'truckno':data.truckNo,
+        'nrlrno':data.nrlrno,
+      };
+  
+      var doc = new jsPDF({
+        orientation: 'l',
+        unit: 'mm',
+        format: 'a6',
+        putOnlyUsedFonts:true
+       })
+      let mainY=6
+      doc.setFontSize('20');
+      doc.setFontType('bold');
+      doc.setTextColor(224,0,0);
+      if(data.partyType==='NR'){
+        doc.text('Nitin Roadways',48, mainY+2)
+      }
+      if(data.partyType==='SNL'){
+          doc.text('Shri Nitin Logistics',40, mainY+2)
+      }
+  
+      doc.setDrawColor(163,0,0);
+      doc.setLineWidth(0.5);
+      doc.line(3, mainY+4, 146, mainY+4);
+      
+      doc.setFontSize('9');
+      doc.setFontType('bold');
+      doc.setTextColor(224,0,0);
+      if(data.partyType==='SNL'){
+        doc.text('DAILY SERVICE MAHARASHTRA,TAMILNADU, KERALA & KARNATAKA',18,mainY+8)
+      }
+      else{
+        doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY',18,mainY+8)
       }
       
-      if(data['cash']==0){}else{
-      qr=qr+'*Cash* :'+String(data['cash'])+'%0A'
-      }
-      if(data['less']==0){}else{
-      qr=qr+'*Other* :'+String(data['less'])+'%0A'
-      }
-      qr=qr+'%0A'
+      doc.setDrawColor(163,0,0);
+      doc.setLineWidth(0.5);
+      doc.line(3, mainY+9, 146, mainY+9);
+  
+      doc.setDrawColor(224,0,0);
+      doc.setLineWidth(0.8);
+      doc.line(3, mainY+10, 146, mainY+10);
+      
+      doc.setFontType('italic');
+    
+      if(data.partyType==='SNL'){
+        doc.setFontType('normal');
+        doc.setFontSize('9');
+        doc.setTextColor(0, 0, 0);
+        doc.text('Cell :- 9822288257, 8529275757', 10, mainY+14)
+        doc.text('Email : shrinitinlogistics@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
+        doc.text('PNo 25, Vazhudavoor Rd, Ramanathapuram, Villianur Commune,Pondicherry - 605505', 10, mainY+22)
+        }
+        else{
+          doc.setFontType('normal');
+        doc.setFontSize('9');
+        doc.setTextColor(0, 0, 0);
+        doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, mainY+14)
+        doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
+        doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 10, mainY+22)
 
-      qr=qr+'*Advance Paid* :%0A'+String(data['advance'])+'-'+String(data['billamt'])+' = '
-      qr=qr+'*'+String(data['onlyadvance'])+'*'
-      qr=qr+'%0A%0Ahttps://www.nitinroadways.in/%23/PM'
-      qr='https://wa.me/+91'+data.contacttb[0]+'/?text='+qr
+      }
+      
+      doc.setDrawColor(224,0,0);
+      doc.setLineWidth(0.2);
+      doc.line(3, mainY+24, 146, mainY+24);
+      
+      doc.setFontSize('12');
+      doc.setFontType('normal');
+      doc.setTextColor(0, 0, 0);
+      
+      doc.setFontType('bold');
+      doc.setTextColor(12,139,173);
+      doc.text('Bill No. : ',10,mainY+30)
+      doc.text('To : ',67,mainY+44)
+      doc.text('Date : ',75,mainY+30)
+      doc.text('M/s :              ',10,mainY+37)  
+      doc.text('Truck No : ',10,mainY+44)
+      
+      doc.text('Lorry Hire : ',10,mainY+53)
+      doc.setTextColor(224,0,0);
+  
+      if(data.nrlrno==='')
+        {
+      doc.text('TON',67, mainY+53)
+      }
+      else{
+        doc.text('LRNO',67, mainY+53)
+      }
+      doc.setTextColor(12,139,173);
+      doc.text('Height or Length Extra Rs     : ',10,mainY+60)
+      doc.setFontSize('10')
+      doc.text('Please Load and oblige. Please Pay Advance Rs : ',10,mainY+67)
+      doc.text('Balance Hire : ',10,mainY+73)
+  
+      doc.setFontSize('12')
+      doc.setTextColor(0,0,0);
+      doc.setDrawColor(0,0,0);
+      doc.text(String(billno),30,mainY+30)
+      doc.text(data.villageDetails,80,mainY+44)
+      doc.text(this.handleF.getDateddmmyy(data.loadingDate),95,mainY+30)
+   
+      doc.text(data.partyDetails,35,mainY+37)
+      
+      // data.partyDetails
+      doc.text(data.truckno,35,mainY+44)
+      doc.text(String(data.hamt),35,mainY+53)
+      if(data.nrlrno===''){
+        doc.text('Fixed',100,mainY+53)
+        }
+        else{ 
+          doc.text(String(data.nrlrno),100,mainY+53)  
+        }
+  
+
+            doc.addImage(this.ssign,'JPEG',100,90,30,15)
+         
+      doc.text(String('-'),75,mainY+60)
+      doc.setFontSize('10')
+      doc.text(String(data.partyAdvanceAmt),100,mainY+67)
+      doc.text(String(data.balance),35,mainY+73)
+  
+      doc.line(0, mainY+31, 150, mainY+31);
+      doc.line(0, mainY+38, 150, mainY+38);
+      doc.line(65, mainY+38, 65, mainY+46);
+      doc.line(0, mainY+46, 150, mainY+46);
+      doc.line(65, mainY+46, 65, mainY+55);
+      doc.line(0, mainY+55, 150, mainY+55);
+      doc.line(0, mainY+62, 150, mainY+62);
+      doc.line(0, mainY+77, 150, mainY+77);
+  
+      
+      
+  
+      doc.setFontSize('8')
+      doc.setTextColor(224,0,0);
+      doc.text('Before Loading Please Check All Documents Of The Vehicle.',10,mainY+81)
+      doc.text('We are not responsible for leakage and damage',10,mainY+84)
+  
+      // doc.text('For,',95,mainY+88)
+   
+      if(data.partyType==='NR'){
+        doc.text('For Nitin Roadways',105, mainY+81)
+        doc.setTextColor(0,0,0);
+        if(this.showPan){
+        doc.text('PAN : AFGPG0575D',10, mainY+92)
+        }
+        
+      }
+      if(data.partyType==='SNL'){
+          doc.text('For Shri Nitin Logistics',105, mainY+84)
+          doc.setTextColor(0,0,0);
+        if(this.showPan){
+        doc.text('PAN : BTBPG2818K',10, mainY+92)
+        }
+      }
+      doc.save(data.truckno+'.pdf')
+      // 3 Info
+    }
+
+  sendMsg(data){
+      let addonsSum=data.addonsSum
+      let deductionsSum=data.deductionsSum
+          
+    let msg=''
+    msg=msg+'*'+(data.truckName.truckno)+'*%0A';
+    msg=msg+'*'+(this.handleF.getDateddmmyy(data.loadingDate))+'*%0A';
+    msg=msg+''+(data.placeName.village_name)+'%0A%0A';
+
+      if(addonsSum>0){
+    msg=msg+'%0A> *`Addons`*'+'%0A';
+    for(let i=0;i<Object.keys(data.addons).length;i++){
+        msg=msg+'* '+Object.keys(data.addons)[i]+' : '+Object.values(data.addons)[i]+'%0A';
+    }
+    if(Object.keys(data.addons).length>1){
+      msg=msg+'------------------------------------%0A';
+      msg=msg+'* Total : '+addonsSum.toString()+'%0A%0A';
+    }
+    msg=msg+'`Rent` : '+data.rent+' + '+addonsSum.toString()+' = '+(parseInt(data.rent) + parseInt(addonsSum)).toString()+'%0A';
+    msg=msg+'`Advance` : '+(data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0)+data.billamt+ deductionsSum).toString()+'%0A';
+    msg=msg+'`Balance` : '+(data.rent+addonsSum-data.billamt-deductionsSum-data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0)).toString()+'%0A%0A';
+    }
+    else{
+    msg=msg+'`Rent` : '+(data.rent).toString()+'%0A';
+    msg=msg+'`Advance` : '+(data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0)+data.billamt+ deductionsSum).toString()+'%0A';
+    msg=msg+'`Balance` : '+(data.rent-data.billamt-deductionsSum-data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0)).toString()+'%0A%0A';
+    }
+    
+    if(deductionsSum>0){
+    msg=msg+'%0A> *`Deductions`*'+'%0A';
+    for(let i=0;i<Object.keys(data.deductions).length;i++){
+        msg=msg+'* '+Object.keys(data.deductions)[i]+' : '+Object.values(data.deductions)[i]+'%0A';
+    }
+    if(data.billamt>0){
+    msg=msg+'* Bill Amt : '+(data.billamt).toString()+'%0A';
+    }
+    msg=msg+'------------------------------------%0A';
+    msg=msg+'* Total : '+(data.billamt+ deductionsSum).toString()+'%0A';
+    }
+    else{
+     if(data.billamt>0){
+    msg=msg+'* Bill Amt : '+(data.billamt).toString()+'%0A';
+    
+    msg=msg+'------------------------------------%0A';
+    msg=msg+'* Total : '+(data.billamt+ deductionsSum).toString()+'%0A';
+     }
+    }
+    msg=msg+'%0A> *`Advance`*%0A';
+    msg=msg+'*`['+(data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0)+data.billamt+ deductionsSum).toString()+'-'+(data.billamt+ deductionsSum).toString()+'='+(data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0)).toString()+']`*%0A%0A';
+    for(let i=0;i<data.advanceArray.length;i++){
+        msg=msg+'* '+data.advanceArray[i]['amount'].toString()+' ('+this.handleF.getDateddmmyy(data.advanceArray[i]['date'])+')'+'%0A';
+    }
+    msg=msg+'%0A';
+
+    msg=msg+'*Nitin Roadways*%0A%0A';
+    // msg=msg+'`Click on link to download Commission Bill.`';
+    let qr='https://wa.me/+91'+data.contacttb[0]+'/?text='+msg
       window.open(qr,'_blank');    
+  }
+
+  sendMsgB(data){
+      
+
+     let tempObj = { 
+        "method": "setBalanceOkay1", 
+        'tablename':'',
+        '_id':data._id
+      };
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {});
+
+
+      let balance = 0
+            let addonsSum=data.addonsSum
+      let deductionsSum=data.deductionsSum
+      let balancedeductionsSum=data.balancedeductionsSum
+          
+      let msg=''
+      msg=msg+'*'+(data.truckName.truckno)+'*%0A';
+      msg=msg+'*'+(this.handleF.getDateddmmyy(data.loadingDate))+'-'+(data.placeName.village_name)+'*%0A';
+
+      if(balancedeductionsSum>0){
+      msg=msg+'%0A> *`Deductions`*'+'%0A';
+      for(let i=0;i<Object.keys(data.balancedeductions).length;i++){
+        msg=msg+'* '+Object.keys(data.balancedeductions)[i]+' : '+Object.values(data.balancedeductions)[i]+'%0A';
+      }
+      if(Object.keys(data.balancedeductions).length>1){
+        msg=msg+'------------------------------------%0A';
+        msg=msg+'* Total : '+balancedeductionsSum.toString()+'%0A%0A';
+      }
+      balance = data.rent+addonsSum-data.billamt-deductionsSum-data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0);
+      }
+      else{
+    balance = data.rent-data.billamt-deductionsSum-data.advanceArray.reduce((partialSum, a) => partialSum + parseInt(a.amount), 0)
+      }
+        
+
+        msg=msg+'%0A> *`Balance`*%0A';
+        if(balancedeductionsSum>0){
+        msg=msg+'*`['+balance+'-'+(balancedeductionsSum).toString()+'='+(balance - balancedeductionsSum-50).toString()+']`*%0A%0A';
+        }
+        for(let i=0;i<data.balanceArray.length;i++){
+            msg=msg+'* '+data.balanceArray[i]['amount'].toString()+' ('+this.handleF.getDateddmmyy(data.balanceArray[i]['date'])+')'+'%0A';
+        }
+        msg=msg+'%0A';
+
+        msg=msg+'*Nitin Roadways*%0A%0A';
+        // msg=msg+'`Click on link to download Commission Bill.`';
+        
+    // this.qrMsg=res.Status.split(res.Status.substring(0,34))[1].replaceAll('%0A','%0A');
+    this.qrMsg=msg;
+
+    let qr='https://wa.me/+91'+data.contacttb[0]+'/?text='+msg
+          window.open(qr,'_blank');  
+
   }
 
 
@@ -162,9 +470,125 @@ public transports=[];
           this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
           this.securityCheck.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.securityCheck.commonArray['transport'];
           
-          this.fetchBasic();
         });
     }
+
+  savePayment(i,j,type){
+    this.bigII=i;
+    this.bigJJ=j;
+    this.advbalarray = this.comm[this.bigJJ][type]
+      
+    this.tempType=type;
+  }
+
+  
+  deladvbalArray(index){
+    if(confirm('Are you sure?')){
+    let tempObj={}
+    
+      tempObj['method']='deladvbalArray'; 
+    
+      tempObj['tablename']='';
+      tempObj['_id']=this.bigII['_id']
+      tempObj['index']=index;
+      tempObj['type']=this.tempType;
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          alert(res.Status);
+          this.comm[this.bigJJ][this.tempType].splice(index,1);
+        });
+    
+      
+  }
+
+
+  addPayment(){
+    let tempObj={};
+    tempObj['method']='updateAdvPaymentDetails'; 
+    tempObj['_id']=this.bigII['_id']
+    tempObj['paymentAmt']=this.paymentAmt;
+    tempObj['paymentDate']=this.paymentDate;
+    tempObj['reference']=this.reference;
+    tempObj['transportid'] = this.transports.find(r=>r.tptName==this.transportid)['_id'];
+    tempObj['tablename']='';
+    tempObj['type']=this.tempType;
+    tempObj['_id']=this.bigII['_id']
+
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+    this.comm[this.bigJJ][this.tempType].push({'amount':this.paymentAmt,'date':this.paymentDate,'reference':this.reference});
+      });
+    
+  }
+
+  storeAD1(){
+    
+    let tempObj1={};
+    tempObj1['method'] = 'storeAD'
+    tempObj1['tablename'] = ''
+    tempObj1['type']=this.tempType
+    tempObj1['_id']=this.bigII['_id'];
+    tempObj1['name']=this.name
+    tempObj1['value']=this.value
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true,this.handleF.createDate(new Date()))//fast
+      .subscribe((res: any) => {
+        alert(res.Status)
+        this.tempBalls.push({key: this.name, value: this.value});
+        this.comm[this.bigJJ][this.tempType][this.name]=this.value;
+      })
+    
+  }
+
+   deleteTB1(i,j){
+    if(confirm('Do you want to delete?')){
+
+       let tempObj1={};
+    tempObj1['method'] = 'deleteAD'
+    tempObj1['tablename'] = ''
+    tempObj1['type']=this.tempType
+    tempObj1['_id']=this.bigII['_id'];
+    tempObj1['key']=i.key[j];
+
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj1, true,this.handleF.createDate(new Date()))//fast
+      .subscribe((res: any) => {
+        this.tempBalls.splice(j,1);
+        delete this.comm[this.bigJJ][this.tempType][i.key[j]];
+        alert(res.Status)
+      })
+        
+      }
+  }
+
+
+    savePayment2(i,j,type){
+      this.tempBalls=[]
+      this.bigII=i;
+      this.bigJJ=j;
+      this.tempType=type;
+      this.bigArr = this.comm[this.bigJJ]
+      let tempObj=this.comm[this.bigJJ][this.tempType];
+      let tempObjK=Object.keys(tempObj)
+      let tempObjV=Object.values(tempObj)
+      for (let i = 0;i<tempObjK.length;i++){
+        this.tempBalls.push({
+          key:[tempObjK[i]],
+          value: tempObjV[i]
+        });
+      }
+  }
+
+    getTransport(){
+      let value={}
+      value['method'] = 'getTransport';
+      value['tablename'] = '';
+      this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, value, true)
+        .subscribe((res: any) => {
+          this.transports=res.Data;
+        });
+  }
+
     fetchBasic() {
       this.commonArray = this.securityCheck.commonArray;
       this.parties = [];
@@ -223,13 +647,13 @@ public transports=[];
 
     breakBill(data){
      let temp={}
-for(let i=0;i<data.length;i++){
-    temp[data[i][0]]=data[i][1]
-}
+      for(let i=0;i<data.length;i++){
+          temp[data[i][0]]=data[i][1]
+      }
         return temp;
       }
 
-     saveEdit(i,j,k){
+  saveEdit(i,j,k){
     this.bigI=i;
     this.bigJ=j;
     this.tempTruckNo=(<HTMLInputElement>document.getElementById('truckno_' + j)).value;
@@ -360,30 +784,30 @@ lulAll(){
 
 
    formatTruckNo(a){
-  a=a.toUpperCase();
-	let newtruck=[]
-	let raw=a.replace(/ /g, "");
-	newtruck.push(raw.slice(0,2))
-	newtruck.push(raw.slice(2,4))
-	
-	if(raw.length==10){
-			newtruck.push(' ')
-			newtruck.push(raw.slice(4,6))	
-			newtruck.push(' ')
-			newtruck.push(raw.slice(6,10))	
-	}
-	if(raw.length==9){
+      a=a.toUpperCase();
+      let newtruck=[]
+      let raw=a.replace(/ /g, "");
+      newtruck.push(raw.slice(0,2))
+      newtruck.push(raw.slice(2,4))
+      
+      if(raw.length==10){
+          newtruck.push(' ')
+          newtruck.push(raw.slice(4,6))	
+          newtruck.push(' ')
+          newtruck.push(raw.slice(6,10))	
+      }
+      if(raw.length==9){
 
-			newtruck.push(' ')
-			newtruck.push(raw.slice(4,5))	
-			newtruck.push(' ')
-			newtruck.push(raw.slice(5,9))	
-	}
-	if(raw.length==8){
-			newtruck.push(' ')
-			newtruck.push(raw.slice(4,8))	
-	}
-	return newtruck.join('')
+          newtruck.push(' ')
+          newtruck.push(raw.slice(4,5))	
+          newtruck.push(' ')
+          newtruck.push(raw.slice(5,9))	
+      }
+      if(raw.length==8){
+          newtruck.push(' ')
+          newtruck.push(raw.slice(4,8))	
+      }
+      return newtruck.join('')
 }
 
 
