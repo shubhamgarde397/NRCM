@@ -5,7 +5,7 @@ import { SecurityCheckService } from '../../../../common/services/Data/security-
 import { HandleDataService } from 'src/app/common/services/Data/handle-data.service';
 import { handleFunction } from 'src/app/common/services/functions/handleFunctions';
 import { Router } from 'node_modules/@angular/router';
-import { Consts } from 'src/app/common/constants/const.ts';
+import { Consts } from 'src/app/common/constants/const';
 import * as jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
@@ -19,18 +19,19 @@ export class DriverContactComponent implements OnInit {
   public bigJ='';
   public tab=1;
   public considerArray=[];
-  
-public tempBalls= [];
-public tempType= '';
-public tempTruckNo='';
-public bigArr = [];
-public transports = [];
-public paymentDate;
-public paymentAmt;
-public reference;
-public transportid='';
-public name='';
-public value='';
+  public sstampsign=''
+  public ssign=''
+  public tempBalls= [];
+  public tempType= '';
+  public tempTruckNo='';
+  public bigArr = [];
+  public transports = [];
+  public paymentDate;
+  public paymentAmt;
+  public reference;
+  public transportid='';
+  public name='';
+  public value='';
   public advbalarray=[]
   public bigII;
   public bigJJ;
@@ -51,22 +52,22 @@ public value='';
     {value:'Ratnagiri',viewValue:'Pipe_Ratnagiri'}
   ]
 
-public tols2=[]
-public submitButton=false;
-public tons=[]
+  public tols2=[]
+  public submitButton=false;
+  public tons=[]
 
-public submission=[];
-public commonArray;
-public parties=[]
-public parties2=[]
-public villages=[]
-public todayDate=new Date().toLocaleDateString();
-public loadingDate;
-public pmts=[]
-public comm=[];
-public pmts3=[]
-public trucks=[]
-public rqty =0
+  public submission=[];
+  public commonArray;
+  public parties=[]
+  public parties2=[]
+  public villages=[]
+  public todayDate=new Date().toLocaleDateString();
+  public loadingDate;
+  public pmts=[]
+  public comm=[];
+  public pmts3=[]
+  public trucks=[]
+  public rqty =0
 
     constructor(
       public apiCallservice: ApiCallsService, 
@@ -146,28 +147,29 @@ public rqty =0
         });
     }
 
-    sendCM(data,i){
+    sendCM(dataM,i){
       this.sstampsign=Consts.sstampsign;
       this.ssign=Consts.ssign;
-      if(this.place2===undefined){}else{
-        data.place=data.place+data.place2;
+      if(dataM.place2===undefined){}
+      else{
+        dataM.place=dataM.place+'/'+dataM.place2;
       }
 
      
       
       
       let d=new Date()
-      let billno=data.billno.split('_')[1];
+      let billno=dataM.billno.split('_')[1];
       let data={
-        'partyType':data.partyType,
-        'loadingDate':data.loadingDate,
-        'partyDetails':data.party,
-        'villageDetails':data.place,
-        'hamt':data.hamt,
+        'partyType':  dataM.partyType,
+        'loadingDate':dataM.loadingDate,
+        'partyDetails':dataM.party,
+        'villageDetails':dataM.place,
+        'hamt':dataM.hamt,
         'partyAdvanceAmt':(<HTMLInputElement>document.getElementById('adv_' + i)).value,
         'balance':(<HTMLInputElement>document.getElementById('bal_' + i)).value,
-        'truckno':data.truckNo,
-        'nrlrno':data.nrlrno,
+        'truckno':dataM.truckNo,
+        'nrlrno':dataM.nrlrno,
       };
   
       var doc = new jsPDF({
@@ -310,17 +312,15 @@ public rqty =0
       if(data.partyType==='NR'){
         doc.text('For Nitin Roadways',105, mainY+81)
         doc.setTextColor(0,0,0);
-        if(this.showPan){
         doc.text('PAN : AFGPG0575D',10, mainY+92)
-        }
+        
         
       }
       if(data.partyType==='SNL'){
           doc.text('For Shri Nitin Logistics',105, mainY+84)
           doc.setTextColor(0,0,0);
-        if(this.showPan){
         doc.text('PAN : BTBPG2818K',10, mainY+92)
-        }
+        
       }
       doc.save(data.truckno+'.pdf')
       // 3 Info
@@ -436,7 +436,6 @@ public rqty =0
         // msg=msg+'`Click on link to download Commission Bill.`';
         
     // this.qrMsg=res.Status.split(res.Status.substring(0,34))[1].replaceAll('%0A','%0A');
-    this.qrMsg=msg;
 
     let qr='https://wa.me/+91'+data.contacttb[0]+'/?text='+msg
           window.open(qr,'_blank');  
@@ -500,12 +499,12 @@ public rqty =0
     
       
   }
-
+  }
 
   addPayment(){
     let tempObj={};
     tempObj['method']='updateAdvPaymentDetails'; 
-    tempObj['_id']=this.bigII['_id']
+    tempObj['_id']=this.bigII['_id'];
     tempObj['paymentAmt']=this.paymentAmt;
     tempObj['paymentDate']=this.paymentDate;
     tempObj['reference']=this.reference;
@@ -752,13 +751,13 @@ public rqty =0
     }
 
   }
-lulAll(){
-  for(let i = 0;i<this.turnbooklist1.length;i++){
-    this.turnbooklist1[i]['lul']='unlock'
-    this.submission[i]=1;
+  lulAll(){
+    for(let i = 0;i<this.turnbooklist1.length;i++){
+      this.turnbooklist1[i]['lul']='unlock'
+      this.submission[i]=1;
+    }
+    this.submitButton=this.submission.every((value)=>{return value>0})
   }
-  this.submitButton=this.submission.every((value)=>{return value>0})
-}
 
 
   delete(index,data,index2){
@@ -808,10 +807,10 @@ lulAll(){
           newtruck.push(raw.slice(4,8))	
       }
       return newtruck.join('')
-}
+    }
 
 
-  save(){
+    save(){
     let array=[]
     for(let i =0;i<this.turnbooklist1.length;i++){
       let temp={};
@@ -867,9 +866,9 @@ lulAll(){
           alert(res.Status);
           this.turnbooklist1=[];
         });
-  }
+    }
 
-  billAmount(i){
+    billAmount(i){
     (<HTMLInputElement>document.getElementById('bill_'+i)).value=String(parseInt((<HTMLInputElement>document.getElementById('rent_'+i)).value)-parseInt((<HTMLInputElement>document.getElementById('adv_'+i)).value) - 3000);
     
   }
