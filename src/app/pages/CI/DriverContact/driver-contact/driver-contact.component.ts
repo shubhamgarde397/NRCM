@@ -468,7 +468,7 @@ export class DriverContactComponent implements OnInit {
           this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
           this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
           this.securityCheck.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.securityCheck.commonArray['transport'];
-          
+          this.fetchBasic();
         });
     }
 
@@ -619,6 +619,7 @@ export class DriverContactComponent implements OnInit {
   
     setParty(index){
       let data=(<HTMLInputElement>document.getElementById('pt_' + index)).value;
+      console.log(this.turnbooklist1);
       switch (data) {
         case 'NRCM':
           let qr=(<HTMLInputElement>document.getElementById('qrsetter')).value;
