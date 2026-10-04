@@ -30,7 +30,6 @@ public parties=[];
       location2: '',
       party:'',
       typeOfLoad: '',
-      rent:0,
       hamt:0,
       ton:0
     });
@@ -95,15 +94,17 @@ public parties=[];
        1, data.value, true)
       .subscribe((res: any) => {
         alert(res['Status']);
-        this.myFormGroup.patchValue({
+      });
+  }
+
+  reset(){
+    this.myFormGroup.patchValue({
           location:'',
           location2:'',
           typeOfLoad:'',
-          rent:0,
           hamt:0,
           party:''
         })
-      });
   }
 
   delete(i,j){

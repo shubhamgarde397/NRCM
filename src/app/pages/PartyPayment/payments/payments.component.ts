@@ -141,6 +141,7 @@ public year;
       .subscribe((res: any) => {
         this.paymentData = res.Data;
         this.selectDisable=false;
+        (<HTMLInputElement>document.getElementById('paymentCheck')).checked=false;
       });
   }
 
@@ -194,6 +195,15 @@ public year;
     this.modalButtonA=true;
   }
 
+    amtFromArray(){
+    let temp=0;
+    for(let i=0;i<this.addToArrayVar.length;i++){
+      let t={}
+      temp=temp+this.addToArrayVar[i]['amount'];
+    }
+    return temp;
+  }
+
 
   addToArray(){
     if(this.isValid()){
@@ -223,14 +233,7 @@ public year;
   }
 
 
-  amtFromArray(){
-    let temp=0;
-    for(let i=0;i<this.addToArrayVar.length;i++){
-      let t={}
-      temp=temp+this.addToArrayVar[i]['amount'];
-    }
-    return temp;
-  }
+
   isValid(){
     
     if(this.youcanaddinarray>=this.amtRec){
@@ -273,7 +276,8 @@ public year;
     let temp={
       'method':'makepartypaymenttrueorfalse',
       'check':(<HTMLInputElement>document.getElementById('paymentCheck')).checked,
-      'tablename':''
+      'tablename':'',
+      '_id' : this.pp1
     }
     this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
     .subscribe((response: Response) => {

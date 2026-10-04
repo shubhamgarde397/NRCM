@@ -10,8 +10,7 @@
           <th>Reason</th>
           <th>Amount</th>
           <th>Pending</th>
-          <th>From</th>
-          <th>Info</th>
+          <th>TBID</th>
           <th>Options</th>
       </tr>
   </thead>
@@ -25,12 +24,10 @@
           <td>{{i.reason}}</td>
           <td>{{i.amt}}</td>
           <td>{{i.pending}}</td>
-          <td>{{i.from}}</td>
           <td>
-            <span *ngFor="let k of i.info;let z = index;">
+            <span *ngFor="let k of i.tbids;let z = index;">
               <ul>
-                <li>Amt Taken : {{k.dueAmtTaken}}</li>
-                <li>Date Taken : {{k.date}}</li>
+                <li>{{k}}</li>
               </ul>
             </span>            
 

@@ -147,6 +147,268 @@ export class DriverContactComponent implements OnInit {
         });
     }
 
+      changehrb(i,j,type){
+  let digit = 0
+  let gono = false;
+
+      digit=parseInt(prompt('Enter the updating amount'))
+    if(digit!==null){
+      if(!isNaN(digit)){      
+        gono = true
+      }
+      else{
+        alert('Error with number')
+      }
+      
+    }else{
+      alert('Error with number')
+    }
+
+if(gono){
+  let tempObj={}
+  tempObj['method']='hrbupdate';  //work from here
+  tempObj['tablename']='';
+  tempObj['_id']=i['_id']
+  tempObj['amount']=digit
+  tempObj['type']=type;
+
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this.comm[j][type] = digit;
+    });
+  }
+}
+
+changelrno(i,j,type){
+  let digit = ''
+  let gono = false;
+
+      digit=prompt('Enter the updating value for ' + type)
+    if(digit!==null){
+      if(digit==='' || digit===undefined){      
+        gono = false
+        alert('Error with value')
+      }
+      else{
+        gono = true
+      }
+      
+    }else{
+      alert('Error with value')
+    }
+
+if(gono){
+  let tempObj={}
+  tempObj['method']='hrbupdate';  //work from here
+  tempObj['tablename']='';
+  tempObj['_id']=i['_id']
+  tempObj['amount']=digit
+  tempObj['type']=type;
+
+  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+    .subscribe((res: any) => {
+      alert(res.Status)
+      this.comm[j][type] = digit;
+    });
+  }
+}
+
+yearly(){
+  
+      let tempObj = { 
+        "method": "getCollectionMemoYear", 
+        'tablename':''
+      };
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.comm=res.Data;
+        });
+    
+}
+
+punhA(){
+           let bigData= this.comm;
+      this.sstampsign=Consts.sstampsign;
+      this.ssign=Consts.ssign;
+      let data;
+        var doc = new jsPDF({
+        orientation: 'l',
+        unit: 'mm',
+        format: 'a6',
+        putOnlyUsedFonts:true
+       })
+     
+      for(let dataM=0;dataM<bigData.length;dataM++){
+
+       if(dataM>0){doc.addPage();data={}}
+      let d=new Date()
+      
+      data={
+        'billno':bigData[dataM].billno.split('_')[1],
+        'partyType':  bigData[dataM].partyType,
+        'loadingDate':bigData[dataM].loadingDate,
+        'partyDetails':bigData[dataM].party,
+        'villageDetails':bigData[dataM].place,
+        'hamt':bigData[dataM].hamt,
+        'partyAdvanceAmt':'',
+        'balance':'',
+        'truckno':bigData[dataM].truckNo,
+        'nrlrno':bigData[dataM].nrlrno,
+      };
+      console.log(data)
+  
+      
+      let mainY=6
+      doc.setFontSize('20');
+      doc.setFontType('bold');
+      doc.setTextColor(224,0,0);
+      if(data.partyType==='NR'){
+        doc.text('Nitin Roadways',48, mainY+2)
+      }
+      if(data.partyType==='SNL'){
+          doc.text('Shri Nitin Logistics',40, mainY+2)
+      }
+  
+      doc.setDrawColor(163,0,0);
+      doc.setLineWidth(0.5);
+      doc.line(3, mainY+4, 146, mainY+4);
+      
+      doc.setFontSize('9');
+      doc.setFontType('bold');
+      doc.setTextColor(224,0,0);
+      if(data.partyType==='SNL'){
+        doc.text('DAILY SERVICE MAHARASHTRA,TAMILNADU, KERALA & KARNATAKA',18,mainY+8)
+      }
+      else{
+        doc.text('DAILY SERVICE TAMILNADU, KERALA, KARNATAKA & PONDICHERY',18,mainY+8)
+      }
+      
+      doc.setDrawColor(163,0,0);
+      doc.setLineWidth(0.5);
+      doc.line(3, mainY+9, 146, mainY+9);
+  
+      doc.setDrawColor(224,0,0);
+      doc.setLineWidth(0.8);
+      doc.line(3, mainY+10, 146, mainY+10);
+      
+      doc.setFontType('italic');
+    
+      if(data.partyType==='SNL'){
+        doc.setFontType('normal');
+        doc.setFontSize('9');
+        doc.setTextColor(0, 0, 0);
+        doc.text('Cell :- 9822288257, 8529275757', 10, mainY+14)
+        doc.text('Email : shrinitinlogistics@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
+        doc.text('PNo 25, Vazhudavoor Rd, Ramanathapuram, Villianur Commune,Pondicherry - 605505', 10, mainY+22)
+        }
+        else{
+          doc.setFontType('normal');
+        doc.setFontSize('9');
+        doc.setTextColor(0, 0, 0);
+        doc.text('Cell :- 9822288257, 8459729293, 9423580221, 8529275757', 10, mainY+14)
+        doc.text('Email : punenitinroadways@gmail.com  Website : www.nitinroadways.in', 10, mainY+18)
+        doc.text('Shop No 253, Opp. Katraj Police Station, Satara Road, Katraj, Pune- 411046', 10, mainY+22)
+
+      }
+      
+      doc.setDrawColor(224,0,0);
+      doc.setLineWidth(0.2);
+      doc.line(3, mainY+24, 146, mainY+24);
+      
+      doc.setFontSize('12');
+      doc.setFontType('normal');
+      doc.setTextColor(0, 0, 0);
+      
+      doc.setFontType('bold');
+      doc.setTextColor(12,139,173);
+      doc.text('Bill No. : ',10,mainY+30)
+      doc.text('To : ',67,mainY+44)
+      doc.text('Date : ',75,mainY+30)
+      doc.text('M/s :              ',10,mainY+37)  
+      doc.text('Truck No : ',10,mainY+44)
+      
+      doc.text('Lorry Hire : ',10,mainY+53)
+      doc.setTextColor(224,0,0);
+  
+      if(data.nrlrno==='')
+        {
+      doc.text('LRNO',67, mainY+53)
+      }
+      else{
+        doc.text('LRNO',67, mainY+53)
+      }
+      doc.setTextColor(12,139,173);
+      doc.text('Height or Length Extra Rs     : ',10,mainY+60)
+      doc.setFontSize('10')
+      doc.text('Please Load and oblige. Please Pay Advance Rs : ',10,mainY+67)
+      doc.text('Balance Hire : ',10,mainY+73)
+  
+      doc.setFontSize('12')
+      doc.setTextColor(0,0,0);
+      doc.setDrawColor(0,0,0);
+      doc.text(String(data.billno),30,mainY+30)
+      doc.text(data.villageDetails,80,mainY+44)
+      doc.text(this.handleF.getDateddmmyy(data.loadingDate),95,mainY+30)
+   
+      doc.text(data.partyDetails,35,mainY+37)
+      
+      // data.partyDetails
+      doc.text(data.truckno,35,mainY+44)
+      doc.text(String(data.hamt),35,mainY+53)
+      if(data.nrlrno===''){
+        doc.text('',100,mainY+53)
+        }
+        else{ 
+          doc.text(String(data.nrlrno),100,mainY+53)  
+        }
+  
+
+            doc.addImage(this.ssign,'JPEG',100,90,30,15)
+         
+      doc.text(String('-'),75,mainY+60)
+      doc.setFontSize('10')
+      doc.text(String(data.partyAdvanceAmt),100,mainY+67)
+      doc.text(String(data.balance),35,mainY+73)
+  
+      doc.line(0, mainY+31, 150, mainY+31);
+      doc.line(0, mainY+38, 150, mainY+38);
+      doc.line(65, mainY+38, 65, mainY+46);
+      doc.line(0, mainY+46, 150, mainY+46);
+      doc.line(65, mainY+46, 65, mainY+55);
+      doc.line(0, mainY+55, 150, mainY+55);
+      doc.line(0, mainY+62, 150, mainY+62);
+      doc.line(0, mainY+77, 150, mainY+77);
+  
+      
+      
+  
+      doc.setFontSize('8')
+      doc.setTextColor(224,0,0);
+      doc.text('Before Loading Please Check All Documents Of The Vehicle.',10,mainY+81)
+      doc.text('We are not responsible for leakage and damage',10,mainY+84)
+  
+      // doc.text('For,',95,mainY+88)
+   
+      if(data.partyType==='NR'){
+        doc.text('For Nitin Roadways',105, mainY+81)
+        doc.setTextColor(0,0,0);
+        doc.text('PAN : AFGPG0575D',10, mainY+92)
+        
+        
+      }
+      if(data.partyType==='SNL'){
+          doc.text('For Shri Nitin Logistics',105, mainY+84)
+          doc.setTextColor(0,0,0);
+        doc.text('PAN : BTBPG2818K',10, mainY+92)
+        
+      }
+    }
+    doc.save(data.truckno+'.pdf')
+      // 3 Info
+    }
+
+
     sendCM(dataM,i){
       this.sstampsign=Consts.sstampsign;
       this.ssign=Consts.ssign;
@@ -154,10 +416,9 @@ export class DriverContactComponent implements OnInit {
       else{
         dataM.place=dataM.place+'/'+dataM.place2;
       }
-
      
       
-      
+
       let d=new Date()
       let billno=dataM.billno.split('_')[1];
       let data={

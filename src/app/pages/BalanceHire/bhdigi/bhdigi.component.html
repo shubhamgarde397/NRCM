@@ -2,13 +2,33 @@
 
     <div class="row">
 
-      <div class="col-xs-3" align="center">
-        <input type="month" [(ngModel)]="selectedDate">
+      <div class="col-lg-2" align="center">
+        <input type="date" [(ngModel)]="selectedDate">
       </div>
 
-      <div class="col-xs-2" align="center">
-        <button class="btn btn-warning" (click)="find('none')">Find</button>
-        <button class="btn btn-warning" (click)="find('all')">Find All</button>
+      <div class="col-lg-2" align="center">
+        <select [(ngModel)]="selectedTypeOfDate" class="form-control">
+          <option value="pochDate" selected>Poch Date</option>
+          <option value="loadingDate">Loading Date</option>
+          </select>
+      </div>
+
+      <div class="col-lg-2" align="center">
+        NRCM : <input type="checkbox" class="form-control" id="NRCM" [checked]=true>
+        NR : <input type="checkbox" class="form-control" id="NR" [checked]=true>
+        SNL : <input type="checkbox" class="form-control" id="SNL" [checked]=false>
+      </div>
+          
+
+      <div class="col-lg-1" align="center">
+        <select [(ngModel)]="selectedTypeOfData" class="form-control">
+          <option value="" selected>Daily</option>
+          <option value="all">Monthly</option>
+          </select>
+      </div>
+
+      <div class="col-lg-1" align="center">
+        <button class="btn btn-warning" (click)="find()">Find</button>
       </div>
      
     
@@ -82,15 +102,6 @@
                     <div class="row">
                       Ref : <input style="color:wheat;background-color: black;" type="text" class="form-control" [(ngModel)]="reference">
                     </div>
-                       <div class="row">
-                          <select id="nop" class="form-control" class="form-control" [(ngModel)]="transportid">
-                            <option disabled selected>Select Name of The Transport</option>
-                            <option *ngFor="let i of transports;let j = index;" value={{i.tptName}}>
-                              {{i.tptName}}
-                            </option>
-                          </select>
-                          <i class="material-icons" style="color: green;cursor: pointer;" (click)="getTransport()">redo</i>
-                        </div>
                     <div class="row">
                       <table>
                         <tr *ngFor="let i of advbalarray;let j=index;">

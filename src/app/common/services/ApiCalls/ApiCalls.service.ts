@@ -19,11 +19,11 @@ export class ApiCallsService {
 
   }
 
-  handleData_New_python(api, apiCall, formBody = {},shallI=true,todayDate=this.handlefunction.createDate(new Date())) {
+  handleData_New_python(api, apiCall, formBody = {},shallI=true,todayDate=this.handlefunction.createDate(new Date()),website='nrcm') {
     formBody['user'] = this.securityCheck.username;
     formBody['todayDate']=todayDate;
     // formBody['website'] = this.securityCheck.getBranch();
-    formBody['website'] = 'nrcm';
+    formBody['website'] = website;
     formBody['nrcmid'] = this.securityCheck.nrcmid;
     this.headerPost = new HttpHeaders();
     this.headerPost.append('Content-Type', 'application/json');

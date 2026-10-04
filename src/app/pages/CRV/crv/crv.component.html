@@ -25,6 +25,20 @@
       <br>
 
       <h3>{{msg}}</h3>
+      <hr>
+<h3>Upload Acknowledgement</h3>
+            <div class="container" style="background-color: black;color: wheat;">
+
+                    <button class="btn btn-danger" (click)="image('c')" *ngIf="data[0]['podImage'][5]['fileType'] == ''">
+                      <i style="color:black;" class="material-icons">camera_alt</i>
+                    </button>
+                    <input type="file" id="file" style="display:none" (change)="onFileSelected($event)"  capture="camera" accept="image/*">
+                    <button (click)="uploadFile(5)" class="btn btn-danger" *ngIf="data[0]['podImage'][5]['fileType'] == ''"><i style="color:black;" class="material-icons">file_upload</i></button>
+                    <button (click)="showFile(5)" data-toggle="modal" data-target="#myModalImageViewer" class="btn btn-success" *ngIf="data[0]['podImage'][5]['fileType'] !== ''">
+                      <i style="color:black;" class="material-icons">remove_red_eye</i>
+                    </button>
+                </div>
+            <br>
       <button class="btn btn-warning" (click)='download()'>Download LR</button>
       <div *ngFor="let i of arr;let j = index">
         <img src={{i}} id={{j}}>
@@ -49,3 +63,27 @@
     
     Safe | Fast | Reliable | Punctual | 24*7 Avaliable</p>
 </div>
+
+
+<div class="modal fade" id="myModalImageViewer" role="dialog">
+              <div class="modal-dialog">
+              
+            
+                <div class="modal-content" style="background-color: black;color: wheat;">
+                  <div class="modal-header">
+                    <button style="color:black;" type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Image</h4>
+                  </div>
+                  <div class="modal-body" style="width: 1vh;padding: 0px;">
+
+                  <img src={{imgSrc}} width="500" height="500"/>
+
+                  </div>
+            
+                  <div class="modal-footer">
+                    <button style="color:black;" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+                
+              </div>
+            </div>

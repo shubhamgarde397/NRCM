@@ -39,8 +39,7 @@ public gotData18=false;
       truckno:'',
       date:'',
       amt:'',
-      reason:'',
-      from:''
+      reason:''
     });
   }
   deleteOne(j,z){
@@ -62,30 +61,6 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
       });
 
   }
-  find(){
-    let tempObj = {}
-
-  if(this.myFormGroup.value.from === 'Truck'){
-    if (this.myFormGroup.value.truckno === '') { alert('Select a '+this.myFormGroup.value.from);  }
-        else {
-          tempObj['truckno'] = this.myFormGroup.value.truckno;
-          tempObj['method'] = 'displayEditTruckD'
-    }
-  }
-  else{
-    if (this.myFormGroup.value.truckno === '') { alert('Select a '+this.myFormGroup.value.from);  }
-        else {
-          tempObj['truckno'] = this.myFormGroup.value.truckno;
-          tempObj['method'] = 'displayEditTruckDT'
-    }
-  }
-
-  tempObj['tablename'] = ''
-  this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
-      .subscribe((res: any) => {
-        this.turnbooklist = res.Data;
-      });
-  }
 
   find11UniqueTruck(){
     if(this.trucknoid11!=='Default'){
@@ -97,9 +72,12 @@ this.apiCallservice.handleData_New_python('commoninformation', 1, temp, true)
 
   store({ value, valid }: { value: [{}], valid: boolean }) {
     value['method'] = 'DuesInsert';
-    value['tablename'] = 'dues';
-    value['truckno'] = this.trucknoid11;
-    
+    value['tablename'] = '';
+    value['truckno'] = this.myFormGroup.value.truckno;
+    value['date'] = this.myFormGroup.value.date;
+    value['amt'] = this.myFormGroup.value.amt;
+    value['reason'] = this.myFormGroup.value.reason;
+
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, value, true)
       .subscribe((res: any) => {

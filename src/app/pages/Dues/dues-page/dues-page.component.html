@@ -2,68 +2,32 @@
   <form [formGroup]="myFormGroup" (ngSubmit)="store(myFormGroup)" submitted=true
     enctype="multipart/form data" action="/">
 
-
-   
-
-
     <div class="form-group row">
-        <div class="col-xs-3">
-          <select id="from" class="form-control" formControlName="from">
-            <option selected disabled>Select Type</option>
-            <option value="Truck">Truck</option>
-            <option value="Transport">Transport</option>
-          </select>
-      </div>
       <div class="col-xs-3">
-        <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN11 TN 1111">
-      </div>
-      <div class="col-xs-3">
-        <button mat-raised-button type="button" (click)="find()" class="btn btn-primary" style="width: 100%;margin-top: 10px;">
-          Find
-        </button>
-      </div>
-      <div class="col-sm-3">
-        <select class="form-control" [(ngModel)]="trucknoid11" [ngModelOptions]="{standalone: true}" (change)="find11UniqueTruck()" id="truckNoone11">
-          <option>Default</option>
-          <option *ngFor="let i of turnbooklist;let j = index;" value={{i.truckno}}>{{i.truckno}}</option>
-        </select>
+        Tno : <input type="text" id="truckno" class="form-control" formControlName="truckno" placeholder="TN11 TN 1111">
       </div>
     </div>
 
-    <div class="form-group row" *ngIf="gotData18">
+    <div class="form-group row">
       <div class="col-xs-3">
         Date : <input type="date" class="form-control" formControlName="date">
       </div>
     </div>
 
-    <div class="form-group row" *ngIf="gotData18">
+    <div class="form-group row">
       <div class="col-xs-3">
         Amount : <input type="number" id="amt" class="form-control" formControlName="amt">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.amt.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
     </div>
 
 
-    <div class="form-group row" *ngIf="gotData18">
+    <div class="form-group row">
       <div class="col-xs-3">
         Reason : <input type="text" id="reason" class="form-control" value='Loan' formControlName="reason" placeholder="Reason">
       </div>
-      <div class="col-xs-2">
-        <div [hidden]="myFormGroup.controls.reason.valid">
-          <font color="red">
-            <span class="glyphicon glyphicon-remove"></span>
-          </font>
-        </div>
-      </div>
     </div>
 
-    <div class="row" *ngIf="gotData18">
+    <div class="row">
       <div class="form-group" class="col-xs-2"></div>
       <div class="form-group" class="col-xs-1">
         <button type="submit" class="btn btn-primary" [disabled]='!myFormGroup.valid'>
@@ -84,7 +48,6 @@
           <th>Reason</th>
           <th>Amount</th>
           <th>Pending</th>
-          <th>From</th>
           <th>Info</th>
           <!-- <th>Options</th> -->
       </tr>
@@ -99,23 +62,14 @@
           <td>{{i.reason}}</td>
           <td>{{i.amt}}</td>
           <td>{{i.pending}}</td>
-          <td>{{i.from}}</td>
           <td>
-            <span *ngFor="let k of i.info;let z = index;">
+            <span *ngFor="let k of i.tbids;let z = index;">
               <ul>
-                <li>Amt Taken : {{k.dueAmtTaken}}</li>
-                <li>Date Taken : {{k.date}}</li>
-                <li><button class="btn btn-warning" (click)='deleteOne(j,z)'>Delete</button></li>
-                <!-- <li><button class="btn btn-warning" (click)='details("TurnBook",i,z)' data-toggle="modal" data-target="#myModal">TB</button>---<button data-toggle="modal" data-target="#myModal" class="btn btn-warning" (click)='details("Balance",i,z)'>BH</button></li> -->
+                <li (click)='details(z)' data-toggle="modal" data-target="#myModal">{{k}}</li>
               </ul>
             </span>            
 
           </td>
-          <!-- <td>
-              <button mat-raised-button (click)="delete(i._id,j)" class="btn-danger btn-sm btn-just-icon">
-                  <i class="material-icons">delete_forever</i>
-              </button>
-          </td> -->
       </tr>
   </tbody>
 </table>

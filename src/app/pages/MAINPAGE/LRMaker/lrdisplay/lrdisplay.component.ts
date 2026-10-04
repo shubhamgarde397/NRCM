@@ -19,7 +19,17 @@ import 'jspdf-autotable';
 export class LrdisplayComponent implements OnInit {
 public billno='';
 public data=[];
+public forparty=false;
 public documentNo='';
+  public belowTwenty: string[] = [
+    "Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+    "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen",
+    "Seventeen", "Eighteen", "Nineteen"
+  ];
+
+  public tens: string[] = [
+    "", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"
+  ];
 public particular='';
 public documentNos=[];
 public particulars=[];
@@ -238,6 +248,8 @@ saveDoc(i,j,data){
       'fromgstno':temp['fromgstno'],
       'lrshort':temp['lrshort']
   }
+  console.log(data);
+  
   // Box on the page
   doc.line(14,14,295,14)
   doc.line(14,14,14,208)
@@ -440,46 +452,38 @@ saveDoc(i,j,data){
   
   doc.text('Amount in Words : ',16,185)
   
-  doc.setFontType('normal')
+  doc.setFontType('normal')  
+  
+    if(this.forparty){
+     doc.text(String(data.particulars2['w']),126,145)
+        doc.text(String(data.particulars2['tf']),158,145)
+        doc.text(String(data.particulars2['paid']),205,145)
+        doc.text(String(data.particulars2['tp']),245,145)
+        doc.text(String(data.particulars2['ba']),275,145)
 
-  if(data.partyType==='NRCM'){
+        doc.text(this.convertNumberToWords(data.particulars2['tf']), 50, 185);
+      }
     if(data.particulars.length>0)
     {
       for(let ii=0;ii<data.particulars.length;ii++){
         doc.text(String(ii+1),18,145+(ii*5))
         doc.text(data.particulars[ii],50,145+(ii*5))
       }
-      doc.text(String(data.particulars2['w']),126,145)
-      doc.text(String(data.particulars2['tf']),158,145)
-      doc.text(String(data.particulars2['paid']),205,145)
-      doc.text(String(data.particulars2['tp']),245,145)
-      doc.text(String(data.particulars2['ba']),275,145)
-    }else{
+
+      
+    }
+    
+    else{
+
       if(data.typeofload==='Fittings'){
       doc.text('1',18,145)
       doc.text('PVC Fittings Bags and Boxes',50,145)
-      doc.text('FTL',126,145)
       }else if(data.typeofload==='Pipe'){
         doc.text('1',18,145)
         doc.text('PVC Pipes',50,145)
-        doc.text('FTL',126,145)
       }
     }
-  }else if(data.partyType==='SNL')
-  {
-    if(data.particulars.length>0)
-      {
-        for(let ii=0;ii<data.particulars.length;ii++){
-          doc.text(String(ii+1),18,145+(ii*5))
-          doc.text(data.particulars[ii],50,145+(ii*5))
-        }
-        doc.text(String(data.particulars2['w']),126,145)
-        doc.text(String(data.particulars2['tf']),158,145)
-        doc.text(String(data.particulars2['paid']),205,145)
-        doc.text(String(data.particulars2['tp']),245,145)
-        doc.text(String(data.particulars2['ba']),275,145)
-      }
-  }
+  
   doc.setFontType('bold')
   
   doc.setFontSize('12');
@@ -564,4 +568,51 @@ saveDoc(i,j,data){
   // Inside box Text
     doc.save(data.truckno+'.pdf')
   }
+
+    getBelowHundred(n: number): string {
+    if (n < 20) return this.belowTwenty[n];
+    const digit: number = n % 10;
+    return this.tens[Math.floor(n / 10)] + (digit > 0 ? " " + this.belowTwenty[digit] : "");
+  }
+
+
+   convertToWords(n: number): string {
+    if (n === 0) return "";
+    if (n < 100) return this.getBelowHundred(n);
+    if (n < 1000) {
+      return this.belowTwenty[Math.floor(n / 100)] + " Hundred" + (n % 100 !== 0 ? " " + this.getBelowHundred(n % 100) : "");
+    }
+    if (n < 100000) { // Thousands
+      return this.convertToWords(Math.floor(n / 1000)) + " Thousand" + (n % 1000 !== 0 ? " " + this.convertToWords(n % 1000) : "");
+    }
+    if (n < 10000000) { // Lakhs
+      return this.convertToWords(Math.floor(n / 100000)) + " Lakh" + (n % 100000 !== 0 ? " " + this.convertToWords(n % 100000) : "");
+    }
+    // Crores
+    return this.convertToWords(Math.floor(n / 10000000)) + " Crore" + (n % 10000000 !== 0 ? " " + this.convertToWords(n % 10000000) : "");
+  }
+
+   convertNumberToWords(amount: number | string): string {
+  const numStr: string = Number(amount).toFixed(2);
+  const [wholePart, decimalPart] = numStr.split('.');
+
+
+
+ 
+
+
+  // Handle Rupee words
+  const rupeesNum: number = parseInt(wholePart, 10);
+  const rupeesWord: string = rupeesNum === 0 ? "Zero" : this.convertToWords(rupeesNum);
+  let result: string = rupeesWord + " Rupee" + (rupeesNum === 1 ? "" : "s");
+
+  // Handle Paise words
+  const paiseNum: number = parseInt(decimalPart, 10);
+  if (paiseNum > 0) {
+    result += " and " + this.getBelowHundred(paiseNum) + " Paise";
+  }
+
+  return result + " Only";
+}
+
 }

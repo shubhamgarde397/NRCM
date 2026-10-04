@@ -19,6 +19,9 @@ export class CRVComponent implements OnInit {
   public birthday = new Date().getFullYear() - 2004;
   public msg = ''
   public arr = []
+  public selectedFile: File;
+  public imgSrc = '';
+  public data = [];
   public imgDataRes={};
    constructor(
      public sec:SecurityCheckService,
@@ -43,6 +46,7 @@ export class CRVComponent implements OnInit {
          if(a=='d'){
           this.msg = 'Please wait we are updating the POD Status.'
     let dataa = String(this.htd(data['d']))
+        console.log(dataa);
         
      let tempObj = {};
 
@@ -55,7 +59,8 @@ export class CRVComponent implements OnInit {
       ('commoninformation', 1, tempObj, true)
       .subscribe((res:any) => {
         this.msg=res.Status;
-        window.open("https://wa.me/+918529275757/?text="+this.urlMaker(res.Data),'_blank');
+        this.data = res.Data;
+        // window.open("https://wa.me/+918529275757/?text="+this.urlMaker(res.Data),'_blank');
       })
     }
 
@@ -98,8 +103,63 @@ if(a=='c'){
   }
   })
  }
+  image(type){
+    (<HTMLInputElement>document.getElementById('file')).click();
+  }
 
+   onFileSelected(event) {
+    this.selectedFile = event.target.files[0];
+  }
 
+   uploadFile(position) {
+  
+      this.hF.fileToBase64(this.selectedFile).then((base64String) => {
+        // Send the Base64 string to the server
+        this.sendToServer(base64String,position);
+      }).catch((error) => {
+        console.error(error);
+      });
+  }
+
+  fileType(position){
+  switch (position) {
+    case 0: return 'raw_F';
+    case 1: return 'stamp_F'
+    case 2: return 'stamp_B'
+    case 3: return 'courier_D2T'  
+    case 4: return 'courier_T2B'  
+    case 5: return 'bill_F'
+  }
+}
+
+   sendToServer(base64String: string,position) {
+    // Implement the logic to send the Base64 string to the server
+    const str='pod/'+this.data[0]['p'].replace(/ /g, "")+'/';
+
+    for(let i=0;i<this.data.length;i++){
+
+    this.data[i]['fileName']=str+this.data[i]['datetruck'].split('_')[1].replace(/ /g, "")+'/'+this.data[i]['nrlrno'].replace(/ /g, "")+'/'+this.fileType(position)+'.'+this.selectedFile.name.split('.').pop()
+    
+}
+
+   let temp={
+        'method':'billImageAll',
+        'tablename':'',
+        'base64':base64String,
+        'fileType':this.selectedFile.name.split('.').pop(),
+        'dataAll':this.data,
+        'website':'nrcm_q'
+      }
+            this.apiCallservice.handleData_New_python
+        ('commoninformation', 1, temp, true,'2025-07-12','nrcm_q')
+        .subscribe((res: any) => {
+          alert(res.Status)
+        })
+  }
+
+  showFile(position){
+    this.imgSrc='https://truckdriverdocuments.s3.ap-south-1.amazonaws.com/pod/'+this.data[0]['p'].replace(/ /g, "")+'/'+this.data[0]['datetruck'].split('_')[1].replace(/ /g, "")+'/'+this.data[0]['nrlrno'].replace(/ /g, "")+'/'+this.fileType(position)+'.'+this.data[0]['podImage'][parseInt(position)]['fileType'];
+  }
 
     download() {
        let arr = this.arr;
@@ -215,7 +275,6 @@ if(a=='c'){
 
 // Example usage:
 urlToBase64(url).then((base64String) => {
-  console.log(base64String);
 }).catch((error) => {
   console.error(error);
 });

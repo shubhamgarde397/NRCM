@@ -32,8 +32,9 @@
 <div class="well" *ngIf="mainData">
       <h3 style="text-align: center;color:wheat;">Details of {{timeLog}}-{{fy}}</h3>
       <div>
-        <span style="background-color: green;height: 10px;width: 10px;display: block;">.</span>Payment Done
-        <span style="background-color: orange;height: 10px;width: 10px;display: block;">.</span>POD Received, Payment Pending
+        <span style="background-color: green;height: 10px;width: 10px;display: block;">.</span>Payment Done.
+        <span style="background-color: orange;height: 10px;width: 10px;display: block;">.</span>POD Received, Payment Pending.
+        <span style="background-color: blue;height: 10px;width: 10px;display: block;">.</span>POD Not Received, Payment Done.
         <span style="background-color: red;height: 10px;width: 10px;display: block;">.</span>POD Not Received.
       </div>
 <div class="row" *ngFor="let i of alltrucks;let j = index">

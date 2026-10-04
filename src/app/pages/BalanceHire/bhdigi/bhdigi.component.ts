@@ -17,11 +17,13 @@ import { handleFunction } from 'src/app/common/services/functions/handleFunction
 export class BHDigiComponent implements OnInit {
   public date = new Date();
   public balanceDate = [];
-  public selectedDate;
+  public selectedDate='';
   public commonArray: any;
   public considerArray: any;
   public gstdetailslist: any;
   public fetchPartyTF=false;
+  public selectedTypeOfDate='pochDate';
+  public selectedTypeOfData = '';
   public fetchLoadedTruckTF=false;
   public advbalarray=[]
   public bigII;
@@ -52,18 +54,31 @@ public value='';
     this.nrcmid=this.securityCheck.nrcmid;
   }
 
-  find = function (data) {
-    
+  find = function () {
+    let data= this.selectedTypeOfData;
     let tempObj = {};
-    if (this.selectedDate === undefined) {
+
+    console.log(this.selectedDate);
+    
+    if (this.selectedDate === '') {
       this.selectedDate = this.handleF.getDate(this.date.getDate(), (this.date.getMonth() + 1), this.date.getFullYear());
-      tempObj['createdDate'] = this.selectedDate;
     } else {
-      tempObj['createdDate'] = this.selectedDate;
+        if(data == 'all'){
+          this.selectedDate = this.selectedDate.slice(0,7);
+        }
     }
-    tempObj['data']=data;
+
+
     tempObj['method'] = 'BalanceHireDisplayDigital';
     tempObj['tablename'] = 'BalanceHire';
+    tempObj['tod'] = this.selectedTypeOfDate;
+    tempObj['createdDate'] = this.selectedDate;
+    tempObj['data'] = data;
+    tempObj['partyType'] = [];
+    tempObj['partyType'].push((<HTMLInputElement>document.getElementById('NRCM')).checked?'NRCM':'');
+    tempObj['partyType'].push((<HTMLInputElement>document.getElementById('NR')).checked?'NR':'');
+    tempObj['partyType'].push((<HTMLInputElement>document.getElementById('SNL')).checked?'SNL':'');
+
     this.apiCallservice.handleData_New_python
       ('commoninformation', 1, tempObj, true)
       .subscribe((res:any) => {
@@ -91,7 +106,6 @@ public value='';
     tempObj['paymentAmt']=this.paymentAmt;
     tempObj['paymentDate']=this.paymentDate;
     tempObj['reference']=this.reference;
-    tempObj['transportid'] = this.transports.find(r=>r.tptName==this.transportid)['_id'];
     tempObj['tablename']='';
     tempObj['type']=this.tempType;
     tempObj['_id']=this.bigII['_id']

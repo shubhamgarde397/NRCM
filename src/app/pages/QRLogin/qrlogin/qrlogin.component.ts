@@ -61,24 +61,24 @@ public ewaybill=0;
     let login=false;
     let pwd = prompt('Enter Password');
     switch (pwd) {
-      case 'SHUB':
+      case 'S':
         this.userid=1;
         login=true;
         break;
-      case 'ROHI':
+      case 'R':
         this.userid=3;
         login=true;
         break;
-      case 'POOJ':
+      case 'P':
         this.userid=2;
         login=true;
         break;
-       case 'TUKA':
+       case 'T':
         this.userid=5;
         login=true;
         break; 
-        case 'KART':
-        this.userid=10;
+        case 'E':
+        this.userid=14;
         login=true;
         break; 
     }

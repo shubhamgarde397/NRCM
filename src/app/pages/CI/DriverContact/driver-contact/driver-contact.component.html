@@ -3,7 +3,8 @@
   <button class="btn btn-warning" (click)="tabF(1)">PartyInfo</button>
   <button class="btn btn-warning" (click)="tabF(2)">Location</button>
   <button class="btn btn-warning" (click)="tabF(3)">Comm Bill</button>
-  <button class="btn btn-warning" (click)="tabF(4)">Balance Data</button>
+  <button class="btn btn-warning" (click)="tabF(4)">Bal Data</button>
+  <button class="btn btn-warning" (click)="tabF(6)">Adv Data</button>
   <button class="btn btn-warning" (click)="tabF(5)">Memo</button>
 </div>
 
@@ -261,28 +262,72 @@
   <input type="date" class="form-control" [(ngModel)]="loadingDate">
   </div>
   <button class="btn btn-danger" (click)="get55()">Get Data</button>
+  <button class="btn btn-danger" (click)="yearly()">Get Yearly</button>
+  <button class="btn btn-danger" (click)="punhA()">Punch A</button>
 
   <table class="table table-bordered">
     <tr>
       <th>Srno</th>
       <th>Date</th>
-      <th>TruckNo</th>
+      <th>TruckNo-Mo</th>
       <th>Party</th>
+      <th>LRNO</th>
       <th>Place</th>
       <th>Rent-Adv-Bal</th>
       <th>Code</th>
     </tr>
     <tr *ngFor="let i of comm;let j = index;">
        <td>{{j+1}}</td>
-      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+      <td>{{i.loadingDate|date:'dd-MM-yyyy'}}<br>{{i.contacttb[0]}}</td>
       <td>{{i.truckNo}}</td>
       <td>{{i.party}}</td>
+      <td (click)="changelrno(i,j,'nrlrno')">{{i.nrlrno}}</td>
       <td>{{i.place}}</td>
-      <td>{{i.hamt}}-<input type="number" class="form-control" value={{i.adv}} id="adv_{{j}}">=<input type="number" id="bal_{{j}}" class="form-control" value={{i.bal}}></td>
+      <td (click)="changehrb(i,j,'hamt')">{{i.hamt}}-<input type="number" class="form-control" value={{i.adv}} id="adv_{{j}}">=<input type="number" id="bal_{{j}}" class="form-control" value={{i.bal}}></td>
       <td><button class="btn btn-warning" (click)="sendCM(i,j)">Send</button></td>
       
     </tr>
   </table>
+</div>
+
+<div class="well" *ngIf="tab==6">
+  <table class="table table-bordered" style="width:100%" align="center">
+
+        <thead class="table-header">
+          <tr>
+            <th>Srno</th>
+            <th>Date</th>
+            <th>TruckNo</th>
+            <th>Place</th>
+            <th>Rent</th>
+            <th>Details</th>
+          </tr>
+        </thead>
+
+
+        <tbody>
+          <tr *ngFor="let i of balanceDate;let j = index">
+            <td [ngStyle]="{'color': i.advBalColor[0]}">{{j+1}}</td>
+            <td [ngStyle]="{'color': i.advBalColor[0]}">{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td [ngStyle]="{'color': i.advBalColor[0]}">{{i.truckno}}</td>
+            <td [ngStyle]="{'color': i.advBalColor[0]}">{{i.place}}</td>
+            <td></td>
+            
+            <td [ngStyle]="{'color': i.advBalColor[0]}">
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <button style="width: 100%" [ngStyle]="{'background-color': i.advBalColor[1]}" (click)="savePayment(i,j,'advanceArray')" data-toggle="modal" data-target="#myModalPay">Adv</button>
+                        </div>
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.ADColor[0]}" (click)="savePayment2(i,j,'addons')" data-toggle="modal" data-target="#myModalDD">Addons</button></div>
+                        <div class="col-sm-4"><button style="width: 100%" [ngStyle]="{'background-color': i.ADColor[1]}" (click)="savePayment2(i,j,'deductions')" data-toggle="modal" data-target="#myModalDD">Deductions</button></div>
+                      </div>     
+            </td>
+          </tr>
+        </tbody>
+      </table>
 </div>
 
 <div class="modal fade" id="myModalDD" role="dialog">
