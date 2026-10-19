@@ -21,6 +21,7 @@ export class DriverContactComponent implements OnInit {
   public considerArray=[];
   public sstampsign=''
   public ssign=''
+  public advanceData = [];
   public tempBalls= [];
   public tempType= '';
   public tempTruckNo='';
@@ -68,6 +69,7 @@ export class DriverContactComponent implements OnInit {
   public pmts3=[]
   public trucks=[]
   public rqty =0
+public manyRows=[];
 
     constructor(
       public apiCallservice: ApiCallsService, 
@@ -82,7 +84,6 @@ export class DriverContactComponent implements OnInit {
   
     ngOnInit() {
       this.considerArray = this.handledata.createConsiderArray('infogsthidden')
-   this.get() 
     this.commonArray = this.securityCheck.commonArray;
     }
 
@@ -127,6 +128,18 @@ export class DriverContactComponent implements OnInit {
      get44(){
       let tempObj = { 
         "method": "getBaltosend", 
+        'tablename':''
+      };
+      this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+        .subscribe((res: any) => {
+          this.comm=res.Data;
+        });
+    }
+
+    get66(){
+      this.comm=[];
+      let tempObj = { 
+        "method": "pendingAdvtosend", 
         'tablename':''
       };
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
@@ -723,15 +736,79 @@ punhA(){
 
     get() {
       this.trucks=[];
-      let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false };
+      let tempObj = { "method": "displaynew", "consider": this.considerArray,'notall':false,'date':(<HTMLInputElement>document.getElementById('datesetter')).value };
       this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
         .subscribe((res: any) => {
           this.securityCheck.commonArray['gstdetails'] = Object.keys(res.gstdetails[0]).length > 0 ? res.gstdetails : this.securityCheck.commonArray['gstdetails'];;
           this.securityCheck.commonArray['villagenames'] = Object.keys(res.villagenames[0]).length > 0 ? res.villagenames : this.securityCheck.commonArray['villagenames'];
           this.securityCheck.commonArray['transport'] = Object.keys(res.transport[0]).length > 0 ? res.transport : this.securityCheck.commonArray['transport'];
+          this.manyRows = res.hiddenownerdetails;
+          this.addRowI(res.hiddenownerdetails);
           this.fetchBasic();
         });
     }
+
+    extract(){
+      for(let i=0;i<this.turnbooklist1.length;i++){
+        (<HTMLInputElement>document.getElementById('truckno_'+i)).value = this.manyRows[i].truckno;
+        (<HTMLInputElement>document.getElementById('pt_'+i)).value = this.manyRows[i].partyType;
+        (<HTMLInputElement>document.getElementById('pn_'+i)).value = this.manyRows[i].party;
+        (<HTMLInputElement>document.getElementById('co_'+i+'0')).value = this.manyRows[i].contact;
+        
+        const inputpT = document.getElementById("pt_"+i) as HTMLInputElement;
+          inputpT.disabled = true;
+
+
+      switch (this.manyRows[i].partyType) {
+        case 'NRCM':
+          let qr=(<HTMLInputElement>document.getElementById('qrsetter')).value;
+          this.turnbooklist1[i].parties2=this.parties.filter(r=>{return r.partyType=='NRCM'});
+          this.turnbooklist1[i]['qrs']=[];
+          this.turnbooklist1[i]['qrs'].push({qr:qr});
+          this.turnbooklist1[i]['otherbuttons']=true;
+          this.turnbooklist1[i].tons=['0','7','8','10','T'];
+          break;
+          case 'NR':
+            this.turnbooklist1[i].parties2=this.parties.filter(r=>{return r.partyType=='NR'})
+            this.turnbooklist1[i]['otherbuttons']=false;
+            this.turnbooklist1[i]['qrs']=[];
+          break;
+          case 'SNL':
+            this.turnbooklist1[i].parties2=this.parties.filter(r=>{return r.partyType=='SNL'})
+            this.turnbooklist1[i]['otherbuttons']=false;
+            this.turnbooklist1[i]['qrs']=[];
+          break;
+      
+        
+        
+      }
+
+
+      }
+    }
+
+      addRowI(data){
+let temp={}
+        data.forEach((r,index)=>{
+          temp={
+          contacts:[{co:''}],
+          lul:'lock',
+          parties2:[],
+          tol:'',
+          tons:[],
+          addons:[],
+          deductions:[],
+          truckno:r.truckno,
+          party:r.party,
+          loadingDate:this.handleF.getDateddmmyy(r.loadingDate),
+          partyType:r.partyType
+        }
+          this.turnbooklist1.push(temp);
+          temp={};
+          this.submission.push(0);
+          this.submitButton=this.submission.every((value)=>{return value>0})
+          });
+  }
 
   savePayment(i,j,type){
     this.bigII=i;
@@ -769,7 +846,6 @@ punhA(){
     tempObj['paymentAmt']=this.paymentAmt;
     tempObj['paymentDate']=this.paymentDate;
     tempObj['reference']=this.reference;
-    tempObj['transportid'] = this.transports.find(r=>r.tptName==this.transportid)['_id'];
     tempObj['tablename']='';
     tempObj['type']=this.tempType;
     tempObj['_id']=this.bigII['_id']
@@ -880,7 +956,6 @@ punhA(){
   
     setParty(index){
       let data=(<HTMLInputElement>document.getElementById('pt_' + index)).value;
-      console.log(this.turnbooklist1);
       switch (data) {
         case 'NRCM':
           let qr=(<HTMLInputElement>document.getElementById('qrsetter')).value;
@@ -935,6 +1010,8 @@ punhA(){
     this.turnbooklist1[this.bigJ][this.tempType].push(arr);
     
   }
+
+
 
   addRow(data,index){
     switch (data) {

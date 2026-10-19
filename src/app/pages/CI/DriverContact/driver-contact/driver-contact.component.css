@@ -21,3 +21,8 @@ input,select,table{
   .width50{
     width: 50%;
   }
+
+  input,select,.form-control:disabled{
+    background-color: black;
+    color: wheat;
+  }
