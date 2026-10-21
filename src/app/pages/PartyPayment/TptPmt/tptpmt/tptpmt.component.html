@@ -6,6 +6,10 @@
   <div class="form-group row">
 
     <div class="col-sm-3">
+<button class="btn btn-danger" (click)="refreshRadio()">Click for {{tpttnoName}}</button>
+    </div>
+
+    <div class="col-sm-3" *ngIf="tpttno">
       <select id="nop" class="form-control" [(ngModel)]="nopid">
         <option disabled selected>Select Name of The Transport</option>
         <option *ngFor="let i of transports;let j = index;" value={{i._id}}>
@@ -13,6 +17,10 @@
         </option>
       </select>
       <button class="btn btn-danger" (click)="refresh()">Refresh</button>
+    </div>
+
+    <div class="col-sm-3" *ngIf="!tpttno">
+      <input type="text" class="form-control" [(ngModel)]="nopid" placeholder="Enter Truck Number">
     </div>
 
 

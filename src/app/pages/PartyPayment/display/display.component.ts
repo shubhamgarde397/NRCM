@@ -72,13 +72,16 @@ public paymentData3=[];
   }
 
   ngOnInit() {
-    this.commonArray = this.securityCheck.commonArray;
-    this.considerArray = this.handledata.createConsiderArray('infogstonly')
-    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
     this.monthNames=this.handleF.genaratemonthNames()
     this.partyids=[];
     this.paymentData=this.handledata.givePaymentData();
     this.paymentData.length>0?this.tableData = true:this.tableData = false;
+  }
+
+  refresh(){
+    this.commonArray = this.securityCheck.commonArray;
+    this.considerArray = this.handledata.createConsiderArray('infogstonly')
+    this.handledata.goAhead(this.considerArray) ? this.getInformationData() : this.fetchBasic();
   }
 
   typeofcolsF(){

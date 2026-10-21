@@ -18,6 +18,8 @@ export class TptpmtComponent implements OnInit {
   tabledata: false;
   public today;
   public todaysDate;
+  public tpttno= true;
+  public tpttnoName= 'TruckNo';
   public bigI;
   public bigJ;
   public apd;
@@ -86,6 +88,18 @@ public paymentData3=[];
     this.paymentData.length>0?this.tableData = true:this.tableData = false;
   }
 
+  refreshRadio(){
+    this.tpttno=!this.tpttno
+    switch (this.tpttno) {
+      case true:
+        this.tpttnoName='Transport'
+        break;
+        case false:
+          this.tpttnoName='TruckNo'
+        break;
+    }
+  }
+
 
   getInformationData() {
     let tempObj = { "method": "displaynew", "consider": this.considerArray ,'notall':false};
@@ -152,6 +166,7 @@ public paymentData3=[];
       tempObj['toloading'] = this.toloading;
       tempObj['method'] = 'transportPaymentPDFForParty';
       tempObj['transportid']=this.nopid;
+      tempObj['type'] = this.tpttnoName;
       this.fromloading=tempObj['fromloading'];
       this.toloading=tempObj['toloading'];
 
@@ -210,9 +225,17 @@ if(gono){
 
 
   downloadForParty1() {//threshhold is 295
-  
+  let tptName = ''
+    switch (this.tpttnoName) {
+      case 'Transport':
+    tptName = this.transports.filter(r=>r._id==this.nopid)[0]['tptName']    
+        break;
+      case 'Truck':
+        tptName = this.nopid;
+        break;
+    }
+
     
-    let tptName = this.transports.filter(r=>r._id==this.nopid)[0]['tptName']
     let adv=this.adv;
     let bal=this.bal;
      let pmtNameArray='';
@@ -407,7 +430,7 @@ if(gono){
          doc.text(String(this.paymentData[i].place), 78, y)//lrno
          doc.text(String(this.paymentData[i].rent), 106, y)//truckno
 
-         doc.text(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['date'] : '', 118, y)//truckno
+         doc.text(this.paymentData[i][pmtNameArray].length>0 ? this.handleF.getDateddmmyy(this.paymentData[i][pmtNameArray][0]['date']) : '', 118, y)//truckno
          doc.text(String(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['amount'] : ''), 139, y)//truckno
          doc.setFontSize('8');
          doc.text(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['reference'] : '', 152, y)//truckno
@@ -416,7 +439,7 @@ if(gono){
 
           if(adv && bal){
             
-            doc.text(this.paymentData[i][pmtNameArray2].length>0 ? this.paymentData[i][pmtNameArray2][0]['date'] : '', 181, y)//truckno
+            doc.text(this.paymentData[i][pmtNameArray2].length>0 ? this.handleF.getDateddmmyy(this.paymentData[i][pmtNameArray2][0]['date']) : '', 181, y)//truckno
             doc.text(String(this.paymentData[i][pmtNameArray2].length>0 ? this.paymentData[i][pmtNameArray2][0]['amount'] : ''), 202, y)//truckno
             doc.setFontSize('8');
             doc.text(this.paymentData[i][pmtNameArray2].length>0 ? this.paymentData[i][pmtNameArray2][0]['reference'] : '', 215, y)//truckno
