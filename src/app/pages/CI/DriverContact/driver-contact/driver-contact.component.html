@@ -34,8 +34,8 @@
           <option *ngFor="let ii of pts;" value={{ii.value}}>{{ii.viewValue}}</option>
         </select>
 
-          <input type="text" list="cars2" class="form-control"  style="width: 50%;background-color: black;color: wheat;" id="pn_{{j}}" [disabled]='i.lul==="unlock"' autocomplete="off"/>
-           <datalist id="cars2">
+          <input type="text" [attr.list]="'cars2_' + j" class="form-control"  style="width: 50%;background-color: black;color: wheat;" id="pn_{{j}}" [disabled]='i.lul==="unlock"' autocomplete="off"/>
+           <datalist [id]="'cars2_' + j">
             <option *ngFor="let k of i.parties2;let kki = index" value={{k.name}}>{{k.name}}</option>
            </datalist>
 
