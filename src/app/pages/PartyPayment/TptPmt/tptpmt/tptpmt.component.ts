@@ -431,7 +431,7 @@ if(gono){
          doc.text(String(this.paymentData[i].rent), 106, y)//truckno
 
          doc.text(this.paymentData[i][pmtNameArray].length>0 ? this.handleF.getDateddmmyy(this.paymentData[i][pmtNameArray][0]['date']) : '', 118, y)//truckno
-         doc.text(String(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['amount'] : ''), 139, y)//truckno
+         doc.text(String(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray].reduce((partialSum, a) => partialSum + parseInt(a.amount), 0) : ''), 139, y)//truckno
          doc.setFontSize('8');
          doc.text(this.paymentData[i][pmtNameArray].length>0 ? this.paymentData[i][pmtNameArray][0]['reference'] : '', 152, y)//truckno
          doc.setTextColor(0, 0, 0);
