@@ -19,11 +19,11 @@
         </div>
 
         <div class="col-sm-3"
-          *ngIf="(buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11' )&&(buttonOption!=='20')">
+          *ngIf="(buttonOption!=='8')&&(buttonOption!=='7')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11' )&&(buttonOption!=='20')">
           <input type="date" class="form-control" [(ngModel)]="dynDate">
         </div>
 
-        <div class="col-sm-3" *ngIf="(buttonOption==='8')||(buttonOption==='18')||(buttonOption==='19')||(buttonOption==='20')">
+        <div class="col-sm-3" *ngIf="(buttonOption==='8')||(buttonOption==='7')||(buttonOption==='18')||(buttonOption==='19')||(buttonOption==='20')">
           <select class="form-control" [(ngModel)]="selectedmy">
             <option *ngFor="let i of buttons;let j = index;" value={{i.value}}>{{i.viewValue}}</option>
           </select>
@@ -50,7 +50,7 @@
 
       <h3>{{todaysDate|date:'dd-MM-yyyy'}}</h3>
       <table class="table" style="width:100%" align="center"
-        *ngIf="(buttonOption!=='8')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11')&&(buttonOption==='20')&&(tableSelected)">
+        *ngIf="(buttonOption!=='8')&&(buttonOption!=='7')&&(buttonOption!=='18')&&(buttonOption!=='19')&&(buttonOption!=='11')&&(buttonOption==='20')&&(tableSelected)">
         <thead align="center" style="font-weight: bold">
           <tr class=table-header>
             <th>Srno</th>
@@ -116,6 +116,42 @@
           </tr>
         </tbody>
       </table>
+
+      <div *ngIf="buttonOption=='7'">
+       <div class="col-sm-12" *ngIf="!showbuttonOption18" style="font-weight: bold;font-size: 8vh;">
+        {{show18Msg}}
+      </div>
+      <div class="col-sm-12" *ngIf="showbuttonOption18">
+
+       <table class="table table-bordered">
+        <thead>
+          <tr>
+          <th>Sr</th>
+          <th>Loading Date</th>
+          <th>Load</th>
+          <th>Place</th>
+          <th>TruckNo</th>
+          <th>Party Name</th>
+          <th>LRNO</th>
+        </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let i of turn18;let j=index;">
+            <td>{{j+1}}</td>
+            <td>{{i.loadingDate|date:'dd-MM-yyyy'}}</td>
+            <td>{{i.typeOfLoad}}</td>
+            <td>{{i.villageDetails[0].shortName}}</td>
+            <td>{{i.ownerDetails[0].truckno}}</td>
+            <td>{{i.partyDetails[0].shortName}}</td>
+            <td><input type="text" value={{i.lrno}} id="{{'lrno_'+ j}}"></td>
+          </tr>
+        </tbody>
+       </table>
+       <button type=" button" class="btn btn-warning" (click)="submitLRNO()">
+        <i class="material-icons">send</i>
+      </button>
+      </div>
+    </div>
 
       <div *ngIf="buttonOption=='8'">
         <div class="col-sm-12" *ngIf="!showbuttonOption8" style="font-weight: bold;font-size: 8vh;">

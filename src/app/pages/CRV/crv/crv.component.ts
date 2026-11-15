@@ -21,7 +21,7 @@ export class CRVComponent implements OnInit {
   public arr = []
   public selectedFile: File;
   public imgSrc = '';
-  public data = [];
+  public data =[{'podImage':[{'setter':0,'fileType':'jpg'},{'setter':0,'fileType':'jpg'},{'setter':0,'fileType':'jpg'},{'setter':0,'fileType':'jpg'},{'setter':0,'fileType':'jpg'},{'setter':0,'fileType':'jpg'}]}];
   public imgDataRes={};
    constructor(
      public sec:SecurityCheckService,
@@ -37,6 +37,7 @@ export class CRVComponent implements OnInit {
     
     
      this.activatedRoute.queryParams.subscribe(data=>{
+      console.log(data);
       if(Object.keys(data).length===0){
         alert('Error with scanning! Please scan valid QR Code!')
       }
@@ -46,9 +47,13 @@ export class CRVComponent implements OnInit {
          if(a=='d'){
           this.msg = 'Please wait we are updating the POD Status.'
     let dataa = String(this.htd(data['d']))
-        console.log(dataa);
-        
+console.log(dataa.length)
+
      let tempObj = {};
+
+        if(dataa.split('202')[0].length==3){
+    dataa = '0'+String(this.htd(data['d']))          
+        }
 
     tempObj['method'] = 'updateCRVStatus';
     tempObj['tablename'] = '';

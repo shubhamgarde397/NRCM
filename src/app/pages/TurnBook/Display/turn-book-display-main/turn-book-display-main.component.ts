@@ -71,6 +71,7 @@ public showbuttonOption821HA=true;
   public addis19=true;
   public tons=[];
   public displayoptions = [
+    { 'value': '7', 'viewvalue': 'Monthly By Series New' ,'disabled':false},
     { 'value': '8', 'viewvalue': 'Monthly By Series' ,'disabled':false},
     { 'value': '18', 'viewvalue': 'Party Amount' ,'disabled':false},
     { 'value': '19', 'viewvalue': 'Packet' ,'disabled':false},
@@ -278,6 +279,27 @@ public nrcmid;
       });
   }
 
+  submitLRNO(){
+     let arr=[]
+    let obj={}
+    for(let j=0;j<this.turn18.length;j++){
+      if(parseInt((<HTMLInputElement>document.getElementById('lrno_'+j)).value)!==0){
+        obj['id']=this.turn18[j]['_id'];
+        obj['lrno']=parseInt((<HTMLInputElement>document.getElementById('lrno_'+j)).value)
+        arr.push(obj)
+        obj={};
+      }
+    }
+    let tempObj={}
+    tempObj['method']='turn18lrno';
+    tempObj['tablename']='';
+    tempObj['data']=arr;
+    this.apiCallservice.handleData_New_python('commoninformation', 1, tempObj, true)
+      .subscribe((res: any) => {
+        alert(res.Status)
+      });
+  }
+
   aF(){ // remove by entry by partyid from turn18
     let arr=this.turn18show;
 
@@ -405,6 +427,10 @@ let tempObj = {};
     this.byTruckName=false;
     this.parties = this.commonArray.gstdetails;
     switch (this.buttonOption) {
+      case '7':
+        tempObj['date'] = this.selectedmy;
+        tempObj['partyType']=this.buttonOptionPartyType;
+        break;
       case '8':
         tempObj['date'] = this.selectedmy;
         tempObj['partyType']=this.buttonOptionPartyType;
@@ -444,6 +470,10 @@ let tempObj = {};
         res.Data.forEach(r=>{
           r['typeOfVehiclefirst']=r.ownerDetails[0].typeOfVehicle.slice(0,1)
           });
+        }
+        if (this.buttonOption == '7') {
+          this.showbuttonOption8 = true;
+            this.turn18 = res.Data;
         }
         if (this.buttonOption == '8') {
           if (res.Data.length > 0) {
